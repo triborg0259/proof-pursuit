@@ -38,6 +38,29 @@ def test_review_offline_archivia_il_verdetto():
     assert not (d / "failed_attempts.md").exists()   # UNKNOWN_STATUS non è un fallimento
 
 
+def test_normalizza_rapporto_con_limitazione():
+    """Rapporto + limitazione insieme: il verdetto resta, la riserva finisce nelle note (prima si perdeva il PASS)."""
+    sys.path.insert(0, str(ROOT / "researcher"))
+    from bridge_referee import CliBackend
+    grezzo = {"report": {"mathematical_verdict": "PASS", "math_notes": "ok"}, "limitation": "no code execution"}
+    out = CliBackend._normalizza("A", grezzo)
+    assert out["limitation"] is None and "no code execution" in out["report"]["math_notes"]
+    assert CliBackend._normalizza("B", {"report": None, "limitation": "x"})["report"] is None  # caso legittimo intatto
+
+
+def test_riesecuzione_codice_produce_osservazioni():
+    """Gli script di code_used vengono rilanciati dall'orchestratore e l'esito (exit, stdout) diventa osservazione."""
+    sys.path.insert(0, str(ROOT / "researcher"))
+    from bridge_referee import esegui_codice
+    d = Path(tempfile.mkdtemp(prefix="pp_code_"))
+    attempt = {"attempt_id": "attempt_001", "code_used": [
+        {"language": "python", "purpose": "conta", "code": "print(2+2)", "rigor": "exact"},
+        {"language": "lean", "purpose": "no", "code": "", "rigor": "exact"}]}
+    oss = esegui_codice(d, attempt, timeout=30)
+    assert len(oss) == 2 and "exit 0" in oss[0] and "'4'" in oss[0] and "not re-run" in oss[1]
+    assert (d / "verifica" / "attempt_001" / "osservazioni.json").exists()
+
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):

@@ -1,0 +1,96 @@
+{
+ "report": {
+  "evidence_verdict": "PASS",
+  "source_issues": [
+   {
+    "code": "SRC_CONTEXT_ONLY_UNRETRIEVED",
+    "detail": "src_1 (AoPS IMO 2022 P6) and src_2 (Evan Chen notes) have empty excerpts and could not be retrieved in this MVP; the proof declares them context only and proves the relevant fact (Lemma 2) itself, so nothing depends on them. src_3 is the in-repo parte-1.md matching registered claim verified_1 and is restated with proof.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "NO_TRUSTED_RERUN",
+    "detail": "Outputs of code_2 (1377 sets / 27540 pairs / 0 acyclic, 0.24 s) and code_3 (3672 sets / 73440 pairs / 0 acyclic, 0.39 s) are candidate-reported; trusted_observations is empty. Request: orchestrator runs `python verifica_q5_indipendenti.py` and `python verifica_q5_bipartita.py` (with code_1 saved as conta_cammini.py in the same directory, .venv) and records the printed counts and wall-clock. Code inspection shows both enumerations are exhaustive, exact-integer and use genuinely different methods; the 10-minute limit is not in doubt for ~73k acyclicity tests on a 32-vertex graph.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "REDUCTION_JUSTIFIED",
+    "detail": "Finite reduction (T ≤ 87 ⇒ structure (★)) is argued in §2 from Lemmas 3–7; symmetry reduction in code_2 (XOR translations, transitivity, invariance of (★)) and the branch pruning are valid; code_3 needs no reduction. Reported counts are consistent with vertex-transitivity (3672·12/32 = 1377) and with 2·C(16,12)+32 mixed sets, and the emptiness of (★) agrees with a hand sanity check (A(5,4)=2).",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "UPPER_BOUND_HAND_CHECKED",
+    "detail": "The 32-string labelling is a bijection; peaks = even vertices minus {00000,11110}; the 6 isolated odd vertices are the weight-3 strings ending in 1 and are non-adjacent to both roots; count 18·1+14·5=88 verified by hand and by two independent exact scripts (code_4 recursion, code_5 DFS).",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US",
+     "COMPUTATIONALLY_VERIFIED"
+    ],
+    "evidence_sufficient": true,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": true,
+    "references": [
+     "src_3",
+     "code_1",
+     "code_2",
+     "code_3",
+     "code_4",
+     "code_5"
+    ],
+    "notes": "Lower bound U(Q_5) ≥ 88: hand case analysis (§1–2) reduces T ≤ 87 to the finite property (★), refuted by two exhaustive exact-integer searches with code included (allowed: allow_computation=true, exact, exhaustive, justified reduction, well under 10 min). Upper bound 88: explicit labelling in required format, count verified by hand and by two exact scripts. Literature sources are context only; verified_1/verified_4 are restated with proof, not relied on as citations. Pending: trusted re-run of code_2/code_3 to record outputs and timing."
+   },
+   {
+    "claim_id": "verified_1",
+    "categories": [
+     "PROVED_BY_US",
+     "REPRODUCED_BY_US"
+    ],
+    "evidence_sufficient": true,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": false,
+    "references": [
+     "src_3"
+    ],
+    "notes": "Re-proved inside the submission as Lemmas 1–3 (T = |E| + v + X with X ≥ 0)."
+   },
+   {
+    "claim_id": "verified_4",
+    "categories": [
+     "KNOWN_IN_LITERATURE",
+     "REPRODUCED_BY_US"
+    ],
+    "evidence_sufficient": true,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": false,
+    "references": [
+     "src_3"
+    ],
+    "notes": "Previously verified in-repo (parte-1.md); superseded by the new bound ≥ 88 and not actually needed by the present argument."
+   }
+  ],
+  "reproducibility_notes": "All code is included and deterministic (no seeds needed for code_2–code_5; code_6/code_7 are evidence only with seed 1 and seeds 0–7). Run from a directory containing code_1 as conta_cammini.py: `python verifica_q5_indipendenti.py` (expect 1377 / 27540 / 0), `python verifica_q5_bipartita.py` (expect 3672 / 73440 / 0), `python costruzione_88.py` and `python verifica_dfs_88.py` (expect 88 and the same 8 valleys). Candidate-reported times < 1 s each; no trusted observation yet. The submission should add these explicit commands and measured times to the cell-2 draft."
+ },
+ "limitation": null
+}

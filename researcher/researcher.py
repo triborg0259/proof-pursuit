@@ -222,13 +222,13 @@ def _cli_command(system_prompt, user_prompt, schema, model, effort, shell, max_t
     scelta (vedi SHELL_MODES). In headless nessuno risponde ai prompt di permesso, per questo ogni modalità
     fissa a priori cosa è concesso."""
     cli_schema = {k: v for k, v in schema.items() if k not in ("$schema", "title")}  # il validatore CLI rifiuta $schema 2020-12
-    cmd = ["claude", "-p", "--no-session-persistence", "--output-format", "json",
+    # `--tools ""` sta SUBITO dopo -p: è un flag variadico e, se fosse l'ultimo prima del prompt, ingoierebbe
+    # il prompt stesso ("Input must be provided either through stdin or as a prompt argument").
+    cmd = ["claude", "-p", *([] if shell else ["--tools", ""]), "--no-session-persistence", "--output-format", "json",
            "--json-schema", json.dumps(cli_schema), "--system-prompt", system_prompt,
            "--max-budget-usd", str(max_budget_usd)]
     if shell:
         cmd += [*SHELL_MODES[shell_mode], "--max-turns", str(max_turns)]
-    else:
-        cmd += ["--tools", ""]
     if model:
         cmd += ["--model", model]
     if effort:

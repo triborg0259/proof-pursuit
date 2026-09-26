@@ -142,11 +142,103 @@
  "submission_digest": "be1d20663923182a841871d76797315d0d40d563b435d044545f292391712f99",
  "math": {
   "report": null,
-  "limitation": "A: ValidationError"
+  "limitation": "A: TimeoutError"
  },
  "evidence": {
-  "report": null,
-  "limitation": "B: ValidationError"
+  "report": {
+   "evidence_verdict": "PARTIAL",
+   "source_issues": [
+    {
+     "code": "SRC_CONTEXT_ONLY_UNRETRIEVED",
+     "detail": "src_1 (AoPS IMO 2022 P6) and src_2 (Evan Chen notes) have empty excerpts and cannot be retrieved in this MVP. The submission declares them context only and proves the relevant fact (Lemma 2, p(v) >= max(1, deg^-(v))) itself, so no claim depends on them; not treated as checked. src_3 is the in-repo parte-1.md matching registered claim verified_1, restated with proof inside the submission.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "NO_TRUSTED_RERUN",
+     "detail": "The outputs of code_2 (1377 sets / 27540 pairs / 0 acyclic / 0.24 s) and code_3 (3672 sets / 73440 pairs / 0 acyclic / 0.39 s) and of code_4/code_5 (88, same 8 valleys) are candidate-reported; trusted_observations is empty, so reproducibility is not yet established by a trusted run. REQUEST: orchestrator saves code_1 as conta_cammini.py in the same directory and runs, in .venv, `python verifica_q5_indipendenti.py`, `python verifica_q5_bipartita.py`, `python costruzione_88.py`, `python verifica_dfs_88.py`, recording printed counts and wall-clock. Code inspection: both lower-bound scripts are exhaustive (code_2 backtracking over all independent 12-sets containing 0 with the only pruning being 'not enough vertices left'; code_3 all 2^16 even masks x all odd completions, no symmetry) and exact-integer; the two acyclicity tests (edges = vertices - components; union-find) are genuinely different methods. Expected runtime is far below the 10-minute limit.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "REDUCTION_JUSTIFIED",
+     "detail": "The finite reduction (T <= 87 => property (★): independent 12-set I and u not in I with Q_5 - (I ∪ {u}) a forest) is derived in §1–2 from Lemmas 3–7; I checked the in-degree identity 4q = 48 + v + |H| - s_H, the four residual structures A–D and the |H| = 2 exclusion (4q ∈ {47,45,43}) and found no gap. The XOR-translation symmetry reduction in code_2 is valid (transitive automorphisms, (★) invariant). Reported counts are mutually consistent: 3672·12/32 = 1377, and 3672 = 2·C(16,12) + 32 (pure-class sets plus the 32 mixed 11+1 sets; 10+2 mixed sets are impossible). Independently, the falsity of (★) admits a short hand argument (any three even vertices of Q_5 contain a pair at distance 2, or the five neighbours of the single odd vertex in a mixed set close a 6-cycle), agreeing with the reported 0.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "UPPER_BOUND_HAND_CHECKED",
+     "detail": "The 32-string labelling is a bijection on {0,1}^5 in the required format; peaks = even-weight vertices minus {00000, 11110}; the 6 isolated odd vertices are the weight-3 strings ending in 1, non-adjacent to both roots; count 18·1 + 14·5 = 88 checked by hand and matched by the two exact scripts (recursion and explicit DFS).",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "COMPUTATIONALLY_VERIFIED"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": true,
+     "references": [
+      "src_3",
+      "code_1",
+      "code_2",
+      "code_3",
+      "code_4",
+      "code_5"
+     ],
+     "notes": "Lower bound U(Q_5) >= 88: hand case analysis reduces T <= 87 to finite property (★), refuted by two exhaustive exact-integer searches with code included (permitted: allow_computation = true, exact, exhaustive over a set justified by the argument, runtime far under 10 minutes). Upper bound: explicit labelling with count 88 verified by hand and by two exact scripts. Literature sources are context only; verified_1/verified_4 are re-proved, not cited. No fatal evidence or rule issue found; evidence_sufficient set to false solely because no trusted re-run of code_2–code_5 has been recorded yet (all outputs are candidate-reported). Once the orchestrator run reproduces the printed counts, this claim should be treated as fully supported."
+    },
+    {
+     "claim_id": "verified_1",
+     "categories": [
+      "PROVED_BY_US",
+      "REPRODUCED_BY_US"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_3"
+     ],
+     "notes": "Re-proved inside the submission as Lemmas 1–3 (T = |E| + v + X, X >= 0)."
+    },
+    {
+     "claim_id": "verified_4",
+     "categories": [
+      "KNOWN_IN_LITERATURE",
+      "REPRODUCED_BY_US"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_3"
+     ],
+     "notes": "Previously verified in-repo (parte-1.md); superseded by the new bound >= 88 and not needed by the present argument."
+    }
+   ],
+   "reproducibility_notes": "All code is included and deterministic (code_2–code_5 need no seeds; code_6 uses seed 1 and code_7 seeds 0–7, both evidence only and not part of the proof). Commands, from a directory containing code_1 saved as conta_cammini.py: `python verifica_q5_indipendenti.py` (expect 1377 / 27540 / 0), `python verifica_q5_bipartita.py` (expect 3672 / 73440 / 0), `python costruzione_88.py` and `python verifica_dfs_88.py` (expect 88 and the same 8 valleys). Candidate-reported times < 1 s each; no trusted observation yet — this is the only outstanding item and the reason for PARTIAL rather than PASS. The cell-2 draft should list these commands and the measured times per the repo protocol."
+  },
+  "limitation": null
  },
  "checks": [],
  "check_errors": [],
@@ -161,15 +253,100 @@
    "missing_cases": []
   },
   "evidence_review": {
-   "verdict": "UNAVAILABLE",
-   "source_issues": [],
-   "computation_issues": [],
+   "verdict": "PARTIAL",
+   "source_issues": [
+    {
+     "code": "SRC_CONTEXT_ONLY_UNRETRIEVED",
+     "detail": "src_1 (AoPS IMO 2022 P6) and src_2 (Evan Chen notes) have empty excerpts and cannot be retrieved in this MVP. The submission declares them context only and proves the relevant fact (Lemma 2, p(v) >= max(1, deg^-(v))) itself, so no claim depends on them; not treated as checked. src_3 is the in-repo parte-1.md matching registered claim verified_1, restated with proof inside the submission.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "NO_TRUSTED_RERUN",
+     "detail": "The outputs of code_2 (1377 sets / 27540 pairs / 0 acyclic / 0.24 s) and code_3 (3672 sets / 73440 pairs / 0 acyclic / 0.39 s) and of code_4/code_5 (88, same 8 valleys) are candidate-reported; trusted_observations is empty, so reproducibility is not yet established by a trusted run. REQUEST: orchestrator saves code_1 as conta_cammini.py in the same directory and runs, in .venv, `python verifica_q5_indipendenti.py`, `python verifica_q5_bipartita.py`, `python costruzione_88.py`, `python verifica_dfs_88.py`, recording printed counts and wall-clock. Code inspection: both lower-bound scripts are exhaustive (code_2 backtracking over all independent 12-sets containing 0 with the only pruning being 'not enough vertices left'; code_3 all 2^16 even masks x all odd completions, no symmetry) and exact-integer; the two acyclicity tests (edges = vertices - components; union-find) are genuinely different methods. Expected runtime is far below the 10-minute limit.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "REDUCTION_JUSTIFIED",
+     "detail": "The finite reduction (T <= 87 => property (★): independent 12-set I and u not in I with Q_5 - (I ∪ {u}) a forest) is derived in §1–2 from Lemmas 3–7; I checked the in-degree identity 4q = 48 + v + |H| - s_H, the four residual structures A–D and the |H| = 2 exclusion (4q ∈ {47,45,43}) and found no gap. The XOR-translation symmetry reduction in code_2 is valid (transitive automorphisms, (★) invariant). Reported counts are mutually consistent: 3672·12/32 = 1377, and 3672 = 2·C(16,12) + 32 (pure-class sets plus the 32 mixed 11+1 sets; 10+2 mixed sets are impossible). Independently, the falsity of (★) admits a short hand argument (any three even vertices of Q_5 contain a pair at distance 2, or the five neighbours of the single odd vertex in a mixed set close a 6-cycle), agreeing with the reported 0.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "UPPER_BOUND_HAND_CHECKED",
+     "detail": "The 32-string labelling is a bijection on {0,1}^5 in the required format; peaks = even-weight vertices minus {00000, 11110}; the 6 isolated odd vertices are the weight-3 strings ending in 1, non-adjacent to both roots; count 18·1 + 14·5 = 88 checked by hand and matched by the two exact scripts (recursion and explicit DFS).",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
    "rule_violations": [],
-   "claim_provenance": []
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "COMPUTATIONALLY_VERIFIED"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": true,
+     "references": [
+      "src_3",
+      "code_1",
+      "code_2",
+      "code_3",
+      "code_4",
+      "code_5"
+     ],
+     "notes": "Lower bound U(Q_5) >= 88: hand case analysis reduces T <= 87 to finite property (★), refuted by two exhaustive exact-integer searches with code included (permitted: allow_computation = true, exact, exhaustive over a set justified by the argument, runtime far under 10 minutes). Upper bound: explicit labelling with count 88 verified by hand and by two exact scripts. Literature sources are context only; verified_1/verified_4 are re-proved, not cited. No fatal evidence or rule issue found; evidence_sufficient set to false solely because no trusted re-run of code_2–code_5 has been recorded yet (all outputs are candidate-reported). Once the orchestrator run reproduces the printed counts, this claim should be treated as fully supported."
+    },
+    {
+     "claim_id": "verified_1",
+     "categories": [
+      "PROVED_BY_US",
+      "REPRODUCED_BY_US"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_3"
+     ],
+     "notes": "Re-proved inside the submission as Lemmas 1–3 (T = |E| + v + X, X >= 0)."
+    },
+    {
+     "claim_id": "verified_4",
+     "categories": [
+      "KNOWN_IN_LITERATURE",
+      "REPRODUCED_BY_US"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_3"
+     ],
+     "notes": "Previously verified in-repo (parte-1.md); superseded by the new bound >= 88 and not needed by the present argument."
+    }
+   ]
   },
   "accepted_progress": [],
-  "blocking_issue": "A: ValidationError; B: ValidationError",
-  "next_required_step": "Provide the missing review or independently checked evidence",
+  "blocking_issue": "B references unregistered provenance",
+  "next_required_step": "Regenerate a contract-valid report",
   "stagnation_signal": false
  },
  "review_status": "INCOMPLETE",

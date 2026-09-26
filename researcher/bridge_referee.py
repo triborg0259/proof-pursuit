@@ -200,6 +200,18 @@ class CliBackend:
             write_json(self.log_dir / f"referee_raw_{role}_{tentativo}.json", raw)
 
     @staticmethod
+    def _normalizza(role, raw):
+        """Rapporto E limitazione insieme: il contratto del Referee li vuole alternativi (limitazione = "non ho
+        potuto giudicare"). Qui il giudice HA giudicato e aggiunge una riserva: il verdetto vale, la riserva
+        finisce nelle note del rapporto. Senza questo passo un PASS motivato veniva buttato via."""
+        if not isinstance(raw, dict) or raw.get("report") is None or raw.get("limitation") is None:
+            return raw
+        campo = "math_notes" if role == "A" else "reproducibility_notes"
+        report = dict(raw["report"])
+        report[campo] = f"{report.get(campo, '')}\n[limitation declared by the judge] {raw['limitation']}".strip()
+        return {"report": report, "limitation": None}
+
+    @staticmethod
     def _valida(role, raw):
         """Applica le stesse regole pydantic del Referee (coerenza PASS/FAIL/PARTIAL). Ritorna il testo dell'errore o ''."""
         from referees.contracts import AgentEnvelope, MathReport, EvidenceReport
@@ -211,8 +223,9 @@ class CliBackend:
             return str(err)[:2000]
 
     def _comando(self, role, system, schema):
-        cmd = ["claude", "-p", "--no-session-persistence", "--output-format", "json", "--tools", "",
-               "--json-schema", json.dumps(schema), "--system-prompt", system]
+        cmd = ["claude", "-p", "--tools", "", "--no-session-persistence", "--output-format", "json",   # --tools è variadico:
+               "--json-schema", json.dumps(schema), "--system-prompt", system]                        # mai ultimo prima del prompt
+        cmd += ["--max-budget-usd", "8"]
         if self.models[role]:
             cmd += ["--model", self.models[role]]
         return cmd
@@ -232,7 +245,7 @@ class CliBackend:
     async def generate(self, *, role, system, payload, schema):
         """Prima chiamata; se il rapporto viola le regole di coerenza del Referee, un solo ritentativo con l'errore
         esatto nel payload (il modello di solito corregge il campo incriminato). Poi si lascia decidere al Referee."""
-        raw = await asyncio.to_thread(self._chiama, role, system, payload, schema)
+        raw = self._normalizza(role, await asyncio.to_thread(self._chiama, role, system, payload, schema))
         self._salva_grezzo(role, 1, raw)
         errore = self._valida(role, raw)
         if not errore:
@@ -240,12 +253,57 @@ class CliBackend:
         print(f"[referee-cli] {role}: rapporto non valido, ritento una volta: {errore[:200]}", file=sys.stderr)
         payload_bis = {**payload, "previous_report_rejected_by_validator": raw, "validation_error": errore,
                        "instruction": "Return a report that satisfies the validator; keep your mathematical judgement."}
-        raw = await asyncio.to_thread(self._chiama, role, system, payload_bis, schema)
+        raw = self._normalizza(role, await asyncio.to_thread(self._chiama, role, system, payload_bis, schema))
         self._salva_grezzo(role, 2, raw)
         return raw
 
     async def close(self):
         return None
+
+
+# =============================================================================== riesecuzione fidata del codice
+def _cartella_verifica(workdir: Path, attempt):
+    """Cartella pulita per rilanciare gli script: copia della sandbox del Researcher (gli script si importano
+    a vicenda con i loro nomi veri) più un file code_i.py per ogni voce di code_used."""
+    import shutil
+    dest = workdir / "verifica" / attempt["attempt_id"]
+    if dest.exists():
+        shutil.rmtree(dest)
+    sandbox = workdir / "sandbox"
+    if sandbox.exists():
+        shutil.copytree(sandbox, dest, ignore=shutil.ignore_patterns("__pycache__"))
+    dest.mkdir(parents=True, exist_ok=True)
+    for i, codice in enumerate(attempt.get("code_used", []), start=1):
+        (dest / f"code_{i}.py").write_text(codice.get("code", ""), encoding="utf-8")
+    return dest
+
+
+def _osserva_script(cartella: Path, nome, timeout):
+    """Esegue uno script e riassume l'esito in una riga: è ciò che il giudice B legge come osservazione fidata."""
+    import time
+    inizio = time.time()
+    try:
+        res = subprocess.run([sys.executable, nome], cwd=cartella, capture_output=True, text=True, timeout=timeout)
+        esito = f"exit {res.returncode} in {time.time() - inizio:.1f}s"
+        dettagli = f"stdout: {res.stdout.strip()[-700:]!r}; stderr: {res.stderr.strip()[-300:]!r}"
+    except subprocess.TimeoutExpired:
+        esito, dettagli = f"TIMEOUT after {timeout}s", "killed: exceeds the verification time limit"
+    return f"orchestrator re-ran {nome} (python3, clean copy of the researcher sandbox): {esito}; {dettagli}"
+
+
+def esegui_codice(workdir: Path, attempt, timeout=600):
+    """Rilancia ogni script Python di code_used e ritorna le osservazioni. Perché: per il Referee i risultati
+    riportati dal candidato non fanno fede; contano solo esecuzioni fatte dall'orchestratore (< 10 min ciascuna)."""
+    cartella = _cartella_verifica(workdir, attempt)
+    osservazioni = []
+    for i, codice in enumerate(attempt.get("code_used", []), start=1):
+        if codice.get("language", "").lower() != "python":
+            osservazioni.append(f"code_{i}: not re-run (language {codice.get('language')!r} not supported by the orchestrator)")
+            continue
+        osservazioni.append(_osserva_script(cartella, f"code_{i}.py", timeout))
+        print(f"[bridge] {osservazioni[-1][:160]}", file=sys.stderr)
+    write_json(cartella / "osservazioni.json", osservazioni)
+    return osservazioni
 
 
 # =============================================================================== comandi
@@ -274,11 +332,14 @@ def cmd_from_packet(args):
     return 0
 
 
-async def _esegui_review(job_dict, backend, timeout):
-    """Chiama il Referee del collega e restituisce il pacchetto come dizionario."""
+async def _esegui_review(job_dict, backend, timeout, osservazioni=()):
+    """Chiama il Referee del collega e restituisce il pacchetto come dizionario. Le osservazioni (nostre esecuzioni
+    del codice) entrano nel TrustedContext: solo l'orchestratore può fornirle, mai il Researcher."""
     from referees.contracts import ReviewInput
     from referees.hackathon import prepare_review
-    packet = await prepare_review(ReviewInput.model_validate(job_dict), backend, [], timeout=timeout)
+    from referees.trust import TrustedContext
+    fidato = TrustedContext(evidence_observations=tuple(osservazioni))
+    packet = await prepare_review(ReviewInput.model_validate(job_dict), backend, [], timeout=timeout, trusted=fidato)
     return json.loads(packet.model_dump_json())
 
 
@@ -300,7 +361,8 @@ def cmd_review(args):
         return 2
     job = costruisci_review_input(workdir, attempt)
     backend = _scegli_backend(args)
-    packet = asyncio.run(_esegui_review(job, backend, args.timeout))
+    osservazioni = esegui_codice(workdir, attempt) if args.run_code else []
+    packet = asyncio.run(_esegui_review(job, backend, args.timeout, osservazioni))
     write_json(workdir / "attempts" / f"packet_{attempt['attempt_id'].split('_')[1]}.json", packet)
     report = converti_packet(packet, attempt["attempt_id"])
     if backend is not None:
@@ -325,6 +387,8 @@ def build_parser():
     rv.add_argument("--workdir", required=True)
     rv.add_argument("--attempt")
     rv.add_argument("--offline", action="store_true", help="solo controlli esatti, nessun modello")
+    rv.add_argument("--run-code", action="store_true",
+                    help="rilancia gli script di code_used e passa gli esiti al Referee come osservazioni fidate")
     rv.add_argument("--backend", choices=["cli", "api"], default="cli")
     rv.add_argument("--model")
     rv.add_argument("--model-b")

@@ -37,11 +37,23 @@ def test_reject_poi_ready_con_creative_agganciato():
 def test_senza_creative_il_loop_prosegue():
     d = cartella()
     p = subprocess.run([PY, str(ROOT / "researcher" / "loop.py"), "--workdir", str(d), "--max-iter", "3",
-                        "--researcher-backend", "mock", "--referee", "mock", "--mock-rejects", "2"],
+                        "--researcher-backend", "mock", "--referee", "mock", "--mock-rejects", "2", "--creative", "none"],
                        capture_output=True, text=True, cwd=ROOT)
     assert p.returncode == 0, p.stderr + p.stdout
     righe = [json.loads(l) for l in (d / "loop_log.jsonl").read_text().splitlines()]
     assert "non collegato" in righe[1]["creative"] and righe[-1]["review_status"] == "READY_FOR_HUMAN"
+
+
+def test_creative_del_team_rule_based_scrive_idee():
+    """Stagnazione al 2° REJECT → il Creative di creative/ (senza modello) scrive creative_ideas.json."""
+    d = cartella()
+    p = subprocess.run([PY, str(ROOT / "researcher" / "loop.py"), "--workdir", str(d), "--max-iter", "3",
+                        "--researcher-backend", "mock", "--referee", "mock", "--mock-rejects", "2", "--creative", "rule_based"],
+                       capture_output=True, text=True, cwd=ROOT)
+    assert p.returncode == 0, p.stderr
+    assert (d / "creative_ideas.json").exists()
+    righe = [json.loads(r) for r in (d / "loop_log.jsonl").read_text().splitlines()]
+    assert any("idee scritte" in r["creative"] for r in righe)
 
 
 if __name__ == "__main__":

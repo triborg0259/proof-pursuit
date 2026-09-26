@@ -16,13 +16,13 @@ Un'iterazione:
        UNKNOWN_STATUS             → stop: da investigare a mano (in offline è l'esito normale)
        PARTIAL_PROGRESS           → i claim accettati entrano in state.verified_claims, si continua
        REJECT                     → si continua; se c'è stagnazione si chiama il Creative
-  5. Creative (punto d'aggancio): comando esterno `--creative-cmd`, con {workdir} sostituito, che deve scrivere
-     <workdir>/creative_ideas.json. Se non è configurato, il loop lo segnala e prosegue.
+  5. Creative: `creative/` del team (--creative cli|rule_based|none, default cli) oppure un comando esterno
+     `--creative-cmd` con {workdir} sostituito; in entrambi i casi deve scrivere <workdir>/creative_ideas.json.
 
 Uso:
   python3 researcher/loop.py --workdir runs/X --max-iter 4 --researcher-backend cli --shell full --referee cli \
-      --literature "hypercube labelling uphill paths" [--creative-cmd "python3 creative/creative.py --workdir {workdir}"]
-Test senza modelli: --researcher-backend mock --referee mock --mock-rejects 2
+      --literature "hypercube labelling uphill paths"
+Test senza modelli: --researcher-backend mock --referee mock --creative rule_based --mock-rejects 2
 """
 import argparse
 import json
@@ -76,7 +76,7 @@ def passo_referee(args, workdir, attempt, iterazione):
     """Giudizio del tentativo. mock: REJECT per le prime --mock-rejects iterazioni, poi READY_FOR_HUMAN."""
     if args.referee == "mock":
         return _referee_mock(workdir, attempt, iterazione, args.mock_rejects)
-    cmd = [sys.executable, str(HERE / "bridge_referee.py"), "review", "--workdir", str(workdir)]
+    cmd = [sys.executable, str(HERE / "bridge_referee.py"), "review", "--workdir", str(workdir), "--run-code"]
     if args.referee == "offline":
         cmd.append("--offline")
     esegui(cmd)
@@ -98,13 +98,24 @@ def _referee_mock(workdir, attempt, iterazione, rifiuti):
     return report
 
 
+def comando_creative(args, workdir):
+    """Il comando che scrive creative_ideas.json: il Creative del team (creative/) con il backend scelto,
+    oppure un comando esterno (--creative-cmd) per chi vuole agganciare altro. None ⇒ nessun Creative."""
+    if args.creative_cmd:
+        import shlex  # rispetta le virgolette; {workdir} sostituito senza .format (le graffe del JSON lo romperebbero)
+        return shlex.split(args.creative_cmd.replace("{workdir}", str(workdir)))
+    if args.creative == "none":
+        return None
+    return [sys.executable, "-m", "creative.creative_agent", "run", "--workdir", str(workdir), "--backend", args.creative]
+
+
 def passo_creative(args, workdir, motivo):
-    """Punto d'aggancio del Creative: comando esterno che scrive creative_ideas.json. Assente ⇒ solo un avviso."""
-    if not args.creative_cmd:
-        print(f"[loop] stagnazione ({motivo}) ma nessun Creative collegato (--creative-cmd): proseguo", file=sys.stderr)
+    """Chiama il Creative quando il ciclo stagna; ritorna True se ha scritto idee nuove per il prossimo tentativo."""
+    cmd = comando_creative(args, workdir)
+    if cmd is None:
+        print(f"[loop] stagnazione ({motivo}) ma nessun Creative collegato: proseguo", file=sys.stderr)
         return False
-    import shlex  # rispetta le virgolette del comando; {workdir} sostituito senza .format (le graffe del JSON lo romperebbero)
-    esegui(shlex.split(args.creative_cmd.replace("{workdir}", str(workdir))))
+    esegui(cmd)
     return (workdir / "creative_ideas.json").exists()
 
 
@@ -178,7 +189,9 @@ def build_parser():
     p.add_argument("--effort")
     p.add_argument("--referee", choices=["cli", "offline", "mock"], default="cli")
     p.add_argument("--mock-rejects", type=int, default=2, help="solo --referee mock: quanti REJECT prima di READY")
-    p.add_argument("--creative-cmd", help="comando che scrive {workdir}/creative_ideas.json (Creative del team)")
+    p.add_argument("--creative", choices=["cli", "rule_based", "none"], default="cli",
+                   help="backend del Creative del team (creative/): cli = modello, rule_based = senza modello")
+    p.add_argument("--creative-cmd", help="in alternativa: comando esterno che scrive {workdir}/creative_ideas.json")
     p.add_argument("--literature", action="append", help="query arXiv, ripetibile; eseguita una volta per cartella")
     return p
 
