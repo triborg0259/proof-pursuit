@@ -277,22 +277,26 @@ partendo da tutt'altro spazio di stati, trova $|I|=28$ e quindi di nuovo $204$.
 
 \begin{table}[h]
 \centering
-\begin{tabular}{crrrrl}
+\begin{tabular}{crrrl}
 \toprule
-$d$ & $|I|$ & $2^d+(d-1)|I|$ & ricottura etichettature & stato\\
+$d$ & ricottura etichettature & $|I|$ esibito & $2^d+(d-1)|I|$ & stato\\
 \midrule
-3 & 3   & 14   & ---   & $=U(Q_3)$, dimostrato (C1)\\
-4 & 6   & 34   & ---   & $=U(Q_4)$, dimostrato (C1)\\
-5 & 14  & 88   & $88$  & $=U(Q_5)$, dimostrato (C2)\\
-6 & 28  & 204  & $204$ & limite superiore\\
-7 & 56  & 464  & $464$ & limite superiore\\
-8 & 112 & 1040 & $1040$& limite superiore\\
+3 & ---    & $3$    & 14   & $=U(Q_3)$, dimostrato (C1)\\
+4 & ---    & $6$    & 34   & $=U(Q_4)$, dimostrato (C1)\\
+5 & $88$   & $14$   & 88   & $=U(Q_5)$, dimostrato (C2)\\
+6 & $204$  & $28$   & 204  & limite superiore\\
+7 & $464$  & in corso & $464$ se $|I|=56$ & limite superiore\\
+8 & $1040$ & in corso & $1040$ se $|I|=112$ & limite superiore\\
 \bottomrule
 \end{tabular}
-\caption{Le due procedure concordano su ogni riga in cui entrambe sono state
-eseguite. Ogni etichettatura prodotta è stata ricontata con un conteggio
-indipendente, e ogni $I$ è stato verificato indipendente e con complemento
-aciclico.}
+\caption{Per $d\le6$ entrambe le procedure sono state portate a termine e
+concordano. Per $d=7,8$ il limite superiore proviene dalla \emph{sola} ricottura
+sulle etichettature, che esibisce un'etichettatura esplicita: è sufficiente a
+stabilire il limite. La ricerca del corrispondente insieme $I$ era ancora in
+esecuzione alla stesura; i valori $56$ e $112$ sono \textbf{dedotti} invertendo
+la formula, non esibiti. Ogni etichettatura prodotta è stata ricontata con un
+conteggio indipendente; ogni $I$ esibito è stato verificato indipendente e con
+complemento aciclico.}
 \label{tab:risultati}
 \end{table}
 
@@ -301,11 +305,19 @@ $U(Q_6)\le 204$, \quad $U(Q_7)\le 464$, \quad $U(Q_8)\le 1040$.
 \end{proposition}
 
 \begin{proof}
-Per ciascun $d\in\{6,7,8\}$ esibiamo nei file allegati un insieme $I$ di
-cardinalità $28$, $56$, $112$ rispettivamente, verificato indipendente e con
-$\Qd-I$ foresta, e l'etichettatura esplicita che ne discende. La
-Proposizione~\ref{prop:costruzione} dà il valore; il conteggio diretto sulle
-etichettature lo conferma.
+Per ciascun $d\in\{6,7,8\}$ i file allegati
+(\texttt{q6\_best.json}, \texttt{q7\_best.json}, \texttt{q8\_best.json})
+contengono un'etichettatura esplicita di $\Qd$, elencata come i $2^d$ vertici in
+ordine di etichetta crescente. Il conteggio dei cammini in salita su ciascuna,
+eseguito con \eqref{eq:ricorrenza} in aritmetica intera e ripetuto con una
+seconda implementazione indipendente, dà rispettivamente $204$, $464$ e $1040$.
+Esibire un'etichettatura che realizza un valore stabilisce il limite superiore.
+
+Per $d=6$ disponiamo in aggiunta di un insieme $I$ con $|I|=28$
+(\texttt{q6\_set.json}), verificato indipendente e con $\Qd-I$ foresta, che
+ritrova $204$ per via della Proposizione~\ref{prop:costruzione}: due strade
+diverse allo stesso numero. Per $d=7,8$ questa seconda strada non è stata
+completata.
 \end{proof}
 
 \begin{remark}[Congettura]
@@ -321,7 +333,8 @@ etichettatura fuori da questa costruzione faccia meglio.
 \end{remark}
 
 \begin{remark}[Un vincolo su $d=9$]
-La successione $|I|=3,6,14,28,56,112$ raddoppia da $d=5$ in poi. Se il
+La successione $|I|=3,6,14,28$ dei valori \emph{esibiti}, prolungata dai valori
+$56$ e $112$ soltanto \emph{dedotti} per $d=7,8$, raddoppia da $d=5$ in poi. Se il
 raddoppio proseguisse si avrebbe $\nabla_{\mathrm{ind}}(Q_9)\le224$, e la
 Proposizione~\ref{prop:costruzione} darebbe $U(Q_9)\le 512+8\cdot224=2304$. Ma
 gli organizzatori dichiarano $U(Q_9)\ge2368$. Poiché la
