@@ -1,64 +1,132 @@
-Problem 2 — Part 5 — PARTIAL submission draft
+Problem 2 — Part 5 — submission (PARTIAL)
 
-Declared status: PARTIAL. No complete solution: below is what has been established, the formalisation,
-the position with respect to the literature and what remains open. Nothing is declared proven beyond what is written.
+Declared status: PARTIAL. The cell is not solved. What follows is the intermediate progress actually established,
+as judged by the automatic Referee (verdict REJECT: The target for cell 5 is disjunctive: either a proof that U(Q_9) >= 2369, or an explicit labelling of Q_9 with <= 2399 uphill paths. The submission delivers neither. (i) Lower bound: the only bound actually proved is Theorem A.4, #paths >= 2^d + (d-1)|H| >= 512 + 8*nabla(Q_9); with the only proved bound nabla(Q_9) >= 225 (from c(S) >= 1) this gives U(Q_9) >= 2312, weaker than the known 2368. Theor).
+The author's own declared status was LEMMA_CANDIDATE.
 
 1. Result and scope
 
-Official request.
-
-Parte 5 (C5) — Bounds for $U(Q_9)$
-
-Punteggio: 8 points · Valutazione: Judged
-
-$Q_9$ has $512$ vertices and $2304$ edges. The best bounds known to the organisers are
-$$2368 \le U(Q_9) \le 2400;$$
-the lower bound is unpublished. Improve either one: prove that $U(Q_9) \ge 2369$, or exhibit a labelling of $Q_9$
-with at most $2399$ uphill paths.
-
-What we submit. No improvement of the known bounds. Contribution: the star construction with an even code of distance 4 and size 20 gives exactly the known upper bound; proof that within this family one cannot go lower.
+Neither bound of the cell is improved. Established (with full proofs): (A) for every labelling of any graph, S = {p = 1} induces a forest whose components are the valleys, H = {p ≥ 2} is a decycling set, all S–H edges point into H, and #paths = |E| + c(S) + Σ_{H-source edges}(p(w) − 1); on Q_d this yields #paths ≥ 2^d + (d − 1)|H| ≥ 2^d + (d − 1)∇(Q_d), which reproduces U(Q_3) = 14, U(Q_4) = 34 and shows the organisers' bounds are 512 + 8·232 and 512 + 8·236. (B) Every independent decycling set of Q_d lies in one parity class and has size ≥ 2^{d−1} − A(d,4); for d = 9 this is 236 (using the cited value A(9,4) = 20). Corollary: every labelling of Q_9 whose p ≥ 2 vertices are pairwise non-adjacent (all star constructions and all 'root a forest, put the rest on top' labellings) has ≥ 2400 paths; any labelling with ≤ 2399 paths has 225 ≤ |H| ≤ 235, at least one edge inside H, c(S) + |E(H)| = 8|H| − 1792 ≤ 88 and total H-edge excess ≤ 7 + 8(235 − |H|). Exact-arithmetic annealing over all induced forests (fixed odd-before-even order in H) and directly over labellings found nothing below 2400 (evidence only).
 
 2. Proof
 
-Star construction (see part 3): total $=(d+1)2^{d-1}-(d-1)|R|$ with $R$ an even code of distance 4. For $d=9$, $|R|\le A(8,3)=20$ and the minimum total of the family is $2560-160=2400$, i.e. the organisers' upper bound. Hence the known bound is (in all likelihood) precisely this construction, and improving it requires a forest of non-peaks that is not made of stars (larger trees, reducing the number of components below 96). Set up: search for independent sets $P$ of $Q_9$ with $|P|<236$ and acyclic complement; not executed.
+Notation
+
+$G=Q_d$, $n=2^d$, $|E|=d2^{d-1}$. Fix a labelling $f$ and orient every edge from the smaller to the larger label ("$u\to v$" means $uv\in E$, $f(u)<f(v)$). For a vertex $v$ let $p(v)$ be the number of uphill paths ending at $v$. Then
+$$p(v)=[v\text{ is a valley}]+\sum_{u\to v}p(u),\qquad \#\text{paths}=\sum_v p(v). \qquad(0)$$
+(Every uphill path ending at $v$ is either $(v)$ itself, which exists iff $v$ is a valley, or is obtained by appending $v$ to an uphill path ending at a lower neighbour $u$, and this correspondence is a bijection.)
+
+Every vertex has $p(v)\ge 1$: follow lower neighbours from $v$; labels strictly decrease, so the walk stops at a valley $v_1$, and reversing it gives an uphill path ending at $v$.
+
+Define $S=\{v:p(v)=1\}$, $H=\{v:p(v)\ge 2\}$, $V$ = number of valleys, $c(S)$ = number of connected components of the subgraph induced by $S$.
+
+Theorem A (exact identity and reduction to decycling sets)
+
+For every labelling of a finite simple graph $G$:
+
+1. Every edge between $S$ and $H$ is oriented from $S$ to $H$.
+2. $S$ induces a forest, and $c(S)=V$ (each tree contains exactly one valley).
+3. $\#\text{paths}=|E|+c(S)+\sum_{w\to u,\ w\in H}(p(w)-1)$, where the sum runs over the edges whose lower endpoint lies in $H$.
+4. For $G=Q_d$: $(d-1)|H|=(d-2)2^{d-1}+c(S)+|E(H)|$, where $E(H)$ is the set of edges with both ends in $H$; consequently
+$$\#\text{paths}\;\ge\;2^d+(d-1)|H|\;\ge\;2^d+(d-1)\,\nabla(Q_d),$$
+where $\nabla(Q_d)$ is the decycling number (minimum size of a set whose removal leaves a forest).
+
+Proof. (1) Let $uw$ be an edge with $u\in H$, $w\in S$ and $f(u)<f(w)$. By (0), $p(w)\ge p(u)\ge 2$, contradicting $w\in S$.
+
+(2) Let $v\in S$. If $v$ is a valley it has no lower neighbour. Otherwise $1=p(v)=\sum_{u\to v}p(u)$ with every $p(u)\ge1$, so $v$ has exactly one lower neighbour $u$, and $p(u)=1$, i.e. $u\in S$. Hence in the digraph induced on $S$ every vertex has in-degree $\le 1$, and in-degree $0$ exactly when it is a valley (valleys have $p=1$, so all valleys lie in $S$). Take a connected component $T$ of the induced subgraph on $S$ with $m$ vertices; its number of edges equals the number of in-degree-$1$ vertices, which is $\le m$; it cannot be $m$, because then every vertex of $T$ would have a lower neighbour in $T$ and following lower neighbours would give an infinite strictly decreasing sequence of labels. So $T$ has $\le m-1$ edges and is connected, hence a tree with exactly $m-1$ vertices of in-degree $1$ and exactly one valley. Thus $S$ induces a forest with $c(S)=V$.
+
+(3) Summing (0) over all vertices: $\#\text{paths}=V+\sum_{u\to v}p(u)=V+|E|+\sum_{u\to v}(p(u)-1)$. Terms with $u\in S$ vanish, and $V=c(S)$ by (2).
+
+(4) In $Q_d$ every vertex has degree $d$. Count edges: $|E|=|E(S)|+e(S,H)+|E(H)|$ with $|E(S)|=|S|-c(S)$ (forest) and $e(S,H)=d|H|-2|E(H)|$. So $d2^{d-1}=2^d-|H|-c(S)+d|H|-|E(H)|$, i.e. $(d-1)|H|=(d-2)2^{d-1}+c(S)+|E(H)|$. By (1), every edge inside $H$ has its lower endpoint in $H$ and contributes $p(w)-1\ge1$ to the sum in (3), so $\#\text{paths}\ge|E|+c(S)+|E(H)|=d2^{d-1}+(d-1)|H|-(d-2)2^{d-1}=2^d+(d-1)|H|$. Finally $S$ is an induced forest, so $H$ is a decycling set and $|H|\ge\nabla(Q_d)$. $\square$
+
+Remarks. (a) For $d=9$: $\#\text{paths}\ge 512+8|H|$; the organisers' bounds read $2368=512+8\cdot232$ and $2400=512+8\cdot236$. (b) Conversely, if $H$ is an independent decycling set, labelling $S$ tree by tree from a chosen root (parents before children) and then $H$ arbitrarily gives $p\equiv1$ on $S$ and $p\equiv d$ on $H$, i.e. exactly $2^d+(d-1)|H|$ paths; the star constructions in the repository are the case $H=$ even vertices minus a distance-4 code. (c) Consistency check with verified claims: $U(Q_3)=14=8+2\cdot3$, $U(Q_4)=34=16+3\cdot6$, with $\nabla(Q_3)=3$, $\nabla(Q_4)=6$ from the edge bound $(d-1)|H|\ge(d-2)2^{d-1}+1$ (since $c(S)\ge1$).
+
+Theorem B (independent decycling sets of $Q_d$)
+
+Let $d\ge3$ and let $H\subseteq V(Q_d)$ be an independent set such that $Q_d-H$ is a forest. Then $H$ is contained in one parity class, and $|H|\ge 2^{d-1}-A(d,4)$, where $A(d,4)$ is the maximum size of a binary code of length $d$ with minimum distance $4$. For $d=9$, $A(9,4)=A(8,3)=20$ (CITED, classical), so $|H|\ge236$.
+
+Write $S=V\setminus H$, $A=H\cap\text{Even}$, $B=H\cap\text{Odd}$ (parity of the Hamming weight), $R=\text{Even}\setminus A=S\cap\text{Even}$, $S_2(h)$ for the set of the $\binom d2$ vertices at Hamming distance $2$ from $h$.
+
+Step 1 (sphere lemma). For every $h\in H$: $|S\cap S_2(h)|\le d-1$.
+
+Proof. Since $H$ is independent, all $d$ neighbours $h+e_i$ lie in $S$. Define a graph $F_h$ on $\{1,\dots,d\}$ with $ij\in F_h$ iff $h+e_i+e_j\in S$. If $F_h$ contained a cycle $i_1i_2\cdots i_mi_1$ ($m\ge3$), then $h+e_{i_1},\,h+e_{i_1}+e_{i_2},\,h+e_{i_2},\,\dots,\,h+e_{i_m}+e_{i_1}$ would be $2m$ distinct vertices of $S$ forming a cycle in $Q_d-H$ (consecutive ones differ in one coordinate), contradicting acyclicity. So $F_h$ is a forest on $d$ vertices and has at most $d-1$ edges. $\square$
+
+Step 2 (spectrum of the distance-2 graph on a parity class). Let $M$ be the adjacency matrix of $Q_d$ and $M_2$ the adjacency matrix of the graph $\Gamma_2$ on $V(Q_d)$ in which $u\sim v$ iff $\mathrm{dist}(u,v)=2$. Then $M_2=\tfrac12(M^2-dI)$, because $(M^2)_{uv}$ counts common neighbours: $d$ if $u=v$, $2$ if $\mathrm{dist}(u,v)=2$, $0$ otherwise. The vectors $\chi_T(x)=(-1)^{|\{i\in T:x_i=1\}|}$, $T\subseteq[d]$, form an orthogonal eigenbasis of $M$: $(M\chi_T)(x)=\sum_i\chi_T(x+e_i)=\chi_T(x)\sum_i(-1)^{[i\in T]}=(d-2|T|)\chi_T(x)$. Hence $M_2$ has eigenvalues $\lambda_k=\tfrac12((d-2k)^2-d)$, $k=|T|=0,\dots,d$. The value $\lambda_0=\lambda_d=\binom d2$ occurs with total multiplicity exactly $2$ ($T=\emptyset$ and $T=[d]$), and every other $\lambda_k$ is at most $\lambda_1=\lambda_{d-1}=\binom d2-2(d-1)$ (because $(d-2k)^2$ is maximal among $1\le k\le d-1$ at $k=1,d-1$). Vertices at distance $2$ have the same parity, so $\Gamma_2$ is the disjoint union of the graphs $\Gamma_2^{\rm even}$, $\Gamma_2^{\rm odd}$ induced on the two parity classes, each of which is $\binom d2$-regular (the translation $x\mapsto x+e_1$ is an isomorphism between them). The spectrum of $M_2$ is the multiset union of their spectra; each of them contains the eigenvalue $\binom d2$ (regularity, all-ones vector), so each contains it exactly once, and all remaining eigenvalues of $\Gamma_2^{\rm even}$ are $\le\binom d2-2(d-1)$. (Numerical sanity check for $d=9$: eigenvalues $36,20,8,0,-4$; $36-20=16=2\cdot8$.)
+
+Step 3 (edge-expansion from the spectral gap). Let $\Gamma$ be a $k$-regular graph on $N$ vertices with adjacency matrix $Q$ and eigenvalues $k=\mu_1\ge\mu_2\ge\dots$. For every $X\subseteq V(\Gamma)$ with $|X|=m$: $e(X,\bar X)\ge(k-\mu_2)\,m(N-m)/N$.
+
+Proof. Let $x=\mathbf 1_X-\tfrac mN\mathbf 1$; then $x\perp\mathbf 1$, so $x^{\mathsf T}Qx\le\mu_2\|x\|^2=\mu_2\,m(N-m)/N$ (expand $x$ in an orthonormal eigenbasis; all components are along eigenvectors with eigenvalue $\le\mu_2$). On the other hand $x^{\mathsf T}Qx=\mathbf 1_X^{\mathsf T}Q\mathbf 1_X-2\tfrac mN\mathbf 1_X^{\mathsf T}Q\mathbf 1+\tfrac{m^2}{N^2}\mathbf 1^{\mathsf T}Q\mathbf 1=2e(X)-2\tfrac mN km+\tfrac{m^2}{N^2}kN=2e(X)-\tfrac{km^2}{N}$, and $2e(X)=km-e(X,\bar X)$. Therefore $km-e(X,\bar X)-km^2/N\le\mu_2 m(N-m)/N$, i.e. $e(X,\bar X)\ge(k-\mu_2)m(N-m)/N$. $\square$
+
+Step 4 (each parity part of $H$ is empty or large). Apply Step 3 to $\Gamma=\Gamma_2^{\rm even}$ ($N=2^{d-1}$, $k=\binom d2$, $k-\mu_2\ge2(d-1)$ by Step 2) and $X=A$: $e(A,R)\ge 2(d-1)|A|(2^{d-1}-|A|)/2^{d-1}$, where $e(A,R)$ counts pairs $(a,r)$, $a\in A$, $r\in R$, at distance $2$. But $R=S\cap\text{Even}$, and for $a\in A\subseteq H$ Step 1 gives $|R\cap S_2(a)|\le|S\cap S_2(a)|\le d-1$, so $e(A,R)\le(d-1)|A|$. If $A\neq\emptyset$, dividing by $(d-1)|A|$ gives $2(2^{d-1}-|A|)/2^{d-1}\le1$, i.e. $|A|\ge2^{d-2}$. The same argument on $\Gamma_2^{\rm odd}$ gives: $B=\emptyset$ or $|B|\ge2^{d-2}$.
+
+Step 5 ($A$ and $B$ cannot both be non-empty). Suppose $A\ne\emptyset\ne B$; then $|A|,|B|\ge2^{d-2}$. $H$ independent means $N(B)\cap A=\emptyset$, and $N(B)\subseteq\text{Even}$, so $|A|\le2^{d-1}-|N(B)|$. Now $B\subsetneq\text{Odd}$ (if $B=\text{Odd}$ then $N(B)=\text{Even}$ and $A=\emptyset$). Counting edges of the $d$-regular bipartite graph $Q_d$: $d|B|=e(B,N(B))\le d|N(B)|$, with equality only if every vertex of $N(B)$ has all its neighbours in $B$, i.e. $B\cup N(B)$ is closed under adjacency, hence equals $V(Q_d)$ by connectivity, forcing $B=\text{Odd}$ — excluded. So $|N(B)|>|B|\ge2^{d-2}$ and $|A|<2^{d-2}$, a contradiction.
+
+Step 6 (conclusion). By Steps 4–5, $H\subseteq\text{Even}$ or $H\subseteq\text{Odd}$. The translation $x\mapsto x+e_1$ is an automorphism of $Q_d$ exchanging the parity classes and preserving independence and acyclicity of the complement, so assume $H=A\subseteq\text{Even}$. Then $S\supseteq\text{Odd}$ and $R=\text{Even}\setminus H\subseteq S$. If $r,r'\in R$ had distance $2$, their two common neighbours (odd, hence in $S$) would form with $r,r'$ a $4$-cycle in $Q_d-H$. Distances between even-weight vectors are even, so $R$ has pairwise distance $\ge4$ and $|R|\le A(d,4)$. Hence $|H|=2^{d-1}-|R|\ge2^{d-1}-A(d,4)$. For $d=9$: $A(9,4)=A(8,3)=20$ (CITED), so $|H|\ge236$. $\square$
+
+Sanity checks (exact, exhaustive). For $d=4$ and $d=5$ all independent sets of $Q_d$ were enumerated (743 and 254 475), the decycling ones (26 and 114) all lie in one parity class and have minimum size $6=8-A(4,4)$ and $14=16-A(5,4)$, as the theorem predicts (script verifica_lemma_indipendenti.py, 0.9 s). The formula $2^{d-1}-A(d,4)$ also reproduces the known $\nabla(Q_d)=3,6,14,28,56,112$ for $d=3,\dots,8$.
+
+Corollary C (what a labelling of $Q_9$ with $\le2399$ paths must look like)
+
+Let $f$ be a labelling of $Q_9$ with $\#\text{paths}\le2399$, and $S,H$ as above. Then:
+1. $|H|\le235$ (Theorem A.4: $512+8|H|\le2399$), $H$ is a decycling set, and $c(S)+|E(H)|=8|H|-1792\le88$.
+2. $H$ is not independent: $|E(H)|\ge1$ (Theorem B: an independent decycling set has $|H|\ge236$, giving $\ge2400$ paths).
+3. $\sum_{w\to u,\ w\in H}(p(w)-2)\le2399-512-8|H|\le7+8(235-|H|)$ (Theorem A.3 combined with the identity in A.4).
+
+In particular every labelling in which all vertices with $p\ge2$ are pairwise non-adjacent (this includes every "star" construction, every labelling whose $p\ge2$ vertices are all peaks, and every labelling obtained by rooting an induced forest and putting its complement on top) has at least $2400$ uphill paths. Any improvement of the upper bound $2400$ must come from a decycling set $H$ of size $232$–$235$ (with $|H|\ge225$ from $c(S)\ge1$) containing at least one edge $w\to u$ whose lower endpoint has exactly two lower neighbours, or a few such edges with small $p(w)$; and any proof of $U(Q_9)\ge2369$ must handle exactly these non-independent configurations.
+
+Computational exploration (exact integer counts; exploration only, proves nothing)
+
+Three simulated-annealing searches were written in C (sources in code_used), all scoring with exact integer arithmetic:
+
+* cerca_radici.c: state $(R,B')$ with $R\subseteq\text{Even}$ (the vertices of $S$ of even parity) and $B'\subseteq\text{Odd}$ (odd vertices put into $H$); this parametrises every induced forest $S$; the labelling order is $S$ (forest order), then $B'$, then $\text{Even}\setminus R$, and its exact path count is $|S|+\sum_{b\in B'}\max(1,k_b)+\sum_{e\in\text{Even}\setminus R}\sum_{o\sim e}(\text{1 if }o\in S\text{ or }k_o<2,\ k_o\text{ otherwise})$, $k_b=|N(b)\cap R|$ (this is (0) evaluated on that order). Eight runs of $3\cdot10^7$ steps (≈100 s each, 4 warm-started from a 20-root star labelling, 4 from scratch) all ended at exactly $2400$; every cold start rediscovered $2400$.
+* ricottura_etichette.c: annealing directly on labellings of $Q_9$ (swap two labels, exact recount, $4\cdot10^7$ steps ≈ 3–4 min per run): three warm starts from the repository's star labelling (2432 with its 16-root code) reached $2400$ and stopped there; two cold starts reached $2400$ and $3104$.
+* cerca_decycling.c: annealing on decycling sets with the surrogate objective $8|H|+6|E(H)|$; from random starts it froze at $8\cdot240+6\cdot112$, far above $1888$ (uninformative).
+
+No labelling with $\le2399$ paths was found. This is numerical evidence only.
 
 3. Verification: instructions, dependencies, timings
 
-Available code (Python 3, standard library; every script runs in under a minute):
-- problema-2/certificati/costruzione_88.py
-- problema-2/certificati/q3_esaustivo.py
-- problema-2/certificati/q3_verifica_indipendente.py
-- problema-2/certificati/q4_branch_and_bound.py
-- problema-2/certificati/q4_ricerca_locale.py
-- problema-2/certificati/q4_verifica_etichettatura_indipendente.py
-- problema-2/certificati/q5_stella_verifica_indipendente.py
-- problema-2/certificati/verifica_dfs_88.py
-- problema-2/certificati/verifica_etichettatura_q3.py
-- problema-2/certificati/verifica_etichettatura_q4.py
-- problema-2/certificati/verifica_q5_bipartita.py
-- problema-2/certificati/verifica_q5_indipendenti.py
-- problema-2/esperimenti/conta_cammini.py
-- problema-2/esperimenti/costruzione_stelle.py
-- problema-2/esperimenti/ricottura_controllo.py
+Python 3 standard library. Scripts (re-run by the orchestrator, see runs/p2_c5/verifica/):
+- code_1 (python, rigor exact): Exhaustive exact check of Theorem B on Q_4 and Q_5: enumerates all independent sets, keeps those whose complement is a forest, checks they lie in one parity class and have size >= 2^{d-1} - A(d,4). Covers all 743 (d=4) and 254475 (d=5) independent sets; 0.9 s.
+- code_2 (python, rigor float_exploration_only): Numerical sanity check (float eigenvalues, NOT a proof) of Step 2: the distance-2 graph on the even class of Q_9 is 36-regular with eigenvalues 36, 20, 8, 0, -4.
+- code_3 (python, rigor exact): Builds a 20-word even-weight code of length 9 with pairwise distance >= 4 by randomised greedy (found at trial 9271; the final assert checks the distance condition exactly); writes the star state stelle20.txt used to warm-start cerca_radici (gives exactly 2400).
+- code_4 (c, rigor exact): Simulated annealing (exploration only) over pairs (R = even vertices kept in S, B' = odd vertices moved to H), i.e. over all induced forests S of Q_9 with the labelling order [S][B'][Even minus R]; exact integer path count plus a penalty of 40 per residual cycle. 8 runs x 3e7 steps (~100 s each): best 2400 in every run.
+- code_5 (c, rigor exact): Simulated annealing (exploration only) directly on labellings of Q_9: swap two labels, exact integer recount of uphill paths. 5 runs x 4e7 steps (~3-4 min each): warm starts from the star labelling and one cold start reached 2400, one cold start 3104; nothing below 2400.
 
 4. Sources and contribution
 
-arXiv literature (deterministic search tools/cerca_letteratura.sh, abstracts read, not used as proof):
-- arXiv:1412.3893v1 — The competition between simple and complex evolutionary trajectories in asexual populations (Ian E. Ochs, Michael M. Desai, 2014); abstract only read.
-No arXiv work on uphill paths on the hypercube: the problem appears to be unpublished.
+- CITED (table value, not reproduced): A(8,3) = A(9,4) = 20 — M. R. Best, A. E. Brouwer, F. J. MacWilliams, A. M. Odlyzko, N. J. A. Sloane, 'Bounds for binary codes of length less than 25', IEEE Trans. Inform. Theory 24 (1978); also Brouwer's tables of A(n,d). Used only in Step 6 of Theorem B for d = 9.
+- Context only (search snippet/abstract, full text not read): S. Bau, L. W. Beineke, 'The decycling number of graphs', Australas. J. Combin. 25 (2002), arXiv:math/0703544 — reports 225 <= nabla(Q_9) <= 237 and nabla(Q_n) for n <= 8.
+- Context only (not read): S. Bau, L. W. Beineke, G.-M. Du, Z. Liu, R. C. Vandell, 'Decycling cubes and grids', Utilitas Math. 59 (2001).
+- Context only (not read): R. Focardi, F. L. Luccio, D. Peleg, 'Feedback vertex set in hypercubes', Inform. Process. Lett. 76 (2000).
+- Repository: problema-2/note.md, submission/parte-4.md, submission/parte-5.md, esperimenti/costruzione_stelle.py, esperimenti/conta_cammini.py (star construction and exact counter).
+- Position with respect to the literature: The only arXiv abstract supplied (1412.3893v1, Ochs–Desai) is about evolutionary "uphill" trajectories and is irrelevant. Web search (WebSearch, 2026-09-26) for the decycling number of hypercubes: the survey Bau–Beineke "The decycling number of graphs" (arXiv math/0703544, abstract and search snippet read, full paper not read) reports 225 ≤ ∇(Q_9) ≤ 237 and the exact values ∇(Q_n) for n ≤ 8 (0,1,2,6,14,28,56,112 by the edge-count bound and the code construction), building on Bau–Beineke–Du–Liu–Vandell, "Decycling cubes and grids", Utilitas Math. 59 (2001) and Focardi–Luccio–Peleg, "Feedback vertex set in hypercubes", IPL 76 (2000). None of these sources mention uphill paths; the link #paths ≥ 2^d + (d−1)∇(Q_d) proved below is our own, and it explains the organisers' numbers: 2368 = 512 + 8·232, 2400 = 512 + 8·236. The literature's best decycling set for Q_9 (237) is worse than the star set with an (8,20,3) code (236), and no source gives ≤ 235, so the published state of the art cannot improve the upper bound. My approach departs from the literature in using the ordering (p-values) to get an exact identity, and adapts the classical spectral edge-expansion bound (proved in full below) to the halved cube. The only cited facts are A(9,4) = A(8,3) = 20 (classical coding-theory table value, Best–Brouwer–MacWilliams–Odlyzko–Sloane 1978 / Brouwer's tables; CITED, not reproduced) and the well-known spectrum of Q_d (proved inline).
 
 5. Limits and unresolved parts
 
-Both the lower and the upper bound.
+Referee's blocking point: The target for cell 5 is disjunctive: either a proof that U(Q_9) >= 2369, or an explicit labelling of Q_9 with <= 2399 uphill paths. The submission delivers neither. (i) Lower bound: the only bound actually proved is Theorem A.4, #paths >= 2^d + (d-1)|H| >= 512 + 8*nabla(Q_9); with the only proved bound nabla(Q_9) >= 225 (from c(S) >= 1) this gives U(Q_9) >= 2312, weaker than the known 2368. Theorem B only bounds INDEPENDENT decycling sets (|H| >= 236) and Corollary C explicitly states that any improving labelling must have a non-independent H; no argument is given for that case, so no bound >= 2369 follows. (ii) Upper bound: no labelling with <= 2399 paths is exhibited; the submission itself reports that all searches ended at 2400 and that this 'proves nothing'. The main claim is therefore not established; no other reusable claim was declared (Theorems A, B, C carry no claim IDs).
+Next step required: Address the stated blocking obligation without silently changing the target
+Gaps declared by the author:
+- A(9,4) = A(8,3) = 20 is cited from the classical coding tables (Best–Brouwer–MacWilliams–Odlyzko–Sloane 1978), not reproduced; it is used only in the last line of Theorem B for d = 9. Without it Theorem B still gives: an independent decycling set of Q_9 lies in one parity class and is the complement (in that class) of a distance-4 code.
+- The eigenvalue computation in Step 2 is proved algebraically (characters of Z_2^d) and only sanity-checked numerically with floating point; the float check is not part of the proof.
+- The claim that the organisers' lower bound 2368 comes from ∇(Q_9) ≥ 232 is a numerical coincidence I cannot verify (their argument is unpublished); I do not use it anywhere.
+- The annealing runs are exploration only: they show that three natural search spaces do not easily reach ≤ 2399, not that no such labelling exists. In particular the (R,B') search fixed the orientation odd→even inside H; labellings with even H-vertices having out-edges inside H (even vertices with ≤ 3 lower S-neighbours) were only explored by the direct labelling annealer.
+- Theorem B rules out the independent-H family; it does not settle whether a non-independent decycling set of size ≤ 235 with small H-edge excess exists (which would give ≤ 2399) nor prove U(Q_9) ≥ 2369.
 
 6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
-- No agent run on this cell; the text was written by the team from its notes.
+- attempt_001 — Researcher: family algebraic_reformulation, subgoal: Prove an exact structural identity for the number of uphill paths (reduction to decycling sets of Q_9) and the lemma that every independent decycling set of Q_9 has size >= 236, so that any labelling with <= 2399 paths must have an edge inside H = {v : p(v) >= 2}; test computationally whether the natural constructions can go below 2400.; declared LEMMA_CANDIDATE.
+  - Why this approach: No blocker was stated and no prior attempt exists for this cell. The repository's own C4/C5 notes show that the star construction gives exactly 2400 = 2^9 + 8·236 and that nobody has an argument for why 2400 cannot be beaten. Before searching blindly, I derived the exact identity that links the count to decycling sets of Q_9 (the organisers' bounds 2368 and 2400 are exactly 512 + 8·232 and 512 + 8·236), then proved that the entire family "H independent" (which contains all star constructions and everything the previous searches explored) cannot go below 2400. This narrows the C5 upper-bound search to labellings with edges inside H and tells the lower-bound direction precisely what remains: decycling sets of size 232–235 with few internal edges.
+  - Position w.r.t. the literature: The only arXiv abstract supplied (1412.3893v1, Ochs–Desai) is about evolutionary "uphill" trajectories and is irrelevant. Web search (WebSearch, 2026-09-26) for the decycling number of hypercubes: the survey Bau–Beineke "The decycling number of graphs" (arXiv math/0703544, abstract and search snippet read, full paper not read) reports 225 ≤ ∇(Q_9) ≤ 237 and the exact values ∇(Q_n) for n ≤ 8 (0,1,2,6,14,28,56,112 by the edge-count bound and the code construction), building on Bau–Beineke–Du–Liu–Vandell, "Decycling cubes and grids", Utilitas Math. 59 (2001) and Focardi–Luccio–Peleg, "Feedback vertex set in hypercubes", IPL 76 (2000). None of these sources mention uphill paths; the link #paths ≥ 2^d + (d−1)∇(Q_d) proved below is our own, and it explains the organisers' numbers: 2368 = 512 + 8·232, 2400 = 512 + 8·236. The literature's best decycling set for Q_9 (237) is worse than the star set with an (8,20,3) code (236), and no source gives ≤ 235, so the published state of the art cannot improve the upper bound. My approach departs from the literature in using the ordering (p-values) to get an exact identity, and adapts the classical spectral edge-expansion bound (proved in full below) to the halved cube. The only cited facts are A(9,4) = A(8,3) = 20 (classical coding-theory table value, Best–Brouwer–MacWilliams–Odlyzko–Sloane 1978 / Brouwer's tables; CITED, not reproduced) and the well-known spectrum of Q_d (proved inline).
+  - Referee: REJECT / NEEDS_WORK; fatal error: The target for cell 5 is disjunctive: either a proof that U(Q_9) >= 2369, or an explicit labelling of Q_9 with <= 2399 uphill paths. The submission delivers neither. (i) Lower bound: the only bound actually proved is Theorem A.4, #paths >= 2^d + (d-1)|H| >= 512 + 8*nabla(Q_9); with the only proved bound nabla(Q_9) >= 225 (from c(S) >= 1) this gives U(Q_9) >= 2312, weaker than the known 2368. Theorem B only bounds INDEPENDENT decycling sets (|H| >= 236) and Corollary C explicitly states that any improving labelling must have a non-independent H; no argument is given for that case, so no bound >= 2369 follows. (ii) Upper bound: no labelling with <= 2399 paths is exhibited; the submission itself reports that all searches ended at 2400 and that this 'proves nothing'. The main claim is therefore not established; no other reusable claim was declared (Theorems A, B, C carry no claim IDs).; next: Address the stated blocking obligation without silently changing the target
 
 6b. Tokens used by the agents
 
-- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+- Researcher attempt_001: input 1,395,758 · output (incl. reasoning) 87,167
+- Referee judge B: input 33,328 · output (incl. reasoning) 3,152
+- Referee judge A: input 38,791 · output (incl. reasoning) 4,910
+- Total: input 1,467,877 · output 95,229 tokens
 
 7. arXiv literature consulted
 

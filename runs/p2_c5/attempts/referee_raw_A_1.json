@@ -1,0 +1,23 @@
+{
+ "report": {
+  "mathematical_verdict": "FAIL",
+  "first_fatal_error": {
+   "claim_ids": [
+    "main"
+   ],
+   "code": "TARGET_MISMATCH",
+   "detail": "The target for cell 5 is disjunctive: either a proof that U(Q_9) >= 2369, or an explicit labelling of Q_9 with <= 2399 uphill paths. The submission delivers neither. (i) Lower bound: the only bound actually proved is Theorem A.4, #paths >= 2^d + (d-1)|H| >= 512 + 8*nabla(Q_9); with the only proved bound nabla(Q_9) >= 225 (from c(S) >= 1) this gives U(Q_9) >= 2312, weaker than the known 2368. Theorem B only bounds INDEPENDENT decycling sets (|H| >= 236) and Corollary C explicitly states that any improving labelling must have a non-independent H; no argument is given for that case, so no bound >= 2369 follows. (ii) Upper bound: no labelling with <= 2399 paths is exhibited; the submission itself reports that all searches ended at 2400 and that this 'proves nothing'. The main claim is therefore not established; no other reusable claim was declared (Theorems A, B, C carry no claim IDs).",
+   "severity": "FATAL"
+  },
+  "accepted_mathematical_claims": [],
+  "unproved_claims": [
+   "main"
+  ],
+  "missing_cases": [
+   "Lower-bound direction: labellings whose set H = {v : p(v) >= 2} is a decycling set of size 225–235 containing at least one edge (the non-independent case, explicitly left open in Corollary C).",
+   "Upper-bound direction: no labelling of Q_9 with <= 2399 uphill paths is provided."
+  ],
+  "math_notes": "Checked in detail; the auxiliary mathematics is sound but does not reach the target. Theorem A (identity (0), orientation of S–H edges, S induces a forest with c(S)=V, #paths = |E| + c(S) + sum_{w->u, w in H}(p(w)-1), and for Q_d: (d-1)|H| = (d-2)2^{d-1} + c(S) + |E(H)|, hence #paths >= 2^d + (d-1)|H| with H a decycling set) is correct for every labelling of every finite simple graph. Theorem B (an independent decycling set H of Q_d, d>=3, lies in one parity class and satisfies |H| >= 2^{d-1} - A(d,4)) is correct: the sphere lemma (Step 1), the spectrum of the distance-2 graph on a parity class (Step 2: eigenvalues ((d-2k)^2 - d)/2, second largest C(d,2) - 2(d-1)), the standard spectral edge-expansion bound (Step 3), the dichotomy |A| in {0} or >= 2^{d-2} (Step 4), the Hall-type counting excluding mixed parity (Step 5), and the distance-4 code bound (Step 6) all check. For d=9 the value |H| >= 236 depends on the CITED table value A(9,4)=A(8,3)=20 (external theorem; conditional correctness only). Corollary C correctly follows: every labelling of Q_9 whose p>=2 vertices are pairwise non-adjacent has >= 2400 paths. If the Researcher wants credit for these, they should be declared as separate claims (e.g. 'Theorem A.4: for every labelling of Q_d, #paths >= 2^d + (d-1)|H| where H={p>=2} is a decycling set' and 'Theorem B: independent decycling sets of Q_d have size >= 2^{d-1} - A(d,4), conditional on the cited A(d,4) value'); I would accept both as stated. The sanity remark that 2^{d-1}-A(d,4) 'reproduces nabla(Q_d) for d<=8' is only a consistency observation, since Theorem B bounds independent decycling sets, not nabla in general. The C annealing runs are exploration only and carry no proof weight, as the submission itself says."
+ },
+ "limitation": null
+}

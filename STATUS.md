@@ -33,7 +33,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | 2 | $U(Q_5)$ (2 pt, checked) | revisionato | $U(Q_5)=88$: riduzione a (★) riletta a mano lemma per lemma + 3 enumerazioni concordi (una indipendente per metodo); etichettatura verificata; Referee automatico READY_FOR_HUMAN (giudice A PASS in 3 run, giudice B PASS con sole note INFO, codice rieseguito dall'orchestratore); bozza in submission/parte-2.md |
 | 3 | $U(Q_6)$ (3 pt, checked) | revisionato | loop p2_c3 attempt_001: Referee READY_FOR_HUMAN (A PASS, B PASS); approvata da Thomas Tumini (human); submission/parte-3.en.md |
 | 4 | $U(Q_7)$, $U(Q_8)$ (5 pt, checked) | parziale | valori candidati 464 = |E|+16 e 1040 = |E|+16 (Hamming) per costruzione a stelle; bound inferiore non dimostrato; submission/parte-4.md |
-| 5 | Migliorare $2368\le U(Q_9)\le2400$ (8 pt) | parziale |la costruzione a stelle con un codice (8,20,3) dà esattamente 2400: il bound noto è questa famiglia; per scendere serve una foresta non a stelle; bozza parziale in inglese in submission/ (parziali.py) |
+| 5 | Migliorare $2368\le U(Q_9)\le2400$ (8 pt) | parziale | loop p2_c5 attempt_001: REJECT (The target for cell 5 is disjunctive: either a proof that U(Q_9) >= 2369, or an explicit labelling of Q_9 with <= 2399 u); lemmi intermedi in submission/parte-5.en.md |
 | 6 | $U(Q_9)$ esatto con prove (13 pt, open) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
 
 ## Problema 3 — Bulgarian solitaire
@@ -56,7 +56,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | 3 | $k\le8$ (3 pt) | revisionato | loop p4_c3 attempt_001: Referee READY_FOR_HUMAN (A PASS, B PASS); approvata da Thomas Tumini (human); submission/parte-3.en.md |
 | 4 | $k\le12$ + report 9–16 (5 pt) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
 | 5 | boundary certificato + $k=24,30$ (8 pt) | parziale |richiede 2 implementazioni indipendenti; bozza parziale in inglese in submission/ (parziali.py) |
-| 6 | oltre (13 pt, open) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
+| 6 | oltre (13 pt, open) | parziale | loop p4_c6 attempt_001: REJECT (The strongest result actually proved is Corollary 6: max gcd(m_i,m_j) >= k^{1/3} unconditionally, and >= c*sqrt(k)/log k); lemmi intermedi in submission/parte-6.en.md |
 
 ## Registro decisioni e ostacoli
 - 2026-09-26 ~15:20: PRIMO END-TO-END REALE CHIUSO: `runs/p2_q5` → READY_FOR_HUMAN. Quarto ostacolo di contratto nel pacchetto Referee: il prompt di B gli chiede di classificare anche le dipendenze, ma `_validate_ids` ammette in `claim_provenance` solo i claim del candidato ("B references unregistered provenance"). Fix nel ponte: le voci sui claim già verificati vengono tolte (mai aggiunto nulla); `review --replay` ri-fonde i grezzi salvati senza richiamare i modelli. Da segnalare a gabundos insieme al `limitation`+report. Costo totale dei 3 run del Referee su Q5: ≈ $7.

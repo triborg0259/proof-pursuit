@@ -1,48 +1,105 @@
-# Problem 4 — Part 6 — PARTIAL submission draft
+# Problem 4 — Part 6 — submission (PARTIAL)
 
-**Declared status: PARTIAL.** No complete solution: below is what has been established, the formalization,
-the position with respect to the literature and what remains open. Nothing is declared proved beyond what is written.
+**Declared status: PARTIAL.** The cell is not solved. What follows is the intermediate progress actually established,
+as judged by the automatic Referee (verdict `REJECT`: The strongest result actually proved is Corollary 6: max gcd(m_i,m_j) >= k^{1/3} unconditionally, and >= c*sqrt(k)/log k conditional on Mertens/Rosser–Schoenfeld. The cell-6 target requires one of: (a) deciding a size k >= 25; (b) gcd >= ck for an absolute c > 0, or an improvement of the known factor k*exp(-(2+o(1)) log k/log log k) (i.e. something better than k^{1-o(1)}); (c) the group form at k ).
+The author's own declared status was `LEMMA_CANDIDATE`.
 
 ## 1. Result and scope
-**Official request.**
-## Parte 6 (C6) — Beyond the boundary
-
-**Punteggio:** 13 points · **Valutazione:** Judged · **Open question**
-
-Three directions beyond the certified range; any one of them counts. Any of the following.
-
-(a) Decide a size $k \ge 25$.
-
-(b) The asymptotic form. It is known that a pairwise disjoint family of size $k$ always has a pair with
-$$
-\gcd(m_i, m_j) \;\ge\; k \cdot \exp\!\left( -(2 + o(1)) \frac{\log k}{\log\log k} \right),
-$$
-which is $k^{1 - o(1)}$ but not linear in $k$. Prove the statement in full, or prove the weaker bound
-$\gcd(m_i, m_j) \ge ck$ for some absolute constant $c > 0$, or improve the exponential factor above.
-
-(c) The group form. Let $G$ be a group, let $G_1, \ldots, G_k$ be subgroups of finite index $n_i = [G : G_i]$,
-and let $x_1 G_1, \ldots, x_k G_k$ be pairwise disjoint cosets. Is there a pair $i < j$ with
-$\gcd(n_i, n_j) \ge k$? This is known for $k \le 5$ and open for every $k \ge 6$; settling $k = 6$ counts as
-progress.
-
-*(End of problem 4. Scores: 1+2+3+5+8+13 = 32.)*
-
-**What we submit.** No proof. Relevant remark: the asymptotic bound quoted in the statement has already been improved in the literature.
+A complete, self-contained proof (using only the CRT criterion (*)) that F(g) — the maximal size of a pairwise disjoint family with all pairwise gcds <= g — satisfies the prime-splitting recursion of Lemma 4, and the closed bounds F(g) <= g^3 and F(g) <= g^2 prod_{p<=g}(1+2/p). Consequences: for every pairwise disjoint family of size k, max gcd >= k^{1/3} unconditionally, and max gcd >= c sqrt(k)/log k with Mertens' theorem (cited). The recursion also re-proves cell 1 (R(2,2)=2). This is strictly weaker than the cited state of the art (k^{1-o(1)}, arXiv:2607.24655) and does NOT settle any of (a),(b),(c); it is offered as a verified, reusable lemma and as a precise diagnosis of where the loss occurs (the union bound over primes in Lemma 4, whose exact values are ~g^2/2). No cell is claimed solved.
 
 ## 2. Proof
-Fornal–Sun [2607.24655] (July 2026) prove $\max\gcd(m_i,m_j)\gg k\exp(-(2+o(1))\sqrt{\log k/\log\log k})$, with a square root in the exponent: an improvement of the exponential factor requested in (b). Reproducing their proof in full (gcd graph, structural lemma, sieving partition, Möbius inversion, discrete Fourier transform) would count under the rules; not done.
+## Setting and notation
+
+A *family* is a finite list $\mathcal F=\{(a_i,m_i)\}_{i\in I}$ of congruence classes $a_i \pmod{m_i}$, $m_i\ge 1$. It is *pairwise disjoint* if $a_i \pmod{m_i}\cap a_j\pmod{m_j}=\emptyset$ for all $i\ne j$. We use only the problem's fact $(*)$: two classes meet iff $\gcd(m_i,m_j)\mid a_i-a_j$.
+
+For an integer $g\ge 1$ and a prime $P$ define
+$$S(g,P)=\sup\Big\{|\mathcal F| :\ \mathcal F \text{ pairwise disjoint},\ \gcd(m_i,m_j)\le g\ \forall i\ne j,\ \gcd(m_i,q)=1\ \forall i,\ \forall \text{ primes } q<P\Big\}.$$
+(The gcd condition is vacuous when $|\mathcal F|=1$, so $S(g,P)\ge 1$.) Put $F(g):=S(g,2)$ (no coprimality condition). The statement of the problem is: *every pairwise disjoint family of size $k$ has a pair with $\gcd\ge k$*; equivalently $F(g)\le g$ for all $g$. The sharp example $1,\dots,k \pmod k$ shows $F(g)\ge g$. We prove upper bounds for $F$.
+
+## Lemma 1 (two classes)
+If $|\mathcal F|\ge 2$ and $\mathcal F$ is pairwise disjoint then $\gcd(m_i,m_j)\ge 2$ for all $i\ne j$.
+
+*Proof.* If $\gcd(m_i,m_j)=1$ then $1\mid a_i-a_j$, so by $(*)$ the classes meet. $\square$
+
+## Lemma 2 (base of the recursion)
+If $P>g$ then $S(g,P)=1$. In particular $S(1,P)=1$ for every prime $P$.
+
+*Proof.* The one-element family $\{(0,1)\}$ satisfies the conditions, so $S(g,P)\ge 1$. Suppose $|\mathcal F|\ge 2$ satisfies the conditions and take $i\ne j$. By Lemma 1, $d=\gcd(m_i,m_j)\ge 2$ has a prime factor $q$, with $q\le d\le g<P$. But $q\mid d\mid m_i$ contradicts $\gcd(m_i,q)=1$ for the prime $q<P$. Hence every admissible family has size $1$. For $g=1$ there is no prime $\le 1$, so $P>g$ for all $P$. $\square$
+
+## Lemma 3 (splitting inside one residue class mod $p$)
+Let $\mathcal F$ be pairwise disjoint, $p$ a prime, $r\in\{0,\dots,p-1\}$, and
+$$J_{p,r}=\{i\in I:\ p\mid m_i,\ a_i\equiv r \pmod p\}.$$
+For $i\in J_{p,r}$ put $n_i=m_i/p\in\mathbb Z_{\ge1}$ and $b_i=(a_i-r)/p\in\mathbb Z$. Then:
+1. the family $\mathcal F'=\{(b_i,n_i)\}_{i\in J_{p,r}}$ is pairwise disjoint;
+2. $\gcd(n_i,n_j)=\gcd(m_i,m_j)/p$ for $i\ne j$ in $J_{p,r}$;
+3. if every $m_i$ is coprime to all primes $q<P$, so is every $n_i$.
+
+*Proof.* Let $\varphi:\mathbb Z\to\mathbb Z$, $\varphi(y)=r+py$; $\varphi$ is injective. For $i\in J_{p,r}$,
+$$\varphi\big(b_i+n_i\mathbb Z\big)=r+p b_i+p n_i\mathbb Z=a_i+m_i\mathbb Z .$$
+If $y\in (b_i+n_i\mathbb Z)\cap(b_j+n_j\mathbb Z)$ then $\varphi(y)$ lies in both $a_i+m_i\mathbb Z$ and $a_j+m_j\mathbb Z$, contradicting disjointness; this proves 1. For 2: $\gcd(m_i,m_j)=\gcd(pn_i,pn_j)=p\gcd(n_i,n_j)$. For 3: $n_i\mid m_i$, so any prime dividing $n_i$ divides $m_i$. $\square$
+
+## Lemma 4 (prime-splitting recursion)
+Let $g\ge 1$ and let $P$ be a prime. Let $p_1<p_2<\dots<p_s$ be the primes in $[P,g]$ ($s=0$ if $P>g$). Then
+$$S(g,P)\ \le\ R(g,P):=\max\Big\{1,\ \sum_{t=1}^{s} p_t\, S\big(\lfloor g/p_t\rfloor,\,p_t\big)\Big\}.$$
+Consequently $S(g,P)$ is finite for all $g,P$ (induction on $g$, since $\lfloor g/p_t\rfloor<g$).
+
+*Proof.* If $s=0$ this is Lemma 2. Let $s\ge1$ and let $\mathcal F$ be admissible for $S(g,P)$ with $|\mathcal F|\ge 2$ (if all admissible families have size $\le1$ the bound is trivial). Define, for $t=1,\dots,s$,
+$$K_t=\{i\in I:\ p_t\mid m_i,\ p_u\nmid m_i \text{ for all } u<t\},\qquad K_{s+1}=\{i\in I: p_t\nmid m_i \text{ for all } t\le s\}.$$
+These sets partition $I$ (each $i$ goes to the smallest $t$ with $p_t\mid m_i$, or to $K_{s+1}$).
+
+*Claim: $K_{s+1}=\emptyset$.* Let $i\in K_{s+1}$ and pick $j\ne i$ (possible since $|\mathcal F|\ge2$). By Lemma 1, $\gcd(m_i,m_j)\ge2$ has a prime factor $q\le\gcd(m_i,m_j)\le g$, and $q\mid m_i$. By admissibility $q\ge P$ (no prime $<P$ divides $m_i$). So $q\in\{p_1,\dots,p_s\}$ divides $m_i$, contradicting $i\in K_{s+1}$.
+
+*Bound for $K_t$.* Fix $t\le s$ and write $p=p_t$. Every $i\in K_t$ has $p\mid m_i$, so $K_t=\bigsqcup_{r=0}^{p-1}(K_t\cap J_{p,r})$ with $J_{p,r}$ as in Lemma 3. Fix $r$ and consider the sub-family $\mathcal F'=\{(b_i,n_i)\}_{i\in K_t\cap J_{p,r}}$ of Lemma 3. By Lemma 3(1) it is pairwise disjoint. By Lemma 3(2), for $i\ne j$ in it, $\gcd(n_i,n_j)=\gcd(m_i,m_j)/p\le g/p$, and being an integer, $\gcd(n_i,n_j)\le\lfloor g/p\rfloor$. Every $m_i$ with $i\in K_t$ is coprime to $p_1,\dots,p_{t-1}$ (definition of $K_t$) and to all primes $<P$ (admissibility), i.e. to all primes $<p_t$; by Lemma 3(3) the same holds for $n_i$. Hence $\mathcal F'$ is admissible for $S(\lfloor g/p_t\rfloor,p_t)$, and $|K_t\cap J_{p,r}|\le S(\lfloor g/p_t\rfloor,p_t)$. Summing over the $p_t$ values of $r$: $|K_t|\le p_t\,S(\lfloor g/p_t\rfloor,p_t)$.
+
+Therefore $|\mathcal F|=\sum_{t=1}^{s}|K_t|\le\sum_{t=1}^{s}p_t\,S(\lfloor g/p_t\rfloor,p_t)$. Taking the sup over $\mathcal F$ gives the lemma. Finiteness: by induction on $g$; for $g=1$ Lemma 2 gives $1$; for $g\ge2$ the right side involves only $S(g',\cdot)$ with $g'=\lfloor g/p_t\rfloor\le g/2<g$. $\square$
+
+## Theorem 5 (closed bounds)
+For every $g\ge1$ and every prime $P$:
+$$\text{(A)}\quad S(g,P)\le g^{3};\qquad\qquad \text{(B)}\quad S(g,P)\le g^{2}\prod_{\substack{p \text{ prime}\\ P\le p\le g}}\Big(1+\frac{2}{p}\Big).$$
+In particular $F(g)\le g^3$ and $F(g)\le g^2\prod_{p\le g}(1+2/p)$.
+
+*Proof of (A).* Induction on $g$. For $g=1$: $S(1,P)=1=1^3$ (Lemma 2). Let $g\ge2$ and assume (A) for all $g'<g$ and all primes. If no prime lies in $[P,g]$, Lemma 2 gives $S=1\le g^3$. Otherwise, by Lemma 4 and the induction hypothesis (note $\lfloor g/p\rfloor<g$),
+$$S(g,P)\le\sum_{P\le p\le g}p\,\lfloor g/p\rfloor^{3}\le\sum_{P\le p\le g}p\Big(\frac gp\Big)^{3}=g^{3}\sum_{P\le p\le g}\frac1{p^{2}}\le g^{3}\sum_{n\ge2}\frac1{n^{2}}< g^{3}\sum_{n\ge2}\frac1{n(n-1)}=g^{3},$$
+using $\frac1{n^2}<\frac1{n(n-1)}$ and the telescoping sum $\sum_{n\ge2}\big(\frac1{n-1}-\frac1n\big)=1$. (Also $R(g,P)\ge 1$ trivially $\le g^3$.) $\square$
+
+*Proof of (B).* Write $Q(g,P):=\prod_{P\le q\le g,\ q\text{ prime}}(1+2/q)$ (empty product $=1$). Induction on $g$. For $g=1$: $S(1,P)=1=1^2\cdot 1$. Let $g\ge2$, assume (B) for all $g'<g$ and all primes. If there is no prime in $[P,g]$, $S(g,P)=1\le g^2$. Otherwise let $p_1<\dots<p_s$ be the primes in $[P,g]$ and set
+$$Q_t:=\prod_{u=t}^{s}\Big(1+\frac2{p_u}\Big)\quad(1\le t\le s),\qquad Q_{s+1}:=1,$$
+so $Q_1=Q(g,P)$ and $Q_t=(1+2/p_t)Q_{t+1}$. By Lemma 4 and the induction hypothesis,
+$$S(g,P)\le\sum_{t=1}^{s}p_t\,\lfloor g/p_t\rfloor^{2}\,Q\big(\lfloor g/p_t\rfloor,p_t\big).$$
+Now $\lfloor g/p_t\rfloor^2\le (g/p_t)^2$, and $Q(\lfloor g/p_t\rfloor,p_t)\le Q(g,p_t)=Q_t$ because the first product runs over a subset of the primes of the second and every factor is $\ge1$. Hence
+$$S(g,P)\le g^{2}\sum_{t=1}^{s}\frac{Q_t}{p_t}.$$
+For each $t$, since $p_t\ge2$ we have $1+2/p_t\le 2$, so
+$$\frac{Q_t}{p_t}=\frac{(1+2/p_t)\,Q_{t+1}}{p_t}\le\frac{2}{p_t}Q_{t+1}=Q_t-Q_{t+1}.$$
+Summing, $\sum_{t=1}^{s}Q_t/p_t\le Q_1-Q_{s+1}=Q_1-1<Q_1$. Therefore $S(g,P)\le g^2Q_1=g^2Q(g,P)$. $\square$
+
+## Corollary 6 (lower bounds for the maximal gcd)
+Let $k\ge2$ and let $a_1\pmod{m_1},\dots,a_k\pmod{m_k}$ be pairwise disjoint, $g:=\max_{i<j}\gcd(m_i,m_j)$. Then:
+
+1. (elementary, unconditional) $g\ge k^{1/3}$;
+2. (with Mertens' theorem, CITED) $g\ge c\,\sqrt{k}/\log k$ for an absolute constant $c>0$; explicitly, if one uses the Rosser–Schoenfeld inequality $\sum_{p\le x}1/p<\log\log x+B+\frac{1}{2\log^2 x}$ ($x>1$, $B=0.2614\ldots$), then $g\ge\min\{\sqrt k,\ \sqrt k/(4\log k)\}=\sqrt k/(4\log k)$ for $k\ge 2$ (see gap list: this constant depends on the cited inequality, which I have not re-derived).
+
+*Proof.* The family is admissible for $S(g,2)=F(g)$, so $k\le F(g)$. (1): $k\le g^3$ by Theorem 5(A). (2): By Theorem 5(B), $k\le g^2\prod_{p\le g}(1+2/p)\le g^2\exp\big(2\sum_{p\le g}1/p\big)$, using $1+x\le e^x$. By Mertens' theorem $\sum_{p\le g}1/p=\log\log g+O(1)$, so $k\le C\,g^2(\log g)^2$ for an absolute $C$ and all $g\ge2$ (note $g\ge2$ by Lemma 1). If $g\ge\sqrt k$ we are done. Otherwise $g<\sqrt k$, so $\log g<\tfrac12\log k$ and $k\le C g^2(\log k)^2/4$, i.e. $g\ge (2/\sqrt C)\,\sqrt k/\log k$. With the Rosser–Schoenfeld form, for $g\ge2$: $\exp(2\sum_{p\le g}1/p)\le (\log g)^2 e^{2B+1/\log^2 g}\le (\log g)^2e^{2B+1/\log^2 2}<13.53(\log g)^2$, so $C=13.53$ and $2/\sqrt{C}>0.544>1/4$. $\square$
+
+## Remarks (what the method gives and where it loses)
+* $R(2,2)=2$: every pairwise disjoint family with all gcds $\le2$ has at most $2$ members, i.e. **any three pairwise disjoint classes have a pair with $\gcd\ge3$** — the statement of cell 1 falls out of Lemma 4 alone. $R(3,2)=5>3$, so cell 2 does not.
+* The exact values of the recursion $R(g,2)$ (integer arithmetic, script below, $g\le3000$, 2.3 s) satisfy $R(g,2)\le g^2$ for all $1\le g\le 3000$, with $R(g,2)/g^2\to$ about $0.50$ (e.g. $R(1000,2)=494228$). So the recursion itself cannot give better than $F(g)\lesssim g^2/2$: the loss relative to the conjecture $F(g)=g$ (and to the $k^{1-o(1)}$ of arXiv:2607.24655) sits entirely in the union bound $|\mathcal F|\le\sum_t|K_t|$ of Lemma 4, which ignores that the "$p$-cliques" $\{i:p\mid m_i\}$ for different primes $p$ must overlap heavily (every pair of vertices shares a prime). Exploiting this overlap is the natural next subgoal; the closed bounds (A),(B) are asymptotically far from $R(g,2)$ (Theorem 5(B) gives $\approx 4.4\cdot10^7$ at $g=1000$ vs $R=4.9\cdot10^5$), so there is also room to sharpen the induction to $F(g)\le g^2$ without touching Lemma 4.
+* Everything above uses only $(*)$; no result from the literature enters Lemmas 1–4 or Theorem 5. Mertens/Rosser–Schoenfeld enters only Corollary 6(2).
 
 ## 3. Verification: instructions, dependencies, timings
-Available code (Python 3, standard library; each script runs in under a minute):
-- No code yet.
+Python 3 standard library. Scripts (re-run by the orchestrator, see `runs/p4_c6/verifica/`):
+- code_1 (python, rigor `exact`): Exact integer evaluation of the recursion R(g,P) of Lemma 4 for all g <= 3000 (P ranging over primes), and exact-rational check that R(g,2) <= g^2 * prod_{p<=g}(1+2/p) and R(g,2) <= g^3 hold for every g <= 3000 (consistency check of Theorem 5 against the recursion; not needed for the proof). Finite set covered: g in [1,3000]. Wall clock: 2.34 s (Python 3, .venv). Command: .venv/bin/python runs/p4_c6/sandbox/ricorsione_gcd.py 3000
 
 ## 4. Sources and contribution
-arXiv literature (deterministic search `tools/cerca_letteratura.sh`, abstracts read, not used as proof):
-- arXiv:2603.26043v1 — Finiteness of Disjoint Covering Systems with Precisely One Repeated Modulus (Yu Hashimoto, 2026); abstract only read.
-- arXiv:1511.04293v1 — Searching for Disjoint Covering Systems with Precisely One Repeated Modulus (Shalosh B. Ekhad, Aviezri S. Fraenkel, Doron Zeilberger, 2015); abstract only read.
-- arXiv:2607.24655v1 — On the problem of large gcd for disjoint residue classes (Jan Fornal, Yu-Chen Sun, 2026); abstract only read.
-- arXiv:2608.15873v1 — Two Questions on $G$-harmonic Tuples (Murali Menon, 2026); abstract only read.
-[2607.24655].
+- arXiv:2607.24655v1, J. Fornal, Y.-C. Sun, 'On the problem of large gcd for disjoint residue classes' (2026), Theorem 1.1: max gcd(m_i,m_j) >> k exp(-(2+o(1)) sqrt(log k/log log k)) — CITED for context only (fetched; introduction and section structure read, proofs not reproduced)
+- K. O'Bryant, 'On Z.-W. Sun's disjoint congruence classes conjecture', Combinatorial Number Theory, de Gruyter 2007, 403–412 — CITED at second hand via the introduction of arXiv:2607.24655 (integer conjecture for k <= 20); not read
+- Z.-W. Sun, 'Finite covers of groups by cosets or subgroups', Internat. J. Math. 17 (2006) 1047–1064 — origin of the conjecture and its group form; cited at second hand via arXiv:2607.24655, not read
+- Mertens' theorem, sum_{p<=x} 1/p = log log x + O(1); explicit form J. B. Rosser, L. Schoenfeld, Illinois J. Math. 6 (1962), Thm 5 (3.20): sum_{p<=x}1/p < log log x + B + 1/(2 log^2 x), x>1, B = 0.2614972... — CITED from memory, used only in Corollary 6(2)
+- Position with respect to the literature: State of the art for this cell (direction (b)): arXiv:2607.24655 (Fornal–Sun, 27 Jul 2026), Theorem 1.1, which I fetched and read in part (introduction and section structure, not the full proofs): "Let a_1 (mod m_1),...,a_k (mod m_k) be pairwise disjoint residue classes. Then max gcd(m_i,m_j) >> k exp(-(2+o(1)) sqrt(log k / log log k))." — CITED, not reproduced. Note this is *stronger* than the bound quoted in the problem statement (exponent log k/log log k without the square root): the square-root version already "improves the exponential factor" asked for in (b); but by the hand-in rules a citation scores nothing, and the paper is ~2000 lines (weighted gcd graph, sieve-theoretic partition Prop. 2.1, Möbius inversion and DFT in Prop. 2.2, key Lemma 4.1), which I judged not reproducible and checkable within one iteration. Its introduction also records (CITED, not checked): O'Bryant proved the integer conjecture for k <= 20 [K. O'Bryant, On Z.-W. Sun's disjoint congruence classes conjecture, Combinatorial Number Theory, de Gruyter 2007, 403–412]; Zhu proved the group form for k=3,4 [Int. J. Mod. Math. 3 (2008)]; Sun proved k=2 and finite p-groups [Internat. J. Math. 17 (2006)]. The problem's statement that the group form is known for k<=5 is consistent with arXiv:2608.15873 (Menon) / Margolis–Schnabel on G-harmonic tuples, relevant only to direction (c). arXiv:2603.26043 and arXiv:1511.04293 concern disjoint *covering* systems with one repeated modulus and are not relevant here. My approach departs from Fornal–Sun: instead of weighting vertices over all n <= d and using Fourier analysis, it uses only the affine rescaling y -> r+py inside a residue class mod a prime, an elementary recursion, and a closed-form induction. The price is the exponent (1/2 instead of 1-o(1)); the gain is a complete proof.
 
 ## 5. Limits and unresolved parts
-Everything; route (b) via reproduction of the proof is the indicated one.
+Referee's blocking point: The strongest result actually proved is Corollary 6: max gcd(m_i,m_j) >= k^{1/3} unconditionally, and >= c*sqrt(k)/log k conditional on Mertens/Rosser–Schoenfeld. The cell-6 target requires one of: (a) deciding a size k >= 25; (b) gcd >= ck for an absolute c > 0, or an improvement of the known factor k*exp(-(2+o(1)) log k/log log k) (i.e. something better than k^{1-o(1)}); (c) the group form at k = 6. A bound of order k^{1/2-o(1)} is strictly weaker than the already-known k^{1-o(1)} and does not touch (a) or (c). The submission's own remarks concede that the recursion of Lemma 4 cannot give better than F(g) ≲ g^2/2, i.e. gcd ≳ sqrt(2k), so no route to the target is present. The declared claim 'main' is therefore not established, and no other reusable claim was declared.
+Next step required: Address the stated blocking obligation without silently changing the target
+Gaps declared by the author:
+- Corollary 6(2) relies on Mertens' theorem (and, for the explicit constant 1/4, on the Rosser–Schoenfeld inequality sum_{p<=x}1/p < log log x + B + 1/(2 log^2 x)), quoted from memory and not re-derived here; the qualitative form 'c sqrt(k)/log k for some absolute c' needs only Mertens, the explicit constant needs the RS form. Everything else (Lemmas 1–4, Theorem 5, Corollary 6(1)) is self-contained.
+- The result is weaker than the literature (exponent 1/2 vs 1-o(1)); it does not achieve any of the three targets of cell 6. The numerical observation R(g,2) <= g^2 for g <= 3000 is evidence only and is not used in any proof.
+- Literature statements attributed to O'Bryant (k <= 20), Zhu (group form k=3,4) and Sun (k=2, p-groups) are taken from the introduction of arXiv:2607.24655 and were not checked against the original papers.

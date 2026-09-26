@@ -1,0 +1,7 @@
+[
+ "orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 1.0s; stdout: \"d=4: indipendenti=743 decycling indipendenti=26 con parita' mista=0 taglia minima=6 (lemma: >= 6)  tempo 0.0s\\nd=5: indipendenti=254475 decycling indipendenti=114 con parita' mista=0 taglia minima=14 (lemma: >= 14)  tempo 1.0s\"; stderr: ''",
+ "orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 0 in 0.1s; stdout: 'grado: 36.0  autovalori distinti: [np.float64(36.0), np.float64(20.0), np.float64(8.0), np.float64(0.0), np.float64(-4.0)]'; stderr: ''",
+ "orchestrator re-ran code_3.py (python3, clean copy of the researcher sandbox): exit 0 in 0.5s; stdout: \"0 16\\n1 17\\n25 18\\n89 19\\n9271 20\\ncodice: ['101100001', '111010110', '110011011', '100101100', '000111010', '011001010', '000010001', '010100110', '001111101', '011110011', '110000101', '001000100', '111101111', '000001111', '100110111', '110110000', '010011100', '010101001', '100000010', '101011000']\"; stderr: ''",
+ "code_4: not re-run (language 'c' not supported by the orchestrator)",
+ "code_5: not re-run (language 'c' not supported by the orchestrator)"
+]

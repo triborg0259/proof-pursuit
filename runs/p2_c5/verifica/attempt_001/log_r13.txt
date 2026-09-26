@@ -1,0 +1,21 @@
+seme 13 passo 2: costo 2552 |R|=1 |B|=2
+seme 13 passo 3: costo 2544 |R|=2 |B|=2
+seme 13 passo 9: costo 2536 |R|=3 |B|=6
+seme 13 passo 18: costo 2528 |R|=4 |B|=12
+seme 13 passo 19: costo 2520 |R|=5 |B|=12
+seme 13 passo 25: costo 2512 |R|=6 |B|=14
+seme 13 passo 27: costo 2504 |R|=7 |B|=15
+seme 13 passo 41: costo 2496 |R|=8 |B|=25
+seme 13 passo 2562: costo 2488 |R|=17 |B|=131
+seme 13 passo 2564: costo 2472 |R|=16 |B|=132
+seme 13 passo 253898: costo 2464 |R|=19 |B|=127
+seme 13 passo 364912: costo 2462 |R|=21 |B|=127
+seme 13 passo 365180: costo 2456 |R|=17 |B|=135
+seme 13 passo 860315: costo 2448 |R|=19 |B|=132
+seme 13 passo 2174117: costo 2440 |R|=20 |B|=128
+seme 13 passo 3891931: costo 2432 |R|=18 |B|=132
+seme 13 passo 3892162: costo 2424 |R|=19 |B|=133
+seme 13 passo 7156140: costo 2416 |R|=19 |B|=131
+seme 13 passo 10972838: costo 2408 |R|=20 |B|=117
+seme 13 passo 12572994: costo 2400 |R|=20 |B|=131
+seme 13: costo migliore 2400

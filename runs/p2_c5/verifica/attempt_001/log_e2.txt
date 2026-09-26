@@ -1,0 +1,6 @@
+seme 2 inizio 2432
+seme 2 passo 44633: 2424
+seme 2 passo 467002: 2416
+seme 2 passo 3248216: 2408
+seme 2 passo 3430212: 2400
+seme 2: migliore 2400

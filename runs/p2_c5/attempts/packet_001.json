@@ -1,0 +1,343 @@
+{
+ "job": {
+  "problem_id": "p2_c5",
+  "original_problem": "# Problema 2 — Uphill paths on the hypercube\n\n*(Enunciato formattato in LaTeX, contenuto fedele all'originale; ricevuto il 2026-09-26.)*\n\n## Preambolo\n\n**Uphill paths on the hypercube.** Label the vertices of the hypercube to make as few uphill paths as possible.\nIMO 2022 settled the grid; the cube is still open.\n\nLet $G$ be a finite simple graph on $n$ vertices. A labelling of $G$ is a bijection $f$ from $V(G)$ to\n$\\{1,2,\\ldots,n\\}$. Fix a labelling.\n\n- A vertex $v$ is a *valley* if every neighbour $w$ of $v$ has $f(w) > f(v)$. An isolated vertex counts as a valley.\n- An *uphill path* is a sequence $(v_1, v_2, \\ldots, v_k)$ with $k \\ge 1$ in which $v_1$ is a valley, $v_i$ and\n  $v_{i+1}$ are adjacent for each $i$, and $f(v_1) < f(v_2) < \\cdots < f(v_k)$. A valley on its own ($k=1$) counts\n  as an uphill path.\n\nLet $U(G)$ be the smallest possible number of uphill paths, taken over all labellings of $G$.\n\nIMO 2022 Problem 6 asks for $U$ of the $n \\times n$ grid graph. The answer is $2n^2 - 2n + 1$.\n\nThis column asks about the $d$-dimensional hypercube $Q_d$. Its vertex set is $\\{0,1\\}^d$, and two vertices are\nadjacent when they differ in exactly one coordinate. $Q_d$ has $2^d$ vertices and $d \\cdot 2^{d-1}$ edges.\n\n**What to hand in.** For C1 to C4, hand in the values, and for each value an explicit labelling that attains it\nas a list of the $2^d$ vertices in increasing label order, written as 0/1 strings. These cells are marked correct\non the values alone, but a value with no labelling behind it will not survive the later cells, which build on\nthe construction.\n\nFor C5, hand in either a labelling of $Q_9$ in the same format, whose uphill paths will be counted mechanically,\nor a proof of the lower bound.\n\nFor C6, hand in all three of: the value; an explicit labelling that attains it, in the same format; a proof that\nno labelling gives fewer uphill paths.\n\nA lower-bound proof may be computer-assisted. If it is, include the code; it must run in under 10 minutes on a\nlaptop, and you must explain why the computation proves the bound. Say clearly which cells you consider solved\nand which are partial.\n\n## Parte 1 (C1) — $U(Q_3)$ and $U(Q_4)$\n\n**Punteggio:** 1 point · **Valutazione:** Checked instantly\n\nThe two smallest interesting cubes: $Q_3$ has $8$ vertices and $12$ edges, $Q_4$ has $16$ vertices and $32$ edges.\nDetermine $U(Q_3)$ and $U(Q_4)$.\n\n## Parte 2 (C2) — $U(Q_5)$\n\n**Punteggio:** 2 points · **Valutazione:** Checked instantly\n\n$Q_5$ has $32$ vertices and $80$ edges. Determine $U(Q_5)$.\n\n## Parte 3 (C3) — $U(Q_6)$\n\n**Punteggio:** 3 points · **Valutazione:** Checked instantly\n\n$Q_6$ has $64$ vertices and $192$ edges. Determine $U(Q_6)$.\n\n## Parte 4 (C4) — $U(Q_7)$ and $U(Q_8)$\n\n**Punteggio:** 5 points · **Valutazione:** Checked instantly\n\nTwo larger cubes: $Q_7$ has $128$ vertices and $448$ edges, $Q_8$ has $256$ vertices and $1024$ edges.\nDetermine $U(Q_7)$ and $U(Q_8)$.\n\n## Parte 5 (C5) — Bounds for $U(Q_9)$\n\n**Punteggio:** 8 points · **Valutazione:** Judged\n\n$Q_9$ has $512$ vertices and $2304$ edges. The best bounds known to the organisers are\n$$\n2368 \\le U(Q_9) \\le 2400;\n$$\nthe lower bound is unpublished. Improve either one: prove that $U(Q_9) \\ge 2369$, or exhibit a labelling of $Q_9$\nwith at most $2399$ uphill paths.\n\n## Parte 6 (C6) — $U(Q_9)$\n\n**Punteggio:** 13 points · **Valutazione:** Judged · **Open question**\n\nThe same cube, settled completely. Determine $U(Q_9)$ exactly, with proof of both bounds.\n\n*(Fine del problema 2. Punteggi: 1+2+3+5+8+13 = 32.)*\n\n\n# TARGET CELL 5\nImprove one of the known bounds 2368 <= U(Q_9) <= 2400: either prove U(Q_9) >= 2369, or exhibit a labelling of Q_9 with at most 2399 uphill paths (its paths are counted mechanically).\n",
+  "cell": {
+   "id": "cell_5",
+   "number": 5,
+   "target_claim_id": "main",
+   "statement": "Improve one of the known bounds 2368 <= U(Q_9) <= 2400: either prove U(Q_9) >= 2369, or exhibit a labelling of Q_9 with at most 2399 uphill paths (its paths are counted mechanically)."
+  },
+  "state": {
+   "highest_verified_cell": 0,
+   "claims": [
+    {
+     "id": "verified_1",
+     "statement": "For any labelling of any graph: #uphill paths >= |E| + #valleys",
+     "depends_on": []
+    },
+    {
+     "id": "verified_2",
+     "statement": "U(Q_3) = 14",
+     "depends_on": []
+    },
+    {
+     "id": "verified_3",
+     "statement": "U(Q_4) = 34, attained by 0000,1111,0111,1101,1110,1011,0001,1000,0010,0100,1001,0110,0011,1010,0101,1100",
+     "depends_on": []
+    }
+   ]
+  },
+  "candidate": {
+   "attempt_id": "attempt_001",
+   "proof": "## Notation\n\n$G=Q_d$, $n=2^d$, $|E|=d2^{d-1}$. Fix a labelling $f$ and orient every edge from the smaller to the larger label (\"$u\\to v$\" means $uv\\in E$, $f(u)<f(v)$). For a vertex $v$ let $p(v)$ be the number of uphill paths ending at $v$. Then\n$$p(v)=[v\\text{ is a valley}]+\\sum_{u\\to v}p(u),\\qquad \\#\\text{paths}=\\sum_v p(v). \\tag{0}$$\n(Every uphill path ending at $v$ is either $(v)$ itself, which exists iff $v$ is a valley, or is obtained by appending $v$ to an uphill path ending at a lower neighbour $u$, and this correspondence is a bijection.)\n\nEvery vertex has $p(v)\\ge 1$: follow lower neighbours from $v$; labels strictly decrease, so the walk stops at a valley $v_1$, and reversing it gives an uphill path ending at $v$.\n\nDefine $S=\\{v:p(v)=1\\}$, $H=\\{v:p(v)\\ge 2\\}$, $V$ = number of valleys, $c(S)$ = number of connected components of the subgraph induced by $S$.\n\n## Theorem A (exact identity and reduction to decycling sets)\n\nFor every labelling of a finite simple graph $G$:\n\n1. Every edge between $S$ and $H$ is oriented from $S$ to $H$.\n2. $S$ induces a forest, and $c(S)=V$ (each tree contains exactly one valley).\n3. $\\#\\text{paths}=|E|+c(S)+\\sum_{w\\to u,\\ w\\in H}(p(w)-1)$, where the sum runs over the edges whose lower endpoint lies in $H$.\n4. For $G=Q_d$: $(d-1)|H|=(d-2)2^{d-1}+c(S)+|E(H)|$, where $E(H)$ is the set of edges with both ends in $H$; consequently\n$$\\#\\text{paths}\\;\\ge\\;2^d+(d-1)|H|\\;\\ge\\;2^d+(d-1)\\,\\nabla(Q_d),$$\nwhere $\\nabla(Q_d)$ is the decycling number (minimum size of a set whose removal leaves a forest).\n\n**Proof.** (1) Let $uw$ be an edge with $u\\in H$, $w\\in S$ and $f(u)<f(w)$. By (0), $p(w)\\ge p(u)\\ge 2$, contradicting $w\\in S$.\n\n(2) Let $v\\in S$. If $v$ is a valley it has no lower neighbour. Otherwise $1=p(v)=\\sum_{u\\to v}p(u)$ with every $p(u)\\ge1$, so $v$ has exactly one lower neighbour $u$, and $p(u)=1$, i.e. $u\\in S$. Hence in the digraph induced on $S$ every vertex has in-degree $\\le 1$, and in-degree $0$ exactly when it is a valley (valleys have $p=1$, so all valleys lie in $S$). Take a connected component $T$ of the induced subgraph on $S$ with $m$ vertices; its number of edges equals the number of in-degree-$1$ vertices, which is $\\le m$; it cannot be $m$, because then every vertex of $T$ would have a lower neighbour in $T$ and following lower neighbours would give an infinite strictly decreasing sequence of labels. So $T$ has $\\le m-1$ edges and is connected, hence a tree with exactly $m-1$ vertices of in-degree $1$ and exactly one valley. Thus $S$ induces a forest with $c(S)=V$.\n\n(3) Summing (0) over all vertices: $\\#\\text{paths}=V+\\sum_{u\\to v}p(u)=V+|E|+\\sum_{u\\to v}(p(u)-1)$. Terms with $u\\in S$ vanish, and $V=c(S)$ by (2).\n\n(4) In $Q_d$ every vertex has degree $d$. Count edges: $|E|=|E(S)|+e(S,H)+|E(H)|$ with $|E(S)|=|S|-c(S)$ (forest) and $e(S,H)=d|H|-2|E(H)|$. So $d2^{d-1}=2^d-|H|-c(S)+d|H|-|E(H)|$, i.e. $(d-1)|H|=(d-2)2^{d-1}+c(S)+|E(H)|$. By (1), every edge inside $H$ has its lower endpoint in $H$ and contributes $p(w)-1\\ge1$ to the sum in (3), so $\\#\\text{paths}\\ge|E|+c(S)+|E(H)|=d2^{d-1}+(d-1)|H|-(d-2)2^{d-1}=2^d+(d-1)|H|$. Finally $S$ is an induced forest, so $H$ is a decycling set and $|H|\\ge\\nabla(Q_d)$. $\\square$\n\n**Remarks.** (a) For $d=9$: $\\#\\text{paths}\\ge 512+8|H|$; the organisers' bounds read $2368=512+8\\cdot232$ and $2400=512+8\\cdot236$. (b) Conversely, if $H$ is an independent decycling set, labelling $S$ tree by tree from a chosen root (parents before children) and then $H$ arbitrarily gives $p\\equiv1$ on $S$ and $p\\equiv d$ on $H$, i.e. exactly $2^d+(d-1)|H|$ paths; the star constructions in the repository are the case $H=$ even vertices minus a distance-4 code. (c) Consistency check with verified claims: $U(Q_3)=14=8+2\\cdot3$, $U(Q_4)=34=16+3\\cdot6$, with $\\nabla(Q_3)=3$, $\\nabla(Q_4)=6$ from the edge bound $(d-1)|H|\\ge(d-2)2^{d-1}+1$ (since $c(S)\\ge1$).\n\n## Theorem B (independent decycling sets of $Q_d$)\n\nLet $d\\ge3$ and let $H\\subseteq V(Q_d)$ be an independent set such that $Q_d-H$ is a forest. Then $H$ is contained in one parity class, and $|H|\\ge 2^{d-1}-A(d,4)$, where $A(d,4)$ is the maximum size of a binary code of length $d$ with minimum distance $4$. For $d=9$, $A(9,4)=A(8,3)=20$ (CITED, classical), so $|H|\\ge236$.\n\nWrite $S=V\\setminus H$, $A=H\\cap\\text{Even}$, $B=H\\cap\\text{Odd}$ (parity of the Hamming weight), $R=\\text{Even}\\setminus A=S\\cap\\text{Even}$, $S_2(h)$ for the set of the $\\binom d2$ vertices at Hamming distance $2$ from $h$.\n\n**Step 1 (sphere lemma).** For every $h\\in H$: $|S\\cap S_2(h)|\\le d-1$.\n\n*Proof.* Since $H$ is independent, all $d$ neighbours $h+e_i$ lie in $S$. Define a graph $F_h$ on $\\{1,\\dots,d\\}$ with $ij\\in F_h$ iff $h+e_i+e_j\\in S$. If $F_h$ contained a cycle $i_1i_2\\cdots i_mi_1$ ($m\\ge3$), then $h+e_{i_1},\\,h+e_{i_1}+e_{i_2},\\,h+e_{i_2},\\,\\dots,\\,h+e_{i_m}+e_{i_1}$ would be $2m$ distinct vertices of $S$ forming a cycle in $Q_d-H$ (consecutive ones differ in one coordinate), contradicting acyclicity. So $F_h$ is a forest on $d$ vertices and has at most $d-1$ edges. $\\square$\n\n**Step 2 (spectrum of the distance-2 graph on a parity class).** Let $M$ be the adjacency matrix of $Q_d$ and $M_2$ the adjacency matrix of the graph $\\Gamma_2$ on $V(Q_d)$ in which $u\\sim v$ iff $\\mathrm{dist}(u,v)=2$. Then $M_2=\\tfrac12(M^2-dI)$, because $(M^2)_{uv}$ counts common neighbours: $d$ if $u=v$, $2$ if $\\mathrm{dist}(u,v)=2$, $0$ otherwise. The vectors $\\chi_T(x)=(-1)^{|\\{i\\in T:x_i=1\\}|}$, $T\\subseteq[d]$, form an orthogonal eigenbasis of $M$: $(M\\chi_T)(x)=\\sum_i\\chi_T(x+e_i)=\\chi_T(x)\\sum_i(-1)^{[i\\in T]}=(d-2|T|)\\chi_T(x)$. Hence $M_2$ has eigenvalues $\\lambda_k=\\tfrac12((d-2k)^2-d)$, $k=|T|=0,\\dots,d$. The value $\\lambda_0=\\lambda_d=\\binom d2$ occurs with total multiplicity exactly $2$ ($T=\\emptyset$ and $T=[d]$), and every other $\\lambda_k$ is at most $\\lambda_1=\\lambda_{d-1}=\\binom d2-2(d-1)$ (because $(d-2k)^2$ is maximal among $1\\le k\\le d-1$ at $k=1,d-1$). Vertices at distance $2$ have the same parity, so $\\Gamma_2$ is the disjoint union of the graphs $\\Gamma_2^{\\rm even}$, $\\Gamma_2^{\\rm odd}$ induced on the two parity classes, each of which is $\\binom d2$-regular (the translation $x\\mapsto x+e_1$ is an isomorphism between them). The spectrum of $M_2$ is the multiset union of their spectra; each of them contains the eigenvalue $\\binom d2$ (regularity, all-ones vector), so each contains it exactly once, and all remaining eigenvalues of $\\Gamma_2^{\\rm even}$ are $\\le\\binom d2-2(d-1)$. (Numerical sanity check for $d=9$: eigenvalues $36,20,8,0,-4$; $36-20=16=2\\cdot8$.)\n\n**Step 3 (edge-expansion from the spectral gap).** Let $\\Gamma$ be a $k$-regular graph on $N$ vertices with adjacency matrix $Q$ and eigenvalues $k=\\mu_1\\ge\\mu_2\\ge\\dots$. For every $X\\subseteq V(\\Gamma)$ with $|X|=m$: $e(X,\\bar X)\\ge(k-\\mu_2)\\,m(N-m)/N$.\n\n*Proof.* Let $x=\\mathbf 1_X-\\tfrac mN\\mathbf 1$; then $x\\perp\\mathbf 1$, so $x^{\\mathsf T}Qx\\le\\mu_2\\|x\\|^2=\\mu_2\\,m(N-m)/N$ (expand $x$ in an orthonormal eigenbasis; all components are along eigenvectors with eigenvalue $\\le\\mu_2$). On the other hand $x^{\\mathsf T}Qx=\\mathbf 1_X^{\\mathsf T}Q\\mathbf 1_X-2\\tfrac mN\\mathbf 1_X^{\\mathsf T}Q\\mathbf 1+\\tfrac{m^2}{N^2}\\mathbf 1^{\\mathsf T}Q\\mathbf 1=2e(X)-2\\tfrac mN km+\\tfrac{m^2}{N^2}kN=2e(X)-\\tfrac{km^2}{N}$, and $2e(X)=km-e(X,\\bar X)$. Therefore $km-e(X,\\bar X)-km^2/N\\le\\mu_2 m(N-m)/N$, i.e. $e(X,\\bar X)\\ge(k-\\mu_2)m(N-m)/N$. $\\square$\n\n**Step 4 (each parity part of $H$ is empty or large).** Apply Step 3 to $\\Gamma=\\Gamma_2^{\\rm even}$ ($N=2^{d-1}$, $k=\\binom d2$, $k-\\mu_2\\ge2(d-1)$ by Step 2) and $X=A$: $e(A,R)\\ge 2(d-1)|A|(2^{d-1}-|A|)/2^{d-1}$, where $e(A,R)$ counts pairs $(a,r)$, $a\\in A$, $r\\in R$, at distance $2$. But $R=S\\cap\\text{Even}$, and for $a\\in A\\subseteq H$ Step 1 gives $|R\\cap S_2(a)|\\le|S\\cap S_2(a)|\\le d-1$, so $e(A,R)\\le(d-1)|A|$. If $A\\neq\\emptyset$, dividing by $(d-1)|A|$ gives $2(2^{d-1}-|A|)/2^{d-1}\\le1$, i.e. $|A|\\ge2^{d-2}$. The same argument on $\\Gamma_2^{\\rm odd}$ gives: $B=\\emptyset$ or $|B|\\ge2^{d-2}$.\n\n**Step 5 ($A$ and $B$ cannot both be non-empty).** Suppose $A\\ne\\emptyset\\ne B$; then $|A|,|B|\\ge2^{d-2}$. $H$ independent means $N(B)\\cap A=\\emptyset$, and $N(B)\\subseteq\\text{Even}$, so $|A|\\le2^{d-1}-|N(B)|$. Now $B\\subsetneq\\text{Odd}$ (if $B=\\text{Odd}$ then $N(B)=\\text{Even}$ and $A=\\emptyset$). Counting edges of the $d$-regular bipartite graph $Q_d$: $d|B|=e(B,N(B))\\le d|N(B)|$, with equality only if every vertex of $N(B)$ has all its neighbours in $B$, i.e. $B\\cup N(B)$ is closed under adjacency, hence equals $V(Q_d)$ by connectivity, forcing $B=\\text{Odd}$ — excluded. So $|N(B)|>|B|\\ge2^{d-2}$ and $|A|<2^{d-2}$, a contradiction.\n\n**Step 6 (conclusion).** By Steps 4–5, $H\\subseteq\\text{Even}$ or $H\\subseteq\\text{Odd}$. The translation $x\\mapsto x+e_1$ is an automorphism of $Q_d$ exchanging the parity classes and preserving independence and acyclicity of the complement, so assume $H=A\\subseteq\\text{Even}$. Then $S\\supseteq\\text{Odd}$ and $R=\\text{Even}\\setminus H\\subseteq S$. If $r,r'\\in R$ had distance $2$, their two common neighbours (odd, hence in $S$) would form with $r,r'$ a $4$-cycle in $Q_d-H$. Distances between even-weight vectors are even, so $R$ has pairwise distance $\\ge4$ and $|R|\\le A(d,4)$. Hence $|H|=2^{d-1}-|R|\\ge2^{d-1}-A(d,4)$. For $d=9$: $A(9,4)=A(8,3)=20$ (CITED), so $|H|\\ge236$. $\\square$\n\n**Sanity checks (exact, exhaustive).** For $d=4$ and $d=5$ all independent sets of $Q_d$ were enumerated (743 and 254 475), the decycling ones (26 and 114) all lie in one parity class and have minimum size $6=8-A(4,4)$ and $14=16-A(5,4)$, as the theorem predicts (script `verifica_lemma_indipendenti.py`, 0.9 s). The formula $2^{d-1}-A(d,4)$ also reproduces the known $\\nabla(Q_d)=3,6,14,28,56,112$ for $d=3,\\dots,8$.\n\n## Corollary C (what a labelling of $Q_9$ with $\\le2399$ paths must look like)\n\nLet $f$ be a labelling of $Q_9$ with $\\#\\text{paths}\\le2399$, and $S,H$ as above. Then:\n1. $|H|\\le235$ (Theorem A.4: $512+8|H|\\le2399$), $H$ is a decycling set, and $c(S)+|E(H)|=8|H|-1792\\le88$.\n2. $H$ is **not** independent: $|E(H)|\\ge1$ (Theorem B: an independent decycling set has $|H|\\ge236$, giving $\\ge2400$ paths).\n3. $\\sum_{w\\to u,\\ w\\in H}(p(w)-2)\\le2399-512-8|H|\\le7+8(235-|H|)$ (Theorem A.3 combined with the identity in A.4).\n\nIn particular **every labelling in which all vertices with $p\\ge2$ are pairwise non-adjacent (this includes every \"star\" construction, every labelling whose $p\\ge2$ vertices are all peaks, and every labelling obtained by rooting an induced forest and putting its complement on top) has at least $2400$ uphill paths.** Any improvement of the upper bound $2400$ must come from a decycling set $H$ of size $232$–$235$ (with $|H|\\ge225$ from $c(S)\\ge1$) containing at least one edge $w\\to u$ whose lower endpoint has exactly two lower neighbours, or a few such edges with small $p(w)$; and any proof of $U(Q_9)\\ge2369$ must handle exactly these non-independent configurations.\n\n## Computational exploration (exact integer counts; exploration only, proves nothing)\n\nThree simulated-annealing searches were written in C (sources in `code_used`), all scoring with exact integer arithmetic:\n\n* `cerca_radici.c`: state $(R,B')$ with $R\\subseteq\\text{Even}$ (the vertices of $S$ of even parity) and $B'\\subseteq\\text{Odd}$ (odd vertices put into $H$); this parametrises **every** induced forest $S$; the labelling order is $S$ (forest order), then $B'$, then $\\text{Even}\\setminus R$, and its exact path count is $|S|+\\sum_{b\\in B'}\\max(1,k_b)+\\sum_{e\\in\\text{Even}\\setminus R}\\sum_{o\\sim e}(\\text{1 if }o\\in S\\text{ or }k_o<2,\\ k_o\\text{ otherwise})$, $k_b=|N(b)\\cap R|$ (this is (0) evaluated on that order). Eight runs of $3\\cdot10^7$ steps (≈100 s each, 4 warm-started from a 20-root star labelling, 4 from scratch) all ended at exactly $2400$; every cold start rediscovered $2400$.\n* `ricottura_etichette.c`: annealing directly on labellings of $Q_9$ (swap two labels, exact recount, $4\\cdot10^7$ steps ≈ 3–4 min per run): three warm starts from the repository's star labelling (2432 with its 16-root code) reached $2400$ and stopped there; two cold starts reached $2400$ and $3104$.\n* `cerca_decycling.c`: annealing on decycling sets with the surrogate objective $8|H|+6|E(H)|$; from random starts it froze at $8\\cdot240+6\\cdot112$, far above $1888$ (uninformative).\n\nNo labelling with $\\le2399$ paths was found. This is numerical evidence only.",
+   "method_tag": "algebraic_reformulation",
+   "claims": [
+    {
+     "id": "main",
+     "statement": "Improve one of the known bounds 2368 <= U(Q_9) <= 2400: either prove U(Q_9) >= 2369, or exhibit a labelling of Q_9 with at most 2399 uphill paths (its paths are counted mechanically).",
+     "depends_on": [
+      "verified_1",
+      "verified_2",
+      "verified_3"
+     ]
+    }
+   ],
+   "sources": [
+    {
+     "id": "src_1",
+     "reference": "CITED (table value, not reproduced): A(8,3) = A(9,4) = 20 — M. R. Best, A. E. Brouwer, F. J. MacWilliams, A. M. Odlyzko, N. J. A. Sloane, 'Bounds for binary codes of length less than 25', IEEE Trans. Inform. Theory 24 (1978); also Brouwer's tables of A(n,d). Used only in Step 6 of Theorem B for d = 9.",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_2",
+     "reference": "Context only (search snippet/abstract, full text not read): S. Bau, L. W. Beineke, 'The decycling number of graphs', Australas. J. Combin. 25 (2002), arXiv:math/0703544 — reports 225 <= nabla(Q_9) <= 237 and nabla(Q_n) for n <= 8.",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_3",
+     "reference": "Context only (not read): S. Bau, L. W. Beineke, G.-M. Du, Z. Liu, R. C. Vandell, 'Decycling cubes and grids', Utilitas Math. 59 (2001).",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_4",
+     "reference": "Context only (not read): R. Focardi, F. L. Luccio, D. Peleg, 'Feedback vertex set in hypercubes', Inform. Process. Lett. 76 (2000).",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_5",
+     "reference": "Repository: problema-2/note.md, submission/parte-4.md, submission/parte-5.md, esperimenti/costruzione_stelle.py, esperimenti/conta_cammini.py (star construction and exact counter).",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": "# Problema 2 — note di triage\n\n## Definizioni\n- Etichettatura $f:V\\to\\{1..n\\}$ biiettiva. Valle = minimo locale (tutti i vicini con etichetta maggiore).\n- Cammino in salita = cammino da una valle con etichette strettamente crescenti (lunghezza $\\ge1$; la valle sola conta).\n- $U(G)=\\min_f \\#\\{\\text{cammini in salita}\\}$. $Q_d$: $2^d$ vertici, $d2^{d-1}$ spigoli.\n\n**Osservazione strutturale.** Il conteggio dipende solo dall'orientazione aciclica indotta da $f$ (spigolo\norientato dal minore al maggiore). Posto $p(v)$ = numero di cammini in salita che terminano in $v$:\n$$p(v)=[v\\text{ valle}]+\\sum_{u\\to v}p(u),\\qquad \\#\\text{cammini}=\\sum_v p(v).$$\nCalcolo esatto in $O(|E|)$ con interi (nessun problema numerico). Perfetto per ricerca locale sulle etichettature.\n\n## Richieste per parte\n| Parte | Richiesta | Punti | Tipo |\n|---|---|---|---|\n| C1 | $U(Q_3)$, $U(Q_4)$ + etichettatura esplicita | 1 | Checked instantly |\n| C2 | $U(Q_5)$ + etichettatura | 2 | Checked instantly |\n| C3 | $U(Q_6)$ + etichettatura | 3 | Checked instantly |\n| C4 | $U(Q_7)$, $U(Q_8)$ + etichettature | 5 | Checked instantly |\n| C5 | Migliorare $2368\\le U(Q_9)\\le2400$: etichettatura con $\\le2399$ oppure prova $\\ge2369$ | 8 | Judged |\n| C6 | $U(Q_9)$ esatto con prova di entrambi i bound | 13 | Judged · Open |\n\n**Formato di consegna:** lista dei $2^d$ vertici in ordine crescente di etichetta, come stringhe 0/1.\nProve computer-assisted ammesse (< 10 min, codice incluso, spiegazione del perché il calcolo prova il bound).\n\n## Ambiguità / dati mancanti\n1. Convenzione delle stringhe 0/1 (coordinata 1 a sinistra o a destra?): irrilevante per il conteggio (simmetria\n   di $Q_d$), ma va dichiarata nella consegna.\n2. \"Checked instantly\" su C1–C4: il valore viene confrontato con quello degli organizzatori. Un valore sbagliato\n   per difetto di ricerca (minimo locale) costa la cella: serve o una prova di minimalità o ricerca esaustiva.\n3. C5: \"lower bound unpublished\" ⇒ gli organizzatori hanno un argomento non in letteratura; non possiamo leggerlo.\n\n## Fatti dimostrabili subito (sanity)\n- **Bound IMO generalizzato:** ogni vertice è fine di almeno un cammino in salita ($p(v)\\ge1$, seguendo vicini\n  decrescenti si arriva a una valle). Quindi $p(v)\\ge\\max(1,\\deg^-(v))$ (i $\\deg^-$ vicini minori hanno ciascuno\n  $p\\ge1$ e danno cammini distinti). Sommando: $\\#\\ge|E|+\\#\\text{valli}\\ge|E|+1$.\n  Per la griglia questo è esatto ($2n^2-2n+1=|E|+1$). Per $Q_d$: $U(Q_d)\\ge d2^{d-1}+1$; per $Q_9$: $\\ge2305$,\n  ma il "
+    }
+   ],
+   "artifacts": [
+    {
+     "id": "code_1",
+     "kind": "CODE",
+     "content": "# Exhaustive exact check of Theorem B on Q_4 and Q_5: enumerates all independent sets, keeps those whose complement is a forest, checks they lie in one parity class and have size >= 2^{d-1} - A(d,4). Covers all 743 (d=4) and 254475 (d=5) independent sets; 0.9 s.\n# rigor: exact\n\"\"\"Verifica esaustiva (esatta) del Lemma B su Q_4 e Q_5: ogni insieme indipendente H tale che Q_d - H e' una foresta\nsta in una sola classe di parita' e ha taglia >= 2^{d-1} - A(d,4) (A(4,4)=2, A(5,4)=2).\nEnumera tutti gli insiemi indipendenti per ricorsione; controlla l'aciclicita' del complemento con union-find.\"\"\"\nimport sys, time\npeso = lambda v: bin(v).count(\"1\")\n\ndef foresta(d, H):\n    \"\"\"True se il sottografo indotto da V \\\\ H e' aciclico (union-find sugli spigoli interni).\"\"\"\n    parent = list(range(1 << d))\n    def find(x):\n        while parent[x] != x:\n            parent[x] = parent[parent[x]]; x = parent[x]\n        return x\n    for v in range(1 << d):\n        if v in H: continue\n        for i in range(d):\n            u = v ^ (1 << i)\n            if u > v and u not in H:\n                a, b = find(u), find(v)\n                if a == b: return False\n                parent[a] = b\n    return True\n\ndef indipendenti(d):\n    \"\"\"Genera tutti gli insiemi indipendenti di Q_d (ricorsione sul vertice da includere o no).\"\"\"\n    n = 1 << d\n    def ric(v, H, vietati):\n        if v == n:\n            yield H; return\n        yield from ric(v + 1, H, vietati)\n        if v not in vietati:\n            yield from ric(v + 1, H | {v}, vietati | {v ^ (1 << i) for i in range(d)})\n    yield from ric(0, frozenset(), frozenset())\n\nfor d, A4 in [(4, 2), (5, 2)]:\n    inizio = time.time(); tot = decyc = 0; misti = 0; minimo = 1 << d\n    for H in indipendenti(d):\n        tot += 1\n        if not H or not foresta(d, H): continue\n        decyc += 1\n        parita = {peso(v) % 2 for v in H}\n        misti += len(parita) == 2\n        minimo = min(minimo, len(H))\n    print(f\"d={d}: indipendenti={tot} decycling indipendenti={decyc} con parita' mista={misti} \"\n          f\"taglia minima={minimo} (lemma: >= {(1 << (d-1)) - A4})  tempo {time.time()-inizio:.1f}s\")\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_2",
+     "kind": "CODE",
+     "content": "# Numerical sanity check (float eigenvalues, NOT a proof) of Step 2: the distance-2 graph on the even class of Q_9 is 36-regular with eigenvalues 36, 20, 8, 0, -4.\n# rigor: float_exploration_only\nimport numpy as np\npeso=lambda v: bin(v).count(\"1\")\npari=[v for v in range(512) if peso(v)%2==0]; idx={v:i for i,v in enumerate(pari)}\nM=np.zeros((256,256))\nfor v in pari:\n    for u in pari:\n        if peso(u^v)==2: M[idx[v],idx[u]]=1\nev=np.sort(np.linalg.eigvalsh(M))[::-1]\nprint(\"grado:\",M.sum(1)[0],\" autovalori distinti:\",sorted(set(np.round(ev,6)),reverse=True))\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_3",
+     "kind": "CODE",
+     "content": "# Builds a 20-word even-weight code of length 9 with pairwise distance >= 4 by randomised greedy (found at trial 9271; the final assert checks the distance condition exactly); writes the star state stelle20.txt used to warm-start cerca_radici (gives exactly 2400).\n# rigor: exact\n\"\"\"Cerca un codice di 20 parole di peso pari e lunghezza 9 a distanza mutua >= 4 (A(8,3)=20) con ricerca locale\ncasuale (esplorazione; il risultato e' verificato esattamente alla fine). Salva stelle20.txt per cerca_radici.\"\"\"\nimport random\npeso = lambda v: bin(v).count(\"1\")\npari = [v for v in range(512) if peso(v) % 2 == 0]\ncompat = {v: {u for u in pari if peso(u ^ v) >= 4} for v in pari}\n\ndef greedy(rng):\n    \"\"\"Greedy casuale: aggiunge parole compatibili finche' possibile.\"\"\"\n    cod, cand = [], set(pari)\n    while cand:\n        v = rng.choice(sorted(cand)); cod.append(v); cand &= compat[v]\n    return cod\n\nrng = random.Random(0)\nmigliore = []\nfor tent in range(20000):\n    c = greedy(rng)\n    if len(c) > len(migliore):\n        migliore = c; print(tent, len(c), flush=True)\n    if len(migliore) >= 20: break\nassert all(peso(a ^ b) >= 4 for a in migliore for b in migliore if a != b)\nopen(\"stelle20.txt\", \"w\").write(\"\\n\".join(str(0 if peso(v) % 2 else (2 if v in migliore else 3)) for v in range(512)) + \"\\n\")\nprint(\"codice:\", [format(v, \"09b\") for v in migliore])\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_4",
+     "kind": "CODE",
+     "content": "# Simulated annealing (exploration only) over pairs (R = even vertices kept in S, B' = odd vertices moved to H), i.e. over all induced forests S of Q_9 with the labelling order [S][B'][Even minus R]; exact integer path count plus a penalty of 40 per residual cycle. 8 runs x 3e7 steps (~100 s each): best 2400 in every run.\n# rigor: exact\n/* cerca_radici.c — ricottura (esplorazione, NON prova) sulla famiglia \"radici pari / dispari rimossi\" per Q_9.\n   Stato: R sottoinsieme dei vertici pari (radici), B sottoinsieme dei dispari (rimossi da S).\n   S = R + (dispari \\ B) deve essere una foresta indotta; etichette: S in ordine di foresta, poi B, poi i pari non radici.\n   Costo esatto dell'etichettatura (se S e' foresta): |S| + sum_b max(1,k_b) + sum_e ( contributi dei vicini dispari ),\n   con k_b = numero di radici adiacenti a b. Penalita' lambda per ciclo residuo in S.\n   Uso: ./cerca_radici seme passi t0 t1 [stato_iniziale.txt]  -> salva migliore_radici_<seme>.txt (512 righe: 0=S,1=B,2=R,3=pari non radice) */\n#include <stdio.h>\n#include <stdlib.h>\n#include <math.h>\n#include <string.h>\n#define D 9\n#define N (1<<D)\nstatic int tipo[N];   /* pari: 2=radice, 3=non radice; dispari: 0=in S, 1=in B */\nstatic int parent[N];\nstatic int find(int x){ while(parent[x]!=x){ parent[x]=parent[parent[x]]; x=parent[x]; } return x; }\nstatic int peso(int v){ return __builtin_popcount(v); }\n\n/* Costo esatto della etichettatura indotta + lambda * cicli residui. */\nstatic long valuta(int lambda, int *cicli_out){\n    int k[N]; long tot=0; int cicli=0;\n    for(int v=0; v<N; v++) parent[v]=v;\n    for(int b=0;b<N;b++) if(peso(b)&1){ k[b]=0; for(int i=0;i<D;i++) if(tipo[b^(1<<i)]==2) k[b]++; }\n    for(int v=0; v<N; v++){\n        if(peso(v)&1){ if(tipo[v]==0) tot+=1; else tot+=(k[v]>1?k[v]:1); }\n        else if(tipo[v]==2){ tot+=1;\n            for(int i=0;i<D;i++){ int o=v^(1<<i); if(tipo[o]==0){ int a=find(v),c=find(o); if(a==c) cicli++; else parent[a]=c; } } }\n        else { for(int i=0;i<D;i++){ int o=v^(1<<i); tot += (tipo[o]==0||k[o]<2)?1:k[o]; } }\n    }\n    *cicli_out=cicli; return tot + (long)lambda*cicli;\n}\n\nint main(int argc, char **argv){\n    int seme=atoi(argv[1]); long passi=atol(argv[2]); double t0=atof(argv[3]), t1=atof(argv[4]); srand(seme);\n    for(int v=0; v<N; v++) tipo[v]=(peso(v)&1)?0:3;\n    if(argc>5){ FILE *f=fopen(argv[5],\"r\"); for(int v=0; v<N; v++) fscanf(f,\"%d\",&tipo[v]); fclose(f); }\n    int lambda=40, cicli; long cur=valuta(lambda,&cicli), best=1L<<40; int bestT[N];\n    if(cicli==0){ best=cur; memcpy(bestT,tipo,sizeof(tipo)); }\n    for(long s=0;s<passi;s++){\n        double t=t0*pow(t1/t0,(double)s/passi);\n        int v=rand()%N; int vecchio=tipo[v];\n        tipo[v] = (peso(v)&1) ? 1-vecchio : 5-vecchio;\n        int c2; long nuovo=valuta(lambda,&c2);\n        if(nuovo<=cur || (double)rand()/RAND_MAX < exp((cur-nuovo)/t)){ cur=nuovo; cicli=c2;\n            if(cicli==0 && cur<best){ best=cur; memcpy(bestT,tipo,sizeof(tipo));\n                int nr=0,nb=0; for(int u=0;u<N;u++){ nr+=tipo[u]==2; nb+=tipo[u]==1; }\n                fprintf(stderr,\"seme %d passo %ld: costo %ld |R|=%d |B|=%d\\n\",seme,s,best,nr,nb); } }\n        else tipo[v]=vecchio;\n    }\n    char nome[64]; sprintf(nome,\"migliore_radici_%d.txt\",seme); FILE *f=fopen(nome,\"w\");\n    for(int v=0; v<N; v++) fprintf(f,\"%d\\n\",bestT[v]); fclose(f);\n    printf(\"seme %d: costo migliore %ld\\n\",seme,best); return 0;\n}\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_5",
+     "kind": "CODE",
+     "content": "# Simulated annealing (exploration only) directly on labellings of Q_9: swap two labels, exact integer recount of uphill paths. 5 runs x 4e7 steps (~3-4 min each): warm starts from the star labelling and one cold start reached 2400, one cold start 3104; nothing below 2400.\n# rigor: exact\n/* ricottura_etichette.c — ricottura simulata (esplorazione, NON prova) direttamente sulle etichettature di Q_9.\n   Stato: permutazione ordine[0..511] (vertice con etichetta i). Mossa: scambio di due etichette. Punteggio esatto:\n   conteggio dei cammini in salita con aritmetica intera (p(v) = [valle] + somma p sui vicini minori).\n   Uso: ./ricottura_etichette seme passi t0 t1 [etichettatura_iniziale.txt (512 stringhe 0/1 separate da virgola)] */\n#include <stdio.h>\n#include <stdlib.h>\n#include <math.h>\n#include <string.h>\n#define D 9\n#define N (1<<D)\nstatic int ordine[N], etichetta[N];\nstatic long long p[N];\n\n/* Conteggio esatto dei cammini in salita. */\nstatic long long conta(void){\n    long long tot=0;\n    for(int i=0;i<N;i++){ int v=ordine[i]; long long s=0; int valle=1;\n        for(int j=0;j<D;j++){ int u=v^(1<<j); if(etichetta[u]<i){ s+=p[u]; valle=0; } }\n        p[v]= valle?1:s; tot+=p[v]; }\n    return tot;\n}\nstatic int da_stringa(const char *s){ int v=0; for(int i=0;i<D;i++) if(s[i]=='1') v|=1<<i; return v; }\n\nint main(int argc,char**argv){\n    int seme=atoi(argv[1]); long passi=atol(argv[2]); double t0=atof(argv[3]), t1=atof(argv[4]); srand(seme);\n    for(int i=0;i<N;i++) ordine[i]=i;\n    if(argc>5){ FILE*f=fopen(argv[5],\"r\"); char s[16]; for(int i=0;i<N;i++){ fscanf(f,\"%[01],\",s); ordine[i]=da_stringa(s);} fclose(f); }\n    else for(int i=N-1;i>0;i--){ int j=rand()%(i+1); int t=ordine[i]; ordine[i]=ordine[j]; ordine[j]=t; }\n    for(int i=0;i<N;i++) etichetta[ordine[i]]=i;\n    long long cur=conta(), best=cur; int bestO[N]; memcpy(bestO,ordine,sizeof(ordine));\n    fprintf(stderr,\"seme %d inizio %lld\\n\",seme,cur);\n    for(long k=0;k<passi;k++){\n        double t=t0*pow(t1/t0,(double)k/passi);\n        int i=rand()%N, j=rand()%N; if(i==j) continue;\n        int a=ordine[i], b=ordine[j]; ordine[i]=b; ordine[j]=a; etichetta[b]=i; etichetta[a]=j;\n        long long nuovo=conta();\n        if(nuovo<=cur || (double)rand()/RAND_MAX<exp((double)(cur-nuovo)/t)){ cur=nuovo;\n            if(cur<best){ best=cur; memcpy(bestO,ordine,sizeof(ordine)); fprintf(stderr,\"seme %d passo %ld: %lld\\n\",seme,k,best);} }\n        else { ordine[i]=a; ordine[j]=b; etichetta[a]=i; etichetta[b]=j; }\n    }\n    char nome[64]; sprintf(nome,\"migliore_etichette_%d.txt\",seme); FILE*f=fopen(nome,\"w\");\n    for(int i=0;i<N;i++){ for(int j=0;j<D;j++) fputc((bestO[i]>>j)&1?'1':'0',f); fputc(i<N-1?',':'\\n',f);} fclose(f);\n    printf(\"seme %d: migliore %lld\\n\",seme,best); return 0;\n}\n",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ]
+  },
+  "rules": {
+   "allow_literature_as_proof": false,
+   "allow_computation": true,
+   "require_machine_verification": false,
+   "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For C1 to C4, hand in the values, and for each value an explicit labelling that attains it as a list of the $2^d$ vertices in increasing label order, written as 0/1 strings. These cells are marked correct on the values alone, but a value with no labelling behind it will not survive the later cells, which build on the construction. For C5, hand in either a labelling of $Q_9$ in the same format, whose uphill paths will be counted mechanically, or a proof of the lower bound. For C6, hand in all three of: the value; an explicit labelling that attains it, in the same format; a proof that no labelling gives fewer uphill paths. A lower-bound proof may be computer-assisted. If it is, include the code; it must run in under 10 minutes on a laptop, and you must explain why the computation proves the bound. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+  }
+ },
+ "submission_digest": "aaf10d9f0f3a1f2c95a1a4f4eed64e01ac94cda7b5130e39db53b22fb86d6c35",
+ "math": {
+  "report": {
+   "mathematical_verdict": "FAIL",
+   "first_fatal_error": {
+    "code": "TARGET_MISMATCH",
+    "detail": "The target for cell 5 is disjunctive: either a proof that U(Q_9) >= 2369, or an explicit labelling of Q_9 with <= 2399 uphill paths. The submission delivers neither. (i) Lower bound: the only bound actually proved is Theorem A.4, #paths >= 2^d + (d-1)|H| >= 512 + 8*nabla(Q_9); with the only proved bound nabla(Q_9) >= 225 (from c(S) >= 1) this gives U(Q_9) >= 2312, weaker than the known 2368. Theorem B only bounds INDEPENDENT decycling sets (|H| >= 236) and Corollary C explicitly states that any improving labelling must have a non-independent H; no argument is given for that case, so no bound >= 2369 follows. (ii) Upper bound: no labelling with <= 2399 paths is exhibited; the submission itself reports that all searches ended at 2400 and that this 'proves nothing'. The main claim is therefore not established; no other reusable claim was declared (Theorems A, B, C carry no claim IDs).",
+    "severity": "FATAL",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   "accepted_mathematical_claims": [],
+   "unproved_claims": [
+    "main"
+   ],
+   "missing_cases": [
+    "Lower-bound direction: labellings whose set H = {v : p(v) >= 2} is a decycling set of size 225–235 containing at least one edge (the non-independent case, explicitly left open in Corollary C).",
+    "Upper-bound direction: no labelling of Q_9 with <= 2399 uphill paths is provided."
+   ],
+   "math_notes": "Checked in detail; the auxiliary mathematics is sound but does not reach the target. Theorem A (identity (0), orientation of S–H edges, S induces a forest with c(S)=V, #paths = |E| + c(S) + sum_{w->u, w in H}(p(w)-1), and for Q_d: (d-1)|H| = (d-2)2^{d-1} + c(S) + |E(H)|, hence #paths >= 2^d + (d-1)|H| with H a decycling set) is correct for every labelling of every finite simple graph. Theorem B (an independent decycling set H of Q_d, d>=3, lies in one parity class and satisfies |H| >= 2^{d-1} - A(d,4)) is correct: the sphere lemma (Step 1), the spectrum of the distance-2 graph on a parity class (Step 2: eigenvalues ((d-2k)^2 - d)/2, second largest C(d,2) - 2(d-1)), the standard spectral edge-expansion bound (Step 3), the dichotomy |A| in {0} or >= 2^{d-2} (Step 4), the Hall-type counting excluding mixed parity (Step 5), and the distance-4 code bound (Step 6) all check. For d=9 the value |H| >= 236 depends on the CITED table value A(9,4)=A(8,3)=20 (external theorem; conditional correctness only). Corollary C correctly follows: every labelling of Q_9 whose p>=2 vertices are pairwise non-adjacent has >= 2400 paths. If the Researcher wants credit for these, they should be declared as separate claims (e.g. 'Theorem A.4: for every labelling of Q_d, #paths >= 2^d + (d-1)|H| where H={p>=2} is a decycling set' and 'Theorem B: independent decycling sets of Q_d have size >= 2^{d-1} - A(d,4), conditional on the cited A(d,4) value'); I would accept both as stated. The sanity remark that 2^{d-1}-A(d,4) 'reproduces nabla(Q_d) for d<=8' is only a consistency observation, since Theorem B bounds independent decycling sets, not nabla in general. The C annealing runs are exploration only and carry no proof weight, as the submission itself says."
+  },
+  "limitation": null
+ },
+ "evidence": {
+  "report": {
+   "evidence_verdict": "FAIL",
+   "source_issues": [
+    {
+     "code": "CITATION_NOT_RETRIEVED",
+     "detail": "src_1 (A(8,3)=A(9,4)=20, Best–Brouwer–MacWilliams–Odlyzko–Sloane 1978) is used as a fact in Theorem B Step 6 but only the citation exists; no excerpt or table page was submitted. The value is consistent with my recollection of the standard tables (not a fabrication signal), but it has not been checked here. Request: submitted excerpt/table row or an exact exhaustive computation of A(9,4) for even-weight words of length 9 (feasible: 256 words, clique search).",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "CONTEXT_ONLY_SOURCES",
+     "detail": "src_2–src_4 are declared 'not read / snippet only' and are not load-bearing for any stated argument. Acceptable as context; they must not be presented as read in a hand-in.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "C_CODE_NOT_REPRODUCED",
+     "detail": "code_4 and code_5 (C annealing searches) were not re-run by the orchestrator; run outcomes (all ≥ 2400) rest solely on the candidate's report. They are labelled exploration-only and prove nothing, so this does not affect the verdict, but no reproducible command, compiler version, or output file (migliore_*.txt) was submitted.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "FLOAT_SANITY_ONLY",
+     "detail": "code_2 (numpy eigvalsh) is correctly flagged as float exploration; Step 2 of Theorem B is proved analytically via the character basis, so the proof does not depend on it. Fine.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "EXHAUSTIVE_CHECK_OK",
+     "detail": "code_1 re-run by orchestrator (exit 0, 1.0 s) matches the reported counts (743/26/min 6; 254475/114/min 14, no mixed parity). It checks Theorem B only for d=4,5, not d=9; it is a consistency test, not a proof of the d=9 case.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [
+    {
+     "code": "TARGET_CLAIM_NOT_ESTABLISHED",
+     "detail": "The cell requires either a Q_9 labelling with ≤ 2399 paths (none submitted; all searches ended at exactly 2400) or a proof of U(Q_9) ≥ 2369. The submitted lower bound is #paths ≥ 512 + 8|H| with |H| ≥ ∇(Q_9) ≥ 225, i.e. ≥ 2312 < 2368: it does not even reach the organisers' bound. Theorem B (|H| ≥ 236) applies only to independent H, and Corollary C itself concedes that non-independent H of size 232–235 remain unhandled. Hence no evidence supports registered claim 'main'. This is an actual insufficiency shown by the submission's own content, not a retrieval gap.",
+     "severity": "FATAL",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "UNVERIFIED"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": true,
+     "relies_on_external_result": true,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1"
+     ],
+     "notes": "Not established: no labelling ≤ 2399, no proof ≥ 2369. Supporting lemmas: Theorem A (self-contained, appears PROVED_BY_US-style, not the cell), Theorem B (self-contained except A(9,4)=20, KNOWN_IN_LITERATURE, cited not retrieved). Computations are exploration only and correctly labelled as such. Cell status should be PARTIAL_PROGRESS, not solved."
+    }
+   ],
+   "reproducibility_notes": "code_1–code_3 reproduced by the orchestrator (python3, ≤1 s each) with outputs matching the candidate's report. code_4/code_5 (C) not reproduced; no build command, seeds/temperatures actually used, or result files submitted. None of the computations is load-bearing for the cell. Requests: (1) excerpt or exact computation for A(9,4)=20; (2) if the annealing results are to be cited as evidence in a hand-in, submit the exact command lines, seeds, and best-labelling files so the 2400 count can be re-counted mechanically."
+  },
+  "limitation": null
+ },
+ "checks": [],
+ "check_errors": [],
+ "report": {
+  "final_verdict": "REJECT",
+  "highest_verified_cell": 0,
+  "math_review": {
+   "verdict": "FAIL",
+   "first_fatal_error": {
+    "code": "TARGET_MISMATCH",
+    "detail": "The target for cell 5 is disjunctive: either a proof that U(Q_9) >= 2369, or an explicit labelling of Q_9 with <= 2399 uphill paths. The submission delivers neither. (i) Lower bound: the only bound actually proved is Theorem A.4, #paths >= 2^d + (d-1)|H| >= 512 + 8*nabla(Q_9); with the only proved bound nabla(Q_9) >= 225 (from c(S) >= 1) this gives U(Q_9) >= 2312, weaker than the known 2368. Theorem B only bounds INDEPENDENT decycling sets (|H| >= 236) and Corollary C explicitly states that any improving labelling must have a non-independent H; no argument is given for that case, so no bound >= 2369 follows. (ii) Upper bound: no labelling with <= 2399 paths is exhibited; the submission itself reports that all searches ended at 2400 and that this 'proves nothing'. The main claim is therefore not established; no other reusable claim was declared (Theorems A, B, C carry no claim IDs).",
+    "severity": "FATAL",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   "accepted_claims": [],
+   "unproved_claims": [
+    "main"
+   ],
+   "missing_cases": [
+    "Lower-bound direction: labellings whose set H = {v : p(v) >= 2} is a decycling set of size 225–235 containing at least one edge (the non-independent case, explicitly left open in Corollary C).",
+    "Upper-bound direction: no labelling of Q_9 with <= 2399 uphill paths is provided."
+   ]
+  },
+  "evidence_review": {
+   "verdict": "FAIL",
+   "source_issues": [
+    {
+     "code": "CITATION_NOT_RETRIEVED",
+     "detail": "src_1 (A(8,3)=A(9,4)=20, Best–Brouwer–MacWilliams–Odlyzko–Sloane 1978) is used as a fact in Theorem B Step 6 but only the citation exists; no excerpt or table page was submitted. The value is consistent with my recollection of the standard tables (not a fabrication signal), but it has not been checked here. Request: submitted excerpt/table row or an exact exhaustive computation of A(9,4) for even-weight words of length 9 (feasible: 256 words, clique search).",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "CONTEXT_ONLY_SOURCES",
+     "detail": "src_2–src_4 are declared 'not read / snippet only' and are not load-bearing for any stated argument. Acceptable as context; they must not be presented as read in a hand-in.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "C_CODE_NOT_REPRODUCED",
+     "detail": "code_4 and code_5 (C annealing searches) were not re-run by the orchestrator; run outcomes (all ≥ 2400) rest solely on the candidate's report. They are labelled exploration-only and prove nothing, so this does not affect the verdict, but no reproducible command, compiler version, or output file (migliore_*.txt) was submitted.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "FLOAT_SANITY_ONLY",
+     "detail": "code_2 (numpy eigvalsh) is correctly flagged as float exploration; Step 2 of Theorem B is proved analytically via the character basis, so the proof does not depend on it. Fine.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "EXHAUSTIVE_CHECK_OK",
+     "detail": "code_1 re-run by orchestrator (exit 0, 1.0 s) matches the reported counts (743/26/min 6; 254475/114/min 14, no mixed parity). It checks Theorem B only for d=4,5, not d=9; it is a consistency test, not a proof of the d=9 case.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [
+    {
+     "code": "TARGET_CLAIM_NOT_ESTABLISHED",
+     "detail": "The cell requires either a Q_9 labelling with ≤ 2399 paths (none submitted; all searches ended at exactly 2400) or a proof of U(Q_9) ≥ 2369. The submitted lower bound is #paths ≥ 512 + 8|H| with |H| ≥ ∇(Q_9) ≥ 225, i.e. ≥ 2312 < 2368: it does not even reach the organisers' bound. Theorem B (|H| ≥ 236) applies only to independent H, and Corollary C itself concedes that non-independent H of size 232–235 remain unhandled. Hence no evidence supports registered claim 'main'. This is an actual insufficiency shown by the submission's own content, not a retrieval gap.",
+     "severity": "FATAL",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "UNVERIFIED"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": true,
+     "relies_on_external_result": true,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1"
+     ],
+     "notes": "Not established: no labelling ≤ 2399, no proof ≥ 2369. Supporting lemmas: Theorem A (self-contained, appears PROVED_BY_US-style, not the cell), Theorem B (self-contained except A(9,4)=20, KNOWN_IN_LITERATURE, cited not retrieved). Computations are exploration only and correctly labelled as such. Cell status should be PARTIAL_PROGRESS, not solved."
+    }
+   ]
+  },
+  "accepted_progress": [],
+  "blocking_issue": "Referee A: The target for cell 5 is disjunctive: either a proof that U(Q_9) >= 2369, or an explicit labelling of Q_9 with <= 2399 uphill paths. The submission delivers neither. (i) Lower bound: the only bound actually proved is Theorem A.4, #paths >= 2^d + (d-1)|H| >= 512 + 8*nabla(Q_9); with the only proved bound nabla(Q_9) >= 225 (from c(S) >= 1) this gives U(Q_9) >= 2312, weaker than the known 2368. Theorem B only bounds INDEPENDENT decycling sets (|H| >= 236) and Corollary C explicitly states that any improving labelling must have a non-independent H; no argument is given for that case, so no bound >= 2369 follows. (ii) Upper bound: no labelling with <= 2399 paths is exhibited; the submission itself reports that all searches ended at 2400 and that this 'proves nothing'. The main claim is therefore not established; no other reusable claim was declared (Theorems A, B, C carry no claim IDs).; Referee B: The cell requires either a Q_9 labelling with ≤ 2399 paths (none submitted; all searches ended at exactly 2400) or a proof of U(Q_9) ≥ 2369. The submitted lower bound is #paths ≥ 512 + 8|H| with |H| ≥ ∇(Q_9) ≥ 225, i.e. ≥ 2312 < 2368: it does not even reach the organisers' bound. Theorem B (|H| ≥ 236) applies only to independent H, and Corollary C itself concedes that non-independent H of size 232–235 remain unhandled. Hence no evidence supports registered claim 'main'. This is an actual insufficiency shown by the submission's own content, not a retrieval gap.",
+  "next_required_step": "Address the stated blocking obligation without silently changing the target",
+  "stagnation_signal": false
+ },
+ "review_status": "NEEDS_WORK",
+ "proposed_claim_ids": []
+}

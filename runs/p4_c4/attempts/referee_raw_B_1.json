@@ -1,0 +1,82 @@
+{
+ "report": {
+  "evidence_verdict": "PARTIAL",
+  "source_issues": [
+   {
+    "code": "SOURCE_NOT_RETRIEVED",
+    "detail": "src_2 (O'Bryant arXiv:math/0604347v2), src_3 (Fornal–Sun arXiv:2607.24655) and src_4 (Huhn–Megyesi 1982) could not be retrieved in this review (no browsing). The candidate correctly labels src_4 as NOT read and states that nothing in the proof relies on any of them (Lemma B is reproved in full). No fabrication is inferred; the references are plausible and are used for comparison/attribution only. The comparison with O'Bryant is honestly reported as 'not run his code'; this is a comparison of conclusions (no counterexample for k ≤ 12), not of methods, and is stated as such.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "RERUN_NOT_REPRODUCED",
+    "detail": "Trusted observation: code_1.py run with no arguments TIMED OUT at 600 s. Cause visible in the submitted code: without arguments it defaults to k = 3..16, which includes the sizes 14–16 the candidate itself reports as unfinished. Consequently none of the node/leaf/survivor counts for k = 3..13 in the table (e.g. 280931/110/0 at k=12; 1224204/3889/1 at k=13) has been reproduced by a trusted run; the claimed rerun file run2_k3_12.txt is a candidate artifact only. Certificate item 4 (rerun reproducing the counts) is therefore not yet established. REQUEST: rerun `python3 code_1.py ricerca 3 4 5 6 7 8 9 10 11 12 13` (candidate-reported total ≈ 100 s) and compare counts elementwise with the table.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "SURVIVOR_DECISION_NOT_REPRODUCED",
+    "detail": "Trusted observation: code_3.py was run with no arguments (empty tuple, trivial output) and code_2.py crashed on missing argv. The k=13 survivor decision (INFATTIBILE, 154235 nodes) and the 'smallest forcing part has 7 classes; every sub-multiset of size ≤ 6 is feasible' claim rest on the candidate file k13_sopravvissuto.txt, not on a trusted run. Note also that parti_minime_infattibili uses a node budget of 10^7 and would print NON_DECISO on budget hits; the absence of such lines is unverified. The hand proof for the 7-tuple (10,10,10,10,10,12,45) is self-contained and does not need the computer, but the minimality claim ('no smaller part does') is purely computational. REQUEST: rerun `python3 code_3.py 10 10 10 10 10 12 12 12 12 24 36 40 45` (candidate-reported 23 s) with code_1/code_2 importable under their original module names, and check there are no NON_DECISO lines. This only affects the extra k=13 claim, not the cell's k ≤ 12 requirement.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "CODE_VERSION_MISMATCH",
+    "detail": "The candidate states the on-disk ricerca_moduli_hm.py differs from the submitted code_1 (600 s time cap, optional flags --senza-potenze/--tre-multipli). The k=13 counts are reported from both versions as identical, but this is candidate-reported. Reruns should be done on the submitted code_1 text so that the certificate refers to the code actually handed in.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [
+   {
+    "code": "PARTIAL_SEARCH_COUNTS_NOT_REPORTED",
+    "detail": "Hand-in rules: an unfinished size must be reported 'with the counts it reached'. For k = 14, 15, 16 the candidate correctly makes no claim, but reports no node counts reached (the log files are said to contain only the k=13 lines). The cell asks for an exact report for each k = 9..16; for k = 14–16 the report is 'unfinished' without counts. Not fatal (nothing is claimed for these sizes), but the report for 14–16 is incomplete under the rules.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "RULES_OTHERWISE_COMPLIANT",
+    "detail": "Certificate items 1–2 are present: finite set S_k defined exactly, and rules (R1),(R2),(R3),(R5) each stated with a proof in the text (Lemma A, B, C, Corollary D); optional rules M4/M5 are stated as off in all claim-bearing runs and their conditional proofs are given. Item 3 (counts + wall clock per size) is present. Item 5 is addressed for the single k=13 survivor. Exact integer arithmetic only (math.gcd/lcm, integer sums) — no floating point. Claimed runtime for k ≤ 13 (≈100 s) is within the 10-minute limit; the observed timeout is due to default arguments, not to the claimed computation. Literature is not used as proof (allow_literature_as_proof=false respected).",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US",
+     "UNVERIFIED"
+    ],
+    "evidence_sufficient": false,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": true,
+    "references": [
+     "src_1",
+     "src_2",
+     "src_3",
+     "src_4",
+     "src_5"
+    ],
+    "notes": "Structure is self-contained: Lemmas A–C and Corollary D are proved in the text and reduce the problem to an exhaustive search over S_k with proved pruning rules; the proof of k ≤ 12 then rests entirely on the claim 'zero stage-A survivors', which is computational. That computation has NOT been reproduced by a trusted run (orchestrator rerun timed out because of default arguments k=3..16). The additional k=13 claim likewise rests on an unreproduced survivor decision plus a self-contained hand proof of the 7-class part. The report for k=9..13 is complete; for k=14..16 it is 'unfinished' without counts. Sources are used for comparison and attribution only; no result is imported. Provided the two requested reruns reproduce the reported counts and the k=13 survivor output, the evidence for the cell would be complete."
+   }
+  ],
+  "reproducibility_notes": "Blocking item: the counts for k=3..13 have not been reproduced by a trusted run. The submitted code_1 defaults to k=3..16 when called without arguments, which explains the 600 s timeout; the actual claim-bearing computation is `python3 code_1.py ricerca 3 4 5 6 7 8 9 10 11 12 13` (candidate: ≈16 s for k≤12, ≈80–94 s for k=13, Apple M4, Python 3.14.7). Second request: `python3 code_3.py 10 10 10 10 10 12 12 12 12 24 36 40 45` (≈23 s) to reproduce the k=13 survivor decision and the minimal-part list, checking for NON_DECISO lines. Both scripts import each other by original module names (ricerca_moduli_hm, decidi_residui); the clean copy must preserve those names. code_2 is needed only for the non-vacuity demonstration (a C5 requirement, not C4) and requires arguments `nonvacuita <node_limit> k...`."
+ },
+ "limitation": null
+}

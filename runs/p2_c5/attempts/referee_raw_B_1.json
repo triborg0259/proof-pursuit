@@ -1,0 +1,77 @@
+{
+ "report": {
+  "evidence_verdict": "FAIL",
+  "source_issues": [
+   {
+    "code": "CITATION_NOT_RETRIEVED",
+    "detail": "src_1 (A(8,3)=A(9,4)=20, Best–Brouwer–MacWilliams–Odlyzko–Sloane 1978) is used as a fact in Theorem B Step 6 but only the citation exists; no excerpt or table page was submitted. The value is consistent with my recollection of the standard tables (not a fabrication signal), but it has not been checked here. Request: submitted excerpt/table row or an exact exhaustive computation of A(9,4) for even-weight words of length 9 (feasible: 256 words, clique search).",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "CONTEXT_ONLY_SOURCES",
+    "detail": "src_2–src_4 are declared 'not read / snippet only' and are not load-bearing for any stated argument. Acceptable as context; they must not be presented as read in a hand-in.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "C_CODE_NOT_REPRODUCED",
+    "detail": "code_4 and code_5 (C annealing searches) were not re-run by the orchestrator; run outcomes (all ≥ 2400) rest solely on the candidate's report. They are labelled exploration-only and prove nothing, so this does not affect the verdict, but no reproducible command, compiler version, or output file (migliore_*.txt) was submitted.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "FLOAT_SANITY_ONLY",
+    "detail": "code_2 (numpy eigvalsh) is correctly flagged as float exploration; Step 2 of Theorem B is proved analytically via the character basis, so the proof does not depend on it. Fine.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "EXHAUSTIVE_CHECK_OK",
+    "detail": "code_1 re-run by orchestrator (exit 0, 1.0 s) matches the reported counts (743/26/min 6; 254475/114/min 14, no mixed parity). It checks Theorem B only for d=4,5, not d=9; it is a consistency test, not a proof of the d=9 case.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [
+   {
+    "code": "TARGET_CLAIM_NOT_ESTABLISHED",
+    "detail": "The cell requires either a Q_9 labelling with ≤ 2399 paths (none submitted; all searches ended at exactly 2400) or a proof of U(Q_9) ≥ 2369. The submitted lower bound is #paths ≥ 512 + 8|H| with |H| ≥ ∇(Q_9) ≥ 225, i.e. ≥ 2312 < 2368: it does not even reach the organisers' bound. Theorem B (|H| ≥ 236) applies only to independent H, and Corollary C itself concedes that non-independent H of size 232–235 remain unhandled. Hence no evidence supports registered claim 'main'. This is an actual insufficiency shown by the submission's own content, not a retrieval gap.",
+    "severity": "FATAL",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "UNVERIFIED"
+    ],
+    "evidence_sufficient": false,
+    "permitted_by_rules": true,
+    "relies_on_external_result": true,
+    "uses_computation_as_proof": false,
+    "references": [
+     "src_1"
+    ],
+    "notes": "Not established: no labelling ≤ 2399, no proof ≥ 2369. Supporting lemmas: Theorem A (self-contained, appears PROVED_BY_US-style, not the cell), Theorem B (self-contained except A(9,4)=20, KNOWN_IN_LITERATURE, cited not retrieved). Computations are exploration only and correctly labelled as such. Cell status should be PARTIAL_PROGRESS, not solved."
+   }
+  ],
+  "reproducibility_notes": "code_1–code_3 reproduced by the orchestrator (python3, ≤1 s each) with outputs matching the candidate's report. code_4/code_5 (C) not reproduced; no build command, seeds/temperatures actually used, or result files submitted. None of the computations is load-bearing for the cell. Requests: (1) excerpt or exact computation for A(9,4)=20; (2) if the annealing results are to be cited as evidence in a hand-in, submit the exact command lines, seeds, and best-labelling files so the 2400 count can be re-counted mechanically."
+ },
+ "limitation": null
+}

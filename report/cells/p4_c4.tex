@@ -97,11 +97,12 @@ Tutto tranne la riduzione.
 \textbf{Researcher}: famiglia \texttt{exact\_computation}, sotto-obiettivo: Prove the statement for every k ≤ 12 (and k = 13) by a certified finite search: reduction lemma (moduli = lcm of gcds, no minimality needed) + Huhn–Megyesi density criterion with all admissible M + residue stage; report exactly what is left undecided for k = 9..16.. Stato dichiarato: \texttt{CELL\_SOLVED\_CANDIDATE}.
 \emph{Perché questa scelta}: First natural subgoal of the cell (no blocker). Cell 3's approved method (clique search on classes mod 420) does not scale to L\_12 = 27720 (112 320 classes). The modulus-level density criterion is far stronger: with all admissible M it kills everything at k ≤ 12 in 15 s and leaves one tuple at k = 13, which the residue stage decides. No minimality of k is assumed for k ≤ 13.
 \emph{Rispetto allo stato dell'arte}: Fornal–Sun arXiv:2607.24655 (read in full via the PDF): asymptotic bound max gcd ≫ k·exp(−(2+o(1))√(log k/log log k)); their Lemma 4.1 is asymptotic and gives nothing at fixed small k; they cite O'Bryant for k ≤ 20. O'Bryant, arXiv:math/0604347v2 (read in full): proves the statement for k ≤ 20 and that a minimal counterexample has k ∉ \{24,30\}, using a modulus-only method: Lemma 5 (= our Lemma B, stated with the Huhn–Megyesi reference), Lemma 6 (items 1–8, several requiring minimality of k and of Σm\_i) and a week-long Mathematica search 'Grow' for k ≤ 19 applying Lemma 5 only with M = lcm of the gcds of each subset. Our method ADAPTS his: (i) Lemma A gives his items 1 and 3 without any minimality assumption; (ii) Lemma B is applied with ALL divisors M of L\_k that are multiples of the gcd-lcm (strictly stronger pruning; his whole k ≤ 19 search is replaced by seconds); (iii) we add a residue stage, which is needed: at k = 13 the modulus-only rules (R1)–(R3) leave one tuple, and so do the rules with his items 4–5 added (tested: 669 090 nodes, same single survivor). Tested agreement with O'Bryant: k ≤ 12 both give 'no counterexample'; at k = 13 we could not reproduce a modulus-only refutation of (10,10,10,10,10,12,12,12,12,24,36,40,45) from his paper (we did not run his code), but our stage B decides it, so nothing we claim depends on him. Abstracts 2603.26043, 1511.04293 (disjoint covering systems) and 2608.15873 (group form, tuple (6,6,6,10,15)) are not relevant to this cell.
-\textbf{Referee}: verdetto \texttt{(nessun verdetto)}.
+\textbf{Referee}: verdetto \texttt{UNKNOWN\_STATUS} (review\_status \texttt{INCOMPLETE}).
+\emph{Prossimo passo richiesto}: Provide the missing review or independently checked evidence
 \end{description}
 
 \subsubsection{Codice su cui poggia il tentativo}
-\begin{lstlisting}[caption={attempt\_001 code\_1 [python, rigore exact] — Stage A (certificate): enumerate non-decreasing k-tuples of divisors of L\_k with pairwise  — verdetto del Referee: (nessun verdetto)}]
+\begin{lstlisting}[caption={attempt\_001 code\_1 [python, rigore exact] — Stage A (certificate): enumerate non-decreasing k-tuples of divisors of L\_k with pairwise  — verdetto del Referee: UNKNOWN\_STATUS}]
 """
 Ricerca certificata per il problema 4, parte 4 (k <= 12; rapporto per k = 9..16).
 
@@ -230,7 +231,7 @@ if __name__ == "__main__":
 
 \end{lstlisting}
 \noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_1.py (python3, clean copy of the researcher sandbox): TIMEOUT after 600s; killed: exceeds the verification time limit}
-\begin{lstlisting}[caption={attempt\_001 code\_2 [python, rigore exact] — Stage B: for each stage-A survivor, exhaustive backtracking on residues (a\_1 = 0 by Lemma  — verdetto del Referee: (nessun verdetto)}]
+\begin{lstlisting}[caption={attempt\_001 code\_2 [python, rigore exact] — Stage B: for each stage-A survivor, exhaustive backtracking on residues (a\_1 = 0 by Lemma  — verdetto del Referee: UNKNOWN\_STATUS}]
 """
 Stadio B per il problema 4, parte 4: decisione sui residui di un multinsieme di moduli.
 
@@ -306,7 +307,7 @@ if __name__ == "__main__":
 
 \end{lstlisting}
 \noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_2.py (python3, clean copy of the researcher sandbox): exit 1 in 0.0s; stdout: ''; stderr: 'Traceback (most recent call last):\textbackslash{}n  File "/Users/thomastumini/proof-pursuit/runs/p4\_c4/verifica/attempt\_001/code\_2.py", line 69, in \textless{}module\textgreater{}\textbackslash{}n    modo = sys.argv[1]\textbackslash{}n           \textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textbackslash{}nIndexError: list index out of range'}
-\begin{lstlisting}[caption={attempt\_001 code\_3 [python, rigore exact] — Decision of the unique k=13 stage-A survivor (10,10,10,10,10,12,12,12,12,24,36,40,45): exh — verdetto del Referee: (nessun verdetto)}]
+\begin{lstlisting}[caption={attempt\_001 code\_3 [python, rigore exact] — Decision of the unique k=13 stage-A survivor (10,10,10,10,10,12,12,12,12,24,36,40,45): exh — verdetto del Referee: UNKNOWN\_STATUS}]
 """
 Trova le parti minime (sotto-multinsiemi) di un multinsieme di moduli che sono gia'
 infattibili sui residui.

@@ -254,76 +254,454 @@ class="math inline">\(k = 6\)</span> counts as progress.</p></li>
 <p><em>(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
 <p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
 <code>OPEN. Any of: (a) decide a size k &gt;= 25; (b) prove gcd &gt;= ck for an absolute c &gt; 0 or improve the known factor k exp(-(2+o(1)) log k / log log k); (c) the group form (disjoint cosets of finite-index subgroups), settle k = 6.</code></p>
-<p><strong>Evidenza registrata in STATUS.md.</strong> bozza parziale in
-inglese in submission/ (parziali.py)</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> loop p4_c6
+attempt_001: REJECT (The strongest result actually proved is Corollary
+6: max gcd(m_i,m_j) &gt;= k^{1/3} unconditionally, and &gt;=
+c*sqrt(k)/log k); lemmi intermedi in submission/parte-6.en.md</p>
 <h3 id="consegna-prova">Consegna (prova)</h3>
-<h4 id="problema-4-parte-6-bozza-di-consegna-parziale">Problema 4 —
-Parte 6 — bozza di consegna PARZIALE</h4>
-<p><strong>Stato dichiarato: PARZIALE.</strong> Nessuna soluzione
-completa: qui sotto ciò che è stabilito, la formalizzazione, la
-posizione rispetto alla letteratura e ciò che resta aperto. Nulla è
-dichiarato dimostrato oltre quanto scritto.</p>
-<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
-<p><strong>Richiesta ufficiale.</strong> ## Parte 6 (C6) — Beyond the
-boundary</p>
-<p><strong>Punteggio:</strong> 13 points · <strong>Valutazione:</strong>
-Judged · <strong>Open question</strong></p>
-<p>Three directions beyond the certified range; any one of them counts.
-Any of the following.</p>
+<h4 id="problem-4-part-6-submission-partial">Problem 4 — Part 6 —
+submission (PARTIAL)</h4>
+<p><strong>Declared status: PARTIAL.</strong> The cell is not solved.
+What follows is the intermediate progress actually established, as
+judged by the automatic Referee (verdict <code>REJECT</code>: The
+strongest result actually proved is Corollary 6: max gcd(m_i,m_j) &gt;=
+k^{1/3} unconditionally, and &gt;= c<em>sqrt(k)/log k conditional on
+Mertens/Rosser–Schoenfeld. The cell-6 target requires one of: (a)
+deciding a size k &gt;= 25; (b) gcd &gt;= ck for an absolute c &gt; 0,
+or an improvement of the known factor k</em>exp(-(2+o(1)) log k/log log
+k) (i.e. something better than k^{1-o(1)}); (c) the group form at k ).
+The author’s own declared status was <code>LEMMA_CANDIDATE</code>.</p>
+<h5 id="result-and-scope">1. Result and scope</h5>
+<p>A complete, self-contained proof (using only the CRT criterion (*))
+that F(g) — the maximal size of a pairwise disjoint family with all
+pairwise gcds &lt;= g — satisfies the prime-splitting recursion of Lemma
+4, and the closed bounds F(g) &lt;= g^3 and F(g) &lt;= g^2
+prod_{p&lt;=g}(1+2/p). Consequences: for every pairwise disjoint family
+of size k, max gcd &gt;= k^{1/3} unconditionally, and max gcd &gt;= c
+sqrt(k)/log k with Mertens’ theorem (cited). The recursion also
+re-proves cell 1 (R(2,2)=2). This is strictly weaker than the cited
+state of the art (k^{1-o(1)}, arXiv:2607.24655) and does NOT settle any
+of (a),(b),(c); it is offered as a verified, reusable lemma and as a
+precise diagnosis of where the loss occurs (the union bound over primes
+in Lemma 4, whose exact values are ~g^2/2). No cell is claimed
+solved.</p>
+<h5 id="proof">2. Proof</h5>
+<h5 id="setting-and-notation">Setting and notation</h5>
+<p>A <em>family</em> is a finite list <span
+class="math inline">\(\mathcal F=\{(a_i,m_i)\}_{i\in I}\)</span> of
+congruence classes <span class="math inline">\(a_i \pmod{m_i}\)</span>,
+<span class="math inline">\(m_i\ge 1\)</span>. It is <em>pairwise
+disjoint</em> if <span class="math inline">\(a_i \pmod{m_i}\cap
+a_j\pmod{m_j}=\emptyset\)</span> for all <span
+class="math inline">\(i\ne j\)</span>. We use only the problem’s fact
+<span class="math inline">\((*)\)</span>: two classes meet iff <span
+class="math inline">\(\gcd(m_i,m_j)\mid a_i-a_j\)</span>.</p>
+<p>For an integer <span class="math inline">\(g\ge 1\)</span> and a
+prime <span class="math inline">\(P\)</span> define <span
+class="math display">\[S(g,P)=\sup\Big\{|\mathcal F| :\ \mathcal F
+\text{ pairwise disjoint},\ \gcd(m_i,m_j)\le g\ \forall i\ne j,\
+\gcd(m_i,q)=1\ \forall i,\ \forall \text{ primes }
+q&lt;P\Big\}.\]</span> (The gcd condition is vacuous when <span
+class="math inline">\(|\mathcal F|=1\)</span>, so <span
+class="math inline">\(S(g,P)\ge 1\)</span>.) Put <span
+class="math inline">\(F(g):=S(g,2)\)</span> (no coprimality condition).
+The statement of the problem is: <em>every pairwise disjoint family of
+size <span class="math inline">\(k\)</span> has a pair with <span
+class="math inline">\(\gcd\ge k\)</span></em>; equivalently <span
+class="math inline">\(F(g)\le g\)</span> for all <span
+class="math inline">\(g\)</span>. The sharp example <span
+class="math inline">\(1,\dots,k \pmod k\)</span> shows <span
+class="math inline">\(F(g)\ge g\)</span>. We prove upper bounds for
+<span class="math inline">\(F\)</span>.</p>
+<h5 id="lemma-1-two-classes">Lemma 1 (two classes)</h5>
+<p>If <span class="math inline">\(|\mathcal F|\ge 2\)</span> and <span
+class="math inline">\(\mathcal F\)</span> is pairwise disjoint then
+<span class="math inline">\(\gcd(m_i,m_j)\ge 2\)</span> for all <span
+class="math inline">\(i\ne j\)</span>.</p>
+<p><em>Proof.</em> If <span
+class="math inline">\(\gcd(m_i,m_j)=1\)</span> then <span
+class="math inline">\(1\mid a_i-a_j\)</span>, so by <span
+class="math inline">\((*)\)</span> the classes meet. <span
+class="math inline">\(\square\)</span></p>
+<h5 id="lemma-2-base-of-the-recursion">Lemma 2 (base of the
+recursion)</h5>
+<p>If <span class="math inline">\(P&gt;g\)</span> then <span
+class="math inline">\(S(g,P)=1\)</span>. In particular <span
+class="math inline">\(S(1,P)=1\)</span> for every prime <span
+class="math inline">\(P\)</span>.</p>
+<p><em>Proof.</em> The one-element family <span
+class="math inline">\(\{(0,1)\}\)</span> satisfies the conditions, so
+<span class="math inline">\(S(g,P)\ge 1\)</span>. Suppose <span
+class="math inline">\(|\mathcal F|\ge 2\)</span> satisfies the
+conditions and take <span class="math inline">\(i\ne j\)</span>. By
+Lemma 1, <span class="math inline">\(d=\gcd(m_i,m_j)\ge 2\)</span> has a
+prime factor <span class="math inline">\(q\)</span>, with <span
+class="math inline">\(q\le d\le g&lt;P\)</span>. But <span
+class="math inline">\(q\mid d\mid m_i\)</span> contradicts <span
+class="math inline">\(\gcd(m_i,q)=1\)</span> for the prime <span
+class="math inline">\(q&lt;P\)</span>. Hence every admissible family has
+size <span class="math inline">\(1\)</span>. For <span
+class="math inline">\(g=1\)</span> there is no prime <span
+class="math inline">\(\le 1\)</span>, so <span
+class="math inline">\(P&gt;g\)</span> for all <span
+class="math inline">\(P\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<h5 id="lemma-3-splitting-inside-one-residue-class-mod-p">Lemma 3
+(splitting inside one residue class mod <span
+class="math inline">\(p\)</span>)</h5>
+<p>Let <span class="math inline">\(\mathcal F\)</span> be pairwise
+disjoint, <span class="math inline">\(p\)</span> a prime, <span
+class="math inline">\(r\in\{0,\dots,p-1\}\)</span>, and <span
+class="math display">\[J_{p,r}=\{i\in I:\ p\mid m_i,\ a_i\equiv r \pmod
+p\}.\]</span> For <span class="math inline">\(i\in J_{p,r}\)</span> put
+<span class="math inline">\(n_i=m_i/p\in\mathbb Z_{\ge1}\)</span> and
+<span class="math inline">\(b_i=(a_i-r)/p\in\mathbb Z\)</span>. Then: 1.
+the family <span class="math inline">\(\mathcal
+F&#39;=\{(b_i,n_i)\}_{i\in J_{p,r}}\)</span> is pairwise disjoint; 2.
+<span class="math inline">\(\gcd(n_i,n_j)=\gcd(m_i,m_j)/p\)</span> for
+<span class="math inline">\(i\ne j\)</span> in <span
+class="math inline">\(J_{p,r}\)</span>; 3. if every <span
+class="math inline">\(m_i\)</span> is coprime to all primes <span
+class="math inline">\(q&lt;P\)</span>, so is every <span
+class="math inline">\(n_i\)</span>.</p>
+<p><em>Proof.</em> Let <span class="math inline">\(\varphi:\mathbb
+Z\to\mathbb Z\)</span>, <span
+class="math inline">\(\varphi(y)=r+py\)</span>; <span
+class="math inline">\(\varphi\)</span> is injective. For <span
+class="math inline">\(i\in J_{p,r}\)</span>, <span
+class="math display">\[\varphi\big(b_i+n_i\mathbb Z\big)=r+p b_i+p
+n_i\mathbb Z=a_i+m_i\mathbb Z .\]</span> If <span
+class="math inline">\(y\in (b_i+n_i\mathbb Z)\cap(b_j+n_j\mathbb
+Z)\)</span> then <span class="math inline">\(\varphi(y)\)</span> lies in
+both <span class="math inline">\(a_i+m_i\mathbb Z\)</span> and <span
+class="math inline">\(a_j+m_j\mathbb Z\)</span>, contradicting
+disjointness; this proves 1. For 2: <span
+class="math inline">\(\gcd(m_i,m_j)=\gcd(pn_i,pn_j)=p\gcd(n_i,n_j)\)</span>.
+For 3: <span class="math inline">\(n_i\mid m_i\)</span>, so any prime
+dividing <span class="math inline">\(n_i\)</span> divides <span
+class="math inline">\(m_i\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<h5 id="lemma-4-prime-splitting-recursion">Lemma 4 (prime-splitting
+recursion)</h5>
+<p>Let <span class="math inline">\(g\ge 1\)</span> and let <span
+class="math inline">\(P\)</span> be a prime. Let <span
+class="math inline">\(p_1&lt;p_2&lt;\dots&lt;p_s\)</span> be the primes
+in <span class="math inline">\([P,g]\)</span> (<span
+class="math inline">\(s=0\)</span> if <span
+class="math inline">\(P&gt;g\)</span>). Then <span
+class="math display">\[S(g,P)\ \le\ R(g,P):=\max\Big\{1,\ \sum_{t=1}^{s}
+p_t\, S\big(\lfloor g/p_t\rfloor,\,p_t\big)\Big\}.\]</span> Consequently
+<span class="math inline">\(S(g,P)\)</span> is finite for all <span
+class="math inline">\(g,P\)</span> (induction on <span
+class="math inline">\(g\)</span>, since <span
+class="math inline">\(\lfloor g/p_t\rfloor&lt;g\)</span>).</p>
+<p><em>Proof.</em> If <span class="math inline">\(s=0\)</span> this is
+Lemma 2. Let <span class="math inline">\(s\ge1\)</span> and let <span
+class="math inline">\(\mathcal F\)</span> be admissible for <span
+class="math inline">\(S(g,P)\)</span> with <span
+class="math inline">\(|\mathcal F|\ge 2\)</span> (if all admissible
+families have size <span class="math inline">\(\le1\)</span> the bound
+is trivial). Define, for <span
+class="math inline">\(t=1,\dots,s\)</span>, <span
+class="math display">\[K_t=\{i\in I:\ p_t\mid m_i,\ p_u\nmid m_i \text{
+for all } u&lt;t\},\qquad K_{s+1}=\{i\in I: p_t\nmid m_i \text{ for all
+} t\le s\}.\]</span> These sets partition <span
+class="math inline">\(I\)</span> (each <span
+class="math inline">\(i\)</span> goes to the smallest <span
+class="math inline">\(t\)</span> with <span
+class="math inline">\(p_t\mid m_i\)</span>, or to <span
+class="math inline">\(K_{s+1}\)</span>).</p>
+<p><em>Claim: <span
+class="math inline">\(K_{s+1}=\emptyset\)</span>.</em> Let <span
+class="math inline">\(i\in K_{s+1}\)</span> and pick <span
+class="math inline">\(j\ne i\)</span> (possible since <span
+class="math inline">\(|\mathcal F|\ge2\)</span>). By Lemma 1, <span
+class="math inline">\(\gcd(m_i,m_j)\ge2\)</span> has a prime factor
+<span class="math inline">\(q\le\gcd(m_i,m_j)\le g\)</span>, and <span
+class="math inline">\(q\mid m_i\)</span>. By admissibility <span
+class="math inline">\(q\ge P\)</span> (no prime <span
+class="math inline">\(&lt;P\)</span> divides <span
+class="math inline">\(m_i\)</span>). So <span
+class="math inline">\(q\in\{p_1,\dots,p_s\}\)</span> divides <span
+class="math inline">\(m_i\)</span>, contradicting <span
+class="math inline">\(i\in K_{s+1}\)</span>.</p>
+<p><em>Bound for <span class="math inline">\(K_t\)</span>.</em> Fix
+<span class="math inline">\(t\le s\)</span> and write <span
+class="math inline">\(p=p_t\)</span>. Every <span
+class="math inline">\(i\in K_t\)</span> has <span
+class="math inline">\(p\mid m_i\)</span>, so <span
+class="math inline">\(K_t=\bigsqcup_{r=0}^{p-1}(K_t\cap
+J_{p,r})\)</span> with <span class="math inline">\(J_{p,r}\)</span> as
+in Lemma 3. Fix <span class="math inline">\(r\)</span> and consider the
+sub-family <span class="math inline">\(\mathcal
+F&#39;=\{(b_i,n_i)\}_{i\in K_t\cap J_{p,r}}\)</span> of Lemma 3. By
+Lemma 3(1) it is pairwise disjoint. By Lemma 3(2), for <span
+class="math inline">\(i\ne j\)</span> in it, <span
+class="math inline">\(\gcd(n_i,n_j)=\gcd(m_i,m_j)/p\le g/p\)</span>, and
+being an integer, <span class="math inline">\(\gcd(n_i,n_j)\le\lfloor
+g/p\rfloor\)</span>. Every <span class="math inline">\(m_i\)</span> with
+<span class="math inline">\(i\in K_t\)</span> is coprime to <span
+class="math inline">\(p_1,\dots,p_{t-1}\)</span> (definition of <span
+class="math inline">\(K_t\)</span>) and to all primes <span
+class="math inline">\(&lt;P\)</span> (admissibility), i.e. to all primes
+<span class="math inline">\(&lt;p_t\)</span>; by Lemma 3(3) the same
+holds for <span class="math inline">\(n_i\)</span>. Hence <span
+class="math inline">\(\mathcal F&#39;\)</span> is admissible for <span
+class="math inline">\(S(\lfloor g/p_t\rfloor,p_t)\)</span>, and <span
+class="math inline">\(|K_t\cap J_{p,r}|\le S(\lfloor
+g/p_t\rfloor,p_t)\)</span>. Summing over the <span
+class="math inline">\(p_t\)</span> values of <span
+class="math inline">\(r\)</span>: <span class="math inline">\(|K_t|\le
+p_t\,S(\lfloor g/p_t\rfloor,p_t)\)</span>.</p>
+<p>Therefore <span class="math inline">\(|\mathcal
+F|=\sum_{t=1}^{s}|K_t|\le\sum_{t=1}^{s}p_t\,S(\lfloor
+g/p_t\rfloor,p_t)\)</span>. Taking the sup over <span
+class="math inline">\(\mathcal F\)</span> gives the lemma. Finiteness:
+by induction on <span class="math inline">\(g\)</span>; for <span
+class="math inline">\(g=1\)</span> Lemma 2 gives <span
+class="math inline">\(1\)</span>; for <span
+class="math inline">\(g\ge2\)</span> the right side involves only <span
+class="math inline">\(S(g&#39;,\cdot)\)</span> with <span
+class="math inline">\(g&#39;=\lfloor g/p_t\rfloor\le g/2&lt;g\)</span>.
+<span class="math inline">\(\square\)</span></p>
+<h5 id="theorem-5-closed-bounds">Theorem 5 (closed bounds)</h5>
+<p>For every <span class="math inline">\(g\ge1\)</span> and every prime
+<span class="math inline">\(P\)</span>: <span
+class="math display">\[\text{(A)}\quad S(g,P)\le g^{3};\qquad\qquad
+\text{(B)}\quad S(g,P)\le g^{2}\prod_{\substack{p \text{ prime}\\ P\le
+p\le g}}\Big(1+\frac{2}{p}\Big).\]</span> In particular <span
+class="math inline">\(F(g)\le g^3\)</span> and <span
+class="math inline">\(F(g)\le g^2\prod_{p\le g}(1+2/p)\)</span>.</p>
+<p><em>Proof of (A).</em> Induction on <span
+class="math inline">\(g\)</span>. For <span
+class="math inline">\(g=1\)</span>: <span
+class="math inline">\(S(1,P)=1=1^3\)</span> (Lemma 2). Let <span
+class="math inline">\(g\ge2\)</span> and assume (A) for all <span
+class="math inline">\(g&#39;&lt;g\)</span> and all primes. If no prime
+lies in <span class="math inline">\([P,g]\)</span>, Lemma 2 gives <span
+class="math inline">\(S=1\le g^3\)</span>. Otherwise, by Lemma 4 and the
+induction hypothesis (note <span class="math inline">\(\lfloor
+g/p\rfloor&lt;g\)</span>), <span
+class="math display">\[S(g,P)\le\sum_{P\le p\le g}p\,\lfloor
+g/p\rfloor^{3}\le\sum_{P\le p\le g}p\Big(\frac
+gp\Big)^{3}=g^{3}\sum_{P\le p\le g}\frac1{p^{2}}\le
+g^{3}\sum_{n\ge2}\frac1{n^{2}}&lt;
+g^{3}\sum_{n\ge2}\frac1{n(n-1)}=g^{3},\]</span> using <span
+class="math inline">\(\frac1{n^2}&lt;\frac1{n(n-1)}\)</span> and the
+telescoping sum <span
+class="math inline">\(\sum_{n\ge2}\big(\frac1{n-1}-\frac1n\big)=1\)</span>.
+(Also <span class="math inline">\(R(g,P)\ge 1\)</span> trivially <span
+class="math inline">\(\le g^3\)</span>.) <span
+class="math inline">\(\square\)</span></p>
+<p><em>Proof of (B).</em> Write <span
+class="math inline">\(Q(g,P):=\prod_{P\le q\le g,\ q\text{
+prime}}(1+2/q)\)</span> (empty product <span
+class="math inline">\(=1\)</span>). Induction on <span
+class="math inline">\(g\)</span>. For <span
+class="math inline">\(g=1\)</span>: <span
+class="math inline">\(S(1,P)=1=1^2\cdot 1\)</span>. Let <span
+class="math inline">\(g\ge2\)</span>, assume (B) for all <span
+class="math inline">\(g&#39;&lt;g\)</span> and all primes. If there is
+no prime in <span class="math inline">\([P,g]\)</span>, <span
+class="math inline">\(S(g,P)=1\le g^2\)</span>. Otherwise let <span
+class="math inline">\(p_1&lt;\dots&lt;p_s\)</span> be the primes in
+<span class="math inline">\([P,g]\)</span> and set <span
+class="math display">\[Q_t:=\prod_{u=t}^{s}\Big(1+\frac2{p_u}\Big)\quad(1\le
+t\le s),\qquad Q_{s+1}:=1,\]</span> so <span
+class="math inline">\(Q_1=Q(g,P)\)</span> and <span
+class="math inline">\(Q_t=(1+2/p_t)Q_{t+1}\)</span>. By Lemma 4 and the
+induction hypothesis, <span
+class="math display">\[S(g,P)\le\sum_{t=1}^{s}p_t\,\lfloor
+g/p_t\rfloor^{2}\,Q\big(\lfloor g/p_t\rfloor,p_t\big).\]</span> Now
+<span class="math inline">\(\lfloor g/p_t\rfloor^2\le
+(g/p_t)^2\)</span>, and <span class="math inline">\(Q(\lfloor
+g/p_t\rfloor,p_t)\le Q(g,p_t)=Q_t\)</span> because the first product
+runs over a subset of the primes of the second and every factor is <span
+class="math inline">\(\ge1\)</span>. Hence <span
+class="math display">\[S(g,P)\le
+g^{2}\sum_{t=1}^{s}\frac{Q_t}{p_t}.\]</span> For each <span
+class="math inline">\(t\)</span>, since <span
+class="math inline">\(p_t\ge2\)</span> we have <span
+class="math inline">\(1+2/p_t\le 2\)</span>, so <span
+class="math display">\[\frac{Q_t}{p_t}=\frac{(1+2/p_t)\,Q_{t+1}}{p_t}\le\frac{2}{p_t}Q_{t+1}=Q_t-Q_{t+1}.\]</span>
+Summing, <span class="math inline">\(\sum_{t=1}^{s}Q_t/p_t\le
+Q_1-Q_{s+1}=Q_1-1&lt;Q_1\)</span>. Therefore <span
+class="math inline">\(S(g,P)\le g^2Q_1=g^2Q(g,P)\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<h5 id="corollary-6-lower-bounds-for-the-maximal-gcd">Corollary 6 (lower
+bounds for the maximal gcd)</h5>
+<p>Let <span class="math inline">\(k\ge2\)</span> and let <span
+class="math inline">\(a_1\pmod{m_1},\dots,a_k\pmod{m_k}\)</span> be
+pairwise disjoint, <span
+class="math inline">\(g:=\max_{i&lt;j}\gcd(m_i,m_j)\)</span>. Then:</p>
 <ol>
-<li><p>Decide a size <span class="math inline">\(k \ge
-25\)</span>.</p></li>
-<li><p>The asymptotic form. It is known that a pairwise disjoint family
-of size <span class="math inline">\(k\)</span> always has a pair with
-<span class="math display">\[\gcd(m_i, m_j) \;\ge\; k \cdot \exp\!\left(
--(2 + o(1)) \frac{\log k}{\log\log k} \right),\]</span> which is <span
-class="math inline">\(k^{1 - o(1)}\)</span> but not linear in <span
-class="math inline">\(k\)</span>. Prove the statement in full, or prove
-the weaker bound <span class="math inline">\(\gcd(m_i, m_j) \ge
-ck\)</span> for some absolute constant <span class="math inline">\(c
-&gt; 0\)</span>, or improve the exponential factor above.</p></li>
-<li><p>The group form. Let <span class="math inline">\(G\)</span> be a
-group, let <span class="math inline">\(G_1, \ldots, G_k\)</span> be
-subgroups of finite index <span class="math inline">\(n_i = [G :
-G_i]\)</span>, and let <span class="math inline">\(x_1 G_1, \ldots, x_k
-G_k\)</span> be pairwise disjoint cosets. Is there a pair <span
-class="math inline">\(i &lt; j\)</span> with <span
-class="math inline">\(\gcd(n_i, n_j) \ge k\)</span>? This is known for
-<span class="math inline">\(k \le 5\)</span> and open for every <span
-class="math inline">\(k \ge 6\)</span>; settling <span
-class="math inline">\(k = 6\)</span> counts as progress.</p></li>
+<li><p>(elementary, unconditional) <span class="math inline">\(g\ge
+k^{1/3}\)</span>;</p></li>
+<li><p>(with Mertens’ theorem, CITED) <span class="math inline">\(g\ge
+c\,\sqrt{k}/\log k\)</span> for an absolute constant <span
+class="math inline">\(c&gt;0\)</span>; explicitly, if one uses the
+Rosser–Schoenfeld inequality <span class="math inline">\(\sum_{p\le
+x}1/p&lt;\log\log x+B+\frac{1}{2\log^2 x}\)</span> (<span
+class="math inline">\(x&gt;1\)</span>, <span
+class="math inline">\(B=0.2614\ldots\)</span>), then <span
+class="math inline">\(g\ge\min\{\sqrt k,\ \sqrt k/(4\log k)\}=\sqrt
+k/(4\log k)\)</span> for <span class="math inline">\(k\ge 2\)</span>
+(see gap list: this constant depends on the cited inequality, which I
+have not re-derived).</p></li>
 </ol>
-<p><em>(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
-<p><strong>Cosa consegniamo.</strong> Nessuna prova. Segnalazione
-rilevante: il bound asintotico citato nell’enunciato è già stato
-migliorato in letteratura.</p>
-<h5 id="dimostrazione">2. Dimostrazione</h5>
-<p>Fornal–Sun <span>[</span>2607.24655<span>]</span> (luglio 2026)
-dimostrano <span class="math inline">\(\max\gcd(m_i,m_j)\gg
-k\exp(-(2+o(1))\sqrt{\log k/\log\log k})\)</span>, con radice quadrata
-all’esponente: un miglioramento del fattore esponenziale richiesto in
-(b). Riprodurre la loro prova per esteso (grafo dei gcd, lemma
-strutturale, partizione crivellante, inversione di Möbius, trasformata
-di Fourier discreta) conterebbe secondo le regole; non fatto.</p>
-<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
-dipendenze, tempi</h5>
-<p>Codice disponibile (Python 3, libreria standard; ogni script gira in
-meno di un minuto): - Nessun codice ancora.</p>
-<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
-<p>Letteratura arXiv (ricerca deterministica
-<code>tools/cerca_letteratura.sh</code>, abstract letti, non usata come
-prova): - arXiv:2603.26043v1 — Finiteness of Disjoint Covering Systems
-with Precisely One Repeated Modulus (Yu Hashimoto, 2026); solo abstract
-letto. - arXiv:1511.04293v1 — Searching for Disjoint Covering Systems
-with Precisely One Repeated Modulus (Shalosh B. Ekhad, Aviezri S.
-Fraenkel, Doron Zeilberger, 2015); solo abstract letto. -
-arXiv:2607.24655v1 — On the problem of large gcd for disjoint residue
-classes (Jan Fornal, Yu-Chen Sun, 2026); solo abstract letto. -
-arXiv:2608.15873v1 — Two Questions on <span
-class="math inline">\(G\)</span>-harmonic Tuples (Murali Menon, 2026);
-solo abstract letto. <span>[</span>2607.24655<span>]</span>.</p>
-<h5 id="limiti-e-parti-irrisolte">5. Limiti e parti irrisolte</h5>
-<p>Tutto; la via (b) via riproduzione della prova è quella indicata.</p>
+<p><em>Proof.</em> The family is admissible for <span
+class="math inline">\(S(g,2)=F(g)\)</span>, so <span
+class="math inline">\(k\le F(g)\)</span>. (1): <span
+class="math inline">\(k\le g^3\)</span> by Theorem 5(A). (2): By Theorem
+5(B), <span class="math inline">\(k\le g^2\prod_{p\le g}(1+2/p)\le
+g^2\exp\big(2\sum_{p\le g}1/p\big)\)</span>, using <span
+class="math inline">\(1+x\le e^x\)</span>. By Mertens’ theorem <span
+class="math inline">\(\sum_{p\le g}1/p=\log\log g+O(1)\)</span>, so
+<span class="math inline">\(k\le C\,g^2(\log g)^2\)</span> for an
+absolute <span class="math inline">\(C\)</span> and all <span
+class="math inline">\(g\ge2\)</span> (note <span
+class="math inline">\(g\ge2\)</span> by Lemma 1). If <span
+class="math inline">\(g\ge\sqrt k\)</span> we are done. Otherwise <span
+class="math inline">\(g&lt;\sqrt k\)</span>, so <span
+class="math inline">\(\log g&lt;\tfrac12\log k\)</span> and <span
+class="math inline">\(k\le C g^2(\log k)^2/4\)</span>, i.e. <span
+class="math inline">\(g\ge (2/\sqrt C)\,\sqrt k/\log k\)</span>. With
+the Rosser–Schoenfeld form, for <span
+class="math inline">\(g\ge2\)</span>: <span
+class="math inline">\(\exp(2\sum_{p\le g}1/p)\le (\log g)^2
+e^{2B+1/\log^2 g}\le (\log g)^2e^{2B+1/\log^2 2}&lt;13.53(\log
+g)^2\)</span>, so <span class="math inline">\(C=13.53\)</span> and <span
+class="math inline">\(2/\sqrt{C}&gt;0.544&gt;1/4\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<h5 id="remarks-what-the-method-gives-and-where-it-loses">Remarks (what
+the method gives and where it loses)</h5>
+<ul>
+<li><p><span class="math inline">\(R(2,2)=2\)</span>: every pairwise
+disjoint family with all gcds <span class="math inline">\(\le2\)</span>
+has at most <span class="math inline">\(2\)</span> members,
+i.e. <strong>any three pairwise disjoint classes have a pair with <span
+class="math inline">\(\gcd\ge3\)</span></strong> — the statement of cell
+1 falls out of Lemma 4 alone. <span
+class="math inline">\(R(3,2)=5&gt;3\)</span>, so cell 2 does
+not.</p></li>
+<li><p>The exact values of the recursion <span
+class="math inline">\(R(g,2)\)</span> (integer arithmetic, script below,
+<span class="math inline">\(g\le3000\)</span>, 2.3 s) satisfy <span
+class="math inline">\(R(g,2)\le g^2\)</span> for all <span
+class="math inline">\(1\le g\le 3000\)</span>, with <span
+class="math inline">\(R(g,2)/g^2\to\)</span> about <span
+class="math inline">\(0.50\)</span> (e.g. <span
+class="math inline">\(R(1000,2)=494228\)</span>). So the recursion
+itself cannot give better than <span class="math inline">\(F(g)\lesssim
+g^2/2\)</span>: the loss relative to the conjecture <span
+class="math inline">\(F(g)=g\)</span> (and to the <span
+class="math inline">\(k^{1-o(1)}\)</span> of arXiv:2607.24655) sits
+entirely in the union bound <span class="math inline">\(|\mathcal
+F|\le\sum_t|K_t|\)</span> of Lemma 4, which ignores that the “<span
+class="math inline">\(p\)</span>-cliques” <span
+class="math inline">\(\{i:p\mid m_i\}\)</span> for different primes
+<span class="math inline">\(p\)</span> must overlap heavily (every pair
+of vertices shares a prime). Exploiting this overlap is the natural next
+subgoal; the closed bounds (A),(B) are asymptotically far from <span
+class="math inline">\(R(g,2)\)</span> (Theorem 5(B) gives <span
+class="math inline">\(\approx 4.4\cdot10^7\)</span> at <span
+class="math inline">\(g=1000\)</span> vs <span
+class="math inline">\(R=4.9\cdot10^5\)</span>), so there is also room to
+sharpen the induction to <span class="math inline">\(F(g)\le
+g^2\)</span> without touching Lemma 4.</p></li>
+<li><p>Everything above uses only <span
+class="math inline">\((*)\)</span>; no result from the literature enters
+Lemmas 1–4 or Theorem 5. Mertens/Rosser–Schoenfeld enters only Corollary
+6(2).</p></li>
+</ul>
+<h5 id="verification-instructions-dependencies-timings">3. Verification:
+instructions, dependencies, timings</h5>
+<p>Python 3 standard library. Scripts (re-run by the orchestrator, see
+<code>runs/p4_c6/verifica/</code>): - code_1 (python, rigor
+<code>exact</code>): Exact integer evaluation of the recursion R(g,P) of
+Lemma 4 for all g &lt;= 3000 (P ranging over primes), and exact-rational
+check that R(g,2) &lt;= g^2 * prod_{p&lt;=g}(1+2/p) and R(g,2) &lt;= g^3
+hold for every g &lt;= 3000 (consistency check of Theorem 5 against the
+recursion; not needed for the proof). Finite set covered: g in
+<span>[</span>1,3000<span>]</span>. Wall clock: 2.34 s (Python 3,
+.venv). Command: .venv/bin/python runs/p4_c6/sandbox/ricorsione_gcd.py
+3000</p>
+<h5 id="sources-and-contribution">4. Sources and contribution</h5>
+<ul>
+<li><p>arXiv:2607.24655v1, J. Fornal, Y.-C. Sun, ‘On the problem of
+large gcd for disjoint residue classes’ (2026), Theorem 1.1: max
+gcd(m_i,m_j) &gt;&gt; k exp(-(2+o(1)) sqrt(log k/log log k)) — CITED for
+context only (fetched; introduction and section structure read, proofs
+not reproduced)</p></li>
+<li><p>K. O’Bryant, ‘On Z.-W. Sun’s disjoint congruence classes
+conjecture’, Combinatorial Number Theory, de Gruyter 2007, 403–412 —
+CITED at second hand via the introduction of arXiv:2607.24655 (integer
+conjecture for k &lt;= 20); not read</p></li>
+<li><p>Z.-W. Sun, ‘Finite covers of groups by cosets or subgroups’,
+Internat. J. Math. 17 (2006) 1047–1064 — origin of the conjecture and
+its group form; cited at second hand via arXiv:2607.24655, not
+read</p></li>
+<li><p>Mertens’ theorem, sum_{p&lt;=x} 1/p = log log x + O(1); explicit
+form J. B. Rosser, L. Schoenfeld, Illinois J. Math. 6 (1962), Thm 5
+(3.20): sum_{p&lt;=x}1/p &lt; log log x + B + 1/(2 log^2 x), x&gt;1, B =
+0.2614972… — CITED from memory, used only in Corollary 6(2)</p></li>
+<li><p>Position with respect to the literature: State of the art for
+this cell (direction (b)): arXiv:2607.24655 (Fornal–Sun, 27 Jul 2026),
+Theorem 1.1, which I fetched and read in part (introduction and section
+structure, not the full proofs): “Let a_1 (mod m_1),…,a_k (mod m_k) be
+pairwise disjoint residue classes. Then max gcd(m_i,m_j) &gt;&gt; k
+exp(-(2+o(1)) sqrt(log k / log log k)).” — CITED, not reproduced. Note
+this is <em>stronger</em> than the bound quoted in the problem statement
+(exponent log k/log log k without the square root): the square-root
+version already “improves the exponential factor” asked for in (b); but
+by the hand-in rules a citation scores nothing, and the paper is ~2000
+lines (weighted gcd graph, sieve-theoretic partition Prop. 2.1, Möbius
+inversion and DFT in Prop. 2.2, key Lemma 4.1), which I judged not
+reproducible and checkable within one iteration. Its introduction also
+records (CITED, not checked): O’Bryant proved the integer conjecture for
+k &lt;= 20 <span>[</span>K. O’Bryant, On Z.-W. Sun’s disjoint congruence
+classes conjecture, Combinatorial Number Theory, de Gruyter 2007,
+403–412<span>]</span>; Zhu proved the group form for k=3,4
+<span>[</span>Int. J. Mod. Math. 3 (2008)<span>]</span>; Sun proved k=2
+and finite p-groups <span>[</span>Internat. J. Math. 17
+(2006)<span>]</span>. The problem’s statement that the group form is
+known for k&lt;=5 is consistent with arXiv:2608.15873 (Menon) /
+Margolis–Schnabel on G-harmonic tuples, relevant only to direction (c).
+arXiv:2603.26043 and arXiv:1511.04293 concern disjoint <em>covering</em>
+systems with one repeated modulus and are not relevant here. My approach
+departs from Fornal–Sun: instead of weighting vertices over all n &lt;=
+d and using Fourier analysis, it uses only the affine rescaling y -&gt;
+r+py inside a residue class mod a prime, an elementary recursion, and a
+closed-form induction. The price is the exponent (1/2 instead of
+1-o(1)); the gain is a complete proof.</p></li>
+</ul>
+<h5 id="limits-and-unresolved-parts">5. Limits and unresolved parts</h5>
+<p>Referee’s blocking point: The strongest result actually proved is
+Corollary 6: max gcd(m_i,m_j) &gt;= k^{1/3} unconditionally, and &gt;=
+c<em>sqrt(k)/log k conditional on Mertens/Rosser–Schoenfeld. The cell-6
+target requires one of: (a) deciding a size k &gt;= 25; (b) gcd &gt;= ck
+for an absolute c &gt; 0, or an improvement of the known factor
+k</em>exp(-(2+o(1)) log k/log log k) (i.e. something better than
+k^{1-o(1)}); (c) the group form at k = 6. A bound of order k^{1/2-o(1)}
+is strictly weaker than the already-known k^{1-o(1)} and does not touch
+(a) or (c). The submission’s own remarks concede that the recursion of
+Lemma 4 cannot give better than F(g) ≲ g^2/2, i.e. gcd ≳ sqrt(2k), so no
+route to the target is present. The declared claim ‘main’ is therefore
+not established, and no other reusable claim was declared. Next step
+required: Address the stated blocking obligation without silently
+changing the target Gaps declared by the author: - Corollary 6(2) relies
+on Mertens’ theorem (and, for the explicit constant 1/4, on the
+Rosser–Schoenfeld inequality sum_{p&lt;=x}1/p &lt; log log x + B + 1/(2
+log^2 x)), quoted from memory and not re-derived here; the qualitative
+form ‘c sqrt(k)/log k for some absolute c’ needs only Mertens, the
+explicit constant needs the RS form. Everything else (Lemmas 1–4,
+Theorem 5, Corollary 6(1)) is self-contained. - The result is weaker
+than the literature (exponent 1/2 vs 1-o(1)); it does not achieve any of
+the three targets of cell 6. The numerical observation R(g,2) &lt;= g^2
+for g &lt;= 3000 is evidence only and is not used in any proof. -
+Literature statements attributed to O’Bryant (k &lt;= 20), Zhu (group
+form k=3,4) and Sun (k=2, p-groups) are taken from the introduction of
+arXiv:2607.24655 and were not checked against the original papers.</p>
 <h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
 <h4 id="run-p4_c6">Run <code>p4_c6</code></h4>
 <dl>

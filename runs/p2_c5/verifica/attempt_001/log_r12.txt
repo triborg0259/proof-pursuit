@@ -1,0 +1,22 @@
+seme 12 passo 2: costo 2552 |R|=1 |B|=2
+seme 12 passo 3: costo 2544 |R|=2 |B|=2
+seme 12 passo 4: costo 2536 |R|=3 |B|=2
+seme 12 passo 5: costo 2528 |R|=4 |B|=2
+seme 12 passo 8: costo 2520 |R|=5 |B|=4
+seme 12 passo 9: costo 2512 |R|=6 |B|=4
+seme 12 passo 12: costo 2504 |R|=7 |B|=6
+seme 12 passo 21: costo 2496 |R|=8 |B|=8
+seme 12 passo 27: costo 2488 |R|=9 |B|=11
+seme 12 passo 57: costo 2480 |R|=11 |B|=22
+seme 12 passo 65: costo 2472 |R|=12 |B|=28
+seme 12 passo 107: costo 2464 |R|=14 |B|=41
+seme 12 passo 1858220: costo 2456 |R|=18 |B|=126
+seme 12 passo 2016260: costo 2454 |R|=19 |B|=131
+seme 12 passo 2016270: costo 2448 |R|=18 |B|=130
+seme 12 passo 2847324: costo 2440 |R|=22 |B|=136
+seme 12 passo 3992712: costo 2432 |R|=21 |B|=126
+seme 12 passo 5872856: costo 2424 |R|=19 |B|=129
+seme 12 passo 8361011: costo 2416 |R|=20 |B|=129
+seme 12 passo 10029177: costo 2408 |R|=20 |B|=133
+seme 12 passo 12708896: costo 2400 |R|=21 |B|=148
+seme 12: costo migliore 2400
