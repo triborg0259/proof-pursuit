@@ -59,6 +59,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | 6 | oltre (13 pt, open) | in analisi | |
 
 ## Registro decisioni e ostacoli
+- 2026-09-26 ~13:35: ciclo end-to-end `researcher/loop.py` (test mock verdi) + ricerca arXiv `literature.py` con campo `literature_position` obbligatorio nel tentativo. Creative NON collegato per scelta: arriva dal team; il loop ha il punto d'aggancio `--creative-cmd`. arXiv non ha letteratura sul problema 2 (ricerca fatta, esito vuoto).
 - 2026-09-26 ~13:15: integrato il Referee di gabundos (branch gabundos-patch-1, zip) in `referee/`; ponte `researcher/bridge_referee.py` testato offline. Il branch NON è stato mergiato (base vecchia, cancellerebbe runs/).
 - 2026-09-26: MVP Researcher (Persona 1 del brief) costruito e testato: `researcher/`, schemi in `shared/schemas/`, 4 test mock + 2 run reali via CLI. Repo reso privato.
 - 2026-09-26: letteratura P1 (Bilyk–Matzke, letta): solo il piano è risolto; P3/P5/P6 e '6 in R^4' aperti al 2018. Fonti in problema-1/fonti/.

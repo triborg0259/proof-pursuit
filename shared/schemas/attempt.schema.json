@@ -4,8 +4,8 @@
   "description": "Output del Researcher, input del Referee. Il Researcher non giudica e non aggiorna highest_verified_cell.",
   "type": "object",
   "required": ["target_cell", "subgoal", "approach", "approach_family", "reason_for_choice",
-               "proof_attempt", "claims_used", "sources_used", "code_used", "claimed_progress",
-               "claimed_status", "self_reported_gaps"],
+               "literature_position", "proof_attempt", "claims_used", "sources_used", "code_used",
+               "claimed_progress", "claimed_status", "self_reported_gaps"],
   "properties": {
     "target_cell": {"type": "integer", "minimum": 1},
     "subgoal": {"type": "string", "description": "UN solo obiettivo per iterazione"},
@@ -16,6 +16,7 @@
       "exact_computation", "special_case", "equivalent_statement", "counterexample_search",
       "stronger_or_weaker_lemma", "reduction", "case_analysis", "other"]},
     "reason_for_choice": {"type": "string"},
+    "literature_position": {"type": "string", "description": "cosa dice lo stato dell'arte (arXiv id citati) per questa cella e perche' l'approccio scelto lo segue, lo adatta o se ne discosta; 'none found' se la ricerca non ha dato nulla"},
     "proof_attempt": {"type": "string", "description": "prova completa in Markdown+LaTeX, ogni passo giustificato"},
     "claims_used": {"type": "array", "items": {"type": "string"}, "description": "claim gia' verificati (da verified_claims) usati come ipotesi"},
     "sources_used": {"type": "array", "items": {"type": "string"}, "description": "riferimenti precisi; vuoto se nessuno"},

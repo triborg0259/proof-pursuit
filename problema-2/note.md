@@ -58,7 +58,7 @@ Prove computer-assisted ammesse (< 10 min, codice incluso, spiegazione del perch
 - **E. Bound inferiori migliori**: raffinare $p(v)\ge\max(1,\deg^-(v))$ con un'analisi dei vertici a
   $\deg^-\ge2$ i cui predecessori hanno $\deg^-\ge2$; oppure LP/ILP sul DAG; oppure prova computer-assisted per C6
   (dubbio: $Q_9$ ha 512 vertici, lo spazio è enorme; serve un argomento strutturale, non una enumerazione).
-- **F. Letteratura**: cercare "uphill paths hypercube", generalizzazioni di IMO 2022 P6 (es. arXiv 2023–2026),
+- **F. Letteratura**: ricerca arXiv fatta (13:30) con "uphill path", "Nordic square", "hypercube labelling", "acyclic orientations of the hypercube": nessun risultato pertinente. Il problema sul cubo è inedito. Originale: cercare "uphill paths hypercube", generalizzazioni di IMO 2022 P6 (es. arXiv 2023–2026),
   OEIS per la sequenza $U(Q_d)$.
 
 ## Risultati

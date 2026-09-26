@@ -73,6 +73,27 @@ Il backend CLI (`CliBackend`) implementa il loro protocollo `JSONBackend` con `c
 `ClaudeBackend` (SDK, chiave API) usa `tool_choice` forzato, che su Claude Fable 5.1 restituisce 400: usare Opus.
 Test: `.venv/bin/python tests/test_bridge_referee.py` (offline).
 
+## Ciclo end-to-end (`loop.py`)
+Researcher → Referee → decisione → (REJECT) Researcher rilegge `fatal_error` → … fino a READY_FOR_HUMAN.
+```
+python3 researcher/loop.py --workdir runs/X --max-iter 4 --researcher-backend cli --shell full --effort high --referee cli \
+    --literature "frase esatta 1" --literature "frase esatta 2" [--creative-cmd "python3 creative/creative.py --workdir {workdir}"]
+python3 researcher/loop.py --workdir runs/X --researcher-backend mock --referee mock --mock-rejects 2   # test senza modelli
+```
+Regole di arresto: READY_FOR_HUMAN/ACCEPT (approvazione umana), COUNTEREXAMPLE_FOUND, KNOWN_OPEN, UNKNOWN_STATUS, `--max-iter`.
+PARTIAL_PROGRESS: i claim accettati entrano in `state.verified_claims`. Creative: punto d'aggancio `--creative-cmd`
+(deve scrivere `{workdir}/creative_ideas.json`), chiamato su `request_creative`, `stagnation_signal` o aumento di
+`stagnation_count`; se assente, avviso e si prosegue. Traccia per iterazione in `loop_log.jsonl`.
+Test: `.venv/bin/python tests/test_loop.py`.
+
+## Letteratura (`literature.py`, arXiv)
+Ricerca deterministica sull'API pubblica di arXiv (frasi esatte per query multi-parola; sintassi nativa `ti:`, `au:`
+passata com'è), salvata in `literature.json` e iniettata nel prompt come sezione LITERATURE con gli abstract.
+Il tentativo deve contenere `literature_position`: cosa dà lo stato dell'arte per la cella e perché l'approccio lo segue,
+lo adatta o se ne discosta, con id arXiv. Gli abstract non sono prove: un risultato preso da un paper è CITED, non
+provato, salvo riproduzione completa (possibile con shell `full` scaricando il PDF). Esito onesto quando non c'è nulla:
+`literature.json = []` e `literature_position = "none found"` (è il caso del problema 2, inedito).
+
 ## Limiti noti
 - La similarità dei `fatal_error` è lessicale: un Referee che riformula lo stesso errore con parole diverse può
   ritardare la rilevazione della stagnazione (il Researcher può comunque impostare `request_creative` da solo).

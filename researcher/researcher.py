@@ -103,6 +103,7 @@ def load_context(workdir: Path):
     if context["state.json"] is None:
         context["state.json"] = default_state(workdir.name)
     context["history"] = load_history(workdir)
+    context["literature"] = read_json(workdir / "literature.json") or []  # prodotto da literature.py (arXiv)
     return context
 
 
@@ -195,6 +196,9 @@ def build_user_prompt(context, stagnating, reason, shell_dir=None, shell_mode="s
         "# FAILED ATTEMPTS (do not repeat without a stated change)\n" + (context["failed_attempts.md"] or "(none recorded)"),
         _history_section(context["history"]),
     ]
+    if context.get("literature"):
+        from literature import sezione_prompt  # stesso pacchetto; import locale per non legare i test a arXiv
+        sections.append(sezione_prompt(context["literature"]))
     if context["referee_report.json"]:
         sections.append(_json_block("LAST REFEREE REPORT", context["referee_report.json"]))
     if context["creative_ideas.json"]:
@@ -302,6 +306,7 @@ def call_mock(system_prompt, user_prompt, schema, model=None, effort=None, **_):
     cell = int(re.search(r"cell (\d+)", user_prompt).group(1))
     attempt = {"target_cell": cell, "subgoal": "mock subgoal", "approach": f"mock {family}", "approach_family": family,
                "reason_for_choice": "mock: avoid families already rejected" if "family=" in user_prompt else "mock: first natural approach",
+               "literature_position": "none found" if "# LITERATURE" not in user_prompt else "mock: cites the listed abstracts",
                "proof_attempt": "(x-1)^2 >= 0 hence x^2 - 2x + 1 >= 0, i.e. x^2 + 1 >= 2x.", "claims_used": [],
                "sources_used": [], "code_used": [], "claimed_progress": "mock", "claimed_status": "CELL_SOLVED_CANDIDATE",
                "self_reported_gaps": [], "request_creative": False}

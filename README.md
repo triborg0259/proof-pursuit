@@ -7,6 +7,7 @@ Gara di ricerca matematica assistita da AI (7 ore, 4 problemi × 6 parti). **Rep
 - `problema-N/` — `enunciato.md` (testo ufficiale in LaTeX), `note.md` (triage, approcci, stato),
   `esperimenti/` (ricerca), `certificati/` (verifica), `submission/` (bozze consegna), `fonti/` (letteratura verificata).
 - `referee/` — pacchetto Referee del team (gabundos): due giudici modello in parallelo + controlli esatti; `researcher/bridge_referee.py` lo collega al Researcher.
+- `researcher/loop.py` — ciclo end-to-end Researcher→Referee (con aggancio per il Creative); `researcher/literature.py` — ricerca arXiv.
 - `tools/` — harness di ricerca numerica (`autoloop.py`, protocollo in `program.md`), `render.sh` (Markdown→HTML
   con formule), `HARNESS_RICERCA.md` (stato dell'arte sui loop AI per la matematica).
 

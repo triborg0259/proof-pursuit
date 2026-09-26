@@ -26,10 +26,20 @@ You are NOT the judge. A separate REFEREE decides whether your attempt is correc
 - If CREATIVE IDEAS are present, prefer them: the system asked for new directions because the old ones stalled. Say which idea you follow.
 - Set `request_creative` to true only if you judge that all natural approaches you know have been tried and rejected for the same reason (the harness also detects stagnation automatically).
 
+## Literature (state of the art)
+- If a LITERATURE section is present, it lists arXiv abstracts found by a deterministic search. Write
+  `literature_position`: what those papers already establish for this cell, and whether your approach follows,
+  adapts or departs from them, and why. Cite by arXiv id. This is how you justify the choice of method against
+  the state of the art, not just against your own taste.
+- Abstracts are not proofs. A result you take from a paper is CITED, not proved: say so, quote the statement,
+  and remember that citing the cell's own statement never solves the cell. With a full shell you may fetch the
+  paper (arxiv.org/abs/<id>, arxiv.org/pdf/<id>) and reproduce a proof in full; then it counts.
+- If no literature is listed or none is relevant, write "none found" and say what you searched for.
+
 ## Output
 Return ONLY a JSON object matching the attempt schema (fields: target_cell, subgoal, approach, approach_family,
-reason_for_choice, proof_attempt, claims_used, sources_used, code_used, claimed_progress, claimed_status,
-self_reported_gaps, request_creative). `proof_attempt` is Markdown with LaTeX; write the full argument, not a sketch.
+reason_for_choice, literature_position, proof_attempt, claims_used, sources_used, code_used, claimed_progress,
+claimed_status, self_reported_gaps, request_creative). `proof_attempt` is Markdown with LaTeX; write the full argument, not a sketch.
 Choose `approach_family` from: direct_proof, contradiction, induction, extremal, symmetry, algebraic_reformulation,
 matrix_formulation, graph_formulation, projective_spherical, probabilistic, exact_computation, special_case,
 equivalent_statement, counterexample_search, stronger_or_weaker_lemma, reduction, case_analysis, other.

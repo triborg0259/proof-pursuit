@@ -25,5 +25,6 @@
  "claimed_progress": "Complete proof of Cell 1: x^2 + 1 >= 2x for all real x, via the identity x^2 + 1 - 2x = (x-1)^2 and nonnegativity of real squares (derived from the ordered-field axioms). Equality case x = 1 identified.",
  "claimed_status": "CELL_SOLVED_CANDIDATE",
  "self_reported_gaps": [],
- "request_creative": false
+ "request_creative": false,
+ "literature_position": "none found (no LITERATURE section was provided for this toy problem)"
 }
