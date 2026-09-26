@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Proof Pursuit — system architecture</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <style type="text/css">body{font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:860px;margin:40px auto;line-height:1.45;color:#111}
+table{border-collapse:collapse;width:100%;font-size:0.9em}th,td{border:1px solid #bbb;padding:5px 8px;vertical-align:top}th{background:#eee}
+pre{font-size:0.72em;line-height:1.2;background:#f6f6f6;padding:8px;overflow-x:hidden;white-space:pre}code{font-size:0.95em}
+h1{font-size:1.6em}h2{font-size:1.25em;margin-top:1.4em}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — system architecture</h1>
+</header>
+<h1 id="proof-pursuit-multi-agent-system-for-verified-mathematical-research">Proof
+Pursuit — multi-agent system for verified mathematical research</h1>
+<p>AI-assisted mathematical research competition: 7 hours, 4 problems ×
+6 cells of increasing difficulty (1/2/3/5/8/13 points). Only verifiable
+proofs and certificates count. <strong>Nothing is sent to the platform
+from the repo</strong>: submissions remain drafts in
+<code>problema-N/submission/</code> until a human approves them.</p>
+<p>This README explains the entire pipeline: from the documents with the
+formalized problems, to the loop between the agents, to how and why each
+agent decides, up to the structured output (submissions + LaTeX report)
+to be uploaded to the platform.</p>
+<hr />
+<h2 id="repo-map">1. Repo map</h2>
+<pre><code>CLAUDE.md            working protocol (applies to humans and agents): what a proof is, what it is not
+STATUS.md            status of the 24 cells with evidence; decision log
+problema-N/          enunciato.md (official text in LaTeX) · note.md (triage, approaches) · fonti/ (literature read,
+                     arxiv.json) · esperimenti/ (research) · certificati/ (verification, separate) · submission/ (drafts)
+shared/schemas/      the CONTRACT between the agents: state · attempt · referee_report · creative_ideas (JSON Schema)
+researcher/          Researcher (researcher.py), arXiv search (literature.py), bridge to the Referee
+                     (bridge_referee.py), end-to-end cycle (loop.py)
+referee/             Referee (gabundos): two model judges in parallel + exact checks + deterministic merge
+creative/            Creative (Marco Renzi): analyzes the history of attempts and proposes new directions
+runs/                one folder per cell (pN_cK): problem.md, state.json, attempts/, referee_report.json,
+                     creative_ideas.json, loop_log.jsonl (the trace of decisions), verifica/ (re-runs)
+tools/               prepara_runs.py · lancia_loop.sh · cerca_letteratura.sh · build_report.py · run_tests.sh ·
+                     autoloop.py (numerical harness) · render.sh
+report/              generated LaTeX report (proof_pursuit.tex) with proofs, decisions, code and citations
+tests/               tests of the Researcher, the bridge, the loop and Referee B (all without models)
+SPIEGAZIONE_SEMPLICE.md   the four problems and the method explained with metaphors</code></pre>
+<hr />
+<h2 id="the-complete-pipeline">2. The complete pipeline</h2>
+<pre><code>   OFFICIAL TEXT                   FORMALIZATION                     WORKING FOLDERS (one per cell)
+ ┌──────────────────┐   by hand  ┌──────────────────────┐  prepara_runs.py  ┌──────────────────────────────┐
+ │ statement pasted │ ─────────► │ problema-N/          │ ────────────────► │ runs/pN_cK/                   │
+ │ from the plat-   │            │   enunciato.md (faith│                   │   problem.md   (statement +   │
+ │ form             │            │   ful LaTeX)         │                   │                 target cell)  │
+ └──────────────────┘            │   note.md (triage)   │                   │   state.json   (contract)     │
+                                 │ runs/celle.json      │                   │   literature.json (arXiv)     │
+                                 │   (24 cell state-    │                   └──────────────┬───────────────┘
+   ARXIV (public API)            │    ments, textual)   │                                  │
+ ┌──────────────────┐            └──────────────────────┘                                  │
+ │ cerca_letteratura│ ──► problema-N/fonti/arxiv.json ──(relevance filter)─────────────────┘
+ └──────────────────┘                                                                      │
+                                                                                           ▼
+                                                                    researcher/loop.py  (§3: the cycle)
+                                                                                           │
+                    ┌──────────────────────────────────────────────────────────────────────┤
+                    ▼                                                                      ▼
+   HUMAN REVIEW (CLAUDE.md §Review)                                        TRACE runs/pN_cK/loop_log.jsonl
+   problema-N/submission/parte-K.md  ◄── draft written by hand from the        + attempts/ + referee_*.json
+   STATUS.md updated with evidence            approved attempt (READY_FOR_HUMAN) + creative_ideas.json + verifica/
+                    │                                                                      │
+                    └──────────────────────────► tools/build_report.py ◄───────────────────┘
+                                                          │
+                                                          ▼
+                                     report/proof_pursuit.tex   (§6: structured output)</code></pre>
+<p>Fixed points of the pipeline: - <strong>The statement is
+protected.</strong> The cell text enters <code>state.json</code> as
+<code>cell_statement</code> and the Referee judges <em>that</em> text:
+no agent can rephrase the target. - <strong>The literature is
+deterministic.</strong> <code>literature.py</code> queries arXiv (exact
+phrase, real ids, abstracts read) before the attempt; the Researcher
+must declare in <code>literature_position</code> whether it follows,
+adapts or departs from the state of the art and why. A result taken from
+a paper is CITED, not proven. - <strong>No agent ever declares
+“solved”.</strong> The Referee reaches at most
+<code>READY_FOR_HUMAN</code>; <code>ACCEPT</code> is a human
+signature.</p>
+<hr />
+<h2 id="the-cycle-of-a-cell-iteration-by-iteration">3. The cycle of a
+cell, iteration by iteration</h2>
+<pre><code>                         ┌─────────────────────────── ITERATION i ─────────────────────────────┐
+                         │                                                                      │
+   state.json ──────────►│  ① RESEARCHER  (researcher.py run --shell full)                       │
+   referee_report.json ─►│     reads: statement, verified claims, last verdict, failed           │
+   failed_attempts.md ──►│     attempts, Creative&#39;s ideas, arXiv abstracts                       │
+   creative_ideas.json ─►│     chooses ONE subgoal and ONE approach family                       │
+   literature.json ─────►│     works in a real shell (python, network) and writes               │
+                         │     attempts/attempt_i.json: proof_attempt, code_used, claims_used,   │
+                         │     reason_for_choice, literature_position, claimed_status, gaps      │
+                         │                              │                                        │
+                         │  ② BRIDGE (bridge_referee.py) │  attempt → Referee&#39;s ReviewInput      │
+                         │     - claims used but not verified → claims `dep_k` (the Referee     │
+                         │       sees them and can mark them UNVERIFIED, they do not vanish)     │
+                         │     - RE-RUNS every script in code_used in a clean copy of the       │
+                         │       sandbox: exit code and stdout become `trusted_observations`     │
+                         │       (results reported by the candidate are not taken on trust)     │
+                         │                              │                                        │
+                         │  ③ REFEREE (referee/)        ▼                                        │
+                         │     ┌──────────────────┐  ┌──────────────────────┐                    │
+                         │     │ Judge A          │  │ Judge B              │  independent,      │
+                         │     │ MATHEMATICS:     │  │ EVIDENCE: sources,   │  same submission,  │
+                         │     │ first unjustified│  │ code, exhaustiveness,│  neither sees      │
+                         │     │ step             │  │ competition rules    │  the other         │
+                         │     └────────┬─────────┘  └──────────┬───────────┘                    │
+                         │              └──────── deterministic merge ────────┘                   │
+                         │                 (pydantic strict: consistent PASS/PARTIAL/FAIL)        │
+                         │                              │                                        │
+                         │  ④ DECISION (loop.py)        ▼   referee_report.json                   │
+                         │     READY_FOR_HUMAN ─────► STOP: submission draft + human review       │
+                         │     COUNTEREXAMPLE_FOUND ─► STOP: the cell statement is false          │
+                         │     KNOWN_OPEN / UNKNOWN ─► STOP: by hand                              │
+                         │     PARTIAL_PROGRESS ────► accepted claims enter                       │
+                         │                            state.verified_claims → iteration i+1       │
+                         │     REJECT ──────────────► failed_attempts.md (family + error)         │
+                         │                            stagnation? ──yes─► ⑤ CREATIVE              │
+                         │                                          └─no──► iteration i+1         │
+                         │                                                                      │
+                         │  ⑤ CREATIVE (creative/)  reads the WHOLE history (attempts + verdicts) │
+                         │     writes creative_ideas.json: blocker_analysis, avoid[], ideas[]     │
+                         │     (SAFE / RISKY, why_different, why_it_might_work)                   │
+                         │     → the Researcher of the next iteration MUST prefer them           │
+                         └──────────────────────────────────────────────────────────────────────┘</code></pre>
+<p>Each iteration leaves a line in
+<code>runs/pN_cK/loop_log.jsonl</code> with: family and subgoal chosen
+by the Researcher and <strong>why</strong>
+(<code>researcher_reason</code>, <code>literature_position</code>),
+verdict and <strong>fatal error</strong> of the Referee
+(<code>fatal_error</code>, <code>next_blocker</code>), whether and
+<strong>why</strong> the Creative stepped in (<code>creative</code>,
+<code>creative_analysis</code>). It is this trace that ends up in the
+submission and in the LaTeX report (§6).</p>
+<hr />
+<h2 id="who-decides-what-when-and-why">4. Who decides what, when and
+why</h2>
+<table>
+<colgroup>
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Moment</th>
+<th>Who</th>
+<th>Decision</th>
+<th>On what basis</th>
+<th>Where it is recorded</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>before the loop</td>
+<td>human</td>
+<td>formalizes the statement, fixes the cell and the rules</td>
+<td>official text, <code>CLAUDE.md</code></td>
+<td><code>problema-N/enunciato.md</code>, <code>runs/celle.json</code>,
+<code>shared/competition_rules.example.json</code></td>
+</tr>
+<tr>
+<td>start of iteration</td>
+<td>Researcher</td>
+<td>ONE subgoal, ONE family (<code>approach_family</code>)</td>
+<td>state, last <code>fatal_error</code>, failed attempts, Creative’s
+ideas, arXiv abstracts</td>
+<td><code>attempt_i.json: subgoal, reason_for_choice, literature_position</code></td>
+</tr>
+<tr>
+<td>during the attempt</td>
+<td>Researcher</td>
+<td>which computations to do and with what rigor (<code>exact</code> /
+<code>interval</code> / <code>float_exploration_only</code>)</td>
+<td>competition rules (&lt; 10 min, justified finite set)</td>
+<td><code>attempt_i.json: code_used[]</code>, <code>sandbox/</code></td>
+</tr>
+<tr>
+<td>end of attempt</td>
+<td>Researcher</td>
+<td>honest <code>claimed_status</code> and
+<code>self_reported_gaps</code></td>
+<td>what it has actually justified</td>
+<td><code>attempt_i.json</code></td>
+</tr>
+<tr>
+<td>bridge</td>
+<td>orchestrator</td>
+<td>re-run the code; record unverified claims as <code>dep_k</code></td>
+<td>the Referee judges only trusted observations</td>
+<td><code>verifica/attempt_i/osservazioni.json</code>,
+<code>review_input.json</code></td>
+</tr>
+<tr>
+<td>judgment</td>
+<td>Referee A</td>
+<td>mathematical PASS / PARTIAL / FAIL, <strong>first</strong> fatal
+error</td>
+<td>only the proof, like a journal referee</td>
+<td><code>attempts/packet_i.json: math_review</code></td>
+</tr>
+<tr>
+<td>judgment</td>
+<td>Referee B</td>
+<td>PASS / PARTIAL / FAIL on evidence; provenance of each claim</td>
+<td>sources, trusted observations, rules</td>
+<td><code>attempts/packet_i.json: evidence_review</code></td>
+</tr>
+<tr>
+<td>merge</td>
+<td>Referee (code)</td>
+<td>final verdict, <code>review_status</code>, accepted claims,
+<code>stagnation_signal</code></td>
+<td>deterministic rules, no model</td>
+<td><code>referee_report.json</code></td>
+</tr>
+<tr>
+<td>decision</td>
+<td>loop.py</td>
+<td>stop / continue / integrate claims / call the Creative</td>
+<td>table in §3</td>
+<td><code>loop_log.jsonl</code></td>
+</tr>
+<tr>
+<td>stagnation</td>
+<td>Creative</td>
+<td>analysis of the block, what to avoid, 2–4 new directions</td>
+<td>the whole history of attempts</td>
+<td><code>creative_ideas.json</code>,
+<code>creative/activation_*.json</code></td>
+</tr>
+<tr>
+<td>after the STOP</td>
+<td>human</td>
+<td>write the submission draft, critical review,
+<code>STATUS.md</code></td>
+<td><code>CLAUDE.md</code> protocol</td>
+<td><code>problema-N/submission/parte-K.md</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="why-and-when-the-creative-steps-in">Why and when the Creative
+steps in</h3>
+<p>The Creative does <strong>not</strong> run at every iteration: it
+would cost and scatter effort. It steps in only when the cycle is
+spinning idly, and the loop recognizes this through three independent
+signals, each sufficient on its own
+(<code>loop.py: serve_creative</code>):</p>
+<ol type="1">
+<li><strong>the Researcher asks for it</strong>
+(<code>request_creative: true</code>): it believes it has exhausted the
+natural avenues;</li>
+<li><strong>the Referee signals it</strong>
+(<code>stagnation_signal</code>): the same fatal error keeps
+repeating;</li>
+<li><strong>the stagnation counter rises</strong>
+(<code>state.stagnation_count</code>): the Researcher itself detects,
+before attempting, that the latest attempts share the same family and
+the same reason for rejection (lexical similarity of the
+<code>fatal_error</code>).</li>
+</ol>
+<p>When it steps in, it reads the <em>whole</em> history (not just the
+last attempt), writes why the block keeps repeating
+(<code>blocker_analysis</code>), what not to repeat (<code>avoid</code>)
+and genuinely different directions with declared risk
+(<code>ideas</code>). The Researcher of the next iteration sees these
+ideas in the prompt and must say which one it follows and why. The
+Creative <strong>certifies nothing and never declares a cell
+solved</strong>: that remains the job of the Referee, then of the
+human.</p>
+<h3 id="why-two-judges-and-a-model-free-merge">Why two judges and a
+model-free merge</h3>
+<p>A single model saying “correct” is not a proof. The Referee separates
+two questions that are readily confused: <em>is it true?</em> (A: logic,
+missing cases, target mismatch, upper bound passed off as exact value)
+and <em>is it proven with what has been shown?</em> (B: sources
+retrieved or not, computations reproduced or not, exhaustive or sampled,
+float or exact). Neither judge sees the other. The merge is
+deterministic code with consistency rules: a PASS with a fatal error is
+rejected by the validator; a judge that cannot judge returns a
+<code>limitation</code>, which is never a FAIL. If a judge attaches a
+reservation to a valid report, the bridge moves it into the notes
+instead of losing the judgment (this was the real case of U(Q₅): a
+well-motivated PASS discarded for one field too many). Similarly, if B
+classifies the already-verified claims too, the bridge keeps only the
+candidate’s ones, as the merge validator requires. The normalizations
+only remove, they never add.
+<code>bridge_referee.py review --replay</code> re-merges the last saved
+raw reports without calling the models again: useful after a fix to the
+bridge.</p>
+<hr />
+<h2 id="the-contracts-sharedschemas">5. The contracts
+(shared/schemas)</h2>
+<ul>
+<li><code>state.schema.json</code> — <code>current_target</code>,
+<code>cell_statement</code> (protected), <code>verified_claims[]</code>,
+<code>failed_attempts[]</code>, <code>stagnation_count</code>,
+<code>cell_status</code> with allowed states SOLVED ·
+SOLVED_BY_COMPUTATION · PARTIAL_PROGRESS · UNRESOLVED · KNOWN_OPEN ·
+FALSE. The Researcher touches only <code>stagnation_count</code>;
+<code>highest_verified_cell</code> is moved only by the Referee.</li>
+<li><code>attempt.schema.json</code> — all fields mandatory
+(<code>literature_position</code> included); <code>claimed_status</code>
+∈ CELL_SOLVED_CANDIDATE · LEMMA_CANDIDATE · NUMERICAL_EVIDENCE_ONLY ·
+LITERATURE_ONLY · COUNTEREXAMPLE_CANDIDATE · NO_PROGRESS.</li>
+<li><code>referee_report.schema.json</code> — <code>verdict</code>,
+<code>review_status</code> (READY_FOR_HUMAN ≠ ACCEPT),
+<code>fatal_error</code>, <code>next_blocker</code>,
+<code>accepted_claims</code>, <code>stagnation_signal</code>.</li>
+<li><code>creative_ideas.schema.json</code> —
+<code>blocker_analysis</code>, <code>avoid[]</code>,
+<code>ideas[]</code> with risk and motivations.</li>
+</ul>
+<hr />
+<h2 id="structured-output-for-the-platform">6. Structured output for the
+platform</h2>
+<p>For each cell the platform receives a written submission. Here the
+path is:</p>
+<ol type="1">
+<li><strong>Loop STOP with READY_FOR_HUMAN</strong> ⇒ a human writes
+<code>problema-N/submission/parte-K.md</code> following
+<code>CLAUDE.md</code>: result and scope · complete proof (or
+certificate + justification) · verification instructions with measured
+times · sources (distinguishing existing results and our contribution) ·
+limitations.</li>
+<li><strong>Human critical review</strong> (missing hypotheses,
+circularity, code/statement discrepancies) ⇒ <code>STATUS.md</code>
+moves to <code>revisionato</code>. A READY_FOR_HUMAN verdict without
+review remains <code>bozza pronta</code>.</li>
+<li><strong>LaTeX report</strong> <code>tools/build_report.py</code> ⇒
+<code>report/proof_pursuit.tex</code>, for each problem and cell:
+official statement · status · submission (proof) · <strong>agents’
+decisions</strong> iteration by iteration (family, reason, verdict,
+fatal error, Creative’s intervention and its analysis) ·
+<strong>code</strong> the proof rests on, with the outcome of the
+trusted re-run and the Referee’s verdict · <strong>arXiv
+citations</strong> found by the deterministic search and used by the
+Researcher, with the declared position relative to the state of the
+art.</li>
+</ol>
+<p>Golden rule (CLAUDE.md): PROVEN / CITED (with source) / VERIFIED ON A
+FINITE RANGE / CONJECTURE are four different things and the submission
+keeps them separate.</p>
+<hr />
+<h2 id="how-to-use-it">7. How to use it</h2>
+<pre><code>python3 -m venv .venv &amp;&amp; .venv/bin/pip install numpy mpmath pydantic     # ambiente
+tools/run_tests.sh                                                        # tutte le suite, senza modelli
+tools/cerca_letteratura.sh                                                # arXiv → problema-N/fonti/arxiv.json
+.venv/bin/python tools/prepara_runs.py p1 p2                              # cartelle runs/pN_cK
+tools/lancia_loop.sh p1 2                # loop reale su tutte le celle di P1, 2 iterazioni, in parallelo
+tools/lancia_loop.sh p2 2 3 4 5 6        # P2, solo celle 3–6 (1–2 già chiuse)
+.venv/bin/python researcher/loop.py --workdir runs/p1_c1 --max-iter 3 --researcher-backend cli --shell full \
+      --referee cli --creative cli      # una cella sola, a mano
+.venv/bin/python tools/build_report.py   # → report/proof_pursuit.tex (+ HTML di anteprima se c&#39;è pandoc)</code></pre>
+<p>Operational notes: the Researcher with shell <code>full</code> runs
+with pre-authorized permissions and must be started from a human
+terminal (in Claude Code: <code>!</code> prefix). Backend:
+<code>claude -p --json-schema</code> with a subscription; no API key
+needed. Testing the cycle without models:
+<code>--researcher-backend mock --referee mock --creative rule_based</code>.</p>
+<h2 id="minimum-rules-for-collaborating">8. Minimum rules for
+collaborating</h2>
+<ol type="1">
+<li>Branch per person/part, small PRs to <code>main</code>;
+<code>STATUS.md</code> is updated in the same PR.</li>
+<li>Clean code: small functions, comments in Italian saying what and
+why, no duplicated dependencies.</li>
+<li>Every experiment: reproducible command, seed, times. Every
+certificate: separate from the research.</li>
+<li>No submission to the platform from the repo.</li>
+</ol>
+</body>
+</html>
