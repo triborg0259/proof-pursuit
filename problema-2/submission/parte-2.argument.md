@@ -1,4 +1,4 @@
-PROBLEM 2 — PART 2 (C2) — SUBMISSION DRAFT
+Problem 2 — Part 2 (C2) — submission draft
 
 Declared status: REVIEWED (ready for submission). Value $U(Q_5)=88$ with an explicit labelling; lower bound by
 reduction to a finite statement (★) refuted by exhaustive enumeration (three concordant implementations, one independent
@@ -6,7 +6,7 @@ per method). Automatic Referee: READY_FOR_HUMAN (judge A, mathematics: PASS on b
 runs; judge B, evidence: PASS, with INFO notes only, after the trusted re-execution of the code by the
 orchestrator). Human review of the reduction: done lemma by lemma (STATUS.md). Final approval remains human.
 
-1. RESULT AND SCOPE
+1. Result and scope
 
 $U(Q_5) = 88 = |E(Q_5)| + 8$. Optimal labelling (increasing label order; position $i$ of the string =
 coordinate $i$; the convention is irrelevant because coordinate permutations are automorphisms of $Q_5$), with 8 valleys:
@@ -14,7 +14,7 @@ coordinate $i$; the convention is irrelevant because coordinate permutations are
 peaks as in the complete list in §2 (upper bound table). The complete 32-element list is produced and
 verified by certificati/costruzione_88.py and certificati/verifica_dfs_88.py.
 
-2. PROOF
+2. Proof
 
 *(Text of the Researcher's attempt runs/p2_q5/attempts/attempt_001.json, re-read lemma by lemma by the team; the
 computational verifications were re-executed by the orchestrator in runs/p2_q5/verifica/attempt_001/.)*
@@ -23,7 +23,7 @@ $U(Q_5) = 88$
 
 Conventions. $V(Q_5)=\{0,1\}^5$, $u\sim v$ iff they differ in exactly one coordinate; $|V|=32$, $|E|=80$, every vertex has degree $5$. In a 0/1 string the $i$-th character from the left is coordinate $i$ (irrelevant for the count: coordinate permutations are automorphisms). For a labelling $f$, orient each edge from the smaller to the larger label ($u\to v$ iff $uv\in E$, $f(u)<f(v)$); $\deg^-(v)=\#\{u:u\to v\}$, $\deg^+(v)=\#\{w:v\to w\}$, $\deg^-(v)+\deg^+(v)=5$. Let $p(v)$ be the number of uphill paths whose last vertex is $v$. A valley is a vertex with $\deg^-=0$; a peak is a vertex with $\deg^+=0$. The vertex with label $1$ is a valley, so $v:=\#\text{valleys}\ge1$.
 
-0. PRELIMINARIES (RESTATED WITH PROOF FOR SELF-CONTAINEDNESS)
+0. Preliminaries (restated with proof for self-containedness)
 
 Lemma 1 (recursion). $p(v)=[v\text{ valley}]+\sum_{u\to v}p(u)$ and the total number of uphill paths is $T=\sum_v p(v)$.
 
@@ -33,7 +33,7 @@ Lemma 2. For every vertex $v$: $p(v)\ge1$, and $p(v)\ge\deg^-(v)$.
 
 Proof. From $v$ move repeatedly to a neighbour with smaller label while one exists; labels strictly decrease, so this stops at a valley; the reversed walk is an uphill path ending at $v$. Hence $p(v)\ge1$ for all $v$, and by Lemma 1, $p(v)\ge\sum_{u\to v}p(u)\ge\deg^-(v)$. $\square$
 
-1. THE EXCESS IDENTITY
+1. The excess identity
 
 Define the excess $X:=\sum_{(u\to w)\in E}\bigl(p(u)-1\bigr)$ (sum over all $80$ oriented edges). By Lemma 2 every term is $\ge0$.
 
@@ -64,7 +64,7 @@ Proof. Peaks have $\deg^-=5$; no peak is heavy (heavy needs $\deg^+\ge1$) and no
 
 Also note: peaks form an independent set (if two peaks were adjacent, the one with the smaller label would have $\deg^+\ge1$).
 
-2. CASE ANALYSIS: EVERY LABELLING WITH $T\LE87$ HAS ONE OF FOUR STRUCTURES
+2. Case analysis: every labelling with $T\le87$ has one of four structures
 
 Assume $T\le87$, i.e. (Lemma 3) $v+X\le7$ with $v\ge1$, so $X\le6$. By Corollary 6, $X\in\{0,3,4,5,6\}$ and $|H|\le2$.
 
@@ -83,7 +83,7 @@ Summary. If $T\le 87$ then there exist an independent set $I\subseteq V(Q_5)$ an
 
 > (★) there is an independent set $I$ of $Q_5$ with $|I|=12$ and a vertex $u\notin I$ such that $Q_5-(I\cup\{u\})$ is a forest.
 
-3. EXACT FINITE VERIFICATION: (★) NEVER HOLDS IN $Q_5$
+3. Exact finite verification: (★) never holds in $Q_5$
 
 Reduction. The maps $x\mapsto x\oplus t$ are automorphisms of $Q_5$ and act transitively on vertices, and (★) is invariant under automorphisms. Hence it suffices to check all independent $12$-sets $I$ containing the vertex $00000$ and all $u\notin I$.
 
@@ -96,7 +96,7 @@ $$U(Q_5)\ge 88.$$
 
 (The counts also make the impossibility of the $X=0$, $v=4$ structure transparent by hand: an independent $12$- or $13$-set turns out to lie in one parity class except for a few mixed sets, and any three even vertices contain two at distance $2$, which share two odd neighbours and thus close a $4$-cycle in the complement; but the proof relies only on the exhaustive check above.)
 
-4. UPPER BOUND: A LABELLING WITH EXACTLY 88 UPHILL PATHS
+4. Upper bound: a labelling with exactly 88 uphill paths
 
 Let $R=\{00000,11110\}$ and let $P$ be the $14$ even-weight vertices other than $R$. $P$ is independent (even-weight vertices are pairwise non-adjacent). The complement $F=R\cup\{\text{16 odd vertices}\}$ induces exactly the $10$ edges from $R$ to the odd vertices (the two vertices of $R$ are at distance $4$, so their neighbourhoods $\{10000,01000,00100,00010,00001\}$ and $\{01110,10110,11010,11100,11111\}$ are disjoint): $F$ is a forest with $18$ vertices, $10$ edges and $8$ components, namely the two stars centred at $R$ and the $6$ isolated odd vertices $11001,10101,01101,10011,01011,00111$.
 
@@ -105,11 +105,11 @@ i.e. labels $1$–$2$: the star centres; $3$–$8$: the six isolated odd vertice
 
 Count. The $8$ vertices with labels $1$–$8$ have all neighbours higher (their $F$-neighbours, if any, are leaves labelled $9$–$18$; their other neighbours are in $P$): they are valleys, $p=1$. Each leaf (labels $9$–$18$) has exactly one lower neighbour, its star centre, so $p=1$. Each peak has all $5$ neighbours lower, all in $F$ with $p=1$, so $p=5$. Total $T=18\cdot1+14\cdot5=88$. Verified exactly by two independent scripts: costruzione_88.py (recursion of Lemma 1) and verifica_dfs_88.py (explicit DFS enumeration of all uphill paths from the $8$ valleys), both printing $88$ and the same $8$ valleys.
 
-5. CONCLUSION
+5. Conclusion
 
 $U(Q_5)=88=|E|+8$, attained by the labelling in §4. Consistency checks (not part of the proof): the same Lemmas 3–7 for $Q_4$ give $c(u)\ge2$ and $3q=16+v$, reproducing $U(Q_4)=34$ with $v=2$; for $Q_3$ they reproduce $U(Q_3)=14$. The identity $T=80+v+X$ and the fact $X\in\{0\}\cup[3,\infty)$ were also sanity-checked on $200{,}000$ random labellings of $Q_5$ (sanity_eccesso.py; the smallest positive $X$ seen was $14$). Simulated annealing over labellings (ricottura_q5.py, 200k swap moves per seed, exact scoring) never went below $88$ in any seed run so far (evidence only).
 
-3. VERIFICATION: INSTRUCTIONS, DEPENDENCIES, TIMINGS
+3. Verification: instructions, dependencies, timings
 
 Dependencies: standard Python 3, no packages. All scripts use exact integer arithmetic.
 Timings measured on a laptop (trusted re-execution by the orchestrator, 2026-09-26). Code of the attempt:
@@ -121,14 +121,14 @@ Timings measured on a laptop (trusted re-execution by the orchestrator, 2026-09-
 - code_6 (python, rigour exact): Sanity check (evidence only, not part of the proof) of the identity T = 80 + #valleys + X and of X ∈ {0} ∪ [3,∞) on 200000 random labellings of Q_5 (all asserts
 - code_7 (python, rigour float_exploration_only): Simulated annealing over labellings (exploration only): best value found 88 in every seed run (seeds 0-5 in a first run, seeds 0-3 in a second run; 200k swap mo
 
-4. SOURCES AND CONTRIBUTION
+4. Sources and contribution
 
 - Counting lemma $p(v)=[\text{valle}]+\sum_{u\to v}p(u)$ and bound $\#\ge|E|+\#\text{valli}$: ours (part 1, re-proved here).
 - Context: IMO 2022 P6 (grid), cited only as context; no result taken from the literature.
 - Deterministic arXiv search (runs/p2_q5/literature.json, problema-2/fonti/arxiv.json): no work on uphill paths
   on the hypercube; the problem appears to be new. Contribution entirely ours.
 
-5. LIMITS AND UNRESOLVED PARTS
+5. Limits and unresolved parts
 
 - Gaps declared by the Researcher in the attempt:
 - The lower bound is computer-assisted at one point: statement (★) (no independent 12-set I and vertex u with Q_5 − (I ∪ {u}) acyclic) is proved by exhaustive enumeration, not by hand. The reduction to (★) is fully by hand; the enumeration is exact, covers the whole finite set (all 3672 independent 12-sets × 20 outside vertices), runs in < 1 s and was done by two methods. A hand proof of (★) was only sketched (parity-class argument), not written out.
@@ -141,7 +141,7 @@ Timings measured on a laptop (trusted re-execution by the orchestrator, 2026-09-
 - The cell is "checked instantly" on the value: the residual risk is an error in the reduction to (★); for this reason the reduction
   was re-read by hand and (★) refuted by three different programs.
 
-6. HOW THIS RESULT WAS OBTAINED (MULTI-AGENT TRACE)
+6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - No agent run on this cell; the text was written by the team from its notes.
@@ -150,16 +150,16 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Position w.r.t. the literature: none found. No LITERATURE section was supplied. I searched the web for "uphill paths" hypercube labelling valley minimum (WebSearch, 2026-09-26): only IMO 2022 Problem 6 material (Nordic squares, answer 2n^2-2n+1: AoPS wiki https://artofproblemsolving.com/wiki/index.php/2022_IMO_Problems/Problem_6, Evan Chen's notes https://web.evanchen.cc/exams/IMO-2022-notes.pdf, D. Grozev's blog https://dgrozev.wordpress.com/2022/07/16/three-graph-problems-on-imo-2022-problem-6/) and unrelated hypercube papers (arXiv 2404.18014 on layered subgraphs, 2310.18163 open problems). None treats the hypercube version. The repo notes (problema-2/note.md, item F) record an earlier arXiv search with the same conclusion. My approach follows the IMO 2022 lower-bound idea (p(v) ≥ max(1, deg^-(v))) and departs from it by quantifying the excess per vertex, which is what the hypercube (regular of odd degree 5) makes decisive.
   - Referee: UNKNOWN_STATUS / READY_FOR_HUMAN; next: Human reviews the exact target, proof and evidence, then approves explicit claims
 
-6B. TOKENS USED BY THE AGENTS
+6b. Tokens used by the agents
 
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 
-7. ARXIV LITERATURE CONSULTED
+7. arXiv literature consulted
 
 - arXiv:1412.3893v1 — The competition between simple and complex evolutionary trajectories in asexual populations (Ian E. Ochs, Michael M. Desai, 2014), found by query uphill paths; abstract read, full text not relied upon.
 
-8. CODE
+8. Code
 
 The complete code, with the orchestrator's trusted re-runs, is in the write-up https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p2_c2.tex and in the repository.
 

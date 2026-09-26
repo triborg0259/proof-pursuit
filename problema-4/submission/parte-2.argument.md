@@ -1,25 +1,25 @@
-PROBLEM 4 — PART 2 — SUBMISSION DRAFT
+Problem 4 — Part 2 — submission draft
 
 Declared status: SOLVED (approved). Complete proof written by the team; automatic Referee READY_FOR_HUMAN
 (judge A mathematics PASS, judge B evidence PASS); human approval recorded in runs/p4_c2/approval.json.
 
-1. RESULT AND SCOPE
+1. Result and scope
 
 Four disjoint classes: the statement of the part is proved in full, in the generality required (see the proof for the
 exact hypotheses). No computer calculation is needed.
 
-2. PROOF
+2. Proof
 
-CELL 2: FOUR PAIRWISE DISJOINT CLASSES HAVE A PAIR OF MODULI WITH $\GCD\GE4$
+Cell 2: four pairwise disjoint classes have a pair of moduli with $\gcd\ge4$
 
 Target. If $a_i\ (\mathrm{mod}\ m_i)$, $i=1,2,3,4$, are pairwise disjoint congruence classes ($m_i\ge1$), then $\gcd(m_i,m_j)\ge4$ for some $i<j$.
 
-LEMMA 0
+Lemma 0
 
 Let $g=\gcd(m,m')$. If $g\mid a-a'$ then the classes $a\ (\mathrm{mod}\ m)$ and $a'\ (\mathrm{mod}\ m')$ meet; equivalently, disjoint classes satisfy $g\nmid a-a'$.
 Proof. Write $m=g\mu$, $m'=g\mu'$ with $\gcd(\mu,\mu')=1$ and $a-a'=g\delta$. The element $a+g\mu t$ of the first class lies in the second iff $g\mu'\mid g(\delta+\mu t)$ iff $\mu'\mid\delta+\mu t$, which has the solution $t\equiv-\delta\mu^{-1}\pmod{\mu'}$ since $\mu$ is invertible modulo $\mu'$. $\square$
 
-PROOF OF THE CELL
+Proof of the cell
 
 Write $g_{ij}=\gcd(m_i,m_j)$ for $i\ne j$. Suppose, for a contradiction, that $g_{ij}\le3$ for all pairs. By Lemma 0, $g_{ij}=1$ is impossible for disjoint classes ($1\mid a_i-a_j$), hence
 $$g_{ij}\in\{2,3\}\quad\text{for all } i\ne j.\qquad(1)$$
@@ -41,22 +41,22 @@ Since $|T|\ge2$ is forced by Claim 3, all cases lead to a contradiction. Hence s
 
 Remark (not needed). The case $|T|=3$ shows more generally the mechanism used: an index whose modulus misses a prime $p$ forces all its gcds to avoid $p$.
 
-3. VERIFICATION: INSTRUCTIONS, DEPENDENCIES, TIMINGS
+3. Verification: instructions, dependencies, timings
 
 Proof by hand, no dependencies. Mechanical verification not needed; the automatic Referee (two independent judges,
 runs/p4_c2/attempts/packet_001.json) found no unjustified steps.
 
-4. SOURCES AND CONTRIBUTION
+4. Sources and contribution
 
 - arXiv:2607.24655 Fornal, Sun, On the problem of large gcd for disjoint residue classes (context only: asymptotic result, not used)
 - Position with respect to the state of the art: Fornal-Sun [2607.24655] use a gcd-coloured complete graph in the asymptotic regime; the same graph viewpoint underlies our finite argument, but the proof here is elementary and self-contained.
 - Contribution: the proof written here is the team's own, in full.
 
-5. LIMITS AND UNRESOLVED PARTS
+5. Limits and unresolved parts
 
 None: the part is proved. Declared gaps: none.
 
-6. HOW THIS RESULT WAS OBTAINED (MULTI-AGENT TRACE)
+6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - attempt_001 — Researcher: family direct_proof, subgoal: Prove the case k=4 by the 'prime cliques' argument: indices whose moduli share a prime p form a set on which residues mod p are pairwise distinct, so |E|<=2 for p=2 and |T|<=3 for p=3; a case analysis on |T| closes.; declared CELL_SOLVED_CANDIDATE.
@@ -65,18 +65,18 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Referee: UNKNOWN_STATUS / READY_FOR_HUMAN; next: Human reviews the exact target, proof and evidence, then approves explicit claims
 - Human approval: Thomas Tumini (human) at 2026-09-26T14:53:05 (READY_FOR_HUMAN → ACCEPT).
 
-6B. TOKENS USED BY THE AGENTS
+6b. Tokens used by the agents
 
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 
-7. ARXIV LITERATURE CONSULTED
+7. arXiv literature consulted
 
 - arXiv:2603.26043v1 — Finiteness of Disjoint Covering Systems with Precisely One Repeated Modulus (Yu Hashimoto, 2026), found by query disjoint covering systems; abstract read, full text not relied upon.
 - arXiv:1511.04293v1 — Searching for Disjoint Covering Systems with Precisely One Repeated Modulus (Shalosh B. Ekhad, Aviezri S. Fraenkel, Doron Zeilberger, 2015), found by query disjoint covering systems; abstract read, full text not relied upon.
 - arXiv:2607.24655v1 — On the problem of large gcd for disjoint residue classes (Jan Fornal, Yu-Chen Sun, 2026), found by query disjoint residue classes; abstract read, full text not relied upon.
 - arXiv:2608.15873v1 — Two Questions on $G$-harmonic Tuples (Murali Menon, 2026), found by query disjoint residue classes; abstract read, full text not relied upon.
 
-8. CODE
+8. Code
 
 The complete code, with the orchestrator's trusted re-runs, is in the write-up https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p4_c2.tex and in the repository.
 

@@ -1,9 +1,9 @@
-PROBLEM 2 — PART 1 (C1) — SUBMISSION DRAFT
+Problem 2 — Part 1 (C1) — submission draft
 
 Declared status: SOLVED (reviewed draft). Both halves: $U(Q_3)=14$ and $U(Q_4)=34$, with value,
 explicit labelling and complete hand proof; exact computations as confirmation.
 
-1. RESULT AND SCOPE
+1. Result and scope
 
 $U(Q_3) = 14$ and $U(Q_4) = 34$.
 Optimal labelling of $Q_4$ (increasing label order; two valleys, 0000 and 1111):
@@ -13,9 +13,9 @@ For $Q_3$: optimal labelling (increasing label order; position $i$ of the string
 the convention is irrelevant because coordinate permutations are automorphisms of $Q_3$):
 000, 100, 010, 110, 101, 011, 001, 111.
 
-2. PROOF
+2. Proof
 
-RESULT
+Result
 
 $$U(Q_3) = 14.$$
 
@@ -25,7 +25,7 @@ $$\texttt{000},\ \texttt{100},\ \texttt{010},\ \texttt{110},\ \texttt{101},\ \te
 
 i.e. $f(000)=1,\ f(100)=2,\ f(010)=3,\ f(110)=4,\ f(101)=5,\ f(011)=6,\ f(001)=7,\ f(111)=8$.
 
-NOTATION AND THE COUNTING IDENTITY
+Notation and the counting identity
 
 For a labelling $f$ of a graph $G$, orient every edge from the smaller to the larger label; this gives an acyclic orientation. Write $u \to v$ if $uv\in E$ and $f(u)<f(v)$, and $\deg^-(v)=\#\{u: u\to v\}$. Let $p(v)$ be the number of uphill paths whose last vertex is $v$.
 
@@ -33,7 +33,7 @@ Lemma 1 (recursion). $p(v) = [\,v \text{ is a valley}\,] + \sum_{u\to v} p(u)$, 
 
 Proof. An uphill path ending at $v$ has $k=1$ (then it is $(v)$ and $v$ must be a valley; conversely a valley gives exactly this one path) or $k\ge2$; in the latter case deleting $v$ gives an uphill path ending at $v_{k-1}$ with $v_{k-1}\to v$, and conversely appending $v$ to any uphill path ending at some $u$ with $u\to v$ gives an uphill path ending at $v$ (the label condition $f(u)<f(v)$ is exactly $u\to v$). These correspondences are bijective, and the sets for different $u$ are disjoint (they differ in the penultimate vertex). Every uphill path has a unique last vertex, hence the total is $\sum_v p(v)$. $\square$
 
-UPPER BOUND: THE LABELLING ABOVE HAS EXACTLY 14 UPHILL PATHS
+Upper bound: the labelling above has exactly 14 uphill paths
 
 Neighbours in $Q_3$: flip one coordinate. Compute $p$ in increasing label order using Lemma 1:
 
@@ -48,7 +48,7 @@ Neighbours in $Q_3$: flip one coordinate. Compute $p$ in increasing label order 
 - 111 · 8 · 110, 101, 011 · 2+1+1 = 4
 Only 000 is a valley (every other vertex has a lower neighbour, as the table shows). Total $=1+1+1+2+1+1+3+4 = 14$. Hence $U(Q_3)\le 14$.
 
-LOWER BOUND (HAND PROOF): NO LABELLING OF $Q_3$ HAS $\LE 13$ UPHILL PATHS
+Lower bound (hand proof): no labelling of $Q_3$ has $\le 13$ uphill paths
 
 Lemma 2. For every labelling of any graph and every vertex $v$: $p(v)\ge 1$, and $p(v)\ge \deg^-(v)$.
 
@@ -68,20 +68,20 @@ $N(x)\cup N(y)$ is the set $S$ of the 6 vertices other than $x,y$. Count edges i
 
 Combining: $U(Q_3)=14$, attained by the labelling above.
 
-INDEPENDENT CONFIRMATION: EXHAUSTIVE EXACT COMPUTATION
+Independent confirmation: exhaustive exact computation
 
 Script q3_esaustivo.py (saved in runs/p2_q3/sandbox/ and copied to problema-2/certificati/) enumerates all $8!=40320$ bijections $V(Q_3)\to\{1,\dots,8\}$ (itertools.permutations), with vertices encoded as integers $0..7$ (bit $i$ = coordinate $i$) and adjacency = XOR with a single bit. For each labelling it computes the number of uphill paths in two independent ways — (i) an explicit recursive DFS that enumerates every uphill path from every valley, (ii) the DP of Lemma 1 processed in increasing label order — and asserts that the two agree. All arithmetic is Python integers (exact; rigor = exact).
 
 Output (Python 3.14.7, wall-clock 0.36 s):
 The distribution confirms Proposition 4 (no labelling with 13, and also none with 15) and Corollary 3 (none below 13). Reproduce with .venv/bin/python problema-2/certificati/q3_esaustivo.py. A second script verifica_etichettatura_q3.py checks only the submitted labelling (bijection check, valleys, per-vertex $p$, total 14) and prints the table above.
 
-2B. PROOF FOR $Q_4$
+2b. Proof for $Q_4$
 
 $U(Q_4)=34$
 
 Conventions. $V(Q_4)=\{0,1\}^4$, $u\sim v$ iff they differ in exactly one coordinate; $|V|=16$, $|E|=32$, every vertex has degree 4. In a 0/1 string the $i$-th character (from the left) is coordinate $i$; the convention is irrelevant for the count, since every coordinate permutation is an automorphism of $Q_4$ and automorphisms preserve the number of uphill paths (they map valleys to valleys and uphill paths to uphill paths bijectively when the labelling is transported). For a labelling $f$ orient each edge from the smaller to the larger label ($u\to v$ iff $uv\in E$, $f(u)<f(v)$); $\deg^-(v)=\#\{u:u\to v\}$, $\deg^+(v)=\#\{w: v\to w\}$, so $\deg^-(v)+\deg^+(v)=4$. Let $p(v)$ be the number of uphill paths whose last vertex is $v$.
 
-PRELIMINARIES (VERIFIED CLAIMS, RESTATED WITH PROOF FOR SELF-CONTAINEDNESS)
+Preliminaries (verified claims, restated with proof for self-containedness)
 
 Lemma 1. $p(v)=[v\text{ is a valley}]+\sum_{u\to v}p(u)$, and the total number of uphill paths is $\sum_v p(v)$.
 
@@ -97,7 +97,7 @@ Proof. Termwise from Lemma 2 and Lemma 1. Valleys are exactly the vertices with 
 
 The vertex with label $1$ is always a valley (all its neighbours have larger labels). Hence for $Q_4$: total $\ge 32+1=33$.
 
-LOWER BOUND: NO LABELLING OF $Q_4$ HAS EXACTLY 33 UPHILL PATHS, HENCE $U(Q_4)\GE34$
+Lower bound: no labelling of $Q_4$ has exactly 33 uphill paths, hence $U(Q_4)\ge34$
 
 Suppose some labelling $f$ of $Q_4$ has total exactly $33$.
 
@@ -117,7 +117,7 @@ Therefore no labelling of $Q_4$ has exactly $33$ uphill paths; combined with tot
 
 (Remark, not needed for the cell: the same argument for $Q_d$, $d\ge2$, gives total $=|E|+1$ only if $(d-1)s=2^{d-1}(d-2)+1$ has an integer solution; for $d=3$ this is $2s=5$, recovering Proposition 4 of the $Q_3$ proof.)
 
-UPPER BOUND: AN EXPLICIT LABELLING WITH EXACTLY 34 UPHILL PATHS
+Upper bound: an explicit labelling with exactly 34 uphill paths
 
 Labelling $f$, as the list of the 16 vertices in increasing label order (label $1$ first):
 
@@ -148,11 +148,11 @@ Every weight-2 vertex has exactly two weight-1 and two weight-3 neighbours, all 
 $$\sum_v p(v)=1+1+4\cdot1+4\cdot1+6\cdot4=34 .$$
 Hence $U(Q_4)\le34$.
 
-CONCLUSION
+Conclusion
 
 $$U(Q_4)=34,$$ attained by the labelling above. (For comparison $U(Q_3)=14=|E|+2$ and $U(Q_4)=34=|E|+2$.)
 
-COMPUTATIONAL CHECKS (EXACT INTEGER ARITHMETIC; INDEPENDENT OF THE PROOF)
+Computational checks (exact integer arithmetic; independent of the proof)
 
 1. verifica_etichettatura_q4.py checks the submitted labelling: bijection, valleys, per-vertex $p$ (the table above), and the total by two independent methods — the DP of Lemma 1 in label order and an explicit recursive DFS enumerating every uphill path from every valley. Output: both totals $=34$, valleys $\{0000,1111\}$. Wall-clock 0.02 s (Python 3.14.7, macOS).
 
@@ -160,7 +160,7 @@ COMPUTATIONAL CHECKS (EXACT INTEGER ARITHMETIC; INDEPENDENT OF THE PROOF)
 
 3. q4_ricerca_locale.py (simulated annealing, 12 seeds, 200 000 steps each, 12.8 s) found the value 34 in every run and never below; heuristic only, proves nothing, used to find the incumbent.
 
-3. VERIFICATION: INSTRUCTIONS, DEPENDENCIES, TIMINGS
+3. Verification: instructions, dependencies, timings
 
 Three independent programs, standard Python 3 only (exact integers), each enumerating all $8!=40320$ labellings:
 - problema-2/certificati/q3_esaustivo.py — explicit DFS of the paths + dynamic programming of Lemma 1,
@@ -180,14 +180,14 @@ For $Q_4$ (the lower-bound proof is by hand; the computation is confirmation onl
   The soundness of the reduction is argued in the script but the cell does not depend on it.
 - q4_ricerca_locale.py: simulated annealing, exploration only (12 seeds, best value 34 in every run).
 
-4. SOURCES AND CONTRIBUTION
+4. Sources and contribution
 
 No external sources used. The lower-bound argument generalises the idea of IMO 2022 P6 (every vertex is the end
 of at least one path; $p(v)\ge\deg^-(v)$), adding the obstruction specific to $Q_3$ (Proposition 4).
 Proof produced by the automatic Researcher (Claude Fable 5.1, run runs/p2_q3/attempts/attempt_001.json) and
 reviewed by hand step by step; independent numerical verification written separately.
 
-5. LIMITS AND UNRESOLVED PARTS
+5. Limits and unresolved parts
 
 - No unresolved part for C1.
 - $U(Q_3)=|E|+2$ and $U(Q_4)=|E|+2$. The parity argument for $Q_4$ (Steps 3–4) generalises: the total $|E|+1$ is
@@ -196,7 +196,7 @@ reviewed by hand step by step; independent numerical verification written separa
 - The optimum of $Q_4$ has TWO valleys and attains exactly $|E|+\#\text{valleys}$: for large cubes it is worth looking for
   labellings with few valleys in which almost all vertices have $p(v)=\max(1,\deg^-(v))$.
 
-6. HOW THIS RESULT WAS OBTAINED (MULTI-AGENT TRACE)
+6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - No agent run on this cell; the text was written by the team from its notes.
@@ -207,17 +207,17 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Why this approach: No failed attempts recorded. Simulated annealing (12 seeds) never went below 34 = |E| + 2, while the verified bound gives 33; the gap of 1 suggested a tightness analysis of the verified bound |E| + #valleys, exactly as Proposition 4 did for Q_3. The tightness analysis turned out to close with a pure counting argument (no case analysis), so I chose route (b) (hand proof + explicit labelling), and added a symmetry-reduced exact search only as an independent check, not as the proof.
   - Referee: (nessun verdetto) / None
 
-6B. TOKENS USED BY THE AGENTS
+6b. Tokens used by the agents
 
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 
-7. ARXIV LITERATURE CONSULTED
+7. arXiv literature consulted
 
 - arXiv:1412.3893v1 — The competition between simple and complex evolutionary trajectories in asexual populations (Ian E. Ochs, Michael M. Desai, 2014), found by query uphill paths; abstract read, full text not relied upon.
 
-8. CODE
+8. Code
 
 The complete code, with the orchestrator's trusted re-runs, is in the write-up https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p2_c1.tex and in the repository.
 

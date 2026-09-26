@@ -1,0 +1,9 @@
+k=3 soglia=2 L=2 candidati=1 nodi=3 foglie=0 sopravvissuti=0 tempo=0.00s
+k=4 soglia=3 L=6 candidati=3 nodi=10 foglie=0 sopravvissuti=0 tempo=0.00s
+k=5 soglia=4 L=12 candidati=5 nodi=26 foglie=0 sopravvissuti=0 tempo=0.00s
+k=6 soglia=5 L=60 candidati=11 nodi=103 foglie=0 sopravvissuti=0 tempo=0.00s
+k=7 soglia=6 L=60 candidati=11 nodi=218 foglie=0 sopravvissuti=0 tempo=0.00s
+k=8 soglia=7 L=420 candidati=23 nodi=1023 foglie=0 sopravvissuti=0 tempo=0.01s
+k=9 soglia=8 L=840 candidati=31 nodi=3632 foglie=0 sopravvissuti=0 tempo=0.05s
+k=10 soglia=9 L=2520 candidati=47 nodi=14907 foglie=0 sopravvissuti=0 tempo=0.32s
+k=11 soglia=10 L=2520 candidati=47 nodi=41768 foglie=128 sopravvissuti=0 tempo=1.03s

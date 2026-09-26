@@ -1,21 +1,21 @@
-PROBLEM 3 — PART 2 — SUBMISSION (PARTIAL)
+Problem 3 — Part 2 — submission (PARTIAL)
 
 Declared status: PARTIAL. Lower bound proved in full with an explicit extremal partition; the upper bound is NOT proved
 here (verified exhaustively for small k only, and known in the literature: Igusa 1985, Etienne 1991, whose proofs we could
 not access in time). The automatic Referee rejected the attempt as a solution of the whole cell precisely for this reason
 (verdict REJECT: "Theorem B (upper bound D_B(T_k) ≤ k^2−k for all k) is not proved; the submission itself marks it 'NOT PROVED HERE' and only cites Igusa/Etienne (statement not reproduced, sources not read) plus an exhaustive check for sm…"), and accepted the lower-bound part as a lemma candidate.
 
-1. RESULT AND SCOPE
+1. Result and scope
 
 Complete proof that D_B(T_k) ≥ k^2 − k for all k ≥ 1 with the explicit extremal γ_k = (k−1,k−1,k−2,…,2,1,1) (Theorem A), resting on a new exact cell-motion lemma for B (Lemma 1) that is reusable for the other cells; exhaustive exact verification that D_B(T_k) = k^2 − k for k ≤ 9. The general upper bound D_B(T_k) ≤ k^2 − k is not proved.
 
-2. PROOF
+2. Proof
 
-CONVENTIONS
+Conventions
 
 Draw a partition $\lambda=(\lambda_1\ge\dots\ge\lambda_s)$ as a diagram whose column $i$ ($1\le i\le s$) consists of the cells $(i,h)$, $1\le h\le \lambda_i$ ($h$ = height). The diagonal of a cell is $d(i,h)=i+h-1$. Diagonal $d$ contains the $d$ slots $(p,\,d+1-p)$, $p=1,\dots,d$; a set of cells is the diagram of a partition iff the column heights are weakly decreasing. $\delta_k$ is the diagram whose diagonals $1,\dots,k$ are full and all others empty. Throughout $n=T_k$.
 
-LEMMA 1 (EXACT CELL RULE FOR $B$)
+Lemma 1 (exact cell rule for $B$)
 
 Let $\lambda$ have $s$ columns. Then $B(\lambda)$ is the diagram obtained from $\lambda$ by moving every cell as follows:
 
@@ -27,11 +27,11 @@ In particular cells of type 1–2 stay on their diagonal (slot $p\mapsto p+1$, a
 
 Proof. By definition the columns of $B(\lambda)$ are the multiset $\{s\}\cup\{\lambda_i-1:\lambda_i\ge 2\}$. Consider first the "unsorted" diagram $U$: column 1 of height $s$, column $i+1$ of height $\lambda_i-1$ ($1\le i\le s$). Rules 1 and 2 applied to all cells with $h\le s+1$ produce exactly the cells of $U$ of height $\le s+1$ (the new column, and the old columns shifted right and lowered), and rule 2 without the restriction $h\le s+1$ would produce all of $U$. Let $q=\#\{i:\lambda_i-1\ge s+1\}=\#\{i:\lambda_i\ge s+2\}$; because $\lambda$ is sorted, these are $i=1,\dots,q$, so in $U$ exactly the columns $2,\dots,q+1$ have height $>s+1$ (column 1 has height $s$, columns $i+1$ with $i>q$ have height $\le s$). Now compare $U$ with the diagram $V$ obtained from $U$ by moving every cell of height $\ge s+1$ in columns $2,\dots,q+1$ one column to the left. Column heights of $V$: column 1 has the $s$ cells of the new column plus the cells of heights $s+1,\dots,\lambda_1-1$ received from column 2, hence height $\lambda_1-1$; column $i$ for $2\le i\le q$ keeps heights $1,\dots,s$ (from old column $i-1$, whose height $\lambda_{i-1}-1\ge s+1$), loses heights $s+1,\dots,\lambda_{i-1}-1$ and receives heights $s+1,\dots,\lambda_i-1$ from column $i+1$, hence height $\lambda_i-1$; column $q+1$ keeps heights $1,\dots,s$ and loses the rest, hence height $s$; columns $i+1>q+1$ are unchanged with height $\lambda_i-1\le s$. So the columns of $V$ are $\lambda_1-1\ge\dots\ge\lambda_q-1\ge s\ge \lambda_{q+1}-1\ge\dots$, i.e. $V$ is the sorted diagram of $B(\lambda)$ (columns of height 0 at the end are discarded). Finally, the cells moved in passing from $U$ to $V$ are exactly the images under rule 2 of the cells $(i,h)$ of $\lambda$ with $h-1\ge s+1$, i.e. $h\ge s+2$; composing "$(i,h)\mapsto(i+1,h-1)$ then one column left" gives rule 3. $\square$
 
-LEMMA 2 (CONVERGENCE TO $\DELTA_K$; USED ONLY FOR CONTEXT, NOT FOR THE BOUND)
+Lemma 2 (convergence to $\delta_k$; used only for context, not for the bound)
 
 Let $W(\lambda)=\sum_{\text{cells}} d(i,h)$. By Lemma 1, $W(B(\lambda))=W(\lambda)-\#\{(i,h)\in\lambda: h\ge s+2\}\le W(\lambda)$. Since diagonal $d$ has only $d$ slots, among all sets of $T_k$ cells with at most $d$ cells on diagonal $d$ the minimum of $W$ is attained only by $\delta_k$ (fill diagonals $1,\dots,k$); hence $W(\lambda)\ge W(\delta_k)$ with equality iff $\lambda=\delta_k$. (Combined with the fact that a partition $\ne\delta_k$ of $T_k$ cannot be periodic with all steps of cost 0 — which is C1 material and not needed below — this gives convergence; we do not use it.)
 
-THEOREM A (LOWER BOUND). FOR EVERY $K\GE1$, $D_B(T_K)\GE K^2-K$, ATTAINED BY
+Theorem A (lower bound). For every $k\ge1$, $D_B(T_k)\ge k^2-k$, attained by
 
 $$\gamma_k=(k-1,\,k-1,\,k-2,\,k-3,\dots,2,\,1,\,1)\quad(k\ge2),\qquad \gamma_1=(1).$$
 ($\gamma_k$ is $\delta_k$ with the part $k$ replaced by the two parts $k-1$ and $1$; $|\gamma_k|=T_k$.)
@@ -48,24 +48,24 @@ Therefore, starting from $\gamma_k=S(1,k+1)$, as long as no step has hit $S(k,1)
 
 (Consistency check with the statement's example and data: $\gamma_3=(2,2,1,1)$, $d_B=6$; the exhaustive computation below gives $D_B(T_k)=k^2-k$ and confirms $\gamma_k$ among the extremals for $k\le9$.)
 
-THEOREM B (UPPER BOUND) — NOT PROVED HERE
+Theorem B (upper bound) — NOT PROVED HERE
 
 Claim: $d_B(\lambda)\le k^2-k$ for every partition $\lambda$ of $T_k$. This is the theorem of Igusa (1985) / Etienne (1991) (CITED, proof not reproduced). What is established:
 
 * Exhaustive verification for $k\le9$ (exact integer arithmetic, all $p(T_k)$ partitions, 0.5 s total): $D_B(T_k)=k^2-k$ for $k=1,\dots,9$. This proves the cell's statement only for $k\le 9$.
 * Structural facts from Lemma 1 available for the next attempt: (i) $W$ strictly decreases exactly at steps where some pile has size $\ge s+2$, and $\gamma_k$ has $W(\gamma_k)-W(\delta_k)=1$, so the difficulty is bounding runs of "free" steps, not the number of costly steps; (ii) empirically (exhaustive, $k\le8$) the number of piles lies in $\{k-1,k,k+1\}$ for all $t\ge T_{k-1}-(k-2)$, which suggests the strategy: bound the time until the configuration becomes "near-staircase", then analyse the near-staircase dynamics as in Theorem A.
 
-CONCLUSION OF THIS ATTEMPT
+Conclusion of this attempt
 
 $D_B(T_k)\ge k^2-k$ for all $k\ge1$ (Theorem A, complete), with explicit extremal $\gamma_k$; $D_B(T_k)=k^2-k$ for $k\le9$ by exhaustive computation; the general inequality $D_B(T_k)\le k^2-k$ remains to be proved.
 
-3. VERIFICATION: INSTRUCTIONS, DEPENDENCIES, TIMINGS
+3. Verification: instructions, dependencies, timings
 
 Python 3 standard library. Scripts (re-run by the orchestrator, see runs/p3_c2/verifica/):
 - code_1 (python, rigor exact): Exhaustive exact computation of D_B(T_k) and of all extremal partitions for k ≤ 9 (all partitions of T_k, orbit followed to δ_k). Finite set covered: every partition of T_k for k=1..9 (up to 89134 partitions). Wall-clock 0.48 s. Confirms D_B(T_k)=k^2−k for k≤9; does not prove the general upper bound.
 - code_2 (python, rigor exact): Exploration only: along every orbit for k ≤ 8, records the last time the pile count leaves {k−1,k,k+1} and the first time diagonals 1..k−1 are full; used to guide the (unfinished) upper-bound strategy. Exact integers, all partitions of T_k for k=3..8, ~1 min.
 
-4. SOURCES AND CONTRIBUTION
+4. Sources and contribution
 
 - B. Hopkins, 30 Years of Bulgarian Solitaire, College Math. J. 43 (2012) 135–140 (read in full; p.137 statement that Igusa proved γ_k=(k−1,k−1,k−2,…,2,1,1) is at maximal distance k(k−1)) — CITED for context only
 - K. Igusa, Solution of the Bulgarian solitaire conjecture, Math. Mag. 58 (1985) 259–271 — NOT read (paywalled); statement cited via Hopkins/Drensky
@@ -75,13 +75,13 @@ Python 3 standard library. Scripts (re-run by the orchestrator, see runs/p3_c2/v
 - M. Jonsson, Processes on Integer Partitions and Their Limit Shapes, PhD thesis, Mälardalen Univ. 2017 (DiVA diva2:1082060) — read the relevant pages; cites Etienne for the game-tree height k^2−k
 - Position with respect to the literature: The listed arXiv abstracts (math/0401385, 1703.07102: random variants; 1101.1546: Toom's convergence proof; 2208.14496: orbit growth; 1503.00885 and 2607.17194: surveys) do not prove the bound. I fetched and read (pdftotext) Drensky 1503.00885, Meštrović 2607.17194, Hopkins "30 years of Bulgarian solitaire" (College Math. J. 43 (2012) 135–140), Hopkins–Jones (EJC 13 (2006) R80), N. Pham's honors thesis and M. Jonsson's PhD thesis (DiVA 1082060). All state, CITED: Knuth conjectured and Igusa (Math. Mag. 58 (1985) 259–271) and Etienne (JCTA 58 (1991) 181–197) proved that for n=T_k the maximal number of moves is k(k−1), attained by γ_k=(k−1,k−1,k−2,…,2,1,1) (Hopkins 2012, p. 137: "Igusa [15] shows that the partition γ_k … is at distance k(k−1) from τ_k and that this distance is maximal"). None of the read sources reproduces the proof. My approach follows the classical "cards on diagonals" idea mentioned by Hopkins (p. 137) but makes it exact (Lemma 1) and uses it to prove the lower bound in full; the upper bound argument of Igusa/Etienne is not reproduced.
 
-5. LIMITS AND UNRESOLVED PARTS
+5. Limits and unresolved parts
 
 - Upper bound D_B(T_k) ≤ k^2 − k for all k: not proved (only verified exhaustively for k ≤ 9 and cited from Igusa 1985 / Etienne 1991, whose proofs I could not access). This is the next blocker.
 - Theorem A uses that δ_k is the only cyclic partition of T_k to conclude d_B(γ_k) = k^2−k rather than merely B^{k^2−k}(γ_k)=δ_k; this is the C1 statement, sketched via the potential W in Lemma 2 but not written out in full here (the strict-decrease/non-periodicity step is omitted).
 - Lemma 1's proof treats ties (columns of equal height) implicitly: the sorted diagram is determined by the multiset of column heights, so ties do not affect the cell set, but the reader may want this stated explicitly.
 
-6. HOW THIS RESULT WAS OBTAINED (MULTI-AGENT TRACE)
+6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - attempt_001 — Researcher: family direct_proof, subgoal: Establish the value D_B(T_k) = k^2 - k: prove the lower bound D_B(T_k) ≥ k^2 - k with an explicit extremal family and an exact cell-motion lemma for B; identify the general upper bound as the remaining blocker.; declared LEMMA_CANDIDATE.
@@ -89,11 +89,11 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Position w.r.t. the literature: The listed arXiv abstracts (math/0401385, 1703.07102: random variants; 1101.1546: Toom's convergence proof; 2208.14496: orbit growth; 1503.00885 and 2607.17194: surveys) do not prove the bound. I fetched and read (pdftotext) Drensky 1503.00885, Meštrović 2607.17194, Hopkins "30 years of Bulgarian solitaire" (College Math. J. 43 (2012) 135–140), Hopkins–Jones (EJC 13 (2006) R80), N. Pham's honors thesis and M. Jonsson's PhD thesis (DiVA 1082060). All state, CITED: Knuth conjectured and Igusa (Math. Mag. 58 (1985) 259–271) and Etienne (JCTA 58 (1991) 181–197) proved that for n=T_k the maximal number of moves is k(k−1), attained by γ_k=(k−1,k−1,k−2,…,2,1,1) (Hopkins 2012, p. 137: "Igusa [15] shows that the partition γ_k … is at distance k(k−1) from τ_k and that this distance is maximal"). None of the read sources reproduces the proof. My approach follows the classical "cards on diagonals" idea mentioned by Hopkins (p. 137) but makes it exact (Lemma 1) and uses it to prove the lower bound in full; the upper bound argument of Igusa/Etienne is not reproduced.
   - Referee: REJECT / NEEDS_WORK; fatal error: Theorem B (upper bound D_B(T_k) ≤ k^2−k for all k) is not proved; the submission itself marks it 'NOT PROVED HERE' and only cites Igusa/Etienne (statement not reproduced, sources not read) plus an exhaustive check for small k. The cell demands both bounds with proof, so the declared target 'main' (exact value k^2−k for every k) is not established. Finite exhaustive verification (k ≤ 8 in the orchestrator's re-run of code_1; k ≤ 9 claimed) does not prove the universal upper bound. What would close it: a proof that every partition of T_k reaches δ_k within k^2−k shifts (e.g. via the potential W of Lemma 2 plus a bound on the length of runs of cost‑0 steps).; next: Address the stated blocking obligation without silently changing the target
 
-6B. TOKENS USED BY THE AGENTS
+6b. Tokens used by the agents
 
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 
-7. ARXIV LITERATURE CONSULTED
+7. arXiv literature consulted
 
 - arXiv:math/0401385v2 — Random Bulgarian solitaire (Serguei Popov, 2004), found by query Bulgarian solitaire; abstract read, full text not relied upon.
 - arXiv:1503.00885v1 — The Bulgarian solitaire and the mathematics around it (Vesselin Drensky, 2015), found by query Bulgarian solitaire; abstract read, full text not relied upon.
@@ -102,7 +102,7 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
 - arXiv:1703.07102v1 — An exponential limit shape of random $q$-proportion Bulgarian solitaire (Kimmo Eriksson, Markus Jonsson abd Jonas Sjöstrand, 2017), found by query Bulgarian solitaire; abstract read, full text not relied upon.
 - arXiv:2208.14496v1 — Limiting behavior in growth of Bulgarian Solitaire orbits (Nhung Pham, 2022), found by query Bulgarian solitaire; abstract read, full text not relied upon.
 
-8. CODE
+8. Code
 
 The complete code, with the orchestrator's trusted re-runs, is in the write-up https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p3_c2.tex and in the repository.
 

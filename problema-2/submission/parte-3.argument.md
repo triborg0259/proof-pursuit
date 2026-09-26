@@ -1,19 +1,19 @@
-PROBLEM 2 — PART 3 — SUBMISSION
+Problem 2 — Part 3 — submission
 
 Declared status: SOLVED (approved). Complete proof; automatic Referee READY_FOR_HUMAN (judge A, mathematics: PASS;
 judge B, evidence: PASS; code re-run by the orchestrator); human approval recorded in runs/p2_c3/approval.json.
 
-1. RESULT AND SCOPE
+1. Result and scope
 
 U(Q_6) = 204 with explicit labelling (two independent exact counters agree). Lower bound: hand reduction (Lemmas 1–7, identical in form to the accepted Q_5 proof) shows any labelling with ≤ 203 paths yields an independent peak set P (|P| ≥ 25) and ≤ 2 heavy vertices H with |P|+|H| ≤ 27 whose complement is an induced forest; split by parity classes, this is refuted by exact enumeration (mixed classes: neighbourhood count 0 hits + hand 6-cycle argument for b=1; single class: 104M brute-force checks in C, 10 s, and a pruned DFS in Python, 0.6 s, both 0 forests). Total verification time < 15 s on a laptop.
 
-2. PROOF
+2. Proof
 
 $U(Q_6)=204$
 
 Conventions. $V=\{0,1\}^6$, $u\sim v$ iff they differ in exactly one coordinate; $|V|=64$, $|E|=192$, every vertex has degree $6$. Vertices are written as 0/1 strings whose $i$-th character (from the left) is coordinate $i$ (the choice is irrelevant: coordinate permutations are automorphisms). $E_0$ = even-weight vertices, $O$ = odd-weight vertices ($|E_0|=|O|=32$); each class is an independent set (bipartition). For a labelling $f$ orient every edge from the smaller to the larger label; $\deg^-(v)$, $\deg^+(v)$ are in/out-degrees, $\deg^-+\deg^+=6$. $p(v)$ = number of uphill paths ending at $v$; a valley has $\deg^-=0$, a peak has $\deg^+=0$. $v$ = number of valleys ($\ge1$: the vertex labelled $1$), $P$ = set of peaks, $q=|P|$, $T$ = total number of uphill paths.
 
-0. LEMMAS (RESTATED WITH PROOF; IDENTICAL TO THE $Q_5$ CASE)
+0. Lemmas (restated with proof; identical to the $Q_5$ case)
 
 Lemma 1. $p(v)=[v\text{ valley}]+\sum_{u\to v}p(u)$ and $T=\sum_v p(v)$.
 Proof. A path ending at $v$ has length 1 (then $v$ is a valley and the path is $(v)$; conversely a valley gives exactly this one) or length $\ge2$; deleting $v$ gives an uphill path ending at an in-neighbour $u$, and appending $v$ to any uphill path ending at $u$ with $u\to v$ gives an uphill path ending at $v$. These maps are inverse bijections and distinct $u$ give disjoint sets. Every path has a unique last vertex. $\square$
@@ -40,7 +40,7 @@ Lemma 6 (partition). $V$ is the disjoint union of $P$, $H$ and the set $L$ of li
 Lemma 7 (in-degree count). With $s_H=\sum_{u\in H}\deg^-(u)$: $\;5q=128+v+|H|-s_H$.
 Proof. $192=\sum_x\deg^-(x)=6q+s_H+\sum_{x\in L}\deg^-(x)$, and by Lemma 4 light vertices have $\deg^-=0$ (the $v$ valleys) or $1$ (the other $64-q-|H|-v$ light vertices). So $192=6q+s_H+64-q-|H|-v$. $\square$
 
-1. REDUCTION: EVERY LABELLING WITH $T\LE203$ HAS A FORBIDDEN STRUCTURE
+1. Reduction: every labelling with $T\le203$ has a forbidden structure
 
 Assume $T\le203$. By Lemma 3, $v+X\le11$; $v\ge1$ gives $X\le10$, and Lemma 5 ($X\ge4|H|$) gives $|H|\le2$.
 
@@ -55,7 +55,7 @@ Summary. In every case: $P$ is independent, $|H|\le2$, $25\le q$, $q+|H|\le27$ (
 
 > (★) there exist an independent set $P\subseteq V(Q_6)$ and a set $H\subseteq V\setminus P$ with $|H|\le2$, $|P|\ge25$, $|P|+|H|\le27$, such that $Q_6-(P\cup H)$ is a forest.
 
-2. SPLITTING (★) BY PARITY CLASSES
+2. Splitting (★) by parity classes
 
 Write $P=A\cup B$ with $A=P\cap E_0$, $B=P\cap O$, $b=|B|$. The map $x\mapsto x\oplus 100000$ is an automorphism of $Q_6$ exchanging $E_0$ and $O$ and preserving all properties in (★), so WLOG $|A|\ge b$; then $b\le13$ (as $2b\le|A|+b\le27$) and $|A|=q-b\ge25-b$. Put $R=E_0\setminus A$, so $|R|=32-q+b\le7+b$. Since $P$ is independent, every neighbour of a vertex of $B$ lies outside $A$, i.e. $N(B)\subseteq R$, hence $|N(B)|\le|R|\le7+b$. The forest of (★) is $F=(R\cup(O\setminus B))\setminus H$ with $|H|\le27-q=|R|-5-b$.
 
@@ -73,18 +73,18 @@ Computation 3 (verifica_q6_picchi_una_classe.py, different method, exact): two e
 
 Therefore (★₀) is false, so (★) is false, so no labelling of $Q_6$ has $T\le203$: $U(Q_6)\ge204$.
 
-3. UPPER BOUND: A LABELLING WITH EXACTLY 204 UPHILL PATHS
+3. Upper bound: a labelling with exactly 204 uphill paths
 
 Let $R=\{000000,\,111100,\,001111,\,110011\}$ (even vertices, pairwise at distance $4$), $P=E_0\setminus R$ (28 vertices, independent). Two vertices of $R$ at distance $4$ have no common neighbour, so the 24 odd neighbours of $R$ are distinct; the subgraph induced by $F=R\cup O$ consists of 4 stars (centres $R$, 24 leaves) and the 8 remaining odd vertices, isolated: a forest with 12 components. Labelling (increasing label order, coordinate 1 on the left):
 Labels 1–4: the four centres; 5–12: the eight isolated odd vertices; 13–36: the 24 leaves; 37–64: the 28 peaks.
 
 Count. The 12 vertices with labels 1–12 have all neighbours higher (leaves or peaks): valleys, $p=1$. Each leaf has exactly one lower neighbour, its centre, so $p=1$. Each peak has all 6 neighbours lower and in $F$, each with $p=1$, so $p=6$. $T=36\cdot1+28\cdot6=204$. Verified exactly by costruzione_204.py (Lemma 1 recursion) and, independently, by verifica_dfs_204.py (explicit DFS enumeration of all uphill paths from the 12 valleys, string-based, no shared code): both print $204$ and $12$ valleys.
 
-4. CONCLUSION
+4. Conclusion
 
 $U(Q_6)=204=|E|+12$, attained by the labelling of §3. The lower bound is computer-assisted at exactly one point, the finite statement (★₀) (plus the two mixed sub-cases), refuted by exact enumeration in three programs (two methods, two languages), total wall-clock $<15$ s. Evidence (not part of the proof): 20000 random labellings satisfy $T=192+v+X$ and $X\in\{0\}\cup[4,\infty)$ (sanity_eccesso_q6.py); simulated annealing over labellings (ricottura_q6.py, 300k swap moves, seeds 0–5) reached $204$ with 12 valleys in 5 of 6 seeds and never less. Consistency: the same construction gives $U(Q_3)=14$, $U(Q_4)=34$, $U(Q_5)=88$ with codes of sizes $1,2,2$ (i.e. $T=2^d+(d-1)(2^{d-1}-A_{\text{even}}(d,4))$), matching the verified values.
 
-3. VERIFICATION: INSTRUCTIONS, DEPENDENCIES, TIMINGS
+3. Verification: instructions, dependencies, timings
 
 Python 3 standard library only. Scripts (also saved in runs/p2_c3/sandbox/ and re-run in runs/p2_c3/verifica/):
 - code_1 (python, rigor exact): Shared exact utilities for Q_6 (parity classes, neighbour bitmasks, union-find forest test).
@@ -106,7 +106,7 @@ Trusted re-runs by the orchestrator (exit code, wall clock, output):
 - orchestrator re-ran code_7.py (python3, clean copy of the researcher sandbox): exit 0 in 2.9s; stdout: "20000 etichettature casuali: identita' verificata; minimo X positivo osservato: 238"; stderr: ''
 - orchestrator re-ran code_8.py (python3, clean copy of the researcher sandbox): exit 1 in 0.0s; stdout: ''; stderr: 'Traceback (most recent call last):\n  File "/Users/thomastumini/proof-pursuit/runs/p2_c3/verifica/attempt_001/code_8.py", line 25, in <module>\n    seed = int(sys.argv[1]); passi = int
 
-4. SOURCES AND CONTRIBUTION
+4. Sources and contribution
 
 - D. A. Pike, Decycling hypercubes, Graphs and Combinatorics 19 (2003) 547–550 — abstract only (https://link.springer.com/article/10.1007/s00373-003-0529-9), cited for context: ∇(Q_n)=2^{n-1}−A(n,4) iff Q_n has an independent minimum decycling set; not used in the proof
 - Problem-2 Q_5 proof (problema-2/submission/parte-2.md, runs/p2_q5/attempts/attempt_001.json): Lemmas 1–7 restated and re-proved here for d=6
@@ -114,7 +114,7 @@ Trusted re-runs by the orchestrator (exit code, wall clock, output):
 - Position with respect to the literature: The deterministic arXiv search returned only 1412.3893v1 (evolutionary biology, "uphill" in a fitness-landscape sense) — irrelevant. I searched the web for the related notion that my reduction produces: decycling (feedback vertex) sets of hypercubes. D. A. Pike, "Decycling hypercubes", Graphs and Combinatorics 19 (2003) 547–550 (abstract read on link.springer.com/article/10.1007/s00373-003-0529-9, paper NOT read): "∇(Q_n) = 2^{n-1} − A(n,4) if and only if Q_n has a minimum decycling set that consists of pairwise non-adjacent vertices". This is CITED for context only: it explains why the optimal construction takes peaks = a parity class minus a distance-4 code (A(6,4)=4 gives 28 peaks), and it is consistent with our computed fact that Q_6 has no independent-plus-≤2 decycling set of size ≤ 27. No statement from the literature is used in the proof; every finite fact is established by our own exact enumeration.
 - Contribution: the proof above is written out in full by the team's Researcher and checked by two independent judges and by a human.
 
-5. LIMITS AND UNRESOLVED PARTS
+5. Limits and unresolved parts
 
 Gaps declared by the author (all accepted by the judges):
 - The lower bound is computer-assisted at one point: statement (★₀) (no h ≤ 2 odd vertices H_O and 5+h even vertices R' with R' ∪ (O \ H_O) an induced forest) and the mixed-class neighbourhood statement (no B ⊆ O, 2 ≤ |B| ≤ 13, |N(B)| ≤ 7+|B|) are proved by exhaustive enumeration, not by hand. The enumerations are exact (integer/bitmask), cover the full finite sets stated, and were done by two programs with different methods for (★₀); the mixed part A has a single implementation (18878 DFS nodes).
@@ -123,7 +123,7 @@ Gaps declared by the author (all accepted by the judges):
 - Pike (2003) is cited from its abstract only; nothing from it is used in the proof.
 - Simulated annealing and the random-labelling sanity check are evidence only and play no role in the proof.
 
-6. HOW THIS RESULT WAS OBTAINED (MULTI-AGENT TRACE)
+6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - attempt_001 — Researcher: family reduction, subgoal: Determine U(Q_6) = 204: explicit labelling with 204 uphill paths, and a lower-bound proof (hand reduction to a finite statement about induced forests of Q_6, refuted by exact enumeration in seconds).; declared CELL_SOLVED_CANDIDATE.
@@ -132,15 +132,15 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Referee: UNKNOWN_STATUS / READY_FOR_HUMAN; next: Human reviews the exact target, proof and evidence, then approves explicit claims
 - Human approval: Thomas Tumini (human) at 2026-09-26T15:11:52 (READY_FOR_HUMAN → ACCEPT).
 
-6B. TOKENS USED BY THE AGENTS
+6b. Tokens used by the agents
 
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 
-7. ARXIV LITERATURE CONSULTED
+7. arXiv literature consulted
 
 - arXiv:1412.3893v1 — The competition between simple and complex evolutionary trajectories in asexual populations (Ian E. Ochs, Michael M. Desai, 2014), found by query uphill paths; abstract read, full text not relied upon.
 
-8. CODE
+8. Code
 
 The complete code, with the orchestrator's trusted re-runs, is in the write-up https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p2_c3.tex and in the repository.
 

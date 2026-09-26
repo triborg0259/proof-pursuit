@@ -1,22 +1,22 @@
-PROBLEM 1 — PART 2 — SUBMISSION DRAFT
+Problem 1 — Part 2 — submission draft
 
 Declared status: SOLVED (approved). Complete proof written by the team; automatic Referee READY_FOR_HUMAN
 (judge A mathematics PASS, judge B evidence PASS); human approval recorded in runs/p1_c2/approval.json.
 
-1. RESULT AND SCOPE
+1. Result and scope
 
 Orthogonality lemma for a chain of unit vectors: the statement of the part is proved in full, in the generality required (see the proof for the
 exact hypotheses). No computer calculation is needed.
 
-2. PROOF
+2. Proof
 
-CELL 2: THE ORTHOGONALITY LEMMA FOR A CHAIN OF UNIT VECTORS
+Cell 2: the orthogonality lemma for a chain of unit vectors
 
 Target. Let $m\ge2$ and let $x_1,\dots,x_m$ be unit vectors in $\mathbb R^{m-1}$ with $\langle x_i,x_j\rangle=0$ whenever $|i-j|\ge2$. Then $\sum_{i=1}^{m-1}\theta(x_i,x_{i+1})\le(m-2)\frac{\pi}{2}$, where $\theta(x,y)=\arccos|\langle x,y\rangle|\in[0,\pi/2]$.
 
 Write $\theta_i=\theta(x_i,x_{i+1})$ for $1\le i\le m-1$. We say that a list of unit vectors $y_1,\dots,y_r$ in a Euclidean space $V$ is a chain if $\langle y_i,y_j\rangle=0$ whenever $|i-j|\ge2$. The statement to prove is: (P$_m$) every chain of $m$ unit vectors in a Euclidean space of dimension $m-1$ satisfies $\sum_{i=1}^{m-1}\theta(y_i,y_{i+1})\le(m-2)\pi/2$. (Stating it for an arbitrary Euclidean space of dimension $m-1$ instead of $\mathbb R^{m-1}$ is harmless: choosing an orthonormal basis gives a linear isometry onto $\mathbb R^{m-1}$, which preserves inner products, hence the chain condition and all the angles.)
 
-TWO ELEMENTARY FACTS
+Two elementary facts
 
 Fact A. For $\beta,\psi\in[0,\pi/2]$: $\arccos(\cos\beta\cos\psi)\le\beta+\psi$.
 Proof. $\cos(\beta+\psi)=\cos\beta\cos\psi-\sin\beta\sin\psi\le\cos\beta\cos\psi$ because $\sin\beta,\sin\psi\ge0$. Both $\cos(\beta+\psi)$ and $\cos\beta\cos\psi$ lie in $[-1,1]$ and $\arccos$ is decreasing on $[-1,1]$, so $\arccos(\cos\beta\cos\psi)\le\arccos(\cos(\beta+\psi))=\beta+\psi$, the last equality because $\beta+\psi\in[0,\pi]$. $\square$
@@ -24,7 +24,7 @@ Proof. $\cos(\beta+\psi)=\cos\beta\cos\psi-\sin\beta\sin\psi\le\cos\beta\cos\psi
 Fact B. If $V$ is a Euclidean space of dimension $n\ge1$ and $v_1,\dots,v_{n-1}\in V$ (possibly fewer vectors, possibly none), there is a unit vector $y\in V$ orthogonal to all of them.
 Proof. The orthogonal complement of $\mathrm{span}(v_1,\dots,v_{n-1})$ in $V$ has dimension $\ge n-(n-1)=1$, so it contains a nonzero vector; normalise it. $\square$
 
-INDUCTION ON $M$
+Induction on $m$
 
 Base $m=2$. $x_1,x_2$ are unit vectors in a $1$-dimensional space, so $x_2=\pm x_1$, $|\langle x_1,x_2\rangle|=1$ and $\theta_1=\arccos 1=0\le0=(m-2)\pi/2$.
 
@@ -46,22 +46,22 @@ In both cases (P$_m$) holds, which completes the induction. $\blacksquare$
 
 Remark (not needed). For $m=3$ the argument shows $\theta_1+\theta_2=\pi/2$ always; for general $m$ equality is attained e.g. by $x_i=e_i$ ($i\le m-1$), $x_m=e_{m-1}$, where all consecutive angles are $\pi/2$ except the last, which is $0$.
 
-3. VERIFICATION: INSTRUCTIONS, DEPENDENCIES, TIMINGS
+3. Verification: instructions, dependencies, timings
 
 Hand-written proof, no dependencies. Mechanical verification not needed; the automatic Referee (two independent judges,
 runs/p1_c2/attempts/packet_001.json) found no unjustified steps.
 
-4. SOURCES AND CONTRIBUTION
+4. Sources and contribution
 
 - No sources used: self-contained proof.
 - Position with respect to the state of the art: No literature found for this lemma specifically (arXiv search: angles between lines / Fejes Toth); it is an elementary statement and is proved here from scratch.
 - Contribution: the proof written here is the team's own, in full.
 
-5. LIMITS AND UNRESOLVED PARTS
+5. Limits and unresolved parts
 
 None: the part is proved. Declared gaps: none.
 
-6. HOW THIS RESULT WAS OBTAINED (MULTI-AGENT TRACE)
+6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - attempt_001 — Researcher: family direct_proof, subgoal: Prove the chain lemma by induction on m, projecting the penultimate vector onto the orthogonal complement of the last one and using the spherical triangle inequality arccos(cos b cos p) <= b + p.; declared CELL_SOLVED_CANDIDATE.
@@ -70,17 +70,17 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Referee: UNKNOWN_STATUS / READY_FOR_HUMAN; next: Human reviews the exact target, proof and evidence, then approves explicit claims
 - Human approval: Thomas Tumini (human) at 2026-09-26T14:53:05 (READY_FOR_HUMAN → ACCEPT).
 
-6B. TOKENS USED BY THE AGENTS
+6b. Tokens used by the agents
 
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 
-7. ARXIV LITERATURE CONSULTED
+7. arXiv literature consulted
 
 - arXiv:1801.07837v1 — On the Fejes Tóth Problem about the Sum of Angles Between Lines (Dmitriy Bilyk, Ryan W Matzke, 2018), found by query angles between lines; abstract read, full text not relied upon.
 - arXiv:2007.08698v2 — On Fejes Tóth's conjectured maximizer for the sum of angles between lines (Tongseok Lim, Robert J. McCann, 2020), found by query angles between lines; abstract read, full text not relied upon.
 - arXiv:1204.3850v1 — Simple Agents Learn to Find Their Way: An Introduction on Mapping Polygons (Jérémie Chalopin, Shantanu Das, Yann Disser, 2012), found by query angles between lines; abstract read, full text not relied upon.
 
-8. CODE
+8. Code
 
 The complete code, with the orchestrator's trusted re-runs, is in the write-up https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p1_c2.tex and in the repository.
 

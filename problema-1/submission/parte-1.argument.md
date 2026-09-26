@@ -1,21 +1,21 @@
-PROBLEM 1 — PART 1 — SUBMISSION DRAFT
+Problem 1 — Part 1 — submission draft
 
 Declared status: SOLVED (approved). Complete proof written by the team; automated Referee READY_FOR_HUMAN
 (judge A mathematics PASS, judge B evidence PASS); human approval recorded in runs/p1_c1/approval.json.
 
-1. RESULT AND SCOPE
+1. Result and scope
 
 Sum of the angles between lines in the plane: the statement of the part is proved in full, in the required generality (see the proof for the
 exact hypotheses). No computer calculation is needed.
 
-2. PROOF
+2. Proof
 
-CELL 1: THE SUM OF THE ANGLES BETWEEN $N$ LINES IN THE PLANE
+Cell 1: the sum of the angles between $N$ lines in the plane
 
 Target. For lines $\ell_1,\dots,\ell_N$ through the origin of $\mathbb R^2$ (repetitions allowed),
 $S=\sum_{i<j}\theta(\ell_i,\ell_j)\le \frac{\pi}{2}\left\lfloor \frac{N^2}{4}\right\rfloor$, where $\theta(\ell,\ell')=\arccos|\langle x,x'\rangle|$ for unit vectors $x,x'$ spanning $\ell,\ell'$.
 
-1. DIRECTIONS AND ANGLES
+1. Directions and angles
 
 Every line $\ell$ through the origin of $\mathbb R^2$ is spanned by exactly one unit vector of the form $(\cos t,\sin t)$ with $t\in[0,\pi)$ (the two unit vectors of $\ell$ are $\pm(\cos t,\sin t)$, and exactly one of the two angles $t,t+\pi$ lies in $[0,\pi)$). Call $t=\tau(\ell)$ the direction of $\ell$.
 For two lines with directions $t,t'\in[0,\pi)$ we have $\langle(\cos t,\sin t),(\cos t',\sin t')\rangle=\cos(t-t')$, hence $\theta(\ell,\ell')=\arccos|\cos(t-t')|$.
@@ -23,7 +23,7 @@ Put $u=|t-t'|\in[0,\pi)$. If $u\le\pi/2$ then $\cos u\ge 0$, so $|\cos u|=\cos u
 $$\theta(\ell,\ell')=\min(u,\pi-u),\qquad u=|\tau(\ell)-\tau(\ell')|.\qquad(1)$$
 Coincident lines have $u=0$ and angle $0$, as they should. Note also that $\min(u,\pi-u)$ is unchanged if $u$ is replaced by $\pi-u$, so (1) also holds with $u=(\tau(\ell')-\tau(\ell))\bmod\pi$ (the representative in $[0,\pi)$): indeed this quantity equals $|t-t'|$ or $\pi-|t-t'|$.
 
-2. A RANDOM HALF-TURN OF DIRECTIONS
+2. A random half-turn of directions
 
 For $x\in\mathbb R$ write $x\bmod\pi$ for the unique representative of $x+\pi\mathbb Z$ in $[0,\pi)$. For $\psi\in[0,\pi)$ define
 $$A_\psi=\{t\in[0,\pi):\ (t-\psi)\bmod\pi\in[0,\pi/2)\}.$$
@@ -43,34 +43,34 @@ Case $u\le\pi/2$. Then $J_u=(0,u]\cup(u+\pi/2,\pi)$ (the second piece is empty i
 Case $u>\pi/2$. Then $u+\pi/2>\pi$, so $J_u=(u-\pi/2,u]$ with $0<u-\pi/2<\pi/2$. Thus $J_0\cap J_u=(\pi/2,\pi)\cap(u-\pi/2,u]=(\pi/2,u]$ up to a null set, of measure $u-\pi/2$. Hence $|J_0\triangle J_u|=\pi-2(u-\pi/2)=2(\pi-u)=2\varphi$.
 In both cases the probability is $|J_0\triangle J_u|/\pi=2\varphi/\pi$. $\square$
 
-3. COUNTING THE PAIRS SEPARATED BY $A_\PSI$
+3. Counting the pairs separated by $A_\psi$
 
 Let $t_i=\tau(\ell_i)$ and, for $\psi\in[0,\pi)$, $k_\psi=\#\{i: t_i\in A_\psi\}\in\{0,1,\dots,N\}$. A pair $\{i,j\}$ has exactly one member with direction in $A_\psi$ if and only if one index is among the $k_\psi$ "inside" indices and the other among the $N-k_\psi$ "outside" indices; hence the number of such pairs is exactly $k_\psi(N-k_\psi)$. Writing $X_{ij}(\psi)$ for the indicator of the event of Lemma 1 for the pair $(t_i,t_j)$, we have $k_\psi(N-k_\psi)=\sum_{i<j}X_{ij}(\psi)$ for every $\psi$ (each $X_{ij}$ is the indicator of a finite union of intervals, so everything is measurable), and by linearity of expectation, Lemma 1 and (1),
 $$\mathbb E\big[k_\psi(N-k_\psi)\big]=\sum_{i<j}\Pr[X_{ij}=1]=\sum_{i<j}\frac{2}{\pi}\theta(\ell_i,\ell_j)=\frac{2}{\pi}S.\qquad(2)$$
 
-4. CONCLUSION
+4. Conclusion
 
 For every integer $k$ we have $N^2-4k(N-k)=(N-2k)^2\ge0$, so $k(N-k)\le N^2/4$; as $k(N-k)$ is an integer, $k(N-k)\le\lfloor N^2/4\rfloor$. Applying this to $k=k_\psi$ for every $\psi$ and taking expectations, (2) gives
 $$S=\frac{\pi}{2}\,\mathbb E\big[k_\psi(N-k_\psi)\big]\le\frac{\pi}{2}\left\lfloor\frac{N^2}{4}\right\rfloor.\qquad\blacksquare$$
 
 Remark (not needed for the cell). The bound is attained: put $\lceil N/2\rceil$ lines along the $x$-axis and $\lfloor N/2\rfloor$ along the $y$-axis; the only nonzero angles are the $\lceil N/2\rceil\lfloor N/2\rfloor=\lfloor N^2/4\rfloor$ cross pairs, each equal to $\pi/2$.
 
-3. VERIFICATION: INSTRUCTIONS, DEPENDENCIES, TIMINGS
+3. Verification: instructions, dependencies, timings
 
 Hand-written proof, no dependencies. Mechanical verification not needed; the automated Referee (two independent judges,
 runs/p1_c1/attempts/packet_001.json) found no unjustified steps.
 
-4. SOURCES AND CONTRIBUTION
+4. Sources and contribution
 
 - arXiv:1801.07837 Bilyk, Matzke, On the Fejes Toth problem about the sum of angles between lines (context only: the planar case is the only settled case; the proof below is self-contained and does not use the paper)
 - Position with respect to the state of the art: Bilyk-Matzke [1801.07837] state that d=1 (the plane) is the only settled case and give several proofs, one of which is a Stolarsky-type identity; our argument is of the same nature but written independently and in full, so nothing is cited as a black box. Lim-McCann [2007.08698] concern a one-parameter deformation and are not used.
 - Contribution: the proof written here is the team's, in full.
 
-5. LIMITS AND UNRESOLVED PARTS
+5. Limits and unresolved parts
 
 None: the part is proved. Declared gaps: none.
 
-6. HOW THIS RESULT WAS OBTAINED (MULTI-AGENT TRACE)
+6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - attempt_001 — Researcher: family direct_proof, subgoal: Prove the planar bound by a random-half-turn (Crofton/Stolarsky-type) double counting: S = (pi/2) E[k(N-k)].; declared CELL_SOLVED_CANDIDATE.
@@ -79,17 +79,17 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Referee: UNKNOWN_STATUS / READY_FOR_HUMAN; next: Human reviews the exact target, proof and evidence, then approves explicit claims
 - Human approval: Thomas Tumini (human) at 2026-09-26T14:53:05 (READY_FOR_HUMAN → ACCEPT).
 
-6B. TOKENS USED BY THE AGENTS
+6b. Tokens used by the agents
 
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 
-7. ARXIV LITERATURE CONSULTED
+7. arXiv literature consulted
 
 - arXiv:1801.07837v1 — On the Fejes Tóth Problem about the Sum of Angles Between Lines (Dmitriy Bilyk, Ryan W Matzke, 2018), found by query angles between lines; abstract read, full text not relied upon.
 - arXiv:2007.08698v2 — On Fejes Tóth's conjectured maximizer for the sum of angles between lines (Tongseok Lim, Robert J. McCann, 2020), found by query angles between lines; abstract read, full text not relied upon.
 - arXiv:1204.3850v1 — Simple Agents Learn to Find Their Way: An Introduction on Mapping Polygons (Jérémie Chalopin, Shantanu Das, Yann Disser, 2012), found by query angles between lines; abstract read, full text not relied upon.
 
-8. CODE
+8. Code
 
 The complete code, with the orchestrator's trusted re-runs, is in the write-up https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p1_c1.tex and in the repository.
 

@@ -94,7 +94,7 @@ def pulisci_markdown(testo):
     fuori = []
     for i in range(0, len(pezzi), 2):
         t = pezzi[i]
-        t = re.sub(r"(?m)^#{1,6}\s*(.+?)\s*$", lambda m: "\n" + m.group(1).upper() + "\n", t)   # titoli → riga maiuscola
+        t = re.sub(r"(?m)^#{1,6}\s*(.+?)\s*$", lambda m: "\n" + m.group(1) + "\n", t)   # titoli → riga a sé (niente maiuscole: romperebbero le formule)
         t = re.sub(r"\*\*(.+?)\*\*", r"\1", t)                                            # grassetto
         t = re.sub(r"(?<!\*)\*(?!\*)([^*\n]+?)\*(?!\*)", r"\1", t)                        # corsivo
         t = re.sub(r"`([^`\n]+)`", r"\1", t)                                                 # codice inline

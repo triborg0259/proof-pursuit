@@ -1,13 +1,13 @@
-PROBLEM 3 — PART 3 — PARTIAL SUBMISSION DRAFT
+Problem 3 — Part 3 — PARTIAL submission draft
 
 Declared status: PARTIAL. No complete solution: below is what has been established, the formalization,
 the position with respect to the literature and what remains open. Nothing is declared proven beyond what is written.
 
-1. RESULT AND SCOPE
+1. Result and scope
 
 Official request.
 
-PART 3 (C3) — A GENERAL UPPER BOUND
+Part 3 (C3) — A general upper bound
 
 Score: 3 points · Evaluation: Judged
 
@@ -18,16 +18,16 @@ and determine $D_B(T_k - 1)$ exactly. Determine also, for that $n$, which partit
 
 What we deliver. No proof. Plan: exact table of $D_B(n)$ for $n\le60$ with extremal partitions, then formula and proof.
 
-2. PROOF
+2. Proof
 
 Exact computation on the functional graph of partitions (integers, no numerical error), with two implementations (partitions as tuples; cards in position on the diagram). Conjecture to be confirmed: $D_B(T_k-1)$ and the explicit extremals in $k$. Not carried out within the competition time.
 
-3. VERIFICATION: INSTRUCTIONS, DEPENDENCIES, TIMINGS
+3. Verification: instructions, dependencies, timings
 
 Code available (Python 3, standard library; each script runs in under one minute):
 - No code yet.
 
-4. SOURCES AND CONTRIBUTION
+4. Sources and contribution
 
 arXiv literature (deterministic search tools/cerca_letteratura.sh, abstracts read, not used as proof):
 - arXiv:math/0401385v2 — Random Bulgarian solitaire (Serguei Popov, 2004); abstract only read.
@@ -38,20 +38,20 @@ arXiv literature (deterministic search tools/cerca_letteratura.sh, abstracts rea
 - arXiv:2208.14496v1 — Limiting behavior in growth of Bulgarian Solitaire orbits (Nhung Pham, 2022); abstract only read.
 Griggs–Ho (1998) probably contain the bound $k^2-2k-1$: to be verified, not read.
 
-5. LIMITS AND UNRESOLVED PARTS
+5. Limits and unresolved parts
 
 Everything except the plan.
 
-6. HOW THIS RESULT WAS OBTAINED (MULTI-AGENT TRACE)
+6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - No agent run on this cell; the text was written by the team from its notes.
 
-6B. TOKENS USED BY THE AGENTS
+6b. Tokens used by the agents
 
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 
-7. ARXIV LITERATURE CONSULTED
+7. arXiv literature consulted
 
 - arXiv:math/0401385v2 — Random Bulgarian solitaire (Serguei Popov, 2004), found by query Bulgarian solitaire; abstract read, full text not relied upon.
 - arXiv:1503.00885v1 — The Bulgarian solitaire and the mathematics around it (Vesselin Drensky, 2015), found by query Bulgarian solitaire; abstract read, full text not relied upon.
@@ -60,7 +60,7 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
 - arXiv:1703.07102v1 — An exponential limit shape of random $q$-proportion Bulgarian solitaire (Kimmo Eriksson, Markus Jonsson abd Jonas Sjöstrand, 2017), found by query Bulgarian solitaire; abstract read, full text not relied upon.
 - arXiv:2208.14496v1 — Limiting behavior in growth of Bulgarian Solitaire orbits (Nhung Pham, 2022), found by query Bulgarian solitaire; abstract read, full text not relied upon.
 
-8. CODE
+8. Code
 
 The complete code, with the orchestrator's trusted re-runs, is in the write-up https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p3_c3.tex and in the repository.
 

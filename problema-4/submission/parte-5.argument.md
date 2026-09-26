@@ -1,13 +1,13 @@
-PROBLEM 4 — PART 5 — PARTIAL SUBMISSION DRAFT
+Problem 4 — Part 5 — PARTIAL submission draft
 
 Declared status: PARTIAL. No complete solution: below is what has been established, the formalization,
 the position with respect to the literature, and what remains open. Nothing is declared proven beyond what is written.
 
-1. RESULT AND SCOPE
+1. Result and scope
 
 Official request.
 
-PARTE 5 (C5) — THE CERTIFIED BOUNDARY
+Parte 5 (C5) — The certified boundary
 
 Punteggio: 8 points · Valutazione: Judged
 
@@ -41,16 +41,16 @@ cell.
 
 What we deliver. No certificate. Observation: for $k=24,30$ brute force on $L_k$ is impractical; a size-reduction argument is needed (if a counterexample exists at $k$, one exists at some $k'<k$).
 
-2. PROOF
+2. Proof
 
 Not developed.
 
-3. VERIFICATION: INSTRUCTIONS, DEPENDENCIES, TIMINGS
+3. Verification: instructions, dependencies, timings
 
 Available code (Python 3, standard library; each script runs in under a minute):
 - No code yet.
 
-4. SOURCES AND CONTRIBUTION
+4. Sources and contribution
 
 arXiv literature (deterministic search tools/cerca_letteratura.sh, abstracts read, not used as proof):
 - arXiv:2603.26043v1 — Finiteness of Disjoint Covering Systems with Precisely One Repeated Modulus (Yu Hashimoto, 2026); abstract only read.
@@ -59,27 +59,27 @@ arXiv literature (deterministic search tools/cerca_letteratura.sh, abstracts rea
 - arXiv:2608.15873v1 — Two Questions on $G$-harmonic Tuples (Murali Menon, 2026); abstract only read.
 As in part 3.
 
-5. LIMITS AND UNRESOLVED PARTS
+5. Limits and unresolved parts
 
 Everything.
 
-6. HOW THIS RESULT WAS OBTAINED (MULTI-AGENT TRACE)
+6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - No agent run on this cell; the text was written by the team from its notes.
 
-6B. TOKENS USED BY THE AGENTS
+6b. Tokens used by the agents
 
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 
-7. ARXIV LITERATURE CONSULTED
+7. arXiv literature consulted
 
 - arXiv:2603.26043v1 — Finiteness of Disjoint Covering Systems with Precisely One Repeated Modulus (Yu Hashimoto, 2026), found by query disjoint covering systems; abstract read, full text not relied upon.
 - arXiv:1511.04293v1 — Searching for Disjoint Covering Systems with Precisely One Repeated Modulus (Shalosh B. Ekhad, Aviezri S. Fraenkel, Doron Zeilberger, 2015), found by query disjoint covering systems; abstract read, full text not relied upon.
 - arXiv:2607.24655v1 — On the problem of large gcd for disjoint residue classes (Jan Fornal, Yu-Chen Sun, 2026), found by query disjoint residue classes; abstract read, full text not relied upon.
 - arXiv:2608.15873v1 — Two Questions on $G$-harmonic Tuples (Murali Menon, 2026), found by query disjoint residue classes; abstract read, full text not relied upon.
 
-8. CODE
+8. Code
 
 The complete code, with the orchestrator's trusted re-runs, is in the write-up https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p4_c5.tex and in the repository.
 

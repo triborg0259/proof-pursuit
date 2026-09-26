@@ -1,15 +1,15 @@
-PROBLEM 3 — PART 1 — SUBMISSION
+Problem 3 — Part 1 — submission
 
 Declared status: SOLVED (approved). Complete proof; automatic Referee READY_FOR_HUMAN (judge A, mathematics: PASS;
 judge B, evidence: PASS; code re-run by the orchestrator); human approval recorded in runs/p3_c1/approval.json.
 
-1. RESULT AND SCOPE
+1. Result and scope
 
 Full written proof of all parts of cell 1: (i) for n=T_k every partition reaches δ_k and δ_k is the unique cyclic partition; (ii) for n=T_{k-1}+r the cyclic partitions are exactly the C(k,r) partitions λ^ε (positive numbers among k-i+ε_i, ε∈{0,1}^k of weight r), on which B acts as cyclic rotation of ε; (iii) the number of cycles is (1/k)Σ_{d|gcd(k,r)} φ(d) C(k/d, r/d). The convergence step is proved via an ordered dynamics, a diagonal potential Φ with exact equality characterisation, and a hole-chasing lemma. Exact brute-force check agrees for all n≤40.
 
-2. PROOF
+2. Proof
 
-NOTATION
+Notation
 
 Throughout $n\ge 1$ has rank $k$, i.e. $n=T_{k-1}+r$ with $1\le r\le k$ (equivalently $T_{k-1}<n\le T_k$). For a $0/1$-word $\varepsilon=(\varepsilon_1,\dots,\varepsilon_k)$ of weight $|\varepsilon|=\sum\varepsilon_i=r$ put
 $$\lambda^{\varepsilon}:=\text{the partition whose parts are the positive numbers among } k-i+\varepsilon_i,\quad i=1,\dots,k,$$
@@ -19,7 +19,7 @@ Fact 0. $\lambda^\varepsilon$ is a partition of $n$; the sequence $(k-i+\varepsi
 
 Proof. Sum: $\sum_i(k-i)+\sum_i\varepsilon_i=T_{k-1}+r=n$. Monotone: $(k-i+\varepsilon_i)-(k-i-1+\varepsilon_{i+1})=1+\varepsilon_i-\varepsilon_{i+1}\ge0$. For $i\le k-1$, $k-i+\varepsilon_i\ge1$. Injective: $\lambda^\varepsilon$ has $k-1$ or $k$ parts; pad it with zeros to length exactly $k$; the padded weakly decreasing sequence of a multiset is unique, and $(k-i+\varepsilon_i)_i$ is such a sequence, so the $i$-th padded part equals $k-i+\varepsilon_i$ and $\varepsilon_i$ is recovered. For $r=k$ the only word is $(1,\dots,1)$ and $\lambda^\varepsilon=(k,k-1,\dots,1)=\delta_k$. $\square$
 
-PART I. $B$ ACTS ON $S_{K,R}$ AS A ROTATION
+Part I. $B$ acts on $S_{k,r}$ as a rotation
 
 Lemma 1. For $\varepsilon\in W_{k,r}$, $B(\lambda^\varepsilon)=\lambda^{\sigma\varepsilon}$ where $\sigma\varepsilon:=(\varepsilon_k,\varepsilon_1,\varepsilon_2,\dots,\varepsilon_{k-1})$. In particular $S_{k,r}$ is $B$-invariant, $B^k$ is the identity on $S_{k,r}$, and every element of $S_{k,r}$ is cyclic.
 
@@ -27,9 +27,9 @@ Proof. By Fact 0, $\lambda^\varepsilon$ has $s=k-1+\varepsilon_k$ parts: the par
 $$k-1+\varepsilon_k\ \ (\text{index }i'=1),\qquad k-i'+\varepsilon_{i'-1}\ \ (i'=2,\dots,k),$$
 which are exactly the numbers $k-i'+(\sigma\varepsilon)_{i'}$, $i'=1,\dots,k$. So $B(\lambda^\varepsilon)=\lambda^{\sigma\varepsilon}$. Since $\sigma$ preserves weight and $\sigma^k=\mathrm{id}$, $B^k(\lambda^\varepsilon)=\lambda^{\sigma^k\varepsilon}=\lambda^\varepsilon$ with $k\ge1$, so $\lambda^\varepsilon$ is cyclic. $\square$
 
-PART II. EVERY PARTITION OF $N$ ENTERS $S_{K,R}$
+Part II. Every partition of $n$ enters $S_{k,r}$
 
-II.1 ORDERED DYNAMICS
+II.1 Ordered dynamics
 
 A composition is a finite sequence $c=(c_1,\dots,c_s)$ of positive integers. Define
 $$\tilde B(c):=\text{the sequence }(s,\ c_1-1,\ \dots,\ c_s-1)\text{ with all zero entries deleted}.$$
@@ -37,7 +37,7 @@ The multiset of entries of $\tilde B(c)$ is $\{s\}\cup\{c_i-1:c_i\ge2\}$, which 
 $$B^t(\lambda)=\mathrm{sort}(c^{(t)})\quad\text{for all }t\ge0. \qquad(1)$$
 Write $s_t$ for the length of $c^{(t)}$. The cell set of a composition is $C(c):=\{(i,j):1\le i\le s,\ 1\le j\le c_i\}\subset\mathbb Z_{\ge1}^2$; put $C_t:=C(c^{(t)})$. Cell $(i,j)$ lies on diagonal $i+j$. Two properties hold for every composition, by definition: (closed) if $(i,j)\in C(c)$ and $1\le j'\le j$ then $(i,j')\in C(c)$; (gap-free) if $(i,1)\in C(c)$ and $1\le i'\le i$ then $(i',1)\in C(c)$; and $(i,1)\notin C(c)$ iff $i>s$.
 
-II.2 THE POTENTIAL
+II.2 The potential
 
 For a finite sequence $e=(e_1,\dots,e_m)$ of non-negative integers put $\Phi(e):=\sum_{i=1}^m\sum_{j=1}^{e_i}(i+j)\in\mathbb Z_{\ge0}$ (zero entries contribute nothing).
 
@@ -50,7 +50,7 @@ where we substituted $j'=j+1$ and used that the term $j'=1$ of column $i$ is $i+
 By Lemma 2, $(\Phi(c^{(t)}))_{t\ge0}$ is a non-increasing sequence of non-negative integers, hence eventually constant: there is $t_0$ with $\Phi(c^{(t+1)})=\Phi(c^{(t)})$ for all $t\ge t_0$. By the equality case of Lemma 2:
 $$\text{for all }t\ge t_0:\quad \{i:c^{(t)}_i=1\}\text{ is a terminal segment of }\{1,\dots,s_t\}. \qquad(2)$$
 
-II.3 DIAGONAL MOTION IN THE STEADY REGIME
+II.3 Diagonal motion in the steady regime
 
 Define $\rho:\mathbb Z_{\ge1}^2\to\mathbb Z_{\ge1}^2$ by $\rho(i,j)=(i+1,j-1)$ if $j\ge2$ and $\rho(i,1)=(1,i)$. Then $\rho$ preserves $i+j$, and $\rho$ is a bijection (inverse: $(i,j)\mapsto(i-1,j+1)$ for $i\ge2$, $(1,j)\mapsto(j,1)$). On diagonal $d\ge2$, whose cells are $(i,d-i)$, $1\le i\le d-1$, $\rho$ sends column $i$ to column $i+1$ for $i\le d-2$ and column $d-1$ to column $1$; hence $\rho^m$ sends the cell of diagonal $d$ in column $i$ to the cell in the unique column $\equiv i+m \pmod{d-1}$ in $\{1,\dots,d-1\}$.
 
@@ -61,7 +61,7 @@ Proof. Let $c=c^{(t)}$, $e=(s,c_1-1,\dots,c_s-1)$ as in Lemma 2. The cells of $e
 Consequently, for $t\ge t_0$ and $m\ge0$, $C_{t+m}=\rho^m(C_t)$, and since $\rho^m$ is injective,
 $$x\in C_t\iff\rho^m(x)\in C_{t+m}\qquad(x\in\mathbb Z_{\ge1}^2). \qquad(3)$$
 
-II.4 THE HOLE LEMMA
+II.4 The hole lemma
 
 Lemma 4. Let $t\ge t_0$ and $d\ge2$. If some cell of diagonal $d$ is not in $C_t$ (a hole), then no cell of any diagonal $D>d$ lies in $C_t$.
 
@@ -77,7 +77,7 @@ Case B: $u\ge D-d+1$. Then $D-u\le d-1$; the card is in column $D-1$ at $l=D-1-u
 
 So each time the hole is in column $d-1$, either Case A gives a contradiction, or Case B occurs and at the next such time the card's column is a strictly smaller positive integer. Case B cannot occur forever (positive integers cannot decrease strictly infinitely often), so Case A occurs at some time — a contradiction. Hence no such card exists. $\square$
 
-II.5 CONCLUSION OF PART II
+II.5 Conclusion of Part II
 
 Theorem A. For every partition $\lambda$ of $n$ (rank $k$, $n=T_{k-1}+r$, $1\le r\le k$) there is $t$ with $B^t(\lambda)\in S_{k,r}$. In particular for $n=T_k$ there is $t$ with $B^t(\lambda)=\delta_k$.
 
@@ -87,7 +87,7 @@ Set $\varepsilon_i:=1$ if $(i,K+1-i)\in R$ and $0$ otherwise ($1\le i\le K$). Co
 If $r'\ge1$: then $T_{K-1}<n\le T_K$, so $K=k$, $r'=r$, and by (1) $B^t(\lambda)=\mathrm{sort}(c^{(t)})=\lambda^\varepsilon\in S_{k,r}$ (the sequence is already weakly decreasing by Fact 0).
 If $r'=0$: then $n=T_{K-1}$, so $k=K-1$, $r=k$, and $c^{(t)}=(K-1,K-2,\dots,1)=\delta_k$, i.e. $B^t(\lambda)=\delta_k\in S_{k,k}$. $\square$
 
-PART III. CYCLIC PARTITIONS AND CYCLES
+Part III. Cyclic partitions and cycles
 
 Theorem B. The cyclic partitions of $n=T_{k-1}+r$ ($1\le r\le k$) are exactly the elements of $S_{k,r}$, i.e. the partitions $\lambda^\varepsilon$ with $\varepsilon\in\{0,1\}^k$ of weight $r$ — explicitly, the partitions whose parts are the positive numbers among $k-1+\varepsilon_1,\ k-2+\varepsilon_2,\ \dots,\ 1+\varepsilon_{k-1},\ \varepsilon_k$ with exactly $r$ of the $\varepsilon_i$ equal to $1$. There are $\binom kr$ of them. For $n=T_k$ ($r=k$) the only cyclic partition is $\delta_k$, and every partition of $T_k$ reaches $\delta_k$.
 
@@ -105,7 +105,7 @@ Fixed points of $\sigma^j$. $\sigma^j$ shifts positions by $j$ modulo $k$; its c
 $$N(k,r)=\frac1k\sum_{d\mid k,\ d\mid r}\varphi(d)\binom{k/d}{r/d}=\frac1k\sum_{d\mid\gcd(k,r)}\varphi(d)\binom{k/d}{r/d}.$$
 For $r=k$: $\sum_{d\mid k}\varphi(d)\binom{k/d}{k/d}=\sum_{d\mid k}\varphi(d)=k$, so $N(k,k)=1$ (consistent with $S_{k,k}=\{\delta_k\}$, $B(\delta_k)=\delta_k$). $\square$
 
-SUMMARY OF THE ANSWERS TO CELL 1
+Summary of the answers to cell 1
 
 * $n=T_k$: every partition reaches $\delta_k$ (Theorem A), and $\delta_k$ is the unique cyclic partition (Theorem B), forming the unique cycle (a fixed point).
 * $n=T_{k-1}+r$, $1\le r\le k$: the cyclic partitions are exactly the $\binom kr$ partitions $\lambda^\varepsilon$, $\varepsilon\in\{0,1\}^k$ of weight $r$ (Theorem B); $B$ acts on them by the rotation $\varepsilon\mapsto(\varepsilon_k,\varepsilon_1,\dots,\varepsilon_{k-1})$ (Lemma 1); the number of cycles is $\frac1k\sum_{d\mid\gcd(k,r)}\varphi(d)\binom{k/d}{r/d}$ (Theorem C).
@@ -114,7 +114,7 @@ Examples. $n=8=T_3+2$ ($k=4,r=2$): cyclic partitions $\lambda^\varepsilon$ for $
 
 Independent exact check (not part of the proof). The script verifica_cella1.py (exact integer arithmetic) enumerates all partitions of every $n\le40$, computes the cyclic partitions and the number of cycles by brute force, and confirms they equal $S_{k,r}$ and $N(k,r)$; it also checks Lemma 2 on all compositions of $n\le14$. Runtime 7.0 s.
 
-3. VERIFICATION: INSTRUCTIONS, DEPENDENCIES, TIMINGS
+3. Verification: instructions, dependencies, timings
 
 Python 3 standard library only. Scripts (also saved in runs/p3_c1/sandbox/ and re-run in runs/p3_c1/verifica/):
 - code_1 (python, rigor exact): Exact brute-force check for n=1..40: cyclic partitions equal S_{k,r}; number of cycles equals the necklace formula; for n=T_k the only cyclic partition is delta_k. Also checks the potential Lemma 2 (monotonicity and exact equality condition) on all compositions of n<=14. Finite set covered: all partitions of n<=40, all compositions of n<=14. Wall-clock 7.0 s. File: runs/p3_c1/sandbox/verifica_cella1.py
@@ -122,7 +122,7 @@ Python 3 standard library only. Scripts (also saved in runs/p3_c1/sandbox/ and r
 Trusted re-runs by the orchestrator (exit code, wall clock, output):
 - orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 7.0s; stdout: 'OK: n=1..40 e potenziale su composizioni di n<=14, tempo 7.0s'; stderr: ''
 
-4. SOURCES AND CONTRIBUTION
+4. Sources and contribution
 
 - arXiv:1503.00885 (Drensky, survey; abstract only — context: attribution of the characterisation to Brandt 1982)
 - arXiv:2607.17194 (Meštrović, survey; abstract only — context)
@@ -131,13 +131,13 @@ Trusted re-runs by the orchestrator (exit code, wall clock, output):
 - Position with respect to the literature: The cell's statement is classical: 1503.00885 (Drensky) and 2607.17194 (Meštrović) survey it and attribute the characterisation of cyclic partitions and the necklace count of cycles to Brandt (1982); 1101.1546 (Hart–Khan–Khan) expounds Toom's proof of convergence to δ_k for triangular n; 2208.14496 (Pham) uses Brandt's necklace parametrisation of orbits. I have not read the full papers, only the abstracts; nothing from them is used as a hypothesis. My proof follows the general strategy of "diagonal invariant + monotone potential" but the hole-chasing lemma and all details are written out in full here, so the result is proved, not cited.
 - Contribution: the proof above is written out in full by the team's Researcher and checked by two independent judges and by a human.
 
-5. LIMITS AND UNRESOLVED PARTS
+5. Limits and unresolved parts
 
 Gaps declared by the author (all accepted by the judges):
 - Lemma 4 (hole lemma) is the most delicate step; the case analysis A/B on the card's column is written out, but the referee should re-check the index bookkeeping (in particular that in Case B the card wraps exactly once before the hole returns to column d-1, and that u' = u-(D-d) is ≥ 1).
 - Burnside's lemma and the orbit structure of a rotation on Z_k are proved briefly inline (orbit–stabiliser is used without proof); these are textbook facts.
 
-6. HOW THIS RESULT WAS OBTAINED (MULTI-AGENT TRACE)
+6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - attempt_001 — Researcher: family direct_proof, subgoal: Prove the complete statement of cell 1: (a) for n = T_k every partition reaches δ_k and δ_k is the only cyclic partition; (b) for n = T_{k-1}+r, 1 ≤ r ≤ k, the cyclic partitions are exactly δ_{k-1}+ε with ε ∈ {0,1}^k of weight r, and the number of cycles is the number of binary necklaces of length k with r black beads, (1/k) Σ_{d | gcd(k,r)} φ(d) C(k/d, r/d).; declared CELL_SOLVED_CANDIDATE.
@@ -150,11 +150,11 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Referee: UNKNOWN_STATUS / READY_FOR_HUMAN; next: Human reviews the exact target, proof and evidence, then approves explicit claims
 - Human approval: Thomas Tumini (human) at 2026-09-26T15:08:49 (READY_FOR_HUMAN → ACCEPT).
 
-6B. TOKENS USED BY THE AGENTS
+6b. Tokens used by the agents
 
 - Token counts not recorded for this run (older harness version; only cost and turns were logged).
 
-7. ARXIV LITERATURE CONSULTED
+7. arXiv literature consulted
 
 - arXiv:math/0401385v2 — Random Bulgarian solitaire (Serguei Popov, 2004), found by query Bulgarian solitaire; abstract read, full text not relied upon.
 - arXiv:1503.00885v1 — The Bulgarian solitaire and the mathematics around it (Vesselin Drensky, 2015), found by query Bulgarian solitaire; abstract read, full text not relied upon.
@@ -163,7 +163,7 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
 - arXiv:1703.07102v1 — An exponential limit shape of random $q$-proportion Bulgarian solitaire (Kimmo Eriksson, Markus Jonsson abd Jonas Sjöstrand, 2017), found by query Bulgarian solitaire; abstract read, full text not relied upon.
 - arXiv:2208.14496v1 — Limiting behavior in growth of Bulgarian Solitaire orbits (Nhung Pham, 2022), found by query Bulgarian solitaire; abstract read, full text not relied upon.
 
-8. CODE
+8. Code
 
 The complete code, with the orchestrator's trusted re-runs, is in the write-up https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p3_c1.tex and in the repository.
 
