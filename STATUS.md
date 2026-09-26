@@ -10,7 +10,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | Problema | Titolo | Celle con evidenza | Stato complessivo |
 |---|---|---|---|
 | 1 | Angles between lines (Fejes Tóth), 32 pt | 0/6 | in corso (tutte le 6 parti ricevute) |
-| 2 | Uphill paths on the hypercube, 32 pt | 0/6 (C1 a metà) | in corso |
+| 2 | Uphill paths on the hypercube, 32 pt | 1/6 | in corso (C1 revisionata) |
 | 3 | Bulgarian solitaire, 32 pt | 0/6 | in analisi (tutte le 6 parti ricevute) |
 | 4 | Disjoint classes / gcd of moduli, 32 pt | 0/6 | in analisi (tutte le 6 parti ricevute) |
 
@@ -29,7 +29,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 
 | Parte | Richiesta | Stato | Evidenza |
 |---|---|---|---|
-| 1 | $U(Q_3)$, $U(Q_4)$ + etichettature (1 pt, checked) | parziale | $U(Q_3)=14$ provato + 3 enumerazioni concordi; bozza in submission/parte-1.md; $Q_4$ da fare |
+| 1 | $U(Q_3)$, $U(Q_4)$ + etichettature (1 pt, checked) | revisionato | $U(Q_3)=14$, $U(Q_4)=34$: prove a mano rilette passo per passo + verifiche esatte indipendenti; bozza in submission/parte-1.md |
 | 2 | $U(Q_5)$ (2 pt, checked) | in analisi | harness discreto |
 | 3 | $U(Q_6)$ (3 pt, checked) | in analisi | |
 | 4 | $U(Q_7)$, $U(Q_8)$ (5 pt, checked) | in analisi | |
