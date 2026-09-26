@@ -134,7 +134,33 @@ def argument(pid, n, k):
         + "\n".join(decisioni_md(r) for r in runs) + "\n\n## 6b. Tokens used by the agents\n" + "\n".join(token_md(r) for r in runs) + "\n\n## 7. arXiv literature consulted\n" + fonti_md(n, pid) \
         + f"\n\n## 8. Code\nThe complete code, with the orchestrator's trusted re-runs, is in the write-up: {PAGES}cells/{pid}_c{k}.html (rendered), {link_overleaf(pid, k)} (open in Overleaf), source in the repository {REPO}.\n" \
         + f"\n\n---\nFull write-up (LaTeX, all resources): {REPO}report/cells/{pid}_c{k}.tex · Repository: {REPO}\n"
-    (sub / f"parte-{k}.argument.md").write_text(pulisci_markdown(normalizza_math(testo)), encoding="utf-8")
+    pulito = pulisci_markdown(normalizza_math(testo))
+    senza_traccia = lambda t: re.sub(r"(?s)\n6\. How this result was obtained.*?(?=\n7\. arXiv)", "\n6. How this result was obtained\n\nSee the multi-agent trace in the write-up (link below).\n", t)
+    (sub / f"parte-{k}.argument.md").write_text(entro_limite(pulito, LIMITE_ARG, [senza_traccia]), encoding="utf-8")
+    return testo
+
+
+LIMITE_TEX, LIMITE_ARG = 50000, 40000   # limiti della piattaforma (caratteri)
+
+
+def accorcia_listati(tex, righe_max):
+    """Taglia ogni listato di codice a righe_max righe, rimandando al repo per il resto: il write-up deve stare nel limite."""
+    def taglio(m):
+        righe = m.group(2).splitlines()
+        if len(righe) <= righe_max:
+            return m.group(0)
+        return m.group(1) + "\n".join(righe[:righe_max]) + f"\n# ... ({len(righe) - righe_max} more lines: full script in the repository)\n\\end{{lstlisting}}"
+    return re.sub(r"(\\begin\{lstlisting\}\[[^\]]*\]\n)(.*?)\\end\{lstlisting\}", taglio, tex, flags=re.S)
+
+
+def entro_limite(testo, limite, riduttori):
+    """Applica i riduttori in ordine finché il testo sta nel limite; come ultima risorsa tronca con avviso."""
+    for r in riduttori:
+        if len(testo) <= limite:
+            return testo
+        testo = r(testo)
+    if len(testo) > limite:
+        testo = testo[:limite - 120] + "\n\n[Truncated to the platform limit; the full text is in the repository.]\n"
     return testo
 
 
@@ -144,8 +170,10 @@ def cella_tex(pid, n, k):
     bib = "\n".join(f"\\bibitem{{{v['arxiv_id']}}} {br.tex(', '.join(v['authors']))}. \\emph{{{br.tex(v['title'])}}}. arXiv:{v['arxiv_id']} ({v['published'][:4]}). \\url{{{v['url']}}}" for v in fonti)
     out = ROOT / "report" / "cells" / f"{pid}_c{k}.tex"
     out.parent.mkdir(exist_ok=True)
-    out.write_text(br.PREAMBOLO.replace("rapporto completo", f"Problem {n}, part {k}") + f"\\section{{Problem {n} — {br.tex(CELLE[pid]['title'])}}}\n" + corpo
-                   + "\n\\section{arXiv literature consulted}\n" + ("\\begin{thebibliography}{99}\n" + bib + "\n\\end{thebibliography}\n" if bib else "None found.\n") + "\\end{document}\n", encoding="utf-8")
+    testo = br.PREAMBOLO.replace("rapporto completo", f"Problem {n}, part {k}") + f"\\section{{Problem {n} — {br.tex(CELLE[pid]['title'])}}}\n" + corpo \
+        + "\n\\section{arXiv literature consulted}\n" + ("\\begin{thebibliography}{99}\n" + bib + "\n\\end{thebibliography}\n" if bib else "None found.\n") + "\\end{document}\n"
+    testo = entro_limite(testo, LIMITE_TEX, [lambda t: accorcia_listati(t, 60), lambda t: accorcia_listati(t, 25), lambda t: accorcia_listati(t, 8)])
+    out.write_text(testo, encoding="utf-8")
 
 
 def main():
