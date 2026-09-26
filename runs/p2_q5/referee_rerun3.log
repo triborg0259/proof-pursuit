@@ -1,0 +1,6 @@
+[bridge] orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: ''; stderr: ''
+[bridge] orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 0 in 0.5s; stdout: 'insiemi indipendenti di taglia 12 contenenti 0: 1377\nco
+[bridge] orchestrator re-ran code_3.py (python3, clean copy of the researcher sandbox): exit 0 in 0.8s; stdout: 'insiemi indipendenti di taglia 12 (tutti, senza simmetri
+[bridge] orchestrator re-ran code_4.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: "totale cammini: 88\nvalli: ['00000', '11110', '11001', '
+[bridge] orchestrator re-ran code_5.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: "valli: ['00000', '11110', '11001', '10101', '01101', '10
+[bridge] orchestrator re-ran code_6.py (python3, clean copy of the researcher sandbox): exit 0 in 13.4s; stdout: "identita' verificata su 200000 etichettature casuali; m

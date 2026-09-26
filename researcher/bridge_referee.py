@@ -110,9 +110,17 @@ def _artefatti(attempt):
     return artefatti
 
 
+def _estratto_interno(riferimento, massimo=2500):
+    """Se la fonte è un file del repo (es. problema-2/submission/parte-1.md) ne allega l'inizio: il giudice B non
+    vede il repo e altrimenti segnala la fonte come non ispezionata."""
+    m = re.search(r"[\w./-]+\.(?:md|py|txt)", riferimento or "")
+    percorso = ROOT / m.group(0) if m else None
+    return percorso.read_text(encoding="utf-8")[:massimo] if percorso and percorso.is_file() else ""
+
+
 def _fonti(attempt):
-    """Le fonti citate dal tentativo, legate al claim principale."""
-    return [{"id": f"src_{i + 1}", "reference": rif, "claim_ids": ["main"], "submitted_excerpt": ""}
+    """Le fonti citate dal tentativo, legate al claim principale; quelle interne con estratto."""
+    return [{"id": f"src_{i + 1}", "reference": rif, "claim_ids": ["main"], "submitted_excerpt": _estratto_interno(rif)}
             for i, rif in enumerate(attempt.get("sources_used", []))]
 
 

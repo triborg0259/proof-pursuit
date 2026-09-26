@@ -1,0 +1,17 @@
+{
+ "problem_id": "p1_c3",
+ "highest_verified_cell": 0,
+ "current_target": "cell_3",
+ "cell_statement": "Let d >= 1. Prove that any d+1 lines through the origin in R^d satisfy S <= (C(d+1,2) - 1) pi/2.",
+ "current_blocker": "",
+ "verified_claims": [],
+ "failed_attempts": [],
+ "stagnation_count": 0,
+ "cell_status": {},
+ "rules": {
+  "allow_literature_as_proof": false,
+  "allow_computation": true,
+  "require_machine_verification": false,
+  "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For each cell you attempt, hand in a written proof. You may use a computer to explore. A proof may rely on a computation only if you include the code, it runs in under 10 minutes on a laptop, and it is rigorous: exact or interval arithmetic, or an argument that bounds the numerical error. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+ }
+}

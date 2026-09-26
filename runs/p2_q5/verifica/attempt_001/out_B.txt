@@ -1,0 +1,2 @@
+insiemi indipendenti di taglia 12 con 0: 1377; strutture B trovate: 0
+tempo 0.0s

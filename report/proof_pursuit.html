@@ -1,0 +1,3741 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)" />
+  <meta name="dcterms.date" content="2026-09-26" />
+  <title>Proof Pursuit — rapporto completo prove, decisioni degli agenti, codice verificato, letteratura</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — rapporto completo<br />
+prove, decisioni degli agenti, codice verificato, letteratura</h1>
+<p class="author">Team Proof Pursuit (Researcher: T. Tumini; Referee:
+gabundos; Creative: M. Renzi; gio3r3gio)</p>
+<p class="date">2026-09-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#come-leggere-questo-rapporto"
+id="toc-come-leggere-questo-rapporto">Come leggere questo
+rapporto</a></li>
+<li><a href="#problema-1-angles-between-lines-fejes-toth"
+id="toc-problema-1-angles-between-lines-fejes-toth">Problema 1 — Angles
+between lines (Fejes Toth)</a>
+<ul>
+<li><a href="#enunciato-ufficiale"
+id="toc-enunciato-ufficiale">Enunciato ufficiale</a>
+<ul>
+<li><a href="#problema-1-angles-between-lines"
+id="toc-problema-1-angles-between-lines">Problema 1 — Angles between
+lines</a></li>
+</ul></li>
+<li><a href="#cella-1-1-punti-stato-in-corso"
+id="toc-cella-1-1-punti-stato-in-corso">Cella 1 (1 punti) — stato: in
+corso</a>
+<ul>
+<li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti"
+id="toc-decisioni-degli-agenti">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo"
+id="toc-codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-2-2-punti-stato-in-corso"
+id="toc-cella-2-2-punti-stato-in-corso">Cella 2 (2 punti) — stato: in
+corso</a>
+<ul>
+<li><a href="#consegna-prova-1" id="toc-consegna-prova-1">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-1"
+id="toc-decisioni-degli-agenti-1">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-1"
+id="toc-codice-su-cui-poggia-il-tentativo-1">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-3-3-punti-stato-in-analisi"
+id="toc-cella-3-3-punti-stato-in-analisi">Cella 3 (3 punti) — stato: in
+analisi</a>
+<ul>
+<li><a href="#consegna-prova-2" id="toc-consegna-prova-2">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-2"
+id="toc-decisioni-degli-agenti-2">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-2"
+id="toc-codice-su-cui-poggia-il-tentativo-2">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-4-5-punti-stato-in-analisi"
+id="toc-cella-4-5-punti-stato-in-analisi">Cella 4 (5 punti) — stato: in
+analisi</a>
+<ul>
+<li><a href="#consegna-prova-3" id="toc-consegna-prova-3">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-3"
+id="toc-decisioni-degli-agenti-3">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-3"
+id="toc-codice-su-cui-poggia-il-tentativo-3">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-5-8-punti-stato-in-analisi"
+id="toc-cella-5-8-punti-stato-in-analisi">Cella 5 (8 punti) — stato: in
+analisi</a>
+<ul>
+<li><a href="#consegna-prova-4" id="toc-consegna-prova-4">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-4"
+id="toc-decisioni-degli-agenti-4">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-4"
+id="toc-codice-su-cui-poggia-il-tentativo-4">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-6-13-punti-stato-in-analisi"
+id="toc-cella-6-13-punti-stato-in-analisi">Cella 6 (13 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-5" id="toc-consegna-prova-5">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-5"
+id="toc-decisioni-degli-agenti-5">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-5"
+id="toc-codice-su-cui-poggia-il-tentativo-5">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a
+href="#letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti"
+id="toc-letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti">Letteratura
+arXiv consultata (ricerca deterministica, abstract letti)</a></li>
+</ul></li>
+<li><a href="#problema-2-uphill-paths-on-the-hypercube"
+id="toc-problema-2-uphill-paths-on-the-hypercube">Problema 2 — Uphill
+paths on the hypercube</a>
+<ul>
+<li><a href="#enunciato-ufficiale-1"
+id="toc-enunciato-ufficiale-1">Enunciato ufficiale</a>
+<ul>
+<li><a href="#problema-2-uphill-paths-on-the-hypercube"
+id="toc-problema-2-uphill-paths-on-the-hypercube">Problema 2 — Uphill
+paths on the hypercube</a></li>
+</ul></li>
+<li><a href="#cella-1-1-punti-stato-revisionato"
+id="toc-cella-1-1-punti-stato-revisionato">Cella 1 (1 punti) — stato:
+revisionato</a>
+<ul>
+<li><a href="#consegna-prova-6" id="toc-consegna-prova-6">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-6"
+id="toc-decisioni-degli-agenti-6">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-6"
+id="toc-codice-su-cui-poggia-il-tentativo-6">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-2-2-punti-stato-bozza-pronta"
+id="toc-cella-2-2-punti-stato-bozza-pronta">Cella 2 (2 punti) — stato:
+bozza pronta</a>
+<ul>
+<li><a href="#consegna-prova-7" id="toc-consegna-prova-7">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-7"
+id="toc-decisioni-degli-agenti-7">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-7"
+id="toc-codice-su-cui-poggia-il-tentativo-7">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-3-3-punti-stato-in-analisi-1"
+id="toc-cella-3-3-punti-stato-in-analisi-1">Cella 3 (3 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-8" id="toc-consegna-prova-8">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-8"
+id="toc-decisioni-degli-agenti-8">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-8"
+id="toc-codice-su-cui-poggia-il-tentativo-8">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-4-5-punti-stato-in-analisi-1"
+id="toc-cella-4-5-punti-stato-in-analisi-1">Cella 4 (5 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-9" id="toc-consegna-prova-9">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-9"
+id="toc-decisioni-degli-agenti-9">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-9"
+id="toc-codice-su-cui-poggia-il-tentativo-9">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-5-8-punti-stato-in-analisi-1"
+id="toc-cella-5-8-punti-stato-in-analisi-1">Cella 5 (8 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-10" id="toc-consegna-prova-10">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-10"
+id="toc-decisioni-degli-agenti-10">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-10"
+id="toc-codice-su-cui-poggia-il-tentativo-10">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-6-13-punti-stato-in-analisi-1"
+id="toc-cella-6-13-punti-stato-in-analisi-1">Cella 6 (13 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-11" id="toc-consegna-prova-11">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-11"
+id="toc-decisioni-degli-agenti-11">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-11"
+id="toc-codice-su-cui-poggia-il-tentativo-11">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#certificati-di-verifica-indipendente-del-team"
+id="toc-certificati-di-verifica-indipendente-del-team">Certificati di
+verifica indipendente del team</a></li>
+<li><a
+href="#letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti-1"
+id="toc-letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti-1">Letteratura
+arXiv consultata (ricerca deterministica, abstract letti)</a></li>
+</ul></li>
+<li><a href="#problema-3-bulgarian-solitaire"
+id="toc-problema-3-bulgarian-solitaire">Problema 3 — Bulgarian
+solitaire</a>
+<ul>
+<li><a href="#enunciato-ufficiale-2"
+id="toc-enunciato-ufficiale-2">Enunciato ufficiale</a>
+<ul>
+<li><a href="#problema-3-bulgarian-solitaire"
+id="toc-problema-3-bulgarian-solitaire">Problema 3 — Bulgarian
+solitaire</a></li>
+</ul></li>
+<li><a href="#cella-1-1-punti-stato-in-analisi"
+id="toc-cella-1-1-punti-stato-in-analisi">Cella 1 (1 punti) — stato: in
+analisi</a>
+<ul>
+<li><a href="#consegna-prova-12" id="toc-consegna-prova-12">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-12"
+id="toc-decisioni-degli-agenti-12">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-12"
+id="toc-codice-su-cui-poggia-il-tentativo-12">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-2-2-punti-stato-in-analisi"
+id="toc-cella-2-2-punti-stato-in-analisi">Cella 2 (2 punti) — stato: in
+analisi</a>
+<ul>
+<li><a href="#consegna-prova-13" id="toc-consegna-prova-13">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-13"
+id="toc-decisioni-degli-agenti-13">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-13"
+id="toc-codice-su-cui-poggia-il-tentativo-13">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-3-3-punti-stato-in-analisi-2"
+id="toc-cella-3-3-punti-stato-in-analisi-2">Cella 3 (3 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-14" id="toc-consegna-prova-14">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-14"
+id="toc-decisioni-degli-agenti-14">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-14"
+id="toc-codice-su-cui-poggia-il-tentativo-14">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-4-5-punti-stato-in-analisi-2"
+id="toc-cella-4-5-punti-stato-in-analisi-2">Cella 4 (5 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-15" id="toc-consegna-prova-15">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-15"
+id="toc-decisioni-degli-agenti-15">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-15"
+id="toc-codice-su-cui-poggia-il-tentativo-15">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-5-8-punti-stato-in-analisi-2"
+id="toc-cella-5-8-punti-stato-in-analisi-2">Cella 5 (8 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-16" id="toc-consegna-prova-16">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-16"
+id="toc-decisioni-degli-agenti-16">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-16"
+id="toc-codice-su-cui-poggia-il-tentativo-16">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-6-13-punti-stato-in-analisi-2"
+id="toc-cella-6-13-punti-stato-in-analisi-2">Cella 6 (13 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-17" id="toc-consegna-prova-17">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-17"
+id="toc-decisioni-degli-agenti-17">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-17"
+id="toc-codice-su-cui-poggia-il-tentativo-17">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a
+href="#letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti-2"
+id="toc-letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti-2">Letteratura
+arXiv consultata (ricerca deterministica, abstract letti)</a></li>
+</ul></li>
+<li><a href="#problema-4-disjoint-congruence-classes-and-large-gcd"
+id="toc-problema-4-disjoint-congruence-classes-and-large-gcd">Problema 4
+— Disjoint congruence classes and large gcd</a>
+<ul>
+<li><a href="#enunciato-ufficiale-3"
+id="toc-enunciato-ufficiale-3">Enunciato ufficiale</a>
+<ul>
+<li><a href="#problema-4-disjoint-congruence-classes-and-large-gcd"
+id="toc-problema-4-disjoint-congruence-classes-and-large-gcd">Problema 4
+— Disjoint congruence classes and large gcd</a></li>
+</ul></li>
+<li><a href="#cella-1-1-punti-stato-in-analisi-1"
+id="toc-cella-1-1-punti-stato-in-analisi-1">Cella 1 (1 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-18" id="toc-consegna-prova-18">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-18"
+id="toc-decisioni-degli-agenti-18">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-18"
+id="toc-codice-su-cui-poggia-il-tentativo-18">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-2-2-punti-stato-in-analisi-1"
+id="toc-cella-2-2-punti-stato-in-analisi-1">Cella 2 (2 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-19" id="toc-consegna-prova-19">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-19"
+id="toc-decisioni-degli-agenti-19">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-19"
+id="toc-codice-su-cui-poggia-il-tentativo-19">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-3-3-punti-stato-in-analisi-3"
+id="toc-cella-3-3-punti-stato-in-analisi-3">Cella 3 (3 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-20" id="toc-consegna-prova-20">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-20"
+id="toc-decisioni-degli-agenti-20">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-20"
+id="toc-codice-su-cui-poggia-il-tentativo-20">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-4-5-punti-stato-in-analisi-3"
+id="toc-cella-4-5-punti-stato-in-analisi-3">Cella 4 (5 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-21" id="toc-consegna-prova-21">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-21"
+id="toc-decisioni-degli-agenti-21">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-21"
+id="toc-codice-su-cui-poggia-il-tentativo-21">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-5-8-punti-stato-in-analisi-3"
+id="toc-cella-5-8-punti-stato-in-analisi-3">Cella 5 (8 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-22" id="toc-consegna-prova-22">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-22"
+id="toc-decisioni-degli-agenti-22">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-22"
+id="toc-codice-su-cui-poggia-il-tentativo-22">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a href="#cella-6-13-punti-stato-in-analisi-3"
+id="toc-cella-6-13-punti-stato-in-analisi-3">Cella 6 (13 punti) — stato:
+in analisi</a>
+<ul>
+<li><a href="#consegna-prova-23" id="toc-consegna-prova-23">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti-23"
+id="toc-decisioni-degli-agenti-23">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo-23"
+id="toc-codice-su-cui-poggia-il-tentativo-23">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+<li><a
+href="#letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti-3"
+id="toc-letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti-3">Letteratura
+arXiv consultata (ricerca deterministica, abstract letti)</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="come-leggere-questo-rapporto">Come leggere
+questo rapporto</h1>
+<p>Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team
+(mai “risolto” senza revisione umana), la consegna con la prova, poi la
+traccia delle decisioni degli agenti (Researcher: famiglia e motivo;
+Referee: verdetto ed errore fatale; Creative: quando e perché è
+intervenuto) e il codice su cui il tentativo poggia con l’esito della
+riesecuzione fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO
+e CONGETTURA restano distinti. L’architettura del sistema è descritta
+nel README del repository.</p>
+<h1 id="problema-1-angles-between-lines-fejes-toth">Problema 1 — Angles
+between lines (Fejes Toth)</h1>
+<h2 id="enunciato-ufficiale">Enunciato ufficiale</h2>
+<h3 id="problema-1-angles-between-lines">Problema 1 — Angles between
+lines</h3>
+<p><em>(Enunciato formattato in LaTeX, contenuto fedele all’originale;
+ricevuto a parti il 2026-09-26.)</em></p>
+<h4 id="preambolo">Preambolo</h4>
+<p><strong>Angles between lines.</strong> How large can the sum of
+pairwise angles between <span class="math inline">\(N\)</span> lines
+through the origin be? Fejes Tóth conjectured in 1959 that orthogonal
+lines win.</p>
+<p>A line here always means a line through the origin of <span
+class="math inline">\(\mathbb{R}^d\)</span>. The angle between two lines
+<span class="math inline">\(\ell, \ell&#39;\)</span> is the acute
+(non-obtuse) angle <span class="math inline">\(\theta(\ell,\ell&#39;)
+\in [0,\pi/2]\)</span> between them. If <span
+class="math inline">\(\ell, \ell&#39;\)</span> are spanned by unit
+vectors <span class="math inline">\(x, x&#39;\)</span>, then <span
+class="math display">\[\theta(\ell,\ell&#39;) = \arccos\,\lvert \langle
+x, x&#39; \rangle \rvert .\]</span> For lines <span
+class="math inline">\(\ell_1, \ldots, \ell_N\)</span> in <span
+class="math inline">\(\mathbb{R}^d\)</span> (repetitions allowed), write
+<span class="math display">\[S(\ell_1,\ldots,\ell_N) = \sum_{1 \le i
+&lt; j \le N} \theta(\ell_i,\ell_j).\]</span> The question is how large
+<span class="math inline">\(S\)</span> can be. In 1959 L. Fejes Tóth
+conjectured that <span class="math inline">\(S\)</span> is maximised by
+taking <span class="math inline">\(d\)</span> mutually orthogonal lines,
+each used either <span class="math inline">\(\lfloor N/d
+\rfloor\)</span> or <span class="math inline">\(\lceil N/d
+\rceil\)</span> times. When <span class="math inline">\(N = d +
+k\)</span> with <span class="math inline">\(0 \le k \le d\)</span>, that
+configuration (the <span class="math inline">\(d\)</span> coordinate
+axes, <span class="math inline">\(k\)</span> of them used twice) has
+<span class="math display">\[S = \left( \binom{N}{2} - k \right) \cdot
+\frac{\pi}{2},\]</span> because exactly <span
+class="math inline">\(k\)</span> pairs of lines coincide and every other
+pair is orthogonal.</p>
+<p>Each cell below asks you to prove this bound, or a special case of
+it. Unless a cell says otherwise, you need a complete proof. Citing a
+published result for the statement you are asked to prove does not
+count.</p>
+<p><strong>What to hand in.</strong> For each cell you attempt, hand in
+a written proof. You may use a computer to explore. A proof may rely on
+a computation only if you include the code, it runs in under 10 minutes
+on a laptop, and it is rigorous: exact or interval arithmetic, or an
+argument that bounds the numerical error. Say clearly which cells you
+consider solved and which are partial.</p>
+<h4 id="parte-1-lines-in-the-plane">Parte 1 — Lines in the plane</h4>
+<p><strong>Punteggio:</strong> 1 point · <strong>Valutazione:</strong>
+Judged</p>
+<p>We begin in the plane (<span class="math inline">\(d = 2\)</span>),
+where the conjectured optimum splits the <span
+class="math inline">\(N\)</span> lines as evenly as possible between two
+perpendicular directions. Let <span class="math inline">\(\ell_1,
+\ldots, \ell_N\)</span> be lines in <span
+class="math inline">\(\mathbb{R}^2\)</span>. Prove that <span
+class="math display">\[S(\ell_1, \ldots, \ell_N) \;\le\; \frac{\pi}{2}
+\cdot \left\lfloor \frac{N^2}{4} \right\rfloor .\]</span></p>
+<h4 id="parte-2-an-orthogonality-lemma">Parte 2 — An orthogonality
+lemma</h4>
+<p><strong>Punteggio:</strong> 2 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>A statement about a chain of vectors, in which each vector may fail
+to be orthogonal only to its immediate neighbours in the list. Let <span
+class="math inline">\(m \ge 2\)</span> and let <span
+class="math inline">\(x_1, \ldots, x_m\)</span> be unit vectors in <span
+class="math inline">\(\mathbb{R}^{m-1}\)</span> with <span
+class="math inline">\(\langle x_i, x_j \rangle = 0\)</span> whenever
+<span class="math inline">\(|i - j| \ge 2\)</span>. Prove that <span
+class="math display">\[\sum_{i=1}^{m-1} \theta(x_i, x_{i+1}) \;\le\;
+(m-2) \cdot \frac{\pi}{2},\]</span> where <span
+class="math inline">\(\theta(x,y) = \arccos\,\lvert \langle x, y \rangle
+\rvert\)</span>.</p>
+<h4 id="parte-3-d1-lines-in-mathbbrd">Parte 3 — <span
+class="math inline">\(d+1\)</span> lines in <span
+class="math inline">\(\mathbb{R}^d\)</span></h4>
+<p><strong>Punteggio:</strong> 3 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The first case in every dimension: one line more than the dimension,
+<span class="math inline">\(N = d+1\)</span>, where the conjectured
+optimum repeats exactly one of the <span
+class="math inline">\(d\)</span> coordinate axes. Let <span
+class="math inline">\(d \ge 1\)</span>. Prove that any <span
+class="math inline">\(d+1\)</span> lines in <span
+class="math inline">\(\mathbb{R}^d\)</span> satisfy <span
+class="math display">\[S \;\le\; \left( \binom{d+1}{2} - 1 \right) \cdot
+\frac{\pi}{2}.\]</span></p>
+<h4 id="parte-4-five-lines-in-mathbbr3-six-in-mathbbr4">Parte 4 — Five
+lines in <span class="math inline">\(\mathbb{R}^3\)</span>, six in <span
+class="math inline">\(\mathbb{R}^4\)</span></h4>
+<p><strong>Punteggio:</strong> 5 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>Two concrete instances of the next case, <span
+class="math inline">\(N = d+2\)</span>: five lines in three dimensions
+and six lines in four. In each, the conjectured optimum repeats two of
+the coordinate axes. Prove that any <span
+class="math inline">\(5\)</span> lines in <span
+class="math inline">\(\mathbb{R}^3\)</span> satisfy <span
+class="math inline">\(S \le 4\pi\)</span>, and that any <span
+class="math inline">\(6\)</span> lines in <span
+class="math inline">\(\mathbb{R}^4\)</span> satisfy <span
+class="math inline">\(S \le 13\pi/2\)</span>.</p>
+<h4 id="parte-5-d2-lines-in-mathbbrd">Parte 5 — <span
+class="math inline">\(d+2\)</span> lines in <span
+class="math inline">\(\mathbb{R}^d\)</span></h4>
+<p><strong>Punteggio:</strong> 8 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The case <span class="math inline">\(N = d+2\)</span> in every
+dimension, with the same conjectured optimum: the <span
+class="math inline">\(d\)</span> coordinate axes, two of them repeated.
+Prove that for every <span class="math inline">\(d \ge 2\)</span>, any
+<span class="math inline">\(d+2\)</span> lines in <span
+class="math inline">\(\mathbb{R}^d\)</span> satisfy <span
+class="math display">\[S \;\le\; \left( \binom{d+2}{2} - 2 \right)
+\frac{\pi}{2}.\]</span></p>
+<h4 id="parte-6-n-lines-in-mathbbrd">Parte 6 — <span
+class="math inline">\(N\)</span> lines in <span
+class="math inline">\(\mathbb{R}^d\)</span></h4>
+<p><strong>Punteggio:</strong> 13 points · <strong>Valutazione:</strong>
+Judged · <strong>Open question</strong></p>
+<p>Fejes Tóth’s conjecture from the Setting, for every <span
+class="math inline">\(N\)</span> and every <span
+class="math inline">\(d\)</span>. For <span
+class="math inline">\(N\)</span> lines in <span
+class="math inline">\(\mathbb{R}^d\)</span>, write <span
+class="math inline">\(N = qd + s\)</span> with <span
+class="math inline">\(0 \le s &lt; d\)</span>, and let <span
+class="math display">\[M(N,d) = s \binom{q+1}{2} + (d-s)
+\binom{q}{2}.\]</span> Prove or disprove: every <span
+class="math inline">\(N\)</span> lines in <span
+class="math inline">\(\mathbb{R}^d\)</span> satisfy <span
+class="math display">\[S \;\le\; \left( \binom{N}{2} - M(N,d) \right)
+\frac{\pi}{2}.\]</span> This is the value attained by splitting the
+lines as evenly as possible among <span class="math inline">\(d\)</span>
+mutually orthogonal directions. Settling any infinite family not already
+covered above counts as partial progress.</p>
+<p><em>(Fine del problema 1. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
+<h2 id="cella-1-1-punti-stato-in-corso">Cella 1 (1 punti) — stato: in
+corso</h2>
+<p><strong>Richiesta.</strong> Let l_1..l_N be lines through the origin
+in R^2. Prove S(l_1..l_N) = sum_{i&lt;j} theta(l_i,l_j) &lt;= (pi/2) *
+floor(N^2/4).</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> E1: max numerico =
+target per N≤10; prova via argomento di Crofton abbozzata (note.md, E),
+da scrivere e revisionare; definizione di $S$ confermata dal
+preambolo</p>
+<h3 id="consegna-prova">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
+<h4 id="run-p1_c1">Run <code>p1_c1</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h2 id="cella-2-2-punti-stato-in-corso">Cella 2 (2 punti) — stato: in
+corso</h2>
+<p><strong>Richiesta.</strong> Let m &gt;= 2 and x_1..x_m unit vectors
+in R^{m-1} with &lt;x_i,x_j&gt; = 0 whenever |i-j| &gt;= 2. Prove
+sum_{i=1}^{m-1} theta(x_i,x_{i+1}) &lt;= (m-2) pi/2, where theta(x,y) =
+arccos|&lt;x,y&gt;|.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> prova per
+induzione abbozzata (note.md, F); casi m=2,3 verificati a mano</p>
+<h3 id="consegna-prova-1">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-1">Decisioni degli agenti</h3>
+<h4 id="run-p1_c2">Run <code>p1_c2</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo-1">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h2 id="cella-3-3-punti-stato-in-analisi">Cella 3 (3 punti) — stato: in
+analisi</h2>
+<p><strong>Richiesta.</strong> Let d &gt;= 1. Prove that any d+1 lines
+through the origin in R^d satisfy S &lt;= (C(d+1,2) - 1) pi/2.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> triage in note.md;
+dipende dal lemma P2</p>
+<h3 id="consegna-prova-2">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-2">Decisioni degli agenti</h3>
+<h4 id="run-p1_c3">Run <code>p1_c3</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo-2">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h2 id="cella-4-5-punti-stato-in-analisi">Cella 4 (5 punti) — stato: in
+analisi</h2>
+<p><strong>Richiesta.</strong> Prove that any 5 lines through the origin
+in R^3 satisfy S &lt;= 4 pi, and that any 6 lines in R^4 satisfy S &lt;=
+13 pi/2. A rigorous computation (exact/interval arithmetic, &lt; 10 min,
+code included) is admissible.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> triage; possibile
+via P5 o calcolo rigoroso</p>
+<h3 id="consegna-prova-3">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-3">Decisioni degli agenti</h3>
+<h4 id="run-p1_c4">Run <code>p1_c4</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo-3">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h2 id="cella-5-8-punti-stato-in-analisi">Cella 5 (8 punti) — stato: in
+analisi</h2>
+<p><strong>Richiesta.</strong> Prove that for every d &gt;= 2, any d+2
+lines through the origin in R^d satisfy S &lt;= (C(d+2,2) - 2) pi/2.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> triage</p>
+<h3 id="consegna-prova-4">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-4">Decisioni degli agenti</h3>
+<h4 id="run-p1_c5">Run <code>p1_c5</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo-4">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h2 id="cella-6-13-punti-stato-in-analisi">Cella 6 (13 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> OPEN. For N lines in R^d write N = qd+s,
+0 &lt;= s &lt; d, M(N,d) = s C(q+1,2) + (d-s) C(q,2). Prove or disprove:
+S &lt;= (C(N,2) - M(N,d)) pi/2. Settling any infinite family not covered
+by cells 1-5 counts as partial progress.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> triage; solo
+ricerca controesempi / famiglie infinite</p>
+<h3 id="consegna-prova-5">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-5">Decisioni degli agenti</h3>
+<h4 id="run-p1_c6">Run <code>p1_c6</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo-5">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h2
+id="letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti">Letteratura
+arXiv consultata (ricerca deterministica, abstract letti)</h2>
+<ul>
+<li><p><span class="citation" data-cites="1801.07837v1"></span> On the
+Fejes Tóth Problem about the Sum of Angles Between Lines — Dmitriy
+Bilyk, Ryan W Matzke (2018). <em>Query</em>:
+<code>angles between lines</code>.</p></li>
+<li><p><span class="citation" data-cites="2007.08698v2"></span> On Fejes
+Tóth’s conjectured maximizer for the sum of angles between lines —
+Tongseok Lim, Robert J. McCann (2020). <em>Query</em>:
+<code>angles between lines</code>.</p></li>
+<li><p><span class="citation" data-cites="1204.3850v1"></span> Simple
+Agents Learn to Find Their Way: An Introduction on Mapping Polygons —
+Jérémie Chalopin, Shantanu Das, Yann Disser, Matúš Mihalák (2012).
+<em>Query</em>: <code>angles between lines</code>.</p></li>
+</ul>
+<h1 id="problema-2-uphill-paths-on-the-hypercube">Problema 2 — Uphill
+paths on the hypercube</h1>
+<h2 id="enunciato-ufficiale-1">Enunciato ufficiale</h2>
+<h3 id="problema-2-uphill-paths-on-the-hypercube">Problema 2 — Uphill
+paths on the hypercube</h3>
+<p><em>(Enunciato formattato in LaTeX, contenuto fedele all’originale;
+ricevuto il 2026-09-26.)</em></p>
+<h4 id="preambolo">Preambolo</h4>
+<p><strong>Uphill paths on the hypercube.</strong> Label the vertices of
+the hypercube to make as few uphill paths as possible. IMO 2022 settled
+the grid; the cube is still open.</p>
+<p>Let <span class="math inline">\(G\)</span> be a finite simple graph
+on <span class="math inline">\(n\)</span> vertices. A labelling of <span
+class="math inline">\(G\)</span> is a bijection <span
+class="math inline">\(f\)</span> from <span
+class="math inline">\(V(G)\)</span> to <span
+class="math inline">\(\{1,2,\ldots,n\}\)</span>. Fix a labelling.</p>
+<ul>
+<li><p>A vertex <span class="math inline">\(v\)</span> is a
+<em>valley</em> if every neighbour <span
+class="math inline">\(w\)</span> of <span
+class="math inline">\(v\)</span> has <span class="math inline">\(f(w)
+&gt; f(v)\)</span>. An isolated vertex counts as a valley.</p></li>
+<li><p>An <em>uphill path</em> is a sequence <span
+class="math inline">\((v_1, v_2, \ldots, v_k)\)</span> with <span
+class="math inline">\(k \ge 1\)</span> in which <span
+class="math inline">\(v_1\)</span> is a valley, <span
+class="math inline">\(v_i\)</span> and <span
+class="math inline">\(v_{i+1}\)</span> are adjacent for each <span
+class="math inline">\(i\)</span>, and <span class="math inline">\(f(v_1)
+&lt; f(v_2) &lt; \cdots &lt; f(v_k)\)</span>. A valley on its own (<span
+class="math inline">\(k=1\)</span>) counts as an uphill path.</p></li>
+</ul>
+<p>Let <span class="math inline">\(U(G)\)</span> be the smallest
+possible number of uphill paths, taken over all labellings of <span
+class="math inline">\(G\)</span>.</p>
+<p>IMO 2022 Problem 6 asks for <span class="math inline">\(U\)</span> of
+the <span class="math inline">\(n \times n\)</span> grid graph. The
+answer is <span class="math inline">\(2n^2 - 2n + 1\)</span>.</p>
+<p>This column asks about the <span
+class="math inline">\(d\)</span>-dimensional hypercube <span
+class="math inline">\(Q_d\)</span>. Its vertex set is <span
+class="math inline">\(\{0,1\}^d\)</span>, and two vertices are adjacent
+when they differ in exactly one coordinate. <span
+class="math inline">\(Q_d\)</span> has <span
+class="math inline">\(2^d\)</span> vertices and <span
+class="math inline">\(d \cdot 2^{d-1}\)</span> edges.</p>
+<p><strong>What to hand in.</strong> For C1 to C4, hand in the values,
+and for each value an explicit labelling that attains it as a list of
+the <span class="math inline">\(2^d\)</span> vertices in increasing
+label order, written as 0/1 strings. These cells are marked correct on
+the values alone, but a value with no labelling behind it will not
+survive the later cells, which build on the construction.</p>
+<p>For C5, hand in either a labelling of <span
+class="math inline">\(Q_9\)</span> in the same format, whose uphill
+paths will be counted mechanically, or a proof of the lower bound.</p>
+<p>For C6, hand in all three of: the value; an explicit labelling that
+attains it, in the same format; a proof that no labelling gives fewer
+uphill paths.</p>
+<p>A lower-bound proof may be computer-assisted. If it is, include the
+code; it must run in under 10 minutes on a laptop, and you must explain
+why the computation proves the bound. Say clearly which cells you
+consider solved and which are partial.</p>
+<h4 id="parte-1-c1-uq_3-and-uq_4">Parte 1 (C1) — <span
+class="math inline">\(U(Q_3)\)</span> and <span
+class="math inline">\(U(Q_4)\)</span></h4>
+<p><strong>Punteggio:</strong> 1 point · <strong>Valutazione:</strong>
+Checked instantly</p>
+<p>The two smallest interesting cubes: <span
+class="math inline">\(Q_3\)</span> has <span
+class="math inline">\(8\)</span> vertices and <span
+class="math inline">\(12\)</span> edges, <span
+class="math inline">\(Q_4\)</span> has <span
+class="math inline">\(16\)</span> vertices and <span
+class="math inline">\(32\)</span> edges. Determine <span
+class="math inline">\(U(Q_3)\)</span> and <span
+class="math inline">\(U(Q_4)\)</span>.</p>
+<h4 id="parte-2-c2-uq_5">Parte 2 (C2) — <span
+class="math inline">\(U(Q_5)\)</span></h4>
+<p><strong>Punteggio:</strong> 2 points · <strong>Valutazione:</strong>
+Checked instantly</p>
+<p><span class="math inline">\(Q_5\)</span> has <span
+class="math inline">\(32\)</span> vertices and <span
+class="math inline">\(80\)</span> edges. Determine <span
+class="math inline">\(U(Q_5)\)</span>.</p>
+<h4 id="parte-3-c3-uq_6">Parte 3 (C3) — <span
+class="math inline">\(U(Q_6)\)</span></h4>
+<p><strong>Punteggio:</strong> 3 points · <strong>Valutazione:</strong>
+Checked instantly</p>
+<p><span class="math inline">\(Q_6\)</span> has <span
+class="math inline">\(64\)</span> vertices and <span
+class="math inline">\(192\)</span> edges. Determine <span
+class="math inline">\(U(Q_6)\)</span>.</p>
+<h4 id="parte-4-c4-uq_7-and-uq_8">Parte 4 (C4) — <span
+class="math inline">\(U(Q_7)\)</span> and <span
+class="math inline">\(U(Q_8)\)</span></h4>
+<p><strong>Punteggio:</strong> 5 points · <strong>Valutazione:</strong>
+Checked instantly</p>
+<p>Two larger cubes: <span class="math inline">\(Q_7\)</span> has <span
+class="math inline">\(128\)</span> vertices and <span
+class="math inline">\(448\)</span> edges, <span
+class="math inline">\(Q_8\)</span> has <span
+class="math inline">\(256\)</span> vertices and <span
+class="math inline">\(1024\)</span> edges. Determine <span
+class="math inline">\(U(Q_7)\)</span> and <span
+class="math inline">\(U(Q_8)\)</span>.</p>
+<h4 id="parte-5-c5-bounds-for-uq_9">Parte 5 (C5) — Bounds for <span
+class="math inline">\(U(Q_9)\)</span></h4>
+<p><strong>Punteggio:</strong> 8 points · <strong>Valutazione:</strong>
+Judged</p>
+<p><span class="math inline">\(Q_9\)</span> has <span
+class="math inline">\(512\)</span> vertices and <span
+class="math inline">\(2304\)</span> edges. The best bounds known to the
+organisers are <span class="math display">\[2368 \le U(Q_9) \le
+2400;\]</span> the lower bound is unpublished. Improve either one: prove
+that <span class="math inline">\(U(Q_9) \ge 2369\)</span>, or exhibit a
+labelling of <span class="math inline">\(Q_9\)</span> with at most <span
+class="math inline">\(2399\)</span> uphill paths.</p>
+<h4 id="parte-6-c6-uq_9">Parte 6 (C6) — <span
+class="math inline">\(U(Q_9)\)</span></h4>
+<p><strong>Punteggio:</strong> 13 points · <strong>Valutazione:</strong>
+Judged · <strong>Open question</strong></p>
+<p>The same cube, settled completely. Determine <span
+class="math inline">\(U(Q_9)\)</span> exactly, with proof of both
+bounds.</p>
+<p><em>(Fine del problema 2. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
+<h2 id="cella-1-1-punti-stato-revisionato">Cella 1 (1 punti) — stato:
+revisionato</h2>
+<p><strong>Richiesta.</strong> Determine U(Q_3) and U(Q_4), each with an
+explicit optimal labelling (list of the 2^d vertices in increasing label
+order as 0/1 strings).</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> $U(Q_3)=14$,
+$U(Q_4)=34$: prove a mano rilette passo per passo + verifiche esatte
+indipendenti; bozza in submission/parte-1.md</p>
+<h3 id="consegna-prova-6">Consegna (prova)</h3>
+<h4 id="problema-2-parte-1-c1-bozza-di-consegna">Problema 2 — Parte 1
+(C1) — bozza di consegna</h4>
+<p><strong>Stato dichiarato: RISOLTA (bozza revisionata).</strong>
+Entrambe le metà: <span class="math inline">\(U(Q_3)=14\)</span> e <span
+class="math inline">\(U(Q_4)=34\)</span>, con valore, etichettatura
+esplicita e prova completa a mano; calcoli esatti a conferma.</p>
+<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
+<p><span class="math inline">\(U(Q_3) = 14\)</span> e <span
+class="math inline">\(U(Q_4) = 34\)</span>. Etichettatura ottima di
+<span class="math inline">\(Q_4\)</span> (ordine crescente di etichetta;
+due valli, <code>0000</code> e <code>1111</code>):
+<code>0000, 1111, 0111, 1101, 1110, 1011, 0001, 1000, 0010, 0100, 1001, 0110, 0011, 1010, 0101, 1100</code>.</p>
+<p>Per <span class="math inline">\(Q_3\)</span>: Etichettatura ottima
+(ordine crescente di etichetta; posizione <span
+class="math inline">\(i\)</span> della stringa = coordinata <span
+class="math inline">\(i\)</span>; la convenzione è irrilevante perché le
+permutazioni di coordinate sono automorfismi di <span
+class="math inline">\(Q_3\)</span>):
+<code>000, 100, 010, 110, 101, 011, 001, 111</code>.</p>
+<h5 id="dimostrazione">2. Dimostrazione</h5>
+<h5 id="result">Result</h5>
+<p><span class="math display">\[U(Q_3) = 14.\]</span></p>
+<p>An optimal labelling, as the list of the 8 vertices in increasing
+label order (string position <span class="math inline">\(i\)</span> =
+coordinate <span class="math inline">\(i\)</span>; the convention is
+irrelevant for the count since <span
+class="math inline">\(\mathrm{Aut}(Q_3)\)</span> contains all coordinate
+permutations):</p>
+<p><span class="math display">\[\texttt{000},\ \texttt{100},\
+\texttt{010},\ \texttt{110},\ \texttt{101},\ \texttt{011},\
+\texttt{001},\ \texttt{111}\]</span></p>
+<p>i.e. <span class="math inline">\(f(000)=1,\ f(100)=2,\ f(010)=3,\
+f(110)=4,\ f(101)=5,\ f(011)=6,\ f(001)=7,\ f(111)=8\)</span>.</p>
+<h5 id="notation-and-the-counting-identity">Notation and the counting
+identity</h5>
+<p>For a labelling <span class="math inline">\(f\)</span> of a graph
+<span class="math inline">\(G\)</span>, orient every edge from the
+smaller to the larger label; this gives an acyclic orientation. Write
+<span class="math inline">\(u \to v\)</span> if <span
+class="math inline">\(uv\in E\)</span> and <span
+class="math inline">\(f(u)&lt;f(v)\)</span>, and <span
+class="math inline">\(\deg^-(v)=\#\{u: u\to v\}\)</span>. Let <span
+class="math inline">\(p(v)\)</span> be the number of uphill paths whose
+last vertex is <span class="math inline">\(v\)</span>.</p>
+<p><strong>Lemma 1 (recursion).</strong> <span
+class="math inline">\(p(v) = [\,v \text{ is a valley}\,] + \sum_{u\to v}
+p(u)\)</span>, and the total number of uphill paths is <span
+class="math inline">\(\sum_v p(v)\)</span>.</p>
+<p><em>Proof.</em> An uphill path ending at <span
+class="math inline">\(v\)</span> has <span
+class="math inline">\(k=1\)</span> (then it is <span
+class="math inline">\((v)\)</span> and <span
+class="math inline">\(v\)</span> must be a valley; conversely a valley
+gives exactly this one path) or <span
+class="math inline">\(k\ge2\)</span>; in the latter case deleting <span
+class="math inline">\(v\)</span> gives an uphill path ending at <span
+class="math inline">\(v_{k-1}\)</span> with <span
+class="math inline">\(v_{k-1}\to v\)</span>, and conversely appending
+<span class="math inline">\(v\)</span> to any uphill path ending at some
+<span class="math inline">\(u\)</span> with <span
+class="math inline">\(u\to v\)</span> gives an uphill path ending at
+<span class="math inline">\(v\)</span> (the label condition <span
+class="math inline">\(f(u)&lt;f(v)\)</span> is exactly <span
+class="math inline">\(u\to v\)</span>). These correspondences are
+bijective, and the sets for different <span
+class="math inline">\(u\)</span> are disjoint (they differ in the
+penultimate vertex). Every uphill path has a unique last vertex, hence
+the total is <span class="math inline">\(\sum_v p(v)\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<h5
+id="upper-bound-the-labelling-above-has-exactly-14-uphill-paths">Upper
+bound: the labelling above has exactly 14 uphill paths</h5>
+<p>Neighbours in <span class="math inline">\(Q_3\)</span>: flip one
+coordinate. Compute <span class="math inline">\(p\)</span> in increasing
+label order using Lemma 1:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">vertex</th>
+<th style="text-align: left;">label</th>
+<th style="text-align: left;">lower neighbours</th>
+<th style="text-align: left;"><span
+class="math inline">\(p\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">none (valley)</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">000</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">010</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">000</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">110</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">100, 010</td>
+<td style="text-align: left;">1+1 = 2</td>
+</tr>
+<tr>
+<td style="text-align: left;">101</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">100 (001 has label 7, 111 has 8)</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">011</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">010 (001 has 7, 111 has 8)</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">001</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">000, 101, 011</td>
+<td style="text-align: left;">1+1+1 = 3</td>
+</tr>
+<tr>
+<td style="text-align: left;">111</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">110, 101, 011</td>
+<td style="text-align: left;">2+1+1 = 4</td>
+</tr>
+</tbody>
+</table>
+<p>Only 000 is a valley (every other vertex has a lower neighbour, as
+the table shows). Total <span class="math inline">\(=1+1+1+2+1+1+3+4 =
+14\)</span>. Hence <span class="math inline">\(U(Q_3)\le
+14\)</span>.</p>
+<h5
+id="lower-bound-hand-proof-no-labelling-of-q_3-has-le-13-uphill-paths">Lower
+bound (hand proof): no labelling of <span
+class="math inline">\(Q_3\)</span> has <span class="math inline">\(\le
+13\)</span> uphill paths</h5>
+<p><strong>Lemma 2.</strong> For every labelling of any graph and every
+vertex <span class="math inline">\(v\)</span>: <span
+class="math inline">\(p(v)\ge 1\)</span>, and <span
+class="math inline">\(p(v)\ge \deg^-(v)\)</span>.</p>
+<p><em>Proof.</em> Starting from <span class="math inline">\(v\)</span>,
+repeatedly move to a neighbour with smaller label while one exists;
+labels strictly decrease so this stops, at a valley <span
+class="math inline">\(v_1\)</span>. Reversing the walk gives an uphill
+path ending at <span class="math inline">\(v\)</span>, so <span
+class="math inline">\(p(v)\ge1\)</span>. Applying this to each <span
+class="math inline">\(u\)</span> with <span class="math inline">\(u\to
+v\)</span> gives <span class="math inline">\(p(u)\ge1\)</span>, so by
+Lemma 1 <span class="math inline">\(p(v)\ge\sum_{u\to
+v}p(u)\ge\deg^-(v)\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Corollary 3.</strong> Total <span class="math inline">\(\ \ge
+\sum_v \max(1,\deg^-(v)) = \#\{\text{valleys}\} + \sum_{v \text{ not
+valley}}\deg^-(v) = \#\{\text{valleys}\} + |E|\)</span>, since valleys
+are exactly the vertices with <span
+class="math inline">\(\deg^-=0\)</span> and <span
+class="math inline">\(\sum_v\deg^-(v)=|E|\)</span> (each edge has
+exactly one head). For <span class="math inline">\(Q_3\)</span>, <span
+class="math inline">\(|E|=12\)</span> and the vertex with label 1 is
+always a valley, so the total is <span class="math inline">\(\ge
+13\)</span>.</p>
+<p><strong>Proposition 4.</strong> The total is never exactly 13 for
+<span class="math inline">\(Q_3\)</span>; hence <span
+class="math inline">\(U(Q_3)\ge 14\)</span>.</p>
+<p><em>Proof.</em> Suppose a labelling has total 13. Then every
+inequality in Corollary 3 is an equality: (a) there is exactly one
+valley, and (b) for every non-valley <span
+class="math inline">\(v\)</span>, <span
+class="math inline">\(p(v)=\deg^-(v)\)</span>, i.e. <span
+class="math inline">\(\sum_{u\to v}p(u)=\deg^-(v)\)</span> with each
+<span class="math inline">\(p(u)\ge1\)</span>, so <span
+class="math inline">\(p(u)=1\)</span> for every <span
+class="math inline">\(u\to v\)</span>. By Lemma 2, <span
+class="math inline">\(p(u)=1\)</span> forces <span
+class="math inline">\(\deg^-(u)\le1\)</span>.</p>
+<p>Let <span class="math inline">\(x\)</span> be the vertex with label
+8. All 3 neighbours of <span class="math inline">\(x\)</span> are lower,
+so <span class="math inline">\(\deg^-(x)=3\)</span> and by (b) every
+<span class="math inline">\(a\in N(x)\)</span> has <span
+class="math inline">\(\deg^-(a)\le1\)</span>.</p>
+<p>Let <span class="math inline">\(y\)</span> be the vertex with label
+7. At most one neighbour of <span class="math inline">\(y\)</span>
+(namely <span class="math inline">\(x\)</span>) is higher, so <span
+class="math inline">\(\deg^-(y)\ge2\)</span>. If <span
+class="math inline">\(y\in N(x)\)</span> we would have <span
+class="math inline">\(\deg^-(y)\le1\)</span>, a contradiction; so <span
+class="math inline">\(y\notin N(x)\)</span>, <span
+class="math inline">\(y\ne x\)</span>, hence <span
+class="math inline">\(y\)</span> is the antipode <span
+class="math inline">\(\bar x\)</span> of <span
+class="math inline">\(x\)</span> (in <span
+class="math inline">\(Q_3\)</span> the only vertex at distance 3). Then
+<span class="math inline">\(N(y)\)</span> is the set of the 3 vertices
+at distance 2 from <span class="math inline">\(x\)</span>, all lower
+than <span class="math inline">\(y\)</span>, so <span
+class="math inline">\(\deg^-(y)=3\)</span> and by (b) every <span
+class="math inline">\(b\in N(y)\)</span> has <span
+class="math inline">\(\deg^-(b)\le1\)</span>.</p>
+<p><span class="math inline">\(N(x)\cup N(y)\)</span> is the set <span
+class="math inline">\(S\)</span> of the 6 vertices other than <span
+class="math inline">\(x,y\)</span>. Count edges inside <span
+class="math inline">\(S\)</span>: <span
+class="math inline">\(Q_3\)</span> has 12 edges, 3 are incident to <span
+class="math inline">\(x\)</span>, 3 to <span
+class="math inline">\(y\)</span>, and <span
+class="math inline">\(xy\)</span> is not an edge, so exactly <span
+class="math inline">\(12-6=6\)</span> edges have both ends in <span
+class="math inline">\(S\)</span>. Each such edge is oriented towards its
+higher endpoint, which lies in <span class="math inline">\(S\)</span>,
+so <span class="math inline">\(\sum_{s\in S}\deg^-(s)\ge 6\)</span>. But
+each <span class="math inline">\(s\in S\)</span> has <span
+class="math inline">\(\deg^-(s)\le1\)</span>, so <span
+class="math inline">\(\sum_{s\in S}\deg^-(s)\le6\)</span>; therefore
+<span class="math inline">\(\deg^-(s)=1\)</span> for every <span
+class="math inline">\(s\in S\)</span>. Thus no vertex of <span
+class="math inline">\(S\)</span> is a valley; <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> are not valleys either (<span
+class="math inline">\(\deg^-\ge2\)</span>). So the labelling has no
+valley, contradicting the fact that the vertex with label 1 is a valley
+(all its neighbours have larger labels). <span
+class="math inline">\(\square\)</span></p>
+<p>Combining: <span class="math inline">\(U(Q_3)=14\)</span>, attained
+by the labelling above.</p>
+<h5
+id="independent-confirmation-exhaustive-exact-computation">Independent
+confirmation: exhaustive exact computation</h5>
+<p>Script <code>q3_esaustivo.py</code> (saved in
+<code>runs/p2_q3/sandbox/</code> and copied to
+<code>problema-2/certificati/</code>) enumerates <strong>all</strong>
+<span class="math inline">\(8!=40320\)</span> bijections <span
+class="math inline">\(V(Q_3)\to\{1,\dots,8\}\)</span>
+(<code>itertools.permutations</code>), with vertices encoded as integers
+<span class="math inline">\(0..7\)</span> (bit <span
+class="math inline">\(i\)</span> = coordinate <span
+class="math inline">\(i\)</span>) and adjacency = XOR with a single bit.
+For each labelling it computes the number of uphill paths in two
+independent ways — (i) an explicit recursive DFS that enumerates every
+uphill path from every valley, (ii) the DP of Lemma 1 processed in
+increasing label order — and <code>assert</code>s that the two agree.
+All arithmetic is Python integers (exact; rigor =
+<code>exact</code>).</p>
+<p>Output (Python 3.14.7, wall-clock 0.36 s):</p>
+<pre><code>etichettature esaminate: 40320
+U(Q_3) = 14; etichettature ottime: 7104
+distribuzione (cammini -&gt; numero etichettature): [(14, 7104), (16, 14112), (17, 6720), (18, 4704), (19, 576), (20, 3648), (21, 1920), (22, 480), (23, 192), (24, 768), (26, 96)]
+prima etichettatura ottima (ordine crescente di etichetta): [&#39;000&#39;, &#39;100&#39;, &#39;010&#39;, &#39;110&#39;, &#39;101&#39;, &#39;011&#39;, &#39;001&#39;, &#39;111&#39;]</code></pre>
+<p>The distribution confirms Proposition 4 (no labelling with 13, and
+also none with 15) and Corollary 3 (none below 13). Reproduce with
+<code>.venv/bin/python problema-2/certificati/q3_esaustivo.py</code>. A
+second script <code>verifica_etichettatura_q3.py</code> checks only the
+submitted labelling (bijection check, valleys, per-vertex <span
+class="math inline">\(p\)</span>, total 14) and prints the table
+above.</p>
+<h5 id="b.-dimostrazione-per-q_4">2b. Dimostrazione per <span
+class="math inline">\(Q_4\)</span></h5>
+<h4 id="uq_434"><span class="math inline">\(U(Q_4)=34\)</span></h4>
+<p><strong>Conventions.</strong> <span
+class="math inline">\(V(Q_4)=\{0,1\}^4\)</span>, <span
+class="math inline">\(u\sim v\)</span> iff they differ in exactly one
+coordinate; <span class="math inline">\(|V|=16\)</span>, <span
+class="math inline">\(|E|=32\)</span>, every vertex has degree 4. In a
+0/1 string the <span class="math inline">\(i\)</span>-th character (from
+the left) is coordinate <span class="math inline">\(i\)</span>; the
+convention is irrelevant for the count, since every coordinate
+permutation is an automorphism of <span
+class="math inline">\(Q_4\)</span> and automorphisms preserve the number
+of uphill paths (they map valleys to valleys and uphill paths to uphill
+paths bijectively when the labelling is transported). For a labelling
+<span class="math inline">\(f\)</span> orient each edge from the smaller
+to the larger label (<span class="math inline">\(u\to v\)</span> iff
+<span class="math inline">\(uv\in E\)</span>, <span
+class="math inline">\(f(u)&lt;f(v)\)</span>); <span
+class="math inline">\(\deg^-(v)=\#\{u:u\to v\}\)</span>, <span
+class="math inline">\(\deg^+(v)=\#\{w: v\to w\}\)</span>, so <span
+class="math inline">\(\deg^-(v)+\deg^+(v)=4\)</span>. Let <span
+class="math inline">\(p(v)\)</span> be the number of uphill paths whose
+last vertex is <span class="math inline">\(v\)</span>.</p>
+<h5
+id="preliminaries-verified-claims-restated-with-proof-for-self-containedness">Preliminaries
+(verified claims, restated with proof for self-containedness)</h5>
+<p><strong>Lemma 1.</strong> <span class="math inline">\(p(v)=[v\text{
+is a valley}]+\sum_{u\to v}p(u)\)</span>, and the total number of uphill
+paths is <span class="math inline">\(\sum_v p(v)\)</span>.</p>
+<p><em>Proof.</em> An uphill path ending at <span
+class="math inline">\(v\)</span> either has length <span
+class="math inline">\(1\)</span> — then it is <span
+class="math inline">\((v)\)</span> and <span
+class="math inline">\(v\)</span> is a valley, and conversely a valley
+<span class="math inline">\(v\)</span> gives exactly this path — or has
+length <span class="math inline">\(\ge2\)</span>; deleting <span
+class="math inline">\(v\)</span> gives an uphill path ending at its
+penultimate vertex <span class="math inline">\(u\)</span>, with <span
+class="math inline">\(u\to v\)</span>, and conversely appending <span
+class="math inline">\(v\)</span> to an uphill path ending at <span
+class="math inline">\(u\)</span> with <span class="math inline">\(u\to
+v\)</span> gives an uphill path ending at <span
+class="math inline">\(v\)</span> (the increasing condition is exactly
+<span class="math inline">\(f(u)&lt;f(v)\)</span>). These maps are
+mutually inverse, and different <span class="math inline">\(u\)</span>
+give disjoint sets (they differ in the penultimate vertex). Each uphill
+path has a unique last vertex, hence the total is <span
+class="math inline">\(\sum_v p(v)\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Lemma 2.</strong> For every vertex <span
+class="math inline">\(v\)</span>: <span
+class="math inline">\(p(v)\ge1\)</span> and <span
+class="math inline">\(p(v)\ge\deg^-(v)\)</span>.</p>
+<p><em>Proof.</em> From <span class="math inline">\(v\)</span>
+repeatedly move to a neighbour with a smaller label while one exists;
+the labels strictly decrease, so the walk stops, at a vertex with no
+smaller neighbour, i.e. a valley <span
+class="math inline">\(v_1\)</span>. The reversed walk is an uphill path
+ending at <span class="math inline">\(v\)</span>, so <span
+class="math inline">\(p(v)\ge1\)</span>. Applying this to every <span
+class="math inline">\(u\)</span> with <span class="math inline">\(u\to
+v\)</span> and using Lemma 1, <span
+class="math inline">\(p(v)\ge\sum_{u\to v}p(u)\ge\sum_{u\to
+v}1=\deg^-(v)\)</span>. <span class="math inline">\(\square\)</span></p>
+<p><strong>Corollary 3.</strong> Total <span class="math inline">\(\
+\ge\sum_v\max(1,\deg^-(v))=\#\{\text{valleys}\}+|E|\)</span>.</p>
+<p><em>Proof.</em> Termwise from Lemma 2 and Lemma 1. Valleys are
+exactly the vertices with <span class="math inline">\(\deg^-=0\)</span>,
+and <span class="math inline">\(\sum_v\deg^-(v)=|E|\)</span> because
+every edge has exactly one head. So <span
+class="math inline">\(\sum_v\max(1,\deg^-(v))=\#\{v:\deg^-(v)=0\}+\sum_{v:\deg^-(v)\ge1}\deg^-(v)=\#\{\text{valleys}\}+|E|\)</span>.
+<span class="math inline">\(\square\)</span></p>
+<p>The vertex with label <span class="math inline">\(1\)</span> is
+always a valley (all its neighbours have larger labels). Hence for <span
+class="math inline">\(Q_4\)</span>: total <span
+class="math inline">\(\ge 32+1=33\)</span>.</p>
+<h5
+id="lower-bound-no-labelling-of-q_4-has-exactly-33-uphill-paths-hence-uq_4ge34">Lower
+bound: no labelling of <span class="math inline">\(Q_4\)</span> has
+exactly 33 uphill paths, hence <span
+class="math inline">\(U(Q_4)\ge34\)</span></h5>
+<p>Suppose some labelling <span class="math inline">\(f\)</span> of
+<span class="math inline">\(Q_4\)</span> has total exactly <span
+class="math inline">\(33\)</span>.</p>
+<p><strong>Step 1 (all inequalities are tight).</strong> By Corollary 3,
+<span class="math inline">\(33=\text{total}\ge\#\{\text{valleys}\}+32\ge
+33\)</span>, so <span
+class="math inline">\(\#\{\text{valleys}\}=1\)</span> and <span
+class="math inline">\(\sum_v p(v)=\sum_v\max(1,\deg^-(v))\)</span>.
+Since <span class="math inline">\(p(v)\ge\max(1,\deg^-(v))\)</span>
+holds for every <span class="math inline">\(v\)</span> (Lemma 2),
+equality of the sums forces equality for every term: <span
+class="math inline">\(p(v)=\max(1,\deg^-(v))\)</span> for all <span
+class="math inline">\(v\)</span>. In particular, for every non-valley
+<span class="math inline">\(v\)</span> (i.e. <span
+class="math inline">\(\deg^-(v)\ge1\)</span>): <span
+class="math inline">\(p(v)=\deg^-(v)\)</span>.</p>
+<p><strong>Step 2 (every in-neighbour of a non-valley has <span
+class="math inline">\(p=1\)</span>, hence <span
+class="math inline">\(\deg^-\le1\)</span>).</strong> Let <span
+class="math inline">\(v\)</span> be a non-valley. By Lemma 1 (with <span
+class="math inline">\([v\text{ valley}]=0\)</span>) and Step 1, <span
+class="math display">\[\sum_{u\to v}p(u)=p(v)=\deg^-(v)=\sum_{u\to v}1
+.\]</span> Each term satisfies <span
+class="math inline">\(p(u)\ge1\)</span> (Lemma 2), and there are <span
+class="math inline">\(\deg^-(v)\)</span> terms on each side, so <span
+class="math inline">\(p(u)=1\)</span> for every <span
+class="math inline">\(u\to v\)</span>. By Lemma 2 again, <span
+class="math inline">\(\deg^-(u)\le p(u)=1\)</span>.</p>
+<p><strong>Step 3 (in-degrees lie in <span
+class="math inline">\(\{0,1,4\}\)</span>).</strong> Let <span
+class="math inline">\(u\)</span> be any vertex. If <span
+class="math inline">\(\deg^+(u)\ge1\)</span>, pick <span
+class="math inline">\(w\)</span> with <span class="math inline">\(u\to
+w\)</span>; then <span class="math inline">\(w\)</span> has an
+in-neighbour, so <span class="math inline">\(w\)</span> is not a valley,
+and Step 2 applied to <span class="math inline">\(v=w\)</span> gives
+<span class="math inline">\(\deg^-(u)\le1\)</span>. If <span
+class="math inline">\(\deg^+(u)=0\)</span>, then <span
+class="math inline">\(\deg^-(u)=4-\deg^+(u)=4\)</span>. Hence <span
+class="math inline">\(\deg^-(u)\in\{0,1,4\}\)</span> for every vertex
+<span class="math inline">\(u\)</span>.</p>
+<p><strong>Step 4 (counting edges).</strong> Let <span
+class="math inline">\(s=\#\{u:\deg^-(u)=4\}\)</span>. The vertices with
+<span class="math inline">\(\deg^-(u)=0\)</span> are exactly the
+valleys, and there is exactly one (Step 1). The remaining <span
+class="math inline">\(16-1-s=15-s\)</span> vertices have <span
+class="math inline">\(\deg^-(u)=1\)</span>. Summing in-degrees over all
+vertices, and using <span
+class="math inline">\(\sum_u\deg^-(u)=|E|=32\)</span>: <span
+class="math display">\[4s+1\cdot(15-s)+0\cdot
+1=32\quad\Longrightarrow\quad 3s=17,\]</span> which has no integer
+solution. Contradiction.</p>
+<p>Therefore no labelling of <span class="math inline">\(Q_4\)</span>
+has exactly <span class="math inline">\(33\)</span> uphill paths;
+combined with total <span class="math inline">\(\ge33\)</span>
+(Corollary 3), every labelling has at least <span
+class="math inline">\(34\)</span> uphill paths: <span
+class="math inline">\(U(Q_4)\ge34\)</span>.</p>
+<p>(<em>Remark, not needed for the cell:</em> the same argument for
+<span class="math inline">\(Q_d\)</span>, <span
+class="math inline">\(d\ge2\)</span>, gives total <span
+class="math inline">\(=|E|+1\)</span> only if <span
+class="math inline">\((d-1)s=2^{d-1}(d-2)+1\)</span> has an integer
+solution; for <span class="math inline">\(d=3\)</span> this is <span
+class="math inline">\(2s=5\)</span>, recovering Proposition 4 of the
+<span class="math inline">\(Q_3\)</span> proof.)</p>
+<h5
+id="upper-bound-an-explicit-labelling-with-exactly-34-uphill-paths">Upper
+bound: an explicit labelling with exactly 34 uphill paths</h5>
+<p>Labelling <span class="math inline">\(f\)</span>, as the list of the
+16 vertices in increasing label order (label <span
+class="math inline">\(1\)</span> first):</p>
+<p><span class="math display">\[\texttt{0000},\ \texttt{1111},\
+\texttt{0111},\ \texttt{1101},\ \texttt{1110},\ \texttt{1011},\
+\texttt{0001},\ \texttt{1000},\ \texttt{0010},\ \texttt{0100},\
+\texttt{1001},\ \texttt{0110},\ \texttt{0011},\ \texttt{1010},\
+\texttt{0101},\ \texttt{1100}.\]</span></p>
+<p>Structure: label <span class="math inline">\(1\)</span> = weight
+<span class="math inline">\(0\)</span>; label <span
+class="math inline">\(2\)</span> = weight <span
+class="math inline">\(4\)</span>; labels <span
+class="math inline">\(3\)</span>–<span class="math inline">\(6\)</span>
+= the four vertices of weight <span class="math inline">\(3\)</span>;
+labels <span class="math inline">\(7\)</span>–<span
+class="math inline">\(10\)</span> = the four vertices of weight <span
+class="math inline">\(1\)</span>; labels <span
+class="math inline">\(11\)</span>–<span
+class="math inline">\(16\)</span> = the six vertices of weight <span
+class="math inline">\(2\)</span>. (This is a bijection: the sixteen
+strings are pairwise distinct and are all of <span
+class="math inline">\(\{0,1\}^4\)</span>.)</p>
+<p>Computation of <span class="math inline">\(p\)</span> in increasing
+label order (Lemma 1). Neighbours of a vertex of weight <span
+class="math inline">\(k\)</span> have weights <span
+class="math inline">\(k\pm1\)</span>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><div class="minipage">
+<p>vertex</p>
+</div></th>
+<th style="text-align: left;"><div class="minipage">
+<p>label</p>
+</div></th>
+<th style="text-align: left;"><div class="minipage">
+<p>lower neighbours</p>
+</div></th>
+<th style="text-align: left;"><div class="minipage">
+<p><span class="math inline">\(p\)</span></p>
+</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">none (its neighbours are the weight-1
+vertices, labels 7–10) — <strong>valley</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">none (its neighbours are the weight-3
+vertices, labels 3–6) — <strong>valley</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(label 2); the other neighbours 0011,
+0101, 0110 have labels 13, 15, 12</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">; others 0101, 1001, 1100 have labels 15,
+11, 16</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">; others 0110, 1010, 1100 have labels 12,
+14, 16</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">; others 0011, 1001, 1010 have labels 13,
+11, 14</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(label 1); others 1001, 0101, 0011 have
+labels 11, 15, 13</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">; others 1100, 1010, 1001 have labels 16,
+14, 11</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">; others 1010, 0110, 0011 have labels 14,
+12, 13</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">; others 1100, 0110, 0101 have labels 16,
+12, 15</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">, 1000 (weight 1) and 1101, 1011 (weight
+3): all four lower, each with <span
+class="math inline">\(p=1\)</span></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">, 0100, 1110, 0111</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">, 0010, 1011, 0111</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">, 0010, 1110, 1011</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">, 0100, 1101, 0111</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">, 0100, 1110, 1101</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p>Every weight-2 vertex has exactly two weight-1 and two weight-3
+neighbours, all with labels <span
+class="math inline">\(\le10&lt;11\)</span>, so all four neighbours are
+lower and each has <span class="math inline">\(p=1\)</span>, giving
+<span class="math inline">\(p=4\)</span>. The valleys are exactly 0000
+and 1111 (every other vertex has a lower neighbour, as the table shows).
+Total <span class="math display">\[\sum_v
+p(v)=1+1+4\cdot1+4\cdot1+6\cdot4=34 .\]</span> Hence <span
+class="math inline">\(U(Q_4)\le34\)</span>.</p>
+<h5 id="conclusion">Conclusion</h5>
+<p><span class="math display">\[U(Q_4)=34,\]</span> attained by the
+labelling above. (For comparison <span
+class="math inline">\(U(Q_3)=14=|E|+2\)</span> and <span
+class="math inline">\(U(Q_4)=34=|E|+2\)</span>.)</p>
+<h5
+id="computational-checks-exact-integer-arithmetic-independent-of-the-proof">Computational
+checks (exact integer arithmetic; independent of the proof)</h5>
+<ol>
+<li><p><code>verifica_etichettatura_q4.py</code> checks the submitted
+labelling: bijection, valleys, per-vertex <span
+class="math inline">\(p\)</span> (the table above), and the total by two
+independent methods — the DP of Lemma 1 in label order and an explicit
+recursive DFS enumerating every uphill path from every valley. Output:
+both totals <span class="math inline">\(=34\)</span>, valleys <span
+class="math inline">\(\{0000,1111\}\)</span>. Wall-clock 0.02 s (Python
+3.14.7, macOS).</p></li>
+<li><p><code>q4_branch_and_bound.py T</code> is an exact,
+symmetry-reduced search for labellings with <span
+class="math inline">\(&lt;T\)</span> uphill paths. Vertices are placed
+in increasing label order; when <span class="math inline">\(v\)</span>
+is placed all its lower neighbours are already placed, so <span
+class="math inline">\(p(v)\)</span> is fixed at that moment (Lemma 1).
+<em>Symmetry reduction:</em> at each node only one candidate per orbit
+of the pointwise stabiliser (inside <span
+class="math inline">\(\mathrm{Aut}(Q_4)\)</span>, order <span
+class="math inline">\(384\)</span>, generated explicitly as coordinate
+permutation followed by XOR with a mask) of the already-placed set is
+tried; this is sound because if <span class="math inline">\(g\)</span>
+fixes the placed vertices pointwise and <span
+class="math inline">\(g(v)=v&#39;\)</span>, then <span
+class="math inline">\(f\mapsto f\circ g^{-1}\)</span> maps labellings
+with prefix <span class="math inline">\((\dots,v)\)</span> bijectively
+onto labellings with prefix <span
+class="math inline">\((\dots,v&#39;)\)</span> and preserves the number
+of uphill paths. <em>Lower bound at a node</em> (placed set <span
+class="math inline">\(S\)</span>, unplaced set <span
+class="math inline">\(U\)</span>, <span
+class="math inline">\(a(v)=\sum_{u\in N(v)\cap S}p(u)\)</span>, <span
+class="math inline">\(d(v)\)</span> = number of in-neighbours of <span
+class="math inline">\(v\)</span> inside <span
+class="math inline">\(U\)</span> in the final orientation, so <span
+class="math inline">\(\sum_{v\in U}d(v)=E(U)\)</span>, the number of
+edges inside <span class="math inline">\(U\)</span>): for <span
+class="math inline">\(v\in U\)</span> all <span
+class="math inline">\(S\)</span>-neighbours are lower and all unplaced
+in-neighbours have <span class="math inline">\(p\ge1\)</span>, so <span
+class="math inline">\(p(v)\ge\max(1,a(v)+d(v))\)</span>; minimising
+<span class="math inline">\(\sum_{v\in U}\max(1,a(v)+d(v))\)</span> over
+nonnegative <span class="math inline">\(d\)</span> with <span
+class="math inline">\(\sum d=E(U)\)</span> gives <span
+class="math inline">\(\sum_{v\in U,a(v)\ge1}a(v)+\max(\#\{v\in
+U:a(v)=0\},E(U))\)</span>, so <span
+class="math inline">\(\text{LB}=\sum_{v\in S}p(v)+\sum_{v\in
+U,a(v)\ge1}a(v)+\max(\#\{a=0\},E(U))\)</span> is a valid lower bound for
+every completion; a node is pruned iff <span
+class="math inline">\(\text{LB}\ge T\)</span>. Results: <span
+class="math inline">\(T=34\)</span>: <strong>0 labellings
+found</strong>, 47 978 nodes, 0.3 s. <span
+class="math inline">\(T=35\)</span>: 19 525 440 labellings with exactly
+34 reached by the reduced search, 54 814 700 nodes, 156.8 s (shows the
+pruning is not over-aggressive at the optimum). Sanity check on <span
+class="math inline">\(Q_3\)</span> (same code with <code>D = 3</code>):
+<span class="math inline">\(T=13\)</span>: 0 found; <span
+class="math inline">\(T=14\)</span>: 0 found (83 nodes); <span
+class="math inline">\(T=15\)</span>: 148 found, and <span
+class="math inline">\(148\cdot48=7104\)</span> is exactly the known
+number of optimal labellings of <span class="math inline">\(Q_3\)</span>
+(<span class="math inline">\(|\mathrm{Aut}(Q_3)|=48\)</span>). This
+search is a confirmation only; the proof of <span
+class="math inline">\(U(Q_4)\ge34\)</span> is the hand argument
+above.</p></li>
+<li><p><code>q4_ricerca_locale.py</code> (simulated annealing, 12 seeds,
+200 000 steps each, 12.8 s) found the value 34 in every run and never
+below; heuristic only, proves nothing, used to find the
+incumbent.</p></li>
+</ol>
+<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
+dipendenze, tempi</h5>
+<p>Tre programmi indipendenti, solo Python 3 standard (interi esatti),
+ciascuno enumera tutte le <span class="math inline">\(8!=40320\)</span>
+etichettature: - <code>problema-2/certificati/q3_esaustivo.py</code> —
+DFS esplicita dei cammini + programmazione dinamica di Lemma 1, con
+<code>assert</code> di uguaglianza su ogni etichettatura. Tempo
+misurato: 0.37 s. -
+<code>problema-2/certificati/q3_verifica_indipendente.py</code> —
+scritto separatamente, metodo diverso: costruzione esplicita livello per
+livello di tutte le sequenze crescenti a partire dalle valli. Tempo
+misurato: 0.20 s. -
+<code>problema-2/certificati/verifica_etichettatura_q3.py</code> —
+controlla la sola etichettatura consegnata (biiezione, valli, <span
+class="math inline">\(p(v)\)</span> per vertice, totale 14). Comando:
+<code>python3 problema-2/certificati/q3_verifica_indipendente.py</code>
+(e analoghi). Python 3.14.7, macOS. Tutti riportano: minimo 14, 7104
+etichettature ottime, distribuzione senza valori 13 e 15.</p>
+<p>Per <span class="math inline">\(Q_4\)</span> (la prova del lower
+bound è a mano; il calcolo è solo conferma): -
+<code>verifica_etichettatura_q4.py</code> (Researcher, due metodi) e
+<code>q4_verifica_etichettatura_indipendente.py</code> (scritto a parte,
+costruzione esplicita dei cammini): entrambi 34 cammini, valli
+<code>0000</code> e <code>1111</code>, biiezione verificata. -
+<code>q4_branch_and_bound.py SOGLIA</code>: branch-and-bound esatto con
+riduzione per simmetria (384 automorfismi); con soglia 34 nessuna
+etichettatura sotto 34 (47978 nodi, 0.3 s); con soglia 35 trova
+etichettature con 34 (54.8M nodi, 157 s). La correttezza della riduzione
+è argomentata nello script ma la cella non ne dipende. -
+<code>q4_ricerca_locale.py</code>: simulated annealing, solo
+esplorazione (12 seed, miglior valore 34 in ogni run).</p>
+<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
+<p>Nessuna fonte esterna usata. L’argomento del lower bound generalizza
+l’idea di IMO 2022 P6 (ogni vertice è fine di almeno un cammino; <span
+class="math inline">\(p(v)\ge\deg^-(v)\)</span>), aggiungendo
+l’ostruzione specifica di <span class="math inline">\(Q_3\)</span>
+(Proposizione 4). Prova prodotta dal Researcher automatico (Claude Fable
+5.1, run <code>runs/p2_q3/attempts/attempt_001.json</code>) e
+revisionata a mano passo per passo; verifica numerica indipendente
+scritta a parte.</p>
+<h5 id="limiti-e-osservazioni">5. Limiti e osservazioni</h5>
+<ul>
+<li><p>Nessuna parte irrisolta per C1.</p></li>
+<li><p><span class="math inline">\(U(Q_3)=|E|+2\)</span> e <span
+class="math inline">\(U(Q_4)=|E|+2\)</span>. L’argomento di parità di
+<span class="math inline">\(Q_4\)</span> (Step 3–4) si generalizza: il
+totale <span class="math inline">\(|E|+1\)</span> è impossibile su <span
+class="math inline">\(Q_d\)</span> quando <span
+class="math inline">\((d-1)\nmid 2^{d-1}(d-2)+1\)</span>, cioè per ogni
+<span class="math inline">\(d\)</span> da 3 a 10 almeno. Quindi <span
+class="math inline">\(U(Q_d)\ge|E|+2\)</span> in quel range: bound
+debole rispetto ai 2368 noti per <span
+class="math inline">\(Q_9\)</span>, ma gratuito.</p></li>
+<li><p>L’ottimo di <span class="math inline">\(Q_4\)</span> ha DUE valli
+e realizza esattamente <span
+class="math inline">\(|E|+\#\text{valli}\)</span>: per i cubi grandi
+conviene cercare etichettature con poche valli in cui quasi tutti i
+vertici abbiano <span
+class="math inline">\(p(v)=\max(1,\deg^-(v))\)</span>.</p></li>
+</ul>
+<h3 id="decisioni-degli-agenti-6">Decisioni degli agenti</h3>
+<h4 id="run-p2_c1">Run <code>p2_c1</code></h4>
+<h4 id="run-p2_q3">Run <code>p2_q3</code></h4>
+<dl>
+<dt>Iterazione 1 — attempt_001</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>exact_computation</code>,
+sotto-obiettivo: Determine U(Q_3) exactly (value + explicit optimal
+labelling in the required format), with certainty via exhaustive exact
+enumeration of all 8! labellings, plus an independent hand proof of the
+lower bound.. Stato dichiarato: <code>CELL_SOLVED_CANDIDATE</code>.
+<em>Perché questa scelta</em>: No prior attempts exist. The cell
+explicitly allows exhaustive exact computation with code and stated
+finite set; 8! = 40320 labellings is tiny (0.36 s). To make the result
+robust against a coding bug, two genuinely different counting routines
+are cross-checked on every labelling, and the lower bound is also proved
+by hand so the value does not rest on the code alone.
+<strong>Referee</strong>: verdetto <code>(nessun verdetto)</code>.</p>
+</dd>
+</dl>
+<h4 id="run-p2_q4">Run <code>p2_q4</code></h4>
+<dl>
+<dt>Iterazione 1 — attempt_001</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>direct_proof</code>,
+sotto-obiettivo: Determine U(Q_4) exactly: prove the lower bound U(Q_4)
+&gt;= 34 by hand and exhibit an explicit labelling with exactly 34
+uphill paths (route (b) of the cell), with an independent exact computer
+confirmation.. Stato dichiarato: <code>CELL_SOLVED_CANDIDATE</code>.
+<em>Perché questa scelta</em>: No failed attempts recorded. Simulated
+annealing (12 seeds) never went below 34 = |E| + 2, while the verified
+bound gives 33; the gap of 1 suggested a tightness analysis of the
+verified bound |E| + #valleys, exactly as Proposition 4 did for Q_3. The
+tightness analysis turned out to close with a pure counting argument (no
+case analysis), so I chose route (b) (hand proof + explicit labelling),
+and added a symmetry-reduced exact search only as an independent check,
+not as the proof. <strong>Referee</strong>: verdetto
+<code>(nessun verdetto)</code>.</p>
+</dd>
+</dl>
+<h3 id="codice-su-cui-poggia-il-tentativo-6">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<pre
+data-caption="attempt\_001 code\_1 [python, rigore exact] — Exhaustive exact enumeration of all 8! = 40320 labellings of Q\_3; two independent counts ( — verdetto del Referee: (nessun verdetto)"><code>&quot;&quot;&quot;
+Calcolo esatto di U(Q_3) per enumerazione esaustiva di tutte le 8! = 40320 etichettature.
+
+Due conteggi indipendenti per ogni etichettatura:
+  1. DFS: enumera esplicitamente ogni cammino in salita (v_1,...,v_k) partendo da ogni valle.
+  2. DP:  p(v) = [v valle] + somma_{u vicino, f(u)&lt;f(v)} p(u);  totale = somma_v p(v).
+Aritmetica: solo interi Python (esatta). Insieme coperto: TUTTE le biiezioni V(Q_3) -&gt; {1..8}.
+&quot;&quot;&quot;
+from itertools import permutations
+from collections import Counter
+import time
+
+D = 3
+VERTICI = list(range(2 ** D))                      # vertice = intero, bit i = coordinata i
+VICINI = [[v ^ (1 &lt;&lt; i) for i in range(D)] for v in VERTICI]
+
+
+def stringa(v):
+    &quot;&quot;&quot;Vertice intero -&gt; stringa 0/1 di lunghezza D (bit 0 a sinistra).&quot;&quot;&quot;
+    return &quot;&quot;.join(str((v &gt;&gt; i) &amp; 1) for i in range(D))
+
+
+def valli(etichetta):
+    &quot;&quot;&quot;Vertici con tutti i vicini di etichetta maggiore.&quot;&quot;&quot;
+    return [v for v in VERTICI if all(etichetta[w] &gt; etichetta[v] for w in VICINI[v])]
+
+
+def conta_dfs(etichetta):
+    &quot;&quot;&quot;Conteggio 1: enumera esplicitamente ogni cammino in salita.&quot;&quot;&quot;
+    def cammini_da(v):
+        # il cammino che termina in v conta 1, piu&#39; tutte le estensioni ai vicini maggiori
+        return 1 + sum(cammini_da(w) for w in VICINI[v] if etichetta[w] &gt; etichetta[v])
+    return sum(cammini_da(v) for v in valli(etichetta))
+
+
+def conta_dp(etichetta):
+    &quot;&quot;&quot;Conteggio 2: programmazione dinamica in ordine crescente di etichetta.&quot;&quot;&quot;
+    ordine = sorted(VERTICI, key=lambda v: etichetta[v])
+    p = {}
+    for v in ordine:
+        minori = [w for w in VICINI[v] if etichetta[w] &lt; etichetta[v]]
+        p[v] = (1 if not minori else 0) + sum(p[w] for w in minori)
+    return sum(p.values())
+
+
+def esplora_tutte():
+    &quot;&quot;&quot;Enumera tutte le 8! etichettature; restituisce (minimo, distribuzione, ottime).&quot;&quot;&quot;
+    distribuzione = Counter()
+    ottime = []
+    minimo = None
+    for perm in permutations(range(1, 2 ** D + 1)):
+        etichetta = list(perm)                     # etichetta[v] = f(v)
+        n_dfs = conta_dfs(etichetta)
+        n_dp = conta_dp(etichetta)
+        assert n_dfs == n_dp, (etichetta, n_dfs, n_dp)
+        distribuzione[n_dfs] += 1
+        if minimo is None or n_dfs &lt; minimo:
+            minimo, ottime = n_dfs, [etichetta]
+        elif n_dfs == minimo:
+            ottime.append(etichetta)
+    return minimo, distribuzione, ottime
+
+
+def lista_ordinata(etichetta):
+    &quot;&quot;&quot;Formato di consegna: vertici in ordine crescente di etichetta, come stringhe 0/1.&quot;&quot;&quot;
+    return [stringa(v) for v in sorted(VERTICI, key=lambda v: etichetta[v])]
+
+
+if __name__ == &quot;__main__&quot;:
+    inizio = time.time()
+    minimo, distribuzione, ottime = esplora_tutte()
+    print(f&quot;etichettature esaminate: {sum(distribuzione.values())}&quot;)
+    print(f&quot;U(Q_3) = {minimo}; etichettature ottime: {len(ottime)}&quot;)
+    print(&quot;distribuzione (cammini -&gt; numero etichettature):&quot;, sorted(distribuzione.items()))
+    print(&quot;prima etichettatura ottima (ordine crescente di etichetta):&quot;, lista_ordinata(ottime[0]))
+    print(f&quot;tempo: {time.time() - inizio:.2f} s&quot;)
+</code></pre>
+<pre
+data-caption="attempt\_001 code\_2 [python, rigore exact] — Independent check of the single submitted labelling (bijection check, valleys, per-vertex  — verdetto del Referee: (nessun verdetto)"><code>&quot;&quot;&quot;
+Verifica indipendente della singola etichettatura consegnata per Q_3:
+stampa valli, p(v) per ogni vertice e il totale dei cammini in salita (interi esatti).
+&quot;&quot;&quot;
+D = 3
+CONSEGNA = [&#39;000&#39;, &#39;100&#39;, &#39;010&#39;, &#39;110&#39;, &#39;101&#39;, &#39;011&#39;, &#39;001&#39;, &#39;111&#39;]   # ordine crescente di etichetta
+
+
+def vicini(s):
+    &quot;&quot;&quot;Stringhe 0/1 che differiscono da s in esattamente una coordinata.&quot;&quot;&quot;
+    return [s[:i] + (&#39;1&#39; if s[i] == &#39;0&#39; else &#39;0&#39;) + s[i + 1:] for i in range(D)]
+
+
+def verifica(consegna):
+    &quot;&quot;&quot;Calcola p(v) in ordine di etichetta e restituisce (valli, p, totale).&quot;&quot;&quot;
+    assert sorted(consegna) == sorted(format(k, f&#39;0{D}b&#39;) for k in range(2 ** D)), &quot;non e&#39; una biiezione&quot;
+    etichetta = {s: k + 1 for k, s in enumerate(consegna)}
+    p, valli = {}, []
+    for s in consegna:
+        minori = [w for w in vicini(s) if etichetta[w] &lt; etichetta[s]]
+        if not minori:
+            valli.append(s)
+        p[s] = (1 if not minori else 0) + sum(p[w] for w in minori)
+    return valli, p, sum(p.values())
+
+
+if __name__ == &quot;__main__&quot;:
+    valli, p, totale = verifica(CONSEGNA)
+    print(&quot;valli:&quot;, valli)
+    for s in CONSEGNA:
+        print(f&quot;  {s}  etichetta {CONSEGNA.index(s)+1}  p = {p[s]}&quot;)
+    print(&quot;cammini in salita totali:&quot;, totale)
+</code></pre>
+<pre
+data-caption="attempt\_001 code\_1 [python, rigore exact] — Exact verification of the submitted labelling of Q\_4: bijection check, valleys, per-vertex — verdetto del Referee: (nessun verdetto)"><code>&quot;&quot;&quot;Verifica ESATTA (interi Python) dell&#39;etichettatura candidata di Q_4 con 34 cammini in salita.
+Due metodi indipendenti: (i) DP di Lemma 1 in ordine di etichetta; (ii) enumerazione esplicita
+(DFS) di tutti i cammini in salita da ogni valle. Stampa la tabella p(v) per la consegna.&quot;&quot;&quot;
+D = 4
+N = 1 &lt;&lt; D
+# Convenzione: carattere i-esimo della stringa (da sinistra) = coordinata i; bit i dell&#39;intero.
+ETICHETTATURA = [&#39;0000&#39;, &#39;1111&#39;, &#39;0111&#39;, &#39;1101&#39;, &#39;1110&#39;, &#39;1011&#39;, &#39;0001&#39;, &#39;1000&#39;,
+                 &#39;0010&#39;, &#39;0100&#39;, &#39;1001&#39;, &#39;0110&#39;, &#39;0011&#39;, &#39;1010&#39;, &#39;0101&#39;, &#39;1100&#39;]
+
+
+def da_stringa(s):
+    &quot;&quot;&quot;Converte la stringa 0/1 (carattere i = coordinata i) nell&#39;intero con bit i = coordinata i.&quot;&quot;&quot;
+    return sum(int(c) &lt;&lt; i for i, c in enumerate(s))
+
+
+def vicini(v):
+    &quot;&quot;&quot;I d vicini di v in Q_d: si cambia esattamente una coordinata.&quot;&quot;&quot;
+    return [v ^ (1 &lt;&lt; i) for i in range(D)]
+
+
+def conta_con_dp(ordine, etichetta):
+    &quot;&quot;&quot;Metodo (i): p(v) = [v valle] + somma p(u) sui vicini u con etichetta minore.&quot;&quot;&quot;
+    p = {}
+    righe = []
+    for v in ordine:
+        minori = [u for u in vicini(v) if etichetta[u] &lt; etichetta[v]]
+        p[v] = 1 if not minori else sum(p[u] for u in minori)
+        righe.append((format(v, f&#39;0{D}b&#39;)[::-1], etichetta[v], [format(u, f&#39;0{D}b&#39;)[::-1] for u in minori], p[v]))
+    return sum(p.values()), righe
+
+
+def conta_con_dfs(etichetta):
+    &quot;&quot;&quot;Metodo (ii): enumera esplicitamente ogni cammino in salita partendo da ogni valle.&quot;&quot;&quot;
+    def estendi(v):
+        totale = 1  # il cammino che termina qui
+        for w in vicini(v):
+            if etichetta[w] &gt; etichetta[v]:
+                totale += estendi(w)
+        return totale
+    valli = [v for v in range(N) if all(etichetta[w] &gt; etichetta[v] for w in vicini(v))]
+    return sum(estendi(v) for v in valli), valli
+
+
+def main():
+    ordine = [da_stringa(s) for s in ETICHETTATURA]
+    assert sorted(ordine) == list(range(N)), &quot;non e&#39; una biiezione&quot;
+    etichetta = {v: i + 1 for i, v in enumerate(ordine)}
+    totale_dp, righe = conta_con_dp(ordine, etichetta)
+    totale_dfs, valli = conta_con_dfs(etichetta)
+    for stringa, lab, minori, p in righe:
+        print(f&quot;{stringa}  etichetta {lab:2d}  vicini minori {minori}  p = {p}&quot;)
+    print(&quot;valli:&quot;, [format(v, f&#39;0{D}b&#39;)[::-1] for v in valli])
+    print(&quot;totale (DP di Lemma 1):&quot;, totale_dp)
+    print(&quot;totale (DFS esplicita):&quot;, totale_dfs)
+    assert totale_dp == totale_dfs == 34
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<pre
+data-caption="attempt\_001 code\_2 [python, rigore exact] — Independent exact confirmation of the lower bound: symmetry-reduced branch-and-bound over  — verdetto del Referee: (nessun verdetto)"><code>&quot;&quot;&quot;Branch-and-bound ESATTO (interi) su Q_4: cerca un&#39;etichettatura con &lt; SOGLIA cammini in salita.
+Si piazzano i vertici in ordine crescente di etichetta; p(v) e&#39; determinato al piazzamento (Lemma 1).
+Riduzione per simmetria: a ogni nodo si prova un solo candidato per orbita dello stabilizzatore
+puntuale (in Aut(Q_4), ordine 384) dell&#39;insieme gia&#39; piazzato. Bound inferiore dimostrato nel testo.
+Conferma indipendente della prova a mano; NON e&#39; la prova principale.&quot;&quot;&quot;
+import sys, time
+from itertools import permutations
+
+D = 4
+N = 1 &lt;&lt; D
+VICINI = [[v ^ (1 &lt;&lt; i) for i in range(D)] for v in range(N)]
+
+
+def automorfismi():
+    &quot;&quot;&quot;Tutti i 384 automorfismi di Q_4 come tuple immagine: v -&gt; perm(coordinate) XOR maschera.&quot;&quot;&quot;
+    gruppo = []
+    for perm in permutations(range(D)):
+        for maschera in range(N):
+            immagine = tuple(sum(((v &gt;&gt; i) &amp; 1) &lt;&lt; perm[i] for i in range(D)) ^ maschera for v in range(N))
+            gruppo.append(immagine)
+    return gruppo
+
+
+GRUPPO = automorfismi()
+
+
+def bound_inferiore(p, piazzati, non_piazzati):
+    &quot;&quot;&quot;Bound: per v non piazzato p(v) &gt;= max(1, a(v) + d(v)), a(v) = somma p sui vicini piazzati,
+    d(v) = archi entranti da vertici non piazzati (somma dei d(v) = archi interni E(U)).
+    Minimizzando sui d(v) a somma fissata: somma_{a&gt;=1} a(v) + max(|U0|, E(U)), U0 = {a(v)=0}.&quot;&quot;&quot;
+    totale = sum(p[v] for v in piazzati)
+    zeri, archi_interni = 0, 0
+    for v in non_piazzati:
+        a = sum(p[u] for u in VICINI[v] if u in piazzati)
+        if a == 0:
+            zeri += 1
+        else:
+            totale += a
+        archi_interni += sum(1 for u in VICINI[v] if u not in piazzati)
+    return totale + max(zeri, archi_interni // 2)
+
+
+def rappresentanti(non_piazzati, stabilizzatore):
+    &quot;&quot;&quot;Un candidato per orbita dello stabilizzatore sui vertici non piazzati.&quot;&quot;&quot;
+    visti, scelti = set(), []
+    for v in sorted(non_piazzati):
+        if v in visti:
+            continue
+        scelti.append(v)
+        visti.update(g[v] for g in stabilizzatore)
+    return scelti
+
+
+class Ricerca:
+    def __init__(self, soglia):
+        self.soglia = soglia
+        self.nodi = 0
+        self.trovate = []
+
+    def esplora(self, ordine, p, piazzati, stabilizzatore):
+        &quot;&quot;&quot;Espande un nodo: prova ogni rappresentante d&#39;orbita come prossimo vertice.&quot;&quot;&quot;
+        self.nodi += 1
+        non_piazzati = [v for v in range(N) if v not in piazzati]
+        if not non_piazzati:
+            self.trovate.append(list(ordine))
+            return
+        if bound_inferiore(p, piazzati, non_piazzati) &gt;= self.soglia:
+            return
+        for v in rappresentanti(non_piazzati, stabilizzatore):
+            minori = [u for u in VICINI[v] if u in piazzati]
+            p[v] = 1 if not minori else sum(p[u] for u in minori)
+            piazzati.add(v)
+            ordine.append(v)
+            self.esplora(ordine, p, piazzati, [g for g in stabilizzatore if g[v] == v])
+            ordine.pop()
+            piazzati.discard(v)
+            del p[v]
+
+
+def main():
+    soglia = int(sys.argv[1]) if len(sys.argv) &gt; 1 else 34
+    inizio = time.time()
+    ricerca = Ricerca(soglia)
+    ricerca.esplora([], {}, set(), GRUPPO)
+    print(f&quot;soglia {soglia}: etichettature con &lt; {soglia} cammini trovate: {len(ricerca.trovate)}&quot;)
+    for ordine in ricerca.trovate[:5]:
+        print(&quot;  &quot;, [format(v, f&#39;0{D}b&#39;)[::-1] for v in ordine])
+    print(f&quot;nodi visitati: {ricerca.nodi}; tempo: {time.time() - inizio:.1f} s&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<pre
+data-caption="attempt\_001 code\_3 [python, rigore float\_exploration\_only] — Heuristic simulated annealing to find an incumbent labelling (upper bound candidate). 12 s — verdetto del Referee: (nessun verdetto)"><code>&quot;&quot;&quot;Ricerca locale (simulated annealing) di etichettature di Q_4 con pochi cammini in salita.
+Serve solo a trovare un buon candidato (upper bound): NON dimostra nulla.
+Aritmetica: interi esatti (il conteggio), float solo nella regola di accettazione di SA.&quot;&quot;&quot;
+import random, sys, math
+
+D = 4
+N = 1 &lt;&lt; D
+VICINI = [[v ^ (1 &lt;&lt; i) for i in range(D)] for v in range(N)]
+
+
+def conta_cammini(ordine):
+    &quot;&quot;&quot;Numero di cammini in salita dell&#39;etichettatura data come lista di vertici
+    in ordine crescente di etichetta (Lemma 1: p(v) = [valle] + somma p(u) sui vicini minori).&quot;&quot;&quot;
+    etichetta = [0] * N
+    for pos, v in enumerate(ordine):
+        etichetta[v] = pos
+    p = [0] * N
+    totale = 0
+    for v in ordine:
+        minori = [u for u in VICINI[v] if etichetta[u] &lt; etichetta[v]]
+        p[v] = 1 if not minori else sum(p[u] for u in minori)
+        totale += p[v]
+    return totale
+
+
+def ricottura(seme, passi=200000):
+    &quot;&quot;&quot;Una corsa di simulated annealing con mosse di scambio e di spostamento.&quot;&quot;&quot;
+    rng = random.Random(seme)
+    ordine = list(range(N))
+    rng.shuffle(ordine)
+    valore = conta_cammini(ordine)
+    migliore, migliore_ordine = valore, ordine[:]
+    for passo in range(passi):
+        temperatura = 2.0 * (1 - passo / passi) + 0.05
+        nuovo = ordine[:]
+        i, j = rng.randrange(N), rng.randrange(N)
+        if rng.random() &lt; 0.5:
+            nuovo[i], nuovo[j] = nuovo[j], nuovo[i]
+        else:
+            nuovo.insert(j, nuovo.pop(i))
+        nuovo_valore = conta_cammini(nuovo)
+        if nuovo_valore &lt;= valore or rng.random() &lt; math.exp((valore - nuovo_valore) / temperatura):
+            ordine, valore = nuovo, nuovo_valore
+            if valore &lt; migliore:
+                migliore, migliore_ordine = valore, ordine[:]
+    return migliore, migliore_ordine
+
+
+def main():
+    corse = int(sys.argv[1]) if len(sys.argv) &gt; 1 else 20
+    globale, globale_ordine = None, None
+    for seme in range(corse):
+        valore, ordine = ricottura(seme)
+        if globale is None or valore &lt; globale:
+            globale, globale_ordine = valore, ordine
+        print(f&quot;seme {seme}: {valore} (migliore finora {globale})&quot;, flush=True)
+    stringhe = [format(v, f&quot;0{D}b&quot;) for v in globale_ordine]
+    print(&quot;MIGLIORE:&quot;, globale, stringhe)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<h2 id="cella-2-2-punti-stato-bozza-pronta">Cella 2 (2 punti) — stato:
+bozza pronta</h2>
+<p><strong>Richiesta.</strong> Determine U(Q_5) exactly and exhibit an
+optimal labelling of Q_5 in the required format.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> $U(Q_5)=88$:
+riduzione a (★) riletta a mano + 3 enumerazioni concordi; etichettatura
+verificata; verdetto Referee automatico in corso</p>
+<h3 id="consegna-prova-7">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-7">Decisioni degli agenti</h3>
+<h4 id="run-p2_c2">Run <code>p2_c2</code></h4>
+<h4 id="run-p2_q5">Run <code>p2_q5</code></h4>
+<dl>
+<dt>Iterazione 1 — attempt_001</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>case_analysis</code>,
+sotto-obiettivo: . Stato dichiarato: . <strong>Referee</strong>:
+verdetto <code>UNKNOWN_STATUS</code> (review_status
+<code>INCOMPLETE</code>).</p>
+</dd>
+</dl>
+<h3 id="codice-su-cui-poggia-il-tentativo-7">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<pre
+data-caption="attempt\_001 code\_1 [python, rigore exact] — Exact count of uphill paths of a labelling of Q\_d via the recursion p(v) = [valley] + sum  — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Conteggio esatto dei cammini in salita di una etichettatura di Q_d.
+
+Vertici = interi 0..2^d-1 (bit i = coordinata i); vicini = XOR con un bit.
+p(v) = [v valle] + somma p(u) sui vicini u con etichetta minore; totale = somma p(v).
+Aritmetica intera: risultato esatto.
+&quot;&quot;&quot;
+
+
+def vicini(v, d):
+    &quot;&quot;&quot;Restituisce i d vicini di v in Q_d.&quot;&quot;&quot;
+    return [v ^ (1 &lt;&lt; i) for i in range(d)]
+
+
+def conta_cammini(ordine, d):
+    &quot;&quot;&quot;ordine = lista dei vertici in ordine crescente di etichetta. Ritorna (totale, p, valli).&quot;&quot;&quot;
+    etichetta = {v: i for i, v in enumerate(ordine)}
+    assert sorted(ordine) == list(range(1 &lt;&lt; d)), &quot;non e&#39; una biiezione&quot;
+    p = {}
+    valli = []
+    for v in ordine:
+        minori = [u for u in vicini(v, d) if etichetta[u] &lt; etichetta[v]]
+        if not minori:
+            valli.append(v)
+            p[v] = 1
+        else:
+            p[v] = sum(p[u] for u in minori)
+    return sum(p.values()), p, valli
+
+
+def stringa(v, d):
+    &quot;&quot;&quot;Vertice intero -&gt; stringa 0/1, coordinata 1 a sinistra.&quot;&quot;&quot;
+    return &quot;&quot;.join(str((v &gt;&gt; i) &amp; 1) for i in range(d))
+
+
+def da_stringa(s):
+    &quot;&quot;&quot;Stringa 0/1 -&gt; vertice intero (coordinata 1 a sinistra).&quot;&quot;&quot;
+    return sum(int(c) &lt;&lt; i for i, c in enumerate(s))
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: ’’; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_001 code\_2 [python, rigore exact] — Certificate 1 for the lower bound: enumerate all independent 12-sets of Q\_5 containing ver — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Certificato per il bound inferiore U(Q_5) &gt;= 88 (implementazione 1: backtracking).
+
+Enunciato verificato (Lemma computazionale):
+  per ogni insieme indipendente I di Q_5 con |I| = 12 e per ogni vertice u di Q_5,
+  il sottografo indotto da V meno (I u {u}) contiene un ciclo.
+Riduzione: le traslazioni x -&gt; x XOR t sono automorfismi di Q_5, quindi basta considerare
+gli I che contengono il vertice 0 (ogni I non vuoto si trasla a contenerne uno).
+Aciclicita&#39; decisa con conteggio esatto: componenti + spigoli (un grafo e&#39; una foresta sse
+spigoli = vertici - componenti). Tutto intero: rigore = exact.
+&quot;&quot;&quot;
+import time
+from conta_cammini import vicini
+
+D = 5
+N = 1 &lt;&lt; D
+ADJ = [set(vicini(v, D)) for v in range(N)]
+
+
+def e_foresta(S):
+    &quot;&quot;&quot;True sse il sottografo indotto da S e&#39; aciclico (spigoli = |S| - componenti).&quot;&quot;&quot;
+    S = set(S)
+    spigoli = sum(len(ADJ[v] &amp; S) for v in S) // 2
+    visti, comp = set(), 0
+    for s in S:
+        if s in visti:
+            continue
+        comp += 1
+        pila, visti = [s], visti | {s}
+        while pila:
+            v = pila.pop()
+            for w in ADJ[v] &amp; S:
+                if w not in visti:
+                    visti.add(w)
+                    pila.append(w)
+    return spigoli == len(S) - comp
+
+
+def indipendenti_con_zero(k):
+    &quot;&quot;&quot;Genera tutti gli insiemi indipendenti di taglia k contenenti 0 (vertici in ordine crescente).&quot;&quot;&quot;
+    def ric(I, prossimo, vietati):
+        if len(I) == k:
+            yield list(I)
+            return
+        for v in range(prossimo, N):
+            if v not in vietati and N - v &gt;= k - len(I):
+                yield from ric(I + [v], v + 1, vietati | ADJ[v] | {v})
+    yield from ric([0], 1, ADJ[0] | {0})
+
+
+if __name__ == &quot;__main__&quot;:
+    inizio = time.time()
+    n_insiemi, n_test, violazioni = 0, 0, []
+    for I in indipendenti_con_zero(12):
+        n_insiemi += 1
+        for u in range(N):
+            if u in I:
+                continue
+            n_test += 1
+            if e_foresta(set(range(N)) - set(I) - {u}):
+                violazioni.append((I, u))
+    print(f&quot;insiemi indipendenti di taglia 12 contenenti 0: {n_insiemi}&quot;)
+    print(f&quot;coppie (I,u) esaminate: {n_test}; complementi aciclici trovati: {len(violazioni)}&quot;)
+    print(f&quot;tempo {time.time()-inizio:.2f}s&quot;)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 0 in 0.5s; stdout: ’insiemi indipendenti di taglia 12 contenenti 0: 1377\ncoppie (I,u) esaminate: 27540; complementi aciclici trovati: 0\ntempo 0.47s’; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_001 code\_3 [python, rigore exact] — Certificate 2 for the lower bound, independent method and no symmetry reduction: all indep — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Certificato per il bound inferiore U(Q_5) &gt;= 88 (implementazione 2, metodo diverso).
+
+Stesso enunciato di verifica_q5_indipendenti.py, ma senza usare la simmetria:
+ogni insieme indipendente e&#39; A u B con A sottoinsieme dei vertici di peso pari e
+B sottoinsieme dei vertici di peso dispari NON adiacenti ad A. Si scorrono tutti i 2^16
+sottoinsiemi A (bitmask), poi tutti i B di taglia 12-|A| tra i dispari disponibili.
+Aciclicita&#39; con union-find (metodo diverso dal conteggio componenti). Rigore = exact.
+&quot;&quot;&quot;
+import itertools
+import time
+
+D = 5
+N = 1 &lt;&lt; D
+PARI = [v for v in range(N) if bin(v).count(&quot;1&quot;) % 2 == 0]
+DISPARI = [v for v in range(N) if bin(v).count(&quot;1&quot;) % 2 == 1]
+SPIGOLI = [(v, v ^ (1 &lt;&lt; i)) for v in range(N) for i in range(D) if v &lt; v ^ (1 &lt;&lt; i)]
+
+
+def maschera_vicini(v):
+    &quot;&quot;&quot;Bitmask dei vicini di v.&quot;&quot;&quot;
+    return sum(1 &lt;&lt; (v ^ (1 &lt;&lt; i)) for i in range(D))
+
+
+VIC = [maschera_vicini(v) for v in range(N)]
+
+
+def ha_ciclo(maschera_vertici):
+    &quot;&quot;&quot;True sse il sottografo indotto dai vertici nella bitmask contiene un ciclo (union-find).&quot;&quot;&quot;
+    padre = list(range(N))
+
+    def trova(x):
+        while padre[x] != x:
+            padre[x] = padre[padre[x]]
+            x = padre[x]
+        return x
+
+    for a, b in SPIGOLI:
+        if (maschera_vertici &gt;&gt; a) &amp; 1 and (maschera_vertici &gt;&gt; b) &amp; 1:
+            ra, rb = trova(a), trova(b)
+            if ra == rb:
+                return True
+            padre[ra] = rb
+    return False
+
+
+def insiemi_indipendenti_12():
+    &quot;&quot;&quot;Genera le bitmask di tutti gli insiemi indipendenti di taglia 12.&quot;&quot;&quot;
+    for bits in range(1 &lt;&lt; 16):
+        A = [PARI[i] for i in range(16) if (bits &gt;&gt; i) &amp; 1]
+        if len(A) &gt; 12:
+            continue
+        vietati = 0
+        for a in A:
+            vietati |= VIC[a]
+        disponibili = [w for w in DISPARI if not (vietati &gt;&gt; w) &amp; 1]
+        for B in itertools.combinations(disponibili, 12 - len(A)):
+            m = 0
+            for x in A + list(B):
+                m |= 1 &lt;&lt; x
+            yield m
+
+
+if __name__ == &quot;__main__&quot;:
+    inizio = time.time()
+    tutti = (1 &lt;&lt; N) - 1
+    n_insiemi, n_test, aciclici = 0, 0, 0
+    for I in insiemi_indipendenti_12():
+        n_insiemi += 1
+        for u in range(N):
+            if (I &gt;&gt; u) &amp; 1:
+                continue
+            n_test += 1
+            if not ha_ciclo(tutti &amp; ~I &amp; ~(1 &lt;&lt; u)):
+                aciclici += 1
+    print(f&quot;insiemi indipendenti di taglia 12 (tutti, senza simmetria): {n_insiemi}&quot;)
+    print(f&quot;coppie (I,u) esaminate: {n_test}; complementi aciclici: {aciclici}&quot;)
+    print(f&quot;tempo {time.time()-inizio:.2f}s&quot;)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_3.py (python3, clean copy of the researcher sandbox): exit 0 in 0.7s; stdout: ’insiemi indipendenti di taglia 12 (tutti, senza simmetria): 3672\ncoppie (I,u) esaminate: 73440; complementi aciclici: 0\ntempo 0.71s’; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_001 code\_4 [python, rigore exact] — Builds the 88-path labelling (peaks = even vertices minus 00000, 11110) and counts exactly — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Costruzione esplicita con 88 cammini in salita su Q_5 e verifica esatta.
+
+Idea: picchi = tutti i vertici di peso pari tranne 00000 e 11110 (14 picchi, indipendenti);
+il complemento (2 pari + 16 dispari) e&#39; una foresta con 10 spigoli e 8 componenti:
+etichettiamo prima le 8 radici (valli), poi le foglie, poi i picchi. Ogni non-picco ha p = 1,
+ogni picco ha p = 5: totale 18 + 14*5 = 88.
+&quot;&quot;&quot;
+from conta_cammini import conta_cammini, stringa, da_stringa
+
+D = 5
+N = 1 &lt;&lt; D
+peso = lambda v: bin(v).count(&quot;1&quot;)
+radici = [da_stringa(&quot;00000&quot;), da_stringa(&quot;11110&quot;)]
+dispari = [v for v in range(N) if peso(v) % 2 == 1]
+foglie = [v for v in dispari if any(v ^ r in [1 &lt;&lt; i for i in range(D)] for r in radici)]
+isolati = [v for v in dispari if v not in foglie]
+picchi = [v for v in range(N) if peso(v) % 2 == 0 and v not in radici]
+ordine = radici + isolati + foglie + picchi
+
+if __name__ == &quot;__main__&quot;:
+    tot, p, valli = conta_cammini(ordine, D)
+    print(&quot;totale cammini:&quot;, tot)
+    print(&quot;valli:&quot;, [stringa(v, D) for v in valli])
+    print(&quot;ordine:&quot;, &quot;,&quot;.join(stringa(v, D) for v in ordine))
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_4.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: "totale cammini: 88\nvalli: [’00000’, ’11110’, ’11001’, ’10101’, ’01101’, ’10011’, ’01011’, ’00111’]\nordine: 00000,11110,11001,10101,01101,10011,01011,00111,10000,01000,00100,11100,00010,11010,10110,01110,00001,11111,11000,10100,01100,10010,01010,00110,10001,01001,00101,11101,00011,11011,10111,0</code></p>
+<pre
+data-caption="attempt\_001 code\_5 [python, rigore exact] — Independent verification of the submitted labelling by explicit DFS enumeration of every u — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Verifica indipendente dell&#39;etichettatura a 88 cammini: enumerazione esplicita per DFS.
+
+Metodo diverso dalla ricorsione p(v): da ogni valle si esplorano tutti i cammini con etichette
+crescenti e si contano uno a uno. Controlla anche che l&#39;input sia una biiezione.
+&quot;&quot;&quot;
+ORDINE = (&quot;00000,11110,11001,10101,01101,10011,01011,00111,10000,01000,00100,11100,00010,11010,&quot;
+          &quot;10110,01110,00001,11111,11000,10100,01100,10010,01010,00110,10001,01001,00101,11101,&quot;
+          &quot;00011,11011,10111,01111&quot;).split(&quot;,&quot;)
+D = 5
+
+
+def vicini(s):
+    &quot;&quot;&quot;Vicini della stringa s: cambia un carattere.&quot;&quot;&quot;
+    return [s[:i] + (&quot;1&quot; if s[i] == &quot;0&quot; else &quot;0&quot;) + s[i + 1:] for i in range(D)]
+
+
+def conta_da(s, etichetta):
+    &quot;&quot;&quot;Numero di cammini in salita che iniziano in s (s incluso come cammino di lunghezza 1).&quot;&quot;&quot;
+    return 1 + sum(conta_da(w, etichetta) for w in vicini(s) if etichetta[w] &gt; etichetta[s])
+
+
+if __name__ == &quot;__main__&quot;:
+    assert len(set(ORDINE)) == 32 and all(len(s) == 5 and set(s) &lt;= {&quot;0&quot;, &quot;1&quot;} for s in ORDINE)
+    etichetta = {s: i + 1 for i, s in enumerate(ORDINE)}
+    valli = [s for s in ORDINE if all(etichetta[w] &gt; etichetta[s] for w in vicini(s))]
+    totale = sum(conta_da(s, etichetta) for s in valli)
+    print(&quot;valli:&quot;, valli)
+    print(&quot;cammini in salita (DFS esplicita):&quot;, totale)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_5.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: "valli: [’00000’, ’11110’, ’11001’, ’10101’, ’01101’, ’10011’, ’01011’, ’00111’]\ncammini in salita (DFS esplicita): 88"; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_001 code\_6 [python, rigore exact] — Sanity check (evidence only, not part of the proof) of the identity T = 80 + \#valleys + X  — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Controllo di sanita&#39; (solo evidenza) dell&#39;identita&#39; usata nella prova:
+totale = |E| + #valli + X, X = somma sugli spigoli u-&gt;w di (p(u)-1), e X in {0} u [3, inf).
+Etichettature casuali di Q_5 con aritmetica esatta.
+&quot;&quot;&quot;
+import random
+from conta_cammini import conta_cammini, vicini
+
+D, N = 5, 32
+rng = random.Random(1)
+valori_x = set()
+for _ in range(200000):
+    ordine = list(range(N))
+    rng.shuffle(ordine)
+    tot, p, valli = conta_cammini(ordine, D)
+    et = {v: i for i, v in enumerate(ordine)}
+    x = sum(p[u] - 1 for u in range(N) for w in vicini(u, D) if et[u] &lt; et[w])
+    assert tot == 80 + len(valli) + x
+    valori_x.add(x)
+print(&quot;identita&#39; verificata su 200000 etichettature casuali; min X&gt;0 osservato:&quot;, min(v for v in valori_x if v &gt; 0))
+print(&quot;valori di X osservati sotto 10:&quot;, sorted(v for v in valori_x if v &lt; 10))
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_6.py (python3, clean copy of the researcher sandbox): exit 0 in 15.5s; stdout: "identita’ verificata su 200000 etichettature casuali; min X&gt;0 osservato: 14\nvalori di X osservati sotto 10: []"; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_001 code\_7 [python, rigore float\_exploration\_only] — Simulated annealing over labellings (exploration only): best value found 88 in every seed  — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Ricerca locale (simulated annealing) sul numero di cammini in salita di Q_5.
+
+Esplorazione: trova etichettature con pochi cammini. NON e&#39; una prova (minimo locale possibile).
+Stato = permutazione dei 32 vertici; mossa = scambio di due etichette; punteggio esatto (interi).
+&quot;&quot;&quot;
+import random
+import sys
+import time
+from conta_cammini import conta_cammini, stringa
+
+D = 5
+N = 1 &lt;&lt; D
+
+
+def ricottura(seed, passi=200000, t0=2.0, t1=0.05):
+    &quot;&quot;&quot;Un run di annealing con seed fissato; ritorna (miglior_valore, miglior_ordine).&quot;&quot;&quot;
+    rng = random.Random(seed)
+    ordine = list(range(N))
+    rng.shuffle(ordine)
+    val = conta_cammini(ordine, D)[0]
+    migliore, miglior_ordine = val, ordine[:]
+    for k in range(passi):
+        t = t0 * (t1 / t0) ** (k / passi)
+        i, j = rng.randrange(N), rng.randrange(N)
+        ordine[i], ordine[j] = ordine[j], ordine[i]
+        nuovo = conta_cammini(ordine, D)[0]
+        if nuovo &lt;= val or rng.random() &lt; 2.718 ** ((val - nuovo) / t):
+            val = nuovo
+            if val &lt; migliore:
+                migliore, miglior_ordine = val, ordine[:]
+        else:
+            ordine[i], ordine[j] = ordine[j], ordine[i]
+    return migliore, miglior_ordine
+
+
+if __name__ == &quot;__main__&quot;:
+    semi = int(sys.argv[1]) if len(sys.argv) &gt; 1 else 8
+    inizio = time.time()
+    globale = None
+    for seed in range(semi):
+        v, o = ricottura(seed)
+        print(f&quot;seed {seed}: {v}&quot;, flush=True)
+        if globale is None or v &lt; globale[0]:
+            globale = (v, o)
+    v, o = globale
+    tot, p, valli = conta_cammini(o, D)
+    print(&quot;migliore:&quot;, v, &quot;valli:&quot;, [stringa(x, D) for x in valli])
+    print(&quot;ordine:&quot;, &quot;,&quot;.join(stringa(x, D) for x in o))
+    print(f&quot;tempo {time.time()-inizio:.1f}s&quot;)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_7.py (python3, clean copy of the researcher sandbox): exit 0 in 78.9s; stdout: "seed 0: 88\nseed 1: 88\nseed 2: 88\nseed 3: 88\nseed 4: 88\nseed 5: 88\nseed 6: 88\nseed 7: 88\nmigliore: 88 valli: [’01001’, ’11100’, ’11010’, ’11111’, ’10011’]\nordine: 01001,11100,01000,11010,11111,01101,10100,10110,00110,00100,00111,01110,11001,01011,00001,11110,00010,10101,10011,10000,1100</code></p>
+<h2 id="cella-3-3-punti-stato-in-analisi-1">Cella 3 (3 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> Determine U(Q_6) exactly (64 vertices,
+192 edges) and exhibit an optimal labelling in the required format.
+Checked on the value: it must be the true minimum, so a lower-bound
+proof (hand or certified computation &lt; 10 min) is needed.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> —</p>
+<h3 id="consegna-prova-8">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-8">Decisioni degli agenti</h3>
+<h4 id="run-p2_c3">Run <code>p2_c3</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo-8">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h2 id="cella-4-5-punti-stato-in-analisi-1">Cella 4 (5 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> Determine U(Q_7) and U(Q_8) exactly, each
+with an explicit optimal labelling in the required format. Checked on
+the values: lower-bound proofs needed.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> —</p>
+<h3 id="consegna-prova-9">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-9">Decisioni degli agenti</h3>
+<h4 id="run-p2_c4">Run <code>p2_c4</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo-9">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h2 id="cella-5-8-punti-stato-in-analisi-1">Cella 5 (8 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> Improve one of the known bounds 2368
+&lt;= U(Q_9) &lt;= 2400: either prove U(Q_9) &gt;= 2369, or exhibit a
+labelling of Q_9 with at most 2399 uphill paths (its paths are counted
+mechanically).</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> via realistica:
+etichettatura $\le2399$</p>
+<h3 id="consegna-prova-10">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-10">Decisioni degli agenti</h3>
+<h4 id="run-p2_c5">Run <code>p2_c5</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo-10">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h2 id="cella-6-13-punti-stato-in-analisi-1">Cella 6 (13 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> OPEN. Determine U(Q_9) exactly, with an
+optimal labelling and a proof of both bounds.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> —</p>
+<h3 id="consegna-prova-11">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-11">Decisioni degli agenti</h3>
+<h4 id="run-p2_c6">Run <code>p2_c6</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo-11">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h2 id="certificati-di-verifica-indipendente-del-team">Certificati di
+verifica indipendente del team</h2>
+<pre data-caption="certificati/costruzione\_88.py"><code>&quot;&quot;&quot;Costruzione esplicita con 88 cammini in salita su Q_5 e verifica esatta.
+
+Idea: picchi = tutti i vertici di peso pari tranne 00000 e 11110 (14 picchi, indipendenti);
+il complemento (2 pari + 16 dispari) e&#39; una foresta con 10 spigoli e 8 componenti:
+etichettiamo prima le 8 radici (valli), poi le foglie, poi i picchi. Ogni non-picco ha p = 1,
+ogni picco ha p = 5: totale 18 + 14*5 = 88.
+&quot;&quot;&quot;
+from conta_cammini import conta_cammini, stringa, da_stringa
+
+D = 5
+N = 1 &lt;&lt; D
+peso = lambda v: bin(v).count(&quot;1&quot;)
+radici = [da_stringa(&quot;00000&quot;), da_stringa(&quot;11110&quot;)]
+dispari = [v for v in range(N) if peso(v) % 2 == 1]
+foglie = [v for v in dispari if any(v ^ r in [1 &lt;&lt; i for i in range(D)] for r in radici)]
+isolati = [v for v in dispari if v not in foglie]
+picchi = [v for v in range(N) if peso(v) % 2 == 0 and v not in radici]
+ordine = radici + isolati + foglie + picchi
+
+if __name__ == &quot;__main__&quot;:
+    tot, p, valli = conta_cammini(ordine, D)
+    print(&quot;totale cammini:&quot;, tot)
+    print(&quot;valli:&quot;, [stringa(v, D) for v in valli])
+    print(&quot;ordine:&quot;, &quot;,&quot;.join(stringa(v, D) for v in ordine))
+</code></pre>
+<pre data-caption="certificati/q3\_esaustivo.py"><code>&quot;&quot;&quot;
+Calcolo esatto di U(Q_3) per enumerazione esaustiva di tutte le 8! = 40320 etichettature.
+
+Due conteggi indipendenti per ogni etichettatura:
+  1. DFS: enumera esplicitamente ogni cammino in salita (v_1,...,v_k) partendo da ogni valle.
+  2. DP:  p(v) = [v valle] + somma_{u vicino, f(u)&lt;f(v)} p(u);  totale = somma_v p(v).
+Aritmetica: solo interi Python (esatta). Insieme coperto: TUTTE le biiezioni V(Q_3) -&gt; {1..8}.
+&quot;&quot;&quot;
+from itertools import permutations
+from collections import Counter
+import time
+
+D = 3
+VERTICI = list(range(2 ** D))                      # vertice = intero, bit i = coordinata i
+VICINI = [[v ^ (1 &lt;&lt; i) for i in range(D)] for v in VERTICI]
+
+
+def stringa(v):
+    &quot;&quot;&quot;Vertice intero -&gt; stringa 0/1 di lunghezza D (bit 0 a sinistra).&quot;&quot;&quot;
+    return &quot;&quot;.join(str((v &gt;&gt; i) &amp; 1) for i in range(D))
+
+
+def valli(etichetta):
+    &quot;&quot;&quot;Vertici con tutti i vicini di etichetta maggiore.&quot;&quot;&quot;
+    return [v for v in VERTICI if all(etichetta[w] &gt; etichetta[v] for w in VICINI[v])]
+
+
+def conta_dfs(etichetta):
+    &quot;&quot;&quot;Conteggio 1: enumera esplicitamente ogni cammino in salita.&quot;&quot;&quot;
+    def cammini_da(v):
+        # il cammino che termina in v conta 1, piu&#39; tutte le estensioni ai vicini maggiori
+        return 1 + sum(cammini_da(w) for w in VICINI[v] if etichetta[w] &gt; etichetta[v])
+    return sum(cammini_da(v) for v in valli(etichetta))
+
+
+def conta_dp(etichetta):
+    &quot;&quot;&quot;Conteggio 2: programmazione dinamica in ordine crescente di etichetta.&quot;&quot;&quot;
+    ordine = sorted(VERTICI, key=lambda v: etichetta[v])
+    p = {}
+    for v in ordine:
+        minori = [w for w in VICINI[v] if etichetta[w] &lt; etichetta[v]]
+        p[v] = (1 if not minori else 0) + sum(p[w] for w in minori)
+    return sum(p.values())
+
+
+def esplora_tutte():
+    &quot;&quot;&quot;Enumera tutte le 8! etichettature; restituisce (minimo, distribuzione, ottime).&quot;&quot;&quot;
+    distribuzione = Counter()
+    ottime = []
+    minimo = None
+    for perm in permutations(range(1, 2 ** D + 1)):
+        etichetta = list(perm)                     # etichetta[v] = f(v)
+        n_dfs = conta_dfs(etichetta)
+        n_dp = conta_dp(etichetta)
+        assert n_dfs == n_dp, (etichetta, n_dfs, n_dp)
+        distribuzione[n_dfs] += 1
+        if minimo is None or n_dfs &lt; minimo:
+            minimo, ottime = n_dfs, [etichetta]
+        elif n_dfs == minimo:
+            ottime.append(etichetta)
+    return minimo, distribuzione, ottime
+
+
+def lista_ordinata(etichetta):
+    &quot;&quot;&quot;Formato di consegna: vertici in ordine crescente di etichetta, come stringhe 0/1.&quot;&quot;&quot;
+    return [stringa(v) for v in sorted(VERTICI, key=lambda v: etichetta[v])]
+
+
+if __name__ == &quot;__main__&quot;:
+    inizio = time.time()
+    minimo, distribuzione, ottime = esplora_tutte()
+    print(f&quot;etichettature esaminate: {sum(distribuzione.values())}&quot;)
+    print(f&quot;U(Q_3) = {minimo}; etichettature ottime: {len(ottime)}&quot;)
+    print(&quot;distribuzione (cammini -&gt; numero etichettature):&quot;, sorted(distribuzione.items()))
+    print(&quot;prima etichettatura ottima (ordine crescente di etichetta):&quot;, lista_ordinata(ottime[0]))
+    print(f&quot;tempo: {time.time() - inizio:.2f} s&quot;)
+</code></pre>
+<pre data-caption="certificati/q3\_verifica\_indipendente.py"><code>&quot;&quot;&quot;
+Verifica indipendente di U(Q_3) = 14 (scritta separatamente dal Researcher, metodo diverso).
+
+Metodo: per ogni etichettatura (8! = 40320) si costruisce l&#39;insieme di tutte le sequenze crescenti di vertici
+adiacenti per lunghezza crescente (BFS per livelli sull&#39;ordine delle etichette), partendo dalle sole valli.
+Nessuna ricorsione e nessuna programmazione dinamica: si contano le sequenze una per una, come oggetti espliciti.
+Interi esatti. Uso: python3 problema-2/certificati/q3_verifica_indipendente.py
+&quot;&quot;&quot;
+import itertools
+import time
+
+VERTICI = list(range(8))                       # vertice = intero 0..7, bit i = coordinata i
+VICINI = {v: [v ^ (1 &lt;&lt; i) for i in range(3)] for v in VERTICI}
+
+
+def valli(etichetta):
+    &quot;&quot;&quot;Vertici con tutti i vicini più alti: sono gli unici punti di partenza ammessi.&quot;&quot;&quot;
+    return [v for v in VERTICI if all(etichetta[w] &gt; etichetta[v] for w in VICINI[v])]
+
+
+def conta_cammini(etichetta):
+    &quot;&quot;&quot;Costruisce esplicitamente tutti i cammini in salita, livello per livello, e li conta.&quot;&quot;&quot;
+    livello = [(v,) for v in valli(etichetta)]  # cammini di lunghezza 1
+    totale = 0
+    while livello:
+        totale += len(livello)
+        livello = [c + (w,) for c in livello for w in VICINI[c[-1]] if etichetta[w] &gt; etichetta[c[-1]]]
+    return totale
+
+
+def stringa(v):
+    &quot;&quot;&quot;Vertice come stringa 0/1 con la posizione i = coordinata i (bit 0 a sinistra).&quot;&quot;&quot;
+    return &quot;&quot;.join(str((v &gt;&gt; i) &amp; 1) for i in range(3))
+
+
+if __name__ == &quot;__main__&quot;:
+    inizio = time.time()
+    minimo, esempio, quante_ottime = None, None, 0
+    for perm in itertools.permutations(VERTICI):          # perm[k] = vertice con etichetta k+1
+        etichetta = {v: k + 1 for k, v in enumerate(perm)}
+        n = conta_cammini(etichetta)
+        if minimo is None or n &lt; minimo:
+            minimo, esempio, quante_ottime = n, perm, 1
+        elif n == minimo:
+            quante_ottime += 1
+    print(f&quot;U(Q_3) = {minimo}; etichettature ottime: {quante_ottime}; tempo {time.time() - inizio:.2f} s&quot;)
+    print(&quot;esempio ottimo (ordine crescente di etichetta):&quot;, [stringa(v) for v in esempio])
+    # controllo della specifica etichettatura consegnata dal Researcher
+    consegnata = [&quot;000&quot;, &quot;100&quot;, &quot;010&quot;, &quot;110&quot;, &quot;101&quot;, &quot;011&quot;, &quot;001&quot;, &quot;111&quot;]
+    et = {int(s[::-1], 2): k + 1 for k, s in enumerate(consegnata)}
+    print(&quot;cammini dell&#39;etichettatura consegnata:&quot;, conta_cammini(et))
+</code></pre>
+<pre data-caption="certificati/q4\_branch\_and\_bound.py"><code>&quot;&quot;&quot;Branch-and-bound ESATTO (interi) su Q_4: cerca un&#39;etichettatura con &lt; SOGLIA cammini in salita.
+Si piazzano i vertici in ordine crescente di etichetta; p(v) e&#39; determinato al piazzamento (Lemma 1).
+Riduzione per simmetria: a ogni nodo si prova un solo candidato per orbita dello stabilizzatore
+puntuale (in Aut(Q_4), ordine 384) dell&#39;insieme gia&#39; piazzato. Bound inferiore dimostrato nel testo.
+Conferma indipendente della prova a mano; NON e&#39; la prova principale.&quot;&quot;&quot;
+import sys, time
+from itertools import permutations
+
+D = 4
+N = 1 &lt;&lt; D
+VICINI = [[v ^ (1 &lt;&lt; i) for i in range(D)] for v in range(N)]
+
+
+def automorfismi():
+    &quot;&quot;&quot;Tutti i 384 automorfismi di Q_4 come tuple immagine: v -&gt; perm(coordinate) XOR maschera.&quot;&quot;&quot;
+    gruppo = []
+    for perm in permutations(range(D)):
+        for maschera in range(N):
+            immagine = tuple(sum(((v &gt;&gt; i) &amp; 1) &lt;&lt; perm[i] for i in range(D)) ^ maschera for v in range(N))
+            gruppo.append(immagine)
+    return gruppo
+
+
+GRUPPO = automorfismi()
+
+
+def bound_inferiore(p, piazzati, non_piazzati):
+    &quot;&quot;&quot;Bound: per v non piazzato p(v) &gt;= max(1, a(v) + d(v)), a(v) = somma p sui vicini piazzati,
+    d(v) = archi entranti da vertici non piazzati (somma dei d(v) = archi interni E(U)).
+    Minimizzando sui d(v) a somma fissata: somma_{a&gt;=1} a(v) + max(|U0|, E(U)), U0 = {a(v)=0}.&quot;&quot;&quot;
+    totale = sum(p[v] for v in piazzati)
+    zeri, archi_interni = 0, 0
+    for v in non_piazzati:
+        a = sum(p[u] for u in VICINI[v] if u in piazzati)
+        if a == 0:
+            zeri += 1
+        else:
+            totale += a
+        archi_interni += sum(1 for u in VICINI[v] if u not in piazzati)
+    return totale + max(zeri, archi_interni // 2)
+
+
+def rappresentanti(non_piazzati, stabilizzatore):
+    &quot;&quot;&quot;Un candidato per orbita dello stabilizzatore sui vertici non piazzati.&quot;&quot;&quot;
+    visti, scelti = set(), []
+    for v in sorted(non_piazzati):
+        if v in visti:
+            continue
+        scelti.append(v)
+        visti.update(g[v] for g in stabilizzatore)
+    return scelti
+
+
+class Ricerca:
+    def __init__(self, soglia):
+        self.soglia = soglia
+        self.nodi = 0
+        self.trovate = []
+
+    def esplora(self, ordine, p, piazzati, stabilizzatore):
+        &quot;&quot;&quot;Espande un nodo: prova ogni rappresentante d&#39;orbita come prossimo vertice.&quot;&quot;&quot;
+        self.nodi += 1
+        non_piazzati = [v for v in range(N) if v not in piazzati]
+        if not non_piazzati:
+            self.trovate.append(list(ordine))
+            return
+        if bound_inferiore(p, piazzati, non_piazzati) &gt;= self.soglia:
+            return
+        for v in rappresentanti(non_piazzati, stabilizzatore):
+            minori = [u for u in VICINI[v] if u in piazzati]
+            p[v] = 1 if not minori else sum(p[u] for u in minori)
+            piazzati.add(v)
+            ordine.append(v)
+            self.esplora(ordine, p, piazzati, [g for g in stabilizzatore if g[v] == v])
+            ordine.pop()
+            piazzati.discard(v)
+            del p[v]
+
+
+def main():
+    soglia = int(sys.argv[1]) if len(sys.argv) &gt; 1 else 34
+    inizio = time.time()
+    ricerca = Ricerca(soglia)
+    ricerca.esplora([], {}, set(), GRUPPO)
+    print(f&quot;soglia {soglia}: etichettature con &lt; {soglia} cammini trovate: {len(ricerca.trovate)}&quot;)
+    for ordine in ricerca.trovate[:5]:
+        print(&quot;  &quot;, [format(v, f&#39;0{D}b&#39;)[::-1] for v in ordine])
+    print(f&quot;nodi visitati: {ricerca.nodi}; tempo: {time.time() - inizio:.1f} s&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<pre data-caption="certificati/q4\_ricerca\_locale.py"><code>&quot;&quot;&quot;Ricerca locale (simulated annealing) di etichettature di Q_4 con pochi cammini in salita.
+Serve solo a trovare un buon candidato (upper bound): NON dimostra nulla.
+Aritmetica: interi esatti (il conteggio), float solo nella regola di accettazione di SA.&quot;&quot;&quot;
+import random, sys, math
+
+D = 4
+N = 1 &lt;&lt; D
+VICINI = [[v ^ (1 &lt;&lt; i) for i in range(D)] for v in range(N)]
+
+
+def conta_cammini(ordine):
+    &quot;&quot;&quot;Numero di cammini in salita dell&#39;etichettatura data come lista di vertici
+    in ordine crescente di etichetta (Lemma 1: p(v) = [valle] + somma p(u) sui vicini minori).&quot;&quot;&quot;
+    etichetta = [0] * N
+    for pos, v in enumerate(ordine):
+        etichetta[v] = pos
+    p = [0] * N
+    totale = 0
+    for v in ordine:
+        minori = [u for u in VICINI[v] if etichetta[u] &lt; etichetta[v]]
+        p[v] = 1 if not minori else sum(p[u] for u in minori)
+        totale += p[v]
+    return totale
+
+
+def ricottura(seme, passi=200000):
+    &quot;&quot;&quot;Una corsa di simulated annealing con mosse di scambio e di spostamento.&quot;&quot;&quot;
+    rng = random.Random(seme)
+    ordine = list(range(N))
+    rng.shuffle(ordine)
+    valore = conta_cammini(ordine)
+    migliore, migliore_ordine = valore, ordine[:]
+    for passo in range(passi):
+        temperatura = 2.0 * (1 - passo / passi) + 0.05
+        nuovo = ordine[:]
+        i, j = rng.randrange(N), rng.randrange(N)
+        if rng.random() &lt; 0.5:
+            nuovo[i], nuovo[j] = nuovo[j], nuovo[i]
+        else:
+            nuovo.insert(j, nuovo.pop(i))
+        nuovo_valore = conta_cammini(nuovo)
+        if nuovo_valore &lt;= valore or rng.random() &lt; math.exp((valore - nuovo_valore) / temperatura):
+            ordine, valore = nuovo, nuovo_valore
+            if valore &lt; migliore:
+                migliore, migliore_ordine = valore, ordine[:]
+    return migliore, migliore_ordine
+
+
+def main():
+    corse = int(sys.argv[1]) if len(sys.argv) &gt; 1 else 20
+    globale, globale_ordine = None, None
+    for seme in range(corse):
+        valore, ordine = ricottura(seme)
+        if globale is None or valore &lt; globale:
+            globale, globale_ordine = valore, ordine
+        print(f&quot;seme {seme}: {valore} (migliore finora {globale})&quot;, flush=True)
+    stringhe = [format(v, f&quot;0{D}b&quot;) for v in globale_ordine]
+    print(&quot;MIGLIORE:&quot;, globale, stringhe)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<pre
+data-caption="certificati/q4\_verifica\_etichettatura\_indipendente.py"><code>&quot;&quot;&quot;
+Verifica indipendente dell&#39;etichettatura di Q_4 consegnata dal Researcher (metodo diverso dal suo):
+costruzione esplicita, livello per livello, di tutti i cammini in salita a partire dalle valli.
+Controlla anche che la lista sia una biiezione su {0,1}^4. Interi esatti.
+Uso: python3 problema-2/certificati/q4_verifica_etichettatura_indipendente.py
+&quot;&quot;&quot;
+D = 4
+CONSEGNATA = [&quot;0000&quot;, &quot;1111&quot;, &quot;0111&quot;, &quot;1101&quot;, &quot;1110&quot;, &quot;1011&quot;, &quot;0001&quot;, &quot;1000&quot;,
+              &quot;0010&quot;, &quot;0100&quot;, &quot;1001&quot;, &quot;0110&quot;, &quot;0011&quot;, &quot;1010&quot;, &quot;0101&quot;, &quot;1100&quot;]
+
+
+def vicini(s):
+    &quot;&quot;&quot;Le d stringhe che differiscono da s in una sola posizione.&quot;&quot;&quot;
+    return [s[:i] + (&quot;1&quot; if s[i] == &quot;0&quot; else &quot;0&quot;) + s[i + 1:] for i in range(D)]
+
+
+def conta_cammini(etichetta):
+    &quot;&quot;&quot;Tutti i cammini in salita come tuple esplicite, per lunghezza crescente; ritorna il totale.&quot;&quot;&quot;
+    valli = [v for v in etichetta if all(etichetta[w] &gt; etichetta[v] for w in vicini(v))]
+    livello = [(v,) for v in valli]
+    totale = 0
+    while livello:
+        totale += len(livello)
+        livello = [c + (w,) for c in livello for w in vicini(c[-1]) if etichetta[w] &gt; etichetta[c[-1]]]
+    return totale, valli
+
+
+if __name__ == &quot;__main__&quot;:
+    assert len(CONSEGNATA) == 16 and len(set(CONSEGNATA)) == 16 and all(len(s) == 4 and set(s) &lt;= {&quot;0&quot;, &quot;1&quot;} for s in CONSEGNATA)
+    etichetta = {s: k + 1 for k, s in enumerate(CONSEGNATA)}   # etichetta = posizione nella lista
+    totale, valli = conta_cammini(etichetta)
+    print(f&quot;biiezione ok; valli: {valli}; cammini in salita: {totale}&quot;)
+</code></pre>
+<pre
+data-caption="certificati/q5\_stella\_verifica\_indipendente.py"><code>&quot;&quot;&quot;
+Verifica indipendente dell&#39;affermazione (★) usata nel lower bound di U(Q_5) (metodo diverso dagli script del Researcher).
+
+(★): esistono un insieme indipendente I di Q_5 con |I| = 12 e un vertice u ∉ I tali che Q_5 − (I ∪ {u}) è una foresta.
+La prova mostra che ogni etichettatura con ≤ 87 cammini implica (★); qui si verifica che (★) è FALSA.
+
+Metodo: enumerazione di tutti gli insiemi indipendenti di taglia 12 come bitmask su 32 bit (backtracking con
+maschera dei vertici vietati), senza riduzione per simmetria; per ogni u ∉ I il test di aciclicità è per POTATURA
+DELLE FOGLIE: si tolgono ripetutamente i vertici di grado ≤ 1 nel sottografo indotto; è una foresta se e solo se
+non resta nulla. Interi esatti, nessuna dipendenza.  Uso: python3 problema-2/certificati/q5_stella_verifica_indipendente.py
+&quot;&quot;&quot;
+import time
+
+D, N = 5, 32
+ADJ = [sum(1 &lt;&lt; (v ^ (1 &lt;&lt; i)) for i in range(D)) for v in range(N)]   # vicini di v come bitmask
+TUTTI = (1 &lt;&lt; N) - 1
+
+
+def insiemi_indipendenti(taglia):
+    &quot;&quot;&quot;Genera le bitmask di tutti gli insiemi indipendenti di `taglia` vertici (ordine crescente, senza ripetizioni).&quot;&quot;&quot;
+    def ricorsione(insieme, vietati, prossimo, mancanti):
+        if mancanti == 0:
+            yield insieme
+            return
+        for v in range(prossimo, N - mancanti + 1):
+            if not (vietati &gt;&gt; v) &amp; 1:
+                yield from ricorsione(insieme | (1 &lt;&lt; v), vietati | ADJ[v] | (1 &lt;&lt; v), v + 1, mancanti - 1)
+    yield from ricorsione(0, 0, 0, taglia)
+
+
+def e_foresta(vertici):
+    &quot;&quot;&quot;Potatura delle foglie sul sottografo indotto dalla bitmask `vertici`: resta vuoto ⇔ aciclico.&quot;&quot;&quot;
+    while vertici:
+        foglie = 0
+        for v in range(N):
+            if (vertici &gt;&gt; v) &amp; 1 and bin(ADJ[v] &amp; vertici).count(&quot;1&quot;) &lt;= 1:
+                foglie |= 1 &lt;&lt; v
+        if not foglie:
+            return False          # tutti i vertici rimasti hanno grado ≥ 2: contengono un ciclo
+        vertici &amp;= ~foglie
+    return True
+
+
+if __name__ == &quot;__main__&quot;:
+    inizio = time.time()
+    n_insiemi = coppie = aciclici = 0
+    for I in insiemi_indipendenti(12):
+        n_insiemi += 1
+        for u in range(N):
+            if not (I &gt;&gt; u) &amp; 1:
+                coppie += 1
+                if e_foresta(TUTTI &amp; ~I &amp; ~(1 &lt;&lt; u)):
+                    aciclici += 1
+    print(f&quot;insiemi indipendenti di taglia 12: {n_insiemi}; coppie (I,u): {coppie}; complementi aciclici: {aciclici}; &quot;
+          f&quot;tempo {time.time() - inizio:.2f} s&quot;)
+    print(&quot;(★) è&quot;, &quot;VERA&quot; if aciclici else &quot;FALSA&quot;)
+</code></pre>
+<pre data-caption="certificati/verifica\_dfs\_88.py"><code>&quot;&quot;&quot;Verifica indipendente dell&#39;etichettatura a 88 cammini: enumerazione esplicita per DFS.
+
+Metodo diverso dalla ricorsione p(v): da ogni valle si esplorano tutti i cammini con etichette
+crescenti e si contano uno a uno. Controlla anche che l&#39;input sia una biiezione.
+&quot;&quot;&quot;
+ORDINE = (&quot;00000,11110,11001,10101,01101,10011,01011,00111,10000,01000,00100,11100,00010,11010,&quot;
+          &quot;10110,01110,00001,11111,11000,10100,01100,10010,01010,00110,10001,01001,00101,11101,&quot;
+          &quot;00011,11011,10111,01111&quot;).split(&quot;,&quot;)
+D = 5
+
+
+def vicini(s):
+    &quot;&quot;&quot;Vicini della stringa s: cambia un carattere.&quot;&quot;&quot;
+    return [s[:i] + (&quot;1&quot; if s[i] == &quot;0&quot; else &quot;0&quot;) + s[i + 1:] for i in range(D)]
+
+
+def conta_da(s, etichetta):
+    &quot;&quot;&quot;Numero di cammini in salita che iniziano in s (s incluso come cammino di lunghezza 1).&quot;&quot;&quot;
+    return 1 + sum(conta_da(w, etichetta) for w in vicini(s) if etichetta[w] &gt; etichetta[s])
+
+
+if __name__ == &quot;__main__&quot;:
+    assert len(set(ORDINE)) == 32 and all(len(s) == 5 and set(s) &lt;= {&quot;0&quot;, &quot;1&quot;} for s in ORDINE)
+    etichetta = {s: i + 1 for i, s in enumerate(ORDINE)}
+    valli = [s for s in ORDINE if all(etichetta[w] &gt; etichetta[s] for w in vicini(s))]
+    totale = sum(conta_da(s, etichetta) for s in valli)
+    print(&quot;valli:&quot;, valli)
+    print(&quot;cammini in salita (DFS esplicita):&quot;, totale)
+</code></pre>
+<pre data-caption="certificati/verifica\_etichettatura\_q3.py"><code>&quot;&quot;&quot;
+Verifica indipendente della singola etichettatura consegnata per Q_3:
+stampa valli, p(v) per ogni vertice e il totale dei cammini in salita (interi esatti).
+&quot;&quot;&quot;
+D = 3
+CONSEGNA = [&#39;000&#39;, &#39;100&#39;, &#39;010&#39;, &#39;110&#39;, &#39;101&#39;, &#39;011&#39;, &#39;001&#39;, &#39;111&#39;]   # ordine crescente di etichetta
+
+
+def vicini(s):
+    &quot;&quot;&quot;Stringhe 0/1 che differiscono da s in esattamente una coordinata.&quot;&quot;&quot;
+    return [s[:i] + (&#39;1&#39; if s[i] == &#39;0&#39; else &#39;0&#39;) + s[i + 1:] for i in range(D)]
+
+
+def verifica(consegna):
+    &quot;&quot;&quot;Calcola p(v) in ordine di etichetta e restituisce (valli, p, totale).&quot;&quot;&quot;
+    assert sorted(consegna) == sorted(format(k, f&#39;0{D}b&#39;) for k in range(2 ** D)), &quot;non e&#39; una biiezione&quot;
+    etichetta = {s: k + 1 for k, s in enumerate(consegna)}
+    p, valli = {}, []
+    for s in consegna:
+        minori = [w for w in vicini(s) if etichetta[w] &lt; etichetta[s]]
+        if not minori:
+            valli.append(s)
+        p[s] = (1 if not minori else 0) + sum(p[w] for w in minori)
+    return valli, p, sum(p.values())
+
+
+if __name__ == &quot;__main__&quot;:
+    valli, p, totale = verifica(CONSEGNA)
+    print(&quot;valli:&quot;, valli)
+    for s in CONSEGNA:
+        print(f&quot;  {s}  etichetta {CONSEGNA.index(s)+1}  p = {p[s]}&quot;)
+    print(&quot;cammini in salita totali:&quot;, totale)
+</code></pre>
+<pre data-caption="certificati/verifica\_etichettatura\_q4.py"><code>&quot;&quot;&quot;Verifica ESATTA (interi Python) dell&#39;etichettatura candidata di Q_4 con 34 cammini in salita.
+Due metodi indipendenti: (i) DP di Lemma 1 in ordine di etichetta; (ii) enumerazione esplicita
+(DFS) di tutti i cammini in salita da ogni valle. Stampa la tabella p(v) per la consegna.&quot;&quot;&quot;
+D = 4
+N = 1 &lt;&lt; D
+# Convenzione: carattere i-esimo della stringa (da sinistra) = coordinata i; bit i dell&#39;intero.
+ETICHETTATURA = [&#39;0000&#39;, &#39;1111&#39;, &#39;0111&#39;, &#39;1101&#39;, &#39;1110&#39;, &#39;1011&#39;, &#39;0001&#39;, &#39;1000&#39;,
+                 &#39;0010&#39;, &#39;0100&#39;, &#39;1001&#39;, &#39;0110&#39;, &#39;0011&#39;, &#39;1010&#39;, &#39;0101&#39;, &#39;1100&#39;]
+
+
+def da_stringa(s):
+    &quot;&quot;&quot;Converte la stringa 0/1 (carattere i = coordinata i) nell&#39;intero con bit i = coordinata i.&quot;&quot;&quot;
+    return sum(int(c) &lt;&lt; i for i, c in enumerate(s))
+
+
+def vicini(v):
+    &quot;&quot;&quot;I d vicini di v in Q_d: si cambia esattamente una coordinata.&quot;&quot;&quot;
+    return [v ^ (1 &lt;&lt; i) for i in range(D)]
+
+
+def conta_con_dp(ordine, etichetta):
+    &quot;&quot;&quot;Metodo (i): p(v) = [v valle] + somma p(u) sui vicini u con etichetta minore.&quot;&quot;&quot;
+    p = {}
+    righe = []
+    for v in ordine:
+        minori = [u for u in vicini(v) if etichetta[u] &lt; etichetta[v]]
+        p[v] = 1 if not minori else sum(p[u] for u in minori)
+        righe.append((format(v, f&#39;0{D}b&#39;)[::-1], etichetta[v], [format(u, f&#39;0{D}b&#39;)[::-1] for u in minori], p[v]))
+    return sum(p.values()), righe
+
+
+def conta_con_dfs(etichetta):
+    &quot;&quot;&quot;Metodo (ii): enumera esplicitamente ogni cammino in salita partendo da ogni valle.&quot;&quot;&quot;
+    def estendi(v):
+        totale = 1  # il cammino che termina qui
+        for w in vicini(v):
+            if etichetta[w] &gt; etichetta[v]:
+                totale += estendi(w)
+        return totale
+    valli = [v for v in range(N) if all(etichetta[w] &gt; etichetta[v] for w in vicini(v))]
+    return sum(estendi(v) for v in valli), valli
+
+
+def main():
+    ordine = [da_stringa(s) for s in ETICHETTATURA]
+    assert sorted(ordine) == list(range(N)), &quot;non e&#39; una biiezione&quot;
+    etichetta = {v: i + 1 for i, v in enumerate(ordine)}
+    totale_dp, righe = conta_con_dp(ordine, etichetta)
+    totale_dfs, valli = conta_con_dfs(etichetta)
+    for stringa, lab, minori, p in righe:
+        print(f&quot;{stringa}  etichetta {lab:2d}  vicini minori {minori}  p = {p}&quot;)
+    print(&quot;valli:&quot;, [format(v, f&#39;0{D}b&#39;)[::-1] for v in valli])
+    print(&quot;totale (DP di Lemma 1):&quot;, totale_dp)
+    print(&quot;totale (DFS esplicita):&quot;, totale_dfs)
+    assert totale_dp == totale_dfs == 34
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<pre data-caption="certificati/verifica\_q5\_bipartita.py"><code>&quot;&quot;&quot;Certificato per il bound inferiore U(Q_5) &gt;= 88 (implementazione 2, metodo diverso).
+
+Stesso enunciato di verifica_q5_indipendenti.py, ma senza usare la simmetria:
+ogni insieme indipendente e&#39; A u B con A sottoinsieme dei vertici di peso pari e
+B sottoinsieme dei vertici di peso dispari NON adiacenti ad A. Si scorrono tutti i 2^16
+sottoinsiemi A (bitmask), poi tutti i B di taglia 12-|A| tra i dispari disponibili.
+Aciclicita&#39; con union-find (metodo diverso dal conteggio componenti). Rigore = exact.
+&quot;&quot;&quot;
+import itertools
+import time
+
+D = 5
+N = 1 &lt;&lt; D
+PARI = [v for v in range(N) if bin(v).count(&quot;1&quot;) % 2 == 0]
+DISPARI = [v for v in range(N) if bin(v).count(&quot;1&quot;) % 2 == 1]
+SPIGOLI = [(v, v ^ (1 &lt;&lt; i)) for v in range(N) for i in range(D) if v &lt; v ^ (1 &lt;&lt; i)]
+
+
+def maschera_vicini(v):
+    &quot;&quot;&quot;Bitmask dei vicini di v.&quot;&quot;&quot;
+    return sum(1 &lt;&lt; (v ^ (1 &lt;&lt; i)) for i in range(D))
+
+
+VIC = [maschera_vicini(v) for v in range(N)]
+
+
+def ha_ciclo(maschera_vertici):
+    &quot;&quot;&quot;True sse il sottografo indotto dai vertici nella bitmask contiene un ciclo (union-find).&quot;&quot;&quot;
+    padre = list(range(N))
+
+    def trova(x):
+        while padre[x] != x:
+            padre[x] = padre[padre[x]]
+            x = padre[x]
+        return x
+
+    for a, b in SPIGOLI:
+        if (maschera_vertici &gt;&gt; a) &amp; 1 and (maschera_vertici &gt;&gt; b) &amp; 1:
+            ra, rb = trova(a), trova(b)
+            if ra == rb:
+                return True
+            padre[ra] = rb
+    return False
+
+
+def insiemi_indipendenti_12():
+    &quot;&quot;&quot;Genera le bitmask di tutti gli insiemi indipendenti di taglia 12.&quot;&quot;&quot;
+    for bits in range(1 &lt;&lt; 16):
+        A = [PARI[i] for i in range(16) if (bits &gt;&gt; i) &amp; 1]
+        if len(A) &gt; 12:
+            continue
+        vietati = 0
+        for a in A:
+            vietati |= VIC[a]
+        disponibili = [w for w in DISPARI if not (vietati &gt;&gt; w) &amp; 1]
+        for B in itertools.combinations(disponibili, 12 - len(A)):
+            m = 0
+            for x in A + list(B):
+                m |= 1 &lt;&lt; x
+            yield m
+
+
+if __name__ == &quot;__main__&quot;:
+    inizio = time.time()
+    tutti = (1 &lt;&lt; N) - 1
+    n_insiemi, n_test, aciclici = 0, 0, 0
+    for I in insiemi_indipendenti_12():
+        n_insiemi += 1
+        for u in range(N):
+            if (I &gt;&gt; u) &amp; 1:
+                continue
+            n_test += 1
+            if not ha_ciclo(tutti &amp; ~I &amp; ~(1 &lt;&lt; u)):
+                aciclici += 1
+    print(f&quot;insiemi indipendenti di taglia 12 (tutti, senza simmetria): {n_insiemi}&quot;)
+    print(f&quot;coppie (I,u) esaminate: {n_test}; complementi aciclici: {aciclici}&quot;)
+    print(f&quot;tempo {time.time()-inizio:.2f}s&quot;)
+</code></pre>
+<pre data-caption="certificati/verifica\_q5\_indipendenti.py"><code>&quot;&quot;&quot;Certificato per il bound inferiore U(Q_5) &gt;= 88 (implementazione 1: backtracking).
+
+Enunciato verificato (Lemma computazionale):
+  per ogni insieme indipendente I di Q_5 con |I| = 12 e per ogni vertice u di Q_5,
+  il sottografo indotto da V meno (I u {u}) contiene un ciclo.
+Riduzione: le traslazioni x -&gt; x XOR t sono automorfismi di Q_5, quindi basta considerare
+gli I che contengono il vertice 0 (ogni I non vuoto si trasla a contenerne uno).
+Aciclicita&#39; decisa con conteggio esatto: componenti + spigoli (un grafo e&#39; una foresta sse
+spigoli = vertici - componenti). Tutto intero: rigore = exact.
+&quot;&quot;&quot;
+import time
+from conta_cammini import vicini
+
+D = 5
+N = 1 &lt;&lt; D
+ADJ = [set(vicini(v, D)) for v in range(N)]
+
+
+def e_foresta(S):
+    &quot;&quot;&quot;True sse il sottografo indotto da S e&#39; aciclico (spigoli = |S| - componenti).&quot;&quot;&quot;
+    S = set(S)
+    spigoli = sum(len(ADJ[v] &amp; S) for v in S) // 2
+    visti, comp = set(), 0
+    for s in S:
+        if s in visti:
+            continue
+        comp += 1
+        pila, visti = [s], visti | {s}
+        while pila:
+            v = pila.pop()
+            for w in ADJ[v] &amp; S:
+                if w not in visti:
+                    visti.add(w)
+                    pila.append(w)
+    return spigoli == len(S) - comp
+
+
+def indipendenti_con_zero(k):
+    &quot;&quot;&quot;Genera tutti gli insiemi indipendenti di taglia k contenenti 0 (vertici in ordine crescente).&quot;&quot;&quot;
+    def ric(I, prossimo, vietati):
+        if len(I) == k:
+            yield list(I)
+            return
+        for v in range(prossimo, N):
+            if v not in vietati and N - v &gt;= k - len(I):
+                yield from ric(I + [v], v + 1, vietati | ADJ[v] | {v})
+    yield from ric([0], 1, ADJ[0] | {0})
+
+
+if __name__ == &quot;__main__&quot;:
+    inizio = time.time()
+    n_insiemi, n_test, violazioni = 0, 0, []
+    for I in indipendenti_con_zero(12):
+        n_insiemi += 1
+        for u in range(N):
+            if u in I:
+                continue
+            n_test += 1
+            if e_foresta(set(range(N)) - set(I) - {u}):
+                violazioni.append((I, u))
+    print(f&quot;insiemi indipendenti di taglia 12 contenenti 0: {n_insiemi}&quot;)
+    print(f&quot;coppie (I,u) esaminate: {n_test}; complementi aciclici trovati: {len(violazioni)}&quot;)
+    print(f&quot;tempo {time.time()-inizio:.2f}s&quot;)
+</code></pre>
+<h2
+id="letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti-1">Letteratura
+arXiv consultata (ricerca deterministica, abstract letti)</h2>
+<ul>
+<li><p><span class="citation" data-cites="1412.3893v1"></span> The
+competition between simple and complex evolutionary trajectories in
+asexual populations — Ian E. Ochs, Michael M. Desai (2014).
+<em>Query</em>: <code>uphill paths</code>.</p></li>
+</ul>
+<h1 id="problema-3-bulgarian-solitaire">Problema 3 — Bulgarian
+solitaire</h1>
+<h2 id="enunciato-ufficiale-2">Enunciato ufficiale</h2>
+<h3 id="problema-3-bulgarian-solitaire">Problema 3 — Bulgarian
+solitaire</h3>
+<p><em>(Enunciato formattato in LaTeX, contenuto fedele all’originale;
+ricevuto il 2026-09-26.)</em></p>
+<h4 id="preambolo">Preambolo</h4>
+<p><strong>Bulgarian solitaire.</strong> Repeatedly take one card from
+every pile and form a new pile. How many moves can it take before the
+piles start to cycle?</p>
+<p>A partition of a positive integer <span
+class="math inline">\(n\)</span> is a weakly decreasing sequence <span
+class="math inline">\(\lambda = (\lambda_1, \ldots, \lambda_s)\)</span>
+of positive integers with <span class="math inline">\(\lambda_1 + \cdots
++ \lambda_s = n\)</span>. Think of it as a division of <span
+class="math inline">\(n\)</span> cards into <span
+class="math inline">\(s\)</span> piles.</p>
+<p>The shift <span class="math inline">\(B(\lambda)\)</span> is the
+partition of <span class="math inline">\(n\)</span> obtained as follows:
+remove one card from every pile, discard the piles that become empty,
+and add one new pile consisting of the <span
+class="math inline">\(s\)</span> removed cards. Formally, <span
+class="math inline">\(B(\lambda)\)</span> is the partition whose parts
+are the positive numbers among <span class="math inline">\(\lambda_1 -
+1, \ldots, \lambda_s - 1\)</span> together with one extra part equal to
+<span class="math inline">\(s\)</span>.</p>
+<p>Iterating <span class="math inline">\(B\)</span> from any starting
+partition must eventually repeat, since there are finitely many
+partitions of <span class="math inline">\(n\)</span>. Call <span
+class="math inline">\(\lambda\)</span> <em>cyclic</em> if <span
+class="math inline">\(B^i(\lambda) = \lambda\)</span> for some <span
+class="math inline">\(i \ge 1\)</span>, and let <span
+class="math display">\[d_B(\lambda) = \min\{\, i \ge 0 : B^i(\lambda)
+\text{ is cyclic} \,\}, \qquad
+D_B(n) = \max\{\, d_B(\lambda) : \lambda \text{ is a partition of } n
+\,\}.\]</span> So <span class="math inline">\(D_B(n)\)</span> is the
+largest number of shifts that can be needed before the process starts to
+cycle.</p>
+<p>Write <span class="math inline">\(T_k = k(k+1)/2\)</span> and <span
+class="math inline">\(\delta_k = (k, k-1, \ldots, 2, 1)\)</span>, the
+partition of <span class="math inline">\(T_k\)</span> into distinct
+parts. Every <span class="math inline">\(n \ge 1\)</span> satisfies
+<span class="math inline">\(T_{k-1} &lt; n \le T_k\)</span> for exactly
+one <span class="math inline">\(k\)</span>, which we call the
+<em>rank</em> of <span class="math inline">\(n\)</span>.</p>
+<p>Examples: <span class="math inline">\(B((2,1,1,1,1)) =
+(5,1)\)</span>; <span class="math inline">\(B((5,1)) = (4,2)\)</span>;
+<span class="math inline">\(B((4,2)) = (3,2,1)\)</span>; <span
+class="math inline">\(B((3,2,1)) = (3,2,1)\)</span>. Here <span
+class="math inline">\(d_B((2,1,1,1,1)) = 3\)</span>.</p>
+<p><strong>What to hand in.</strong> For each cell you attempt, hand in
+a written proof. You may use a computer to explore. A proof may rely on
+a computation only if you include the code, it runs in under 10 minutes
+on a laptop, and the computation is exhaustive over a finite set that
+your argument has reduced the problem to. Where a cell asks you to
+determine a quantity, give the exact value as a formula in <span
+class="math inline">\(k\)</span> and prove both bounds; state any
+partitions you use explicitly as functions of <span
+class="math inline">\(k\)</span>. Say clearly which cells you consider
+solved and which are partial.</p>
+<p>Citing a published result for the statement you are asked to prove
+does not count as a solution; a proof written out in full does, whatever
+its source.</p>
+<h4 id="parte-1-c1-cyclic-partitions-and-cycles">Parte 1 (C1) — Cyclic
+partitions and cycles</h4>
+<p><strong>Punteggio:</strong> 1 point · <strong>Valutazione:</strong>
+Judged</p>
+<p>First, the long-run behaviour: which partitions repeat under the
+shift, and how they fall into cycles. Let <span class="math inline">\(n
+= T_k\)</span>. Prove that for every partition <span
+class="math inline">\(\lambda\)</span> of <span
+class="math inline">\(n\)</span> there is an <span
+class="math inline">\(i\)</span> with <span
+class="math inline">\(B^i(\lambda) = \delta_k\)</span>, and that <span
+class="math inline">\(\delta_k\)</span> is the only cyclic partition of
+<span class="math inline">\(n\)</span>. Then let <span
+class="math inline">\(n\)</span> be arbitrary of rank <span
+class="math inline">\(k\)</span>, say <span class="math inline">\(n =
+T_{k-1} + r\)</span> with <span class="math inline">\(1 \le r \le
+k\)</span>: determine all cyclic partitions of <span
+class="math inline">\(n\)</span>, and determine the number of distinct
+cycles of <span class="math inline">\(B\)</span> on the partitions of
+<span class="math inline">\(n\)</span>. Prove both.</p>
+<h4 id="parte-2-c2-d_b-at-triangular-n">Parte 2 (C2) — <span
+class="math inline">\(D_B\)</span> at triangular <span
+class="math inline">\(n\)</span></h4>
+<p><strong>Punteggio:</strong> 2 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>Next, how long the process can take to reach a cycle, starting with
+the triangular numbers. Determine <span
+class="math inline">\(D_B(T_k)\)</span> for every <span
+class="math inline">\(k\)</span>, with proof of both bounds.</p>
+<h4 id="parte-3-c3-a-general-upper-bound">Parte 3 (C3) — A general upper
+bound</h4>
+<p><strong>Punteggio:</strong> 3 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>Now the numbers strictly between two consecutive triangular numbers.
+Prove that for every <span class="math inline">\(k \ge 4\)</span> and
+every non-triangular <span class="math inline">\(n\)</span> with <span
+class="math inline">\(T_{k-1} &lt; n &lt; T_k\)</span>, <span
+class="math display">\[D_B(n) \le k^2 - 2k - 1,\]</span> and determine
+<span class="math inline">\(D_B(T_k - 1)\)</span> exactly. Determine
+also, for that <span class="math inline">\(n\)</span>, which partitions
+attain the maximum.</p>
+<h4 id="parte-4-c4-one-above-a-triangular-number">Parte 4 (C4) — One
+above a triangular number</h4>
+<p><strong>Punteggio:</strong> 5 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The first family just above a triangular number: <span
+class="math inline">\(n = T_{k-1} + 1\)</span>, that is <span
+class="math inline">\(n = 11, 16, 22, 29, \ldots\)</span> for <span
+class="math inline">\(k = 5, 6, 7, 8, \ldots\)</span>. Determine <span
+class="math inline">\(D_B(T_{k-1} + 1)\)</span> for every <span
+class="math inline">\(k \ge 5\)</span>, with proof of both bounds.</p>
+<h4 id="parte-5-c5-two-above-a-triangular-number">Parte 5 (C5) — Two
+above a triangular number</h4>
+<p><strong>Punteggio:</strong> 8 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The next family: <span class="math inline">\(n = T_{k-1} +
+2\)</span>, that is <span class="math inline">\(n = 3, 5, 8, 12, 17, 23,
+\ldots\)</span> for <span class="math inline">\(k = 2, 3, 4, 5, 6, 7,
+\ldots\)</span>. Determine <span class="math inline">\(D_B(T_{k-1} +
+2)\)</span> for every <span class="math inline">\(k\)</span>, with proof
+of both bounds. State exactly for which <span
+class="math inline">\(k\)</span> your formula holds, and give the
+remaining values separately. Your upper bound must be a single argument
+valid for all <span class="math inline">\(k\)</span> in that range, not
+a separate treatment of each <span class="math inline">\(k\)</span>, and
+you must give the extremal partitions explicitly as a function of <span
+class="math inline">\(k\)</span>.</p>
+<p>Say also where the straightforward extension of the C3 argument
+stops: give the bound it does yield, show it is strictly weaker than the
+truth, and identify precisely what your proof supplies in its place.</p>
+<h4 id="parte-6-c6-d_bn-for-every-n">Parte 6 (C6) — <span
+class="math inline">\(D_B(n)\)</span> for every <span
+class="math inline">\(n\)</span></h4>
+<p><strong>Punteggio:</strong> 13 points · <strong>Valutazione:</strong>
+Judged · <strong>Open question</strong></p>
+<p>Finally, the whole function <span class="math inline">\(n \mapsto
+D_B(n)\)</span>. Determine <span class="math inline">\(D_B(n)\)</span>
+for every <span class="math inline">\(n\)</span>.</p>
+<p><em>(Fine del problema 3. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
+<h2 id="cella-1-1-punti-stato-in-analisi">Cella 1 (1 punti) — stato: in
+analisi</h2>
+<p><strong>Richiesta.</strong> Let n = T_k. Prove that every partition
+of n reaches delta_k = (k,k-1,...,1) under iterated B and that delta_k
+is the only cyclic partition. Then for n = T_{k-1} + r, 1 &lt;= r &lt;=
+k, determine all cyclic partitions of n and the number of distinct
+cycles of B on partitions of n, with proofs.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> struttura nota
+(collane), prova da scrivere</p>
+<h3 id="consegna-prova-12">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-12">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-12">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2 id="cella-2-2-punti-stato-in-analisi">Cella 2 (2 punti) — stato: in
+analisi</h2>
+<p><strong>Richiesta.</strong> Determine D_B(T_k) for every k, with
+proof of both bounds (exact value as a formula in k).</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> atteso $k^2-k$
+(Igusa/Etienne, da verificare)</p>
+<h3 id="consegna-prova-13">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-13">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-13">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2 id="cella-3-3-punti-stato-in-analisi-2">Cella 3 (3 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> Prove that for every k &gt;= 4 and every
+non-triangular n with T_{k-1} &lt; n &lt; T_k, D_B(n) &lt;= k^2 - 2k -
+1; determine D_B(T_k - 1) exactly and which partitions attain the
+maximum.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> —</p>
+<h3 id="consegna-prova-14">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-14">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-14">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2 id="cella-4-5-punti-stato-in-analisi-2">Cella 4 (5 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> Determine D_B(T_{k-1} + 1) for every k
+&gt;= 5, with proof of both bounds.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> —</p>
+<h3 id="consegna-prova-15">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-15">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-15">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2 id="cella-5-8-punti-stato-in-analisi-2">Cella 5 (8 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> Determine D_B(T_{k-1} + 2) for every k,
+with proof of both bounds; state exactly for which k the formula holds
+and give the remaining values; the upper bound must be one uniform
+argument; give the extremal partitions explicitly in k; say where the
+straightforward extension of the C3 argument stops and what replaces
+it.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> —</p>
+<h3 id="consegna-prova-16">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-16">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-16">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2 id="cella-6-13-punti-stato-in-analisi-2">Cella 6 (13 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> OPEN. Determine D_B(n) for every n.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> —</p>
+<h3 id="consegna-prova-17">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-17">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-17">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2
+id="letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti-2">Letteratura
+arXiv consultata (ricerca deterministica, abstract letti)</h2>
+<ul>
+<li><p><span class="citation" data-cites="math/0401385v2"></span> Random
+Bulgarian solitaire — Serguei Popov (2004). <em>Query</em>:
+<code>Bulgarian solitaire</code>.</p></li>
+<li><p><span class="citation" data-cites="1503.00885v1"></span> The
+Bulgarian solitaire and the mathematics around it — Vesselin Drensky
+(2015). <em>Query</em>: <code>Bulgarian solitaire</code>.</p></li>
+<li><p><span class="citation" data-cites="2607.17194v1"></span> A short
+survey the game Bulgarian solitaire and related games — Romeo Meštrović
+(2026). <em>Query</em>: <code>Bulgarian solitaire</code>.</p></li>
+<li><p><span class="citation" data-cites="1101.1546v3"></span>
+Revisiting Toom’s proof of Bulgarian Solitaire — Therese A. Hart,
+Gabriel Khan, Mizan R. Khan (2011). <em>Query</em>:
+<code>Bulgarian solitaire</code>.</p></li>
+<li><p><span class="citation" data-cites="1703.07102v1"></span> An
+exponential limit shape of random $q$-proportion Bulgarian solitaire —
+Kimmo Eriksson, Markus Jonsson abd Jonas Sjöstrand (2017).
+<em>Query</em>: <code>Bulgarian solitaire</code>.</p></li>
+<li><p><span class="citation" data-cites="2208.14496v1"></span> Limiting
+behavior in growth of Bulgarian Solitaire orbits — Nhung Pham (2022).
+<em>Query</em>: <code>Bulgarian solitaire</code>.</p></li>
+</ul>
+<h1 id="problema-4-disjoint-congruence-classes-and-large-gcd">Problema 4
+— Disjoint congruence classes and large gcd</h1>
+<h2 id="enunciato-ufficiale-3">Enunciato ufficiale</h2>
+<h3 id="problema-4-disjoint-congruence-classes-and-large-gcd">Problema 4
+— Disjoint congruence classes and large gcd</h3>
+<p><em>(Enunciato formattato in LaTeX, contenuto fedele all’originale;
+ricevuto il 2026-09-26. Titolo della colonna non riportato nel testo
+incollato; la domanda di apertura è: “If congruence classes are pairwise
+disjoint, must two of their moduli share a large common
+factor?”)</em></p>
+<h4 id="preambolo">Preambolo</h4>
+<p>For integers <span class="math inline">\(a\)</span> and <span
+class="math inline">\(m \ge 1\)</span> write <span
+class="math display">\[a \pmod m = \{\, a + mt : t \in \mathbb{Z}
+\,\}\]</span> for the congruence class of <span
+class="math inline">\(a\)</span> modulo <span
+class="math inline">\(m\)</span>. A finite family of classes <span
+class="math inline">\(a_1 \pmod{m_1}, \ldots, a_k \pmod{m_k}\)</span> is
+<em>pairwise disjoint</em> if <span class="math inline">\(a_i \pmod{m_i}
+\cap a_j \pmod{m_j} = \emptyset\)</span> whenever <span
+class="math inline">\(i &lt; j\)</span>. Nothing is assumed about the
+moduli beyond <span class="math inline">\(m_i \ge 1\)</span>: they may
+repeat, and the residues <span class="math inline">\(a_i\)</span> may
+repeat as well.</p>
+<p>By the Chinese remainder theorem, two classes meet if and only if the
+congruences <span class="math inline">\(x \equiv a_i \pmod{m_i}\)</span>
+and <span class="math inline">\(x \equiv a_j \pmod{m_j}\)</span> are
+compatible, that is <span class="math display">\[a_i \pmod{m_i} \cap a_j
+\pmod{m_j} \ne \emptyset \iff \gcd(m_i, m_j) \mid a_i - a_j. \qquad
+(*)\]</span> The question of this column is how large the moduli of a
+disjoint family must be forced to overlap in the gcd sense.</p>
+<p><strong>Question.</strong> Let <span class="math inline">\(k \ge
+2\)</span> and let <span class="math inline">\(a_1 \pmod{m_1}, \ldots,
+a_k \pmod{m_k}\)</span> be pairwise disjoint. Must there be a pair <span
+class="math inline">\(i &lt; j\)</span> with <span
+class="math display">\[\gcd(m_i, m_j) \ge k \,?\]</span> This is
+believed to be true for every <span class="math inline">\(k\)</span>. It
+is sharp: the <span class="math inline">\(k\)</span> classes <span
+class="math inline">\(1, 2, \ldots, k \pmod k\)</span> are pairwise
+disjoint — their differences have absolute value less than <span
+class="math inline">\(k\)</span>, so <span
+class="math inline">\(k\)</span> divides none of them — and every
+pairwise gcd equals exactly <span class="math inline">\(k\)</span>. So
+<span class="math inline">\(k\)</span> could not be replaced by <span
+class="math inline">\(k+1\)</span> in the statement.</p>
+<p><strong>Examples.</strong> The three classes <span
+class="math inline">\(0 \pmod 2\)</span>, <span class="math inline">\(1
+\pmod 4\)</span>, <span class="math inline">\(3 \pmod 8\)</span> are
+pairwise disjoint by <span class="math inline">\((*)\)</span>, and their
+pairwise gcds are <span class="math inline">\(2, 2, 4\)</span>; the
+largest is <span class="math inline">\(4 \ge 3\)</span>, as the question
+predicts for <span class="math inline">\(k = 3\)</span>. By contrast
+<span class="math inline">\(0 \pmod 2\)</span> and <span
+class="math inline">\(0 \pmod 3\)</span> have coprime moduli and do
+meet, at <span class="math inline">\(0\)</span>.</p>
+<p><strong>Trivial bounds.</strong> Two observations are immediate and
+you should assume they are already on the table; presenting either as
+progress counts for nothing.</p>
+<ol>
+<li><p>If <span class="math inline">\(\gcd(m_i, m_j) = 1\)</span> then
+by <span class="math inline">\((*)\)</span> the two classes meet. Hence
+in any pairwise disjoint family every pairwise gcd is at least <span
+class="math inline">\(2\)</span>. This answers the question for <span
+class="math inline">\(k = 2\)</span>, and for a family of size <span
+class="math inline">\(k\)</span> that fails the question it confines
+every pairwise gcd to the range <span class="math inline">\(2 \le
+\gcd(m_i, m_j) \le k - 1\)</span>.</p></li>
+<li><p>The class <span class="math inline">\(a \pmod m\)</span> has
+density <span class="math inline">\(1/m\)</span>, so a pairwise disjoint
+family satisfies <span class="math inline">\(\sum_{i=1}^k 1/m_i \le
+1\)</span>. In particular some modulus satisfies <span
+class="math inline">\(m_i \ge k\)</span>.</p></li>
+</ol>
+<p>Observation 2 bounds a single modulus from below; it says nothing
+about any gcd, and the two together settle no size <span
+class="math inline">\(k \ge 3\)</span>. Every cell below needs a
+genuinely new argument.</p>
+<p><strong>What to hand in.</strong> For each cell you attempt, hand in
+a written proof. You may use a computer to explore. A proof may rely on
+a computation only if you include the code, it runs in under ten minutes
+on a laptop, and the computation is exhaustive over a finite set that
+your own argument has reduced the problem to.</p>
+<p>A computational cell is accepted only with an <em>exhaustiveness
+certificate</em>, meaning all four of:</p>
+<ol>
+<li><p>an exact description of the finite set your search enumerates,
+together with the proof that nothing outside it can be a
+counterexample;</p></li>
+<li><p>every pruning rule you use, stated precisely, each with the proof
+that it discards only objects that cannot be completed to a
+counterexample;</p></li>
+<li><p>the node count of the search at each size you claim, and the wall
+clock;</p></li>
+<li><p>a rerun that reproduces those counts;</p></li>
+<li><p>and, if anything at all survives your pruning at a size you
+claim, a separate decision for every survivor — not a sample — together
+with, for each one, the smallest part of it that already forces the
+decision, and your proof that no smaller part does. A survivor you
+cannot decide means the size is not certified.</p></li>
+</ol>
+<p>A run that reports “I searched and found nothing” without 1–5 is not
+a certificate and scores nothing. If a search does not finish at some
+size, report it as unfinished and do not claim that size; a partial
+search is a legitimate partial result and should be handed in as one,
+with the counts it reached.</p>
+<p>Where a cell asks you to determine a boundary, state the exact value
+you claim. Claim only what you have certified: an unfinished size, or
+one certified under an assumption you have not verified, must be
+reported as such. Say clearly which cells you consider solved and which
+are partial.</p>
+<p>Citing a published result for the statement you are asked to prove
+does not count as a solution; a proof written out in full does, whatever
+its source. If you rely on a published argument, you are responsible for
+it: check it yourself, and report it if it does not hold up.</p>
+<h4 id="parte-1-c1-three-classes">Parte 1 (C1) — Three classes</h4>
+<p><strong>Punteggio:</strong> 1 point · <strong>Valutazione:</strong>
+Judged</p>
+<p>The first size that the two trivial observations above do not settle.
+Prove the statement for <span class="math inline">\(k = 3\)</span>: any
+three pairwise disjoint classes have <span
+class="math inline">\(\gcd(m_i, m_j) \ge 3\)</span> for some <span
+class="math inline">\(i &lt; j\)</span>.</p>
+<h4 id="parte-2-c2-four-classes">Parte 2 (C2) — Four classes</h4>
+<p><strong>Punteggio:</strong> 2 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The same question for four classes. Prove the statement for <span
+class="math inline">\(k = 4\)</span>.</p>
+<h4 id="parte-3-c3-every-k-up-to-8">Parte 3 (C3) — Every <span
+class="math inline">\(k\)</span> up to 8</h4>
+<p><strong>Punteggio:</strong> 3 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>A first range of sizes: after C1 and C2, the sizes <span
+class="math inline">\(k = 5, 6, 7\)</span> and <span
+class="math inline">\(8\)</span> remain. Prove the statement for every
+<span class="math inline">\(k \le 8\)</span>.</p>
+<h4 id="parte-4-c4-every-k-up-to-12">Parte 4 (C4) — Every <span
+class="math inline">\(k\)</span> up to 12</h4>
+<p><strong>Punteggio:</strong> 5 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>A longer range, and a precise account of your method at the sizes
+just beyond it. Prove the statement for every <span
+class="math inline">\(k \le 12\)</span>. Then, for each <span
+class="math inline">\(k\)</span> from <span
+class="math inline">\(9\)</span> to <span
+class="math inline">\(16\)</span> in turn, report exactly what your
+method leaves undecided at that <span class="math inline">\(k\)</span>:
+if nothing, say so and prove it; if something, exhibit it in full. If
+that disagrees with any source you consulted, say which of the two is
+right and why. An answer that reports agreement with a source it did not
+test will be marked wrong.</p>
+<h4 id="parte-5-c5-the-certified-boundary">Parte 5 (C5) — The certified
+boundary</h4>
+<p><strong>Punteggio:</strong> 8 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The main certification cell: an initial range of sizes as long as you
+can make it, plus two isolated sizes further out. Determine the largest
+<span class="math inline">\(k\)</span> for which you can certify the
+statement for all sizes up to and including <span
+class="math inline">\(k\)</span>, and certify it. The range you claim
+must be contiguous, and if your argument at a given size assumes that
+all smaller sizes have already been settled you must say so. Then decide
+the two isolated sizes <span class="math inline">\(k = 24\)</span> and
+<span class="math inline">\(k = 30\)</span>: show that neither is the
+least size at which the statement can fail.</p>
+<p>For this cell the exhaustiveness certificate of the hand-in rules is
+not enough on its own. Add:</p>
+<ol>
+<li><p>a demonstration that your method is not vacuous. Construct a case
+in which an admissible configuration genuinely exists, run your
+machinery on it unmodified, and show it returns that configuration. A
+method that reports “nothing survives” at every size it is pointed at is
+indistinguishable from a method with a bug, and will be graded as
+one;</p></li>
+<li><p>for every object your pruning leaves undecided, at every <span
+class="math inline">\(k\)</span> you claim — not a sample — an
+individual decision, plus the smallest part of that object which already
+forces the decision, plus a proof that no smaller part does;</p></li>
+<li><p>the exact list, not merely the count, of what survives at each
+<span class="math inline">\(k\)</span>;</p></li>
+<li><p>every pruning rule you use beyond those you have proved, proved.
+If your search needs a rule you invented to finish a size, that rule is
+part of your claim: state it, prove it, and show the survivor list is
+unchanged when you switch it off. A size that only closes with an
+unproved rule is not certified;</p></li>
+<li><p>a second implementation, written independently of your first,
+that differs in method — not the same algorithm twice — and the two
+survivor lists compared elementwise at every <span
+class="math inline">\(k\)</span> you claim. Report any difference rather
+than reconciling it silently: a disagreement means one of them is wrong,
+and finding which is part of the cell.</p></li>
+</ol>
+<h4 id="parte-6-c6-beyond-the-boundary">Parte 6 (C6) — Beyond the
+boundary</h4>
+<p><strong>Punteggio:</strong> 13 points · <strong>Valutazione:</strong>
+Judged · <strong>Open question</strong></p>
+<p>Three directions beyond the certified range; any one of them counts.
+Any of the following.</p>
+<ol>
+<li><p>Decide a size <span class="math inline">\(k \ge
+25\)</span>.</p></li>
+<li><p>The asymptotic form. It is known that a pairwise disjoint family
+of size <span class="math inline">\(k\)</span> always has a pair with
+<span class="math display">\[\gcd(m_i, m_j) \;\ge\; k \cdot \exp\!\left(
+-(2 + o(1)) \frac{\log k}{\log\log k} \right),\]</span> which is <span
+class="math inline">\(k^{1 - o(1)}\)</span> but not linear in <span
+class="math inline">\(k\)</span>. Prove the statement in full, or prove
+the weaker bound <span class="math inline">\(\gcd(m_i, m_j) \ge
+ck\)</span> for some absolute constant <span class="math inline">\(c
+&gt; 0\)</span>, or improve the exponential factor above.</p></li>
+<li><p>The group form. Let <span class="math inline">\(G\)</span> be a
+group, let <span class="math inline">\(G_1, \ldots, G_k\)</span> be
+subgroups of finite index <span class="math inline">\(n_i = [G :
+G_i]\)</span>, and let <span class="math inline">\(x_1 G_1, \ldots, x_k
+G_k\)</span> be pairwise disjoint cosets. Is there a pair <span
+class="math inline">\(i &lt; j\)</span> with <span
+class="math inline">\(\gcd(n_i, n_j) \ge k\)</span>? This is known for
+<span class="math inline">\(k \le 5\)</span> and open for every <span
+class="math inline">\(k \ge 6\)</span>; settling <span
+class="math inline">\(k = 6\)</span> counts as progress.</p></li>
+</ol>
+<p><em>(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
+<h2 id="cella-1-1-punti-stato-in-analisi-1">Cella 1 (1 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> Prove: any three pairwise disjoint
+congruence classes a_i (mod m_i) have gcd(m_i,m_j) &gt;= 3 for some i
+&lt; j.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> prova a mano
+abbozzata (parità)</p>
+<h3 id="consegna-prova-18">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-18">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-18">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2 id="cella-2-2-punti-stato-in-analisi-1">Cella 2 (2 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> Prove the statement for k = 4: any four
+pairwise disjoint classes have a pair with gcd(m_i,m_j) &gt;= 4.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> schema "clique per
+primo" abbozzato</p>
+<h3 id="consegna-prova-19">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-19">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-19">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2 id="cella-3-3-punti-stato-in-analisi-3">Cella 3 (3 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> Prove the statement for every k &lt;= 8
+(sizes 5,6,7,8 remain after cells 1-2). A computation is admissible only
+with the full exhaustiveness certificate (finite set + proof, pruning
+rules proved, node counts, wall clock, rerun, decisions for every
+survivor).</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> riduzione a
+insieme finito abbozzata (note.md)</p>
+<h3 id="consegna-prova-20">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-20">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-20">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2 id="cella-4-5-punti-stato-in-analisi-3">Cella 4 (5 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> Prove the statement for every k &lt;= 12;
+then for each k = 9..16 report exactly what the method leaves undecided
+(nothing: prove it; something: exhibit it in full); compare with sources
+only if tested.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> —</p>
+<h3 id="consegna-prova-21">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-21">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-21">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2 id="cella-5-8-punti-stato-in-analisi-3">Cella 5 (8 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> Determine the largest k for which the
+statement is certified for all sizes up to k (contiguous range), with
+the strengthened certificate (i)-(v): non-vacuity demonstration,
+individual decisions for survivors with minimal forcing part, exact
+survivor lists, all pruning rules proved and tested off, a second
+independent implementation compared elementwise. Also decide k = 24 and
+k = 30: show neither is the least size at which the statement can
+fail.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> richiede 2
+implementazioni indipendenti</p>
+<h3 id="consegna-prova-22">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-22">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-22">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2 id="cella-6-13-punti-stato-in-analisi-3">Cella 6 (13 punti) — stato:
+in analisi</h2>
+<p><strong>Richiesta.</strong> OPEN. Any of: (a) decide a size k &gt;=
+25; (b) prove gcd &gt;= ck for an absolute c &gt; 0 or improve the known
+factor k exp(-(2+o(1)) log k / log log k); (c) the group form (disjoint
+cosets of finite-index subgroups), settle k = 6.</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> —</p>
+<h3 id="consegna-prova-23">Consegna (prova)</h3>
+<p>Nessuna bozza di consegna ancora scritta.</p>
+<h3 id="decisioni-degli-agenti-23">Decisioni degli agenti</h3>
+<p>Nessuna run del loop su questa cella.</p>
+<h3 id="codice-su-cui-poggia-il-tentativo-23">Codice su cui poggia il
+tentativo</h3>
+<p>—</p>
+<h2
+id="letteratura-arxiv-consultata-ricerca-deterministica-abstract-letti-3">Letteratura
+arXiv consultata (ricerca deterministica, abstract letti)</h2>
+<ul>
+<li><p><span class="citation" data-cites="2603.26043v1"></span>
+Finiteness of Disjoint Covering Systems with Precisely One Repeated
+Modulus — Yu Hashimoto (2026). <em>Query</em>:
+<code>disjoint covering systems</code>.</p></li>
+<li><p><span class="citation" data-cites="1511.04293v1"></span>
+Searching for Disjoint Covering Systems with Precisely One Repeated
+Modulus — Shalosh B. Ekhad, Aviezri S. Fraenkel, Doron Zeilberger
+(2015). <em>Query</em>: <code>disjoint covering systems</code>.</p></li>
+<li><p><span class="citation" data-cites="2607.24655v1"></span> On the
+problem of large gcd for disjoint residue classes — Jan Fornal, Yu-Chen
+Sun (2026). <em>Query</em>:
+<code>disjoint residue classes</code>.</p></li>
+<li><p><span class="citation" data-cites="2608.15873v1"></span> Two
+Questions on $G$-harmonic Tuples — Murali Menon (2026). <em>Query</em>:
+<code>disjoint residue classes</code>.</p></li>
+</ul>
+<div class="thebibliography">
+<p><span>99</span> Therese A. Hart, Gabriel Khan, Mizan R. Khan.
+<em>Revisiting Toom’s proof of Bulgarian Solitaire</em>.
+arXiv:1101.1546v3 (2011). <a href="http://arxiv.org/abs/1101.1546v3"
+class="uri">http://arxiv.org/abs/1101.1546v3</a> Jérémie Chalopin,
+Shantanu Das, Yann Disser, Matúš Mihalák, Peter Widmayer. <em>Simple
+Agents Learn to Find Their Way: An Introduction on Mapping
+Polygons</em>. arXiv:1204.3850v1 (2012). <a
+href="http://arxiv.org/abs/1204.3850v1"
+class="uri">http://arxiv.org/abs/1204.3850v1</a> Ian E. Ochs, Michael M.
+Desai. <em>The competition between simple and complex evolutionary
+trajectories in asexual populations</em>. arXiv:1412.3893v1 (2014). <a
+href="http://arxiv.org/abs/1412.3893v1"
+class="uri">http://arxiv.org/abs/1412.3893v1</a> Vesselin Drensky.
+<em>The Bulgarian solitaire and the mathematics around it</em>.
+arXiv:1503.00885v1 (2015). <a href="http://arxiv.org/abs/1503.00885v1"
+class="uri">http://arxiv.org/abs/1503.00885v1</a> Shalosh B. Ekhad,
+Aviezri S. Fraenkel, Doron Zeilberger. <em>Searching for Disjoint
+Covering Systems with Precisely One Repeated Modulus</em>.
+arXiv:1511.04293v1 (2015). <a href="http://arxiv.org/abs/1511.04293v1"
+class="uri">http://arxiv.org/abs/1511.04293v1</a> Kimmo Eriksson, Markus
+Jonsson abd Jonas Sjöstrand. <em>An exponential limit shape of random
+$q$-proportion Bulgarian solitaire</em>. arXiv:1703.07102v1 (2017). <a
+href="http://arxiv.org/abs/1703.07102v1"
+class="uri">http://arxiv.org/abs/1703.07102v1</a> Dmitriy Bilyk, Ryan W
+Matzke. <em>On the Fejes Tóth Problem about the Sum of Angles Between
+Lines</em>. arXiv:1801.07837v1 (2018). <a
+href="http://arxiv.org/abs/1801.07837v1"
+class="uri">http://arxiv.org/abs/1801.07837v1</a> Tongseok Lim, Robert
+J. McCann. <em>On Fejes Tóth’s conjectured maximizer for the sum of
+angles between lines</em>. arXiv:2007.08698v2 (2020). <a
+href="http://arxiv.org/abs/2007.08698v2"
+class="uri">http://arxiv.org/abs/2007.08698v2</a> Nhung Pham.
+<em>Limiting behavior in growth of Bulgarian Solitaire orbits</em>.
+arXiv:2208.14496v1 (2022). <a href="http://arxiv.org/abs/2208.14496v1"
+class="uri">http://arxiv.org/abs/2208.14496v1</a> Yu Hashimoto.
+<em>Finiteness of Disjoint Covering Systems with Precisely One Repeated
+Modulus</em>. arXiv:2603.26043v1 (2026). <a
+href="http://arxiv.org/abs/2603.26043v1"
+class="uri">http://arxiv.org/abs/2603.26043v1</a> Romeo Meštrović. <em>A
+short survey the game Bulgarian solitaire and related games</em>.
+arXiv:2607.17194v1 (2026). <a href="http://arxiv.org/abs/2607.17194v1"
+class="uri">http://arxiv.org/abs/2607.17194v1</a> Jan Fornal, Yu-Chen
+Sun. <em>On the problem of large gcd for disjoint residue classes</em>.
+arXiv:2607.24655v1 (2026). <a href="http://arxiv.org/abs/2607.24655v1"
+class="uri">http://arxiv.org/abs/2607.24655v1</a> Murali Menon. <em>Two
+Questions on $G$-harmonic Tuples</em>. arXiv:2608.15873v1 (2026). <a
+href="http://arxiv.org/abs/2608.15873v1"
+class="uri">http://arxiv.org/abs/2608.15873v1</a> Serguei Popov.
+<em>Random Bulgarian solitaire</em>. arXiv:math/0401385v2 (2004). <a
+href="http://arxiv.org/abs/math/0401385v2"
+class="uri">http://arxiv.org/abs/math/0401385v2</a> D. Bilyk, R. Matzke.
+<em>On the Fejes Tóth problem about the sum of angles between
+lines</em>. Proc. AMS (2019); letta integralmente, vedi
+problema-1/fonti/.</p>
+</div>
+</body>
+</html>

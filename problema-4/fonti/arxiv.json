@@ -1,0 +1,49 @@
+[
+ {
+  "arxiv_id": "2603.26043v1",
+  "url": "http://arxiv.org/abs/2603.26043v1",
+  "title": "Finiteness of Disjoint Covering Systems with Precisely One Repeated Modulus",
+  "authors": [
+   "Yu Hashimoto"
+  ],
+  "published": "2026-03-27",
+  "abstract": "We prove that for each fixed $m \\ge 2$, there are only finitely many disjoint covering systems with minimum modulus at least $3$ in which precisely one modulus is repeated, namely the largest modulus, and it occurs exactly $m$ times.",
+  "query": "disjoint covering systems"
+ },
+ {
+  "arxiv_id": "1511.04293v1",
+  "url": "http://arxiv.org/abs/1511.04293v1",
+  "title": "Searching for Disjoint Covering Systems with Precisely One Repeated Modulus",
+  "authors": [
+   "Shalosh B. Ekhad",
+   "Aviezri S. Fraenkel",
+   "Doron Zeilberger"
+  ],
+  "published": "2015-11-13",
+  "abstract": "A set of arithmetical sequences $$ a_1\\, (\\bmod{ \\,\\, m_1}) \\quad, \\quad a_2 \\, (\\bmod{\\,\\, m_2}) \\quad, \\quad \\dots \\quad , \\quad a_k \\, (\\bmod{\\,\\,m_k}) \\quad \\quad , $$ with $$ m_1 \\leq m_2 \\leq \\dots \\leq m_k \\quad \\quad , $$ is called a {\\it disjoint covering system} (alias {\\it exact covering system}) if every positive integer belongs to {\\bf exactly} one of the sequences. Mirski, Newman, Davenport and Rado famously proved that the moduli can't all be distinct. In fact the two largest moduli must be equal, i.e. $m_{k-1}=m_k$ This raises the natural question:\"How close can you get to getting distinct moduli?\", in other words, can you find all such systems where all the moduli are distinct except the largest, that is repeated $r$ times, for any, specific given $r$? It turns out (conjecturally, but almost certainly) that excluding the trivial case where the smallest modulus is 2, for any number of repeats $r$, there are only finitely many such systems. Marc Berger, Alexander Felzenbaum and Aviezri Fraenkel found them all for $r$ up to $9$, and Mekmamu Zeleke and Jamie Simpson extended the list for systems up to $12$ repeats. In the present article we continue the list up to $r=32$. All our systems are correct, but we did not bother to formally prove completeness, but we know for sure that the lists are complete if the largest modulus is $\\leq 600$, and we are pretty sure that they are complete.",
+  "query": "disjoint covering systems"
+ },
+ {
+  "arxiv_id": "2607.24655v1",
+  "url": "http://arxiv.org/abs/2607.24655v1",
+  "title": "On the problem of large gcd for disjoint residue classes",
+  "authors": [
+   "Jan Fornal",
+   "Yu-Chen Sun"
+  ],
+  "published": "2026-07-27",
+  "abstract": "Consider $k$ pairwise disjoint residue classes $a_i \\pmod{m_i}$. We prove that \\[ \\max_{1\\leq i<j\\leq k}\\gcd(m_i,m_j) \\gg k\\exp\\!\\left(-(2+o(1)) \\sqrt{\\frac{\\log k}{\\log\\log k}}\\right). \\] The proof uses a complete graph whose edges are colored by the gcds of the corresponding moduli, together with a structural lemma, a sieve-theoretic partition, Möbius inversion, and the discrete Fourier transform.",
+  "query": "disjoint residue classes"
+ },
+ {
+  "arxiv_id": "2608.15873v1",
+  "url": "http://arxiv.org/abs/2608.15873v1",
+  "title": "Two Questions on $G$-harmonic Tuples",
+  "authors": [
+   "Murali Menon"
+  ],
+  "published": "2026-08-16",
+  "abstract": "An $n$-tuple of positive integers is $G$-harmonic if there are subgroups of $G$ having those indices whose cosets can be chosen pairwise disjoint, and $\\mathbb{Z}$-harmonic if there are pairwise disjoint residue classes with those moduli. Ginosar asked whether every $G$-harmonic tuple is $\\mathbb{Z}$-harmonic. Margolis and Schnabel proved this for tuples of length at most $4$, and analysed a particular family of length-$5$ tuples that would yield a counterexample if any member were $G$-harmonic. We show that the bound $4$ is sharp: $(6,6,6,10,15)$ is $A_5$-harmonic but not $\\mathbb{Z}$-harmonic. Moreover, the five pairwise disjoint cosets realising this tuple can be extended to a coset partition of $A_5$ using only cosets of indices $6$, $10$, and $15$. The index tuple of this partition is not $\\mathbb{Z}$-harmonic; because its indices repeat, this does not contradict the Herzog--Schönheim conjecture. We also prove that no member of the length-$5$ family analysed by Margolis and Schnabel in connection with possible counterexamples is $G$-harmonic for any group $G$.",
+  "query": "disjoint residue classes"
+ }
+]

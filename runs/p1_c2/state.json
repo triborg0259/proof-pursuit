@@ -1,0 +1,17 @@
+{
+ "problem_id": "p1_c2",
+ "highest_verified_cell": 0,
+ "current_target": "cell_2",
+ "cell_statement": "Let m >= 2 and x_1..x_m unit vectors in R^{m-1} with <x_i,x_j> = 0 whenever |i-j| >= 2. Prove sum_{i=1}^{m-1} theta(x_i,x_{i+1}) <= (m-2) pi/2, where theta(x,y) = arccos|<x,y>|.",
+ "current_blocker": "",
+ "verified_claims": [],
+ "failed_attempts": [],
+ "stagnation_count": 0,
+ "cell_status": {},
+ "rules": {
+  "allow_literature_as_proof": false,
+  "allow_computation": true,
+  "require_machine_verification": false,
+  "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For each cell you attempt, hand in a written proof. You may use a computer to explore. A proof may rely on a computation only if you include the code, it runs in under 10 minutes on a laptop, and it is rigorous: exact or interval arithmetic, or an argument that bounds the numerical error. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+ }
+}

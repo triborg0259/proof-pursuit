@@ -1,0 +1,14 @@
+[
+ {
+  "arxiv_id": "1412.3893v1",
+  "url": "http://arxiv.org/abs/1412.3893v1",
+  "title": "The competition between simple and complex evolutionary trajectories in asexual populations",
+  "authors": [
+   "Ian E. Ochs",
+   "Michael M. Desai"
+  ],
+  "published": "2014-12-12",
+  "abstract": "On rugged fitness landscapes where sign epistasis is common, adaptation can often involve either individually beneficial \"uphill\" mutations or more complex mutational trajectories involving fitness valleys or plateaus. The dynamics of the evolutionary process determine the probability that evolution will take any specific path among a variety of competing possible trajectories. Understanding this evolutionary choice is essential if we are to understand the outcomes and predictability of adaptation on rugged landscapes. We present a simple model to analyze the probability that evolution will eschew immediately uphill paths in favor of crossing fitness valleys or plateaus that lead to higher fitness but less accessible genotypes. We calculate how this probability depends on the population size, mutation rates, and relevant selection pressures, and compare our analytical results to Wright-Fisher simulations. We find that the probability of valley crossing depends nonmonotonically on population size: intermediate size populations are most likely to follow a \"greedy\" strategy of acquiring immediately beneficial mutations even if they lead to evolutionary dead ends, while larger and smaller populations are more likely to cross fitness valleys to reach distant advantageous genotypes. We explicitly identify the boundaries between these different regimes in terms of the relevant evolutionary parameters. Above a certain threshold population size, we show that the degree of evolutionary \"foresight\" depends only on a single simple combination of the relevant parameters.",
+  "query": "uphill paths"
+ }
+]

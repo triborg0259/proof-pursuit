@@ -1,0 +1,41 @@
+[
+ {
+  "arxiv_id": "1801.07837v1",
+  "url": "http://arxiv.org/abs/1801.07837v1",
+  "title": "On the Fejes Tóth Problem about the Sum of Angles Between Lines",
+  "authors": [
+   "Dmitriy Bilyk",
+   "Ryan W Matzke"
+  ],
+  "published": "2018-01-24",
+  "abstract": "In 1959 Fejes Tóth posed a conjecture that the sum of pairwise non-obtuse angles between $N$ unit vectors in $\\mathbb S^d$ is maximized by periodically repeated elements of the standard orthonormal basis. We obtain new improved upper bounds for this sum, as well as for the corresponding energy integral. We also provide several new approaches to the only settled case of the conjecture: $d=1$.",
+  "query": "angles between lines"
+ },
+ {
+  "arxiv_id": "2007.08698v2",
+  "url": "http://arxiv.org/abs/2007.08698v2",
+  "title": "On Fejes Tóth's conjectured maximizer for the sum of angles between lines",
+  "authors": [
+   "Tongseok Lim",
+   "Robert J. McCann"
+  ],
+  "published": "2020-07-17",
+  "abstract": "Choose $N$ unoriented lines through the origin of ${\\bf R}^{d+1}$. The sum of the angles between these lines is conjectured to be maximized if the lines are distributed as evenly as possible amongst the coordinate axes of some orthonormal basis for ${\\bf R}^{d+1}$. For $d \\ge 2$ we embed the conjecture into a one-parameter family of problems, in which we seek to maximize the sum of the $α$-th power of the renormalized angles between the lines. We show the conjecture is equivalent to this same configuration becoming the {\\em unique} optimizer (up to rotations) for all $α>1$. We establish both the asserted optimality and uniqueness in the limiting case $α=\\infty$ of mildest repulsion. The same conclusions extend to $N=\\infty$, provided we assume only finitely many of the lines are distinct.",
+  "query": "angles between lines"
+ },
+ {
+  "arxiv_id": "1204.3850v1",
+  "url": "http://arxiv.org/abs/1204.3850v1",
+  "title": "Simple Agents Learn to Find Their Way: An Introduction on Mapping Polygons",
+  "authors": [
+   "Jérémie Chalopin",
+   "Shantanu Das",
+   "Yann Disser",
+   "Matúš Mihalák",
+   "Peter Widmayer"
+  ],
+  "published": "2012-02-16",
+  "abstract": "This paper gives an introduction to the problem of mapping simple polygons with autonomous agents. We focus on minimalistic agents that move from vertex to vertex along straight lines inside a polygon, using their sensors to gather local observations at each vertex. Our attention revolves around the question whether a given configuration of sensors and movement capabilities of the agents allows them to capture enough data in order to draw conclusions regarding the global layout of the polygon. In particular, we study the problem of reconstructing the visibility graph of a simple polygon by an agent moving either inside or on the boundary of the polygon. Our aim is to provide insight about the algorithmic challenges faced by an agent trying to map a polygon. We present an overview of techniques for solving this problem with agents that are equipped with simple sensorial capabilities. We illustrate these techniques on examples with sensors that mea- sure angles between lines of sight or identify the previous location. We give an overview over related problems in combinatorial geometry as well as graph exploration.",
+  "query": "angles between lines"
+ }
+]

@@ -1,0 +1,81 @@
+[
+ {
+  "arxiv_id": "1801.07837v1",
+  "url": "http://arxiv.org/abs/1801.07837v1",
+  "title": "On the Fejes Tóth Problem about the Sum of Angles Between Lines",
+  "authors": [
+   "Dmitriy Bilyk",
+   "Ryan W Matzke"
+  ],
+  "published": "2018-01-24",
+  "abstract": "In 1959 Fejes Tóth posed a conjecture that the sum of pairwise non-obtuse angles between $N$ unit vectors in $\\mathbb S^d$ is maximized by periodically repeated elements of the standard orthonormal basis. We obtain new improved upper bounds for this sum, as well as for the corresponding energy integral. We also provide several new approaches to the only settled case of the conjecture: $d=1$.",
+  "query": "angles between lines"
+ },
+ {
+  "arxiv_id": "2007.08698v2",
+  "url": "http://arxiv.org/abs/2007.08698v2",
+  "title": "On Fejes Tóth's conjectured maximizer for the sum of angles between lines",
+  "authors": [
+   "Tongseok Lim",
+   "Robert J. McCann"
+  ],
+  "published": "2020-07-17",
+  "abstract": "Choose $N$ unoriented lines through the origin of ${\\bf R}^{d+1}$. The sum of the angles between these lines is conjectured to be maximized if the lines are distributed as evenly as possible amongst the coordinate axes of some orthonormal basis for ${\\bf R}^{d+1}$. For $d \\ge 2$ we embed the conjecture into a one-parameter family of problems, in which we seek to maximize the sum of the $α$-th power of the renormalized angles between the lines. We show the conjecture is equivalent to this same configuration becoming the {\\em unique} optimizer (up to rotations) for all $α>1$. We establish both the asserted optimality and uniqueness in the limiting case $α=\\infty$ of mildest repulsion. The same conclusions extend to $N=\\infty$, provided we assume only finitely many of the lines are distinct.",
+  "query": "angles between lines"
+ },
+ {
+  "arxiv_id": "1204.3850v1",
+  "url": "http://arxiv.org/abs/1204.3850v1",
+  "title": "Simple Agents Learn to Find Their Way: An Introduction on Mapping Polygons",
+  "authors": [
+   "Jérémie Chalopin",
+   "Shantanu Das",
+   "Yann Disser",
+   "Matúš Mihalák",
+   "Peter Widmayer"
+  ],
+  "published": "2012-02-16",
+  "abstract": "This paper gives an introduction to the problem of mapping simple polygons with autonomous agents. We focus on minimalistic agents that move from vertex to vertex along straight lines inside a polygon, using their sensors to gather local observations at each vertex. Our attention revolves around the question whether a given configuration of sensors and movement capabilities of the agents allows them to capture enough data in order to draw conclusions regarding the global layout of the polygon. In particular, we study the problem of reconstructing the visibility graph of a simple polygon by an agent moving either inside or on the boundary of the polygon. Our aim is to provide insight about the algorithmic challenges faced by an agent trying to map a polygon. We present an overview of techniques for solving this problem with agents that are equipped with simple sensorial capabilities. We illustrate these techniques on examples with sensors that mea- sure angles between lines of sight or identify the previous location. We give an overview over related problems in combinatorial geometry as well as graph exploration.",
+  "query": "angles between lines"
+ },
+ {
+  "arxiv_id": "2502.00851v2",
+  "url": "http://arxiv.org/abs/2502.00851v2",
+  "title": "A More Precise Elbow Method for Optimum K-means Clustering",
+  "authors": [
+   "Indra Herdiana",
+   "M Alfin Kamal",
+   "Triyani",
+   "Mutia Nur Estri",
+   "Renny"
+  ],
+  "published": "2025-02-02",
+  "abstract": "K-means clustering is an unsupervised clustering method that requires an initial decision of number of clusters. One method to determine the number of clusters is the elbow method, a heuristic method that relies on visual representation. The method uses the number based on the elbow point, the point closest to 90 degrees that indicates the most optimum number of clusters. This research improves the elbow method such that it becomes an objective method. We use the analytical geometric formula to calculate an angle between lines and real analysis principle of derivative to simplify the elbow point determination. We also consider every possibility of the elbow method graph behaviour such that the algorithm is universally applicable. The result is that the elbow point can be measured precisely with a simple algorithm that does not involve complex functions or calculations. This improved method gives an alternative of more reliable cluster determination method that contributes to more optimum k-means clustering.",
+  "query": "angles between lines"
+ },
+ {
+  "arxiv_id": "2112.01142v1",
+  "url": "http://arxiv.org/abs/2112.01142v1",
+  "title": "Center--limb variation of solar photospheric microturbulence",
+  "authors": [
+   "Yoichi Takeda"
+  ],
+  "published": "2021-12-02",
+  "abstract": "Microturbulence (ξ) is a key parameter introduced in stellar spectroscopy to explain the strength of saturated lines by formally incorporating an additional thermal broadening term in the line opacity profile. Although our Sun can serve as an important testing bench to check the usual assumption of constant ξ, the detailed behavior of how ξvaries from the disk center through the limb seems to have never been investigated so far. In order to fill this gap, local ξvalues on the solar disk were determined from the equivalent widths of 46 Fe I lines at 32 points from the center to the limb by requiring the consistency between the abundances derived from lines of various strengths. The run of ξwith θ(angle between line of sight and the surface normal) was found to be only gradual from ~1.0km/s (at sinθ= 0: disk center) to ~1.3km/s (at sinθ~ 0.7: two-thirds of radial distance); but thereafter increasing more steeply up to ~2km/s (at sinθ= 0.97: limb). This result further suggests that the microturbulence derived from the flux spectrum of the disk-integrated Sun is by ~20% larger than that of the disk-center value, which is almost consistent with the prediction from 3D hydrodynamical model atmospheres.",
+  "query": "angles between lines"
+ },
+ {
+  "arxiv_id": "astro-ph/0304092v1",
+  "url": "http://arxiv.org/abs/astro-ph/0304092v1",
+  "title": "How are Emerging Flux, Flares and CMEs Related to Magnetic Polarity Imbalance in MDI Data?",
+  "authors": [
+   "L. M. Green",
+   "P. Demoulin",
+   "C. H. Mandrini",
+   "L. van Driel-Gesztelyi"
+  ],
+  "published": "2003-04-04",
+  "abstract": "In order to understand whether major flares or coronal mass ejections (CMEs) can be related to changes in the longitudinal photospheric magnetic field, we study 4 young active regions during seven days of their disc passage. This time period precludes any biases which may be introduced in studies that look at the field evolution during the short-term flare or CME period only. Data from the Michelson Doppler Imager (MDI) with a time cadence of 96 minutes are used. Corrections are made to the data to account for area foreshortening and angle between line of sight and field direction, and also the underestimation of the flux densities. We make a systematic study of the evolution of the longitudinal magnetic field, and analyze flare and CME occurrence in the magnetic evolution. We find that the majority of CMEs and flares occur during or after new flux emergence. The flux in all four active regions is observed to have deviations from polarity balance both on the long-term (solar rotation) and on the short term (few hours). The long-term imbalance is not due to linkage outside the active region; it is primarily related to the east-west distance from central meridian, with the sign of polarity closer to the limb dominating. The sequence of short term imbalances are not closely linked to CMEs and flares and no permanent imbalance remains after them. We propose that both kinds of imbalance are due to the presence of a horizontal field component (parallel to the photospheric surface) in the emerging flux.",
+  "query": "angles between lines"
+ }
+]

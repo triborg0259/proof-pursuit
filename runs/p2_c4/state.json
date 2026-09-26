@@ -1,0 +1,21 @@
+{
+ "problem_id": "p2_c4",
+ "highest_verified_cell": 0,
+ "current_target": "cell_4",
+ "cell_statement": "Determine U(Q_7) and U(Q_8) exactly, each with an explicit optimal labelling in the required format. Checked on the values: lower-bound proofs needed.",
+ "current_blocker": "",
+ "verified_claims": [
+  "For any labelling of any graph: #uphill paths >= |E| + #valleys",
+  "U(Q_3) = 14",
+  "U(Q_4) = 34, attained by 0000,1111,0111,1101,1110,1011,0001,1000,0010,0100,1001,0110,0011,1010,0101,1100"
+ ],
+ "failed_attempts": [],
+ "stagnation_count": 0,
+ "cell_status": {},
+ "rules": {
+  "allow_literature_as_proof": false,
+  "allow_computation": true,
+  "require_machine_verification": false,
+  "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For C1 to C4, hand in the values, and for each value an explicit labelling that attains it as a list of the $2^d$ vertices in increasing label order, written as 0/1 strings. These cells are marked correct on the values alone, but a value with no labelling behind it will not survive the later cells, which build on the construction. For C5, hand in either a labelling of $Q_9$ in the same format, whose uphill paths will be counted mechanically, or a proof of the lower bound. For C6, hand in all three of: the value; an explicit labelling that attains it, in the same format; a proof that no labelling gives fewer uphill paths. A lower-bound proof may be computer-assisted. If it is, include the code; it must run in under 10 minutes on a laptop, and you must explain why the computation proves the bound. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+ }
+}

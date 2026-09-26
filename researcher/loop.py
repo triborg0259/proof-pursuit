@@ -147,22 +147,35 @@ def registra_log(workdir, voce):
         f.write(json.dumps(voce, ensure_ascii=False) + "\n")
 
 
+def voce_di_log(i, attempt, report):
+    """La riga di traccia di un'iterazione: non solo i verdetti ma il PERCHÉ di ogni agente, così la consegna
+    e il rapporto possono raccontare le decisioni (cosa ha scelto il Researcher e perché, cosa ha bloccato il Referee)."""
+    return {"iter": i, "attempt_id": attempt["attempt_id"], "family": attempt.get("approach_family"),
+            "subgoal": attempt.get("subgoal"), "claimed_status": attempt.get("claimed_status"),
+            "researcher_reason": (attempt.get("reason_for_choice") or "")[:600],
+            "literature_position": (attempt.get("literature_position") or "")[:600],
+            "verdict": report["verdict"], "review_status": report.get("review_status"),
+            "fatal_error": report.get("fatal_error"), "next_blocker": report.get("next_blocker"),
+            "creative": "", "creative_analysis": "", "ts": time.strftime("%H:%M:%S")}
+
+
 def iterazione(args, workdir, i):
     """Un giro completo; ritorna (esito_da_fermare_o_None, voce_di_log)."""
     stagnazione_prima = read_json(workdir / "state.json").get("stagnation_count", 0) if (workdir / "state.json").exists() else 0
     attempt = passo_researcher(args, workdir)
     report = passo_referee(args, workdir, attempt, i)
     esito = report.get("review_status") if report.get("review_status") == "READY_FOR_HUMAN" else report["verdict"]
-    voce = {"iter": i, "attempt_id": attempt["attempt_id"], "family": attempt.get("approach_family"),
-            "verdict": report["verdict"], "review_status": report.get("review_status"), "fatal_error": report.get("fatal_error"),
-            "creative": "", "ts": time.strftime("%H:%M:%S")}
+    voce = voce_di_log(i, attempt, report)
     if esito in FERMA:
         return FERMA[esito], voce
     if report["verdict"] == "PARTIAL_PROGRESS":
         voce["new_claims"] = integra_progresso_parziale(workdir, report)
     motivo = serve_creative(workdir, attempt, report, stagnazione_prima)
     if motivo:
-        voce["creative"] = f"{motivo} → {'idee scritte' if passo_creative(args, workdir, motivo) else 'non collegato'}"
+        scritte = passo_creative(args, workdir, motivo)
+        voce["creative"] = f"{motivo} → {'idee scritte' if scritte else 'non collegato'}"
+        idee = read_json(workdir / "creative_ideas.json") if scritte else None
+        voce["creative_analysis"] = (idee or {}).get("blocker_analysis", "")[:600]
     return None, voce
 
 

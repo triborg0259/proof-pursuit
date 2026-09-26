@@ -9,33 +9,26 @@
  "citation_issue": true,
  "computation_issue": true,
  "next_blocker": "Regenerate a contract-valid report",
- "reasoning_summary": "review_status=INCOMPLETE; math=UNAVAILABLE; evidence=PARTIAL; B references unregistered provenance",
+ "reasoning_summary": "review_status=INCOMPLETE; math=PASS; evidence=PARTIAL; B references unregistered provenance",
  "stagnation_signal": false,
  "usage": [
   {
    "role": "B",
-   "cost_usd": 0.49006750000000004,
+   "cost_usd": 0.77427325,
+   "model": [
+    "claude-fable-5-1"
+   ]
+  },
+  {
+   "role": "A",
+   "cost_usd": 0.8556297500000001,
    "model": [
     "claude-fable-5-1"
    ]
   },
   {
    "role": "B",
-   "cost_usd": 0.73994325,
-   "model": [
-    "claude-fable-5-1"
-   ]
-  },
-  {
-   "role": "A",
-   "cost_usd": 1.076944,
-   "model": [
-    "claude-fable-5-1"
-   ]
-  },
-  {
-   "role": "A",
-   "cost_usd": 1.3055557500000001,
+   "cost_usd": 0.69999325,
    "model": [
     "claude-fable-5-1"
    ]

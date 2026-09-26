@@ -1,0 +1,30 @@
+{
+ "p1": {"title": "Angles between lines (Fejes Toth)", "cells": {
+  "1": "Let l_1..l_N be lines through the origin in R^2. Prove S(l_1..l_N) = sum_{i<j} theta(l_i,l_j) <= (pi/2) * floor(N^2/4).",
+  "2": "Let m >= 2 and x_1..x_m unit vectors in R^{m-1} with <x_i,x_j> = 0 whenever |i-j| >= 2. Prove sum_{i=1}^{m-1} theta(x_i,x_{i+1}) <= (m-2) pi/2, where theta(x,y) = arccos|<x,y>|.",
+  "3": "Let d >= 1. Prove that any d+1 lines through the origin in R^d satisfy S <= (C(d+1,2) - 1) pi/2.",
+  "4": "Prove that any 5 lines through the origin in R^3 satisfy S <= 4 pi, and that any 6 lines in R^4 satisfy S <= 13 pi/2. A rigorous computation (exact/interval arithmetic, < 10 min, code included) is admissible.",
+  "5": "Prove that for every d >= 2, any d+2 lines through the origin in R^d satisfy S <= (C(d+2,2) - 2) pi/2.",
+  "6": "OPEN. For N lines in R^d write N = qd+s, 0 <= s < d, M(N,d) = s C(q+1,2) + (d-s) C(q,2). Prove or disprove: S <= (C(N,2) - M(N,d)) pi/2. Settling any infinite family not covered by cells 1-5 counts as partial progress."}},
+ "p2": {"title": "Uphill paths on the hypercube", "cells": {
+  "1": "Determine U(Q_3) and U(Q_4), each with an explicit optimal labelling (list of the 2^d vertices in increasing label order as 0/1 strings).",
+  "2": "Determine U(Q_5) exactly and exhibit an optimal labelling of Q_5 in the required format.",
+  "3": "Determine U(Q_6) exactly (64 vertices, 192 edges) and exhibit an optimal labelling in the required format. Checked on the value: it must be the true minimum, so a lower-bound proof (hand or certified computation < 10 min) is needed.",
+  "4": "Determine U(Q_7) and U(Q_8) exactly, each with an explicit optimal labelling in the required format. Checked on the values: lower-bound proofs needed.",
+  "5": "Improve one of the known bounds 2368 <= U(Q_9) <= 2400: either prove U(Q_9) >= 2369, or exhibit a labelling of Q_9 with at most 2399 uphill paths (its paths are counted mechanically).",
+  "6": "OPEN. Determine U(Q_9) exactly, with an optimal labelling and a proof of both bounds."}},
+ "p3": {"title": "Bulgarian solitaire", "cells": {
+  "1": "Let n = T_k. Prove that every partition of n reaches delta_k = (k,k-1,...,1) under iterated B and that delta_k is the only cyclic partition. Then for n = T_{k-1} + r, 1 <= r <= k, determine all cyclic partitions of n and the number of distinct cycles of B on partitions of n, with proofs.",
+  "2": "Determine D_B(T_k) for every k, with proof of both bounds (exact value as a formula in k).",
+  "3": "Prove that for every k >= 4 and every non-triangular n with T_{k-1} < n < T_k, D_B(n) <= k^2 - 2k - 1; determine D_B(T_k - 1) exactly and which partitions attain the maximum.",
+  "4": "Determine D_B(T_{k-1} + 1) for every k >= 5, with proof of both bounds.",
+  "5": "Determine D_B(T_{k-1} + 2) for every k, with proof of both bounds; state exactly for which k the formula holds and give the remaining values; the upper bound must be one uniform argument; give the extremal partitions explicitly in k; say where the straightforward extension of the C3 argument stops and what replaces it.",
+  "6": "OPEN. Determine D_B(n) for every n."}},
+ "p4": {"title": "Disjoint congruence classes and large gcd", "cells": {
+  "1": "Prove: any three pairwise disjoint congruence classes a_i (mod m_i) have gcd(m_i,m_j) >= 3 for some i < j.",
+  "2": "Prove the statement for k = 4: any four pairwise disjoint classes have a pair with gcd(m_i,m_j) >= 4.",
+  "3": "Prove the statement for every k <= 8 (sizes 5,6,7,8 remain after cells 1-2). A computation is admissible only with the full exhaustiveness certificate (finite set + proof, pruning rules proved, node counts, wall clock, rerun, decisions for every survivor).",
+  "4": "Prove the statement for every k <= 12; then for each k = 9..16 report exactly what the method leaves undecided (nothing: prove it; something: exhibit it in full); compare with sources only if tested.",
+  "5": "Determine the largest k for which the statement is certified for all sizes up to k (contiguous range), with the strengthened certificate (i)-(v): non-vacuity demonstration, individual decisions for survivors with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, a second independent implementation compared elementwise. Also decide k = 24 and k = 30: show neither is the least size at which the statement can fail.",
+  "6": "OPEN. Any of: (a) decide a size k >= 25; (b) prove gcd >= ck for an absolute c > 0 or improve the known factor k exp(-(2+o(1)) log k / log log k); (c) the group form (disjoint cosets of finite-index subgroups), settle k = 6."}}
+}
