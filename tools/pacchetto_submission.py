@@ -87,6 +87,25 @@ def normalizza_math(testo):
     return "```".join(pezzi)
 
 
+def pulisci_markdown(testo):
+    """Testo pulito per il campo della piattaforma: niente #, **, backtick, tabelle o blocchi di codice; restano
+    paragrafi, elenchi con trattino e le formule $…$ / $$…$$. Il codice completo sta nel write-up linkato."""
+    pezzi = testo.split("```")
+    fuori = []
+    for i in range(0, len(pezzi), 2):
+        t = pezzi[i]
+        t = re.sub(r"(?m)^#{1,6}\s*(.+?)\s*$", lambda m: "\n" + m.group(1).upper() + "\n", t)   # titoli → riga maiuscola
+        t = re.sub(r"\*\*(.+?)\*\*", r"\1", t)                                            # grassetto
+        t = re.sub(r"(?<!\*)\*(?!\*)([^*\n]+?)\*(?!\*)", r"\1", t)                        # corsivo
+        t = re.sub(r"`([^`\n]+)`", r"\1", t)                                                 # codice inline
+        t = re.sub(r"(?m)^\|\s*-+[-|\s]*$\n?", "", t)                                         # separatori di tabella
+        t = re.sub(r"(?m)^\|(.+)\|\s*$", lambda m: "- " + " · ".join(c.strip() for c in m.group(1).split("|")), t)  # righe tabella
+        t = re.sub(r"(?m)^-{3,}\s*$", "", t)                                                  # linee orizzontali
+        t = re.sub(r"\n{3,}", "\n\n", t)
+        fuori.append(t)
+    return "\n".join(f.strip("\n") for f in fuori if f.strip()) + "\n"
+
+
 def argument(pid, n, k):
     sub = ROOT / f"problema-{n}" / "submission"
     base = (sub / f"parte-{k}.en.md").read_text(encoding="utf-8") if (sub / f"parte-{k}.en.md").exists() else "(no draft)"

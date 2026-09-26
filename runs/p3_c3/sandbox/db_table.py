@@ -43,7 +43,7 @@ def distanze_dal_ciclo(n):
             for lam in cammino[visti[cur]:]:
                 d[lam] = 0
             cammino = cammino[:visti[cur]]
-            base = -1
+            base = 0  # il primo elemento fuori dal ciclo dista 1
         for i, lam in enumerate(reversed(cammino)):
             d[lam] = base + 1 + i
     return d

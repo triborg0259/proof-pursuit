@@ -1,0 +1,1092 @@
+Mar. 2, 1998
+
+
+
+
+     The Cycling of Partitions and Compositions under Repeated Shifts
+
+                        Jerrold R. Griggs1,2 and Chih-Chang Ho2
+                               Department of Mathematics
+                               University of South Carolina
+                                Columbia, SC 29208 USA
+                                email: griggs@math.sc.edu
+
+
+
+
+                                           Abstract
+
+     In “Bulgarian Solitaire”, a player divides a deck of n cards into piles. Each move
+consists of taking a card from each pile to form a single new pile. One is concerned only
+with how many piles there are of each size. Starting from any division into piles, one
+always reaches some cycle of partitions of n. Brandt proved that for n = 1 + 2 + · · ·+ k,
+the cycle is just the single partition into piles of distinct sizes 1, 2, . . . , k. Let D B (n)
+denote the maximum number of moves required to reach a cycle. Igusa and Etienne
+proved that DB (n) ≤ k 2 − k whenever n ≤ 1 + 2 + · · · + k, and equality holds when
+n = 1 + 2 + · · · + k. We present a simple new derivation of these facts. We improve the
+bound to DB (n) ≤ k 2 − 2k − 1, whenever n < 1 + 2 + · · · + k with k ≥ 4. We present
+a lower bound for DB (n) that is likely to be the actual value. We introduce a new
+version of the game, Carolina Solitaire, in which the piles are kept in order, so we work
+with compositions rather than partitions. Many analogous results can be obtained.
+
+
+
+
+Running head: Cycling Under Repeated Shifts
+
+1
+    Research supported in part by grant NSA/MSP MDA904–95H1024.
+
+2
+    Research supported in part by grant NSF DMS–9701211.
+                                                                  Cycling Under Repeated Shifts
+
+
+
+
+                               Section 1. Introduction
+        In the early 1980’s, an article by Martin Gardner brought widespread attention
+to a card game that had attracted the curiosity of some European mathematicians.
+Called Bulgarian Solitaire, the game works as follows: First divide a finite deck of n
+cards into piles. A move consists of removing one card from each pile and forming a
+new pile. The operation is repeated over and over. We pay attention only to how many
+piles there are of each positive size, ignoring the locations of the piles.
+        Thus, Bulgarian Solitaire can be viewed as a way of changing one partition into
+another. For instance, the partition into k parts of distinct sizes from 1 to k is preserved
+under the operation. Clearly, for any n, any start eventually leads to a cycle of parti-
+tions, since there are only finitely many partitions of n altogether. What is striking in
+playing the game is that starting from any partition of a deck of size n = 1 + 2 + · · · + k
+cards, one always arrives eventually at this stable partition into sizes 1 through k. This
+effect is all the more dramatic in that it seems to take quite awhile in some cases with
+only moderately large k, say k = 5.
+        We don’t know yet the reason for the appellation “Bulgarian.” However, we were
+introduced to an ordered variation of the game by a Bulgarian visitor, Andrey Andreev.
+In his game, which we shall call Carolina Solitaire, one also maintains an ordering of
+the nonempty P      piles. Say we begin with n cards divided into a row of piles of sizes
+c1 , . . . , cr > 0, i ci = n. One card is removed from each pile, and these r cards are
+then placed in a pile ahead of the others. Any exhausted pile (size 0) is ignored; only
+nonempty piles are considered. For a triangular number n, say n = 1 + 2 + · · · + k, this
+game also appears to arrive at a stable division, with piles of sizes k, k − 1, . . . , 1.
+        After proving this fact for Carolina Solitaire, as well as deriving bounds on how
+soon the cycling begins for arbitrary n, we asked experts for references to related work,
+and our search finally led us to the literature on Bulgarian Solitaire. Our methods are
+easily adapted to this simpler unordered game. In fact, we obtain improved bounds
+on the maximum number of shifts needed for any game on n cards to cycle. We shall
+also mention work on other variation(s) of Bulgarian Solitaire, most notably one called
+Montreal Solitaire.
+        Let us now define the games formally, present some examples and calculations,
+and describe the plan of the paper. For a positive integer n, we say λ = (λ 1 , λ2 , . . .) is
+a partition of n, and we write λ ` n, provided the nonnegative integers λ 1 ≥ λ2 ≥ · · ·
+add up to n, If λs > λs+1 = 0, we say λ has s parts, and we often drop the zeroes,
+writing λ = (λ1 , λ2 , . . . , λs ).
+        The shift operation B on λ is the partition of n, denoted B(λ), obtained by de-
+creasing each part λi by one, inserting a part s, and discarding any zero parts. So
+B (i) (λ) denotes the partition obtained by successively applying the shift operation B
+to λ a total of i times. Starting with a partition λ, we describe Bulgarian solitaire by
+repeatedly applying the shift operation to obtain the sequence of partitions
+
+                                    λ, B(λ), B (2) (λ), . . . .
+
+                                                2
+                                                                    Cycling Under Repeated Shifts
+
+
+
+
+For a couple of simple examples, we note that λ = (2, 1, 1, 1, 1) ` 6, gives the sequence
+(2, 1, 1, 1, 1), (5, 1), (4, 2), (3, 2, 1), (3, 2, 1), . . . , while λ = (6, 1) ` 7 yields (6, 1), (5, 2),
+(4, 2, 1), (3, 3, 1), (3, 2, 2), (3, 2, 1, 1), (4, 2, 1), . . . . The first example is fixed at the
+partition (3, 2, 1) after three steps, while the second example reaches a cycle after two
+steps.
+      We say a partition µ ` n is B-cyclic if B (i) (µ) = µ for some i > 0. Brandt [3]
+characterized all B-cyclic partitions for Bulgarian Solitaire. In particular, when n is
+a triangular number, 1 + 2 + · · · + k, he proved that (k, k − 1, ..., 2, 1) is the unique
+B-cyclic partition of n, one that we end up with, no matter where we start. Note that
+if n is not triangular, there is no fixed partition under B.
+      To measure how long it takes for Bulgarian Solitaire to cycle, for λ ` n we let
+dB (λ) denote the smallest integer i ≥ 0 such that B (i) (λ) is B-cyclic . Let DB (n) :=
+max{dB (λ) : λ ` n}, so that for any λ ` n, DB (n) steps reach a cycle. Trivially,
+DB (1) = DB (2) = 0 and DB (3) = 2. The values of DB (n), 4 ≤ n ≤ 36, are displayed
+in Figure 1, which we worked out by computer. The data are arranged using the
+representation n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r ≤ k.
+      Brandt [3] conjectured that DB (n) = k 2 − k for triangular n, n = 1 + 2 + · · · + k.
+Hobby and Knuth [7] confirmed this for k ≤ 10 by computer. It was first proven by
+Igusa [8] and Etienne [5], apparently independently at about the same time, although
+Etienne’s proof was published much later. (Note that Etienne’s paper is noted as
+having been received in 1984.) In 1987 Bentz [2] also gave a different proof. In Section
+2 we present our proof of Brandt’s result characterizing all B-cyclic partitions. This
+leads to our simple, new proof of the value of D B (n) for triangular numbers n, given
+in Section 3.
+      Igusa and Etienne went on to obtain the upper bound D B (n) ≤ k 2 − k for general
+n, represented as 1 + 2 + · · · + (k − 1) + r, 1 ≤ r ≤ k. It is by no means sharp for every
+n (see Figure 1). Igusa [8] mentioned that this bound follows easily from Brandt’s
+conjecture using a comparison theorem by Akin and Davis [1, Theorem 3(c)]. We will
+describe this comparison theorem and show the implication in Section 4. We then
+prove a better general bound (Theorem 4.4), which is D B (n) ≤ k 2 − 2k − 1, when
+1 ≤ r < k and k ≥ 4. (Cases n = 2, 5 violate the bound.) We also present a lower
+bound for DB (n) that we suspect is the correct value in general, although a proof of
+this claim has eluded us.
+      In Section 5 we consider Carolina Solitaire, the ordered version of Bulgarian Soli-
+taire. Analogous with dB (λ) and DB (n) for Bulgarian Solitaire, we introduce dC (λ)
+and DC (n) for Carolina Solitaire. We show that for triangular n = 1 + 2 + · · · + k,
+DC (n) = k 2 − 1. For other n of the form n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r < k, we
+prove DC (n) ≤ k 2 − k − 2, provided that k ≥ 4. We also present a lower bound for
+DC (n) that we conjecture is the correct value in general.
+      Other variations of Bulgarian Solitaire have been introduced: Yeh and Servedio
+[9,10] studied a variation on circular compositions; Cannings and Haigh [4] investigated
+“Montreal Solitaire,” in which game the rule from λ to B(λ) is changed when an
+
+                                                    3
+                                                                 Cycling Under Repeated Shifts
+
+
+
+
+exhausted pile (size 0) in λ occurs. Akin and Davis [1] also introduced “Austrian
+Solitaire.” In this game, a special pile called the bank is reserved. Each move consists
+of taking a card from each pile into the bank, and then generating some new piles from
+the bank by a certain rule.
+
+
+      k=3        k=4          k=5          k=6          k=7          k=8
+r = 1 DB (4) = 2 DB (7) = 4 DB (11) = 8 DB (16) = 15 DB (22) = 24 DB (29) = 35
+r = 2 DB (5) = 3 DB (8) = 5 DB (12) = 8 DB (17) = 12 DB (23) = 18 DB (30) = 28
+r = 3 DB (6) = 6 DB (9) = 7 DB (13) = 9 DB (18) = 13 DB (24) = 18 DB (31) = 24
+r=4              DB (10) = 12 DB (14) = 14 DB (19) = 16 DB (25) = 19 DB (32) = 25
+r=5                           DB (15) = 20 DB (20) = 23 DB (26) = 26 DB (33) = 29
+r=6                                        DB (21) = 30 DB (27) = 34 DB (34) = 38
+r=7                                                     DB (28) = 42 DB (35) = 47
+r=8                                                                  DB (36) = 56
+
+                           Figure 1. DB (n) for n = 4, 5, . . . , 36.
+
+
+
+                   Section 2. Characterizing Cyclic Partitions
+     We begin by describing B-cyclic partitions of n, a result discovered by Brandt [3].
+Etienne [5] as well as Akin and Davis [1] also gave proofs. Although Etienne proved
+the result for triangular n only, the idea in his proof is simple and can be applied to
+general n. The approach presented here is similar to Etienne’s and we include it for
+the reader’s benefit.
+Theorem 2.1. [3] Let n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r ≤ k. Then λ ` n is B-cyclic
+if and only if λ has the form
+
+                   (k − 1 + δk−1 , k − 2 + δk−2 , . . . , 2 + δ2 , 1 + δ1 , δ0 ),
+                                Pk−1
+where each δi is 0 or 1 and       i=0 δi = r.
+
+Corollary 2.2. If n = 1 + 2 + · · · + k, then (k, k − 1, . . . , 2, 1) is the unique B-cyclic
+partition of n.
+     In order to prove the theorem, we introduce a natural array representation of a
+partition λ. We are particularly interested in the how repeatedly shifting λ affects the
+position of the 1’s in the array.
+     For a partition λ = (λ1 , λ2 , . . . , λs ) ` n, we associate a (0, 1)-array
+                                                     
+                                                         1, if j ≤ s and i ≤ λj ;
+           Mλ = [mij ]∞
+                      i,j=1 ,    where     mij =
+                                                         0, otherwise .
+
+                                                 4
+                                                                      Cycling Under Repeated Shifts
+
+
+
+
+The columns of Mλ correspond to the parts of λ.
+      We notice that MB(λ) can be obtained directly from Mλ by a shifting process
+on a (0, 1)-array. In later sections, such a shifting process can help us evaluate d B (λ)
+easily for some particular partitions λ. We describe this shifting process as follows: For
+a (0, 1)-array M , we say that the w-th diagonal of M consists of entries m ij where
+i + j − 1 = w. Assume λ = (λ1 , λ2 , . . . , λs ) ` n and its associated array Mλ is given.
+Step 1. Diagonally Circular Shifting: For each diagonal of M λ , say v1 , v2 , . . . ,
+and vw are the entries (listed from left to right) in this diagonal, we replace them by
+vw , v1 , v2 , . . . , and vw−1 respectively. Then we obtain a new array, denote it M λ 0 . Note
+that the numbers of 1’s in columns of Mλ 0 are s, λ1 − 1, λ2 − 1, . . . , λs − 1, 0, 0, 0, . . . .
+If s ≥ λ1 − 1 then Mλ 0 is the array MB(λ) . If s < λ1 − 1 then we need an extra step to
+obtain MB(λ) .
+Step 2. Left Shifting: We remove all zero entries in the first column of M λ 0 and shift
+each entry at the (i, j)-position, i ≥ s + 1, j ≥ 2, to the (i, j − 1)-position. The new
+array is MB(λ) .
+      Figure 2 shows two examples of the shifting process described above.
+
+λ = (2, 2, 1, 1):
+                              all ones 1   1                           all ones 1   0
+                                   1 0                                      0 0
+                    Mλ =      0   0 all zeroes       M λ’= MB (λ) =    1   0   all zeroes
+                              0                                        1
+
+
+λ = (4, 2):
+                all ones 0    0                  all ones 1   0                     all ones 1   0
+                     1 0                              1 0                                1 0
+      Mλ =      1     0 all zeroes         M λ’= 0   1 all zeroes      MB (λ) =     1   0 all zeroes
+                1                                0                                  0
+
+
+
+                             Figure 2. A shifting process on the arrays.
+
+
+Proof of Theorem 2.1. (⇐) Assume that λ has the stated form. The array M λ has
+all ones on the first k − 1 diagonals and all zeroes beyond diagonal k. Each shift just
+shifts entries on diagonal k. Thus, B (k) (λ) = λ, and λ is B-cyclic .
+     (⇒) In the shifting process, we notice that Step 1 keeps every entry on the same
+diagonal, while Step 2 always brings the entry 1 at the (s + 1, 2)-position to a diagonal
+with smaller index. Thus, for any B-cyclic partition µ, the shifting process from M µ
+to MB(µ) should involve Step 1 only.
+
+                                                      5
+                                                                          Cycling Under Repeated Shifts
+
+
+
+
+     Now assume that λ is B-cyclic and λ cannot be expressed in the stated form.
+Then for some w, there is a 0 in the w-th diagonal and a 1 in the (w + 1)-th diagonal.
+Since the series of shifting processes from Mλ to MB(λ) to MB(2) (λ) , and so on involves
+Step 1 (Diagonally Circular Shifting) only, and since the integers w and w + 1 are
+relatively prime, we will reach (in at most w 2 − w − 1 steps) an array Mµ which has 0
+as (1, w)-entry and 1 as (w + 1, 1)-entry. (Figure 3 shows an example for such a series
+of shifting processes.) Then the shifting process from M µ to MB(µ) involves Step 2, a
+contradiction.
+
+                                                                            (2)
+               λ =( 2   2   1    1)    B (λ) = ( 4       1   1)            B (λ) = ( 3   3)
+
+                   all ones 1    1              all ones 1        0                 all ones 0   0
+                        1 0                          0 0                                 1 0
+                    0   0 all zeroes            1        0   all zeroes             1    1 all zeroes
+                    0                           1                                   0
+
+
+
+
+         (3)                           (4)                                  (5)
+        B (λ) = ( 2     2   2)         B (λ) = ( 3       1   1    1)       B (λ) = ( 4   2)
+
+                   all ones 1    0              all ones 1        1                 all ones 0   0
+                        1 1                          0 0                                 1 0
+                    0   0 all zeroes            1        0 all zeroes               1    0 all zeroes
+                    0                           0                                   1
+
+
+
+
+         (6)
+        B (λ) = ( 3     2   1)
+
+                   all ones 1    0
+                        1 0
+                    1   0 all zeroes
+                    0
+
+
+
+  Figure 3. A series of shifting processes on the associated array of λ = (2, 2, 1, 1).
+
+     It is easy to see from Theorem 2.1 that for a given n with r = k, k − 1, or 1,
+starting from any partition of n and repeatedly applying the shift operation B always
+reaches a unique cycle of partitions of n.
+
+                                                     6
+                                                                    Cycling Under Repeated Shifts
+
+
+
+
+     For general n, Brandt [3] also showed that the number of cycles for Bulgarian
+               P                    
+Solitaire is k1 d|gcd(k,r) φ(d) k/d
+                                r/d
+                                      , where φ(d) is the Euler φ-function. The derivation
+of this formula was explained in detail later in the paper [1] of Akin and Davis.
+
+
+
+            Section 3. Evaluating DB (n) for Triangular Numbers n
+
+     The partition λ = (2, 2, 1, 1) in Figure 3 gives DB (3) ≥ 32 − 3. In general, we have
+Theorem 3.1. [1, 2, 5] If n = 1 + 2 + · · · + k, then DB (n) ≥ k 2 − k.
+Proof. It suffices to present λ ` n such that dB (λ) = k 2 −k. Let λ = (λ1 , λ2 , . . . , λk+1 )
+where λ1 = k−1, λi = k−i+1 for i = 2, 3, . . . , k, and λk+1 = 1. By repeatedly applying
+the shifting process (described in previous section) to the arrays M λ , MB(λ) , . . ., it is
+easy to see that
+
+                               B (k) (λ) = (λ1 , λ2 , . . . , λk−1 , λk + 1),
+                              B (2k) (λ) = (λ1 , λ2 , . . . , λk−1 + 1, λk ),
+                                        ..
+                                         .
+                         B ((k−2)k) (λ) = (λ1 , λ2 , λ3 + 1, λ4 , λ5 , . . . , λk ),
+                      B ((k−1)k−1) (λ) = (λ1 + 2, λ2 , λ3 , . . . , λk−1 ), and
+                         B ((k−1)k) (λ) = (k, k − 1, k − 2, . . . , 2, 1).
+
+Therefore dB (λ) = k 2 − k.
+     Before we prove in Theorem 3.7 that for triangular n, the lower bound k 2 − k is
+the actual value of DB (n), we need some notation and lemmas. Let us start with the
+example for n = 15: The 176 partitions of 15 can be arranged in a tree illustrated in
+Figure 4 (from [3]) so that the vertices correspond to the partitions and going down
+corresponds to applying B. (Thus, the root of the tree is the partition (5, 4, 3, 2, 1).)
+In this figure, each vertex is labeled with the number of parts for its corresponding
+partition.
+     For a partition λ ` n, we associate a sequence seq B (λ) = hc1 , c2 , . . .i, where ci
+is the number of parts in B (i−1) (λ). For instance, the top left vertex in Figure 4
+(corresponding to the partition λ = (4, 4, 3, 2, 1, 1) ` 15) has the associated sequence
+seqB (λ) = h6, 5, 5, 5, 4, 5, 6, 5, 5, 4, 5, 5, 6, 5, 4, 5, 5, 5, 6, 4, 5, 5, 5, 5, 5, . . .i.
+In Figure 4, we observe that the pattern “x − 1, x, x, . . . , x, x + 1” appears quite often
+in most associated sequences. It will play a pivotal role in our process for evaluating
+DB (n). To study this pattern, we associate each partition with a diagram: Given a
+
+                                                  7
+                                                                                                                   Cycling Under Repeated Shifts
+
+
+
+                        6 6 7 6 6 8 6 7 6 8 7 8 6 7 7 7
+                        5 6 5 5 7 5 6 5 7 5 7 6 6 5 6 6
+
+                         5        4           6       4           6       5           4 10 10                  5           4       5 11
+
+                          5           4               3           9           4        9           5           4           3       10 4
+                              4                   8               4               3           4            9           3            6       9
+                             5            7           3           5           8           3            7           8       8        7 13
+                          6               4           6           7               4           7            6           2           12       3
+                                 5                6                   5                3                   11              2            11
+
+                                 5                    4                   10                  3                    10                   5
+
+                                      4                       9                   4                        2                        15
+                                  5                   8                   3                   8                    14                   1
+                              5                   7           4                   7                    7                   13           2
+                             6                4               6               3           9        12                  2                12
+                                 5                3               8               5           11           3               11               4
+                                      4               7                   4            10                  3                   2            10
+
+                                  5           6           3       9           3       9       9        6           5       9        7           9
+
+                                  5           4           8       4           8       5       2        6           8       4        8           6
+
+                                      5                   7           4                3                   7                   5            3
+                                                          6                            4                                   3
+
+                                                                                       4
+                                                                                       5
+
+                             Figure 4. A tree for the partitions of 15.
+
+partition λ = (λ1 , λ2 , . . . , λs ) ` n, let seqB (λ) = hc1 , c2 , . . .i be its associated sequence.
+Then diagramB (λ) is defined to be the diagram shown in Figure 5, where each λ i -
+column (resp., ci -column) has λi (resp., ci ) 1’s on the top and has infinitely many
+0’s on all other entries. For example, if λ = (4, 2, 2, 2) then diagram B (λ) is shown in
+Figure 6(a).
+
+    We notice that there are ci 1’s in the row corresponding to ci . Furthermore,
+diagramB (λ) can be regarded as bookkeeping for the shift operation B on λ, since
+we can easily obtain B (i) (λ) from diagramB (λ) for any integer i. For example, the
+
+                                                                                  8
+                                                                                                                     Cycling Under Repeated Shifts
+
+
+
+
+                                                                                                 λ1    λ2    .....    λS
+
+                                                                                  C1                         .....
+
+                                                                          C2
+
+                                                           C3
+
+                                                 .   ..
+                                            ..
+
+
+
+                                                               ..          ..         ..         ..    ..             ..
+                                                                ..          ..         ..         ..    ..   .....     ..
+                                                                 .           .          .          .     .              ..
+
+
+                                                           Figure 5. diagramB (λ).
+
+                                                                     4     2     2          2
+                                                          4          1     1     1          1
+                                             5            1          1     1     1          1
+                                       3     1            1          1     0     0          0
+                                  4    1     1            1          1     0     0          0                                1    1    1    1    0    0    0
+                             4    1    1     1            1          0     0     0          0                                1    1    1    0    0    0    0
+                        4    1    1    1     1            0          0     0     0          0                                1    1    0    0    0    0    0
+                   4    1    1    1    0     1            0          0     0     0          0                                0    1    0    0    0    0    0
+                 .. 1   1    1    1    0     0            0          0     0     0          0
+          .   ..                                                                                                             0    0    0    0    0    0    0
+                   1    1    1    0    0     0            0          0     0     0          0                                0    0    0    0    0    0    0
+                   1    1    0    0    0     0            0          0     0     0          0                                0    0    0    0    0    0    0
+                   1    0    0    0    0     0            0          0     0     0          0                                0    0    0    0    0    0    0
+                   0    0    0    0    0     0            0          0     0     0          0                                0    0    0    0    0    0    0
+                   ..   ..   ..   ..   ..    ..           ..         ..    ..    ..         ..                               ..   ..   ..   ..   ..   ..   ..
+                    .    .    .    .    .     .            .          .     .     .          .                                .    .    .    .    .    .    .
+
+    Figure 6. (a) diagramB (λ) for λ = (4, 2, 2, 2)                                                              (b) The rectangle below c3 .
+
+rectangle below c3 (see Figure 6(b)) gives B (3) (λ) = (4, 3, 2, 1) and the rectangle below
+c6 gives B (6) (λ) = (4, 3, 2, 1).
+Proposition 3.2. Assume n ≥ 1, λ ` n, and seqB (λ) = hc1 , c2 , . . .i. Then
+(1) ci+1 ≤ ci + 1 for i ≥ 1.
+(2) For n = 1 + 2 + · · · + (k − 1) + r, where 1 ≤ r ≤ k, the sum of any k consecutive
+    terms in the sequence is at most k(k − 1) + r.
+(3) (The Sandwich Property) If i < j and ci < x < cj , then there exist integers p and q
+    such that i ≤ p < q ≤ j, q ≥ p+2, and (cp , cp+1 , . . . , cq ) = (x−1, x, x, . . . , x, x+1).
+Proof. (1) follows from the definition of the shift operation B. To prove (2), we see
+for i > 0 in diagramB (λ) that ci+1 + ci+2 + · · · + ci+k is the number of 1’s in the k
+rows labelled by ci+1 , ci+2 , . . .. These come from B (i) (λ) (in the rectangle below ci ),
+
+                                                                                             9
+                                                                 Cycling Under Repeated Shifts
+
+
+
+
+or from the staircase consisting of j − 1 squares to the right of c i+j , 1 ≤ j ≤ k. Thus,
+ci+1 + · · · + ci+k ≤ n + 1 + 2 + · · · + (k − 1) = k(k − 1) + r.
+     For (3), choose p as large as possible such that i ≤ p < j and c p ≤ x − 1.
+     We next require a series of lemmas that rely on Proposition 3.2 and diagram B (λ).
+Lemma 3.3. Let λ ` n = 1 + 2 + · · · + k and seqB (λ) = hc1 , c2 , . . .i. Then
+(1) dB (λ) = t, where hct , ct+1 , . . .i = hk − 1, k, k, . . .i.
+(2) If dB (λ) = t ≥ k + 1 then at least one of the following holds:
+    (i) (cp , cp+1 , . . . , cq ) = (k − 1, k, k, . . . , k, k + 1) for some p, q with t − k ≤ p < q ≤
+          t − 1 and q ≥ p + 2;
+    (ii) (cp , cp+1 , . . . , cq ) = (k − 2, k − 1, k − 1, . . . , k − 1, k) for some p, q with
+          t − k + 1 ≤ p < q ≤ t + 1 and q ≥ p + 2.
+Proof. (1) By Theorem 2.1, we have dB (λ) = t where seqB (λ) = hc1 , . . . , ct , k, k, k, . . .i
+and ct 6= k. Then Proposition 3.2 forces ct = k − 1.
+      (2) For i > j, let ei,j denote the entry in the ci -row and the cj -column of
+diagramB (λ). Then et,t−1 = 1. Since ct = k − 1, we have et,i = 0 for some i,
+t − k ≤ i ≤ t − 2. We choose such i as large as possible. Then e t,i+1 = 1, and,
+since ct+1 = k = ct + 1, comparing rows for ct and ct+1 in diagramB (λ), we have
+et+1,i+1 = 1 as well. The column below ci+1 then has 1’s down at least as far as the
+row for ct+1 . Proposition 3.2(1) gives ci ≥ ci+1 − 1, which forces all entries in the
+ci -column above the 0 at et,i to be 1’s. Therefore, ci = t − i − 1 and ci+1 = t − i.
+      If i ≥ t − k + 1, then ci ≤ k − 2, and (ii) holds by the Sandwich Property. Else, we
+have i = t−k, ct−k = k−1, and ct−k+1 = k. If cj ≤ k−2 for some j, t−k+2 ≤ j ≤ t−1,
+(ii) holds by the Sandwich Property, while if cj ≥ k + 1 for some such j, (i) holds. Else,
+suppose for contradiction that k − 1 ≤ cj ≤ k, for j = t − k + 2, t − k + 3, . . . , t − 1:
+Since i = t − k, the row for ct in diagramB (λ) consists of k − 1 1’s followed by all
+0’s. The row for ct+1 is then k 1’s followed by all 0’s. There are k 1’s at the tops of
+columns ct+1 , ct+2 , . . .. Hence, in the rectangle below ct−1 , we have just k − 1 1’s in the
+first row, followed by k − j + 1 1’s in row j, 2 ≤ j ≤ k. Rows below that are all 0. In
+total, we have n − 1 1’s in the rectangle, which is a contradiction since this rectangle
+represents, after reordering the columns if necessary, a partition of n.
+Lemma 3.4. Let λ = (λ1 , λ2 , . . . , λs ) ` n ≥ 1 and seqB (λ) = hc1 , c2 , . . .i. If for some
+p, k,
+              (cp , . . . , cp+k ) = (k − 2, k − 1, k − 1, . . . , k − 1, k),
+then p + k ≤ n + 1.
+Proof. Let ei,j (resp., fi,j ) denote the entry in the ci -row and the cj -column (resp.,
+λj -column) of diagramB (λ). Then we have ep+k−2,p = 1 and ep+k−1,p = 0, since
+cp = k − 2. By the given condition, in the cp+k -row we also have ep+k,j = 1 for
+j = p + 1, p + 2, . . . , p + k − 1. Note that in addition to these k − 1 entries of 1, there
+is exactly one more 1 in the cp+k -row, since cp+k = k.
+
+                                                 10
+                                                                           Cycling Under Repeated Shifts
+
+
+
+
+    If fp+k,j = 1 for some j, 1 ≤ j ≤ s, then p + k ≤ λj ≤ n. Else, ep+k,j = 1 for
+some j, 1 ≤ j ≤ p − 1. In fact, j = 1, for, otherwise, we have e p+k,j−1 = 0, and, since
+cp+k = k = cp+k−1 + 1, comparing rows for cp+k and cp+k−1 in diagramB (λ), we also
+have ep+k−1,j−1 = 0. Similarly, since cp+k−1 = cp+k−2 , ep+k−2,p = 1, and ep+k−1,p = 0,
+and comparing rows for cp+k−1 and cp+k−2 in diagramB (λ), we have ep+k−2,j−1 = 0.
+Then cj > cj−1 + 1, a contradiction. So j = 1, and then p + k − 1 ≤ c1 ≤ n.
+Lemma 3.5. Let λ ` n ≥ 1 and seqB (λ) = hc1 , c2 , . . .i. If for some integers x, p, q,
+q ≥ p + 3 and
+                (cp , cp+1 , . . . , cq ) = (x − 1, x, x, . . . , x, x + 1),
+then either p ≤ x or
+
+                     (cp0 , cp0 +1 , . . . , cq 0 ) = (x0 − 1, x0 , x0 , . . . , x0 , x0 + 1)
+
+for some integers x0 , p0 , q 0 with x0 ≤ x, 2 ≤ q 0 − p0 < q − p, and p − x ≤ p0 < q 0 ≤ p + 1.
+Proof. We assume p ≥ x + 1 and prove the existence of x 0 , p0 , and q 0 . For i > j, let ei,j
+denote the entry in the ci -row and the cj -column of diagramB (λ). Then ep,p−1 = 1.
+Since cp = x − 1, we have ep,p0 = 0 for some p0 , p − x ≤ p0 ≤ p − 2. We choose
+such p0 as large as possible. Then ep,j = 1 for j = p0 + 1, p0 + 2, . . . , p − 1, and, since
+cp+1 = x = cp + 1, comparing rows for cp+1 and cp in diagramB (λ), we also have
+ep+1,j = 1 for j = p0 + 1, p0 + 2, . . . , p. The column below cp0 +1 then has 10 s down at
+least as far as the row at cp+1 . Proposition 3.2(1) gives cp0 ≥ cp0 +1 − 1, which forces
+all entries above the zero at ep,p0 to be 1’s. Therefore cp0 = p − p0 − 1, cp0 +1 = p − p0 ,
+and ep+2,p0 +1 = 0.
+     Since cp+2 = x = cp+1 , comparing rows for cp+2 and cp+1 in diagramB (λ), we
+have ep+2,j = 1 for j = p0 + 2, p0 + 3, . . . , p + 1. If ep+3,p0 +2 = 1 then cp0 +2 = p − p0 + 1,
+and we are finished. So we may assume ep+3,p0 +2 = 0 and cp0 +2 = p − p0 .
+     Since cp+3 = x = cp+2 , comparing rows for cp+3 and cp+2 in diagramB (λ), we
+have ep+3,j = 1 for j = p0 + 3, p0 + 4, . . . , p + 2. If ep+4,p0 +3 = 1 then cp0 +3 = p − p0 + 1,
+and we are finished. So we may assume ep+4,p0 +3 = 0 and cp0 +3 = p − p0 . Continue this
+process . . . .
+     So we may assume eq−1,p0 +q−p−2 = 0, cp0 +q−p−2 = p − p0 , and eq−1,j = 1 for
+j = p0 + q − p − 1, p0 + q − p, . . . , q − 2. Since cq = x + 1 = cq−1 + 1, comparing rows for
+cq and cq−1 in diagramB (λ), we have eq,p0 +q−p−1 = 1, and hence cp0 +q−p−1 = p−p0 +1.
+This completes the proof.
+Lemma 3.6. Let λ ` n ≥ 1 and seqB (λ) = hc1 , c2 , . . .i. If
+
+                               (cp , cp+1 , cp+2 ) = (x − 1, x, x + 1),
+
+then p ≤ x.
+Proof. For i > j, let ei,j denote the entry in the ci -row and the cj -column of
+diagramB (λ). Then ep,p−1 = 1. Assume the contrary, i.e., p > x. Then cp = x−1 < p−1
+
+                                                       11
+                                                                 Cycling Under Repeated Shifts
+
+
+
+
+implies ep,i = 0 for some i, 1 ≤ i ≤ p − 2. Choose such i as large as possible. Then
+ep,i+1 = 1. Since cp+1 = x = cp + 1 and cp+2 = x + 1 = cp+1 + 1, comparing rows
+for cp , cp+1 , and cp+2 in diagramB (λ), we also have ep+2,i+1 = ep+1,i+1 = 1. Thus
+ci+1 > ci + 1, a contradiction.
+     We are now in a position to prove
+Theorem 3.7. [5, 8] If n = 1 + 2 + · · · + k, then
+
+                                        DB (n) = k 2 − k.
+
+Proof. Note that from Theorem 3.1 we have DB (n) ≥ k 2 − k. Now we prove DB (n) ≤
+k 2 − k. Let λ ` n. It suffices to show dB (λ) ≤ k 2 − k. We may assume k ≥ 3, since
+it is easy to verify that dB (λ) ≤ k 2 − k for k = 1, 2. Further, we may also assume
+dB (λ) ≥ k + 1. (Otherwise, dB (λ) ≤ k < k 2 − k, since k ≥ 3.) Let seqB (λ) = hc1 , c2 , . . .i
+where hct , ct+1 , . . .i = hk − 1, k, k, k, . . .i. Then dB (λ) = t and at least one of (i), (ii) of
+Lemma 3.3 holds.
+      If (ii) holds with q = p + k, we have p = t − k + 1 and q = t + 1. Note that Lemma
+3.4 gives p + k ≤ n + 1. Then dB (λ) = t = p + k − 1 ≤ n ≤ k 2 − k, since k ≥ 3.
+      Else, (i) or (ii) holds and q ≤ p + k − 1. By Lemmas 3.5 and 3.6, seq B (λ) has
+at most k 2 − 2k − 1 terms before the cp -term. Then dB (λ) = t ≤ (p − 1) + k + 1 ≤
+(k 2 − 2k − 1) + k + 1 ≤ k 2 − k.
+     We observe that for k = 2 (resp., k = 3), λ = (1, 1, 1) (resp., λ = (2, 2, 1, 1)) is
+the only partition of n = 1 + 2 + · · · + k achieving d B (λ) = k 2 − k. For k ≥ 4, we have
+Theorem 3.8. Let k ≥ 4 and n = 1 + 2 + · · · + k. If λ ` n with d B (λ) = k 2 − k, then
+the associated array Mλ = [mij ]∞   i,j=1 satisfies the following conditions (illustrated in
+Figure 7):
+ (1) mij = 1 for j ≤ k + 3 − 2i,
+ (2) mij = 0 for j ≥ 2k + 1 − 2i, and
+ (3) |{(i, j) : j = k + 4 − 2i, mij = 0}| ≤ 2.
+
+
+Proof. If k ≥ 4 and dB (λ) = k 2 − k, the proof of Theorem 3.7 implies (i) of Lemma 3.3
+holds and q = p+k−1. Further, we have seqB (λ) = hc1 , c2 , . . .i where (ck , ck+1 , ck+2 ) =
+(k − 1, k, k + 1) and (c2k , c2k+1 , c2k+2 , c2k+3 ) = (k − 1, k, k, k + 1).
+     For i > j, let ei,j denote the entry in the ci -row and the cj -column of diagramB (λ).
+Then ek+2,k+1 = 1 and ek+2,k = 1. We also have ek+2,i = 1 for i = 1, 2, . . . , k − 1.
+(Otherwise, we choose i as large as possible such that 1 ≤ i ≤ k − 1 and e k+2,i = 0. By
+comparing rows for ck+2 , ck+1 , and ck in diagramB (λ), we have ek,i = ek+1,i = 0, and
+hence ci+1 > ci + 1, a contradiction.) Therefore, ci ≥ k + 2 − i for i = 1, 2, . . . , k + 2,
+and hence Condition (1) holds.
+     We also have e2k,i = 1 for i = k + 1, k + 2, . . . , 2k − 1. (Otherwise, we choose i
+as large as possible such that k + 3 ≤ i ≤ 2k − 2 and e2k,i = 0. Then e2k,i+1 = 1. We
+
+                                                 12
+                                                                                     Cycling Under Repeated Shifts
+
+
+
+                                                              2 k -2
+
+                                      k +1
+
+                                              2           2              2                   2      2
+                            . . . .                                              . . . . .
+           1                                                                     *
+           1                                                         *
+           1         all ones                         *
+               .                .         *                                  .
+               .                                                         .
+               .            .                                    .
+               .       .        mixture                   .
+                                                  .
+                                              .
+    Mλ =                              .
+
+                                                              all zeroes
+
+
+
+
+         Among the b(k + 3)/2c entries marked by *, at most two are zeroes.
+
+                           Figure 7. Conditions for Theorem 3.8.
+
+note that e2k+1,k+1 = 1 and e2k+2,k+1 = 0, since ck+1 = k. By comparing rows for
+c2k , c2k+1 , and c2k+2 in diagramB (λ), we have e2k+2,i+1 = e2k+1,i+1 = 1, and hence
+ci+1 > ci + 1, a contradiction.) Therefore, e2k,i = 0 for i = 1, 2, . . . , k, and Condition
+(2) holds.
+      Since e2k,k+3 = 1, by comparing rows for c2k , c2k+1 , c2k+2 , and c2k+3 in diagramB (λ),
+we have e2k+3,k+3 = e2k+2,k+3 = e2k+1,k+3 = 1, and hence ck+3 ≥ k. So we have
+Pk+2
+   j=1 ek+3,j ≥ k, and hence Condition (3) holds.
+
+      We have checked by computer that the converse of this theorem is true for k =
+4, 5, 6, 7. (In particular, the converse with Condition (3) removed is also true for k =
+4, 5, 6.) When k = 8, there are 1276 partitions satisfying all three conditions in Theorem
+3.8, but 9 partitions among them have dB (λ) = 20 6= k 2 − k. So the three conditions
+given in Theorem 3.8 are necessary, but not sufficient, for the associated array of
+extremal partitions.
+
+
+  Section 4. Evaluating Bounds on DB (n) for Non-Triangular Numbers n
+    For any non-triangular n, we can write n = 1 + 2 + · · · + (k − 1) + r, where
+1 ≤ r < k. In this section we first prove DB (n) ≤ k 2 − k based on Theorem 3.7 and a
+
+                                                          13
+                                                                 Cycling Under Repeated Shifts
+
+
+
+
+comparison theorem from [1]. Then we improve this bound to k 2 − 2k − 1 for k ≥ 4.
+We also present a lower bound that is likely the actual value.
+      Let Λ = ∪∞     i=1 Λi where Λi denotes the set containing all partitions of i. For λ =
+(λ1 , λ2 , . . .) and µ = (µ1 , µ2 , . . .) in Λ, we define a partial ordering (i.e., a reflexive,
+antisymmetric and transitive relation) by:
+
+                          λ≤µ       ⇔     λ i ≤ µi    for    i = 1, 2, . . . .
+
+     Then we have the following theorem due to Akin and Davis [1, Theorem 3(c)]:
+Theorem 4.1. If λ, µ ∈ Λ and λ ≤ µ, then B(λ) ≤ B(µ).
+Proof. Let x1 , x2 , . . . and y1 , y2 , . . . (not necessarily in non-increasing order) be the
+parts of two partitions x and y respectively. We observe that if x i ≤ yi for i ≥ 1, then
+x ≤ y. (To verify this, we may assume further, without loss of generality, that the x i ’s
+are already in non-increasing order. If y1 < y2 , we interchange y1 and y2 , then xi ≤ yi
+for i ≥ 1 still holds. If y2 < y3 , we interchange y2 and y3 , then xi ≤ yi for i ≥ 1 still
+holds. Continuing this process, eventually we can arrange all y i ’s in non-increasing
+order and xi ≤ yi for i ≥ 1 still holds. Therefore x ≤ y.)
+     Now we assume λ, µ ∈ Λ and λ ≤ µ. Let λ = (λ1 , λ2 , . . .) and µ = (µ1 , µ2 , . . .),
+where λ1 ≥ · · · ≥ λs > λs+1 = 0, µ1 ≥ · · · ≥ µt > µt+1 = 0, and λi ≤ µi for
+i ≥ 1. Then the parts of B(λ) are x1 = s, x2 = λ1 − 1, x3 = λ2 − 1, . . . , xs+1 =
+λs − 1, xs+2 = 0, xs+3 = 0, . . .. Similarly, the parts of B(µ) are y1 = t, y2 = µ1 − 1, y3 =
+µ2 − 1, . . . , yt+1 = µt − 1, yt+2 = 0, yt+3 = 0, . . .. Since xi ≤ yi for i ≥ 1, we have
+B(λ) ≤ B(µ) by the observation above.
+     Combining this theorem with Theorem 3.7, we can show
+Theorem 4.2. [5, 8] Let n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r < k. Then
+
+                                         DB (n) ≤ k 2 − k.
+
+Proof. Let λ ` n. It suffices to show dB (λ) ≤ k 2 − k. We choose µ, ν such that
+µ ` (1 + 2 + · · · + (k − 1)), ν ` (1 + 2 + · · · + k), and µ ≤ λ ≤ ν. By Theorem
+                        2                   2               2
+4.1, we have that B (k −k) (µ) ≤ B (k −k) (λ) ≤ B (k −k) (ν). Note that Theorem 3.7
+          2                                               2
+gives B (k −k) (µ) = (k − 1, k − 2, . . . , 2, 1) and B (k −k) (ν) = (k, k − 1, . . . , 2, 1). Thus
+    2
+B (k −k) (λ) has the form stated in Theorem 2.1 and dB (λ) ≤ k 2 − k.
+     We prove an analogue of Lemma 3.3 for non-triangular n. Applying it along
+with Lemmas 3.4, 3.5, and 3.6 leads to an improved upper bound on D B (n) for non-
+triangular n.
+Lemma 4.3. Let λ ` n = 1 + 2 + · · · + k + r, 1 ≤ r < k, and seq B (λ) = hc1 , c2 , . . .i.
+(1) If (ct , . . . , ct+k−1 ) = (ct+k , . . . , ct+2k−1 ) = · · ·, i.e., ct+i = ct+i+k for i ≥ 0, then
+    dB (λ) ≤ t − 1. (Thus we can find dB (λ) by choosing such t as small as possible.)
+
+                                                 14
+                                                                 Cycling Under Repeated Shifts
+
+
+
+
+(2) If ct = k−1, ct+1 = k, ct+i = ct+i+k for i ≥ 0, and (ct−k , . . . , ct−1 ) 6= (ct , . . . , ct+k−1 ),
+    then at least one of (i), (ii) of Lemma 3.3 holds.
+Proof. (1) If ct+i = ct+i+k for i ≥ 0, then each ct+i is the number of parts for some B-
+cyclic partition, and hence Theorem 2.1 gives k − 1 ≤ c t+i ≤ k for i ≥ 0. In particular,
+we note that the rows for ct , ct+1 , . . . , ct+k−1 in diagramB (λ) each consists of k − 1 or k
+1’s. Then B (t−1) (λ) has the stated form of Theorem 2.1, since it is represented by the
+rectangle below ct−1 , after reordering the columns if necessary. Therefore, B (t−1) (λ) is
+B-cyclic , and hence dB (λ) ≤ t − 1.
+     (2) The proof is similar to that of Lemma 3.3(2). In the last case, we suppose
+for contradiction that ct−k = k − 1, ct−k+1 = k, and k − 1 ≤ cj ≤ k, for j =
+t − k + 2, t − k + 3, . . . , t − 1. Similar to the proof of (1), then the rectangle below
+ct−k−1 in diagramB (λ) gives that B (t−k−1) (λ) is B-cyclic . Thus, by Theorem 2.1,
+B (t−k−1+i) (λ) = B (t−1+i) (λ) for i ≥ 0. Counting the number of parts in each partition,
+we have (ct−k , . . . , ct−1 ) = (ct , . . . , ct+k−1 ), a contradiction.
+Theorem 4.4. Let n be non-triangular and n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r < k.
+Then
+(1) DB (n) ≤ k 2 − 2k − 1 for k ≥ 4.
+(2) Furthermore, equality holds when k ≥ 4 and r = k − 1.
+Proof. (1) We may assume k ≥ 5, since we have DB (n) ≤ 7 for k = 4 from Figure 1. Let
+λ ` n. It suffices to show dB (λ) ≤ k 2 − 2k − 1. Let seqB (λ) = hc1 , c2 , . . .i. Let B (t−1) (λ)
+be B-cyclic for some t ≥ 1. Then Theorem 2.1 gives c t+i = ct+i+k and k − 1 ≤ ct+i ≤ k
+for i ≥ 0. Further, we may assume ct = k − 1 and ct+1 = k, since r 6= k. We choose
+such t as small as possible. If t ≤ k, then dB (λ) ≤ t − 1 ≤ k − 1 < k 2 − 2k − 1, since
+k ≥ 5. So we may assume t ≥ k + 1 and (ct−k , . . . , ct−1 ) 6= (ct , . . . , ct+k−1 ). Then, by
+Lemma 4.3, at least one of (i), (ii) of Lemma 3.3 holds.
+     If (ii) holds with q = p + k, we have (p, q) = (t − k + 1, t + 1). Note that Lemma
+3.4 gives p + k ≤ n + 1. Then dB (λ) ≤ t − 1 = p + k − 2 ≤ n − 1 < k 2 − 2k − 1, since
+k ≥ 5.
+     Else, if (i) or (ii) holds and q ≤ p + k − 2, by Lemmas 3.5 and 3.6, seq B (λ) has
+at most k 2 − 3k − 1 terms before the cp -term. Then dB (λ) ≤ t − 1 ≤ (p − 1) + k ≤
+(k 2 − 3k − 1) + k = k 2 − 2k − 1.
+     Else, suppose for contradiction that (i) or (ii) holds with q = p + k − 1: if (i)
+holds with q = p + k − 1, we have (p, q) = (t − k, t − 1) and ct−1 = k + 1, which is
+a contradiction, since, by Proposition 3.2(2), we have c t−1 ≤ k; else, (ii) holds with
+q = p + k − 1, we have (p, q) = (t − k + 2, t + 1) and ct−k+2 = k − 2, which is also
+a contradiction, since, by comparing rows for c t+1 and ct in diagramB (λ), we have
+ct−k+2 6= k − 2.
+     (2) Assume k ≥ 4 and r = k − 1. By (1), it suffices to present λ ` n such that
+dB (λ) = k 2 − 2k − 1. Let λ = (λ1 , λ2 , . . . , λk+1 ) where λ1 = k − 1, λ2 = k − 2,
+λi = k − i + 1 for i = 3, 4, . . . , k, and λk+1 = 1. Imitating the proof of Theorem 3.1,
+we can show that dB (λ) = k 2 − 2k − 1.
+
+                                                 15
+                                                                  Cycling Under Repeated Shifts
+
+
+
+
+     So far we have obtained an upper bound for DB (n) in Theorem 4.4. Next we will
+find a lower bound for DB (n) and conjecture this lower bound is the actual value of
+DB (n).
+
+Lower Bound Theorem 4.5. For n ≥ 3 and n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r ≤ k,
+
+                     
+                     
+                      (k − 3 − r)k + r + 2                for   1 ≤ r < b k−1
+                                                                            2 c
+                                                                      k−1
+             DB (n) ≥ n − k + 1                            for   r = b 2 c or b k+1
+                                                                                 2 c
+                     
+                      (r − 2)k + r                               k+1
+                                                           for   b 2 c < r ≤ k.
+
+
+Proof. It suffices to present λ ` n such that dB (λ) is the stated lower bound on DB (n).
+We consider three cases: (Associated arrays for two extremal partitions in Case (1)
+and (3) are illustrated in Figure 8.)
+
+Case (1) 1 ≤ r < b k−1     2 c: Let λ = (λ1 , λ2 , . . . , λk ) where λ1 = k − 2, λi = k − i for
+i = 2, 3, . . . , k − r − 1, and λi = k − i + 1 for i = k − r, k − r + 1, . . . , k. Imitating the
+proof of Theorem 3.1, we can show that dB (λ) = (k − 3 − r)k + r + 2.
+
+Case (2) r = b k−1                   k+1
+                        2 c or b 2 c: Let λ = (1, 1, . . . , 1) with n parts of 1. By applying
+induction on i, we can show that B (1+1+2+3+···+i) (λ) = (n − (1 + 2 + · · ·+ i), i, i − 1, i −
+2, . . . , 2, 1) for i = 1, 2, . . . , k − 2. Thus dB (λ) = 1 + 1 + 2 + 3 + · · · + (k − 2) + (r − 1) =
+n − k + 1.
+
+Case (3) b k+1
+            2 c < r ≤ k: Let λ = (λ1 , λ2 , . . . , λk+1 ) where λi = k−i for i = 1, 2, . . . , k−
+r + 1, λi = k − i + 1 for i = k − r + 2, k − r + 3, . . . , k, and λk+1 = 1. Imitating the
+proof of Theorem 3.1, we can show that dB (λ) = (r − 2)k + r.
+
+Conjecture 4.6. [5] Assume n ≥ 3.
+(1) If n ∈ [1 + 2 + · · · + (K − 1), 1 + 2 + · · · + (K − 1) + b K−2
+                                                                  2 c], then DB (n) strictly
+                                                       2
+     decreases from (K − 1)2 − (K − 1) to d K −2K
+                                              2   e.
+(2) If n ∈ [1 + 2 + · · · + (K − 1) + d K−2
+                                         2 e, 1 + 2 + · · · + (K − 1) + K], then DB (n)
+                                    2
+     strictly increases from d K −2K
+                                 2
+                                     e to K 2 − K .
+
+    Actually Etienne gave K 2 − K in stead of (K − 1)2 − (K − 1) in (1) and gave
+(K + 1)2 − (K + 1) in stead of K 2 − K in (2). Both of these seem to be mistakes.
+    According to [5], this conjecture was confirmed for n = 3, 4, 5, . . . , 55. Here we
+suggest a stronger conjecture that is confirmed for n = 3, 4, 5, . . . , 36 (see Figure 1),
+and also for r = k − 1, k.
+
+Conjecture 4.7. In Theorem 4.5 “DB (n) ≥” can be replaced with “DB (n) =.”
+
+                                                  16
+                                                                             Cycling Under Repeated Shifts
+
+
+
+Case (1)                                                     Case (3)
+                                k -1                                                        k -1
+
+                                                 r                                                          r -2
+
+                                                     1   1                                                         1   1   1
+                                                 1 1                                                         1 1
+                                            . .. ...                                                    . .. ...
+                     all ones              . .                                   all ones              . .
+                                       1    1                                                      1    1
+                                 1     0                                                     1     0
+ Mλ =                    1 0                                      Mλ =               1 0
+                     . . ..                                                      . . ..
+                   .. ..                   all zeroes                          .. ..                   all zeroes
+                 1 0                                                         1 0
+             0   0                                                       1   0
+             0                                                           0
+
+
+
+           Figure 8. Associated arrays for two extremal partitions in Theorem 4.5.
+
+           Section 5. Carolina Solitaire: A Variation of Bulgarian Solitaire
+
+     Let us now define Carolina Solitaire formally, and then derive analogues of some of
+the results for Bulgarian Solitaire. For a positive integer n, we say λ = (λ 1 , λ2 , . . .) is a
+composition of n, and we write λ |= n, provided that the positive integers λ 1 , λ2 , · · · , λs
+(not necessarily in non-increasing order) add up to n and λ i = 0 for i ≥ s + 1. We say
+such λ has s (positive) parts, and we often drop the zeroes, writing λ = (λ 1 , λ2 , . . . , λs ).
+     The shift operation C on λ is the composition of n, denoted C(λ), obtained by
+decreasing each part λi by one, inserting a part = s as the first part, and discarding
+any zero parts. So C (i) (λ) denotes the composition obtained by successively applying
+the shift operation C to λ a total of i times. Starting with a composition λ, we describe
+Carolina Solitaire by repeatedly applying the shift operation C to obtain the sequence
+of compositions
+                                   λ, C(λ), C (2) (λ), . . . .
+
+For a couple of simple examples, we note that λ = (2, 1, 1, 1, 1) |= 6 gives the sequence
+(2, 1, 1, 1, 1), (5, 1), (2, 4), (2, 1, 3), (3, 1, 2), (3, 2, 1), (3, 2, 1), . . ., while λ = (6, 1) |= 7
+yields (6, 1), (2, 5), (2, 1, 4), (3, 1, 3), (3, 2, 2), (3, 2, 1, 1), (4, 2, 1), (3, 3, 1), (3, 2, 2),
+(3, 2, 1, 1), (4, 2, 1), . . . . The first example is fixed at the composition (3, 2, 1) after
+five steps, while the second example reaches a cycle after four steps.
+      We say a composition µ = (µ1 , µ2 , . . . , µs ) |= n is a permutation of a composition
+λ = (λ1 , λ2 , . . . , λs ) |= n if the parts µi of µ are a permutation of the parts λi of λ. We
+notice the connection between Bulgarian Solitaire and Carolina Solitaire: If µ |= n is a
+permutation of λ ` n then, for i > 0, C (i) (µ) |= n is also a permutation of B (i) (λ) ` n.
+
+                                                             17
+                                                                Cycling Under Repeated Shifts
+
+
+
+
+     Similar to B-cyclic partition, dB (λ), and DB (n) in Bulgarian Solitaire, we can
+define C-cyclic composition, dC (λ), and DC (n) in Carolina Solitaire: We say a compo-
+sition µ |= n is C-cyclic if C (i) (µ) = µ for some i > 0. We will prove in Theorem 5.1
+that λ |= n is C-cyclic if and only if λ ` n is B-cyclic . To measure how long it takes
+for Carolina Solitaire to cycle, for λ |= n we let d C (λ) denote the smallest integer i ≥ 0
+such that C (i) (λ) is C-cyclic . Let DC (n) := max{dC (λ) : λ |= n}, so that for any λ |= n,
+DC (n) steps reach a cycle. Trivially, DC (1) = DC (2) = 0 and DC (3) = 3. The values of
+DC (n), 4 ≤ n ≤ 36, are displayed in Figure 9, which we worked out by computer. The
+data are arranged using the representation n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r ≤ k.
+     We will show in Theorem 5.5 that DC (n) = k 2 − 1 whenever n = 1 + 2 + · · · + k.
+When n is a non-triangular number, we will prove in Theorem 5.8 that D C (n) ≤
+k 2 − k − 2 for k ≥ 4. We also present in Theorem 5.9 a lower bound for D C (n) that
+we conjecture is the correct value in general.
+
+
+      k=3        k=4          k=5          k=6          k=7          k=8
+r = 1 DC (4) = 3 DC (7) = 6 DC (11) = 11 DC (16) = 19 DC (22) = 29 DC (29) = 41
+r = 2 DC (5) = 5 DC (8) = 8 DC (12) = 12 DC (17) = 17 DC (23) = 23 DC (30) = 34
+r = 3 DC (6) = 8 DC (9) = 10 DC (13) = 13 DC (18) = 18 DC (24) = 24 DC (31) = 31
+r=4              DC (10) = 15 DC (14) = 18 DC (19) = 21 DC (25) = 25 DC (32) = 32
+r=5                           DC (15) = 24 DC (20) = 28 DC (26) = 32 DC (33) = 36
+r=6                                        DC (21) = 35 DC (27) = 40 DC (34) = 45
+r=7                                                     DC (28) = 48 DC (35) = 54
+r=8                                                                  DC (36) = 63
+
+                            Figure 9. DC (n) for n = 4, 5, . . . , 36.
+
+    Now we start with the characterization of C-cyclic compositions. Similar to the
+associated (0, 1)-array for a partition, we can define the associated (0, 1)-array for a
+composition λ = (λ1 , λ2 , . . . , λs ) |= n:
+                                                     
+                                                         1, if j ≤ s and i ≤ λj ;
+           Mλ = [mij ]∞
+                      i,j=1 ,     where    mij =
+                                                         0, otherwise .
+
+The columns of Mλ correspond to the parts of λ.
+      We notice that MC(λ) can be obtained directly from Mλ by a shifting process on
+a (0, 1)-array: Assume λ = (λ1 , λ2 , . . . , λs ) |= n and its associated array Mλ is given.
+Step 1. Diagonally Circular Shifting: This is the same as Step 1 for Bulgarian
+Solitaire described in Section 2. After Step 1, we obtain a new array, denote it M λ 0 .
+Note that the numbers of 1’s in columns of Mλ 0 are s, λ1 −1, λ2 −1, . . . , λs −1, 0, 0, 0, . . . .
+If λi − 1 = 0 and λi+1 − 1 > 0 for some i, then we need an extra step to obtain M C(λ) .
+Otherwise, Mλ 0 is the array MC(λ) .
+
+                                                18
+                                                                   Cycling Under Repeated Shifts
+
+
+
+
+Step 2. Left Shifting: Whenever there is some integer j such that the j-th column of
+Mλ 0 is an all zero column and the (j + 1)-th column of M λ 0 is not an all zero column,
+we remove the j-th column and shift each column with larger index one column to the
+left. We repeat this shifting until there does not exist such an integer j.
+      Using the shifting process described above and imitating the proof of Theorem
+2.1, we can show
+Theorem 5.1. Let n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r ≤ k. Then λ |= n is C-cyclic if
+and only if λ has the form
+
+                     (k − 1 + δk−1 , k − 2 + δk−2 , . . . , 2 + δ2 , 1 + δ1 , δ0 ),
+                                 Pk−1
+where each δi is 0 or 1 and         i=0 δi = r.
+
+Corollary 5.2. If n = 1 + 2 + · · · + k, then (k, k − 1, . . . , 2, 1) is the unique C-cyclic
+composition of n.
+     By Theorems 2.1 and 5.1, λ |= n is C-cyclic if and only if λ ` n is B-cyclic . So
+the number of cycles for Carolina Solitaire is the same as that for Bulgarian Solitaire.
+     Next we shall prove DC (n) = k 2 − 1 for triangular n.
+Proposition 5.3. Let n = 1 + 2 + · · · + k and λ |= n. Then λ is a permutation of
+(k, k − 1, . . . , 2, 1) if and only if dC (λ) ≤ k − 1.
+
+Proof. If λ is a permutation of (k, k − 1, . . . , 1), it is easy to see that C (k−1) (λ) =
+(k, k − 1, . . . , 1) and dC (λ) ≤ k − 1. If λ is not a permutation of (k, k − 1, . . . , 1), then
+there exists µ = C (i) (λ), i ≥ 0, such that µ is not a permutation of (k, k − 1, . . . , 1)
+and C(µ) is a permutation of (k, k − 1, . . . , 1). We note that µ must be a permutation
+of (k + 1, k − 1, k − 2, k − 3, . . . , 2), and hence C (k−1) (µ) = (k, k − 1, . . . , 3, 1, 2) is not
+C-cyclic . Therefore, dC (µ) ≥ k and dC (λ) ≥ k.
+     Combining Proposition 5.3 with Theorem 2.1, we have the following corollary that
+describes the relation between Carolina Solitaire and Bulgarian Solitaire when n is a
+triangular number.
+Corollary 5.4. Let n = 1 + 2 + · · · + k and let λ |= n be a permutation of λ 0 ` n.
+(1) dC (λ) ≤ k − 1 if and only if dB (λ0 ) = 0.
+(2) If dC (λ) ≥ k then dC (λ) − dB (λ0 ) = k − 1.
+     Combining Corollary 5.4 with Theorem 3.7, we can prove:
+Theorem 5.5. If n = 1 + 2 + · · · + k, then
+
+                                        DC (n) = k 2 − 1.
+
+     Now we turn our attention to the value of DC (n) for non-triangular n.
+
+                                                  19
+                                                              Cycling Under Repeated Shifts
+
+
+
+
+Proposition 5.6. Let λ |= n and n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r < k.
+(1) If λ is a permutation of some C-cyclic composition of n, then d C (λ) ≤ k − 1.
+(2) If λ is not a permutation of any C-cyclic composition of n, then d C (λ) ≥ k − 1.
+
+Proof. (1) Assume λ is a permutation of µ |= n, where µ has the stated form of
+Theorem 2.1. Then we note that C (k−1) (λ) also has the stated form of Theorem 2.1.
+Thus C (k−1) (λ) is C-cyclic and dC (λ) ≤ k − 1.
+     (2) It is easy to verify the statement for k ≤ 3. So we may assume k ≥ 4. If λ
+is not a permutation of any C-cyclic composition of n, then there exists µ = C (i) (λ),
+i ≥ 0, such that µ is not a permutation of any C-cyclic composition and C(µ) is a
+permutation of some C-cyclic composition. By Theorem 2.1, we note that µ must be
+a permutation of (k + δk−1 , k − 2 + δk−3 , k − 3 + δk−4 , . . . , 3 + δ2 , 2 + δ1 , δ0 + δk−2 ),
+where each δi is 0 or 1, δ0 ≤ δk−2 , and (δk−1 , δk−2 ) 6= (0, 1). Then C (k−2) (µ) does not
+have the stated form of Theorem 2.1. So dC (µ) ≥ k − 1, and hence dC (λ) ≥ k − 1.
+
+     We note that from the condition “dC (λ) = k − 1”, we cannot determine whether
+λ is a permutation of some C-cyclic composition of n. For example, when k = 4,
+λ = (3, 2, 4) |= 9 with dC (λ) = 3 is a permutation of the C-cyclic composition (4, 3, 2);
+however, λ = (5, 4) |= 9 with dC (λ) = 3 is not a permutation of any C-cyclic composi-
+tion.
+     Similar to Corollary 5.4 for triangular n, we have the following corollary that
+describes the relation between Carolina Solitaire and Bulgarian Solitaire when n is
+not a triangular number:
+
+Corollary 5.7. Let n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r < k, and let λ |= n be a
+permutation of λ0 ` n.
+(1) If dC (λ) ≤ k − 2 then dB (λ0 ) = 0.
+(2) If dC (λ) ≥ k − 1 then dC (λ) − dB (λ0 ) = k − 2 or k − 1.
+
+Proof. (1) follows immediately from Proposition 5.6(2) and we can prove (2) by ap-
+plying induction on dC (λ). (For the induction basis, we note that if dC (λ) = k − 1,
+then dB (λ0 ) = 0 or 1 by Proposition 5.6.)
+
+     We are now in a position to prove
+
+Theorem 5.8. Let n be non-triangular and n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r < k.
+Then
+(1) DC (n) ≤ k 2 − k − 2 for k ≥ 4.
+(2) Furthermore, equality holds when k ≥ 4 and r = k − 1.
+
+Proof. (1) follows from Theorem 4.4 and Proposition 5.7. To prove (2), it suffices
+to present λ |= n such that dC (λ) = k 2 − k − 2. Let λ = (λ1 , λ2 , . . . , λk+1 ) where
+λ1 = k − 1, λ2 = k − 2, λi = k − i + 1 for i = 3, 4, . . . , k, and λk+1 = 1. Imitating the
+proof of Theorem 3.1, we can show that dC (λ) = k 2 − k − 2.
+
+                                               20
+                                                       Cycling Under Repeated Shifts
+
+
+
+
+     Using the results for DB (n) and considering the relations between dC (λ) and
+dB (λ), we have proven Theorems 5.5 and 5.8 for DC (n). We can also prove these two
+theorems in another way: Note that we have Lemmas 3.3, 3.4, 3.5, 3.6, and 4.3 for
+Bulgarian Solitaire. If we consider analogous lemmas for Carolina Solitaire, then we
+can prove Theorems 5.5 and 5.8 directly.
+     Similar to Theorem 4.5 for DB (n), we have the following “Lower Bound Theorem”
+for DC (n):
+Lower Bound Theorem 5.9. For n ≥ 3 and n = 1 + 2 + · · · + (k − 1) + r, 1 ≤ r ≤ k,
+                 
+                 
+                  (k − 2 − r)k + r      for   1 ≤ r < b k−1
+                                                          2 c
+                 
+                 n − 1                          k−1
+                                         for   b 2 c ≤ r ≤ b k+1
+                                                               2
+                                                                  c and r = 1
+        DC (n) ≥                                 k−1          k+1
+                 
+                  n                     for   b 2 c ≤ r ≤ b 2 c and r ≥ 2
+                 
+                 
+                   (r − 1)k + r − 1      for   b k+1
+                                                  2 c < r ≤ k.
+
+
+Proof. Similar to the proof of Theorem 4.5, we consider three cases: 1 ≤ r < b k−1
+                                                                                2 c,
+ k−1           k+1          k+1
+b 2 c ≤ r ≤ b 2 c, and b 2 c < r ≤ k. For each case, we take the same extremal
+partition (composition) as that in the proof of Theorem 4.5.
+    We conclude this paper by giving the following conjecture that is confirmed for
+n = 3, 4, . . . , 36 (see Figure 9), and also for r = k − 1, k.
+Conjecture 5.10. In Theorem 5.9 “DC (n) ≥” can be replaced with “DC (n) =.”
+
+
+
+                                Acknowledgements
+
+
+     We are grateful to Andrey Andreev for introducing us to Bulgarian Solitaire and
+Carolina Solitaire. We thank Ron Graham for pointing us to the literature on Bulgarian
+Solitaire.
+
+
+
+                                      References
+
+
+ 1. E. Akin and M. Davis, Bulgarian solitaire, Amer. Math. Monthly 4 (1985), 237–250.
+
+ 2. H-J. Bentz, Proof of the Bulgarian Solitaire conjectures, Ars Combin. 23 (1987),
+    151–170.
+
+ 3. J. Brandt, Cycles of partitions, Proc. Amer. Math. Soc. 85 (1982), 483–486.
+
+                                          21
+                                                       Cycling Under Repeated Shifts
+
+
+
+
+ 4. C. Cannings and J. Haigh, Montreal solitaire, J. Combin. Theory Ser. A 60 (1992),
+    50–66.
+
+ 5. G. Etienne, Tableaux de Young et solitaire bulgare, J. Combin. Theory Ser. A 58
+    (1991), 181–197.
+
+ 6. M. Gardner, Mathematical games, Scientific American 249 (1983), 12–21.
+
+ 7. J. D. Hobby and D. Knuth, Problem 1: Bulgarian Solitaire, A Programming and
+    Problem-Solving Seminar, Dept. of Comp. Sci., Stanford University, Stanford
+    (December 1983), 6–13.
+
+ 8. K. Igusa, Solution of the Bulgarian solitaire conjecture, Math. Mag. 58 (1985),
+    259–271.
+
+ 9. R. Servedio and Y. N. Yeh, A bijective proof on circular compositions, Bull. Inst.
+    Math. Acad. Sinica 23 (1995), 283–293.
+
+10. Y. N. Yeh, A remarkable endofunction involving compositions, Studies in Appl.
+    Math. (1995), 419–432
+
+
+
+
+                                         22
+
