@@ -1,0 +1,87 @@
+{
+ "report": {
+  "evidence_verdict": "PASS",
+  "source_issues": [
+   {
+    "code": "SRC_CONTEXT_ONLY",
+    "detail": "src_1 (Pike 2003) is declared abstract-only and 'not used in the proof'; the proof indeed never invokes it. Not checked by me (no browsing); no reliance, so no issue.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "SRC_INTERNAL_REPROVED",
+    "detail": "src_2 (Q_5 draft) is internal prior work; Lemmas 1–7 are restated with proofs in the candidate text, so the argument is self-contained and does not depend on the citation.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "CODE3_NOT_RERUN_REDUNDANT",
+    "detail": "code_3 (C brute force, Computation 2) was not re-run by the orchestrator. It is redundant: code_2 (trusted re-run, 0.6 s, 0 forests) refutes the same finite statement (★₀) for h=0,1,2 with a pruning rule justified in the text (two even vertices at distance 2 share exactly two odd neighbours; if neither is removed they close a 4-cycle), which I checked and is valid. Optional request: compile with cc -O2 and run (claimed 10.3 s) to obtain the promised independent confirmation.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "CODE6_HARNESS_FAILURE",
+    "detail": "code_6 (independent string-based DFS count of the labelling) failed under the orchestrator only because no stdin was supplied (assert on 64 strings). Not evidence of invalidity. Request: re-run with the 64-string list from code_5's stdout piped in; expected output 204 / 12 valleys. Upper bound is already established by the trusted re-run of code_5 (204, 12 valleys) and by the hand count 36·1+28·6.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "HIDDEN_DEPENDENCY",
+    "detail": "code_5, code_7, code_8 import conta_cammini.py (from the Q_5 certificate), which is not among the submitted artifacts. The orchestrator's clean-copy re-run of code_5 and code_7 succeeded, so the module is present in the sandbox; for hand-in it must be shipped with the code.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "CODE8_ARGV",
+    "detail": "code_8 (simulated annealing, exploration only, not part of the proof) needs a seed argument; orchestrator ran it without one. Irrelevant to the bound.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "PRUNING_VALIDITY_CHECKED",
+    "detail": "code_4 part A: DFS pruning |N(B)|≤20 is valid because N(B) is monotone in B and 7+b≤20 for b≤13; enumeration is exhaustive over B∋100000 (WLOG by even translation, transitive on the odd class, after the class-swap WLOG |A|≥b). Part B: R=N(o)∪(≤2 extra even), |H|≤#extra, H drawn from R∪(O∖{o}) — matches the derived constraints |R|=33−q∈{6,7,8}, |H|≤|R|−6. Trusted re-run: 18878 nodes / 0 sets; 254840 pairs / 0 forests.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US",
+     "COMPUTATIONALLY_VERIFIED"
+    ],
+    "evidence_sufficient": true,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": true,
+    "references": [
+     "code_2 (trusted re-run: 0 forests, 0.6 s)",
+     "code_4 (trusted re-run: 0 sets, 0 forests, 3.6 s)",
+     "code_5 (trusted re-run: 204 paths, 12 valleys, labelling printed)"
+    ],
+    "notes": "Lower bound = hand reduction to finite statements (★) refuted by exact integer/bitmask enumeration; all essential computations (code_2, code_4) re-run by the orchestrator with matching output, total <5 s, well under the 10-minute limit; code included and its role explained, as the official rules require. Upper bound = explicit labelling in the required format with trusted exact count. No literature used as proof. Consistency with verified_2/verified_3 is stated but not needed."
+   }
+  ],
+  "reproducibility_notes": "Essential lower-bound computations code_2 and code_4 and upper-bound count code_5 reproduced by the orchestrator (python3, clean copies) with outputs identical to the candidate's claims; exact integer arithmetic throughout, no floating point in the proof path; total runtime ≈4.2 s. Not reproduced: code_3 (C, redundant with code_2), code_6 (needs stdin — pipe code_5's 64-string output), code_8 (needs seed argv; exploration only). For hand-in, bundle conta_cammini.py and cubo6.py with the scripts and give the exact commands (including `cc -O2 verifica_q6_foreste.c` and `python3 verifica_dfs_204.py < ordine.txt`)."
+ },
+ "limitation": null
+}

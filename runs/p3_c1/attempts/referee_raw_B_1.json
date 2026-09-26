@@ -1,0 +1,50 @@
+{
+ "report": {
+  "evidence_verdict": "PASS",
+  "source_issues": [
+   {
+    "code": "SOURCES_NOT_RETRIEVED_CONTEXT_ONLY",
+    "detail": "All four sources (src_1..src_4) are declared 'abstract only — context' with empty excerpts, and none is invoked at any step of the proof. src_2 (arXiv:2607.17194) carries a July-2026 identifier that I cannot check here; I do not infer anything from that. Since the argument is self-contained (Facts/Lemmas 0–4, Theorems A–C, Burnside proved inline), absence of retrieval is not a defect. Recommend the submission either drop these references or label them explicitly as 'not used in the proof; historical context (Brandt 1982 characterisation of cyclic partitions)'.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "COMPUTATION_ILLUSTRATIVE_ONLY",
+    "detail": "code_1 (verifica_cella1.py) is exact integer arithmetic, exhaustive over all partitions of n<=40 and all compositions of n<=14; orchestrator re-run: exit 0, 7.0 s, output matches. It checks Theorem B, Theorem C and Lemma 2 on that finite range; it does not check Lemma 3/4 or Theorem A directly (not needed, as the proof does not rely on it). Potential implementation i*c + c(c+1)/2 equals sum_{j<=c}(i+j) as defined. The candidate correctly labels it 'not part of the proof'.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US",
+     "KNOWN_IN_LITERATURE",
+     "COMPUTATIONALLY_VERIFIED"
+    ],
+    "evidence_sufficient": true,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": false,
+    "references": [
+     "src_1",
+     "src_2",
+     "src_3",
+     "src_4",
+     "code_1"
+    ],
+    "notes": "Full written proof supplied for all four requested statements (reach delta_k, uniqueness of delta_k, all cyclic partitions = S_{k,r} with |S_{k,r}|=C(k,r), number of cycles = necklace formula); Burnside is proved inline rather than cited. The characterisation is classical (Brandt 1982) but no citation is used as a substitute for proof, so the 'citing a published result does not count' rule is satisfied. Computation is exhaustive on n<=40 and confirmed by trusted re-run, but is supplementary only. Mathematical soundness of Lemma 4 / Theorem A is Referee A's remit; I only checked that no step depends on unretrieved sources or on floating-point/sampled computation."
+   }
+  ],
+  "reproducibility_notes": "code_1 reproduced by orchestrator (python3, clean copy): exit 0, 7.0 s, stdout 'OK: n=1..40 e potenziale su composizioni di n<=14, tempo 7.0s'. Well under 10-minute limit; stdlib only (math, itertools, time); deterministic, no seeds. Command: python3 runs/p3_c1/sandbox/verifica_cella1.py."
+ },
+ "limitation": null
+}

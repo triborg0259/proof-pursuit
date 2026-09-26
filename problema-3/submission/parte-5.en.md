@@ -1,0 +1,41 @@
+# Problem 3 — Part 5 — PARTIAL submission draft
+
+**Declared status: PARTIAL.** No complete solution: below is what has been established, the formalization,
+the position with respect to the literature and what remains open. Nothing is claimed as proven beyond what is written.
+
+## 1. Result and scope
+**Official request.**
+## Parte 5 (C5) — Two above a triangular number
+
+**Punteggio:** 8 points · **Valutazione:** Judged
+
+The next family: $n = T_{k-1} + 2$, that is $n = 3, 5, 8, 12, 17, 23, \ldots$ for $k = 2, 3, 4, 5, 6, 7, \ldots$.
+Determine $D_B(T_{k-1} + 2)$ for every $k$, with proof of both bounds. State exactly for which $k$ your formula
+holds, and give the remaining values separately. Your upper bound must be a single argument valid for all $k$ in
+that range, not a separate treatment of each $k$, and you must give the extremal partitions explicitly as a
+function of $k$.
+
+Say also where the straightforward extension of the C3 argument stops: give the bound it does yield, show it is
+strictly weaker than the truth, and identify precisely what your proof supplies in its place.
+
+**What we submit.** No proof.
+
+## 2. Proof
+Same plan; the cell requires a single uniform argument and the analysis of where the extension of part 3 stops.
+
+## 3. Verification: instructions, dependencies, timings
+Available code (Python 3, standard library; every script runs in under a minute):
+- No code yet.
+
+## 4. Sources and contribution
+arXiv literature (deterministic search `tools/cerca_letteratura.sh`, abstracts read, not used as proof):
+- arXiv:math/0401385v2 — Random Bulgarian solitaire (Serguei Popov, 2004); abstract only read.
+- arXiv:1503.00885v1 — The Bulgarian solitaire and the mathematics around it (Vesselin Drensky, 2015); abstract only read.
+- arXiv:2607.17194v1 — A short survey the game Bulgarian solitaire and related games (Romeo Meštrović, 2026); abstract only read.
+- arXiv:1101.1546v3 — Revisiting Toom's proof of Bulgarian Solitaire (Therese A. Hart, Gabriel Khan, Mizan R. Khan, 2011); abstract only read.
+- arXiv:1703.07102v1 — An exponential limit shape of random $q$-proportion Bulgarian solitaire (Kimmo Eriksson, Markus Jonsson abd Jonas Sjöstrand, 2017); abstract only read.
+- arXiv:2208.14496v1 — Limiting behavior in growth of Bulgarian Solitaire orbits (Nhung Pham, 2022); abstract only read.
+As in part 3.
+
+## 5. Limits and unresolved parts
+Everything.

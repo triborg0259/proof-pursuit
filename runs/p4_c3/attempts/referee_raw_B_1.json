@@ -1,0 +1,74 @@
+{
+ "report": {
+  "evidence_verdict": "PASS",
+  "source_issues": [
+   {
+    "code": "SRC_UNVERIFIED_NOT_RELIED",
+    "detail": "src_2 (arXiv:2607.24655) and src_3 (arXiv:2608.15873) are cited 'abstract only' with empty excerpts and no result relied upon. They could not be retrieved here; since the proof is self-contained (Lemma 1 + exhaustive search + trusted rerun) this is not blocking. Recommend removing them from the hand-in or verifying the identifiers before citing, per the project rule against presenting unverified sources as read.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "SRC_PROBLEM_STATEMENT_OK",
+    "detail": "src_1 is the problem statement itself; criterion (*) is given by the problem and used as stated. No external mathematical result is relied upon.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "REPRODUCED_BY_ORCHESTRATOR",
+    "detail": "Trusted rerun of code_1 reproduced all node counts (7118, 20241, 56208, 234719, 806717, 3523544), vertex count 1343 and zero survivors for k=3..8 in 2.5 s; trusted rerun of code_2 reproduced modulus-tuple counts (51, 77, 221, 293, 1249, 1668) and zero families in 3.0 s. Both far below the 10-minute limit. Arithmetic is exact Python integers (math.gcd, %).",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "CODE_MATCHES_CERTIFICATE",
+    "detail": "Read code_1: edge predicate is exactly 'gcd(m,m')<=soglia and (a-b)%gcd!=0' with soglia=k-1; vertex set is {(a,m): m|420, m>=2, 0<=a<m}; recursion uses candidati & adj[j] with adj[j] containing only indices > j, so every increasing pairwise-adjacent k-tuple is visited once; node count = calls with nonempty prefix. No pruning beyond the edge definition, as claimed. Lemma 1 (reduction mod 420, gcd preserved because every g<=7 divides 420, disjointness preserved since g|m_i', g|m_j') is checked and correct, so the finite set is justified.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "NONVACUITY_NOT_RERUN",
+    "detail": "The non-vacuity outputs (non_vacuita.txt, non_vacuita_k8_N840.txt, impl2_non_vacuita.txt) were not among the trusted observations. Not required for cell 3, so not blocking; if these are to be cited for cell 5 later, request an orchestrator rerun of mode non_vacuita.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US",
+     "COMPUTATIONALLY_VERIFIED",
+     "REPRODUCED_BY_US"
+    ],
+    "evidence_sufficient": true,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": true,
+    "references": [
+     "src_1",
+     "code_1",
+     "code_2",
+     "trusted_observations[0]",
+     "trusted_observations[1]"
+    ],
+    "notes": "Computation is admissible under the official rules: code included, <10 min, exhaustive over a finite set (V, |V|=1343) that the candidate's own Lemma 1 reduces the problem to. Certificate items 1-5 present: finite set with proof; no pruning beyond edge definition (stated and justified); node counts and wall clock per size; rerun reproducing counts (candidate's run2 and orchestrator's trusted rerun agree); zero survivors so nothing to decide. Independent second implementation (different method) agrees on zero outcomes. Hand proofs for k=3,4 also checked and hold. No forbidden literature dependency."
+   }
+  ],
+  "reproducibility_notes": "Command: `.venv/bin/python runs/p4_c3/sandbox/ricerca_clique_420.py certificato` (exact integers, no seeds, deterministic). Orchestrator rerun matched every count in the candidate's table exactly; timings 2.5 s (impl 1) and 3.0 s (impl 2) on a laptop. Environment stated: Python 3.14.7, Apple M4."
+ },
+ "limitation": null
+}

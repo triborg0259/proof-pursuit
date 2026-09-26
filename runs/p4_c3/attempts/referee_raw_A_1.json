@@ -1,0 +1,13 @@
+{
+ "report": {
+  "mathematical_verdict": "PASS",
+  "first_fatal_error": null,
+  "accepted_mathematical_claims": [
+   "main"
+  ],
+  "unproved_claims": [],
+  "missing_cases": [],
+  "math_notes": "Lemma 1 (reduction m_i' = gcd(m_i,420), a_i' = a_i mod m_i') is correct: for g_ij in [2,7], g_ij | 420 so gcd(m_i',m_j') = gcd(g_ij,420) = g_ij; g_ij | m_i' gives m_i' >= 2; a_i'-a_j' ≡ a_i-a_j (mod g_ij) preserves disjointness via (*); reduced pairs are distinct. Only the direction counterexample ⇒ k-clique in G_k is needed and it is proved. |V| = σ(420)-1 = 1343 checked (σ(420)=7·4·6·8). Clique enumeration: invariant verified against code_1 (adj[j] has only indices > j; recursion with candidati & adj[j]); every increasing pairwise-adjacent k-tuple visited exactly once; no pruning beyond the edge definition; exact integer arithmetic. Orchestrator re-runs reproduce all node counts and 0 survivors for k=3..8; independent code_2 (moduli multisets + residue CSP with valid translation normalisation a_1=0) also gives 0. Hand proofs for k=3 (parity) and k=4 (E/T argument, step (d) checked) are correct. k=2 is covered by (P1) (all gcds >= 2), which the submission proves, so the target 'every k <= 8' is established. The computation is exhaustive over a finite set justified by a proved reduction, so it counts as proof rather than experiment."
+ },
+ "limitation": null
+}

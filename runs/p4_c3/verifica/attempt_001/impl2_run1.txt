@@ -1,0 +1,6 @@
+k=3 soglia_gcd<=2 multinsiemi_moduli=51 famiglie(a1=0)=0 tempo=0.00s
+k=4 soglia_gcd<=3 multinsiemi_moduli=77 famiglie(a1=0)=0 tempo=0.01s
+k=5 soglia_gcd<=4 multinsiemi_moduli=221 famiglie(a1=0)=0 tempo=0.02s
+k=6 soglia_gcd<=5 multinsiemi_moduli=293 famiglie(a1=0)=0 tempo=0.07s
+k=7 soglia_gcd<=6 multinsiemi_moduli=1249 famiglie(a1=0)=0 tempo=0.43s
+k=8 soglia_gcd<=7 multinsiemi_moduli=1668 famiglie(a1=0)=0 tempo=2.43s

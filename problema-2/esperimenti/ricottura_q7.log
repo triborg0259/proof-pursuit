@@ -1,2 +1,5 @@
 d=7 partenza dalle stelle: 464
   ricottura dalle stelle -> 464
+  ricottura da caso seed 0 -> 606
+  ricottura da caso seed 1 -> 464
+tempo 31s

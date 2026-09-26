@@ -1,0 +1,62 @@
+% Problema 2, parte 5: campi da incollare nella piattaforma (uno per sezione)
+
+% ===== CAMPO: 1. Result and scope =====
+\textbf{Official request.} \#\# Parte 5 (C5) --- Bounds for \(U(Q_9)\)
+
+\textbf{Punteggio:} 8 points · \textbf{Valutazione:} Judged
+
+\(Q_9\) has \(512\) vertices and \(2304\) edges. The best bounds known
+to the organisers are \[
+2368 \le U(Q_9) \le 2400;
+\] the lower bound is unpublished. Improve either one: prove that
+\(U(Q_9) \ge 2369\), or exhibit a labelling of \(Q_9\) with at most
+\(2399\) uphill paths.
+
+\textbf{What we submit.} No improvement of the known bounds.
+Contribution: the star construction with an even code of distance 4 and
+size 20 gives exactly the known upper bound; proof that within this
+family one cannot go lower.
+
+
+% ===== CAMPO: 2. Proof =====
+Star construction (see part 3): total \(=(d+1)2^{d-1}-(d-1)|R|\) with
+\(R\) an even code of distance 4. For \(d=9\), \(|R|\le A(8,3)=20\) and
+the minimum total of the family is \(2560-160=2400\), i.e.~the
+organisers' upper bound. Hence the known bound is (in all likelihood)
+precisely this construction, and improving it requires a forest of
+non-peaks that is not made of stars (larger trees, reducing the number
+of components below 96). Set up: search for independent sets \(P\) of
+\(Q_9\) with \(|P|<236\) and acyclic complement; not executed.
+
+
+% ===== CAMPO: 3. Verification: instructions, dependencies, timings =====
+Available code (Python 3, standard library; every script runs in under a
+minute): - \texttt{problema-2/certificati/costruzione\_88.py} -
+\texttt{problema-2/certificati/q3\_esaustivo.py} -
+\texttt{problema-2/certificati/q3\_verifica\_indipendente.py} -
+\texttt{problema-2/certificati/q4\_branch\_and\_bound.py} -
+\texttt{problema-2/certificati/q4\_ricerca\_locale.py} -
+\texttt{problema-2/certificati/q4\_verifica\_etichettatura\_indipendente.py}
+- \texttt{problema-2/certificati/q5\_stella\_verifica\_indipendente.py}
+- \texttt{problema-2/certificati/verifica\_dfs\_88.py} -
+\texttt{problema-2/certificati/verifica\_etichettatura\_q3.py} -
+\texttt{problema-2/certificati/verifica\_etichettatura\_q4.py} -
+\texttt{problema-2/certificati/verifica\_q5\_bipartita.py} -
+\texttt{problema-2/certificati/verifica\_q5\_indipendenti.py} -
+\texttt{problema-2/esperimenti/conta\_cammini.py} -
+\texttt{problema-2/esperimenti/costruzione\_stelle.py} -
+\texttt{problema-2/esperimenti/ricottura\_controllo.py}
+
+
+% ===== CAMPO: 4. Sources and contribution =====
+arXiv literature (deterministic search
+\texttt{tools/cerca\_letteratura.sh}, abstracts read, not used as
+proof): - arXiv:1412.3893v1 --- The competition between simple and
+complex evolutionary trajectories in asexual populations (Ian E. Ochs,
+Michael M. Desai, 2014); abstract only read. No arXiv work on uphill
+paths on the hypercube: the problem appears to be unpublished.
+
+
+% ===== CAMPO: 5. Limits and unresolved parts =====
+Both the lower and the upper bound.
+

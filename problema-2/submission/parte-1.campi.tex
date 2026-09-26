@@ -1,18 +1,17 @@
 % Problema 2, parte 1: campi da incollare nella piattaforma (uno per sezione)
 
-% ===== CAMPO: 1. Risultato e ambito =====
-\(U(Q_3) = 14\) e \(U(Q_4) = 34\). Etichettatura ottima di \(Q_4\)
-(ordine crescente di etichetta; due valli, \texttt{0000} e
-\texttt{1111}):
+% ===== CAMPO: 1. Result and scope =====
+\(U(Q_3) = 14\) and \(U(Q_4) = 34\). Optimal labelling of \(Q_4\)
+(increasing label order; two valleys, \texttt{0000} and \texttt{1111}):
 \texttt{0000,\ 1111,\ 0111,\ 1101,\ 1110,\ 1011,\ 0001,\ 1000,\ 0010,\ 0100,\ 1001,\ 0110,\ 0011,\ 1010,\ 0101,\ 1100}.
 
-Per \(Q_3\): Etichettatura ottima (ordine crescente di etichetta;
-posizione \(i\) della stringa = coordinata \(i\); la convenzione è
-irrilevante perché le permutazioni di coordinate sono automorfismi di
-\(Q_3\)): \texttt{000,\ 100,\ 010,\ 110,\ 101,\ 011,\ 001,\ 111}.
+For \(Q_3\): optimal labelling (increasing label order; position \(i\)
+of the string = coordinate \(i\); the convention is irrelevant because
+coordinate permutations are automorphisms of \(Q_3\)):
+\texttt{000,\ 100,\ 010,\ 110,\ 101,\ 011,\ 001,\ 111}.
 
 
-% ===== CAMPO: 2. Dimostrazione =====
+% ===== CAMPO: 2. Proof =====
 \subparagraph{Result}\label{result}
 
 \[U(Q_3) = 14.\]
@@ -165,8 +164,8 @@ second script \texttt{verifica\_etichettatura\_q3.py} checks only the
 submitted labelling (bijection check, valleys, per-vertex \(p\), total
 14) and prints the table above.
 
-\subparagraph{\texorpdfstring{2b. Dimostrazione per
-\(Q_4\)}{2b. Dimostrazione per Q\_4}}\label{b.-dimostrazione-per-q_4}
+\subparagraph{\texorpdfstring{2b. Proof for
+\(Q_4\)}{2b. Proof for Q\_4}}\label{b.-proof-for-q_4}
 
 \paragraph{\texorpdfstring{\(U(Q_4)=34\)}{U(Q\_4)=34}}\label{uq_434}
 
@@ -394,61 +393,63 @@ proof)}\label{computational-checks-exact-integer-arithmetic-independent-of-the-p
 \end{enumerate}
 
 
-% ===== CAMPO: 3. Verifica: istruzioni, dipendenze, tempi =====
-Tre programmi indipendenti, solo Python 3 standard (interi esatti),
-ciascuno enumera tutte le \(8!=40320\) etichettature: -
-\texttt{problema-2/certificati/q3\_esaustivo.py} --- DFS esplicita dei
-cammini + programmazione dinamica di Lemma 1, con \texttt{assert} di
-uguaglianza su ogni etichettatura. Tempo misurato: 0.37 s. -
+% ===== CAMPO: 3. Verification: instructions, dependencies, timings =====
+Three independent programs, standard Python 3 only (exact integers),
+each enumerating all \(8!=40320\) labellings: -
+\texttt{problema-2/certificati/q3\_esaustivo.py} --- explicit DFS of the
+paths + dynamic programming of Lemma 1, with an equality \texttt{assert}
+on every labelling. Measured time: 0.37 s. -
 \texttt{problema-2/certificati/q3\_verifica\_indipendente.py} ---
-scritto separatamente, metodo diverso: costruzione esplicita livello per
-livello di tutte le sequenze crescenti a partire dalle valli. Tempo
-misurato: 0.20 s. -
+written separately, different method: explicit level-by-level
+construction of all increasing sequences starting from the valleys.
+Measured time: 0.20 s. -
 \texttt{problema-2/certificati/verifica\_etichettatura\_q3.py} ---
-controlla la sola etichettatura consegnata (biiezione, valli, \(p(v)\)
-per vertice, totale 14). Comando:
+checks only the submitted labelling (bijection, valleys, \(p(v)\) per
+vertex, total 14). Command:
 \texttt{python3\ problema-2/certificati/q3\_verifica\_indipendente.py}
-(e analoghi). Python 3.14.7, macOS. Tutti riportano: minimo 14, 7104
-etichettature ottime, distribuzione senza valori 13 e 15.
+(and analogous). Python 3.14.7, macOS. All report: minimum 14, 7104
+optimal labellings, distribution with no values 13 and 15.
 
-Per \(Q_4\) (la prova del lower bound è a mano; il calcolo è solo
-conferma): - \texttt{verifica\_etichettatura\_q4.py} (Researcher, due
-metodi) e \texttt{q4\_verifica\_etichettatura\_indipendente.py} (scritto
-a parte, costruzione esplicita dei cammini): entrambi 34 cammini, valli
-\texttt{0000} e \texttt{1111}, biiezione verificata. -
-\texttt{q4\_branch\_and\_bound.py\ SOGLIA}: branch-and-bound esatto con
-riduzione per simmetria (384 automorfismi); con soglia 34 nessuna
-etichettatura sotto 34 (47978 nodi, 0.3 s); con soglia 35 trova
-etichettature con 34 (54.8M nodi, 157 s). La correttezza della riduzione
-è argomentata nello script ma la cella non ne dipende. -
-\texttt{q4\_ricerca\_locale.py}: simulated annealing, solo esplorazione
-(12 seed, miglior valore 34 in ogni run).
-
-
-% ===== CAMPO: 4. Fonti e contributo =====
-Nessuna fonte esterna usata. L'argomento del lower bound generalizza
-l'idea di IMO 2022 P6 (ogni vertice è fine di almeno un cammino;
-\(p(v)\ge\deg^-(v)\)), aggiungendo l'ostruzione specifica di \(Q_3\)
-(Proposizione 4). Prova prodotta dal Researcher automatico (Claude Fable
-5.1, run \texttt{runs/p2\_q3/attempts/attempt\_001.json}) e revisionata
-a mano passo per passo; verifica numerica indipendente scritta a parte.
+For \(Q_4\) (the lower-bound proof is by hand; the computation is
+confirmation only): - \texttt{verifica\_etichettatura\_q4.py}
+(Researcher, two methods) and
+\texttt{q4\_verifica\_etichettatura\_indipendente.py} (written
+separately, explicit construction of the paths): both 34 paths, valleys
+\texttt{0000} and \texttt{1111}, bijection verified. -
+\texttt{q4\_branch\_and\_bound.py\ SOGLIA}: exact branch-and-bound with
+symmetry reduction (384 automorphisms); with threshold 34 no labelling
+below 34 (47978 nodes, 0.3 s); with threshold 35 it finds labellings
+with 34 (54.8M nodes, 157 s). The soundness of the reduction is argued
+in the script but the cell does not depend on it. -
+\texttt{q4\_ricerca\_locale.py}: simulated annealing, exploration only
+(12 seeds, best value 34 in every run).
 
 
-% ===== CAMPO: 5. Limiti e osservazioni =====
+% ===== CAMPO: 4. Sources and contribution =====
+No external sources used. The lower-bound argument generalises the idea
+of IMO 2022 P6 (every vertex is the end of at least one path;
+\(p(v)\ge\deg^-(v)\)), adding the obstruction specific to \(Q_3\)
+(Proposition 4). Proof produced by the automatic Researcher (Claude
+Fable 5.1, run \texttt{runs/p2\_q3/attempts/attempt\_001.json}) and
+reviewed by hand step by step; independent numerical verification
+written separately.
+
+
+% ===== CAMPO: 5. Limits and unresolved parts =====
 \begin{itemize}
 \tightlist
 \item
-  Nessuna parte irrisolta per C1.
+  No unresolved part for C1.
 \item
-  \(U(Q_3)=|E|+2\) e \(U(Q_4)=|E|+2\). L'argomento di parità di \(Q_4\)
-  (Step 3--4) si generalizza: il totale \(|E|+1\) è impossibile su
-  \(Q_d\) quando \((d-1)\nmid 2^{d-1}(d-2)+1\), cioè per ogni \(d\) da 3
-  a 10 almeno. Quindi \(U(Q_d)\ge|E|+2\) in quel range: bound debole
-  rispetto ai 2368 noti per \(Q_9\), ma gratuito.
+  \(U(Q_3)=|E|+2\) and \(U(Q_4)=|E|+2\). The parity argument for \(Q_4\)
+  (Steps 3--4) generalises: the total \(|E|+1\) is impossible on \(Q_d\)
+  when \((d-1)\nmid 2^{d-1}(d-2)+1\), i.e.~for every \(d\) from 3 to 10
+  at least. Hence \(U(Q_d)\ge|E|+2\) in that range: a weak bound
+  compared with the known 2368 for \(Q_9\), but free.
 \item
-  L'ottimo di \(Q_4\) ha DUE valli e realizza esattamente
-  \(|E|+\#\text{valli}\): per i cubi grandi conviene cercare
-  etichettature con poche valli in cui quasi tutti i vertici abbiano
+  The optimum of \(Q_4\) has TWO valleys and attains exactly
+  \(|E|+\#\text{valleys}\): for large cubes it is worth looking for
+  labellings with few valleys in which almost all vertices have
   \(p(v)=\max(1,\deg^-(v))\).
 \end{itemize}
 

@@ -1,0 +1,22 @@
+k=3 soglia_gcd<=3 vertici=1343 nodi=20241 sopravvissuti=6688 tempo=0.11s
+   partizione banale trovata: True
+k=4 soglia_gcd<=4 vertici=1343 nodi=56208 sopravvissuti=7917 tempo=0.12s
+   partizione banale trovata: True
+k=5 soglia_gcd<=5 vertici=1343 nodi=234719 sopravvissuti=17856 tempo=0.20s
+   partizione banale trovata: True
+k=6 soglia_gcd<=6 vertici=1343 nodi=806717 sopravvissuti=17329 tempo=0.43s
+   partizione banale trovata: True
+k=7 soglia_gcd<=7 vertici=1343 nodi=3523544 sopravvissuti=34056 tempo=1.52s
+   partizione banale trovata: True
+k=8 soglia_gcd<=8 vertici=1343 nodi=3523544 sopravvissuti=0 tempo=1.48s
+Traceback (most recent call last):
+  File "/Users/thomastumini/proof-pursuit/runs/p4_c3/sandbox/ricerca_clique_420.py", line 109, in <module>
+    main()
+    ~~~~^^
+  File "/Users/thomastumini/proof-pursuit/runs/p4_c3/sandbox/ricerca_clique_420.py", line 102, in main
+    atteso = tuple(vertici.index((a, k)) for a in range(k))
+             ^^^^^
+  File "/Users/thomastumini/proof-pursuit/runs/p4_c3/sandbox/ricerca_clique_420.py", line 102, in <genexpr>
+    atteso = tuple(vertici.index((a, k)) for a in range(k))
+                   ~~~~~~~~~~~~~^^^^^^^^
+ValueError: list.index(x): x not in list

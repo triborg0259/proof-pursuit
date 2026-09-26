@@ -1,2 +1,6 @@
 d=6 partenza dalle stelle: 204
   ricottura dalle stelle -> 204
+  ricottura da caso seed 0 -> 204
+  ricottura da caso seed 1 -> 204
+  ricottura da caso seed 2 -> 204
+tempo 47s

@@ -1,0 +1,13 @@
+{
+ "report": {
+  "mathematical_verdict": "PASS",
+  "first_fatal_error": null,
+  "accepted_mathematical_claims": [
+   "main"
+  ],
+  "unproved_claims": [],
+  "missing_cases": [],
+  "math_notes": "Checked every step adversarially. Fact 0 (λ^ε is a partition of n, injectivity via zero-padding to length k, S_{k,k}={δ_k}) is correct. Lemma 1: the computation of B(λ^ε) — parts k-(i+1)+ε_i for i≤k-1 (the i=k-1 term ε_{k-1} kept iff 1), the part 1 from ε_k discarded, new part s=k-1+ε_k — gives exactly the numbers k-i'+(σε)_{i'}, so B is the rotation σ on words; B^k=id on S_{k,r}. Part II: the ordered dynamics B̃ has the same multiset as B, so (1) holds. Lemma 2: the identity Φ(s,c_1-1,…,c_s-1)=Φ(c) is verified by the substitution j'=j+1 (column i+1, height j ↦ column i, height j+1, same diagonal; the new first entry supplies the height-1 cells); deleting zeros decreases Φ by Σ z_q e_q, equality iff zeros are terminal, i.e. iff {i:c_i=1} is a terminal segment. Monotone non-negative integer potential ⇒ steady regime from t_0. Lemma 3: cell set of e is ρ(C_t) and terminal zeros do not shift entries, so C_{t+1}=ρ(C_t) for t≥t_0; ρ is a bijection so (3) is an iff. Lemma 4 (hole lemma): constraint (ii) follows from gap-freeness (hole at (d-1,1) ⇒ s≤d-2 ⇒ all columns ≤d-2); Case A (u≤D-d) yields card column u+d-1≥d when the hole returns to column d-1, contradicting (ii); Case B (u≥D-d+1) yields a strictly smaller positive column u'=u-(D-d) with the no-further-wrap check u'≤u≤d-2<D-1 valid; infinite descent impossible, so Case A eventually occurs. Theorem A: with K the largest m with diagonals 2..m full, diagonal K+1 has a hole, Lemma 4 empties all higher diagonals, so column heights are K-i+ε_i, n=T_{K-1}+r' with 0≤r'≤K-1; the two cases r'≥1 (K=k, r'=r) and r'=0 (n=T_{K-1}, k=K-1, c^{(t)}=δ_k) are handled correctly and cover all n. Theorem B: cyclic ⇒ λ=B^{qi-t}(B^tλ)∈S_{k,r} by invariance; count C(k,r). Theorem C: cycles of B on S_{k,r} ↔ σ-orbits on W_{k,r} via injectivity; Burnside proved via orbit–stabiliser; |Fix(σ^j)| = C(g, rg/k) if (k/g)|r else 0 with g=gcd(j,k), and #{j: gcd(j,k)=g}=φ(k/g); substitution d=k/g gives N(k,r)=(1/k)Σ_{d|gcd(k,r)} φ(d) C(k/d,r/d), and N(k,k)=1. All parts of the cell (every partition of T_k reaches δ_k; δ_k unique cyclic partition; all cyclic partitions of T_{k-1}+r determined explicitly; number of cycles determined) are established with proof. The brute-force check (n≤40) is corroboration only and is not relied upon by the argument."
+ },
+ "limitation": null
+}

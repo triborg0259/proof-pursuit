@@ -3,7 +3,7 @@
 campi_latex.py — da una bozza di consegna (problema-N/submission/parte-K.md) produce i CAMPI LaTeX da incollare
 nella piattaforma, uno per sezione: risultato, dimostrazione, verifica, fonti, limiti.
 Perché: la piattaforma chiede la consegna a campi; il Markdown con formule viene reso in LaTeX con pandoc.
-Uso: .venv/bin/python tools/campi_latex.py 1 1   → problema-1/submission/parte-1.campi.tex
+Uso: .venv/bin/python tools/campi_latex.py 1 1   → problema-1/submission/parte-1.campi.tex (dalla versione .en.md)
 """
 import re
 import subprocess
@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[1]
 def sezioni(testo_md):
     """Spezza la bozza nelle sezioni '## n. Titolo' → [(titolo, corpo)]."""
     # solo le cinque sezioni canoniche della consegna: i titoli interni della prova (es. "## 1. The excess identity") restano nel corpo
-    pezzi = re.split(r"(?m)^## (\d\.\s*(?:Risultato|Dimostrazione|Verifica|Fonti|Limiti)[^\n]*)\n", testo_md)
+    pezzi = re.split(r"(?m)^## (\d\.\s*(?:Result|Proof|Verification|Sources|Limits|Risultato|Dimostrazione|Verifica|Fonti|Limiti)[^\n]*)\n", testo_md)
     return [(pezzi[i].strip(), pezzi[i + 1].strip()) for i in range(1, len(pezzi) - 1, 2)]
 
 
@@ -28,8 +28,10 @@ def md_a_tex(corpo):
 
 
 def main(n, k):
-    src = ROOT / f"problema-{n}" / "submission" / f"parte-{k}.md"
-    out = src.with_suffix(".campi.tex")
+    src = ROOT / f"problema-{n}" / "submission" / f"parte-{k}.en.md"   # la piattaforma vuole l'inglese
+    if not src.exists():
+        src = src.with_name(f"parte-{k}.md")
+    out = ROOT / f"problema-{n}" / "submission" / f"parte-{k}.campi.tex"
     blocchi = [f"% ===== CAMPO: {titolo} =====\n{md_a_tex(corpo)}\n" for titolo, corpo in sezioni(src.read_text(encoding="utf-8"))]
     out.write_text(f"% Problema {n}, parte {k}: campi da incollare nella piattaforma (uno per sezione)\n\n" + "\n".join(blocchi), encoding="utf-8")
     print(f"scritto {out} ({len(blocchi)} campi)")

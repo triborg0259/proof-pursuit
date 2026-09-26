@@ -1,24 +1,22 @@
 % Problema 2, parte 2: campi da incollare nella piattaforma (uno per sezione)
 
-% ===== CAMPO: 1. Risultato e ambito =====
-\(U(Q_5) = 88 = |E(Q_5)| + 8\). Etichettatura ottima (ordine crescente
-di etichetta; posizione \(i\) della stringa = coordinata \(i\);
-convenzione irrilevante perché le permutazioni di coordinate sono
-automorfismi di \(Q_5\)), con 8 valli:
+% ===== CAMPO: 1. Result and scope =====
+\(U(Q_5) = 88 = |E(Q_5)| + 8\). Optimal labelling (increasing label
+order; position \(i\) of the string = coordinate \(i\); the convention
+is irrelevant because coordinate permutations are automorphisms of
+\(Q_5\)), with 8 valleys:
 \texttt{00000,\ 11110,\ 11001,\ 10101,\ 01101,\ 10011,\ 01011,\ 00111}
-sono le etichette 1--8 (le valli), seguite dalle foglie e dai picchi
-come nella lista completa in §2 (tabella dell'upper bound). La lista
-completa a 32 elementi è prodotta e verificata da
-\texttt{certificati/costruzione\_88.py} e
-\texttt{certificati/verifica\_dfs\_88.py}.
+are labels 1--8 (the valleys), followed by the leaves and the peaks as
+in the complete list in §2 (upper bound table). The complete 32-element
+list is produced and verified by \texttt{certificati/costruzione\_88.py}
+and \texttt{certificati/verifica\_dfs\_88.py}.
 
 
-% ===== CAMPO: 2. Dimostrazione =====
-\emph{(Testo del tentativo
-\texttt{runs/p2\_q5/attempts/attempt\_001.json} del Researcher, riletto
-lemma per lemma dal team; le verifiche computazionali sono state
-rieseguite dall'orchestratore in
-\texttt{runs/p2\_q5/verifica/attempt\_001/}.)}
+% ===== CAMPO: 2. Proof =====
+\emph{(Text of the Researcher's attempt
+\texttt{runs/p2\_q5/attempts/attempt\_001.json}, re-read lemma by lemma
+by the team; the computational verifications were re-executed by the
+orchestrator in \texttt{runs/p2\_q5/verifica/attempt\_001/}.)}
 
 \paragraph{\texorpdfstring{\(U(Q_5) = 88\)}{U(Q\_5) = 88}}\label{uq_5-88}
 
@@ -267,9 +265,9 @@ labellings (\texttt{ricottura\_q5.py}, 200k swap moves per seed, exact
 scoring) never went below \(88\) in any seed run so far (evidence only).
 
 
-% ===== CAMPO: 3. Verifica: istruzioni, dipendenze, tempi =====
-Dipendenze: Python 3 standard, nessun pacchetto. Tutti gli script usano
-aritmetica intera esatta.
+% ===== CAMPO: 3. Verification: instructions, dependencies, timings =====
+Dependencies: standard Python 3, no packages. All scripts use exact
+integer arithmetic.
 
 \begin{verbatim}
 cd problema-2/certificati
@@ -280,54 +278,53 @@ python3 verifica_q5_bipartita.py          # (★) confutata senza riduzione per 
 python3 q5_stella_verifica_indipendente.py  # (★) confutata con metodo diverso (potatura delle foglie): 3672 / 73440 / 0 (0.40 s)
 \end{verbatim}
 
-Tempi misurati su portatile (riesecuzione fidata dell'orchestratore,
-2026-09-26). Codice del tentativo: - \texttt{code\_1} (python, rigore
+Timings measured on a laptop (trusted re-execution by the orchestrator,
+2026-09-26). Code of the attempt: - \texttt{code\_1} (python, rigour
 \texttt{exact}): Exact count of uphill paths of a labelling of Q\_d via
 the recursion p(v) = {[}valley{]} + sum of p over lower neighbours
-(shared module). - \texttt{code\_2} (python, rigore \texttt{exact}):
+(shared module). - \texttt{code\_2} (python, rigour \texttt{exact}):
 Certificate 1 for the lower bound: enumerate all independent 12-sets of
 Q\_5 containing vertex 0 (1377 sets, symmetry reduction by XOR
-translations) and, for eac - \texttt{code\_3} (python, rigore
+translations) and, for eac - \texttt{code\_3} (python, rigour
 \texttt{exact}): Certificate 2 for the lower bound, independent method
 and no symmetry reduction: all independent 12-sets as A ∪ B (A ⊆ even
 class over all 2\^{}16 bitmasks, B ⊆ od - \texttt{code\_4} (python,
-rigore \texttt{exact}): Builds the 88-path labelling (peaks = even
+rigour \texttt{exact}): Builds the 88-path labelling (peaks = even
 vertices minus 00000, 11110) and counts exactly with the recursion:
 prints 88, the 8 valleys and the 32-vertex order. - \texttt{code\_5}
-(python, rigore \texttt{exact}): Independent verification of the
+(python, rigour \texttt{exact}): Independent verification of the
 submitted labelling by explicit DFS enumeration of every uphill path
 from each valley (string-based, no shared code): prints 88. -
-\texttt{code\_6} (python, rigore \texttt{exact}): Sanity check (evidence
+\texttt{code\_6} (python, rigour \texttt{exact}): Sanity check (evidence
 only, not part of the proof) of the identity T = 80 + \#valleys + X and
 of X ∈ \{0\} ∪ {[}3,∞) on 200000 random labellings of Q\_5 (all asserts
-- \texttt{code\_7} (python, rigore \texttt{float\_exploration\_only}):
+- \texttt{code\_7} (python, rigour \texttt{float\_exploration\_only}):
 Simulated annealing over labellings (exploration only): best value found
 88 in every seed run (seeds 0-5 in a first run, seeds 0-3 in a second
 run; 200k swap mo
 
 
-% ===== CAMPO: 4. Fonti e contributo =====
+% ===== CAMPO: 4. Sources and contribution =====
 \begin{itemize}
 \tightlist
 \item
-  Lemma di conteggio \(p(v)=[\text{valle}]+\sum_{u\to v}p(u)\) e bound
-  \(\#\ge|E|+\#\text{valli}\): nostri (parte 1, ridimostrati qui).
+  Counting lemma \(p(v)=[\text{valle}]+\sum_{u\to v}p(u)\) and bound
+  \(\#\ge|E|+\#\text{valli}\): ours (part 1, re-proved here).
 \item
-  Contesto: IMO 2022 P6 (griglia), citato solo come contesto; nessun
-  risultato preso dalla letteratura.
+  Context: IMO 2022 P6 (grid), cited only as context; no result taken
+  from the literature.
 \item
-  Ricerca arXiv deterministica (\texttt{runs/p2\_q5/literature.json},
-  \texttt{problema-2/fonti/arxiv.json}): nessun lavoro sui cammini in
-  salita sull'ipercubo; il problema risulta inedito. Contributo
-  interamente nostro.
+  Deterministic arXiv search (\texttt{runs/p2\_q5/literature.json},
+  \texttt{problema-2/fonti/arxiv.json}): no work on uphill paths on the
+  hypercube; the problem appears to be new. Contribution entirely ours.
 \end{itemize}
 
 
-% ===== CAMPO: 5. Limiti e parti irrisolte =====
+% ===== CAMPO: 5. Limits and unresolved parts =====
 \begin{itemize}
 \tightlist
 \item
-  Gap dichiarati dal Researcher nel tentativo:
+  Gaps declared by the Researcher in the attempt:
 \item
   The lower bound is computer-assisted at one point: statement (★) (no
   independent 12-set I and vertex u with Q\_5 − (I ∪ \{u\}) acyclic) is
@@ -353,15 +350,15 @@ run; 200k swap mo
   the proof; the second SA run (20 seeds) was still running when this
   report was written (4 seeds completed, all at 88).
 \item
-  Il giudice B ha classificato tutte le osservazioni su fonti e calcoli
-  come INFO (fonti di contesto non caricate e non necessarie; versione
-  di Python non registrata: 3.14, libreria standard; tempi riprodotti
-  0.44--0.71 s). Nei primi due run l'unico punto MISSING riguardava le
-  regole ufficiali, poi passate alla lettera dal preambolo
-  dell'enunciato.
+  Judge B classified all observations on sources and computations as
+  INFO (context sources not loaded and not needed; Python version not
+  recorded: 3.14, standard library; reproduced timings 0.44--0.71 s). In
+  the first two runs the only MISSING point concerned the official
+  rules, later passed verbatim from the preamble of the problem
+  statement.
 \item
-  La cella è ``checked instantly'' sul valore: il rischio residuo è un
-  errore nella riduzione a (★); per questo la riduzione è stata riletta
-  a mano e (★) confutata da tre programmi diversi.
+  The cell is ``checked instantly'' on the value: the residual risk is
+  an error in the reduction to (★); for this reason the reduction was
+  re-read by hand and (★) refuted by three different programs.
 \end{itemize}
 
