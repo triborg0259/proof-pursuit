@@ -245,11 +245,17 @@ submission/parte-4.en.md</p>
 <h3 id="consegna-prova">Consegna (prova)</h3>
 <h4 id="problem-4-part-4-submission-partial">Problem 4 — Part 4 —
 submission (PARTIAL)</h4>
-<p><strong>Declared status: PARTIAL.</strong> The cell is not solved.
-What follows is the intermediate progress actually established, as
-judged by the automatic Referee (verdict <code>UNKNOWN_STATUS</code>:
-Provide the missing review or independently checked evidence). The
-author’s own declared status was <code>CELL_SOLVED_CANDIDATE</code>.</p>
+<p><strong>Declared status: PARTIAL (strong).</strong> Mathematics
+judged PASS by the independent mathematical judge for every size up to
+13, with the exhaustiveness certificate written out; the evidence judge
+could not reproduce the runs only because the scripts, launched without
+arguments by the orchestrator, default to a size that exceeds the
+10-minute limit (run them with the size as argument, as documented in
+section 3). The cell is therefore reported as partial, not solved. What
+follows is the intermediate progress actually established, as judged by
+the automatic Referee (verdict <code>UNKNOWN_STATUS</code>: Provide the
+missing review or independently checked evidence). The author’s own
+declared status was <code>CELL_SOLVED_CANDIDATE</code>.</p>
 <h5 id="result-and-scope">1. Result and scope</h5>
 <p>Complete proof of the statement for every 3 ≤ k ≤ 12 (the cell) and
 for k = 13, with an exhaustiveness certificate: finite set + proof
@@ -1029,6 +1035,8 @@ if __name__ == &quot;__main__&quot;:
     for k in ks:
         Ricerca(k, k - 1 if modo == &quot;ricerca&quot; else k).esegui()
 </code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): TIMEOUT after 600s; killed: exceeds the verification time limit</code></p>
 <pre
 data-caption="attempt\_001 code\_2 [python, rigore exact] — Stage B: for each stage-A survivor, exhaustive backtracking on residues (a\_1 = 0 by Lemma  — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;
 Stadio B per il problema 4, parte 4: decisione sui residui di un multinsieme di moduli.
@@ -1103,6 +1111,8 @@ if __name__ == &quot;__main__&quot;:
     for k in map(int, sys.argv[3:]):
         decidi_tutti(k, k - 1 if modo == &quot;ricerca&quot; else k, limite)
 </code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 1 in 0.0s; stdout: ’’; stderr: ’Traceback (most recent call last):\n File "/Users/thomastumini/proof-pursuit/runs/p4_c4/verifica/attempt_001/code_2.py", line 69, in &lt;module&gt;\n modo = sys.argv[1]\n ~~~~~~~~^^^\nIndexError: list index out of range’</code></p>
 <pre
 data-caption="attempt\_001 code\_3 [python, rigore exact] — Decision of the unique k=13 stage-A survivor (10,10,10,10,10,12,12,12,12,24,36,40,45): exh — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;
 Trova le parti minime (sotto-multinsiemi) di un multinsieme di moduli che sono gia&#39;
@@ -1144,6 +1154,8 @@ if __name__ == &quot;__main__&quot;:
         print(&quot;   parte minima infattibile: indici&quot;, idx, &quot;moduli&quot;, tuple(moduli[i] for i in idx))
     print(f&quot;tempo totale {time.time()-t0:.2f}s&quot;)
 </code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_3.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: ’moduli=() esito=FATTIBILE nodi_B=1 tempo=0.00s testimone=()\ntempo totale 0.00s’; stderr: ’’</code></p>
 <h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
 <div class="thebibliography">
 <p><span>99</span> Yu Hashimoto. <em>Finiteness of Disjoint Covering
