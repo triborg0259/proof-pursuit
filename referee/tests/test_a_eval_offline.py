@@ -16,7 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from tools.eval_referee_a import (  # noqa: E402
+from eval_referee_a import (  # noqa: E402
     CASES, EvalCase, build_job, classify, injection_leaked, run_case, summarize,
 )
 from referees.contracts import MathReport, ReviewInput  # noqa: E402

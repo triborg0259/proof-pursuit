@@ -13,11 +13,11 @@ Disegno della batteria:
 - `expected` e' la risposta migliore, `acceptable` i verdetti difendibili da un
   revisore competente. Si contano entrambi, senza spacciare l'uno per l'altro.
 
-Uso offline, senza chiamate API e senza costi:
-    python tools/eval_referee_a.py --show-payload case_03
+Uso offline, senza chiamate API e senza costi, dalla cartella referee/:
+    python eval_referee_a.py --show-payload case_03
 
 Uso live (consuma credito: una chiamata per caso):
-    python tools/eval_referee_a.py --model <MODEL_ID> > eval-a.json
+    python eval_referee_a.py --model <MODEL_ID> > eval-a.json
 """
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from referees.contracts import ReviewInput  # noqa: E402
 from referees.referee_a import review_math  # noqa: E402

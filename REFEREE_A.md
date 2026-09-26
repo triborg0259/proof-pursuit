@@ -27,13 +27,24 @@ quelli del pacchetto originale.
 
 ## Verifica del software
 
+Tutti i comandi si lanciano **dalla cartella `referee/`**, che e' la radice del
+pacchetto dopo l'integrazione fatta da Thomas:
+
 ```bash
+cd referee
+set PYTHONPATH=%CD%                                # su Windows
 python -m unittest tests.test_a_contract -v        # 21 test, ~1.2 s
 python -m unittest tests.test_a_eval_offline -v    # 23 test, ~0.3 s
-python -m pytest tests/ -q                         # intera suite, ~25 s
+python -m unittest discover -s tests -q            # 94 test, ~6.2 s
 ```
 
-Misurato su Windows 11, Python 3.14.6, pydantic 2.13.4.
+Suite di radice del repository (Researcher, ponte, Referee B), dalla radice:
+
+```bash
+python -m pytest tests/ -q                         # ~30 s
+```
+
+Misurato su Windows 11, Python 3.14.6, pydantic 2.13.4, pytest 9.0.3.
 
 **Ambito:** questi test usano backend simulati. Verificano il software — ruolo,
 isolamento dell'input, schema, gestione degli errori, compatibilita' con
@@ -48,17 +59,17 @@ lemma indispensabile non dimostrato, circolarita', induzione senza caso base,
 limite superiore presentato come valore esatto, parziale valido su claim
 dichiarato, prova corretta con istruzioni ostili immerse nel testo.
 
-Senza costi:
+Senza costi, dalla cartella `referee/`:
 
 ```bash
-python tools/eval_referee_a.py --list
-python tools/eval_referee_a.py --show-payload case_03   # cosa vede il modello
+python eval_referee_a.py --list
+python eval_referee_a.py --show-payload case_03   # cosa vede il modello
 ```
 
 Live, **consuma 11 chiamate a pagamento**:
 
 ```bash
-python tools/eval_referee_a.py --model <MODEL_ID> > eval-a.json
+python eval_referee_a.py --model <MODEL_ID> > eval-a.json
 ```
 
 Gli esiti attesi non raggiungono mai il modello: gli identificatori sono neutri
@@ -74,7 +85,42 @@ riga conserva `first_fatal_error` e `math_notes`.
 
 ## Segnalazioni all'integratore
 
-Due difetti in moduli **non** di competenza di A, quindi non modificati.
+Tre punti in moduli **non** di competenza di A, quindi non modificati.
+
+**0. I moduli condivisi esistono in due copie, e questo rompe l'integrazione.**
+Le stesse classi vivono sia in `referee/referees/` (copia canonica, portata da
+Thomas su `main`) sia in `referees/` al primo livello (copia di
+`feature/referee-b`). I file sono byte per byte identici, quindi il rischio
+sembra estetico, ma non lo e': Python li importa come moduli distinti e crea
+**classi diverse con lo stesso nome**. Riproduzione, su un albero in cui
+entrambe le copie sono presenti:
+
+```python
+import sys
+sys.path.insert(0, 'referee'); sys.path.insert(0, '.')
+from referees.contracts import MathReport as B_side
+del sys.modules['referees'], sys.modules['referees.contracts']
+sys.path.remove('.')
+from referees.contracts import MathReport as A_side
+print(A_side is B_side)                 # False
+report = A_side(mathematical_verdict='PASS', first_fatal_error=None,
+                accepted_mathematical_claims=['main'], unproved_claims=[],
+                missing_cases=[], math_notes='x')
+print(isinstance(report, B_side))       # False
+```
+
+Conseguenza pratica: un `MathReport` prodotto da A non e' riconosciuto come
+`MathReport` da B. Qualunque composizione dei due rapporti (per esempio
+`ReviewPacket`, che contiene entrambi gli envelope) fallisce la validazione.
+
+Modifica necessaria, che spetta all'integratore: **una sola copia** dei moduli
+condivisi. Poiche' `main` porta gia' il pacchetto in `referee/referees/`, la
+strada piu' corta e' spostare li' `adapter_b.py` e il resto del lavoro di B ed
+eliminare `referees/` di primo livello. Referee A e' gia' allineato a quella
+collocazione. Verificato su un branch locale `integration-a-b`: con le due
+copie presenti le suite passano comunque (94 test nel pacchetto, 19 alla
+radice), perche' nessun test fa attraversare un oggetto da una copia all'altra.
+I test verdi **non** dimostrano quindi che l'integrazione regga.
 
 **1. `referees/adversarial_eval.py` mostra la risposta attesa al modello.**
 In `make_job` il nome del caso finisce in `problem_id` e `attempt_id`, e i nomi
