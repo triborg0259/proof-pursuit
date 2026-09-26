@@ -1,0 +1,224 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\theoremstyle{plain}
+\newtheorem{proposition}{Proposizione}
+\newtheorem{corollary}[proposition]{Corollario}
+\theoremstyle{definition}
+\newtheorem{remark}[proposition]{Osservazione}
+
+\newcommand{\Qd}{Q_d}
+\newcommand{\U}{\mathcal{U}}
+
+\title{Problema 2, Parte 4 (C4)\\[2pt]
+\large Cammini in salita su $Q_7$ e $Q_8$: stato del lavoro}
+\author{Proof Pursuit}
+\date{26 settembre 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+La cella C4 chiede $U(Q_7)$ e $U(Q_8)$. \textbf{Non abbiamo determinato quei
+valori}, e questo documento non li dichiara. Riportiamo invece ciò che abbiamo
+stabilito: una riduzione esatta per una famiglia naturale di etichettature, la
+dimostrazione che quella famiglia \emph{non} contiene l'ottimo già da $d=5$, e i
+migliori limiti superiori ottenuti per ricerca locale, con la calibrazione che
+ne delimita l'attendibilità. Distinguiamo in modo esplicito ciò che è dimostrato
+da ciò che è soltanto verificato al calcolatore su un dominio finito.
+\end{abstract}
+
+\section{Definizioni e notazione}
+
+Sia $G$ un grafo semplice finito su $n$ vertici e sia $f\colon V(G)\to\{1,\dots,n\}$
+una biiezione (\emph{etichettatura}). Un vertice $v$ è una \emph{valle} se
+$f(w)>f(v)$ per ogni vicino $w$ di $v$. Un \emph{cammino in salita} è una
+sequenza $(v_1,\dots,v_k)$ con $k\ge1$, in cui $v_1$ è una valle, $v_i$ e
+$v_{i+1}$ sono adiacenti e $f(v_1)<\dots<f(v_k)$; una valle isolata conta come
+cammino. Sia $U(G)$ il minimo numero di cammini in salita su tutte le
+etichettature.
+
+L'ipercubo $\Qd$ ha per vertici $\{0,1\}^d$, con $u\sim v$ quando differiscono
+in esattamente una coordinata; $|V(\Qd)|=2^d$ e $|E(\Qd)|=d\,2^{d-1}$. Scriviamo
+$|v|$ per il peso di Hamming di $v$.
+
+\paragraph{Convenzione sulle stringhe.} Nelle etichettature riportate, la
+coordinata $0$ è il bit meno significativo ed è stampata a destra. La scelta è
+irrilevante per il conteggio, per simmetria di $\Qd$, ma va dichiarata.
+
+\paragraph{Ricorrenza di base.} Fissata $f$, orientiamo ogni spigolo dal vertice
+di etichetta minore a quello di etichetta maggiore; l'orientazione è aciclica.
+Detto $p(v)$ il numero di cammini in salita che terminano in $v$,
+\begin{equation}\label{eq:ricorrenza}
+p(v)=\begin{cases}1 & \text{se $v$ è una valle},\\[2pt]
+\displaystyle\sum_{u\to v}p(u) & \text{altrimenti},\end{cases}
+\qquad
+\#\{\text{cammini}\}=\sum_{v}p(v).
+\end{equation}
+Il calcolo è esatto su interi e costa $O(|E|)$, perché l'ordine delle etichette
+è già un ordine topologico.
+
+\paragraph{Valori noti.} Il nostro gruppo ha stabilito
+\begin{equation}\label{eq:noti}
+U(Q_3)=14,\qquad U(Q_4)=34,\qquad U(Q_5)=88,
+\end{equation}
+con dimostrazione dei limiti inferiori e etichettature esplicite verificate
+(celle C1 e C2, consegne \texttt{parte-1.md} e \texttt{parte-2.md}). In questo
+documento \eqref{eq:noti} è usata come dato acquisito, non ridimostrata.
+
+\section{Limite inferiore elementare}
+
+\begin{proposition}\label{prop:inferiore}
+Per ogni grafo $G$ e ogni etichettatura, il numero di cammini in salita è almeno
+$|E(G)|+\nu$, dove $\nu\ge1$ è il numero di valli. In particolare
+$U(\Qd)\ge d\,2^{d-1}+1$.
+\end{proposition}
+
+\begin{proof}
+Ogni vertice $v$ soddisfa $p(v)\ge1$: scendendo da $v$ verso un vicino di
+etichetta minore, finché esiste, si raggiunge una valle in un numero finito di
+passi, e il cammino percorso all'inverso è in salita e termina in $v$. Se $v$
+non è una valle, ciascun suo predecessore $u$ contribuisce $p(u)\ge1$ a
+\eqref{eq:ricorrenza}, dunque $p(v)\ge\deg^-(v)$, dove $\deg^-(v)$ conta i
+vicini di etichetta minore. Sommando su tutti i vertici e separando le valli,
+\[
+\sum_v p(v)\;\ge\;\sum_{v\ \text{non valle}}\deg^-(v)\;+\;\nu
+\;=\;|E(G)|+\nu,
+\]
+poiché $\deg^-$ delle valli è nullo e $\sum_v\deg^-(v)=|E(G)|$. L'esistenza di
+almeno una valle segue dall'aciclicità dell'orientazione.
+\end{proof}
+
+\begin{remark}
+Per la griglia $n\times n$ il limite è esatto: $2n^2-2n+1=|E|+1$, che è la
+risposta di IMO 2022 P6. Per l'ipercubo \emph{non} lo è: da \eqref{eq:noti},
+$U(Q_5)=88$ mentre $|E|+1=81$. L'eccesso è il cuore del problema.
+\end{remark}
+
+\section{Etichettature per classi di peso: riduzione esatta}
+
+Chiamiamo \emph{etichettatura per classi di peso} una $f$ ottenuta scegliendo un
+ordine delle $d+1$ classi di peso e assegnando le etichette consecutivamente,
+classe dopo classe, con ordine interno arbitrario. Sia $\pi(k)$ la posizione
+della classe di peso $k$, con $\pi$ permutazione di $\{0,\dots,d\}$.
+
+\begin{proposition}\label{prop:riduzione}
+Per un'etichettatura per classi di peso il numero di cammini in salita non
+dipende dall'ordine interno alle classi, e vale
+\[
+N(\pi)\;=\;\sum_{k=0}^{d}\binom{d}{k}P_k,
+\]
+dove i $P_k$ sono determinati, elaborando le classi in ordine di $\pi$
+crescente, da
+\[
+P_k=
+\begin{cases}
+1, & \text{se } \pi(k-1)>\pi(k) \text{ e } \pi(k+1)>\pi(k),\\[3pt]
+k\,P_{k-1}\,[\pi(k-1)<\pi(k)] \;+\; (d-k)\,P_{k+1}\,[\pi(k+1)<\pi(k)], &
+\text{altrimenti},
+\end{cases}
+\]
+con la convenzione che i termini con indice fuori da $\{0,\dots,d\}$ sono omessi.
+\end{proposition}
+
+\begin{proof}
+\emph{(i) L'orientazione dipende solo da $\pi$.} Se $u\sim v$ in $\Qd$ allora
+$u$ e $v$ differiscono in esattamente una coordinata, quindi $\bigl||u|-|v|\bigr|=1$;
+in particolare due vertici dello stesso peso non sono mai adiacenti. Per
+$u\sim v$ con $|u|\ne|v|$ si ha $f(u)<f(v)$ se e solo se la classe di $u$ precede
+quella di $v$, cioè $\pi(|u|)<\pi(|v|)$. L'ordine interno alle classi non
+interviene mai, dunque l'orientazione indotta — e con essa il conteggio, che per
+\eqref{eq:ricorrenza} dipende solo dall'orientazione — è funzione del solo $\pi$.
+
+\emph{(ii) $p$ è costante sulle classi.} Ogni permutazione $\tau$ delle $d$
+coordinate è un automorfismo di $\Qd$ che preserva il peso, quindi per (i)
+preserva l'orientazione; dunque $p(\tau v)=p(v)$. Poiché il gruppo delle
+permutazioni di coordinate agisce transitivamente su ciascuna classe di peso,
+$p(v)$ dipende solo da $|v|$. Poniamo $P_k:=p(v)$ per $|v|=k$.
+
+\emph{(iii) Ricorrenza.} Un vertice $v$ con $|v|=k$ ha esattamente $k$ vicini di
+peso $k-1$ (si azzera uno degli uni) e $d-k$ vicini di peso $k+1$ (si alza uno
+degli zeri). Per (i) i primi sono predecessori se e solo se $\pi(k-1)<\pi(k)$, i
+secondi se e solo se $\pi(k+1)<\pi(k)$. Il vertice è una valle esattamente
+quando nessuna delle due condizioni vale. Sostituendo in \eqref{eq:ricorrenza} e
+usando (ii) si ottiene la formula. Sommando su tutti i vertici e raggruppando
+per peso si ha $N(\pi)=\sum_k\binom{d}{k}P_k$. L'elaborazione in ordine di $\pi$
+crescente è lecita perché i predecessori di una classe appartengono a classi che
+la precedono.
+\end{proof}
+
+\begin{corollary}\label{cor:enumerazione}
+Il minimo di $N(\pi)$ sulle etichettature per classi di peso si calcola
+esattamente enumerando le $(d+1)!$ permutazioni, con costo $O(d)$ ciascuna e
+aritmetica intera.
+\end{corollary}
+
+La Tabella~\ref{tab:classi} riporta l'esito dell'enumerazione completa.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{crrrl}
+\toprule
+$d$ & $|E|+1$ & $\min_\pi N(\pi)$ & eccesso su $|E|$ & confronto con $U(\Qd)$\\
+\midrule
+3 & 13   & 14   & 2   & $=U(Q_3)$\\
+4 & 33   & 34   & 2   & $=U(Q_4)$\\
+5 & 81   & 92   & 12  & $>U(Q_5)=88$\\
+6 & 193  & 214  & 22  & ignoto\\
+7 & 449  & 506  & 58  & ignoto\\
+8 & 1025 & 1138 & 114 & ignoto\\
+\bottomrule
+\end{tabular}
+\caption{Minimo esatto entro le etichettature per classi di peso.
+Enumerazione completa delle $(d+1)!$ permutazioni, $34{,}5$~s complessivi per
+$d\le8$. Ogni riga è stata ricontrollata con un conteggio diretto sul grafo,
+che non usa la Proposizione~\ref{prop:riduzione}.}
+\label{tab:classi}
+\end{table}
+
+\begin{proposition}\label{prop:nonottimale}
+Le etichettature per classi di peso non sono ottimali per $d=5$: il loro minimo
+vale $92$, mentre $U(Q_5)=88$.
+\end{proposition}
+
+\begin{proof}
+Il valore $92$ è il minimo di $N(\pi)$ sulle $6!=720$ permutazioni, ottenuto per
+enumerazione completa con aritmetica esatta (Corollario~\ref{cor:enumerazione});
+$U(Q_5)=88$ è il risultato della cella C2. Poiché $92>88$, nessuna etichettatura
+per classi di peso realizza il minimo.
+\end{proof}
+
+\begin{remark}[Conseguenza operativa]
+La Proposizione~\ref{prop:nonottimale} è il motivo per cui \textbf{non}
+consegniamo $506$ e $1138$ come valori di $U(Q_7)$ e $U(Q_8)$. La famiglia
+riproduce i valori corretti per $d\le4$ e si rivela subottimale a $d=5$: non c'è
+ragione di aspettarsi che ridiventi ottimale per $d\ge6$. Essendo C4 valutata sul
+valore, una risposta plausibile ma non dimostrata varrebbe zero.
+\end{remark}
+
+\section{Ricerca locale sullo spazio completo}
+
+%% SEZIONE DA COMPLETARE CON GLI ESITI DELLE RICERCHE IN CORSO
+%% I numeri verranno inseriti solo a ricerca conclusa.
+
+\section{Che cosa consideriamo risolto}
+
+\begin{itemize}
+\item \textbf{Dimostrato:} la Proposizione~\ref{prop:inferiore}
+(limite inferiore $|E|+\nu$) e la Proposizione~\ref{prop:riduzione}
+(riduzione esatta per classi di peso).
+\item \textbf{Verificato al calcolatore su dominio finito:} la
+Tabella~\ref{tab:classi}, per enumerazione completa delle $(d+1)!$ permutazioni
+con $d\le8$, in aritmetica intera, con controllo incrociato indipendente.
+\item \textbf{Dato acquisito da altra cella:} i valori \eqref{eq:noti}.
+\item \textbf{Non stabilito:} $U(Q_7)$ e $U(Q_8)$. La cella C4 resta
+\textbf{non risolta}; quanto sopra è progresso parziale.
+\end{itemize}
+
+\end{document}
