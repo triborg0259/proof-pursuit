@@ -61,6 +61,13 @@ Prove computer-assisted ammesse (< 10 min, codice incluso, spiegazione del perch
 - **F. Letteratura**: cercare "uphill paths hypercube", generalizzazioni di IMO 2022 P6 (es. arXiv 2023–2026),
   OEIS per la sequenza $U(Q_d)$.
 
+## Risultati
+- **$U(Q_3)=14$** (2026-09-26): prova completa (lower bound a mano: Cor. 3 dà $\ge13$, Prop. 4 esclude 13 via vertice 8
+  e antipodo 7; upper bound: etichettatura `000,100,010,110,101,011,001,111`). Tre enumerazioni esaustive concordi
+  (7104 ottime su 40320; nessuna con 13 o 15). Bozza in `submission/parte-1.md`. Prodotto dal Researcher con
+  shell `full` in 150 s / $1.57, revisionato a mano e verificato con script indipendente.
+- Da fare per chiudere C1: $U(Q_4)$.
+
 ## Priorità
 C1 (esatto, quasi gratis) → C2–C4 con harness discreto + costruzione ricorsiva → C5 solo se la costruzione
 scala a $\le2399$ (upper bound è la via più realistica; il lower bound $\ge2369$ è "unpublished" e difficile).
