@@ -1,0 +1,308 @@
+{
+  "$defs": {
+    "CubeCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "hypercube_paths",
+          "title": "Kind",
+          "type": "string"
+        },
+        "claim_id": {
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "dimension": {
+          "maximum": 16,
+          "minimum": 0,
+          "title": "Dimension",
+          "type": "integer"
+        },
+        "order": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 65536,
+          "title": "Order",
+          "type": "array"
+        },
+        "expected_total": {
+          "minimum": 0,
+          "title": "Expected Total",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind",
+        "claim_id",
+        "dimension",
+        "order",
+        "expected_total"
+      ],
+      "title": "CubeCheck",
+      "type": "object"
+    },
+    "CubeMinimumCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "hypercube_minimum",
+          "title": "Kind",
+          "type": "string"
+        },
+        "claim_id": {
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "dimension": {
+          "maximum": 3,
+          "minimum": 0,
+          "title": "Dimension",
+          "type": "integer"
+        },
+        "expected_minimum": {
+          "minimum": 0,
+          "title": "Expected Minimum",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind",
+        "claim_id",
+        "dimension",
+        "expected_minimum"
+      ],
+      "title": "CubeMinimumCheck",
+      "type": "object"
+    },
+    "PartitionCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "unrestricted_partitions_allowed_parts",
+          "title": "Kind",
+          "type": "string"
+        },
+        "claim_id": {
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "allowed_parts": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 500,
+          "minItems": 1,
+          "title": "Allowed Parts",
+          "type": "array"
+        },
+        "expected_counts": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "maxProperties": 501,
+          "minProperties": 1,
+          "title": "Expected Counts",
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "claim_id",
+        "allowed_parts",
+        "expected_counts"
+      ],
+      "title": "PartitionCheck",
+      "type": "object"
+    },
+    "RationalVectorCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "rational_vectors",
+          "title": "Kind",
+          "type": "string"
+        },
+        "claim_id": {
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "vectors": {
+          "items": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array"
+          },
+          "maxItems": 100,
+          "minItems": 1,
+          "title": "Vectors",
+          "type": "array"
+        },
+        "require_unit_norm": {
+          "title": "Require Unit Norm",
+          "type": "boolean"
+        },
+        "max_absolute_pairwise_dot": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Absolute Pairwise Dot"
+        },
+        "expected_dot_products": {
+          "anyOf": [
+            {
+              "items": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "integer"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected Dot Products"
+        }
+      },
+      "required": [
+        "kind",
+        "claim_id",
+        "vectors",
+        "require_unit_norm"
+      ],
+      "title": "RationalVectorCheck",
+      "type": "object"
+    },
+    "ResidueCheck": {
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "const": "residue_classes",
+          "title": "Kind",
+          "type": "string"
+        },
+        "claim_id": {
+          "title": "Claim Id",
+          "type": "string"
+        },
+        "classes": {
+          "items": {
+            "$ref": "#/$defs/ResidueClass"
+          },
+          "maxItems": 200,
+          "minItems": 1,
+          "title": "Classes",
+          "type": "array"
+        },
+        "require_pairwise_disjoint": {
+          "title": "Require Pairwise Disjoint",
+          "type": "boolean"
+        },
+        "expected_modulus_gcds": {
+          "anyOf": [
+            {
+              "items": {
+                "items": {
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Expected Modulus Gcds"
+        }
+      },
+      "required": [
+        "kind",
+        "claim_id",
+        "classes",
+        "require_pairwise_disjoint"
+      ],
+      "title": "ResidueCheck",
+      "type": "object"
+    },
+    "ResidueClass": {
+      "additionalProperties": false,
+      "properties": {
+        "residue": {
+          "title": "Residue",
+          "type": "integer"
+        },
+        "modulus": {
+          "maximum": 1000000000000,
+          "minimum": 1,
+          "title": "Modulus",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "residue",
+        "modulus"
+      ],
+      "title": "ResidueClass",
+      "type": "object"
+    }
+  },
+  "items": {
+    "discriminator": {
+      "mapping": {
+        "hypercube_minimum": "#/$defs/CubeMinimumCheck",
+        "hypercube_paths": "#/$defs/CubeCheck",
+        "rational_vectors": "#/$defs/RationalVectorCheck",
+        "residue_classes": "#/$defs/ResidueCheck",
+        "unrestricted_partitions_allowed_parts": "#/$defs/PartitionCheck"
+      },
+      "propertyName": "kind"
+    },
+    "oneOf": [
+      {
+        "$ref": "#/$defs/CubeCheck"
+      },
+      {
+        "$ref": "#/$defs/CubeMinimumCheck"
+      },
+      {
+        "$ref": "#/$defs/PartitionCheck"
+      },
+      {
+        "$ref": "#/$defs/ResidueCheck"
+      },
+      {
+        "$ref": "#/$defs/RationalVectorCheck"
+      }
+    ]
+  },
+  "type": "array"
+}

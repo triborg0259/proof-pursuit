@@ -1,0 +1,264 @@
+{
+  "$defs": {
+    "Artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "CODE",
+            "CERTIFICATE",
+            "LOG"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "content": {
+          "title": "Content",
+          "type": "string"
+        },
+        "claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Claim Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "content",
+        "claim_ids"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "Candidate": {
+      "additionalProperties": false,
+      "properties": {
+        "attempt_id": {
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "proof": {
+          "minLength": 1,
+          "title": "Proof",
+          "type": "string"
+        },
+        "method_tag": {
+          "title": "Method Tag",
+          "type": "string"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/Claim"
+          },
+          "title": "Claims",
+          "type": "array"
+        },
+        "sources": {
+          "items": {
+            "$ref": "#/$defs/Source"
+          },
+          "title": "Sources",
+          "type": "array"
+        },
+        "artifacts": {
+          "items": {
+            "$ref": "#/$defs/Artifact"
+          },
+          "title": "Artifacts",
+          "type": "array"
+        }
+      },
+      "required": [
+        "attempt_id",
+        "proof",
+        "method_tag",
+        "claims"
+      ],
+      "title": "Candidate",
+      "type": "object"
+    },
+    "Cell": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "number": {
+          "minimum": 1,
+          "title": "Number",
+          "type": "integer"
+        },
+        "target_claim_id": {
+          "title": "Target Claim Id",
+          "type": "string"
+        },
+        "statement": {
+          "minLength": 1,
+          "title": "Statement",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "number",
+        "target_claim_id",
+        "statement"
+      ],
+      "title": "Cell",
+      "type": "object"
+    },
+    "Claim": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "minLength": 1,
+          "title": "Id",
+          "type": "string"
+        },
+        "statement": {
+          "minLength": 1,
+          "title": "Statement",
+          "type": "string"
+        },
+        "depends_on": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Depends On",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "statement"
+      ],
+      "title": "Claim",
+      "type": "object"
+    },
+    "Rules": {
+      "additionalProperties": false,
+      "properties": {
+        "allow_literature_as_proof": {
+          "title": "Allow Literature As Proof",
+          "type": "boolean"
+        },
+        "allow_computation": {
+          "title": "Allow Computation",
+          "type": "boolean"
+        },
+        "require_machine_verification": {
+          "title": "Require Machine Verification",
+          "type": "boolean"
+        },
+        "additional_rules": {
+          "title": "Additional Rules",
+          "type": "string"
+        }
+      },
+      "required": [
+        "allow_literature_as_proof",
+        "allow_computation",
+        "require_machine_verification",
+        "additional_rules"
+      ],
+      "title": "Rules",
+      "type": "object"
+    },
+    "Source": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "reference": {
+          "title": "Reference",
+          "type": "string"
+        },
+        "claim_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Claim Ids",
+          "type": "array"
+        },
+        "submitted_excerpt": {
+          "default": "",
+          "title": "Submitted Excerpt",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "reference",
+        "claim_ids"
+      ],
+      "title": "Source",
+      "type": "object"
+    },
+    "VerifiedState": {
+      "additionalProperties": false,
+      "properties": {
+        "highest_verified_cell": {
+          "minimum": 0,
+          "title": "Highest Verified Cell",
+          "type": "integer"
+        },
+        "claims": {
+          "items": {
+            "$ref": "#/$defs/Claim"
+          },
+          "title": "Claims",
+          "type": "array"
+        }
+      },
+      "required": [
+        "highest_verified_cell"
+      ],
+      "title": "VerifiedState",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "problem_id": {
+      "title": "Problem Id",
+      "type": "string"
+    },
+    "original_problem": {
+      "minLength": 1,
+      "title": "Original Problem",
+      "type": "string"
+    },
+    "cell": {
+      "$ref": "#/$defs/Cell"
+    },
+    "state": {
+      "$ref": "#/$defs/VerifiedState"
+    },
+    "candidate": {
+      "$ref": "#/$defs/Candidate"
+    },
+    "rules": {
+      "$ref": "#/$defs/Rules"
+    }
+  },
+  "required": [
+    "problem_id",
+    "original_problem",
+    "cell",
+    "state",
+    "candidate",
+    "rules"
+  ],
+  "title": "ReviewInput",
+  "type": "object"
+}
