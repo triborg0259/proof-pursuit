@@ -1,0 +1,33 @@
+{
+ "report": {
+  "evidence_verdict": "PASS",
+  "source_issues": [
+   {
+    "code": "SOURCE_UNRETRIEVED_CONTEXT_ONLY",
+    "detail": "src_1 (arXiv:2607.24655, Fornal–Sun) is listed with an empty excerpt and explicitly marked 'context only, not used'. I could not retrieve or confirm this identifier (no browsing available). The proof does not depend on it in any step, so this is not blocking; however, per the project protocol (never present an unverified source as read) it should either be dropped from the hand-in or verified before submission. This is a missing-verification note, not a finding of fabrication.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [],
+  "rule_violations": [],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US"
+    ],
+    "evidence_sufficient": true,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": false,
+    "references": [],
+    "notes": "Self-contained written proof, no computation and no cited result used. Lemma 0 is the CRT criterion (*) given in the problem statement, re-proved in full. Dependencies checked to the extent needed for evidence purposes: (1) gcd in {2,3} follows from Lemma 0 plus the contradiction hypothesis; Claims 1–3 and the three cases |T|=4,3,2 each use only (1), (E), (T) and Lemma 0; no step invokes external literature. Cell 1 is not used as a dependency (depends_on is empty, consistent with the argument). Rule compliance: written proof handed in as required; no computational certificate needed since no computation is relied upon."
+   }
+  ],
+  "reproducibility_notes": "Nothing to reproduce: no code, no search, no numerical experiment. The argument is finite case analysis checkable by hand in minutes. Only open item is the unverified context-only reference src_1 (arXiv:2607.24655), which is not load-bearing; recommend removing it or confirming the identifier before the final hand-in."
+ },
+ "limitation": null
+}

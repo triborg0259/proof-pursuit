@@ -1,0 +1,168 @@
+{
+ "job": {
+  "problem_id": "p1_c1",
+  "original_problem": "# Problema 1 — Angles between lines\n\n*(Enunciato formattato in LaTeX, contenuto fedele all'originale; ricevuto a parti il 2026-09-26.)*\n\n## Preambolo\n\n**Angles between lines.** How large can the sum of pairwise angles between $N$ lines through the origin be?\nFejes Tóth conjectured in 1959 that orthogonal lines win.\n\nA line here always means a line through the origin of $\\mathbb{R}^d$. The angle between two lines\n$\\ell, \\ell'$ is the acute (non-obtuse) angle $\\theta(\\ell,\\ell') \\in [0,\\pi/2]$ between them.\nIf $\\ell, \\ell'$ are spanned by unit vectors $x, x'$, then\n$$\n\\theta(\\ell,\\ell') = \\arccos\\,\\lvert \\langle x, x' \\rangle \\rvert .\n$$\nFor lines $\\ell_1, \\ldots, \\ell_N$ in $\\mathbb{R}^d$ (repetitions allowed), write\n$$\nS(\\ell_1,\\ldots,\\ell_N) = \\sum_{1 \\le i < j \\le N} \\theta(\\ell_i,\\ell_j).\n$$\nThe question is how large $S$ can be. In 1959 L. Fejes Tóth conjectured that $S$ is maximised by taking\n$d$ mutually orthogonal lines, each used either $\\lfloor N/d \\rfloor$ or $\\lceil N/d \\rceil$ times.\nWhen $N = d + k$ with $0 \\le k \\le d$, that configuration (the $d$ coordinate axes, $k$ of them used twice) has\n$$\nS = \\left( \\binom{N}{2} - k \\right) \\cdot \\frac{\\pi}{2},\n$$\nbecause exactly $k$ pairs of lines coincide and every other pair is orthogonal.\n\nEach cell below asks you to prove this bound, or a special case of it. Unless a cell says otherwise, you need\na complete proof. Citing a published result for the statement you are asked to prove does not count.\n\n**What to hand in.** For each cell you attempt, hand in a written proof. You may use a computer to explore.\nA proof may rely on a computation only if you include the code, it runs in under 10 minutes on a laptop, and\nit is rigorous: exact or interval arithmetic, or an argument that bounds the numerical error. Say clearly\nwhich cells you consider solved and which are partial.\n\n## Parte 1 — Lines in the plane\n\n**Punteggio:** 1 point · **Valutazione:** Judged\n\nWe begin in the plane ($d = 2$), where the conjectured optimum splits the $N$ lines as evenly as\npossible between two perpendicular directions. Let $\\ell_1, \\ldots, \\ell_N$ be lines in $\\mathbb{R}^2$.\nProve that\n$$\nS(\\ell_1, \\ldots, \\ell_N) \\;\\le\\; \\frac{\\pi}{2} \\cdot \\left\\lfloor \\frac{N^2}{4} \\right\\rfloor .\n$$\n\n## Parte 2 — An orthogonality lemma\n\n**Punteggio:** 2 points · **Valutazione:** Judged\n\nA statement about a chain of vectors, in which each vector may fail to be orthogonal only to its immediate\nneighbours in the list. Let $m \\ge 2$ and let $x_1, \\ldots, x_m$ be unit vectors in $\\mathbb{R}^{m-1}$ with\n$\\langle x_i, x_j \\rangle = 0$ whenever $|i - j| \\ge 2$. Prove that\n$$\n\\sum_{i=1}^{m-1} \\theta(x_i, x_{i+1}) \\;\\le\\; (m-2) \\cdot \\frac{\\pi}{2},\n$$\nwhere $\\theta(x,y) = \\arccos\\,\\lvert \\langle x, y \\rangle \\rvert$.\n\n## Parte 3 — $d+1$ lines in $\\mathbb{R}^d$\n\n**Punteggio:** 3 points · **Valutazione:** Judged\n\nThe first case in every dimension: one line more than the dimension, $N = d+1$, where the conjectured optimum\nrepeats exactly one of the $d$ coordinate axes. Let $d \\ge 1$. Prove that any $d+1$ lines in $\\mathbb{R}^d$ satisfy\n$$\nS \\;\\le\\; \\left( \\binom{d+1}{2} - 1 \\right) \\cdot \\frac{\\pi}{2}.\n$$\n\n## Parte 4 — Five lines in $\\mathbb{R}^3$, six in $\\mathbb{R}^4$\n\n**Punteggio:** 5 points · **Valutazione:** Judged\n\nTwo concrete instances of the next case, $N = d+2$: five lines in three dimensions and six lines in four.\nIn each, the conjectured optimum repeats two of the coordinate axes. Prove that any $5$ lines in $\\mathbb{R}^3$\nsatisfy $S \\le 4\\pi$, and that any $6$ lines in $\\mathbb{R}^4$ satisfy $S \\le 13\\pi/2$.\n\n## Parte 5 — $d+2$ lines in $\\mathbb{R}^d$\n\n**Punteggio:** 8 points · **Valutazione:** Judged\n\nThe case $N = d+2$ in every dimension, with the same conjectured optimum: the $d$ coordinate axes, two of them\nrepeated. Prove that for every $d \\ge 2$, any $d+2$ lines in $\\mathbb{R}^d$ satisfy\n$$\nS \\;\\le\\; \\left( \\binom{d+2}{2} - 2 \\right) \\frac{\\pi}{2}.\n$$\n\n## Parte 6 — $N$ lines in $\\mathbb{R}^d$\n\n**Punteggio:** 13 points · **Valutazione:** Judged · **Open question**\n\nFejes Tóth's conjecture from the Setting, for every $N$ and every $d$. For $N$ lines in $\\mathbb{R}^d$, write\n$N = qd + s$ with $0 \\le s < d$, and let\n$$\nM(N,d) = s \\binom{q+1}{2} + (d-s) \\binom{q}{2}.\n$$\nProve or disprove: every $N$ lines in $\\mathbb{R}^d$ satisfy\n$$\nS \\;\\le\\; \\left( \\binom{N}{2} - M(N,d) \\right) \\frac{\\pi}{2}.\n$$\nThis is the value attained by splitting the lines as evenly as possible among $d$ mutually orthogonal\ndirections. Settling any infinite family not already covered above counts as partial progress.\n\n*(Fine del problema 1. Punteggi: 1+2+3+5+8+13 = 32.)*\n\n\n# TARGET CELL 1\nLet l_1..l_N be lines through the origin in R^2. Prove S(l_1..l_N) = sum_{i<j} theta(l_i,l_j) <= (pi/2) * floor(N^2/4).\n",
+  "cell": {
+   "id": "cell_1",
+   "number": 1,
+   "target_claim_id": "main",
+   "statement": "Let l_1..l_N be lines through the origin in R^2. Prove S(l_1..l_N) = sum_{i<j} theta(l_i,l_j) <= (pi/2) * floor(N^2/4)."
+  },
+  "state": {
+   "highest_verified_cell": 0,
+   "claims": []
+  },
+  "candidate": {
+   "attempt_id": "attempt_001",
+   "proof": "# Cell 1: the sum of the angles between $N$ lines in the plane\n\n**Target.** For lines $\\ell_1,\\dots,\\ell_N$ through the origin of $\\mathbb R^2$ (repetitions allowed),\n$S=\\sum_{i<j}\\theta(\\ell_i,\\ell_j)\\le \\frac{\\pi}{2}\\left\\lfloor \\frac{N^2}{4}\\right\\rfloor$, where $\\theta(\\ell,\\ell')=\\arccos|\\langle x,x'\\rangle|$ for unit vectors $x,x'$ spanning $\\ell,\\ell'$.\n\n## 1. Directions and angles\nEvery line $\\ell$ through the origin of $\\mathbb R^2$ is spanned by exactly one unit vector of the form $(\\cos t,\\sin t)$ with $t\\in[0,\\pi)$ (the two unit vectors of $\\ell$ are $\\pm(\\cos t,\\sin t)$, and exactly one of the two angles $t,t+\\pi$ lies in $[0,\\pi)$). Call $t=\\tau(\\ell)$ the *direction* of $\\ell$.\nFor two lines with directions $t,t'\\in[0,\\pi)$ we have $\\langle(\\cos t,\\sin t),(\\cos t',\\sin t')\\rangle=\\cos(t-t')$, hence $\\theta(\\ell,\\ell')=\\arccos|\\cos(t-t')|$.\nPut $u=|t-t'|\\in[0,\\pi)$. If $u\\le\\pi/2$ then $\\cos u\\ge 0$, so $|\\cos u|=\\cos u$ and $\\arccos(\\cos u)=u$ because $u\\in[0,\\pi]$. If $u>\\pi/2$ then $\\cos u<0$, so $|\\cos u|=-\\cos u=\\cos(\\pi-u)$ with $\\pi-u\\in(0,\\pi/2)$, and $\\arccos(\\cos(\\pi-u))=\\pi-u$. In both cases\n$$\\theta(\\ell,\\ell')=\\min(u,\\pi-u),\\qquad u=|\\tau(\\ell)-\\tau(\\ell')|.\\tag{1}$$\nCoincident lines have $u=0$ and angle $0$, as they should. Note also that $\\min(u,\\pi-u)$ is unchanged if $u$ is replaced by $\\pi-u$, so (1) also holds with $u=(\\tau(\\ell')-\\tau(\\ell))\\bmod\\pi$ (the representative in $[0,\\pi)$): indeed this quantity equals $|t-t'|$ or $\\pi-|t-t'|$.\n\n## 2. A random half-turn of directions\nFor $x\\in\\mathbb R$ write $x\\bmod\\pi$ for the unique representative of $x+\\pi\\mathbb Z$ in $[0,\\pi)$. For $\\psi\\in[0,\\pi)$ define\n$$A_\\psi=\\{t\\in[0,\\pi):\\ (t-\\psi)\\bmod\\pi\\in[0,\\pi/2)\\}.$$\nLet $\\psi$ be a random variable with the uniform distribution on $[0,\\pi)$, i.e. $\\Pr[\\psi\\in B]=|B|/\\pi$ for every Borel set $B\\subseteq[0,\\pi)$, where $|B|$ is Lebesgue measure.\n\n**Lemma 1.** For fixed $t,t'\\in[0,\\pi)$ let $u=(t'-t)\\bmod\\pi$ and $\\varphi=\\min(u,\\pi-u)$. Then\n$$\\Pr\\big[\\text{exactly one of } t,t' \\text{ lies in } A_\\psi\\big]=\\frac{2\\varphi}{\\pi}.$$\n\n*Proof.* Step 1 (reduction to $t=0$). Put $\\psi'=(\\psi-t)\\bmod\\pi$. The map $x\\mapsto(x-t)\\bmod\\pi$ is a bijection of $[0,\\pi)$ onto itself which is a translation on each of the two pieces $[0,t)$ and $[t,\\pi)$, hence it preserves Lebesgue measure; therefore $\\psi'$ is again uniform on $[0,\\pi)$. Moreover $(t-\\psi)\\bmod\\pi=(-(\\psi-t))\\bmod\\pi=(-\\psi')\\bmod\\pi=(0-\\psi')\\bmod\\pi$ and $(t'-\\psi)\\bmod\\pi=((t'-t)-(\\psi-t))\\bmod\\pi=(u-\\psi')\\bmod\\pi$. Hence $t\\in A_\\psi\\iff 0\\in A_{\\psi'}$ and $t'\\in A_\\psi\\iff u\\in A_{\\psi'}$. So it suffices to prove the claim for the pair $(0,u)$ with $u\\in[0,\\pi)$ and a uniform $\\psi$ (we rename $\\psi'$ as $\\psi$).\n\nStep 2 (the two sets). For $s\\in[0,\\pi)$ let $J_s=\\{\\psi\\in[0,\\pi): s\\in A_\\psi\\}=\\{\\psi: (s-\\psi)\\bmod\\pi<\\pi/2\\}$. Since $s-\\psi\\in(-\\pi,\\pi)$: if $\\psi\\le s$ then $(s-\\psi)\\bmod\\pi=s-\\psi$ and the condition reads $\\psi>s-\\pi/2$; if $\\psi>s$ then $(s-\\psi)\\bmod\\pi=s-\\psi+\\pi$ and the condition reads $\\psi>s+\\pi/2$. Therefore\n$$J_s=\\big(\\max(0,s-\\tfrac{\\pi}{2}),\\,s\\big]\\ \\cup\\ \\big(s+\\tfrac{\\pi}{2},\\,\\pi\\big)\\cap[0,\\pi),$$\nwhere the second interval is empty when $s+\\pi/2\\ge\\pi$. In particular $|J_s|=\\pi/2$ for every $s$: if $s<\\pi/2$ the two pieces have lengths $s$ and $\\pi/2-s$; if $s\\ge\\pi/2$ the first piece has length $\\pi/2$ and the second is empty. For $s=0$ the first piece is $\\{0\\}$ (measure $0$) and $J_0=\\{0\\}\\cup(\\pi/2,\\pi)$.\n\nStep 3 (the symmetric difference). The event \"exactly one of $0,u$ lies in $A_\\psi$\" is $\\{\\psi\\in J_0\\triangle J_u\\}$, and $|J_0\\triangle J_u|=|J_0|+|J_u|-2|J_0\\cap J_u|=\\pi-2|J_0\\cap J_u|$.\n*Case $u\\le\\pi/2$.* Then $J_u=(0,u]\\cup(u+\\pi/2,\\pi)$ (the second piece is empty if $u=\\pi/2$). Up to the null set $\\{0\\}$, $J_0=(\\pi/2,\\pi)$; since $u\\le\\pi/2$, $(0,u]\\cap(\\pi/2,\\pi)=\\emptyset$, so $J_0\\cap J_u=(u+\\pi/2,\\pi)$ up to a null set, of measure $\\pi/2-u$. Hence $|J_0\\triangle J_u|=\\pi-2(\\pi/2-u)=2u=2\\varphi$.\n*Case $u>\\pi/2$.* Then $u+\\pi/2>\\pi$, so $J_u=(u-\\pi/2,u]$ with $0<u-\\pi/2<\\pi/2$. Thus $J_0\\cap J_u=(\\pi/2,\\pi)\\cap(u-\\pi/2,u]=(\\pi/2,u]$ up to a null set, of measure $u-\\pi/2$. Hence $|J_0\\triangle J_u|=\\pi-2(u-\\pi/2)=2(\\pi-u)=2\\varphi$.\nIn both cases the probability is $|J_0\\triangle J_u|/\\pi=2\\varphi/\\pi$. $\\square$\n\n## 3. Counting the pairs separated by $A_\\psi$\nLet $t_i=\\tau(\\ell_i)$ and, for $\\psi\\in[0,\\pi)$, $k_\\psi=\\#\\{i: t_i\\in A_\\psi\\}\\in\\{0,1,\\dots,N\\}$. A pair $\\{i,j\\}$ has exactly one member with direction in $A_\\psi$ if and only if one index is among the $k_\\psi$ \"inside\" indices and the other among the $N-k_\\psi$ \"outside\" indices; hence the number of such pairs is exactly $k_\\psi(N-k_\\psi)$. Writing $X_{ij}(\\psi)$ for the indicator of the event of Lemma 1 for the pair $(t_i,t_j)$, we have $k_\\psi(N-k_\\psi)=\\sum_{i<j}X_{ij}(\\psi)$ for every $\\psi$ (each $X_{ij}$ is the indicator of a finite union of intervals, so everything is measurable), and by linearity of expectation, Lemma 1 and (1),\n$$\\mathbb E\\big[k_\\psi(N-k_\\psi)\\big]=\\sum_{i<j}\\Pr[X_{ij}=1]=\\sum_{i<j}\\frac{2}{\\pi}\\theta(\\ell_i,\\ell_j)=\\frac{2}{\\pi}S.\\tag{2}$$\n\n## 4. Conclusion\nFor every integer $k$ we have $N^2-4k(N-k)=(N-2k)^2\\ge0$, so $k(N-k)\\le N^2/4$; as $k(N-k)$ is an integer, $k(N-k)\\le\\lfloor N^2/4\\rfloor$. Applying this to $k=k_\\psi$ for every $\\psi$ and taking expectations, (2) gives\n$$S=\\frac{\\pi}{2}\\,\\mathbb E\\big[k_\\psi(N-k_\\psi)\\big]\\le\\frac{\\pi}{2}\\left\\lfloor\\frac{N^2}{4}\\right\\rfloor.\\qquad\\blacksquare$$\n\n*Remark (not needed for the cell).* The bound is attained: put $\\lceil N/2\\rceil$ lines along the $x$-axis and $\\lfloor N/2\\rfloor$ along the $y$-axis; the only nonzero angles are the $\\lceil N/2\\rceil\\lfloor N/2\\rfloor=\\lfloor N^2/4\\rfloor$ cross pairs, each equal to $\\pi/2$.\n",
+   "method_tag": "direct_proof",
+   "claims": [
+    {
+     "id": "main",
+     "statement": "Let l_1..l_N be lines through the origin in R^2. Prove S(l_1..l_N) = sum_{i<j} theta(l_i,l_j) <= (pi/2) * floor(N^2/4).",
+     "depends_on": []
+    }
+   ],
+   "sources": [
+    {
+     "id": "src_1",
+     "reference": "arXiv:1801.07837 Bilyk, Matzke, On the Fejes Toth problem about the sum of angles between lines (context only: the planar case is the only settled case; the proof below is self-contained and does not use the paper)",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    }
+   ],
+   "artifacts": []
+  },
+  "rules": {
+   "allow_literature_as_proof": false,
+   "allow_computation": true,
+   "require_machine_verification": false,
+   "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For each cell you attempt, hand in a written proof. You may use a computer to explore. A proof may rely on a computation only if you include the code, it runs in under 10 minutes on a laptop, and it is rigorous: exact or interval arithmetic, or an argument that bounds the numerical error. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+  }
+ },
+ "submission_digest": "83ba9d87877c18e35dc2d600897217df73db2ad15e461f927ec593f8a9969f28",
+ "math": {
+  "report": {
+   "mathematical_verdict": "PASS",
+   "first_fatal_error": null,
+   "accepted_mathematical_claims": [
+    "main"
+   ],
+   "unproved_claims": [],
+   "missing_cases": [],
+   "math_notes": "Standard random-half-turn (double counting) argument, checked step by step. (1) Direction parametrisation t∈[0,π) and θ=min(u,π−u), u=|t−t'|, is correct, including the remark that u may be replaced by (t'−t) mod π. (2) Lemma 1: the translation ψ↦(ψ−t) mod π is measure-preserving on [0,π) and the equivalences t∈A_ψ ⇔ 0∈A_{ψ'}, t'∈A_ψ ⇔ u∈A_{ψ'} hold since the arguments agree mod π. The explicit description J_s=(max(0,s−π/2),s]∪(s+π/2,π) is correct (checked both branches ψ≤s, ψ>s), |J_s|=π/2, and the two cases u≤π/2, u>π/2 give |J_0△J_u|=2u and 2(π−u) respectively, i.e. 2φ. (3) The identity k_ψ(N−k_ψ)=Σ_{i<j}X_{ij}(ψ) is exact for every ψ; the events are finite unions of intervals so measurable; linearity of expectation gives S=(π/2)E[k_ψ(N−k_ψ)]. (4) k(N−k)≤N²/4 from (N−2k)²≥0 and integrality gives ≤⌊N²/4⌋; taking expectations of a pointwise bound yields the target. Repeated lines (u=0) are handled. The external source is used only as context, not in the argument. Target exactly matches the cell statement."
+  },
+  "limitation": null
+ },
+ "evidence": {
+  "report": {
+   "evidence_verdict": "PASS",
+   "source_issues": [
+    {
+     "code": "SOURCE_NOT_RETRIEVED",
+     "detail": "src_1 (arXiv:1801.07837, Bilyk–Matzke) could not be retrieved in this environment and has an empty submitted_excerpt; it is treated as unchecked. It is declared context-only and the proof does not use it, so this does not affect the verdict. If the final hand-in keeps the citation, the author should confirm the reference (title/authors/arXiv id) against the arXiv page.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [],
+   "rule_violations": [
+    {
+     "code": "HANDIN_STATUS_NOT_EXPLICIT",
+     "detail": "Official rules require saying clearly which cells are considered solved vs partial. The draft ends with ■ but does not explicitly state 'cell 1: solved'. Add one line in the submission.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "KNOWN_IN_LITERATURE"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1 (context only, not used in the argument, not retrieved)"
+     ],
+     "notes": "Self-contained written proof via uniformly random half-turn and double counting; no computation, no citation used as a proof step. The planar case is stated by the candidate to be known in the literature, but the submitted argument stands on its own."
+    }
+   ],
+   "reproducibility_notes": "No code, artifacts, or numerical claims were submitted; nothing to reproduce. Verification is by reading the written proof only. No external result is load-bearing, so the unretrieved source does not block acceptance."
+  },
+  "limitation": null
+ },
+ "checks": [],
+ "check_errors": [],
+ "report": {
+  "final_verdict": "UNKNOWN_STATUS",
+  "highest_verified_cell": 0,
+  "math_review": {
+   "verdict": "PASS",
+   "first_fatal_error": null,
+   "accepted_claims": [
+    "main"
+   ],
+   "unproved_claims": [],
+   "missing_cases": []
+  },
+  "evidence_review": {
+   "verdict": "PASS",
+   "source_issues": [
+    {
+     "code": "SOURCE_NOT_RETRIEVED",
+     "detail": "src_1 (arXiv:1801.07837, Bilyk–Matzke) could not be retrieved in this environment and has an empty submitted_excerpt; it is treated as unchecked. It is declared context-only and the proof does not use it, so this does not affect the verdict. If the final hand-in keeps the citation, the author should confirm the reference (title/authors/arXiv id) against the arXiv page.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [],
+   "rule_violations": [
+    {
+     "code": "HANDIN_STATUS_NOT_EXPLICIT",
+     "detail": "Official rules require saying clearly which cells are considered solved vs partial. The draft ends with ■ but does not explicitly state 'cell 1: solved'. Add one line in the submission.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "KNOWN_IN_LITERATURE"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1 (context only, not used in the argument, not retrieved)"
+     ],
+     "notes": "Self-contained written proof via uniformly random half-turn and double counting; no computation, no citation used as a proof step. The planar case is stated by the candidate to be known in the literature, but the submitted argument stands on its own."
+    }
+   ]
+  },
+  "accepted_progress": [],
+  "blocking_issue": "Both model reviews passed. A human must read and approve the argument; this is not formal verification.",
+  "next_required_step": "Human reviews the exact target, proof and evidence, then approves explicit claims",
+  "stagnation_signal": false
+ },
+ "review_status": "READY_FOR_HUMAN",
+ "proposed_claim_ids": [
+  "main"
+ ]
+}

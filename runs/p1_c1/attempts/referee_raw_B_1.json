@@ -1,0 +1,45 @@
+{
+ "report": {
+  "evidence_verdict": "PASS",
+  "source_issues": [
+   {
+    "code": "SOURCE_NOT_RETRIEVED",
+    "detail": "src_1 (arXiv:1801.07837, Bilyk–Matzke) could not be retrieved in this environment and has an empty submitted_excerpt; it is treated as unchecked. It is declared context-only and the proof does not use it, so this does not affect the verdict. If the final hand-in keeps the citation, the author should confirm the reference (title/authors/arXiv id) against the arXiv page.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [],
+  "rule_violations": [
+   {
+    "code": "HANDIN_STATUS_NOT_EXPLICIT",
+    "detail": "Official rules require saying clearly which cells are considered solved vs partial. The draft ends with ■ but does not explicitly state 'cell 1: solved'. Add one line in the submission.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US",
+     "KNOWN_IN_LITERATURE"
+    ],
+    "evidence_sufficient": true,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": false,
+    "references": [
+     "src_1 (context only, not used in the argument, not retrieved)"
+    ],
+    "notes": "Self-contained written proof via uniformly random half-turn and double counting; no computation, no citation used as a proof step. The planar case is stated by the candidate to be known in the literature, but the submitted argument stands on its own."
+   }
+  ],
+  "reproducibility_notes": "No code, artifacts, or numerical claims were submitted; nothing to reproduce. Verification is by reading the written proof only. No external result is load-bearing, so the unretrieved source does not block acceptance."
+ },
+ "limitation": null
+}

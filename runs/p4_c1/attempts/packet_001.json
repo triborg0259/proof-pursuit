@@ -1,0 +1,146 @@
+{
+ "job": {
+  "problem_id": "p4_c1",
+  "original_problem": "# Problema 4 — Disjoint congruence classes and large gcd\n\n*(Enunciato formattato in LaTeX, contenuto fedele all'originale; ricevuto il 2026-09-26. Titolo della colonna\nnon riportato nel testo incollato; la domanda di apertura è: \"If congruence classes are pairwise disjoint, must\ntwo of their moduli share a large common factor?\")*\n\n## Preambolo\n\nFor integers $a$ and $m \\ge 1$ write\n$$\na \\pmod m = \\{\\, a + mt : t \\in \\mathbb{Z} \\,\\}\n$$\nfor the congruence class of $a$ modulo $m$. A finite family of classes $a_1 \\pmod{m_1}, \\ldots, a_k \\pmod{m_k}$\nis *pairwise disjoint* if $a_i \\pmod{m_i} \\cap a_j \\pmod{m_j} = \\emptyset$ whenever $i < j$. Nothing is assumed\nabout the moduli beyond $m_i \\ge 1$: they may repeat, and the residues $a_i$ may repeat as well.\n\nBy the Chinese remainder theorem, two classes meet if and only if the congruences $x \\equiv a_i \\pmod{m_i}$ and\n$x \\equiv a_j \\pmod{m_j}$ are compatible, that is\n$$\na_i \\pmod{m_i} \\cap a_j \\pmod{m_j} \\ne \\emptyset \\iff \\gcd(m_i, m_j) \\mid a_i - a_j. \\qquad (*)\n$$\nThe question of this column is how large the moduli of a disjoint family must be forced to overlap in the gcd sense.\n\n**Question.** Let $k \\ge 2$ and let $a_1 \\pmod{m_1}, \\ldots, a_k \\pmod{m_k}$ be pairwise disjoint. Must there be\na pair $i < j$ with\n$$\n\\gcd(m_i, m_j) \\ge k \\,?\n$$\nThis is believed to be true for every $k$. It is sharp: the $k$ classes $1, 2, \\ldots, k \\pmod k$ are pairwise\ndisjoint — their differences have absolute value less than $k$, so $k$ divides none of them — and every pairwise\ngcd equals exactly $k$. So $k$ could not be replaced by $k+1$ in the statement.\n\n**Examples.** The three classes $0 \\pmod 2$, $1 \\pmod 4$, $3 \\pmod 8$ are pairwise disjoint by $(*)$, and their\npairwise gcds are $2, 2, 4$; the largest is $4 \\ge 3$, as the question predicts for $k = 3$. By contrast\n$0 \\pmod 2$ and $0 \\pmod 3$ have coprime moduli and do meet, at $0$.\n\n**Trivial bounds.** Two observations are immediate and you should assume they are already on the table;\npresenting either as progress counts for nothing.\n\n1. If $\\gcd(m_i, m_j) = 1$ then by $(*)$ the two classes meet. Hence in any pairwise disjoint family every\n   pairwise gcd is at least $2$. This answers the question for $k = 2$, and for a family of size $k$ that fails\n   the question it confines every pairwise gcd to the range $2 \\le \\gcd(m_i, m_j) \\le k - 1$.\n2. The class $a \\pmod m$ has density $1/m$, so a pairwise disjoint family satisfies $\\sum_{i=1}^k 1/m_i \\le 1$.\n   In particular some modulus satisfies $m_i \\ge k$.\n\nObservation 2 bounds a single modulus from below; it says nothing about any gcd, and the two together settle no\nsize $k \\ge 3$. Every cell below needs a genuinely new argument.\n\n**What to hand in.** For each cell you attempt, hand in a written proof. You may use a computer to explore.\nA proof may rely on a computation only if you include the code, it runs in under ten minutes on a laptop, and\nthe computation is exhaustive over a finite set that your own argument has reduced the problem to.\n\nA computational cell is accepted only with an *exhaustiveness certificate*, meaning all four of:\n\n1. an exact description of the finite set your search enumerates, together with the proof that nothing outside\n   it can be a counterexample;\n2. every pruning rule you use, stated precisely, each with the proof that it discards only objects that cannot\n   be completed to a counterexample;\n3. the node count of the search at each size you claim, and the wall clock;\n4. a rerun that reproduces those counts;\n5. and, if anything at all survives your pruning at a size you claim, a separate decision for every survivor —\n   not a sample — together with, for each one, the smallest part of it that already forces the decision, and\n   your proof that no smaller part does. A survivor you cannot decide means the size is not certified.\n\nA run that reports \"I searched and found nothing\" without 1–5 is not a certificate and scores nothing. If a\nsearch does not finish at some size, report it as unfinished and do not claim that size; a partial search is a\nlegitimate partial result and should be handed in as one, with the counts it reached.\n\nWhere a cell asks you to determine a boundary, state the exact value you claim. Claim only what you have\ncertified: an unfinished size, or one certified under an assumption you have not verified, must be reported as\nsuch. Say clearly which cells you consider solved and which are partial.\n\nCiting a published result for the statement you are asked to prove does not count as a solution; a proof written\nout in full does, whatever its source. If you rely on a published argument, you are responsible for it: check it\nyourself, and report it if it does not hold up.\n\n## Parte 1 (C1) — Three classes\n\n**Punteggio:** 1 point · **Valutazione:** Judged\n\nThe first size that the two trivial observations above do not settle. Prove the statement for $k = 3$: any three\npairwise disjoint classes have $\\gcd(m_i, m_j) \\ge 3$ for some $i < j$.\n\n## Parte 2 (C2) — Four classes\n\n**Punteggio:** 2 points · **Valutazione:** Judged\n\nThe same question for four classes. Prove the statement for $k = 4$.\n\n## Parte 3 (C3) — Every $k$ up to 8\n\n**Punteggio:** 3 points · **Valutazione:** Judged\n\nA first range of sizes: after C1 and C2, the sizes $k = 5, 6, 7$ and $8$ remain. Prove the statement for every\n$k \\le 8$.\n\n## Parte 4 (C4) — Every $k$ up to 12\n\n**Punteggio:** 5 points · **Valutazione:** Judged\n\nA longer range, and a precise account of your method at the sizes just beyond it. Prove the statement for every\n$k \\le 12$. Then, for each $k$ from $9$ to $16$ in turn, report exactly what your method leaves undecided at that\n$k$: if nothing, say so and prove it; if something, exhibit it in full. If that disagrees with any source you\nconsulted, say which of the two is right and why. An answer that reports agreement with a source it did not test\nwill be marked wrong.\n\n## Parte 5 (C5) — The certified boundary\n\n**Punteggio:** 8 points · **Valutazione:** Judged\n\nThe main certification cell: an initial range of sizes as long as you can make it, plus two isolated sizes\nfurther out. Determine the largest $k$ for which you can certify the statement for all sizes up to and including\n$k$, and certify it. The range you claim must be contiguous, and if your argument at a given size assumes that\nall smaller sizes have already been settled you must say so. Then decide the two isolated sizes $k = 24$ and\n$k = 30$: show that neither is the least size at which the statement can fail.\n\nFor this cell the exhaustiveness certificate of the hand-in rules is not enough on its own. Add:\n\n(i) a demonstration that your method is not vacuous. Construct a case in which an admissible configuration\ngenuinely exists, run your machinery on it unmodified, and show it returns that configuration. A method that\nreports \"nothing survives\" at every size it is pointed at is indistinguishable from a method with a bug, and will\nbe graded as one;\n\n(ii) for every object your pruning leaves undecided, at every $k$ you claim — not a sample — an individual\ndecision, plus the smallest part of that object which already forces the decision, plus a proof that no smaller\npart does;\n\n(iii) the exact list, not merely the count, of what survives at each $k$;\n\n(iv) every pruning rule you use beyond those you have proved, proved. If your search needs a rule you invented\nto finish a size, that rule is part of your claim: state it, prove it, and show the survivor list is unchanged\nwhen you switch it off. A size that only closes with an unproved rule is not certified;\n\n(v) a second implementation, written independently of your first, that differs in method — not the same\nalgorithm twice — and the two survivor lists compared elementwise at every $k$ you claim. Report any difference\nrather than reconciling it silently: a disagreement means one of them is wrong, and finding which is part of the\ncell.\n\n## Parte 6 (C6) — Beyond the boundary\n\n**Punteggio:** 13 points · **Valutazione:** Judged · **Open question**\n\nThree directions beyond the certified range; any one of them counts. Any of the following.\n\n(a) Decide a size $k \\ge 25$.\n\n(b) The asymptotic form. It is known that a pairwise disjoint family of size $k$ always has a pair with\n$$\n\\gcd(m_i, m_j) \\;\\ge\\; k \\cdot \\exp\\!\\left( -(2 + o(1)) \\frac{\\log k}{\\log\\log k} \\right),\n$$\nwhich is $k^{1 - o(1)}$ but not linear in $k$. Prove the statement in full, or prove the weaker bound\n$\\gcd(m_i, m_j) \\ge ck$ for some absolute constant $c > 0$, or improve the exponential factor above.\n\n(c) The group form. Let $G$ be a group, let $G_1, \\ldots, G_k$ be subgroups of finite index $n_i = [G : G_i]$,\nand let $x_1 G_1, \\ldots, x_k G_k$ be pairwise disjoint cosets. Is there a pair $i < j$ with\n$\\gcd(n_i, n_j) \\ge k$? This is known for $k \\le 5$ and open for every $k \\ge 6$; settling $k = 6$ counts as\nprogress.\n\n*(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)*\n\n\n# TARGET CELL 1\nProve: any three pairwise disjoint congruence classes a_i (mod m_i) have gcd(m_i,m_j) >= 3 for some i < j.\n",
+  "cell": {
+   "id": "cell_1",
+   "number": 1,
+   "target_claim_id": "main",
+   "statement": "Prove: any three pairwise disjoint congruence classes a_i (mod m_i) have gcd(m_i,m_j) >= 3 for some i < j."
+  },
+  "state": {
+   "highest_verified_cell": 0,
+   "claims": []
+  },
+  "candidate": {
+   "attempt_id": "attempt_001",
+   "proof": "# Cell 1: three pairwise disjoint classes have a pair of moduli with $\\gcd\\ge3$\n\n**Target.** If $a_1\\ (\\mathrm{mod}\\ m_1)$, $a_2\\ (\\mathrm{mod}\\ m_2)$, $a_3\\ (\\mathrm{mod}\\ m_3)$ are pairwise disjoint congruence classes ($m_i\\ge1$), then $\\gcd(m_i,m_j)\\ge3$ for some $i<j$.\n\n## Lemma 0 (the direction of $(*)$ that we use)\nLet $g=\\gcd(m,m')$. If $g\\mid a-a'$ then the classes $a\\ (\\mathrm{mod}\\ m)$ and $a'\\ (\\mathrm{mod}\\ m')$ have a common element. Equivalently: if the two classes are disjoint then $g\\nmid a-a'$.\n*Proof.* Write $m=g\\mu$, $m'=g\\mu'$ with $\\gcd(\\mu,\\mu')=1$, and $a-a'=g\\delta$ with $\\delta\\in\\mathbb Z$. An element of the first class has the form $a+mt=a+g\\mu t$, $t\\in\\mathbb Z$; it lies in the second class iff $m'\\mid a+g\\mu t-a'$, i.e. $g\\mu'\\mid g(\\delta+\\mu t)$, i.e. $\\mu'\\mid\\delta+\\mu t$. Since $\\gcd(\\mu,\\mu')=1$, $\\mu$ is invertible modulo $\\mu'$, so $t\\equiv-\\delta\\mu^{-1}\\pmod{\\mu'}$ solves it. $\\square$\n(This is the statement $(*)$ quoted in the problem; we include the short proof so that the argument is self-contained.)\n\n## Proof of the cell\nLet the three classes be pairwise disjoint and suppose, for a contradiction, that $\\gcd(m_i,m_j)\\le2$ for all three pairs.\n1. *Every pairwise gcd equals $2$.* If $\\gcd(m_i,m_j)=1$ then $1\\mid a_i-a_j$, so by Lemma 0 the classes $i$ and $j$ meet, contradicting disjointness. Hence $\\gcd(m_i,m_j)=2$ for all $i<j$.\n2. *The residues are pairwise of different parity.* For $i<j$, disjointness and Lemma 0 give $\\gcd(m_i,m_j)=2\\nmid a_i-a_j$, i.e. $a_i\\not\\equiv a_j\\pmod 2$.\n3. *Contradiction.* $a_1,a_2,a_3$ would be three integers with pairwise different residues modulo $2$; but there are only two residues modulo $2$, so two of them coincide (pigeonhole). \n\nHence the assumption fails: some pair satisfies $\\gcd(m_i,m_j)\\ge3$. $\\blacksquare$\n\n*Remark.* Step 1 is the first \"trivial bound\" of the problem statement; it is re-derived here only because the argument needs the exact value $2$ of every gcd, not merely $\\ge2$.\n",
+   "method_tag": "direct_proof",
+   "claims": [
+    {
+     "id": "main",
+     "statement": "Prove: any three pairwise disjoint congruence classes a_i (mod m_i) have gcd(m_i,m_j) >= 3 for some i < j.",
+     "depends_on": []
+    }
+   ],
+   "sources": [
+    {
+     "id": "src_1",
+     "reference": "arXiv:2607.24655 Fornal, Sun, On the problem of large gcd for disjoint residue classes (context only: asymptotic result, not used)",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    }
+   ],
+   "artifacts": []
+  },
+  "rules": {
+   "allow_literature_as_proof": false,
+   "allow_computation": true,
+   "require_machine_verification": false,
+   "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For each cell you attempt, hand in a written proof. You may use a computer to explore. A proof may rely on a computation only if you include the code, it runs in under ten minutes on a laptop, and the computation is exhaustive over a finite set that your own argument has reduced the problem to. A computational cell is accepted only with an *exhaustiveness certificate*, meaning all four of: 1. an exact description of the finite set your search enumerates, together with the proof that nothing outside it can be a counterexample; 2. every pruning rule you use, stated precisely, each with the proof that it discards only objects that cannot be completed to a counterexample; 3. the node count of the search at each size you claim, and the wall clock; 4. a rerun that reproduces those counts; 5. and, if anything at all survives your pruning at a size you claim, a separate decision for every survivor — not a sample — together with, for each one, the smallest part of it that already forces the decision, and your proof that no smaller part does. A survivor you cannot decide means the size is not certified. A run that reports \"I searched and found nothing\" without 1–5 is not a certificate and scores nothing. If a search does not finish at some size, report it as unfinished and do not claim that size; a partial search is a legitimate partial result and should be handed in as one, with the counts it reached. Where a cell asks you to determine a boundary, state the exact value you claim. Claim only what you have certified: an unfinished size, or one certified under an assumption you have not verified, must be reported as such. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source. If you rely on a published argument, you are responsible for it: check it yourself, and report it if it does not hold up. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+  }
+ },
+ "submission_digest": "603ed2902db988a37dc2b524d46b5083e952c62eba6451f79f8b99bb24172b8e",
+ "math": {
+  "report": {
+   "mathematical_verdict": "PASS",
+   "first_fatal_error": null,
+   "accepted_mathematical_claims": [
+    "main"
+   ],
+   "unproved_claims": [],
+   "missing_cases": [],
+   "math_notes": "Checked the argument step by step. Lemma 0 (gcd(m,m') | a-a' implies the classes meet) is proved correctly via Bezout/invertibility of mu modulo mu' after factoring out g; the case mu'=1 is harmless (the congruence on t is vacuous, any t works). Step 1: under the contradiction hypothesis gcd<=2 for all pairs, gcd=1 is excluded by Lemma 0 (1 divides every difference), so all three pairwise gcds equal exactly 2. Step 2: disjointness plus Lemma 0 (contrapositive) gives 2 does not divide a_i - a_j for each pair, i.e. the three residues are pairwise distinct modulo 2. Step 3: pigeonhole on two residues modulo 2 contradicts this. The contradiction is valid, all quantifiers match the target (arbitrary a_i in Z, m_i >= 1, k=3), and no external source is used mathematically. The exact target claim 'main' is established."
+  },
+  "limitation": null
+ },
+ "evidence": {
+  "report": {
+   "evidence_verdict": "PASS",
+   "source_issues": [
+    {
+     "code": "SOURCE_UNCHECKED_NONESSENTIAL",
+     "detail": "src_1 (arXiv:2607.24655, Fornal–Sun) is cited as 'context only, not used', has an empty submitted excerpt, and could not be retrieved or verified in this review (no browsing tools). The proof does not depend on it, so this is not blocking. Recommendation: remove it from the hand-in or mark it explicitly as 'not consulted/unverified' so it is not presented as a read source, per the team protocol on citations.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [],
+   "rule_violations": [],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "KNOWN_IN_LITERATURE"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [],
+     "notes": "Self-contained written proof: Lemma 0 (the 'if gcd divides difference then classes meet' direction of (*)) is proved directly via CRT-style inversion; the cell then follows by forcing every pairwise gcd to equal 2, deducing pairwise distinct parities of a_1,a_2,a_3, and applying pigeonhole on two residues mod 2. No computation, no citation is load-bearing. The k=3 case is presumably known in the literature (the problem itself says the statement is believed/known for small k) but the proof here does not rely on that."
+    }
+   ],
+   "reproducibility_notes": "No code, artifacts or numerical experiments are involved; nothing to reproduce. The proof can be checked by hand in a few minutes. Official hand-in rules (written proof; computation only with certificate) are satisfied since no computation is used."
+  },
+  "limitation": null
+ },
+ "checks": [],
+ "check_errors": [],
+ "report": {
+  "final_verdict": "UNKNOWN_STATUS",
+  "highest_verified_cell": 0,
+  "math_review": {
+   "verdict": "PASS",
+   "first_fatal_error": null,
+   "accepted_claims": [
+    "main"
+   ],
+   "unproved_claims": [],
+   "missing_cases": []
+  },
+  "evidence_review": {
+   "verdict": "PASS",
+   "source_issues": [
+    {
+     "code": "SOURCE_UNCHECKED_NONESSENTIAL",
+     "detail": "src_1 (arXiv:2607.24655, Fornal–Sun) is cited as 'context only, not used', has an empty submitted excerpt, and could not be retrieved or verified in this review (no browsing tools). The proof does not depend on it, so this is not blocking. Recommendation: remove it from the hand-in or mark it explicitly as 'not consulted/unverified' so it is not presented as a read source, per the team protocol on citations.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [],
+   "rule_violations": [],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "KNOWN_IN_LITERATURE"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [],
+     "notes": "Self-contained written proof: Lemma 0 (the 'if gcd divides difference then classes meet' direction of (*)) is proved directly via CRT-style inversion; the cell then follows by forcing every pairwise gcd to equal 2, deducing pairwise distinct parities of a_1,a_2,a_3, and applying pigeonhole on two residues mod 2. No computation, no citation is load-bearing. The k=3 case is presumably known in the literature (the problem itself says the statement is believed/known for small k) but the proof here does not rely on that."
+    }
+   ]
+  },
+  "accepted_progress": [],
+  "blocking_issue": "Both model reviews passed. A human must read and approve the argument; this is not formal verification.",
+  "next_required_step": "Human reviews the exact target, proof and evidence, then approves explicit claims",
+  "stagnation_signal": false
+ },
+ "review_status": "READY_FOR_HUMAN",
+ "proposed_claim_ids": [
+  "main"
+ ]
+}

@@ -1,0 +1,13 @@
+{
+ "report": {
+  "mathematical_verdict": "PASS",
+  "first_fatal_error": null,
+  "accepted_mathematical_claims": [
+   "main"
+  ],
+  "unproved_claims": [],
+  "missing_cases": [],
+  "math_notes": "Standard random-half-turn (double counting) argument, checked step by step. (1) Direction parametrisation t∈[0,π) and θ=min(u,π−u), u=|t−t'|, is correct, including the remark that u may be replaced by (t'−t) mod π. (2) Lemma 1: the translation ψ↦(ψ−t) mod π is measure-preserving on [0,π) and the equivalences t∈A_ψ ⇔ 0∈A_{ψ'}, t'∈A_ψ ⇔ u∈A_{ψ'} hold since the arguments agree mod π. The explicit description J_s=(max(0,s−π/2),s]∪(s+π/2,π) is correct (checked both branches ψ≤s, ψ>s), |J_s|=π/2, and the two cases u≤π/2, u>π/2 give |J_0△J_u|=2u and 2(π−u) respectively, i.e. 2φ. (3) The identity k_ψ(N−k_ψ)=Σ_{i<j}X_{ij}(ψ) is exact for every ψ; the events are finite unions of intervals so measurable; linearity of expectation gives S=(π/2)E[k_ψ(N−k_ψ)]. (4) k(N−k)≤N²/4 from (N−2k)²≥0 and integrality gives ≤⌊N²/4⌋; taking expectations of a pointwise bound yields the target. Repeated lines (u=0) are handled. The external source is used only as context, not in the argument. Target exactly matches the cell statement."
+ },
+ "limitation": null
+}

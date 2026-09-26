@@ -1,0 +1,119 @@
+{
+ "job": {
+  "problem_id": "p1_c2",
+  "original_problem": "# Problema 1 — Angles between lines\n\n*(Enunciato formattato in LaTeX, contenuto fedele all'originale; ricevuto a parti il 2026-09-26.)*\n\n## Preambolo\n\n**Angles between lines.** How large can the sum of pairwise angles between $N$ lines through the origin be?\nFejes Tóth conjectured in 1959 that orthogonal lines win.\n\nA line here always means a line through the origin of $\\mathbb{R}^d$. The angle between two lines\n$\\ell, \\ell'$ is the acute (non-obtuse) angle $\\theta(\\ell,\\ell') \\in [0,\\pi/2]$ between them.\nIf $\\ell, \\ell'$ are spanned by unit vectors $x, x'$, then\n$$\n\\theta(\\ell,\\ell') = \\arccos\\,\\lvert \\langle x, x' \\rangle \\rvert .\n$$\nFor lines $\\ell_1, \\ldots, \\ell_N$ in $\\mathbb{R}^d$ (repetitions allowed), write\n$$\nS(\\ell_1,\\ldots,\\ell_N) = \\sum_{1 \\le i < j \\le N} \\theta(\\ell_i,\\ell_j).\n$$\nThe question is how large $S$ can be. In 1959 L. Fejes Tóth conjectured that $S$ is maximised by taking\n$d$ mutually orthogonal lines, each used either $\\lfloor N/d \\rfloor$ or $\\lceil N/d \\rceil$ times.\nWhen $N = d + k$ with $0 \\le k \\le d$, that configuration (the $d$ coordinate axes, $k$ of them used twice) has\n$$\nS = \\left( \\binom{N}{2} - k \\right) \\cdot \\frac{\\pi}{2},\n$$\nbecause exactly $k$ pairs of lines coincide and every other pair is orthogonal.\n\nEach cell below asks you to prove this bound, or a special case of it. Unless a cell says otherwise, you need\na complete proof. Citing a published result for the statement you are asked to prove does not count.\n\n**What to hand in.** For each cell you attempt, hand in a written proof. You may use a computer to explore.\nA proof may rely on a computation only if you include the code, it runs in under 10 minutes on a laptop, and\nit is rigorous: exact or interval arithmetic, or an argument that bounds the numerical error. Say clearly\nwhich cells you consider solved and which are partial.\n\n## Parte 1 — Lines in the plane\n\n**Punteggio:** 1 point · **Valutazione:** Judged\n\nWe begin in the plane ($d = 2$), where the conjectured optimum splits the $N$ lines as evenly as\npossible between two perpendicular directions. Let $\\ell_1, \\ldots, \\ell_N$ be lines in $\\mathbb{R}^2$.\nProve that\n$$\nS(\\ell_1, \\ldots, \\ell_N) \\;\\le\\; \\frac{\\pi}{2} \\cdot \\left\\lfloor \\frac{N^2}{4} \\right\\rfloor .\n$$\n\n## Parte 2 — An orthogonality lemma\n\n**Punteggio:** 2 points · **Valutazione:** Judged\n\nA statement about a chain of vectors, in which each vector may fail to be orthogonal only to its immediate\nneighbours in the list. Let $m \\ge 2$ and let $x_1, \\ldots, x_m$ be unit vectors in $\\mathbb{R}^{m-1}$ with\n$\\langle x_i, x_j \\rangle = 0$ whenever $|i - j| \\ge 2$. Prove that\n$$\n\\sum_{i=1}^{m-1} \\theta(x_i, x_{i+1}) \\;\\le\\; (m-2) \\cdot \\frac{\\pi}{2},\n$$\nwhere $\\theta(x,y) = \\arccos\\,\\lvert \\langle x, y \\rangle \\rvert$.\n\n## Parte 3 — $d+1$ lines in $\\mathbb{R}^d$\n\n**Punteggio:** 3 points · **Valutazione:** Judged\n\nThe first case in every dimension: one line more than the dimension, $N = d+1$, where the conjectured optimum\nrepeats exactly one of the $d$ coordinate axes. Let $d \\ge 1$. Prove that any $d+1$ lines in $\\mathbb{R}^d$ satisfy\n$$\nS \\;\\le\\; \\left( \\binom{d+1}{2} - 1 \\right) \\cdot \\frac{\\pi}{2}.\n$$\n\n## Parte 4 — Five lines in $\\mathbb{R}^3$, six in $\\mathbb{R}^4$\n\n**Punteggio:** 5 points · **Valutazione:** Judged\n\nTwo concrete instances of the next case, $N = d+2$: five lines in three dimensions and six lines in four.\nIn each, the conjectured optimum repeats two of the coordinate axes. Prove that any $5$ lines in $\\mathbb{R}^3$\nsatisfy $S \\le 4\\pi$, and that any $6$ lines in $\\mathbb{R}^4$ satisfy $S \\le 13\\pi/2$.\n\n## Parte 5 — $d+2$ lines in $\\mathbb{R}^d$\n\n**Punteggio:** 8 points · **Valutazione:** Judged\n\nThe case $N = d+2$ in every dimension, with the same conjectured optimum: the $d$ coordinate axes, two of them\nrepeated. Prove that for every $d \\ge 2$, any $d+2$ lines in $\\mathbb{R}^d$ satisfy\n$$\nS \\;\\le\\; \\left( \\binom{d+2}{2} - 2 \\right) \\frac{\\pi}{2}.\n$$\n\n## Parte 6 — $N$ lines in $\\mathbb{R}^d$\n\n**Punteggio:** 13 points · **Valutazione:** Judged · **Open question**\n\nFejes Tóth's conjecture from the Setting, for every $N$ and every $d$. For $N$ lines in $\\mathbb{R}^d$, write\n$N = qd + s$ with $0 \\le s < d$, and let\n$$\nM(N,d) = s \\binom{q+1}{2} + (d-s) \\binom{q}{2}.\n$$\nProve or disprove: every $N$ lines in $\\mathbb{R}^d$ satisfy\n$$\nS \\;\\le\\; \\left( \\binom{N}{2} - M(N,d) \\right) \\frac{\\pi}{2}.\n$$\nThis is the value attained by splitting the lines as evenly as possible among $d$ mutually orthogonal\ndirections. Settling any infinite family not already covered above counts as partial progress.\n\n*(Fine del problema 1. Punteggi: 1+2+3+5+8+13 = 32.)*\n\n\n# TARGET CELL 2\nLet m >= 2 and x_1..x_m unit vectors in R^{m-1} with <x_i,x_j> = 0 whenever |i-j| >= 2. Prove sum_{i=1}^{m-1} theta(x_i,x_{i+1}) <= (m-2) pi/2, where theta(x,y) = arccos|<x,y>|.\n",
+  "cell": {
+   "id": "cell_2",
+   "number": 2,
+   "target_claim_id": "main",
+   "statement": "Let m >= 2 and x_1..x_m unit vectors in R^{m-1} with <x_i,x_j> = 0 whenever |i-j| >= 2. Prove sum_{i=1}^{m-1} theta(x_i,x_{i+1}) <= (m-2) pi/2, where theta(x,y) = arccos|<x,y>|."
+  },
+  "state": {
+   "highest_verified_cell": 0,
+   "claims": []
+  },
+  "candidate": {
+   "attempt_id": "attempt_001",
+   "proof": "# Cell 2: the orthogonality lemma for a chain of unit vectors\n\n**Target.** Let $m\\ge2$ and let $x_1,\\dots,x_m$ be unit vectors in $\\mathbb R^{m-1}$ with $\\langle x_i,x_j\\rangle=0$ whenever $|i-j|\\ge2$. Then $\\sum_{i=1}^{m-1}\\theta(x_i,x_{i+1})\\le(m-2)\\frac{\\pi}{2}$, where $\\theta(x,y)=\\arccos|\\langle x,y\\rangle|\\in[0,\\pi/2]$.\n\nWrite $\\theta_i=\\theta(x_i,x_{i+1})$ for $1\\le i\\le m-1$. We say that a list of unit vectors $y_1,\\dots,y_r$ in a Euclidean space $V$ is a *chain* if $\\langle y_i,y_j\\rangle=0$ whenever $|i-j|\\ge2$. The statement to prove is: (P$_m$) every chain of $m$ unit vectors in a Euclidean space of dimension $m-1$ satisfies $\\sum_{i=1}^{m-1}\\theta(y_i,y_{i+1})\\le(m-2)\\pi/2$. (Stating it for an arbitrary Euclidean space of dimension $m-1$ instead of $\\mathbb R^{m-1}$ is harmless: choosing an orthonormal basis gives a linear isometry onto $\\mathbb R^{m-1}$, which preserves inner products, hence the chain condition and all the angles.)\n\n## Two elementary facts\n**Fact A.** For $\\beta,\\psi\\in[0,\\pi/2]$: $\\arccos(\\cos\\beta\\cos\\psi)\\le\\beta+\\psi$.\n*Proof.* $\\cos(\\beta+\\psi)=\\cos\\beta\\cos\\psi-\\sin\\beta\\sin\\psi\\le\\cos\\beta\\cos\\psi$ because $\\sin\\beta,\\sin\\psi\\ge0$. Both $\\cos(\\beta+\\psi)$ and $\\cos\\beta\\cos\\psi$ lie in $[-1,1]$ and $\\arccos$ is decreasing on $[-1,1]$, so $\\arccos(\\cos\\beta\\cos\\psi)\\le\\arccos(\\cos(\\beta+\\psi))=\\beta+\\psi$, the last equality because $\\beta+\\psi\\in[0,\\pi]$. $\\square$\n\n**Fact B.** If $V$ is a Euclidean space of dimension $n\\ge1$ and $v_1,\\dots,v_{n-1}\\in V$ (possibly fewer vectors, possibly none), there is a unit vector $y\\in V$ orthogonal to all of them.\n*Proof.* The orthogonal complement of $\\mathrm{span}(v_1,\\dots,v_{n-1})$ in $V$ has dimension $\\ge n-(n-1)=1$, so it contains a nonzero vector; normalise it. $\\square$\n\n## Induction on $m$\n**Base $m=2$.** $x_1,x_2$ are unit vectors in a $1$-dimensional space, so $x_2=\\pm x_1$, $|\\langle x_1,x_2\\rangle|=1$ and $\\theta_1=\\arccos 1=0\\le0=(m-2)\\pi/2$.\n\n**Step.** Let $m\\ge3$ and assume (P$_{m-1}$). Let $x_1,\\dots,x_m$ be a chain of unit vectors in a Euclidean space $W$ of dimension $m-1$. Put $U=x_m^{\\perp}=\\{v\\in W:\\langle v,x_m\\rangle=0\\}$, a subspace of dimension $m-2$. For $j\\le m-2$ we have $|j-m|\\ge2$, hence $\\langle x_j,x_m\\rangle=0$: so $x_1,\\dots,x_{m-2}\\in U$. Let $c=\\langle x_{m-1},x_m\\rangle\\in[-1,1]$ and $w=x_{m-1}-c\\,x_m$. Then $\\langle w,x_m\\rangle=c-c=0$, so $w\\in U$, and $\\|w\\|^2=1-2c^2+c^2=1-c^2$.\n\n*Case 1: $|c|<1$.* Then $w\\neq0$; let $y=w/\\|w\\|$, a unit vector of $U$. For $j\\le m-3$ we have $|j-(m-1)|\\ge2$ and $|j-m|\\ge2$, so $\\langle y,x_j\\rangle=(\\langle x_{m-1},x_j\\rangle-c\\langle x_m,x_j\\rangle)/\\|w\\|=0$. Consequently $x_1,\\dots,x_{m-2},y$ is a chain of $m-1$ unit vectors in $U$ (pairs among $x_1,\\dots,x_{m-2}$ inherit the chain condition from the original chain; the pairs $(x_j,y)$ with $j\\le m-3$, i.e. $|j-(m-1)|\\ge2$ in the new indexing, were just checked). Since $\\dim U=m-2$, (P$_{m-1}$) gives\n$$\\sum_{i=1}^{m-3}\\theta_i+\\psi\\le(m-3)\\frac{\\pi}{2},\\qquad\\text{where }\\psi=\\theta(x_{m-2},y)\\in[0,\\pi/2].\\tag{3}$$\n(For $m=3$ the sum is empty and (3) says $\\psi\\le0$, i.e. $\\psi=0$, which is indeed what (P$_2$) gives for the chain $x_1,y$ in the $1$-dimensional space $U$.)\nNow $x_{m-1}=w+c\\,x_m=\\|w\\|\\,y+c\\,x_m$. Let $\\varphi=\\theta_{m-1}=\\theta(x_{m-1},x_m)=\\arccos|c|$, so $|c|=\\cos\\varphi$, $\\|w\\|=\\sqrt{1-c^2}=\\sin\\varphi$ and $\\varphi\\in(0,\\pi/2]$. Using $\\langle x_{m-2},x_m\\rangle=0$,\n$$\\langle x_{m-2},x_{m-1}\\rangle=\\|w\\|\\langle x_{m-2},y\\rangle+c\\langle x_{m-2},x_m\\rangle=\\sin\\varphi\\,\\langle x_{m-2},y\\rangle,$$\nso $|\\langle x_{m-2},x_{m-1}\\rangle|=\\sin\\varphi\\cos\\psi=\\cos\\beta\\cos\\psi$ with $\\beta=\\pi/2-\\varphi\\in[0,\\pi/2)$. By Fact A,\n$$\\theta_{m-2}=\\arccos(\\cos\\beta\\cos\\psi)\\le\\beta+\\psi=\\frac{\\pi}{2}-\\varphi+\\psi,\\qquad\\text{i.e.}\\qquad \\theta_{m-2}+\\theta_{m-1}\\le\\frac{\\pi}{2}+\\psi.$$\nAdding this to (3): $\\sum_{i=1}^{m-1}\\theta_i\\le(m-3)\\frac{\\pi}{2}-\\psi+\\frac{\\pi}{2}+\\psi=(m-2)\\frac{\\pi}{2}$.\n\n*Case 2: $|c|=1$, i.e. $x_{m-1}=\\pm x_m$.* Then $\\theta_{m-1}=\\arccos1=0$, and $\\langle x_{m-2},x_{m-1}\\rangle=\\pm\\langle x_{m-2},x_m\\rangle=0$, so $\\theta_{m-2}=\\arccos0=\\pi/2$. By Fact B applied to $V=U$ (dimension $m-2\\ge1$) and the $m-3$ vectors $x_1,\\dots,x_{m-3}$, there is a unit vector $y\\in U$ with $\\langle y,x_j\\rangle=0$ for all $j\\le m-3$. Then $x_1,\\dots,x_{m-2},y$ is a chain of $m-1$ unit vectors in $U$ (same verification as in Case 1), and (P$_{m-1}$) gives $\\sum_{i=1}^{m-3}\\theta_i+\\theta(x_{m-2},y)\\le(m-3)\\frac{\\pi}{2}$, hence $\\sum_{i=1}^{m-3}\\theta_i\\le(m-3)\\frac{\\pi}{2}$ because $\\theta(x_{m-2},y)\\ge0$. Therefore\n$$\\sum_{i=1}^{m-1}\\theta_i=\\sum_{i=1}^{m-3}\\theta_i+\\frac{\\pi}{2}+0\\le(m-2)\\frac{\\pi}{2}.$$\n\nIn both cases (P$_m$) holds, which completes the induction. $\\blacksquare$\n\n*Remark (not needed).* For $m=3$ the argument shows $\\theta_1+\\theta_2=\\pi/2$ always; for general $m$ equality is attained e.g. by $x_i=e_i$ ($i\\le m-1$), $x_m=e_{m-1}$, where all consecutive angles are $\\pi/2$ except the last, which is $0$.\n",
+   "method_tag": "direct_proof",
+   "claims": [
+    {
+     "id": "main",
+     "statement": "Let m >= 2 and x_1..x_m unit vectors in R^{m-1} with <x_i,x_j> = 0 whenever |i-j| >= 2. Prove sum_{i=1}^{m-1} theta(x_i,x_{i+1}) <= (m-2) pi/2, where theta(x,y) = arccos|<x,y>|.",
+     "depends_on": []
+    }
+   ],
+   "sources": [],
+   "artifacts": []
+  },
+  "rules": {
+   "allow_literature_as_proof": false,
+   "allow_computation": true,
+   "require_machine_verification": false,
+   "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For each cell you attempt, hand in a written proof. You may use a computer to explore. A proof may rely on a computation only if you include the code, it runs in under 10 minutes on a laptop, and it is rigorous: exact or interval arithmetic, or an argument that bounds the numerical error. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+  }
+ },
+ "submission_digest": "63b4b8bfad5418504a31dcc18d4ae88303428b888316c6bbf291cf49c12c7ae6",
+ "math": {
+  "report": {
+   "mathematical_verdict": "PASS",
+   "first_fatal_error": null,
+   "accepted_mathematical_claims": [
+    "main"
+   ],
+   "unproved_claims": [],
+   "missing_cases": [],
+   "math_notes": "Target matches cell 2 exactly (sum of consecutive angles of a chain of m unit vectors in an (m-1)-dimensional space, bound (m-2)π/2). Induction on m with the statement generalised to arbitrary Euclidean spaces of dimension m-1; the isometry remark makes the generalisation harmless and is needed so that P_{m-1} can be applied inside the subspace U = x_m^⊥. Fact A: cos(β+ψ) ≤ cosβ cosψ for β,ψ∈[0,π/2] and arccos decreasing with β+ψ∈[0,π] — correct. Fact B: dimension count — correct. Base m=2: two unit vectors in a 1-dimensional space are ±each other, angle 0 — correct. Step, Case 1 (|c|<1): x_1..x_{m-2}∈U because |j-m|≥2; y=w/‖w‖ with w=x_{m-1}-c x_m lies in U and is orthogonal to x_j for j≤m-3; hence x_1..x_{m-2},y is a chain of m-1 vectors in the (m-2)-dimensional U, so P_{m-1} applies giving (3). The decomposition x_{m-1}=sinφ·y+c·x_m together with ⟨x_{m-2},x_m⟩=0 yields |⟨x_{m-2},x_{m-1}⟩|=sinφ cosψ=cos(π/2-φ)cosψ; Fact A gives θ_{m-2}+θ_{m-1} ≤ π/2+ψ, and adding (3) gives exactly (m-2)π/2. The m=3 sub-case (empty sum, ψ=0 from P_2) is handled explicitly. Case 2 (|c|=1): θ_{m-1}=0, θ_{m-2}=π/2 since x_{m-2}⊥x_m, and Fact B supplies a unit y∈U orthogonal to x_1..x_{m-3} (m-3 vectors in a space of dimension m-2≥1), so P_{m-1} bounds the first m-3 angles by (m-3)π/2; total ≤ (m-2)π/2. Both cases exhaust |c|∈[-1,1]. The signs, boundaries (φ∈(0,π/2], β∈[0,π/2)) and the ψ cancellation are all correct. No external results used; sources and artifacts are empty and none are needed. The closing remark (equality example) is not needed and is not judged."
+  },
+  "limitation": null
+ },
+ "evidence": {
+  "report": {
+   "evidence_verdict": "PASS",
+   "source_issues": [],
+   "computation_issues": [],
+   "rule_violations": [],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "KNOWN_IN_LITERATURE"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [],
+     "notes": "The submission is a fully self-contained written proof (induction on m, with two elementary facts proved inline: a cosine-product inequality and existence of an orthogonal unit vector). It cites no sources, includes no code, no artifacts and no numerical experiments, so there is nothing external to retrieve or reproduce. The lemma is of a type known in the literature on the Fejes Tóth line-angle problem, but the candidate does not rely on that: every step is written out, which is exactly what the official hand-in rules require ('a proof written out in full does, whatever its source'). Dependencies used inside the proof (Fact A, Fact B, base case m=2) are proved in the text; the induction hypothesis (P_{m-1}) is applied to a chain of m-1 vectors in a space of dimension m-2, matching the target statement's dimension convention. Mathematical correctness of each step is Referee A's remit; from the evidence/compliance side no blocking issue is found."
+    }
+   ],
+   "reproducibility_notes": "No computation, code, data or external citation is part of the argument, so no reproduction or retrieval is required. Rule check: allow_literature_as_proof=false is respected (no literature is used as proof); allow_computation=true is irrelevant (no computation used); no machine verification required. The candidate does not explicitly state 'we consider this cell solved' as the hand-in rules request; this is a presentational note for the final hand-in, not an evidence defect."
+  },
+  "limitation": null
+ },
+ "checks": [],
+ "check_errors": [],
+ "report": {
+  "final_verdict": "UNKNOWN_STATUS",
+  "highest_verified_cell": 0,
+  "math_review": {
+   "verdict": "PASS",
+   "first_fatal_error": null,
+   "accepted_claims": [
+    "main"
+   ],
+   "unproved_claims": [],
+   "missing_cases": []
+  },
+  "evidence_review": {
+   "verdict": "PASS",
+   "source_issues": [],
+   "computation_issues": [],
+   "rule_violations": [],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "KNOWN_IN_LITERATURE"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [],
+     "notes": "The submission is a fully self-contained written proof (induction on m, with two elementary facts proved inline: a cosine-product inequality and existence of an orthogonal unit vector). It cites no sources, includes no code, no artifacts and no numerical experiments, so there is nothing external to retrieve or reproduce. The lemma is of a type known in the literature on the Fejes Tóth line-angle problem, but the candidate does not rely on that: every step is written out, which is exactly what the official hand-in rules require ('a proof written out in full does, whatever its source'). Dependencies used inside the proof (Fact A, Fact B, base case m=2) are proved in the text; the induction hypothesis (P_{m-1}) is applied to a chain of m-1 vectors in a space of dimension m-2, matching the target statement's dimension convention. Mathematical correctness of each step is Referee A's remit; from the evidence/compliance side no blocking issue is found."
+    }
+   ]
+  },
+  "accepted_progress": [],
+  "blocking_issue": "Both model reviews passed. A human must read and approve the argument; this is not formal verification.",
+  "next_required_step": "Human reviews the exact target, proof and evidence, then approves explicit claims",
+  "stagnation_signal": false
+ },
+ "review_status": "READY_FOR_HUMAN",
+ "proposed_claim_ids": [
+  "main"
+ ]
+}

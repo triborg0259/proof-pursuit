@@ -1,0 +1,981 @@
+                    Shift-Induced Dynamical Systems
+                     on Partitions and Compositions
+                                          Brian Hopkins
+                                   Department of Mathematics
+                        Saint Peter’s College, Jersey City, NJ 07306, USA
+                                       bhopkins@spc.edu
+
+
+                                        Michael A. Jones
+                             Department of Mathematical Sciences
+                         Montclair State University, Montclair, NJ 07043
+                                 jonesm@mail.montclair.edu
+
+           Submitted: Feb 22, 2006; Accepted: Sep 10, 2006; Published: Sep 22, 2006
+                      Mathematics Subject Classification: 05A17, 37E15
+
+
+
+                                               Abstract
+          The rules of “Bulgarian solitaire” are considered as an operation on the set of
+      partitions to induce a finite dynamical system. We focus on partitions with no
+      preimage under this operation, known as Garden of Eden points, and their relation
+      to the partitions that are in cycles. These are the partitions of interest, as we show
+      that starting from the Garden of Eden points leads through the entire dynamical
+      system to all cycle partitions. A primary result concerns the number of Garden
+      of Eden partitions (the number of cycle partitions is known from Brandt). The
+      same operation and questions can be put in the context of compositions (ordered
+      partitions), where we give stronger results.
+
+
+1     Introduction
+Let P (n) be the set of partitions of n. The relation λ ∈ P (n) will be written λ ` n.
+The shift operator DP : P (n) → P (n) is defined as follows. Given a partition λ =
+(λ1 , . . . , λk ) ` n, let DP (λ) be the partition of n with parts k, λ1 − 1, . . . , λk − 1, excluding
+any zeros (notice that the parts may not be in the standard nonincreasing order). The map
+is more easily defined from the graphic representation of a partition known as a Ferrers
+diagram: the first column of the diagram becomes a row, with reordering as needed to
+write the image in nonincreasing order. See Fig. 1.
+
+
+the electronic journal of combinatorics 13 (2006), #R80                                               1
+        Figure 1: An example of the map on partitions: DP ((6, 3, 1, 1)) = (5, 4, 2).
+
+     Analysis of this shift operator on partitions was first published by Jørgen Brandt in
+1982 [4], although the author claimed that the problem had already “been circulating
+for some time.” The next year, the idea was brought to a wider audience under the
+name “Bulgarian solitaire” in Martin Gardner’s popular column [8]. A handful of papers
+followed contributing to the analysis of this operator, and several variants were introduced.
+     We will also consider the natural analog of the shift operation on C(n), the set of
+compositions of n (ordered partitions). The relation λ ∈ C(n) will be written λ |=
+n. Given a composition λ = (λ1 , . . . , λk ) |= n, let DC (λ) be the composition (k, λ1 −
+1, . . . , λk − 1) excluding any zeros. Thus DC is DP without reordering, but with the
+provision of closing gaps where there are now zeros. See Fig. 2.
+
+
+
+
+      Figure 2: An example of the map on compositions: DC ((6, 1, 3, 1)) = (4, 5, 2).
+
+   Here is some notation that we will use. Repeated elements are sometimes indicated
+by exponents, such as (2, 14 ) rather than (2, 1, 1, 1, 1). In figures, we shorten the partition
+notation by representing (2, 14 ) as 214 . A partition or composition λ with k parts is said
+to have length k, written here `(λ) = k. Repeated application of the DP or DC map is
+denoted with exponents, e.g.,
+
+             DC2 ((6, 1, 3, 1)) = DC (DC ((6, 1, 3, 1))) = DC ((4, 5, 2)) = (3, 3, 4, 1).
+
+Recall the notion of the conjugate of a partition λ, written λ0 , which is most easily
+described in terms of the Ferrers diagram: reflect the dots across the diagonal, so that
+rows and columns switch roles. Some partitions are self-conjugate, while the rest fall into
+conjugate pairs. See Fig. 3.
+     Also, let (k, &, 1) indicate the list of integers decreasing by 1. For k = 4, (k, &, 1)
+is shorthand for (4, 3, 2, 1). We list only the greatest and least elements of such sublists.
+Lists with this notation sometimes collapse for small variable values. For example, when
+k = 3, the abbreviated list in (k+2, k−1, &, 3, 1) should be omitted entirely: the intended
+list is (5, 1). When k = 4, the same notation denotes (6, 3, 1); when k = 5, it is (7, 4, 3, 1),
+etc.
+
+the electronic journal of combinatorics 13 (2006), #R80                                       2
+Figure 3: Conjugate partitions (7,5,3,3,2,1,1), (7,5,4,2,2,1,1), and self-conjugate partition
+(6,5,4,4,2,1), all in P (22).
+
+    The cellular automata / finite dynamical systems context comes from considering the
+partition “state diagram,” a directed graph whose vertices are elements of P (n) and whose
+directed edges are the set of all (λ, DP (λ)). We can now define the objects of interest and
+outline of the paper.
+
+Definition 1. A partition λ is a cycle partition if DPm (λ) = λ for some m ≥ 1.
+
+    Cycle partitions are studied in [4] (details in Section 2). It is important to realize
+that P (n) can contain multiple cycles, one per connected component of the corresponding
+directed graph.
+
+Definition 2. A partition λ is a Garden of Eden partition or GE-partition if λ has no
+preimage under DP .
+
+   The terminology comes from [12], a foundational paper in cellular automata. We
+denote by GEP (n) the set of GE-partitions in P (n).
+
+Definition 3. Given a GE-partition λ, its preperiod length is the least m for which D Pm (λ)
+is a cycle partition.
+
+    In Section 2, we establish the importance of GE-partitions by proving that they are the
+entry points for all of P (n) (for n ≥ 3). The specific statement of Theorem 1 is that there
+are no stand-alone cycles, so that all cycles can be reached by starting at GE-partitions.
+Therefore, a complete analysis of P (n) can be achieved by determining the GE-partitions
+and applying DP repeatedly to them. The proof of Theorem 1 establishes a stronger
+result, giving the minimal period length among the GE-partitions of n. This contributes
+to the program of understanding the complete distribution of GE-partition preperiod
+lengths, a primary part of studying the global dynamics of a system [15]. Previously,
+maximal preperiod lengths had been studied, along with selected intermediate values for
+particular n. Complete data for preperiod lengths in P (n) up to n = 15 are given in
+Section 4. The second primary result of Section 2 is a combinatorial proof establishing a
+lower bound for the size of GEP (n).
+
+
+the electronic journal of combinatorics 13 (2006), #R80                                     3
+    All definitions apply to compositions, using the map DC . In Section 3, we consider
+analogous issues for GE-compositions. Again, we prove that there are no stand-alone
+cycles. The size of GEC (n) is computed exactly in two ways, giving a combinatorial proof
+of a Fibonacci number identity. In section 4, we will discuss various outstanding questions
+raised by our work.
+
+
+2     Partitions
+First, we summarize existing research relevant to our results. The initial observation
+on “Bulgarian solitaire” was that, for n a triangular number Ts = 1 + · · · + s = s(s +
+1)/2, repeated application of DP always leads to a single partition λ = (s, &, 1), which
+is fixed under DP . For other n, repeated application of DP always leads to multiple
+cycle partitions. In addition to the results mentioned so far, [4] also gives a formula for
+determining the number of cycles for n, i.e., the number of connected components of
+the corresponding directed graph. The smallest state diagram with multiple components
+occurs at n = 8 and is shown in Fig. 4.
+
+                          216         314           3213
+
+
+              18           8          71           62            521        431    4211
+
+
+
+                                      2311         513           44         332    3221
+
+
+                                      24           414           53         422
+
+
+                                      2214         611                      3311
+
+
+Figure 4: The two-component directed graph representing the state diagram for DP on
+P (8).
+
+    We give the characterization of cycle partitions without proof, following the notation
+of [1], a helpful elaboration on [4]. For n = Tk + r with 0 ≤ r ≤ k,
+                   λ ` n is a cycle partition ⇐⇒ λ = (k + δk , . . . , 1 + δ1 , δ0 )
+where exactly r of the δi are 1 and the rest are 0. Notice that cycle partitions have length
+k or k + 1, depending on δ0 . We can completely describe cyclic λ by ∆(λ) = (δk , . . . , δ0 ),
+a binary vector of length k + 1. The effect of DP on cyclic λ is cycling the entries of the
+vector ∆(λ). In particular,
+                           DP (λ) = (k + δ0 , k − 1 + δk , . . . , 1 + δ2 , δ1 )
+
+the electronic journal of combinatorics 13 (2006), #R80                                      4
+and ∆(DP (λ)) = (δ0 , δk , . . . , δ1 ). For example, in the smaller component for n = 8 shown
+in Fig. 4, ∆((4, 2, 2)) = (1, 0, 1, 0) and ∆((3, 3, 1, 1)) = (0, 1, 0, 1).
+    GE-partitions are characterized as a corollary to the following lemma, stated in [6]
+without proof.
+
+Lemma 1. The number of Dp -preimages of a partition λ is equal to the number of distinct
+parts λi ≥ `(λ) − 1.
+
+Proof. Let λ = (λ1 , . . . , λk ). For each distinct part λi ≥ k − 1, there exists a partition
+that maps to λ under DP . Specifically,
+
+                DP ((λ1 + 1, . . . , λi−1 + 1, λi+1 + 1, . . . , λk + 1, 1λi −(k−1) )) = λ.
+
+This implies that λ has at least the number of DP -preimages as the number of distinct
+parts λi ≥ `(λ) − 1.
+   Suppose κ = (κ1 , . . . , κj ) and DP (κ) = λ. DP (κ) consists of the nonzero parts in the
+unordered list κ1 − 1, κ2 − 1, . . . , κj − 1, j. Because `(λ) = k, there are j + 1 − k zeros in
+the unordered list of DP (κ)’s parts. This implies that κi = 1 for i = k − 1 to j so that
+j ≥ k − 1. Further, because `(κ) = j must be a part in DP (κ) = λ, then j = λi for some
+λi ≥ k − 1. Therefore, κi = λi + 1 for i = 1 to i − 1 and κi = λi+1 + 1 for i = i to k − 1.
+There exists a unique DP -preimage for each distinct part λi ≥ `(λ) − 1.
+
+Corollary 1. A partition λ is a Garden of Eden partition if and only if `(λ) > λ1 + 1.
+
+   The following theorem establishes the importance of studying GE-partitions in order
+to understand the P (n) dynamical system determined by DP . We prove that there are
+no stand-alone cycles, so that every cycle partition can be reached by starting from GE-
+partitions.
+
+Theorem 1. For n ≥ 3, every cycle partition λ ∈ P (n) satisfies DPm (κ) = λ for some
+κ ∈ GEP (n) and m ≥ 2.
+
+Proof. We show that every cycle partition has strictly positive minimal preperiod length.
+In fact, we show that, for n = Tk with k ≥ 3, the minimal preperiod length is 3, and n 6= Tk
+or n = 3, the minimal preperiod length is 2. The proof includes six cases. The initial
+comments and initial five cases prove the theorem – case 1 addresses the case where n is a
+triangular number, and cases two through five cover cycle partitions for other n in every
+connected component of the P (n) directed graph determined by DP . Case six establishes
+that there is GE-partition in some component of n 6= Tk with minimal preperiod length 2.
+    First we show that there is no GE-partition with preperiod length 1. Write n = Tk + r
+where 0 ≤ r ≤ k. We know that each cycle partition λ satisfies `(λ) = k or k + 1. Since
+application of DP can increase partition length by at most 1, any κ ` n with DP (κ) = λ
+has `(κ) ≥ k − 1. Further, κ1 = λ2 + 1 or λ1 + 1, depending on the relation between
+κ1 and `(κ). In either case, by the characterization of cycle partitions, we can conclude
+κ1 ≥ k. Therefore, by Corollary 1, no κ ` n with DP (κ) = λ can be a GE-partition.
+
+
+the electronic journal of combinatorics 13 (2006), #R80                                       5
+     We deal with some small values of n before proceeding to general arguments. Note
+that there are no GE-partitions for n = 1, 2. For n = 3, the GE-partition (13 ) has
+preperiod length 2 to the unique cycle partition (2, 1). For n = 4, the GE-partition
+(14 ) has preperiod length 2 to the cycle partition (3, 1) (note ∆((3, 1)) = (1, 0, 0)). For
+n = 5, the GE-partition (2, 13 ) has preperiod length 2 to the cycle partition (3, 2) (note
+∆((3, 2)) = (1, 1, 0)).
+Case 1. Let n = Tk for k ≥ 3. Consider the three successive images under DP of
+(k, &, 4, 2, 14) with length k + 2, which is a GE-partition:
+                      DP3 ((k, &, 4, 2, 14))
+                               = DP2 ((k + 2, k − 1, &, 3, 1)) of length k − 1
+                               = DP ((k + 1, k − 1, &, 2)) of length k − 1
+                               = (k, &, 1) of length k,
+the unique cycle partition. To show that 3 is the minimal preperiod length between a
+GE-partition and the cycle partition, we need to show that there are no GE-partitions 2
+applications of DP away from the cycle. By Lemma 1, the only partition whose image is
+(k, &, 1), other than itself, is (k + 1, k − 1, &, 2) with length k − 1; for an example when
+n = 6, see Fig. 6. Again, by Lemma 1, this partition has three preimages under DP ,
+namely
+                           (k, &, 3, 1, 1, 1) of length k + 1,
+                           (k + 2, k − 1, &, 3, 1) of length k − 1, and
+                           (k + 2, k, k − 2, &, 3) of length k − 2.
+None of these are GE-partitions.
+    For the subsequent cases where n = Tk + r with 1 ≤ r ≤ k, every cycle partition λ of
+n has ∆(λ) = (δk , ..., δ0 ) with at least one 0 and at least one 1. Since partitions in the
+cycle are related by cycling this binary vector, we choose to work with a cycle partition
+whose ∆ satisfies δk = 1 and δ0 = 0. We consider four cases determined by δk−1 and δk−2 .
+    Cases 2-5 establish the initial statement of the theorem, that given a cycle of partitions
+for any n ≥ 3, there is a GE-partition at most 3 applications of DP away from a partition
+in the cycle. Minimality for these cases is discussed before case 6. For cases 2-5, we
+expand our notation to represent (k + δk , . . . , 1 + δ1 , δ0 ) by (k + δk , &, 1 + δ1 , δ0 ).
+Case 2. ∆(λ) = (1, 0, 0, δk−3 , . . . , δ1 , 0). Consider the two successive images under DP of
+(k, k − 1 + δk−3 , &, 3 + δ1 , 14 ) with length k + 2, which is a GE-partition:
+            DP2 ((k, k − 1 + δk−3 , &, 3 + δ1 , 14 ))
+                     = DP ((k + 2, k − 1, k − 2 + δk−3 , &, 2 + δ1 )) of length k − 1
+                     = (k + 1, k − 1, k − 2, k − 3 + δk−3 , &, 1 + δ1 ) of length k.
+This results in the cycle partition λ with ∆(λ) as specified. Since we showed earlier that
+there are no GE-partitions whose image under DP is a cycle partition, this shows the
+minimal preperiod length in this case is 2.
+
+the electronic journal of combinatorics 13 (2006), #R80                                      6
+Case 3. ∆(λ) = (1, 0, 1, δk−3, . . . , δ1 , 0). Consider the three successive images under DP
+of (k + δk−3 , &, 4 + δ1 , 2, 2, 14 ) with length k + 3, which is a GE-partition:
+             DP3 ((k + δk−3 , &, 4 + δ1 , 2, 2, 14 ))
+                     = DP2 ((k + 3, k − 1 + δk−3 , &, 3 + δ1 , 1, 1)) of length k
+                     = DP ((k + 2, k, k − 2 + δk−3 , &, 2 + δ1 )) of length k − 1
+                     = (k + 1, k − 1, k − 1, k − 3 + δk−3 , &, 1 + δ1 ) of length k.
+This results in the cycle partition λ with ∆(λ) as specified. (For n = 8, this corresponds
+to the path from (2, 2, 14 ) to (4, 2, 2) in the smaller component shown in Fig. 4.)
+Case 4. ∆(λ) = (1, 1, 0, δk−3 , . . . , δ1 , 0). Consider the two successive images under DP of
+(k, k − 1 + δk−3 , &, 3 + δ1 , 2, 13 ) with length k + 2, which is a GE-partition:
+             DP2 ((k, k − 1 + δk−3 , &, 3 + δ1 , 2, 13 ))
+                      = DP ((k + 2, k − 1, k − 2 + δk−3 , &, 2 + δ1 , 1)) of length k
+                      = (k + 1, k, k − 2, k − 3 + δk−3 , &, 1 + δ1 ) of length k.
+This results in the cycle partition λ with ∆(λ) as specified. (For n = 8, this corresponds
+to the path from (3, 2, 13 ) to (4,3,1) in the larger component shown in Fig. 4.)
+Case 5. ∆(λ) = (1, 1, 1, δk−3, . . . , δ1 , 0). Consider the three successive images under DP
+of (k + δk−3 , &, 4 + δ1 , 3, 2, 14 ) with length k + 3, which is a GE-partition:
+                DP3 ((k + δk−3 , &, 4 + δ1 , 3, 2, 14 ))
+                        = DP2 ((k + 3, k − 1 + δk−3 , &, 3 + δ1 , 2, 1)) of length k
+                        = DP ((k + 2, k, k − 2 + δk−3 , &, 2 + δ1 , 1)) of length k
+                        = (k + 1, k, k − 1, k − 3 + δk−3 , &, 1 + δ1 ) of length k.
+This results in the cycle partition λ with ∆(λ) as specified.
+    These cases show that every cycle of partitions can be reached with at most 3 appli-
+cations of the DP map from some GE-partition, so that no cycle is isolated. It remains
+to show that, for n = Tk + r with 1 ≤ r ≤ k, the minimal preperiod length from a
+GE-partition to some cycle partition is 2. The case r = 1 is covered by case 2 above, and
+r = 2 by case 4. While some other cases, depending on k and r, are covered by those
+two arguments, not every n has a cycle partition λ with ∆(λ) covered by cases 2 and 4.
+While there are partition cycles for which the bounds given in cases 3 and 5 are sharp
+(such as the examples mentioned in P (8)), the next case shows that every n has some
+cycle partition with preperiod length 2.
+Case 6. We now have n = Tk + r with 3 ≤ r ≤ k. Consider the two successive images
+under DP of (k, &, r, r, &, 3, 13) with length k + 2, which is a GE-partition:
+                DP2 ((k, &, r, r, &, 3, 13))
+                         = DP ((k + 2, k − 1, &, r − 1, r − 1, &, 2)) length k
+                         = (k + 1, k, k − 2, &, r − 2, r − 2, &, 1) length k + 1.
+
+the electronic journal of combinatorics 13 (2006), #R80                                      7
+This results in the cycle partition λ with ∆(λ) = (1, 1, 0k−r+1, 1r−2 ).
+    The proof of Theorem 1 contributes to the program of understanding all GE-partition
+preperiod lengths. Earlier work has focused primarily on maximal preperiod lengths. For
+n = Tk , the maximal preperiod length is k(k − 1) [10], attained by the GE-partition
+(k − 1, k − 1, &, 1, 1) [6]. Various bounds on maximal preperiod lengths for other n are
+given in [7] and [9]. Minimal preperiod lengths for the case n = Tk are determined in [6],
+which also considers various intermediate preperiod lengths when n = Tk .
+    Having established that GEP (n) is a sufficient starting set to determine the entire
+structure of P (n), we want to know its size relative to P (n). We have not found an exact
+formula, but we show the number of GE-partitions is bounded below by an established
+sequence that can be described in terms of p(n) = |P (n)|.
+    Another notation for partitions simplifies the following discussion. The Frobenius
+symbol of a partition λ is a 2 × k array of nonnegative integers
+                                                    
+                                        a1 . . . ak
+                                        b1 . . . bk
+where k is the number of dots on the diagonal of the Ferrers diagram of λ, ai is the number
+of dots to the right of the ith diagonal dot, and bi is the number of dots under the ith
+diagonal dot. Fig. 5 includes some examples. Notice that the numbers in each row on
+the Frobenius symbol must be strictly decreasing. This notation highlights conjugation,
+as the Frobenius symbols of λ and λ0 simply have the two rows interchanged.
+    It is also easy to read from a partition’s Frobenius symbol whether it is a GE-partition:
+λ1 = a1 + 1 and `(λ) = b1 + 1, so the characterization of Lemma 1 becomes λ is a GE-
+partition exactly when a1 − b1 ≤ −2.
+Theorem 2. The number of GE-partitions in P (n) is at least the number of conjugate
+pairs in P (n − 1).
+Proof. We construct a one-to-one map from conjugate pairs of P (n − 1) into GEP (n).
+   Let λ ` n − 1 satisfy λ 6= λ0 . Without loss of generality, assume that the entries of
+the Frobenius symbol for λ satisfy a1 = b1 , . . . , aj = bj , aj+1 < bj+1 , i.e., λ is the ‘more
+vertical’ partition of the conjugate pair. We construct µ ` n from λ as follows, using the
+entries of the Frobenius symbol of λ and the parameter j (which may be 0). Let
+                                                  !
+                           a 1  a 2   . . .  a k
+                    
+                                                                        if j = 0
+                     b1 + 1 b 2 . . . bk
+                    
+                    
+                    
+                µ=
+                                                                      !
+                            b    . . .  b        a     . . . . . . a
+                    
+                              2
+                                         j+1      j+1               k
+                                                                         if j ≥ 1.
+                    
+                    
+                    
+                          b1 + 1 a 1 . . .        aj bj+2 . . . bk
+                    
+
+    In words, µ is constructed by adding a dot to the first column of λ and swapping the
+first j horizontal arms from the diagonal with the second to (j + 1)st vertical arms. See
+Fig. 5 for an example.
+
+the electronic journal of combinatorics 13 (2006), #R80                                        8
+Figure 5: The partition (7, 5, 4, 4, 3, 1, 1) with Frobenius symbol 66 33 12 00 corresponds to the
+                                                                               
+
+GE-partition (4, 4, 4, 4, 3, 3, 2, 2) with Frobenius symbol 37 26 13 00 .
+                                                                       
+
+
+    First, we show that the array is the Frobenius symbol of a partition. The j = 0 case
+is clear. For the j ≥ 1 cases, the entries of the first row are strictly decreasing since λ was
+chosen to have bj+1 > aj+1 . For the second row, b1 + 1 = a1 + 1 > a1 and aj = bj > bj+2 .
+Since one dot has been added, we have µ ` n.
+    Next, we show that µ ∈ GEP (n). For the j = 0 case, by assumption, b1 > a1 , i.e.,
+a1 − b1 ≤ −1. The difference of the numbers in the first column of the Frobenius symbol
+for µ is then a1 − (b1 + 1) = a1 − b1 − 1 ≤ −2. For the j ≥ 1 cases, we know b1 ≥ b2 + 1,
+from which b2 − (b1 − 1) ≤ −2 as well. Therefore µ is a GE-partition.
+    Notice that the GE-partitions constructed in this way, from λ with j ≥ 2, have b3 = a1
+in their Frobenius symbol, since these correspond to a2 and b2 of λ. This is not true of
+GE-partitions in general and shows the limitations of the map: we show next that it
+is an injection, but it is not a bijection. The smallest GE-partition not in its image is
+(3, 3, 3, 3, 3, 3) with Frobenius symbol 25 14 03 .
+    For the inverse map, let µ ∈ GEP (n). If b1 > b2 + 1, let j = 0. If b1 = b2 + 1
+and b3 6= a1 , let j = 1. Otherwise, let j be the greatest index for which b3 = a1 , . . . ,
+bj+1 = aj−1 . We construct λ ` n − 1 as follows.
+                                                     !
+                             a 1   a 2   . . .  a k
+                       
+                                                                           if j = 0
+                        b1 − 1 b 2 . . . bk
+                       
+                       
+                       
+                   λ=
+                                                                         !
+                              b     . . .  b        a     . . . . . . a
+                       
+                                2
+                                            j+1      j+1               k
+                                                                            if j ≥ 1
+                       
+                       
+                       
+                            b1 − 1 a 1 . . .         aj bj+2 . . . bk
+                       
+
+    In words, λ is constructed by removing a dot from the first column of µ and the same
+swapping as in the previous map. Since µ is a GE-partition, a1 − b1 ≤ −2, so b1 − 1 > a1 .
+Notice that if j ≥ 2 and bj+2 > aj , then the proposed array is not a Frobenius symbol,
+so the map is not defined for such µ. Otherwise, a verification similar to the preceding
+shows that this is the Frobenius symbol for λ ∈ P (n − 1) with λ 6= λ0 and it is clear that
+the two maps described are inverses.
+
+
+the electronic journal of combinatorics 13 (2006), #R80                                         9
+    As mentioned, the map first fails to be a bijection at n = 18, as there are 146 conjugate
+pairs in P (17) and 147 GE-partitions of 18. For n = 60, the injection misses 6,143 of the
+421,957 GE-partitions, less than 1.5%.
+    The number of pairs of conjugate partitions λ 6= λ0 , first documented in [13], is 1, 1,
+2, 3, 5, 7, 10, 14, 20, 27, 37, 49, 66, 86, 113, 146, . . . , starting from n = 2. Therefore
+there at least that many GE-partitions of n, starting from n = 3. With an observation
+by Jovovic in [14], we have
+
+|GEP (n)| ≥ p(n − 3) − p(n − 9) + p(n − 19) − p(n − 33) + · · · + (−1)k+1 p(n − 1 − 2k 2 )
+
+for the largest k such that n − 1 − 2k 2 ≥ 0. This suggests that |GE(n)| is on the order of
+p(n − 3), a significant improvement over p(n) for large n.
+
+
+3     Compositions
+Although there are generally many more compositions than partitions for a fixed n, com-
+positions are more structured in many ways. For instance, while the Hardy-Ramanujan-
+Rademacher formula for p(n) has “an infinite series involving π, square roots, complex
+roots of unity, and derivatives of hyperbolic functions,” [2], the analogous c(n) = |C(n)|
+is simply 2n−1 . We give one of MacMahon’s proofs of this formula [11], since ideas in the
+proof will be used later.
+
+Proposition 1. c(n) = 2n−1 .
+
+Proof. Between each digit of 1n , place a + or ⊕. We show that the set of all possible
+resulting sequences is in bijection to C(n). Two digits with a ⊕ between them are summed,
+while digits separated by + remain different parts. For example,
+
+                               1 + 1 ⊕ 1 ⊕ 1 + 1 ⊕ 1 −→ 1 + 3 + 2.
+
+The inverse is clear. Since there are n − 1 binary decisions to create the sequence, the
+claim follows.
+    Similarly, the dynamics on C(n) determined by DC , while having a directed graph
+with more vertices than its partition analog, is often easier to analyze. For instance,
+since the map DC requires no reordering, every preimage of a composition λ has the same
+length, namely λ1 .
+    The structure of the directed graph representing the map DC on compositions of n is
+related to the corresponding directed graph for DP on partitions of n. For comparison,
+the state diagrams of DP and DC for n = 6 appear in Fig. 6. The boxed entries in Fig. 6
+represent equivalence classes of compositions that have the same partition representation.
+Compositions in an equivalence class may or may not have the same image under DC ;
+this depends on the distribution of ones in the compositions and the order of the parts
+greater than 1.
+
+
+the electronic journal of combinatorics 13 (2006), #R80                                   10
+                                    21111
+
+
+                          111111       6         51       42   321
+
+
+
+         2211       411       33      222        3111
+
+
+                                    11112
+
+                                    11121
+
+                                    11211
+
+                                    12111
+
+                                    21111        51            123    132
+
+
+
+                          111111        6        15       24   213    312     321
+
+
+
+         2211       411       33      222       3111      42   231
+
+         2121       141                         1311
+
+         2112       114                         1131
+
+         1221                                   1113
+
+         1212
+
+         1122
+
+
+
+
+Figure 6: Expanding the directed graph for the shift map on partitions of 6 to the map
+on compositions of 6.
+
+   Results for compositions are often similar to those for partitions, and sometimes
+simpler. First, we show that GE-compositions have the same characterization as GE-
+partitions, namely that the length of the composition is greater than the size of the first
+part plus 1. In this setting, this result is a corollary to the following proposition. First,
+we make another definition.
+
+Definition 4. We say that compositions θ and κ are related by a partial permutation if
+they correspond to the same partition and the integer parts greater than 1 appear in the
+same relative order.
+
+Lemma 2. Compositions θ and κ are related by a partial permutation if and only if
+DC (θ) = DC (κ).
+
+Proof. If θ and κ are related by a partial permutation, then the application of DC removes
+any and all ones from θ and κ and puts an initial row of length `(θ) = `(κ) on the image
+
+the electronic journal of combinatorics 13 (2006), #R80                                   11
+compositions. The remaining rows of the images are one less than the parts of θ and
+κ greater than 1. Since those parts are in the same order in θ and κ, the images are
+identical.
+    Assume that DC (θ) = DC (κ) = λ. By the definition of DC , it follows that `(θ) =
+`(κ) = λ1 . Also, θ and κ each have λ1 − (`(λ) − 1) ones. From the parts λ2 , . . . , λk in λ,
+we know that λ2 + 1, . . . , λk + 1 must appear in the same relative order in θ and κ. Hence
+θ and κ are related by a partial permutation (the ones may appear in any of the positions
+of θ and κ without effecting their images under DC ).
+                                                     λ1
+                                                         
+Proposition 2. A composition λ has indegree `(λ)−1        .
+Proof. Suppose κ is a preimage of λ, i.e., DC (κ) = λ. Then λ1 = `(κ) by the definition
+of DC . Also, κ contains `(κ) − (`(λ) − 1) ones. By Lemma 2, any partial permutation of
+                                      λ1
+κ maps to λ under DC . There are `(λ)−1      partial permutations of κ, because that counts
+the ways to select the positions of the parts greater than 1.
+Corollary 2. A composition λ is a GE-composition if and only if `(λ) > λ1 + 1.
+    The shift map on compositions has been studied in [9] where it is called “Carolina
+solitaire.” We cite their primary results before going on to new material. Griggs and
+Ho [9] show that λ |= n is cyclic under DC if and only if the parts are in decreasing
+order and λ is cyclic under DP . Hence, the cycle structure and corresponding number of
+components of the directed graph representation of DC are the same as for the shift map
+on partitions. Griggs and Ho provide a lower bound for the maximal preperiod length
+from a GE-composition to a cycle composition and conjecture that this bound is tight.
+Analogous to Theorem 1, we prove that there are no stand alone cycles for the shift map
+on compositions.
+Lemma 3. If DC (κ) = λ with λ1 > 2 and κi = 1 for some i, then there exists at least
+one GE-composition θ such that DC (θ) = λ.
+Proof. By the previous lemma, we know all partial permutations of κ are preimages of λ.
+At least one of these has initial part 1; call this composition θ. Since
+                                       `(θ) = λ1 > 2 = θ1 + 1,
+we know by Corollary 2 that θ is a GE-composition.
+Theorem 3. For n ≥ 3, every cycle composition λ ∈ C(n) satisfies DCm (κ) = λ for some
+κ ∈ GEC (n) and m ≥ 1.
+Proof. We prove that, for n ≥ 4, the minimum preperiod length for a GE-composition
+of n is 1. For smaller n, there are no GE-compositions for n = 1, 2, and (13 ) is the only
+GE-composition for n = 3, which is distance 2 from the cycle composition (2, 1).
+    From the characterization of cycle compositions, we know that, for any n ≥ 4, every
+cycle contains at least one cycle composition κ with final part 1 and `(κ) > 2. Then
+λ determined by DC (κ) = λ, another cycle composition, has λ1 > 2. By the previous
+lemma, there is at least one GE-composition θ, a partial permutation of κ, whose image
+is λ.
+
+the electronic journal of combinatorics 13 (2006), #R80                                    12
+    For example, in Fig. 6, the GE-composition (1, 3, 2) has preperiod 1. So while maxi-
+mal preperiod lengths for compositions are longer than for partitions, minimal preperiod
+lengths are shorter.
+    Again, having established that GEC (n) is a sufficient starting set to determine the
+entire structure of C(n), we want to count the GE-compositions. Unlike the situation
+with partitions, we establish an exact formula. In fact, we prove two formulas for the
+number of GE-compositions, |GEC (n)|.
+Theorem 4. |GEC (n)| = 2n−1 − Fn+1 , where Fi are the Fibonacci numbers determined
+by F1 = F2 = 1 and Fn = Fn−1 + Fn−2 for n ≥ 3.
+Proof. We count the number of compositions of n that are in the image of DC using
+induction. Let In denote the set of compositions that have at least one preimage under
+DC (equivalently, those with positive indegree in the state diagram). By inspection,
+I1 = {(1)} and I2 = {(2), (1, 1)}, so that |I1 | = F2 and |I2 | = F3 .
+    Assume that |In−1 | = Fn and |In−2 | = Fn−1 . We define maps from In−1 and In−2 into
+In that will lead to the conclusion that |In | = |In−1 | + |In−2 |.
+    For each λ = (λ1 , . . . , λk ) ∈ In−1 , define
+                                   a(λ) = (λ1 , . . . , λk−1 , λk + 1).
+Notice that a(λ) |= n and `(a(λ)) = k. Since λ ∈ In−1 , we know by Corollary 2 that
+λ1 ≥ k − 1, which shows that a(λ) ∈ In . The map a is clearly bijective.
+   For each µ = (µ1 , . . . , µj ) ∈ In−2 , define
+                                   b(µ) = (µ1 + 1, µ2 , . . . , µj , 1).
+Notice that b(µ) |= n and `(b(µ)) = j + 1. Since µ ∈ In−2 , we know by Corollary 2 that
+µ1 ≥ j − 1. Therefore, µ1 + 1 ≥ j, which shows that b(µ) ∈ In . Again, b is injective. See
+Fig. 7 for examples of applications of these maps.
+
+
+
+
+                    Figure 7: a((2, 1, 2)) = (2, 1, 3) and b((1, 3)) = (2, 3, 1).
+
+    Writing a(In−1 ) and b(In−2 ) for these sets of compositions of n, we have a(In−1 ) ∪
+b(In−2 ) ⊆ In .
+    We show that In ⊆ a(In−1 ) ∪ b(In−2 ). Consider an arbitrary ν = (ν1 , . . . , νh ) ∈ In .
+By Corollary 2, we know ν1 ≥ h − 1. If νh ≥ 2, then (ν1 , . . . , νh−1 , νh − 1) ∈ In−1 since
+ν1 ≥ h − 1, so that ν ∈ a(In−1 ). If νh = 1, then (ν1 − 1, ν2 , . . . , νh−1 ) ∈ In−2 since
+ν1 − 1 ≥ h − 2, so that ν ∈ b(In−2 ). Therefore In = a(In−1 ) ∪ b(In−2 ).
+    By looking at the last entry of the compositions, clearly a(In−1 ) ∩ b(In−2 ) = ∅. There-
+fore
+             |In | = |a(In−1 )| + |b(In−2 )| = |In−1 | + |In−2 | = Fn + Fn−1 = Fn+1 .
+Since there are 2n−1 total compositions of n, |GEC (n)| = 2n−1 − Fn+1 .
+
+the electronic journal of combinatorics 13 (2006), #R80                                    13
+    The second formula for |GEC (n)| comes from a result on the number of compositions
+of a given length. Before we proceed, we need a few smaller results. The first lemma is
+another result of MacMahon [11].
+
+Lemma 4. There are n−1
+                            
+                        k−1
+                              compositions of n of length k where k ≤ n.
+
+Proof. Using the bijection of Proposition 1, these compositions correspond to sequences
+of n ones where exactly k − 1 of the n − 1 separators are + and the rest are ⊕.
+
+Lemma 5. There are n−j−1
+                             
+                         k−2
+                               compositions of n of length k with first part j < n
+
+Proof. Because j < n, it follows that k ≥ 2. Using the bijection from Proposition 1, these
+compositions correspond to sequences of n ones where the first j − 1 separators are ⊕
+and the next separator is +. To have k − 1 more parts, exactly k − 2 of the remaining
+n − j − 1 separators need to be +.
+   In the following theorem and discussion, we will let b·c represent the floor function
+and d·e represent the ceiling function.
+
+Theorem 5.                               n
+                                       b2c                j+1           !
+                                       X                  X     n−j−1
+                        |GEC (n)| =           2n−j−1 −                        .
+                                        j=1               k=2
+                                                                 k−2
+
+Proof. First, we show that the first part of a GE-composition cannot be greater than b n2 c.
+Let µ = (µ1 , . . . , µk ) |= n be a GE-composition. If µ1 > b n2 c, then k ≤ n − µ1 + 1 <
+n − b n2 c + 1. It follows that
+                                            jnk jnk
+                             `(µ) = k ≤ n −    ≤      + 1 < µ1 + 1,
+                                             2     2
+contradicting Corollary 2. Hence, µ1 ≤ b n2 c.
+   Let λ = (j, λ2 , . . . , λk ) |= n with j ≤ b n2 c and denote λ∗ = (λ2 , . . . , λk ) |= n − j.
+By Lemma 4, there are n−j−1            compositions λ∗ in C(n − j) of length k − 1. Because
+                                     
+                                k−2
+c(n − j) = 2n−j−1 by Proposition 1, there are 2n−j−1 − n−j−1
+                                                                    
+                                                                k−2
+                                                                      compositions of length k
+in C(n) with first part j.
+   By Corollary 2, if k ≤ λ1 + 1, then λ is not a GE-composition. Summing over the
+values of k ≤ j + 1 yieldsPthe number of compositions of n with λ1 = j that are not
+GE-compositions, namely j+1        k=2
+                                        n−j−1
+                                         k−2
+                                              . Notice that k ≥ 2 because λ1 = j ≤ b n2 c, so λ
+has at least 2 parts. Thus there are 2n−j−1 − j+1           n−j−1
+                                                     P            
+                                                        k=2  k−2
+                                                                    GE-compositions of n with
+                                               n
+λ1 = j. Because j can range from 1 to b 2 c, the number of GE-compositions is
+
+                                bn
+                                 2
+                                   c              j+1       !
+                                X                 X     n−j−1
+                                       2n−j−1 −                    .
+                                j=1               k=2
+                                                           k−2
+
+
+
+
+the electronic journal of combinatorics 13 (2006), #R80                                        14
+   Together, these two results give a round-about combinatorial proof of the following
+Fibonacci identity:
+                                                   n
+                                              b2c                           j+1                       !
+                                              X                             X     n−j−1
+                        Fn+1 = 2n−1 −                          2n−j−1 −
+                                               j=1
+                                                                                            k−2
+                                                                            k=2
+                                                       n
+                                                   b 2 c j−1 
+                                                         X n − j − 1
+                                   d n2 e−1
+                                                   X
+                              =2              +                                         .
+                                                   j=1 i=0
+                                                                             i
+
+This can also be derived using two well-known Fibonacci identities,
+                                                                                            n
+                                     n−1                                                b2c      
+                                     X                                                  X     n−i
+                      Fn+1 − 1 =              Fi               and          Fn+1 =                          ,
+                                     i=1                                                i=0
+                                                                                                    i
+
+(both proved combinatorially in [5]), the binomial theorem, and a simple application of
+geometric series:
+                                        n−1
+                                        X
+                         Fn+1 = 1 +                Fi
+                                         i=1
+                                             i−1
+                                        n−1 bX2
+                                                 c      
+                                        X           i−h−1
+                               =1+
+                                         i=1 h=0
+                                                                        h
+                                        dn
+                                         2
+                                           e−2
+                                             h                                 n−2    n−h−2
+                                           X X  h                                X       X         h
+                                                                                                        
+                               =1+                                      +
+                                                                 i                                  i
+                                           h=0         i=0                  h=d n
+                                                                                2
+                                                                                  e−1       i=0
+
+                                        dn
+                                         2
+                                           e−2                   bn c
+                                                                  j−1 
+                                                                  2
+                                                                             
+                                           X
+                                                           h
+                                                                 XX     n−j−1
+                               =1+                     2 +
+                                           h=0                   j=1 i=0
+                                                                                        i
+                                                                        n
+                                                                     b 2 c j−1 
+                                              n
+                                                                     X     X n − j − 1
+                               = 1 + 2d 2 e−1 − 1 +                                                     .
+                                                                     j=1 i=0
+                                                                                                i
+
+    In addition to exact formulas for |GEC (n)|, we can further our investigation of GE-
+compositions by counting how many have a given indegree. We do not arrive at a formula,
+rather an algorithm. From Proposition 2, counting the number of compositions with a
+given indegree requires determining all of the ways that the indegree can be written as a
+binomial coefficient with certain constraints. This generalizes Lemma 5.
+Proposition 3. All of the n−j−1
+                                    
+                               k−2
+                                      compositions of n of length k with first part j < n
+                 j
+                   
+have indegree k−1 .
+Proof. By Proposition 2, the indegree of a composition  depends only on its length and
+                                                     j
+first part, so these compositions all have indegree k−1 .
+
+the electronic journal of combinatorics 13 (2006), #R80                                                         15
+                                                                           1
+                                                                               
+                                                                           1
+                                                                                   :1
+                                                                  2                 2
+                                                                                       
+                                                                  1
+                                                                          :1        2
+                                                                                            :5
+                                                         3                 3                 3
+                                                                                               
+                                                         1
+                                                                 :1        2
+                                                                                   :4        3
+                                                                                                     :6
+                                                4                 4                 4                 4
+                                                                                                       
+                                                1
+                                                        :1        2
+                                                                          :3        3
+                                                                                            :3        4
+                                                                                                              :1
+                                       5                 5                 5
+                                                                             
+                                       1
+                                               :1        2
+                                                                 :2        3
+                                                                                   :1
+                              6                 6
+                                                   
+                              1
+                                      :1        2
+                                                        :1
+                     7
+                         
+                     1
+                             :1
+
+
+Figure 8: Truncated Pascal’s triangle containing the number of compositions of n = 8
+with the specific indegree as entries of the form indegree:number.
+
+   The proposition fails to consider length 1 compositions. There is a unique length 1
+composition, (n), which has indegree 1 since DC ((1n )) = (n) and no other composition
+has length n. We apply this proposition to the compositions of C(8).
+
+Example 1. The indegrees for compositions of n = 8. Proposition 3 suggests
+creating a form of Pascal’s triangle where the entries are indegrees from a particular
+binomial coefficient  paired with the number of compositions with that indegree. For
+example, the 42 entry indicates the compositions with indegree 6 that have first part 4
+                 
+
+and length 3; it is followed by a 3 since there are 8−4−1    = 32 = 3 such compositions.
+                                                                 
+                                                      3−1
+The triangle for C(8) is given in Fig. 8. The figure omits the GE-compositions, indegree
+0, and the composition (8), indegree 1. All of C(8) is accounted for in Table 1, which
+collects the triangle entries with the same indegree. (The fact 6that binomial coefficients
+                                                        4
+                                                                  
+from different rows can have the same value, such as 2 and 1 , prevents this approach
+from leading to a direct formula.)
+
+
+
+4     Suggestions for Further Work
+There are many remaining questions about the state diagrams induced by DP and DC .
+First, we know from [4] that the diagrams have multiple components for any n two or
+more away from the nearest triangular number – what are the sizes of those components?
+For partitions, we know that DP splits the 22 partitions in P (8) into components of size
+15 and 7. For 12 and 13, the splits are 77 = 45 + 32 and 101 = 67 + 34, respectively.
+The problem appears no easier for compositions: DC splits the 128 compositions in C(8)
+into components of size 93 and 35.
+    While we have developed a procedure to determine the distribution of compositions
+in C(n) according to their indegrees, we do not see an analogous approach to P (n), even
+though there are fewer possible indegrees. Data up to n = 15 are given in Table 2.
+    Turning to GE-partitions, Theorem 2 gives a lower bound of their number; an exact
+formula is desired. Also, we know only the bounds for preperiod length. Theorem 1
+
+the electronic journal of combinatorics 13 (2006), #R80                                                            16
+                   Indegree                                     Number of Compositions
+                   0                                            94 (= 27 − F9 = 128 − 34)
+                               1     2     3     4        8
+                                                       
+                   1 from 1 , 2 , 3 , 4 and 1                   14 (= 1 + 5 + 6 + 1 + 1)
+                   2 from 21
+                            
+                                                                1
+                   3 from 31 and 32
+                                  
+                                                                5 (= 1 + 4)
+                   4 from 41 and 43
+                                  
+                                                                4 (= 1 + 3)
+                   5 from 51
+                            
+                                                                1
+                   6 from 61 and 42
+                                  
+                                                                4 (= 1 + 3)
+                   7 from 71
+                            
+                                                                1
+                   10 from 52 and 53
+                                   
+                                                                3 (= 2 + 1)
+                   15 from 62
+                              
+                                                                1
+
+
+          Table 1: The number of compositions of n = 8 with specific indegrees.
+
+    i\n   1    2       3   4   5     6     7       8      9     10   11       12          13      14   15
+     0    0    0       1   1   2     3     5     7: 5,2   10    14   20   27: 17,10   37: 24,13   49   66
+     1    1    2       1   3   3     5     5     8: 5,3   11    15   18   26: 13,13   32: 22,10   44   55
+     2                 1   1   2     3     5     7: 5,2   8     12   16    21: 13,8   27: 18,9    35   44
+     3                                                     1     1    2     3: 2,1      5: 3,2     7   11
+
+
+Table 2: The number of partitions of n with specific indegree i, broken down by component
+when more than one component exists.
+
+shows that the minimal preperiod length is 2 or 3 in each component induced by DP ,
+and maximal preperiod lengths are conjectured in [9] (with proofs in some cases). Some
+additional information about possible preperiod lengths for the n = Tk case is given in
+[6]. However, no general results are known about the distribution of GEP (n) according
+to preperiod length. Data up to n = 15 are given in Table 3.
+    For GE-compositions, Theorem 3 shows that the minimal preperiod length is 1 in each
+component induced by DC for n ≥ 4. There is a general relation between partition and
+composition preperiod length explored in [9], related to the ‘explosion’ of the partition
+(3, 2, 1) ` 6 into the six related compositions in C(6) shown in Fig. 6. This allows them
+to conjecture maximal preperiod lengths, with proofs in some cases. Again, no general
+results are known about the distribution of GEC (n) according to preperiod length. Data
+up to n = 10 are given in Table 4.
+
+Acknowledgments: We are grateful to Matthew J. Haines for helping with the litera-
+ture search. Comments from the anonymous referees have helped us improve the article.
+Also, each author was on sabbatical from his respective institution while undertaking this
+research.
+
+
+the electronic journal of combinatorics 13 (2006), #R80                                                     17
+           d\n    3   4   5    6   7     8      9    10   11      12        13     14   15
+            2     1   1   1    0   1   1: 1,0   1     0    1    2: 1,1    2: 1,1    1    0
+            3             1    1   3   4: 2,2   4     1    3    4: 2,2    6: 4,2    4    1
+            4                  1   1   1: 1,0   2     3    9   13: 9,4   13: 7,6   10    3
+            5                  0       1: 1,0   1     1    2    3: 2,1    5: 3,2    7    8
+            6                  1                1     1    2    2: 1,1    3: 2,1    3    3
+            7                                   1     1    1    1: 1,0    2: 1,1    6    3
+            8                                         2    3    2: 1,1    5: 5,0    3    3
+            9                                         1                   1: 1,0    3    3
+           10                                         1                             1    3
+           11                                         0                             1    2
+           12                                         3                             6    2
+           13                                                                            2
+           14                                                                            2
+           15                                                                            5
+           16                                                                            4
+           17                                                                            3
+           18                                                                            3
+           19                                                                            0
+           20                                                                           16
+
+
+Table 3: The number of GE-partitions of n with preperiod length d, broken down by
+component when more than one component exists.
+
+References
+ [1] Ethan Akin, Morton Davis. Bulgarian solitaire, Amer. Math. Monthly 92 (1985)
+     237-250.
+ [2] George Andrews. The Theory of Partitions, Cambridge Mathematical Library, Cam-
+     bridge University Press, 1998.
+ [3] Elwyn R. Berlekamp, John H. Conway, Richard K. Guy. Winning Ways for your
+     Mathematical Plays, Volume 3, Second Edition, A K Peters, 2004.
+ [4] Jørgen Brandt. Cycles of partitions, Proc. Amer. Math. Soc. 85 (1982) 483-486.
+ [5] Arthur Benjamin, Jennifer Quinn. Proofs That Really Count, Dolciana Mathematical
+     Expositions, Mathematics Association of America, 2003.
+ [6] Hans-J. Bentz. Proof of the Bulgarian solitaire conjectures, Ars Combin. 23 (1987)
+     151-170.
+ [7] Gwihen Etienne. Tableaux de Young et solitaire bulgare. J. Combin. Theory Ser. A
+     58 (1991) 181-197.
+ [8] Martin Gardner. Bulgarian solitaire and other seemingly endless tasks, Sci. Amer.
+     249 (1983) 12-21.
+
+
+the electronic journal of combinatorics 13 (2006), #R80                                      18
+                           d\n    3   4   5   6   7            8      9    10
+                            1     0   2   3   1    5         8: 5,3   5     1
+                            2     0   0   0   1    7       14: 14,0   13    5
+                            3     1   1   0   0    0         1: 1,0   3     6
+                            4             4   3   10        11: 5,6   6     0
+                            5             1   5   20      46: 30,16   36   18
+                            6                 1    1         6: 6,0   61   43
+                            7                 2              7: 7,0   28   79
+                            8                 6              1: 1,0    9     8
+                            9                                         10    15
+                           10                                         30    29
+                           11                                               33
+                           12                                                9
+                           13                                               33
+                           14                                               34
+                           15                                              110
+
+
+Table 4: The number of GE-compositions of n with preperiod length d, broken down by
+component when more than one component exists.
+
+ [9] Jerrold R. Griggs, Chih-Chang Ho. The cycling of partitions and compositions under
+     repeated shifts, Adv. in Appl. Math. 21 (1998) 205-227.
+[10] Kiyoshi Igusa. Solution of the Bulgarian solitaire conjecture, Math. Magazine 58
+     (1985) 259-271.
+[11] Percy Alexander MacMahon. Memoir on the theory of compositions of numbers, Phil.
+     Trans. 185 (1894), 835 - 901.
+[12] Edward F. Moore. Machine models of self-reproduction, Proceedings of Symposia in
+     Applied Mathematics, vol. 14, 17-33, American Mathematical Society, 1962.
+[13] Masaru Osima. On the irreducible representations of the symmetric group, Canad.
+     J. Math. 4 (1952) 381-384.
+[14] Neil J. A. Sloane. The On-Line Encyclopedia of Integer Sequences, published elec-
+     tronically at http://www.research.att.com/~njas/sequences (2005).
+[15] Andrew Wuensche, Mike Lesser. The Global Dynamics of Cellular Automata: An
+     Atlas of Basin of Attraction Fields of One-Dimensional Cellular Automata, Santa Fe
+     Institute Studies in the Sciences of Complexity, Addison Wesley Longman, 1992.
+
+
+
+
+the electronic journal of combinatorics 13 (2006), #R80                              19
+

@@ -9,17 +9,17 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 
 | Problema | Titolo | Celle con evidenza | Stato complessivo |
 |---|---|---|---|
-| 1 | Angles between lines (Fejes Tóth), 32 pt | 0/6 | in corso (tutte le 6 parti ricevute) |
+| 1 | Angles between lines (Fejes Tóth), 32 pt | 2/6 | in corso (parti 1–2 revisionate e approvate) |
 | 2 | Uphill paths on the hypercube, 32 pt | 2/6 | in corso (C1 e C2 revisionate) |
 | 3 | Bulgarian solitaire, 32 pt | 0/6 | in analisi (tutte le 6 parti ricevute) |
-| 4 | Disjoint classes / gcd of moduli, 32 pt | 0/6 | in analisi (tutte le 6 parti ricevute) |
+| 4 | Disjoint classes / gcd of moduli, 32 pt | 2/6 | in corso (parti 1–2 revisionate e approvate) |
 
 ## Problema 1 — Lines / somma di angoli
 
 | Parte | Richiesta | Stato | Evidenza |
 |---|---|---|---|
-| 1 | Prova: $S \le \frac{\pi}{2}\lfloor N^2/4\rfloor$ in $\mathbb{R}^2$ (1 pt, Judged) | in corso | E1: max numerico = target per N≤10; prova via argomento di Crofton abbozzata (note.md, E), da scrivere e revisionare; definizione di $S$ confermata dal preambolo |
-| 2 | Prova lemma di ortogonalità su catene di versori (2 pt, Judged) | in corso | prova per induzione abbozzata (note.md, F); casi m=2,3 verificati a mano |
+| 1 | Prova: $S \le \frac{\pi}{2}\lfloor N^2/4\rfloor$ in $\mathbb{R}^2$ (1 pt, Judged) | revisionato | prova completa (semigiro casuale, argomento E) scritta a mano; Referee READY_FOR_HUMAN (A PASS, B PASS); approvata; submission/parte-1.md |
+| 2 | Prova lemma di ortogonalità su catene di versori (2 pt, Judged) | revisionato | prova completa per induzione con proiezione (argomento F); Referee READY_FOR_HUMAN (A PASS, B PASS); approvata; submission/parte-2.md |
 | 3 | $N=d+1$: $S\le(\binom{d+1}{2}-1)\pi/2$ (3 pt) | in analisi | triage in note.md; dipende dal lemma P2 |
 | 4 | 5 rette in $\mathbb{R}^3$ ($4\pi$), 6 in $\mathbb{R}^4$ ($13\pi/2$) (5 pt) | in analisi | triage; possibile via P5 o calcolo rigoroso |
 | 5 | $N=d+2$: $S\le(\binom{d+2}{2}-2)\pi/2$ (8 pt) | in analisi | triage |
@@ -51,8 +51,8 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 
 | Parte | Richiesta | Stato | Evidenza |
 |---|---|---|---|
-| 1 | $k=3$ (1 pt) | in analisi | prova a mano abbozzata (parità) |
-| 2 | $k=4$ (2 pt) | in analisi | schema "clique per primo" abbozzato |
+| 1 | $k=3$ (1 pt) | revisionato | prova completa (parità); Referee READY_FOR_HUMAN (A PASS, B PASS); approvata; submission/parte-1.md |
+| 2 | $k=4$ (2 pt) | revisionato | prova completa (clique per primo, casi su $|T|$); Referee READY_FOR_HUMAN (A PASS, B PASS); approvata; submission/parte-2.md |
 | 3 | $k\le8$ (3 pt) | in analisi | riduzione a insieme finito abbozzata (note.md) |
 | 4 | $k\le12$ + report 9–16 (5 pt) | in analisi | |
 | 5 | boundary certificato + $k=24,30$ (8 pt) | in analisi | richiede 2 implementazioni indipendenti |

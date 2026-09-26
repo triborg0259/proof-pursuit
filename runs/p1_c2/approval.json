@@ -1,0 +1,9 @@
+{
+ "attempt_id": "attempt_001",
+ "review_status": "READY_FOR_HUMAN",
+ "approved_by": "Thomas Tumini (human)",
+ "approved_at": "2026-09-26T14:53:05",
+ "approved_claim_ids": [
+  "main"
+ ]
+}

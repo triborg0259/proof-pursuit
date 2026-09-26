@@ -1,0 +1,34 @@
+{
+ "report": {
+  "evidence_verdict": "PASS",
+  "source_issues": [
+   {
+    "code": "SOURCE_UNCHECKED_NONESSENTIAL",
+    "detail": "src_1 (arXiv:2607.24655, Fornal–Sun) is cited as 'context only, not used', has an empty submitted excerpt, and could not be retrieved or verified in this review (no browsing tools). The proof does not depend on it, so this is not blocking. Recommendation: remove it from the hand-in or mark it explicitly as 'not consulted/unverified' so it is not presented as a read source, per the team protocol on citations.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [],
+  "rule_violations": [],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US",
+     "KNOWN_IN_LITERATURE"
+    ],
+    "evidence_sufficient": true,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": false,
+    "references": [],
+    "notes": "Self-contained written proof: Lemma 0 (the 'if gcd divides difference then classes meet' direction of (*)) is proved directly via CRT-style inversion; the cell then follows by forcing every pairwise gcd to equal 2, deducing pairwise distinct parities of a_1,a_2,a_3, and applying pigeonhole on two residues mod 2. No computation, no citation is load-bearing. The k=3 case is presumably known in the literature (the problem itself says the statement is believed/known for small k) but the proof here does not rely on that."
+   }
+  ],
+  "reproducibility_notes": "No code, artifacts or numerical experiments are involved; nothing to reproduce. The proof can be checked by hand in a few minutes. Official hand-in rules (written proof; computation only with certificate) are satisfied since no computation is used."
+ },
+ "limitation": null
+}

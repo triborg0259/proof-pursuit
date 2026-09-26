@@ -1,0 +1,624 @@
+                                                              THE BULGARIAN SOLITAIRE
+                                                           AND THE MATHEMATICS AROUND IT
+
+
+
+
+arXiv:1503.00885v1 [math.CO] 3 Mar 2015
+                                                                               VESSELIN DRENSKY
+
+
+                                                   Abstract. The Bulgarian solitaire is a mathematical card game played by
+                                                   one person. A pack of n cards is divided into several decks (or “piles”). Each
+                                                   move consists of the removing of one card from each deck and collecting the
+                                                   removed cards to form a new deck. The game ends when the same position
+                                                   occurs twice. It has turned out that when n = k(k + 1)/2 is a triangular
+                                                   number, the game reaches the same stable configuration with size of the piles
+                                                   1, 2, . . . , k. The purpose of the paper is to tell the (quite amusing) story of
+                                                   the game and to discuss mathematical problems related with the Bulgarian
+                                                   solitaire.
+
+
+
+                                                      Dedicated to the memory of Borislav Bojanov (1944–2009),
+                                                              a great mathematician, person, and friend.
+
+                                                                                  1. The story
+                                             The popularity of the Bulgarian solitaire started around 1980. Below we present
+                                          the version of Borislav Bojanov [6] who is one of the main protagonists in the story.
+                                             The problem was brought to Bulgaria by the famous number theorist Anatolii
+                                          Karatsuba from the Steklov Mathematical Institute in Moscow. In May 1980 he
+                                          visited the Institute of Mathematics and Informatics at the Bulgarian Academy of
+                                          Sciences in Sofia. Once, after his lecture at the Seminar of Approximation Theory,
+                                          he told his Bulgarian colleagues the story of the problem.
+                                             Konstantin Oskolkov, in that time professor at the Steklov Institute, was travel-
+                                          ing from Moscow to Leningrad (now Saint Petersburg) in the night, by the fastest
+                                          train in the Soviet Union, the so called “Red Arrow”. There was another man in
+                                          his compartment and they started a conversation. When the other man learned
+                                          that Konstantin Oskolkov is a mathematician, he showed him the following game.
+                                             A pack of n = 1 + 2 + · · ·+ k cards is divided in an arbitrary way in several packs.
+                                          Each move consists of the removing of one card from each deck and collecting the
+                                          removed cards to form a new deck. Surprisingly, it turns out that after several moves
+                                          one reaches the stable position of k piles consisting of 1, 2, . . . , k cards, respectively.
+                                          (The legend claims that the game was illustrated with several experiments with 15
+                                          cards.)
+                                             For example, starting with a deck of 10 cards divided in three packs of size 4, 3,
+                                          3, as in Fig. 1, we obtain a new pack of 3 cards and the number of cards in the old
+                                          packs decreases to 3, 2, 2, respectively. It is more convenient to denote only the
+
+                                            2010 Mathematics Subject Classification. Primary: 00A08; Secondary: 05A17, 11P81, 97A20.
+                                            Key words and phrases. Bulgarian solitaire, partitions, discrete dynamical systems, card
+                                          games.
+                                            This project was partially supported by Grant I 02/18 “Computational and Combinatorial
+                                          Methods in Algebra and Applications” of the Bulgarian National Science Fund.
+                                                                                          1
+2                                 VESSELIN DRENSKY
+
+
+
+
+        Fig. 1. A deck of 10 cards is divided in three packs of size 4, 3, 3.
+
+
+size of the packs, ordering the sizes in nonincreasing order. For example, starting
+from the position (4, 3, 3), we have marked the new size of the new pack in bold
+and have consecutively
+                 (4, 3, 3) ⇒ (3, 3, 2, 2) ⇒ (4, 2, 2, 1, 1) ⇒ (5, 3, 1, 1)
+(In the last step the two packs consisting of a single card disappear.) Then we
+continue
+                  (5, 3, 1, 1) ⇒ (4, 4, 2) ⇒ (3, 3, 3, 1) ⇒ (4, 2, 2, 2)
+               ⇒ (4, 3, 1, 1, 1) ⇒ (5, 3, 2) ⇒ (4, 3, 2, 1) ⇒ (4, 3, 2, 1).
+In this way we obtain the stable position (4, 3, 2, 1).
+    Returning back to Moscow, Konstantin Oskolkov told the problem to the people
+of the Department of Number Theory at the Steklov Institute. Anatolii Karatsuba
+described this moment in the following way. “When Genadii Arkhipov (professor
+in Number Theory who liked very much nice problems) learned about the problem,
+his face took a Satanic expression, he ran to his office, closed the door and did not
+came out until he solved the problem.”
+    Borislav Bojanov also liked very much nice problems. He went home, waited
+until the children went to the bed and then started to think about it. Around
+midnight he found a solution and was very happy. The next day he shared the
+solution with some of his colleagues. Pencho Petrushev said that he also had a
+solution. Milko Petkov who was an editor of the Bulgarian high school mathematical
+journal “Obuchenieto po matematika” (“Education in Mathematics”) published the
+problem in the section “Competition Problems” in the issue 5 of 1980. Since no
+student submitted a solution, in 1981 the Editorial Board of the journal decided to
+publish the solution of Borislav Bojanov [5].
+    Approximately in the same time the problem was published by S. Limanov and
+A. L. Toom in the issue 11 of 1980 of the Russian mathematical journal “Kvant”.
+The solution of Toom [38] appeared also in 1981. It contains also some analysis of
+the general case of an arbitrary number of cards. It seems that [5] and [38] are the
+first published solutions of the Bulgarian solitaire.
+    In that time the Swedish mathematician Gert Almkvist from the University of
+Lund visited the Department of Algebra at the Institute of Mathematics and In-
+formatics in Sofia. When he learned the problem he brought it to Sweden and told
+it to his colleagues including his friend Henrik Eriksson from the Royal Institute of
+Technology in Stockholm. In 1981 Eriksson wrote the paper [13] where he also pre-
+sented a solution for the puzzle and gave it the name Bulgarian solitaire (Bulgarisk
+patiens in Swedish). Later he visited the USA and spread the puzzle there. Jørgen
+Brandt from the Aarhus University, Denmark, also learnt about the problem but
+          THE BULGARIAN SOLITAIRE AND THE MATHEMATICS AROUND IT                                3
+
+
+without its name, and in 1982 published another solution [9], where he also ana-
+lyzed the general case. (Brandt starts his paper with “The problem to be discussed
+in the following has been circulating for some time.”) In 1982 Donald Knuth used
+the Bulgarian solitaire to start his Programming and Problem-Solving Seminar in
+Stanford [22]. Finally, with the help of Ron Graham the problem reached Martin
+Gardner who included it in his paper [18]. The paper by Gardner was the starting
+point of the popularity of the Bulgarian solitaire among mathematicians all over
+the world and was the main source of references for many years. For already 35
+years the Bulgarian solitaire and its generalizations continue to inspire new research
+in combinatorics, game theory, probability, computer science, and to be an object
+of intensive study in research and teaching literature. Due to the efforts of Henrik
+Eriksson in 2005 and the paper by Brian Hopkins [23] in 2012, recently the real
+story of the Bulgarian solitaire finally reached the large audience.
+
+                                           2. The solution
+   In the first publications on the Bulgarian solitaire [5, 38, 13] the main problem is
+stated in three different ways. In the Bulgarian version [5] there are k(k + 1)/2 balls
+grouped in m piles. In the Russian version [38] a clerk from the Circumlocution
+Office1 rearranges piles of volumes of Encyclopædia Britannica. The Swedish text
+[13] handles packs of cards. Nevertheless the three solutions use similar ideas. An
+exposition of Tooms proof [38] with more details can be found in [21].
+   As we already mentioned, instead of considering packs of cards, we may consider
+the sequence of the number of cards in each pack. Since we are not interested in
+the order of the packs, we may order the integers in the sequence in nonincreasing
+way. A finite sequence of nonnegative integers
+             λ = (λ1 , . . . , λc ),       λ1 ≥ . . . ≥ λc ≥ 0,   λ1 + · · · + λc = n,
+is called a partition of n. (The standard notation is λ ⊢ n.) The partition λ =
+(λ1 , . . . , λc ) is visualized by its Young diagram [λ] (also called Ferrers diagram
+when represented using dots) consisting of boxes arranged in left-justified rows,
+with λi boxes in the i-th row. For example, the Young diagram of the partition
+λ = (4, 3, 3) ⊢ 10 is in Fig. 2.
+
+
+
+
+                                 Fig. 2. [λ] = [4, 3, 3]
+For our purposes it is more convenient to rotate the Young diagram on 90◦ , when the
+height of each row is equal to the number of cards in the corresponding pack, see Fig.
+3. Then the move in the Bulgarian solitaire consists of removing the bottom row of
+
+
+
+
+                                       ⇒     (4,3,3)   ⇒                 ⇒
+
+
+                                                  Fig. 3.
+  1The Circumlocution Office is a place of endless confusion in Little Dorrit by Charles Dickens.
+4                                   VESSELIN DRENSKY
+
+
+the (rotated) Young diagram and adding it as a column, as shown in Fig. 4. In the
+
+
+
+                                               ×
+                        ⇒                ⇒
+                                               ×              ⇒
+                              ×××              ×
+                                           Fig. 4.
+
+language of partitions, we start with a partition λ = (λ1 , . . . , λc ) with λc > 0 and
+obtain the partition B(λ) = (c, λ1 − 1, . . . , λc − 1). Clearly, if λi − 1 > c ≥ λi+1 − 1,
+as in Fig. 5, then we assume that B(λ) = (λ1 − 1, . . . , λi − 1, c, λi+1 − 1, . . . , λc − 1).
+
+                         ·
+                         ·                   ·                ·
+                         ·                   ·                ·
+                         ·                 × ·                · ×
+                         ·           ⇒
+                                           × ·         ⇒
+                                                              · ×
+                         ×××               × ·                · ×
+                                        Fig. 5.
+This is a typical example of a discrete dynamical system. We consider the set P(n)
+of all partitions of n and the operator B : P(n) → P(n) which in a period of time
+changes the state of the system, the partition λ, to the new state, the partition
+B(λ). Hence B plays the role of the updating function of the system. The main
+problem is, starting with the initial state λ(0) to determine the state of the system
+λ(t) = B(λ(t−1) ) which it will reach after some interval of time t. Since we have
+a finite number of states P(n) only, we may associate to the discrete dynamical
+system its oriented graph with vertices the partitions λ of n and oriented edges
+(λ, B(λ)). In Fig. 6 we give the graph for n = 6 and n = 7.
+   We shall present the solution of the Bulgarian solitaire from [38] modified in
+the spirit of the exposition in [9] and the solution proposed by Anders Björner,
+according to the student essays [33, 19]. There are also several other solutions,
+using different arguments, see, e.g., the inductive proof of Meštrović [31].
+Theorem 1. When the total number n = k(k + 1)/2 of cards is triangular, the
+Bulgarian solitaire will converge into piles of size 1, 2, . . . , k.
+Proof. We use the brilliant visualization of the Bulgarian solitaire, the cradle model,
+suggested by Björner. Let λ = (λ1 , . . . , λc ) ⊢ n, λc > 0, be the partition corre-
+sponding to the given collection of card packs. We turn the Young diagram [λ]
+counter-clockwise by 45◦ , see Fig. 7, and further consider this 45◦ -turn interpreta-
+tion of [λ].
+Assuming that the boxes of [λ] are material points with the same mass m, we
+consider the potential energy of the system
+                                               X
+                                 U (λ) = mg        hij ,
+
+where g ≈ 9, 8 m/s2 is the free fall acceleration on Earth, the sum runs on all
+boxes of [λ], and hij is the height of the center of the box with coordinates (i, j)
+corresponding to the j-th card of the i-th pack. Clearly, hij is proportional to i + j
+          THE BULGARIAN SOLITAIRE AND THE MATHEMATICS AROUND IT                      5
+
+
+
+
+        Fig. 6. The graph for the Bulgarian solitaire for n = 6 and n = 7.
+
+
+
+
+                                     ⇒
+
+
+
+
+                                Fig. 7. λ = (4, 3, 3).
+
+
+and we may assume that it is equal to i+j units. As we discussed above, the move of
+the Bulgarian solitaire removes the c boxes of the bottom row of [λ] and adds them
+as the first column, as shown in Fig. 4. In this way, the box (j, 1) ∈ [λ] becomes
+the box (1, j) ∈ [B(λ)]. Obviously, in the 45◦ -turn interpretation the potential
+energy of these c boxes of [λ] does not change. The other n − c boxes of [λ] move
+one step to the right, from the position (i, j), j > 1, to the position (i + 1, j − 1).
+Hence they also preserve their potential energy. Therefore, if c ≥ λ1 − 1, as in
+Fig. 8, the move of the Bulgarian solitaire forces the boxes to cycle on the same
+6                                  VESSELIN DRENSKY
+
+
+level and preserves the potential energy of the Young diagram. If c < λ1 − 1, as
+
+
+
+
+                                             ⇒
+
+
+
+
+                            Fig. 8. B(4, 3, 3) = (3, 3, 2, 2).
+
+
+in Fig. 9, then by the gravity the excessive boxes of the second pile will fall down
+southwest and the potential energy of the Young diagram will decrease. Since the
+
+
+
+
+                               ⇒                          ⇒
+
+
+
+
+                        Fig. 9. B(6, 3, 1) = (3, 5, 2) = (5, 3, 2).
+
+
+partitions of n are a finite number, we shall reach the position when the moves do
+not decrease the height of the boxes and the potential energy of the system. In this
+moment, let r be the maximal integer with the property that the first r levels of
+the Young diagram consisting of boxes (i, j) of height i + j = 2, 3, . . . , r + 1, do not
+have empty places. Hence these r levels contain 1 + 2 + · · · + r = r(r + 1)/2 boxes.
+If r = k, then we have reached the stable position (k, k − 1, . . . , 2, 1). Otherwise,
+n − r(r + 1)/2 = k(k + 1)/2 − r(r + 1)/2 ≥ k > r. Hence, the (r + 1)-th level
+has an empty place and the (r + 2)-nd level contains at least one box. Each move
+pushes this box one place to the right and, when it reaches the most right position,
+it starts again from the most left position. The period of the repetition of the
+positions is r + 2. Hence after several moves this box will be in position (2, r + 1).
+Now we follow the position of one of the empty places in level r + 1. It also moves
+to the right with period r + 1. Since the integers r + 1 and r + 2 are relatively
+prime, in the moments 0, (r + 2), 2(r + 2), . . . , r(r + 2) the empty place with be
+in pairwise different places. In some moment it will be in the most left position
+           THE BULGARIAN SOLITAIRE AND THE MATHEMATICS AROUND IT                          7
+
+
+(1, r + 1), as in Fig. 9. Therefore the box in position (2, r + 1) will move to the
+empty position (1, r + 1), decreasing the potential energy of the system, which is a
+contradiction. Hence the minimal potential energy is reached in the stable position
+(k, k − 1, . . . , 2, 1) only.                                                    
+   Now we shall consider the general case of any n. The first considerations are
+in [38], the detailed study was done in [9]. Consider the oriented graph associated
+with the set P(n) of all partitions of n with vertices the partitions λ ∈ P(n) and
+oriented edges (λ, B(λ)). Clearly, the graph consists of several components and,
+starting from any vertex of a given component, the multiple application of the
+operator B defines a cycle which is unique for the component. In Fig. 6 the cycle
+of the unique component of the graph of P(7) is
+                    B            B            B              B
+      λ = (4, 2, 1) → (3, 3, 1) → (3, 2, 2) → (3, 2, 1, 1) → B 4 (λ) = λ = (4, 2, 1).
+Theorem 2. Let n have the form n = (k − 1)k/2 + r, 0 < r ≤ k, and let λ ∈ P(n).
+Then in the interpretation of the cradle model the solitaire will converge with a cycle
+of partitions which consists of the triangular partition as bottom and r surplus blocks
+cycling above. The number of the components of the oriented graph associated with
+the partitions of n is equal to the number of necklaces consisting of r black beads
+and k − r white beads, where the symmetry group of the necklace is the cyclic group
+of order k. It is                                       
+                                       1 X           k/d
+                             C(n) =           ϕ(d)        ,
+                                       k             r/d
+                                           d|(r,k)
+
+where (r, k) is the greatest common divisor of r and k and ϕ(d) is the Euler ϕ-
+function, i.e., the number of positive integers ≤ d and relatively prime to d.
+Proof. As in the proof of Theorem 1, we shall follow the potential energy U (B s (λ))
+of the partitions B s (λ), s = 0, 1, 2 . . .. The minimum of the potential energy will
+be reached when the first k − 1 levels in the cradle interpretation of the diagram
+[B s (λ)] are filled in with boxes, and there are no boxes in the k + 1-st level. We
+shall identify such a partition [B s (λ)] of minimal potential energy with the necklace
+with k beads, where the i-th bead is black if there is a box in the i-th place of the
+k-th level of the diagram, and is white if the i-th place is empty, see Fig. 10. Since
+the application of the operator B moves to the right with period k the boxes of the
+k-th level, we obtain that this corresponds to the clockwise rotation of the necklace
+by 360◦ /k. The number of necklaces with r black and k − r white beads can be
+obtained as in [9] and [1] as an easy application of the Pólya enumeration theorem,
+see [4, 12].                                                                         
+   In the case of triangular n = k(k + 1)/2, already Toom [38] raised the problem
+to determine the longest path in the graph of P(n) to reach the stable partition
+σ = (k, k − 1, . . . , 2, 1). He showed that, starting from the partition τ = (k − 1, k −
+1, k − 2, k − 3, k − 4, . . . , 3, 2, 1, 1), the minimal s with the property σ = B s (τ ) is
+s = k(k − 1). Knuth [22] checked the equality
+             σ = (k, k − 1, . . . , 2, 1) = B k(k−1) (λ),   λ ∈ P(k(k + 1)/2),
+for k ≤ 5. He asked his students to write a computer program to check it for k ≤ 10
+and conjectured that this holds for any k. The conjecture of Knuth was proved by
+Igusa [28] and Bentz [3]. Bentz also established the following interesting property
+8                                VESSELIN DRENSKY
+
+
+
+
+                    ⇒                      ⇒                     ⇒
+
+
+
+
+                                          m
+
+
+
+
+    Fig. 10. The cycle generated by (5,3,3,1) and the corresponding necklace.
+
+
+of the partition τ considered by Toom: The partitions B i (τ ) and B k(k−1)−i−1 (τ )
+are conjugate for i = 0, 1, 2, . . . , k(k − 1) − 1. This means that the related Young
+diagrams are obtained by reflection with respect to the bisectrix from the origin of
+the first quadrant of the coordinate plane, i.e., the lengths of the columns of one
+diagram are equal to the lengths of the rows of the other. The general case of an
+arbitrary n was studied by Etienne [16].
+   In the theory of cellular automata, a Garden of Eden configuration is a config-
+uration that cannot appear on the lattice after one time step, no matter what the
+initial configuration. In other words, these are the configurations with no predeces-
+sors. The terminology comes from the foundational paper [32] by analogy with the
+concept of the Garden of Eden which, following Semitic religions, was created out
+of nowhere. Hopkins and Jones [25] studied the Garden of Eden partitions (GE-
+partitions) defined by the property that they do not belong to the image B(P(n)).
+It has turned out that each cycle in the oriented graph of P(n) can be reached from
+a GE-partition. We shall mention only the following easy property and refer to
+[25, 26, 24, 27] for more details and further developments.
+Proposition 3. A partition λ = (λ1 , . . . , λs ) ⊢ n, λs > 0, is a GE-partition if and
+only if λ1 < s − 1.
+
+                               3. Generalizations
+   Before the paper by Hopkins [23], only pieces of the history of the Bulgarian
+solitaire were known by the large mathematical community. A couple of times the
+solitaire was rediscovered or called with other names. The case for triangular n is
+known also as the Karatsuba solitaire. (Since Karatsuba brought it to Bulgaria some
+           THE BULGARIAN SOLITAIRE AND THE MATHEMATICS AROUND IT                           9
+
+
+people claimed that he invented the puzzle.) We shall discuss several generalizations
+of the Bulgarian solitaire which have been studied in the literature.
+
+3.1. Real life interpretation of the Bulgarian solitaire. Discrete dynamical
+systems often have economic or biological interpretations. The Bulgarian solitaire
+reflects the following situation from the real life. Consider a company consisting of a
+number of departments. The Board of Directors decides to create a new department,
+but does not want to increase the total number of employees. So, the Board takes a
+member from the existing departments and move the person to the new department.
+If we assume that the number of cards in the piles is equal to the number of
+persons in the departments, the Bulgarian solitaire corresponds to the “greediest”
+case, when the new department is formed by taking a person from each department
+of the company.
+
+3.2. Austrian solitaire. Inspired by a discussion on the so-called Austrian school
+of capital theory, Akin and Davis [1] introduced the Austrian solitaire which has
+the following economic interpretation. A company has several machines. Each
+machine has, when new, a life of exactly L years. Each year for each machine on
+line the company deposits 1/L of its cost into the bank as a sinking fund. Then
+it buys as many new machines as it can afford, and the remaining funds are left
+in the bank until next year. Now, take a pack of cards and divide it in piles in
+such a way that each pack contains not more than L cards. Think of the piles as
+machines. The number of the cards is equal to the number of productive years left
+for a particular machine. One of the piles is specific. It is the bank and does not
+correspond to a machine. Each move of the solitaire consists of two steps. In the
+first step we remove one card from each of the ordinary piles (the machines have
+one year less to live) and add the cards to the pile of the bank. In the second step we
+take L cards from the bank and form a new ordinary pile of size L (we buy a new
+machine) and continue this process until the bank contains < L cards. The problem
+is to describe the cycles of the corresponding dynamical system. For enumeration
+problems related with the Austrian solitaire see the Baccalaureate Degree Thesis
+of Bastola [2].
+
+3.3. Carolina solitaire. When visiting the University of South Carolina, Columbia,
+Andrey Andreev from the Institute of Mathematics and Informatics at the Bul-
+garian Academy of Sciences introduced a new ordered variation of the Bulgarian
+solitaire called the Carolina solitaire. The game begins with n cards divided into a
+row of piles of sizes α1 , . . . , αc , α1 + · · ·+ αc = n, αi > 0. Hence we work with com-
+positions, i.e., ordered systems of positive integers, (α1 , . . . , αc ) rather than with
+partitions λ = (λ1 , . . . , λc ) ⊢ n. The move consists of removing one card from each
+pile, and then placing these c cards in a pile ahead of the others. Any exhausted
+pile (of size 0) is ignored and only nonempty piles are considered. In other words,
+if C is the operator of the Carolina solitaire, then, up to the ignored empty piles
+(obtained for αi = 1), the action is defined by
+                   C(α1 , . . . , αc ) = (c, α1 − 1, . . . , αc − 1),   αi > 0.
+For a triangular number n = k(k + 1)/2 this new game also appears to arrive at a
+stable division, with piles of sizes k, k − 1, . . . , 2, 1. Griggs and Ho [20] derived upper
+and lower bounds for the maximum number of moves required to reach a cycle of
+10                                       VESSELIN DRENSKY
+
+
+the graph of the compositions of n. See also the Master Thesis of Tambellini [37]
+for other properties of the Carolina solitaire.
+3.4. Montreal solitaire. It is suggested by Cannings and Haigh [11]. The po-
+sitions are compositions α = (α1 , . . . , αc ) of nonnegative integers. Identifying the
+compositions (α1 , . . . , αc ), (0, α1 , . . . , αc ), and (α1 , . . . , αc , 0), we may consider only
+the case when α1 and αc are positive. The successor rule M of the Montreal soli-
+taire is defined in the following way. If all αi in α = (α1 , . . . , αc ) are positive,
+then
+                               M(α) = (α1 − 1, . . . , αc − 1, c).
+Then we extend the action of M inductively. If
+      α = (β, 0, . . . , 0, γ) = (β, 0r , γ),   β = (β1 , . . . , βc ), βi > 0, γ = (γ1 , . . . , γd ),
+              | {z }
+                r times
+then
+                           M(α) = (M(β, 0r−1 , M(γ)),
+keeping the 0’s in the beginning of M(γ). For example,
+                       M(1, 0, 2) = (0,1, 1,1) = (0, 1, 1, 1)(= (1, 1, 1))
+and
+                                M(1,2, 0, 1 , 0 , 2 ) = (1,2, 0,1,1,1).
+Another example is
+           M                M                   M                  M                   M
+ (3, 2, 2) → (2, 1, 1, 3) → (1, 0, 0, 2, 4) → (1, 0, 1, 3, 2) → (1, 0, 2, 1, 3) → (1, 1, 0, 2, 3)
+and one can check that M18 (3, 2, 2) = (3, 2, 2). In contrast to the Bulgarian soli-
+taire, in the Montreal solitaire each position α has a unique predecessor M−1 (α)
+and there exists a positive integer p such that Mp (α) = α. Hence the set of compo-
+sitions (α1 , . . . , αc ) of n with positive α1 and αc is a union of disjoint cycles. We
+refer to [11] for more properties of the game.
+3.5. Other discrete generalizations. There are also several other games moti-
+vated by the Bulgarian solitaire. As in the case of the regular Bulgarian solitaire,
+the problems studied concern the type and the number of cycles, the Garden of
+Eden positions, etc. We shall list a couple of generalizations.
+   Locke [30] invented the Red-green Bulgarian solitaire where the cards are colored
+in two colors, red and green, and the moves depend on the existence of green cards
+in each pile.
+   Grensjö [19] studied the Three-dimensional Bulgarian solitaire. The idea is to
+define the game on plane partitions, which can be visualized using three-dimensional
+Young diagrams.
+   Öhman [33] considered two generalizations: the Dual Bulgarian solitaire and
+the Multiplayer Bulgarian solitaire. In the dual game the piles are ordered in
+nonincreasing order. In each move the largest pile is removed and its cards are
+distributed to the remaining piles one by one, from larger to smaller, with any ex-
+cessive blocks forming piles of size 1. For example, the partition (4, 4, 3, 2, 2, 1, 1)
+goes to (5, 4, 3, 3, 1, 1) = (4 + 1, 3 + 1, 2 + 1, 2 + 1, 1 + 0, 1 + 0), and (6, 6, 3, 2, 1) goes
+to (7, 4, 3, 2, 1, 1) = (6 + 1, 3 + 1, 2 + 1, 1 + 1, 0 + 1, 0 + 1). In the regular Bulgarian
+solitaire we may assume that each part of a partition corresponds to the income of
+a citizen or a company. Then the Government collects the same taxes from each
+          THE BULGARIAN SOLITAIRE AND THE MATHEMATICS AROUND IT                          11
+
+
+person and each company and uses the collected money to make a new company.
+In the dual game, see the comments in [19], one applies the principles of Robin
+Hood: taking from the rich and giving to the poor. It can be shown that if Robin
+Hood continues to take from the rich and give to the poor, then the distribution of
+fortune in his community will become close to triangular. The explanation is sim-
+ple. If one translates the game in the cradle model, it is easy to see that the dual
+Bulgarian solitaire is equivalent to the regular one. Bouchet [7, 8], see also Bruhn
+[10], established that ⁀the dual Bulgarian solitaire corresponds to the old African
+game Owari which consists of cyclically ordered pits that are filled with pebbles. In
+a sowing move all the pebbles are taken out of one pit and distributed one by one
+in subsequent pits. Repeated sowing will give rise to recurrent states of the owari.
+   One can interpret the multiplayer game in the following way. Several players
+sitting around a circular table play the Bulgarian solitaire. All players remove one
+card from each of their piles at the same time and then pass this new pile to the
+player on their right. In other words, if we have a collection of partitions
+                       (1)                                (s)
+            λ(1) = (λ1 , . . . , λ(1)
+                                  c1 ), . . . , λ
+                                                 (s)
+                                                     = (λ1 , . . . , λ(s)
+                                                                      cs ),   λ(i)
+                                                                               ci > 0,
+
+                                   (i)             (i)
+the move sends λ(i) to (ci−1 , λ1 − 1, . . . , λci − 1), where by convention c0 = cn and
+the parts of the image of λ(i) are rearranged in nonincreasing order if necessary.
+   Servedio and Yeh [36] suggested a game which can be interpreted in the following
+way. There are c players sitting around a circular table. The i-th player has αi
+cards. (We consider circular compositions on n, identifying α = (α1 , . . . , αc ) and
+(αc , α1 , . . . , αc−1 ).) The move consists of the following simultaneous actions of the
+players. The i-th one takes one’s cards and distributes them clockwise, to oneself
+and to the following αi − 1 players.
+   Janetzko in his Ph. D. Thesis [29] considered a similar game with c players
+around a circular table and with total number of n cards. A pointer points one
+of the persons (e.g., the i-th one) who takes all cards from his or her pile and
+distributes them to all players on the right, giving one card to the (i + 1)-th player,
+one card to the (i + 2)-th player, etc. (the addition is modulo c). At the end
+the pointer points at the player that receives the last card. Repeating this procedure
+gives a periodic sequence of pointer positions. The thesis studies the question which
+periodic sequences can be realized as such pointer sequences. It is interesting to
+mention that the problem is reduced to the investigation of an inhomogeneous linear
+system of equations. Then the author applies the Perron-Frobenius theorem, [34]
+and [17], which asserts that a real square matrix with positive entries has a unique
+largest real eigenvalue and that the corresponding eigenvector has strictly positive
+components, and also asserts a similar statement for certain classes of nonnegative
+matrices.
+
+3.6. Stochastic Bulgarian solitaires. There are many possible ways to formu-
+late stochastic versions of the Bulgarian solitaire. Popov [35] introduced his Ran-
+dom Bulgarian solitaire. As in the regular Bulgarian solitaire, a deck of n cards is
+divided into several piles. Then one fixes a number p ∈ (0, 1] and, for each pile,
+one leaves it intact with probability 1 − p and removes one card from the pile with
+probability p, independently of the other piles. The cards that are removed are
+collected to form a new pile. For p = 1 this is the regular, or deterministic, Bul-
+garian solitaire. The model with parameter 0 < p < 1 is a discrete-time irreducible
+12                                 VESSELIN DRENSKY
+
+
+and aperiodic Markov chain on the space of unordered partitions of n. For the sta-
+tionary measure of the game Popov proves that most of its mass is concentrated on
+(roughly) triangular configurations of a certain type. Eriksson and Sjöstrand [15]
+showed that the random Bulgarian solitaire can be interpreted as a birth-and-death
+process on Young diagrams.
+   Recently Eriksson, Jonsson, and Sjöstrand [14] introduced another Stochastic
+Bulgarian solitaire. They assume that the selection acts on the cards rather than
+on the piles: When forming a new pile by picking cards from the old piles, every card
+is picked with a fixed probability 0 < p < 1, independently of all other cards. They
+establish a surprising fact. The solitaire is not drawn to triangular configurations
+but to an exponential shape.
+
+                                      References
+ [1] E. Akin, M. Davis, Bulgarian solitaire, Amer. Math. Monthly 92 (1985), No. 4, 237–250.
+ [2] K. Bastola, Enumeration of Austrian Solitaire, Baccalaureate Degree Thesis, Saint Peter’s
+     University, Jersey City, NJ, USA, 2012.
+     http://librarydb.saintpeters.edu:8080/xmlui/bitstream/handle/123456789/30/Kapil.pdf?
+     sequence=1
+ [3] H.-J. Bentz, Proof of the Bulgarian Solitaire conjectures, Ars Combin. 23 (1987), 151-170.
+ [4] N. L. Biggs, Discrete Mathematics, 2nd ed., Oxford Univ. Press, Oxford, 2002.
+ [5] B. Bojanov, Problem Solution 4 (Bulgarian), In: Obuchenieto po matematica 24 (1981), No.
+     5, 59-60.
+ [6] B. Bojanov, Email to H. Eriksson, forwarded to V. Drensky, Nov. 22, 2005.
+ [7] A. Bouchet, Owari I. Marching groups and periodical queues,
+     http://warimath.free.fr/Documents/OwariI.pdf
+ [8] A. Bouchet, Owari II. Marching groups and Bulgarian solitaire,
+     http://warimath.free.fr/Documents/OwariII.pdf
+ [9] J. Brandt, Cycles of partitions, Proc. Amer. Math. Soc. 85 (1982), No. 3, 483-486.
+[10] H. Bruhn, Periodical states and marching groups in a closed Owari, Discrete Math. 308
+     (2008), No. 16, 3694-3698.
+[11] C. Cannings, J. Haigh, Montreal solitaire, J. Combin. Theory Ser. A 60 (1992), No. 1, 50-66.
+[12] L. L. Dornhoff, F. E. Hohn, Applied Modern Algebra, Macmillan Publishing Co., Inc., New
+     York, Collier Macmillan Publishers, London, 1978.
+[13] H. Eriksson, Bulgarisk patiens (Swedish), Elementa 64 (1981), No. 4, 186-188.
+[14] K. Eriksson, M. Jonsson, J. Sjöstrand, The limit shape of a stochastic Bulgarian solitaire,
+     arXiv: 1309.2846v1 [math.PR].
+[15] K. Eriksson, J. Sjöstrand, Limiting shapes of birth-and-death processes on Young diagrams,
+     Adv. Appl. Math. 48 (2012), No. 4, 575-602.
+[16] G. Etienne, Tableux de Young et Solitaire Bulgare, J. Comb. Theory, Ser. A 58 (1991), No.
+     2, 181-197.
+[17] G. Frobenius, Über Matrizen aus nicht negativen Elementen, Sitzungsber. Königl. Preuss.
+     Akad. Wiss. (1912), 456477.
+[18] M. Gardner, Bulgarian solitaire and other seemingly endless tasks, Sci. Amer. 249 (1983),
+     12-21.
+[19] A. Grensjö, Bulgarian Solitaire in Three Dimensions, Research Academy for Young Scientists,
+     March 24, 2013. Royal Institute of Technology, Stockholm.
+     http://www.raysforexcellence.se/wp-content/uploads/2013/06/Bulgarian-Solitaire-in-Three-Dimensions-Anton-Grensjo.pdf
+[20] J. R. Griggs, C.-C. Ho, The cycling of partitions and composition under repeated shifts, Adv.
+     Appl. Math. 21 (1998), No. 2, 205-227.
+[21] T. A. Hart, G. J. H. Khan, M. R. Khan, Revisiting Toom’s proof of Bulgarian solitaire, Ann.
+     Sci. Math. Qué. 36 (2012), No. 2, 477-486.
+[22] J. D. Hobby, D. Knuth, Problem 1: Bulgarian Solitaire, In: A Programming and Problem-
+     Solving Seminar. Department of Computer Science, Stanford University, 1983 (December),
+     6-13.
+     http://i.stanford.edu/pub/cstr/reports/cs/tr/83/990/CS-TR-83-990.pdf
+           THE BULGARIAN SOLITAIRE AND THE MATHEMATICS AROUND IT                             13
+
+
+[23] B. Hopkins, 30 years of Bulgarian solitaire, College Math. J. 43 (2012), No. 2, 135-140.
+[24] B. Hopkins, Column-to-row operations on partitions: the envelopes, Combinatorial Number
+     Theory, 65-76, Walter de Gruyter, Berlin, 2009.
+[25] B. Hopkins, M. A. Jones, Shift-induced dynamical systems on partitions and compositions,
+     Electron. J. Comb. 13 (2006), No. 1, Research paper R80, 19 p.
+[26] B. Hopkins, L. Kolitsch, Column-to-row operations on partitions: Garden of Eden partitions,
+     Ramanujan J. 23 (2010), No. 1-3, 335-339.
+[27] B. Hopkins, A. Sellers, Exact enumeration of Garden of Eden partitions, Combinatorial
+     Number Theory, 299-303, de Gruyter, Berlin, 2007.
+[28] K. Igusa, Solution of the Bulgarian solitaire conjecture, Math. Mag. 58 (1985), 259-271.
+[29] H.-D. Janetzko, Realisierung von Zeigerperioden für einen Verteilungsalgorithmus nach Art
+     des Bulgarischen Solitärs, TH Aachen, Math.-Naturwiss. Fak., Aachen, 1996.
+[30] S. C. Locke, Red-green Bulgarian solitaire,
+     http://math.fau.edu/locke/courses/Rec-Math/RedGreenBulgarianSolitaire.htm
+[31] R. Meštrović, An inductive proof of a result about Bulgarian solitaire, Ars Comb. 95 (2010),
+     65-70.
+[32] E. F. Moore. Machine models of self-reproduction, Proc. Sympos. Appl. Math. 14 (1962),
+     17-33.
+[33] E. Öhman, Multiplayer Bulgarian Solitaire, Research Academy for Young Scientists, July
+     11, 2012. Royal Institute of Technology, Stockholm.
+     http://www.raysforexcellence.se/wp-content/uploads/2013/02/Multiplayer-Bulgarian-Solitaire.pdf
+[34] O. Perron, Zur Theorie der Matrices, Math. Ann. 64 (1907), 248-263.
+[35] S. Popov, Random Bulgarian solitaire, Random Structures Algorithms 27 (2005), No. 3,
+     310-330.
+[36] R. Servedio, Y.-N. Yeh, A bijective proof on circular compositions, Bull. Inst. Math., Acad.
+     Sin. 23 (1995), No. 4, 283-293.
+[37] L. Tambellini, Sistemas Dinâmicos Finitos: Paciência Búlgara (Shift em Partições e Com-
+     posições Cı́clicas), M. Sci. Thesis, Universidade Estadual Paulista “Júlio De Mesquita Filho”,
+     São José do Rio, SP, Brazil, 2013.
+     http://base.repositorio.unesp.br/bitstream/handle/11449/94253/tambellini l me sjrp.pdf?
+     sequence=1&isAllowed=y
+[38] A. L. Toom, Problem Solution M655 (Russian), In: Kvant 12 (1981), No. 7, 28-30.
+
+   Institute of Mathematics and Informatics, Bulgarian Academy of Sciences, Acad.
+G. Bonchev Str., Block 8, 1113 Sofia, Bulgaria
+   E-mail address: drensky@math.bas.bg
+

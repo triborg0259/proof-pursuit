@@ -1,0 +1,1 @@
+{"attempt_id": "attempt_001", "verdict": "UNKNOWN_STATUS", "review_status": "READY_FOR_HUMAN", "fatal_error": null, "next_blocker": "Human reviews the exact target, proof and evidence, then approves explicit claims", "usage": [{"role": "A", "cost_usd": 0.3149615, "model": ["claude-fable-5-1"]}, {"role": "B", "cost_usd": 0.31988325, "model": ["claude-fable-5-1"]}]}

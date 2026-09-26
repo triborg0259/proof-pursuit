@@ -1,0 +1,32 @@
+{
+ "attempt_id": "attempt_001",
+ "verdict": "UNKNOWN_STATUS",
+ "review_status": "READY_FOR_HUMAN",
+ "highest_verified_cell": 0,
+ "accepted_claims": [],
+ "proposed_claim_ids": [
+  "main"
+ ],
+ "fatal_error": null,
+ "citation_issue": true,
+ "computation_issue": false,
+ "next_blocker": "Human reviews the exact target, proof and evidence, then approves explicit claims",
+ "reasoning_summary": "review_status=READY_FOR_HUMAN; math=PASS; evidence=PASS; Both model reviews passed. A human must read and approve the argument; this is not formal verification.",
+ "stagnation_signal": false,
+ "usage": [
+  {
+   "role": "A",
+   "cost_usd": 0.2692415,
+   "model": [
+    "claude-fable-5-1"
+   ]
+  },
+  {
+   "role": "B",
+   "cost_usd": 0.31421325,
+   "model": [
+    "claude-fable-5-1"
+   ]
+  }
+ ]
+}

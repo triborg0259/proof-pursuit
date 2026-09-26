@@ -1,0 +1,29 @@
+{
+ "attempt_id": "attempt_001",
+ "problem_id": "p4_c2",
+ "ts": "2026-09-26T14:48:58",
+ "meta": {
+  "backend": "human",
+  "model": [],
+  "cost_usd": 0,
+  "note": "written by hand by the team from the sketch in note.md; no model call"
+ },
+ "stagnation_detected": false,
+ "schema_errors": [],
+ "target_cell": 2,
+ "subgoal": "Prove the case k=4 by the 'prime cliques' argument: indices whose moduli share a prime p form a set on which residues mod p are pairwise distinct, so |E|<=2 for p=2 and |T|<=3 for p=3; a case analysis on |T| closes.",
+ "approach": "Prove the case k=4 by the 'prime cliques' argument: indices whose moduli share a prime p form a set on which residues mod p are pairwise distinct, so |E|<=2 for p=2 and |T|<=3 for p=3; a case analysis on |T| closes.",
+ "approach_family": "direct_proof",
+ "reason_for_choice": "With all gcds in {2,3}, each modulus is divisible by 2 or 3, and the indices divisible by a common prime p must carry pairwise distinct residues mod p; counting these residues bounds the sizes of the two 'prime cliques' and the remaining case analysis on their sizes is short and exhaustive.",
+ "literature_position": "Fornal-Sun [2607.24655] use a gcd-coloured complete graph in the asymptotic regime; the same graph viewpoint underlies our finite argument, but the proof here is elementary and self-contained.",
+ "proof_attempt": "# Cell 2: four pairwise disjoint classes have a pair of moduli with $\\gcd\\ge4$\n\n**Target.** If $a_i\\ (\\mathrm{mod}\\ m_i)$, $i=1,2,3,4$, are pairwise disjoint congruence classes ($m_i\\ge1$), then $\\gcd(m_i,m_j)\\ge4$ for some $i<j$.\n\n## Lemma 0\nLet $g=\\gcd(m,m')$. If $g\\mid a-a'$ then the classes $a\\ (\\mathrm{mod}\\ m)$ and $a'\\ (\\mathrm{mod}\\ m')$ meet; equivalently, disjoint classes satisfy $g\\nmid a-a'$.\n*Proof.* Write $m=g\\mu$, $m'=g\\mu'$ with $\\gcd(\\mu,\\mu')=1$ and $a-a'=g\\delta$. The element $a+g\\mu t$ of the first class lies in the second iff $g\\mu'\\mid g(\\delta+\\mu t)$ iff $\\mu'\\mid\\delta+\\mu t$, which has the solution $t\\equiv-\\delta\\mu^{-1}\\pmod{\\mu'}$ since $\\mu$ is invertible modulo $\\mu'$. $\\square$\n\n## Proof of the cell\nWrite $g_{ij}=\\gcd(m_i,m_j)$ for $i\\ne j$. Suppose, for a contradiction, that $g_{ij}\\le3$ for all pairs. By Lemma 0, $g_{ij}=1$ is impossible for disjoint classes ($1\\mid a_i-a_j$), hence\n$$g_{ij}\\in\\{2,3\\}\\quad\\text{for all } i\\ne j.\\tag{1}$$\nTwo consequences of (1) and Lemma 0, for $i\\ne j$:\n- (E) if $2\\mid m_i$ and $2\\mid m_j$, then $2\\mid g_{ij}$, so by (1) $g_{ij}=2$, and disjointness gives $2\\nmid a_i-a_j$, i.e. $a_i\\not\\equiv a_j\\pmod2$;\n- (T) if $3\\mid m_i$ and $3\\mid m_j$, then $3\\mid g_{ij}$, so $g_{ij}=3$, and disjointness gives $a_i\\not\\equiv a_j\\pmod3$.\n\nLet $E=\\{i: 2\\mid m_i\\}$ and $T=\\{i:3\\mid m_i\\}$.\n*Claim 1: $|E|\\le2$ and $|T|\\le3$.* By (E) the residues $a_i\\bmod2$, $i\\in E$, are pairwise distinct, and there are only $2$ residues; by (T) the residues $a_i\\bmod3$, $i\\in T$, are pairwise distinct, and there are only $3$ residues.\n*Claim 2: $E\\cup T=\\{1,2,3,4\\}$.* Given $i$, pick any $j\\ne i$; by (1) $g_{ij}\\in\\{2,3\\}$ and $g_{ij}\\mid m_i$, so $2\\mid m_i$ or $3\\mid m_i$.\n*Claim 3: $|T|\\ge2$.* By Claims 1–2, $|T|\\ge4-|E|\\ge2$.\n\nWe now rule out the remaining sizes of $T$.\n- *$|T|=4$.* Then all four residues $a_i\\bmod 3$ are pairwise distinct by (T), impossible with three residues.\n- *$|T|=3$.* Say $T=\\{1,2,3\\}$ after relabelling, so $3\\nmid m_4$. For $j\\in T$: $g_{4j}\\in\\{2,3\\}$ and $3\\nmid g_{4j}$ (because $g_{4j}\\mid m_4$), hence $g_{4j}=2$, so $2\\mid m_j$. Thus $2\\mid m_1,m_2,m_3$; also $2\\mid m_4$ by Claim 2 (as $3\\nmid m_4$). So $|E|=4$, contradicting Claim 1.\n- *$|T|=2$.* By Claim 2 the two indices outside $T$ lie in $E$, so $|E|\\ge2$, hence $|E|=2$ by Claim 1 and $E$ is exactly the complement of $T$; in particular $E\\cap T=\\emptyset$. Take $i\\in E$ and $j\\in T$. Then $g_{ij}\\in\\{2,3\\}$ by (1). But $j\\notin E$ means $2\\nmid m_j$, so $2\\nmid g_{ij}$ and $g_{ij}\\ne2$; and $i\\notin T$ means $3\\nmid m_i$, so $3\\nmid g_{ij}$ and $g_{ij}\\ne3$. Contradiction.\n\nSince $|T|\\ge2$ is forced by Claim 3, all cases lead to a contradiction. Hence some pair satisfies $g_{ij}\\ge4$. $\\blacksquare$\n\n*Remark (not needed).* The case $|T|=3$ shows more generally the mechanism used: an index whose modulus misses a prime $p$ forces all its gcds to avoid $p$.\n",
+ "claims_used": [],
+ "sources_used": [
+  "arXiv:2607.24655 Fornal, Sun, On the problem of large gcd for disjoint residue classes (context only: asymptotic result, not used)"
+ ],
+ "code_used": [],
+ "claimed_progress": "Complete proof of the cell statement, written out in full with every step justified.",
+ "claimed_status": "CELL_SOLVED_CANDIDATE",
+ "self_reported_gaps": [],
+ "request_creative": false
+}

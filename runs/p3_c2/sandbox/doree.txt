@@ -1,0 +1,399 @@
+                                        Bulgarian Solitaire
+                                                    Suzanne Dorée
+                                                   Augsburg College
+
+
+
+Summary
+A player begins with coins arranged in piles. At each turn she rearranges the coins according to the following rule:
+remove the top coin from each pile, possibly eliminating piles, and form a new collected pile of coins. She repeats
+the process until she revisits a previously encountered arrangement, having reached a terminal cycle. Where are fixed
+points, if any? Are there any 2-cycles? Which states are cyclic? How can we visualize the process?
+   This process was dubbed “Bulgarian Solitaire” in a 1983 Scientific American column by Martin Gardner [11],
+though I first saw it in Doug West and John D’Angelo’s text Mathematical Thinking [22]. In my sophomore level
+discrete mathematics class I use an activity on Bulgarian Solitaire called The Coins Go ’Round ’n ’Round to introduce
+students to partitions of integers, directed graphs, state graphs, and dynamical systems and to draw connections to the
+ubiquitous triangular numbers. In class I avoid using the name “Bulgarian Solitaire” since that would make it too easy
+for students to find answers on the Internet.
+   The activity takes two twenty-minute time blocks, or it can be done all as one entire class period. Each pair of
+students needs a dozen coins. It works best when I introduce the process prior to Part I and the graphs prior to Part II.
+I provide this introductory material below.
+   I expect students have seen the triangular numbers
+                                                                        k
+                                                                        X           k.k C 1/
+                                     1; 3; 6; 10; 15; 21; : : :; tk D          iD
+                                                                                       2
+                                                                        i D1
+
+earlier in the course, preferably including their representation as triangles of dots. It is helpful, but not necessary, for
+students to have seen the partitions of an integer. I do not expect that students have seen any graph theory prior to the
+activity. My students haven’t and they are able to pick up on the terminology, notation, and ideas when needed.
+   My experience is that there are parts of the activity that challenge my strongest students, most of which I save as
+extra credit, but most parts are easily completed by all of my students. They really get into “playing the game,” and
+are curious about what happens.
+
+Notes for the instructor
+I begin the activity by demonstrating the process by moving coins on an overhead projector while on the blackboard
+I record each state visited and connect it to the subsequent state with an arrow. Rather than piling the coins vertically,
+which would be difficult to see on the overhead screen, I extend them up the screen as in Figure 1. I literally remove the
+top coin from each pile and form the collected pile each time. For example, starting with (5,1,1,1) as on the worksheet
+I show students how to get (4,4), (3,3,2), (3,2,2,1), (4,2,1,1), (4,3,1), and then (3,3,2) again. Along the way I point out
+how the singleton piles were eliminated and that for convenience we keep the piles in increasing order by size. By the
+end of this introduction on the blackboard I have drawn the progression
+            .5; 1; 1; 1/ ! .4; 4/ ! .3; 3; 2/ ! .3; 2; 2; 1/ ! .4; 2; 1; 1/ ! .4; 3; 1/ ! back to .3; 3; 2/:
+
+                                                                                                                         83
+84                                                                                           Part I   Classroom-tested Projects
+
+
+I explain that we have repeated a state and so we’re going to stop. Without my recording these states on the board, the
+class probably would not recognize the repeat. Students usually need to stop and think about why the process would
+just repeat from there and so I have them turn to their neighbor to discuss why. I also ask them to decide if we’ll ever
+return to (5,1,1,1) again, which of course we won’t. I casually introduce the terminology “4-cycle” and refer to the
+repeated elements as “cyclic”. These terms are defined later on the worksheet, but I find students get the idea from this
+one example.
+   At this point I have students work on Exercises 1-4.
+   Thus far in the activity students have only drawn the progression from one state. I begin the second part by drawing
+the first few state graphs on the board, G4 on four coins and G5 on five coins as appear in Figure 2. I point out that
+each vertex has out-degree one since there is a unique state to which it goes, but a vertex can have in-degree more than
+one (or zero).
+   If students have not seen the partitions of an integer, I show them how to systematically list the partitions of five
+to make sure we have all of the vertices of G5 . Before I set them off to work on the remaining exercises, I also list
+out the partitions of six. A word of warning: once students have the list, some are tempted to draw the graph by first
+calculating where each partition on the list is sent and then trying to connect the whole kit and caboodle. In addition to
+taking far more time than necessary, it also results in a tangled picture of the graph. Instead, I encourage them to pick
+a particular partition, such as .1; 1; 1; 1; 1; 1/, draw the progression from there, then pick a missing partition, and draw
+its progression, etc., each time connecting the new progression to the graph as soon as possible. I encourage them to
+work on scratch paper and later redraw the graph in an organized fashion without any crossings.
+   Now I have students work on Exercises 5-8.
+
+Bibliography
+ [1] Akin, Ethan and Morton Davis. “Bulgarian solitaire,” The American Mathematical Monthly 92 (1985) 237–250.
+
+ [2] Bancroft, Tim. “Bulgarian Exchange: Where Does It End?” Senior Honors Project, Augsburg College, Min-
+     neapolis, MN, 2004.
+ [3] Bending, Thomas. “Bulgarian Solitaire,” Eureka 50 (1990) 12–19.
+
+ [4] Bentz, Hans-J. “Proof of the Bulgarian solitaire conjectures,” Ars Combinatoria 23 (1987) 151–170.
+
+ [5] Brandt, Jørgen. “Cycles of partitions,” Proceedings of the American Mathematical Society 85 (1982) 483–486.
+
+ [6] Broline, Duane M. and Daniel E. Loeb. “The combinatorics of Mancala-type games: Ayo, Tchoukaillon, and
+     1/pi,” UMAP Journal 16 (1995) 21–36.
+ [7] Brualdi, Richard A. Introductory Combinatorics, Elsevier North Holland Inc., 1977.
+
+ [8] Campbell, Paul J. and Darrah P. Chavey. “Tchuka Runa solitaire,” UMAP Journal 16 (1995) 343–365.
+
+ [9] Cannings, C. and J. Haigh. “Montreal solitaire,” Journal of Combinatorial Theory, Series A 60 (1992) 50–66.
+
+[10] Etienne, Gwihen. “Tableaux de Young et solitaire bulgare,” Journal of Combinatorial Theory, Series A 58 (1991)
+     181–197.
+[11] Gardner, Martin. “Mathematical Games (a.k.a. Bulgarian Solitaire and Other Seemingly Endless Tasks),” Scien-
+     tific American (1983) 249.
+[12] Griggs, Jerrold R. and Chih-Chang Ho. “The cycling of partitions and compositions under repeated shifts,”
+     Advances in Applied Mathematics 21 (1998) 205–227.
+[13] Hobby, J. D. and D. Knuth. “Problem 1: Bulgarian Solitaire,” A Programming and Problem-Solving Seminar,
+     Department of Computer Science, Stanford University, Stanford, December 1983, 6–13.
+[14] Hopkins, Brian and Michael A. Jones. “Shift-Induced Dynamical Systems on Partitions and Compositions,”
+     Electronic Journal of Combinatorics 13 (2006) R80, 19pp.
+Doree: Bulgarian Solitaire                                                                                       85
+
+[15] Igusa, Kiyoshi. “Solution of the Bulgarian solitaire conjecture,” Mathematics Magazine 58 (1985) 259–271.
+
+[16] Loeb, Daniel E. “Combinatorial properties of Mancala,” Abstract of the American Mathematical Society 96
+      (1994) 471.
+[17] Nicholson, Al. “Bulgarian Solitaire,” Mathematics Teacher 86 (1993) 84–86.
+
+[18] Popov, Serguei. “Random Bulgarian Solitaire,” Random Structures and Algorithms 27 (2005) 310–330.
+
+[19] Rosen, Kenneth H. Discrete Mathematics and Its Applications, McGraw-Hill Inc., 2003.
+
+[20] Servedio, Rocca and Yeong Nan Yeh. “A bijective proof on circular compositions,” Bulletin of the Institute of
+      Mathematics, Academia Sinica 23 (1995) 283–293.
+[21] Sieve, Maria. “The Coin Game and Its State Graphs,” Senior Honors Project, Augsburg College, Minneapolis,
+      MN, 2002.
+[22] West, Douglas B. and John P. D’Angelo. Mathematical Thinking: Problem-Solving and Proofs, Prentice-Hall,
+      Inc., 1997.
+[23] West, Douglas B. Introduction to Graph Theory, Prentice Hall, Inc., 1996.
+
+[24] Yeh, Yeong-Nan. “A remarkable endofunction involving compositions,” Studies in Applied Mathematics 95
+      (1995) 419–432.
+86                                                                                           Part I   Classroom-tested Projects
+
+
+Worksheet on The Coins Go ’Round ’n ’Round
+Part I: A never-ending process
+Take some coins and arrange them into piles. You may make any number of piles and have any number of coins in
+each pile. The piles may be different heights and a pile may have as few as one coin in it. Now, from that starting
+arrangement pick up the top coin from each pile and make one new pile out of those coins. Notice that any pile that
+had just a single coin was eliminated. You now have a new arrangement of the coins. Repeat this process to the new
+arrangement of coins, i.e. pick up the top coin from each new pile and make one new pile out of those collected coins.
+For convenience we list the piles in increasing order by size. Keep repeating the process. Although this process never
+ends, we’ll call it quits if we get back to a place we’ve already been.
+   For example, suppose I take eight coins and place them into one pile of five coins and three piles of one coin each,
+which we denote (5,1,1,1). At the first step I remove one coin from each pile, eliminating all but the tallest pile. This
+leaves a pile of four coins and the four collected coins, forming two piles of four coins each that we denote (4,4). At
+the next step I remove one coin from each pile, leaving three coins in each and two collected coins that form a new
+pile. The resulting arrangement is (3,3,2). These steps are illustrated in Figure 1.
+
+
+
+
+                                                              =
+                                       Figure 1. .5; 1; 1; 1/ ! .4; 4/ ! .3; 3; 2/.
+
+
+   When I repeat the process I get (3,2,2,1), (4,2,1,1), (4,3,1), and then (3,3,2) again, as you can check. Even though I
+did not get back to my original arrangement, since I have returned to an arrangement from earlier, I’ll call it quits. If I
+were to continue, it would just repeat through those same four states over and over again. We represent this progression
+as
+             .5; 1; 1; 1/ ! .4; 4/ ! .3; 3; 2/ ! .3; 2; 2; 1/ ! .4; 2; 1; 1/ ! .4; 3; 1/ ! back to .3; 3; 2/:
+
+Exercises
+     1. Now it’s your turn. Perform the process beginning with the given arrangement and record the progression until
+        you repeat an arrangement.
+         (a) (2,1,1,1)
+         (b) (4)
+         (c) (3,3)
+         (d) (4,2,1)
+         (e) (2,2,2,2)
+     2. Although we do not always return to our original arrangement, we will necessarily return to some state we have
+        visited before. Explain why. Also explain why once we return to a previously-visited state the process repeats.
+
+  An arrangement of coins that is eventually repeated is called cyclic and the number of steps from a cyclic state to its
+next repeat is called the length of the cycle. For example, with eight coins the elements (3,3,2), (3,2,2,1), and (4,2,1,1),
+and (4,3,1) are cyclic states that form a cycle of length four, called a 4-cycle for short. An arrangement in a 1-cycle is
+called a fixed point, i.e. a fixed point is unchanged by the process.
+
+     3. Fixed points
+         (a) Give an example of a fixed point from your earlier work. Give another example of a fixed point.
+Doree: Bulgarian Solitaire                                                                                            87
+
+         (b) Make a conjecture about which states are fixed points under this process.
+         (c) Make a conjecture about the number of coins in a fixed point state.
+         (d) Prove your conjectures. Hint: Be sure to both show that these states are fixed points and that any fixed
+             point is one of these states.
+   4. 2-cycles
+         (a) Give an example of a 2-cycle from your earlier work. Give another example of a 2-cycle.
+         (b) Make a conjecture about which states are in 2-cycles under this process.
+         (c) ? Make a conjecture about the number of coins in a 2-cycle state.
+
+   Note: The star (?) indicates a more difficult problem.
+
+Part II: The state graphs
+Thus far we have drawn the progression from one beginning state. For a fixed number of coins, n, we can visually
+represent the entire process using a state graph denoted Gn . The vertices (dots) are all possible arrangements of the
+coins, which we continue to list as a tuple ordered by size, regardless of the physical order of the piles. These labels
+are known as the partitions of the integer n. We draw an arrow from each vertex to the vertex we get by performing
+the process once. There is a unique arrow out of each vertex, but there may be one, several, or no arrows into a vertex.
+For example, the state graphs on four and five coins are shown in Figure 2.
+
+                                                                       (2,2)
+
+
+                                    (1,1,1,1)        (4)      (3,1)
+
+
+
+
+                                                                      (2,1,1)
+
+
+
+
+                                    (1,1,1,1,1)      (5)                            (2,2,1)
+
+
+                                                              (4,1)    (3,2)
+
+
+
+
+                                                  (2,1,1,1)                         (3,1,1)
+
+
+
+                                            Figure 2. The state graphs G4 and G5.
+
+
+Exercises
+   5. State Graphs
+         (a) Draw G6 , the state graph on six coins. Hint: Be sure to include all 11 possible arrangement of six coins.
+         (b) Draw G7 , the state graph on seven coins. Hint: There are 15 vertices.
+   6. Garden of Eden States
+       A state having no predecessors, i.e. no arrows into the vertex, is called a Garden of Eden state.
+         (a) Show that the state (4,4,3,3) on fourteen coins is not Garden of Eden.
+         (b) The state (4,3,3,2,1,1) on fourteen coins is Garden of Eden. Explain why.
+         (c) ? State and prove a conjecture about which states on n coins are Garden of Eden.
+88                                                                                        Part I   Classroom-tested Projects
+
+
+     7. Ten Coins
+         (a) Start with an arrangement of ten coins, perform the process, and draw the progression.
+         (b) Start with an arrangement of ten coins that you haven’t encountered yet, perform the process, and connect
+             this progression to your graph.
+         (c) Start with another arrangement of ten coins that you haven’t encountered yet, perform the process, and
+             connect this progression to your graph.
+         (d) Make a conjecture about how the process with ten coins will always end.
+         (e) Generalize your conjecture.
+     8. Eleven Coins
+         (a) List the cyclic states on eleven coins. Hint: There is a unique end cycle.
+         (b) ? Suppose that n is an integer such that there is a fixed point with n coins. Consider the process on n C 1
+             coins. Make a conjecture about which states are cyclic.
+Doree: Bulgarian Solitaire                                                                                                      89
+
+Solutions and Notes
+   1. The Process
+
+         (a) .2; 1; 1; 1/ ! .4; 1/ ! .3; 2/ ! .2; 2; 1/ ! .3; 1; 1/ ! back to .3; 2/
+         (b) .4/ ! .3; 1/ ! .2; 2/ ! .2; 1; 1/ ! back to .3; 1/
+         (c) .3; 3/ ! .2; 2; 2/ ! .3; 1; 1; 1/ ! .4; 2/ ! .3; 2; 1/ ! back to itself
+         (d) .4; 2; 1/ ! .3; 3; 1/ ! .3; 2; 2/ ! .3; 2; 1; 1/ ! back to .4; 2; 1/
+         (e) .2; 2; 2; 2/ ! .4; 1; 1; 1; 1/ ! .5; 3/ ! .4; 2; 2/ ! .3; 3; 1; 1/ ! back to .4; 2; 2/
+
+   2. We will necessarily return to some state we have visited before because there are only finitely many states. The
+      process will repeat from there because the process and state are the same as when we were there before.
+   3. Fixed Points
+
+         (a) A fixed point from earlier work is (3,2,1). Other examples include (1) on one coin, (2,1) on three coins,
+             (4,3,2,1) on ten coins, etc.
+         (b) Conjecture: A state is fixed if and only if it is of the form .k; k 1; : : : ; 3; 2; 1/. I find it necessary to remind
+             students that a conjecture should be a complete sentence.
+         (c) Conjecture: There is a fixed point state for n coins if and only if n is a triangular number.
+         (d) Proof: First we check that these states are fixed by performing the process and observing that each pile is
+             reduced by one coin and the smallest pile is eliminated, but there are k collected coins, which reinstates
+             the largest pile. Conversely, suppose we had a fixed state with largest pile k. Since the process reduces the
+             size of each pile, the only way we can get a pile of k coins is as the collected pile and so there must be
+             exactly k piles. The pile of k coins is reduced to k 1 coins by the process and so there must have been a
+             pile of k 1 coins. Similarly that pile of k 1 coins is reduced to k 2 coins by the process and so there
+             must have been a pile of k 2 coins. The argument continues until we note that the pile of two coins is
+             reduced to one coin by the process and so there must have been a pile of one coin. This gives us k piles in
+             total, and so there are no additional piles. We therefore have the triangle state .k; k 1; k 2; : : : ; 3; 2; 1/,
+             with a triangular number of coins. For formal proof see [22].
+
+   4. 2-Cycles
+       This exercise can easily be left as homework or omitted altogether if short on time.
+         (a) A 2-cycle from earlier work is (4,2,2) $ (3,3,1,1) on eight coins. Other examples include (2) $ (1,1) on
+             two coins and (6,4,4,2,2) $ (5,5,3,3,1,1) on eighteen coins.
+         (b) Conjecture: A state is in a 2-cycle if and only if it is of the form
+
+                             .2t; 2t   2; 2t   2; : : : ; 4; 4; 2; 2/ or .2t   1; 2t   1; 2t   3; 2t   3; : : : ; 3; 3; 1; 1/
+
+             for some integer t. My students usually guess the pattern but have difficulty stating it. This result follows
+             from the characterization of cycles in the work of Akin and Davis [1]. While it is easy to check that states
+             of this form are in a 2-cycle, it takes a bit more work to prove that these are the only 2-cycles and so I do
+             not ask my students for proof.
+         (c) ? I make this part extra credit since it relies on a clearly-stated conjecture in the previous part. Adding
+             the number of coins from the previous conjecture in the odd case we get
+                                                   t
+                                                   X
+                                                          2.2t    1/ D 2 Œt.t C 1/     t D 2t 2 :
+                                                   i D1
+
+              Conjecture: A two-cycle occurs exactly when the number of coins is twice a square. As far as I can deter-
+              mine the first direct proof of this fact was given by one of my students, Augsburg College undergraduate
+              Maria Sieve, [21].
+90                                                                                                                                    Part I    Classroom-tested Projects
+
+
+     5. State Graphs
+
+         (a) The state graph G6 is shown in Figure 3.
+
+
+
+                       (2,2,1,1)           (4,1,1)              (3,3)             (2,2,2)            (3,1,1,1)
+
+
+                                                                                (2,2,1,1,1)                         (4,2)
+
+                                                                                                                                      (3,2,1)
+
+
+                                                            (1,1,1,1,1,1)           (6)               (5,1)
+
+
+
+                                                              Figure 3. The state graph G6 .
+
+
+         (b) The state graph G7 is shown in Figure 4.
+
+
+
+                       (1,1,1,1,1,1,1,1)             (7)            (6,1)             (5,2)               (4,2,1)
+
+
+
+
+                                           (2,1,1,1,1,1,1)        (3,1,1,1,1)                 (3,2,1,1)                     (3,3,1)
+
+
+                                              (2,2,2,1)          (4,1,1,1)
+
+
+                                                                                          (4,3)           (3,2,2)
+
+
+                                              (2,2,1,1,1)           (5,1,1)
+
+
+
+                                                              Figure 4. The state graph G7 .
+
+       The first seven state graphs are connected, but G8 has two connected components. There are graphs with even
+       more components [1].
+
+     6. Garden of Eden States
+
+         (a) (4,4,3,3) is not a Garden of Eden state because .5; 4; 4; 1/ ! .4; 4; 3; 3/.
+         (b) Proof: To see why (4,3,3,2,1,1) is a Garden of Eden state, suppose this state had a predecessor. There are six
+             piles of coins in (4,3,3,2,1,1), only one of which could be the collected coins from a predecessor. Therefore
+             a predecessor would have to include at least five piles of coins. (It might have additional singleton piles.)
+             But then there would be at least five collected coins and so our state would include a pile with at least
+             five coins in it. Since (4,3,3,2,1,1) does not have any pile with more than four coins, the existence of a
+             predecessor is impossible. Thus (4,3,3,2,1,1) is Garden of Eden, as claimed.
+         (c) ? I make this part extra credit since it requires a clear understanding of the previous part. Conjecture: A
+             state is Garden of Eden if and only if each pile is at least two coins smaller than the number of piles. Proof:
+             That these states are Garden of Eden follows as in the proof for (4,3,3,2,1,1). For the converse, given a
+             state that does not meet the criteria, the largest pile must be no smaller than one less than the number of
+             piles. So, we can construct a predecessor by picking up that largest pile, distributing one coin to each of
+             the remaining piles (which we definitely have enough coins to do), and placing any remaining coins from
+             the largest pile as new singleton piles.
+Doree: Bulgarian Solitaire                                                                                                 91
+
+   7. Ten Coins
+
+      (a-c) Any progression on ten coins leads to the fixed point (4,3,2,1). I have sometimes done this part of the
+            activity as an entire class, where each pair of students tries an arrangement of ten coins at once and then
+            all report what happens.
+         (d) Conjecture: Any arrangement of ten coins progresses to the fixed point (4,3,2,1).
+         (e) Conjecture: For a triangular number of coins, any arrangement progresses to the fixed point. This result is
+             proved in [5] and [1]. Students may try to generalize further but they should be reminded of the example
+             of eight coins that has both a terminal 2-cycle and 4-cycle, as evidence that the outcome might depend on
+             the initial state.
+
+   8. Eleven coins
+
+         (a) The cyclic states on eleven coins are (5,3,2,1), (4,4,2,1), (4,3,3,1), (4,3,2,2), (4,3,2,1,1). The easiest way to
+             find these states is to begin with any partition of eleven and apply the process until you reach the 5-cycle.
+             Without the hint students would not know that these are the only cyclic elements. The pattern is that any
+             cyclic state on eleven coins is formed from (4,3,2,1) by adding a coin to some pile or to the right of the last
+             pile [1].
+         (b) ? I make this part extra credit since it is so difficult that few of my students get it. The question is stated
+             a bit awkwardly to avoid revealing the answer to Exercise 3. You may want to restate it as “n C 1 coins
+             when n is triangular”. Conjecture: For a triangular number of coins, n, a state with n C 1 coins is cyclic if
+             and only if it is formed from the triangular base of n coins with the addition of a single coin. This result is
+             proved in [1].
+
+       For any number of coins, the cyclic states are formed by a triangular base with at most one coin atop each pile
+       and possibly one coin to the right of the last pile. If the base triangle has k piles, and thus tk D k.kC1/
+                                                                                                               2
+                                                                                                                    coins,
+       then there are k C 1 slots for possible additional coins. The cycle length will be a divisor of k C 1 and there are
+       cycles of each divisor’s length [1].
+
+   A somewhat different question that intrigued Gardner was the maximal number of steps needed to get from a
+triangular number of coins to the fixed point [11]. The answer he posed became known as the “Bulgarian Solitaire
+Conjecture” though it has now been settled, for example in [10].
+

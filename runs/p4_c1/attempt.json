@@ -1,0 +1,29 @@
+{
+ "attempt_id": "attempt_001",
+ "problem_id": "p4_c1",
+ "ts": "2026-09-26T14:48:58",
+ "meta": {
+  "backend": "human",
+  "model": [],
+  "cost_usd": 0,
+  "note": "written by hand by the team from the sketch in note.md; no model call"
+ },
+ "stagnation_detected": false,
+ "schema_errors": [],
+ "target_cell": 1,
+ "subgoal": "Prove the case k=3 by parity: all gcds would be 2, forcing pairwise distinct parities of three residues.",
+ "approach": "Prove the case k=3 by parity: all gcds would be 2, forcing pairwise distinct parities of three residues.",
+ "approach_family": "direct_proof",
+ "reason_for_choice": "For three classes the only escape from the conclusion is that every gcd equals 2; the disjointness criterion (*) then forces three pairwise different parities, which is impossible. The criterion (*) is re-proved in one paragraph so that the argument is self-contained.",
+ "literature_position": "Fornal-Sun [2607.24655] prove an asymptotic lower bound for the largest gcd; the small cases k=3,4 are elementary and are not treated there. Our proof is independent.",
+ "proof_attempt": "# Cell 1: three pairwise disjoint classes have a pair of moduli with $\\gcd\\ge3$\n\n**Target.** If $a_1\\ (\\mathrm{mod}\\ m_1)$, $a_2\\ (\\mathrm{mod}\\ m_2)$, $a_3\\ (\\mathrm{mod}\\ m_3)$ are pairwise disjoint congruence classes ($m_i\\ge1$), then $\\gcd(m_i,m_j)\\ge3$ for some $i<j$.\n\n## Lemma 0 (the direction of $(*)$ that we use)\nLet $g=\\gcd(m,m')$. If $g\\mid a-a'$ then the classes $a\\ (\\mathrm{mod}\\ m)$ and $a'\\ (\\mathrm{mod}\\ m')$ have a common element. Equivalently: if the two classes are disjoint then $g\\nmid a-a'$.\n*Proof.* Write $m=g\\mu$, $m'=g\\mu'$ with $\\gcd(\\mu,\\mu')=1$, and $a-a'=g\\delta$ with $\\delta\\in\\mathbb Z$. An element of the first class has the form $a+mt=a+g\\mu t$, $t\\in\\mathbb Z$; it lies in the second class iff $m'\\mid a+g\\mu t-a'$, i.e. $g\\mu'\\mid g(\\delta+\\mu t)$, i.e. $\\mu'\\mid\\delta+\\mu t$. Since $\\gcd(\\mu,\\mu')=1$, $\\mu$ is invertible modulo $\\mu'$, so $t\\equiv-\\delta\\mu^{-1}\\pmod{\\mu'}$ solves it. $\\square$\n(This is the statement $(*)$ quoted in the problem; we include the short proof so that the argument is self-contained.)\n\n## Proof of the cell\nLet the three classes be pairwise disjoint and suppose, for a contradiction, that $\\gcd(m_i,m_j)\\le2$ for all three pairs.\n1. *Every pairwise gcd equals $2$.* If $\\gcd(m_i,m_j)=1$ then $1\\mid a_i-a_j$, so by Lemma 0 the classes $i$ and $j$ meet, contradicting disjointness. Hence $\\gcd(m_i,m_j)=2$ for all $i<j$.\n2. *The residues are pairwise of different parity.* For $i<j$, disjointness and Lemma 0 give $\\gcd(m_i,m_j)=2\\nmid a_i-a_j$, i.e. $a_i\\not\\equiv a_j\\pmod 2$.\n3. *Contradiction.* $a_1,a_2,a_3$ would be three integers with pairwise different residues modulo $2$; but there are only two residues modulo $2$, so two of them coincide (pigeonhole). \n\nHence the assumption fails: some pair satisfies $\\gcd(m_i,m_j)\\ge3$. $\\blacksquare$\n\n*Remark.* Step 1 is the first \"trivial bound\" of the problem statement; it is re-derived here only because the argument needs the exact value $2$ of every gcd, not merely $\\ge2$.\n",
+ "claims_used": [],
+ "sources_used": [
+  "arXiv:2607.24655 Fornal, Sun, On the problem of large gcd for disjoint residue classes (context only: asymptotic result, not used)"
+ ],
+ "code_used": [],
+ "claimed_progress": "Complete proof of the cell statement, written out in full with every step justified.",
+ "claimed_status": "CELL_SOLVED_CANDIDATE",
+ "self_reported_gaps": [],
+ "request_creative": false
+}
