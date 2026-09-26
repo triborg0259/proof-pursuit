@@ -301,9 +301,9 @@ id="toc-decisioni-degli-agenti-6">Decisioni degli agenti</a></li>
 id="toc-codice-su-cui-poggia-il-tentativo-6">Codice su cui poggia il
 tentativo</a></li>
 </ul></li>
-<li><a href="#cella-2-2-punti-stato-bozza-pronta"
-id="toc-cella-2-2-punti-stato-bozza-pronta">Cella 2 (2 punti) — stato:
-bozza pronta</a>
+<li><a href="#cella-2-2-punti-stato-revisionato"
+id="toc-cella-2-2-punti-stato-revisionato">Cella 2 (2 punti) — stato:
+revisionato</a>
 <ul>
 <li><a href="#consegna-prova-7" id="toc-consegna-prova-7">Consegna
 (prova)</a></li>
@@ -1968,8 +1968,8 @@ def main():
 if __name__ == &quot;__main__&quot;:
     main()
 </code></pre>
-<h2 id="cella-2-2-punti-stato-bozza-pronta">Cella 2 (2 punti) — stato:
-bozza pronta</h2>
+<h2 id="cella-2-2-punti-stato-revisionato">Cella 2 (2 punti) — stato:
+revisionato</h2>
 <h5 id="parte-2-c2-uq_5">Parte 2 (C2) — <span
 class="math inline">\(U(Q_5)\)</span></h5>
 <p><strong>Punteggio:</strong> 2 points · <strong>Valutazione:</strong>
@@ -1981,21 +1981,24 @@ class="math inline">\(U(Q_5)\)</span>.</p>
 <p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
 <code>Determine U(Q_5) exactly and exhibit an optimal labelling of Q_5 in the required format.</code></p>
 <p><strong>Evidenza registrata in STATUS.md.</strong> $U(Q_5)=88$:
-riduzione a (★) riletta a mano + 3 enumerazioni concordi; etichettatura
-verificata; Referee automatico: giudice A PASS (2 run), giudice B
-PARTIAL solo per regole segnaposto → terzo run con regole ufficiali in
-corso; bozza in submission/parte-2.md</p>
+riduzione a (★) riletta a mano lemma per lemma + 3 enumerazioni concordi
+(una indipendente per metodo); etichettatura verificata; Referee
+automatico READY_FOR_HUMAN (giudice A PASS in 3 run, giudice B PASS con
+sole note INFO, codice rieseguito dall’orchestratore); bozza in
+submission/parte-2.md</p>
 <h3 id="consegna-prova-7">Consegna (prova)</h3>
 <h4 id="problema-2-parte-2-c2-bozza-di-consegna">Problema 2 — Parte 2
 (C2) — bozza di consegna</h4>
-<p><strong>Stato dichiarato: BOZZA PRONTA, da revisionare.</strong>
+<p><strong>Stato dichiarato: REVISIONATA (pronta per consegna).</strong>
 Valore <span class="math inline">\(U(Q_5)=88\)</span> con etichettatura
 esplicita; lower bound per riduzione a un enunciato finito (★) confutato
 per enumerazione esaustiva (tre implementazioni concordi, una
-indipendente per metodo). Verdetto del Referee automatico: giudice A
-(matematica) PASS su entrambe le direzioni in due run indipendenti;
-giudice B (evidenze): vedi §5. Revisione umana della riduzione: fatta
-lemma per lemma (STATUS.md).</p>
+indipendente per metodo). Referee automatico:
+<strong>READY_FOR_HUMAN</strong> (giudice A, matematica: PASS su
+entrambe le direzioni in tre run indipendenti; giudice B, evidenze:
+PASS, con sole note INFO, dopo la riesecuzione fidata del codice da
+parte dell’orchestratore). Revisione umana della riduzione: fatta lemma
+per lemma (STATUS.md). L’approvazione finale resta umana.</p>
 <h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
 <p><span class="math inline">\(U(Q_5) = 88 = |E(Q_5)| + 8\)</span>.
 Etichettatura ottima (ordine crescente di etichetta; posizione <span
@@ -2483,9 +2486,10 @@ so any slip there does not affect the proof.</p></li>
 in the proof; the second SA run (20 seeds) was still running when this
 report was written (4 seeds completed, all at 88).</p></li>
 <li><p>Il giudice B ha classificato tutte le osservazioni su fonti e
-calcoli come INFO (fonti di contesto non caricate, versione di Python
-non registrata: 3.14, libreria standard); l’unico punto MISSING
-riguardava le regole ufficiali, ora passate alla lettera dal preambolo
+calcoli come INFO (fonti di contesto non caricate e non necessarie;
+versione di Python non registrata: 3.14, libreria standard; tempi
+riprodotti 0.44–0.71 s). Nei primi due run l’unico punto MISSING
+riguardava le regole ufficiali, poi passate alla lettera dal preambolo
 dell’enunciato.</p></li>
 <li><p>La cella è “checked instantly” sul valore: il rischio residuo è
 un errore nella riduzione a (★); per questo la riduzione è stata riletta
@@ -2498,16 +2502,43 @@ a mano e (★) confutata da tre programmi diversi.</p></li>
 <dt>Iterazione 1 — attempt_001</dt>
 <dd>
 <p><strong>Researcher</strong>: famiglia <code>case_analysis</code>,
-sotto-obiettivo: . Stato dichiarato: . <strong>Referee</strong>:
-verdetto <code>UNKNOWN_STATUS</code> (review_status
-<code>INCOMPLETE</code>).</p>
+sotto-obiettivo: Determine U(Q_5) exactly: prove the lower bound U(Q_5)
+&gt;= 88 by a hand case analysis of the "excess" plus a small exact
+finite check, and exhibit an explicit labelling with exactly 88 uphill
+paths.. Stato dichiarato: <code>CELL_SOLVED_CANDIDATE</code>. <em>Perché
+questa scelta</em>: No previous attempt for this cell. The verified
+claims (total ≥ |E| + #valleys, and the parity argument that killed
+|E|+1 for Q_4/Q_5) suggested pushing the same equality analysis further:
+quantify the slack ("excess") vertex by vertex. The key new observation
+is that in a 5-regular graph any slack is at least 3 and the remaining
+cases are a tiny combinatorial statement about independent sets and
+induced forests of Q_5 that can be checked exactly in under a second,
+with the reduction proved by hand. <em>Rispetto allo stato
+dell’arte</em>: none found. No LITERATURE section was supplied. I
+searched the web for "uphill paths" hypercube labelling valley minimum
+(WebSearch, 2026-09-26): only IMO 2022 Problem 6 material (Nordic
+squares, answer 2n^2-2n+1: AoPS wiki
+https://artofproblemsolving.com/wiki/index.php/2022_IMO_Problems/Problem_6,
+Evan Chen’s notes https://web.evanchen.cc/exams/IMO-2022-notes.pdf, D.
+Grozev’s blog
+https://dgrozev.wordpress.com/2022/07/16/three-graph-problems-on-imo-2022-problem-6/)
+and unrelated hypercube papers (arXiv 2404.18014 on layered subgraphs,
+2310.18163 open problems). None treats the hypercube version. The repo
+notes (problema-2/note.md, item F) record an earlier arXiv search with
+the same conclusion. My approach follows the IMO 2022 lower-bound idea
+(p(v) ≥ max(1, deg^-(v))) and departs from it by quantifying the excess
+per vertex, which is what the hypercube (regular of odd degree 5) makes
+decisive. <strong>Referee</strong>: verdetto <code>UNKNOWN_STATUS</code>
+(review_status <code>READY_FOR_HUMAN</code>). <em>Prossimo passo
+richiesto</em>: Human reviews the exact target, proof and evidence, then
+approves explicit claims</p>
 </dd>
 </dl>
 <h3 id="codice-su-cui-poggia-il-tentativo-7">Codice su cui poggia il
 tentativo</h3>
 <p>Nessun codice nei tentativi.</p>
 <pre
-data-caption="attempt\_001 code\_1 [python, rigore exact] — Exact count of uphill paths of a labelling of Q\_d via the recursion p(v) = [valley] + sum  — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Conteggio esatto dei cammini in salita di una etichettatura di Q_d.
+data-caption="attempt\_001 code\_1 [python, rigore exact] — Exact count of uphill paths of a labelling of Q\_d via the recursion p(v) = [valley] + sum  — approvato dal Referee"><code>&quot;&quot;&quot;Conteggio esatto dei cammini in salita di una etichettatura di Q_d.
 
 Vertici = interi 0..2^d-1 (bit i = coordinata i); vicini = XOR con un bit.
 p(v) = [v valle] + somma p(u) sui vicini u con etichetta minore; totale = somma p(v).
@@ -2548,7 +2579,7 @@ def da_stringa(s):
 <p><em>Riesecuzione fidata dell’orchestratore</em>:
 <code>orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: ’’; stderr: ’’</code></p>
 <pre
-data-caption="attempt\_001 code\_2 [python, rigore exact] — Certificate 1 for the lower bound: enumerate all independent 12-sets of Q\_5 containing ver — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Certificato per il bound inferiore U(Q_5) &gt;= 88 (implementazione 1: backtracking).
+data-caption="attempt\_001 code\_2 [python, rigore exact] — Certificate 1 for the lower bound: enumerate all independent 12-sets of Q\_5 containing ver — approvato dal Referee"><code>&quot;&quot;&quot;Certificato per il bound inferiore U(Q_5) &gt;= 88 (implementazione 1: backtracking).
 
 Enunciato verificato (Lemma computazionale):
   per ogni insieme indipendente I di Q_5 con |I| = 12 e per ogni vertice u di Q_5,
@@ -2615,7 +2646,7 @@ if __name__ == &quot;__main__&quot;:
 <p><em>Riesecuzione fidata dell’orchestratore</em>:
 <code>orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 0 in 0.5s; stdout: ’insiemi indipendenti di taglia 12 contenenti 0: 1377\ncoppie (I,u) esaminate: 27540; complementi aciclici trovati: 0\ntempo 0.44s’; stderr: ’’</code></p>
 <pre
-data-caption="attempt\_001 code\_3 [python, rigore exact] — Certificate 2 for the lower bound, independent method and no symmetry reduction: all indep — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Certificato per il bound inferiore U(Q_5) &gt;= 88 (implementazione 2, metodo diverso).
+data-caption="attempt\_001 code\_3 [python, rigore exact] — Certificate 2 for the lower bound, independent method and no symmetry reduction: all indep — approvato dal Referee"><code>&quot;&quot;&quot;Certificato per il bound inferiore U(Q_5) &gt;= 88 (implementazione 2, metodo diverso).
 
 Stesso enunciato di verifica_q5_indipendenti.py, ma senza usare la simmetria:
 ogni insieme indipendente e&#39; A u B con A sottoinsieme dei vertici di peso pari e
@@ -2696,7 +2727,7 @@ if __name__ == &quot;__main__&quot;:
 <p><em>Riesecuzione fidata dell’orchestratore</em>:
 <code>orchestrator re-ran code_3.py (python3, clean copy of the researcher sandbox): exit 0 in 0.8s; stdout: ’insiemi indipendenti di taglia 12 (tutti, senza simmetria): 3672\ncoppie (I,u) esaminate: 73440; complementi aciclici: 0\ntempo 0.77s’; stderr: ’’</code></p>
 <pre
-data-caption="attempt\_001 code\_4 [python, rigore exact] — Builds the 88-path labelling (peaks = even vertices minus 00000, 11110) and counts exactly — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Costruzione esplicita con 88 cammini in salita su Q_5 e verifica esatta.
+data-caption="attempt\_001 code\_4 [python, rigore exact] — Builds the 88-path labelling (peaks = even vertices minus 00000, 11110) and counts exactly — approvato dal Referee"><code>&quot;&quot;&quot;Costruzione esplicita con 88 cammini in salita su Q_5 e verifica esatta.
 
 Idea: picchi = tutti i vertici di peso pari tranne 00000 e 11110 (14 picchi, indipendenti);
 il complemento (2 pari + 16 dispari) e&#39; una foresta con 10 spigoli e 8 componenti:
@@ -2724,7 +2755,7 @@ if __name__ == &quot;__main__&quot;:
 <p><em>Riesecuzione fidata dell’orchestratore</em>:
 <code>orchestrator re-ran code_4.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: "totale cammini: 88\nvalli: [’00000’, ’11110’, ’11001’, ’10101’, ’01101’, ’10011’, ’01011’, ’00111’]\nordine: 00000,11110,11001,10101,01101,10011,01011,00111,10000,01000,00100,11100,00010,11010,10110,01110,00001,11111,11000,10100,01100,10010,01010,00110,10001,01001,00101,11101,00011,11011,10111,0</code></p>
 <pre
-data-caption="attempt\_001 code\_5 [python, rigore exact] — Independent verification of the submitted labelling by explicit DFS enumeration of every u — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Verifica indipendente dell&#39;etichettatura a 88 cammini: enumerazione esplicita per DFS.
+data-caption="attempt\_001 code\_5 [python, rigore exact] — Independent verification of the submitted labelling by explicit DFS enumeration of every u — approvato dal Referee"><code>&quot;&quot;&quot;Verifica indipendente dell&#39;etichettatura a 88 cammini: enumerazione esplicita per DFS.
 
 Metodo diverso dalla ricorsione p(v): da ogni valle si esplorano tutti i cammini con etichette
 crescenti e si contano uno a uno. Controlla anche che l&#39;input sia una biiezione.
@@ -2756,7 +2787,7 @@ if __name__ == &quot;__main__&quot;:
 <p><em>Riesecuzione fidata dell’orchestratore</em>:
 <code>orchestrator re-ran code_5.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: "valli: [’00000’, ’11110’, ’11001’, ’10101’, ’01101’, ’10011’, ’01011’, ’00111’]\ncammini in salita (DFS esplicita): 88"; stderr: ’’</code></p>
 <pre
-data-caption="attempt\_001 code\_6 [python, rigore exact] — Sanity check (evidence only, not part of the proof) of the identity T = 80 + \#valleys + X  — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Controllo di sanita&#39; (solo evidenza) dell&#39;identita&#39; usata nella prova:
+data-caption="attempt\_001 code\_6 [python, rigore exact] — Sanity check (evidence only, not part of the proof) of the identity T = 80 + \#valleys + X  — approvato dal Referee"><code>&quot;&quot;&quot;Controllo di sanita&#39; (solo evidenza) dell&#39;identita&#39; usata nella prova:
 totale = |E| + #valli + X, X = somma sugli spigoli u-&gt;w di (p(u)-1), e X in {0} u [3, inf).
 Etichettature casuali di Q_5 con aritmetica esatta.
 &quot;&quot;&quot;
@@ -2780,7 +2811,7 @@ print(&quot;valori di X osservati sotto 10:&quot;, sorted(v for v in valori_x if
 <p><em>Riesecuzione fidata dell’orchestratore</em>:
 <code>orchestrator re-ran code_6.py (python3, clean copy of the researcher sandbox): exit 0 in 13.4s; stdout: "identita’ verificata su 200000 etichettature casuali; min X&gt;0 osservato: 14\nvalori di X osservati sotto 10: []"; stderr: ’’</code></p>
 <pre
-data-caption="attempt\_001 code\_7 [python, rigore float\_exploration\_only] — Simulated annealing over labellings (exploration only): best value found 88 in every seed  — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;Ricerca locale (simulated annealing) sul numero di cammini in salita di Q_5.
+data-caption="attempt\_001 code\_7 [python, rigore float\_exploration\_only] — Simulated annealing over labellings (exploration only): best value found 88 in every seed  — approvato dal Referee"><code>&quot;&quot;&quot;Ricerca locale (simulated annealing) sul numero di cammini in salita di Q_5.
 
 Esplorazione: trova etichettature con pochi cammini. NON e&#39; una prova (minimo locale possibile).
 Stato = permutazione dei 32 vertici; mossa = scambio di due etichette; punteggio esatto (interi).

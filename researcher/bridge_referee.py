@@ -203,9 +203,15 @@ class CliBackend:
         self.log_dir = Path(log_dir) if log_dir else None   # dove salvare gli output grezzi dei giudici
 
     def _salva_grezzo(self, role, tentativo, raw):
-        """Conserva la risposta grezza del giudice: senza questo un ValidationError è indiagnosticabile."""
-        if self.log_dir:
-            write_json(self.log_dir / f"referee_raw_{role}_{tentativo}.json", raw)
+        """Conserva la risposta grezza del giudice: senza questo un ValidationError è indiagnosticabile.
+        Al primo salvataggio di un run i grezzi del run precedente per quel giudice vengono tolti, così la cartella
+        descrive sempre l'ultimo run (e il replay non pesca rapporti vecchi)."""
+        if not self.log_dir:
+            return
+        if tentativo == 1:
+            for vecchio in self.log_dir.glob(f"referee_raw_{role}_*.json"):
+                vecchio.unlink()
+        write_json(self.log_dir / f"referee_raw_{role}_{tentativo}.json", raw)
 
     @staticmethod
     def _normalizza(role, raw):
@@ -218,6 +224,19 @@ class CliBackend:
         report = dict(raw["report"])
         report[campo] = f"{report.get(campo, '')}\n[limitation declared by the judge] {raw['limitation']}".strip()
         return {"report": report, "limitation": None}
+
+    @staticmethod
+    def _solo_claim_candidato(raw, payload):
+        """Il prompt del giudice B gli chiede di classificare anche le dipendenze, ma il validatore del merge ammette in
+        claim_provenance solo i claim del candidato: le voci sui claim già verificati (verified_i) vengono tolte. Si
+        rimuove soltanto, mai si aggiunge: il verdetto resta quello del giudice."""
+        report = (raw or {}).get("report") if isinstance(raw, dict) else None
+        if not report or "claim_provenance" not in report:
+            return raw
+        candidati = {c["id"] for c in payload.get("submission", {}).get("candidate", {}).get("claims", [])}
+        report = dict(report)
+        report["claim_provenance"] = [v for v in report["claim_provenance"] if v.get("claim_id") in candidati]
+        return {**raw, "report": report}
 
     @staticmethod
     def _valida(role, raw):
@@ -254,6 +273,7 @@ class CliBackend:
         """Prima chiamata; se il rapporto viola le regole di coerenza del Referee, un solo ritentativo con l'errore
         esatto nel payload (il modello di solito corregge il campo incriminato). Poi si lascia decidere al Referee."""
         raw = self._normalizza(role, await asyncio.to_thread(self._chiama, role, system, payload, schema))
+        raw = self._solo_claim_candidato(raw, payload)
         self._salva_grezzo(role, 1, raw)
         errore = self._valida(role, raw)
         if not errore:
@@ -262,8 +282,33 @@ class CliBackend:
         payload_bis = {**payload, "previous_report_rejected_by_validator": raw, "validation_error": errore,
                        "instruction": "Return a report that satisfies the validator; keep your mathematical judgement."}
         raw = self._normalizza(role, await asyncio.to_thread(self._chiama, role, system, payload_bis, schema))
+        raw = self._solo_claim_candidato(raw, payload)
         self._salva_grezzo(role, 2, raw)
         return raw
+
+    async def close(self):
+        return None
+
+
+class ReplayBackend:
+    """Restituisce l'ultimo rapporto grezzo salvato per ogni giudice (referee_raw_<ruolo>_<n>.json), applicando le stesse
+    normalizzazioni del backend CLI. Perché: dopo una correzione del ponte si vuole ri-fondere i giudizi già pagati,
+    non richiamare i modelli."""
+
+    def __init__(self, log_dir):
+        self.log_dir = Path(log_dir)
+        self.usage = []
+
+    def _ultimo_grezzo(self, role):
+        """Il file più recente per data di modifica: un run può salvare solo _1 mentre resta un _2 del run prima."""
+        file = sorted(self.log_dir.glob(f"referee_raw_{role}_*.json"), key=lambda f: f.stat().st_mtime)
+        if not file:
+            raise FileNotFoundError(f"nessun rapporto grezzo salvato per il giudice {role} in {self.log_dir}")
+        return read_json(file[-1])
+
+    async def generate(self, *, role, system, payload, schema):
+        raw = CliBackend._normalizza(role, self._ultimo_grezzo(role))
+        return CliBackend._solo_claim_candidato(raw, payload)
 
     async def close(self):
         return None
@@ -355,6 +400,8 @@ def _scegli_backend(args):
     """offline → nessun modello; api → ClaudeBackend del collega (serve chiave); altrimenti la CLI."""
     if args.offline:
         return None
+    if args.replay:
+        return ReplayBackend(Path(args.workdir) / "attempts")
     if args.backend == "api":
         from referees.provider import ClaudeBackend
         return ClaudeBackend(args.model or "claude-opus-5", args.model_b)
@@ -395,6 +442,8 @@ def build_parser():
     rv.add_argument("--workdir", required=True)
     rv.add_argument("--attempt")
     rv.add_argument("--offline", action="store_true", help="solo controlli esatti, nessun modello")
+    rv.add_argument("--replay", action="store_true",
+                    help="ri-fonde gli ultimi rapporti grezzi salvati dei due giudici, senza chiamare i modelli")
     rv.add_argument("--run-code", action="store_true",
                     help="rilancia gli script di code_used e passa gli esiti al Referee come osservazioni fidate")
     rv.add_argument("--backend", choices=["cli", "api"], default="cli")

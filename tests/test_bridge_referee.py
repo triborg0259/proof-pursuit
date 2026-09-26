@@ -48,6 +48,16 @@ def test_normalizza_rapporto_con_limitazione():
     assert CliBackend._normalizza("B", {"report": None, "limitation": "x"})["report"] is None  # caso legittimo intatto
 
 
+def test_provenienza_ristretta_ai_claim_del_candidato():
+    """Il giudice B classifica anche i claim già verificati; il merge ammette solo quelli del candidato: si filtra."""
+    sys.path.insert(0, str(ROOT / "researcher"))
+    from bridge_referee import CliBackend
+    payload = {"submission": {"candidate": {"claims": [{"id": "main"}]}}}
+    raw = {"report": {"evidence_verdict": "PASS", "claim_provenance": [{"claim_id": "main"}, {"claim_id": "verified_1"}]}, "limitation": None}
+    out = CliBackend._solo_claim_candidato(raw, payload)
+    assert [v["claim_id"] for v in out["report"]["claim_provenance"]] == ["main"]
+
+
 def test_riesecuzione_codice_produce_osservazioni():
     """Gli script di code_used vengono rilanciati dall'orchestratore e l'esito (exit, stdout) diventa osservazione."""
     sys.path.insert(0, str(ROOT / "researcher"))

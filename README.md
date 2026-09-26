@@ -165,7 +165,10 @@ dimostrato con ciò che è stato mostrato?* (B: fonti recuperate o no, calcoli r
 float o esatto). Nessun giudice vede l'altro. Il merge è codice deterministico con regole di coerenza: un PASS con
 un errore fatale è rifiutato dal validatore; un giudice che non può giudicare restituisce una `limitation`, che non è
 mai un FAIL. Se un giudice allega una riserva a un rapporto valido, il ponte la sposta nelle note invece di perdere
-il giudizio (era il caso reale di U(Q₅): un PASS motivato scartato per un campo di troppo).
+il giudizio (era il caso reale di U(Q₅): un PASS motivato scartato per un campo di troppo). Analogamente, se B classifica
+anche i claim già verificati, il ponte tiene solo quelli del candidato, come vuole il validatore del merge. Le
+normalizzazioni tolgono soltanto, non aggiungono mai. `bridge_referee.py review --replay` ri-fonde gli ultimi rapporti
+grezzi salvati senza richiamare i modelli: utile dopo una correzione del ponte.
 
 ---
 

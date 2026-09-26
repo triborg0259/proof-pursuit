@@ -1,9 +1,10 @@
 # Problema 2 — Parte 2 (C2) — bozza di consegna
 
-**Stato dichiarato: BOZZA PRONTA, da revisionare.** Valore $U(Q_5)=88$ con etichettatura esplicita; lower bound per
+**Stato dichiarato: REVISIONATA (pronta per consegna).** Valore $U(Q_5)=88$ con etichettatura esplicita; lower bound per
 riduzione a un enunciato finito (★) confutato per enumerazione esaustiva (tre implementazioni concordi, una indipendente
-per metodo). Verdetto del Referee automatico: giudice A (matematica) PASS su entrambe le direzioni in due run
-indipendenti; giudice B (evidenze): vedi §5. Revisione umana della riduzione: fatta lemma per lemma (STATUS.md).
+per metodo). Referee automatico: **READY_FOR_HUMAN** (giudice A, matematica: PASS su entrambe le direzioni in tre run
+indipendenti; giudice B, evidenze: PASS, con sole note INFO, dopo la riesecuzione fidata del codice da parte
+dell'orchestratore). Revisione umana della riduzione: fatta lemma per lemma (STATUS.md). L'approvazione finale resta umana.
 
 ## 1. Risultato e ambito
 $U(Q_5) = 88 = |E(Q_5)| + 8$. Etichettatura ottima (ordine crescente di etichetta; posizione $i$ della stringa =
@@ -146,8 +147,8 @@ Tempi misurati su portatile (riesecuzione fidata dell'orchestratore, 2026-09-26)
 - In Lemma 7 / §2 I use that every non-peak, non-heavy vertex is light; this is immediate from the definitions (a vertex with deg^+ ≥ 1 and p ≥ 2 is heavy by definition) but the Referee should check that no case escapes: valleys (p=1), peaks (deg^+=0), heavy, light — these four classes cover V.
 - The step 'out-neighbours of the unique heavy vertex u are peaks' (needed for nothing in the final finite check, since (★) only uses I independent of size 12 and u ∉ I) is included for completeness; the final reduction deliberately uses only the weaker necessary conditions, so any slip there does not affect the proof.
 - Simulated annealing results are exploration only and play no role in the proof; the second SA run (20 seeds) was still running when this report was written (4 seeds completed, all at 88).
-- Il giudice B ha classificato tutte le osservazioni su fonti e calcoli come INFO (fonti di contesto non caricate, versione
-  di Python non registrata: 3.14, libreria standard); l'unico punto MISSING riguardava le regole ufficiali, ora passate
-  alla lettera dal preambolo dell'enunciato.
+- Il giudice B ha classificato tutte le osservazioni su fonti e calcoli come INFO (fonti di contesto non caricate e non
+  necessarie; versione di Python non registrata: 3.14, libreria standard; tempi riprodotti 0.44–0.71 s). Nei primi due run
+  l'unico punto MISSING riguardava le regole ufficiali, poi passate alla lettera dal preambolo dell'enunciato.
 - La cella è "checked instantly" sul valore: il rischio residuo è un errore nella riduzione a (★); per questo la riduzione
   è stata riletta a mano e (★) confutata da tre programmi diversi.

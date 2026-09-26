@@ -184,9 +184,11 @@ Immagina una classe:
 **Cosa abbiamo imparato facendolo girare davvero.** Il primo giro reale sul cubo 5D è andato così: il Ricercatore ha
 trovato 88 con una prova e sette programmi; il Giudice A ha detto "corretto in entrambe le direzioni" ma ha aggiunto
 una riserva ("non ho potuto eseguire il codice") in un campo che il contratto non ammette insieme al verdetto, e il
-rapporto è stato scartato; il Giudice B ha chiesto che i calcoli fossero rifatti da qualcuno di fidato. Da lì due
-correzioni: il ponte ora rilancia il codice e passa gli esiti ai giudici, e una riserva del giudice va nelle note
-invece di far perdere il giudizio.
+rapporto è stato scartato; il Giudice B ha chiesto che i calcoli fossero rifatti da qualcuno di fidato. Da lì tre
+correzioni: il ponte ora rilancia il codice e passa gli esiti ai giudici; una riserva del giudice va nelle note invece
+di far perdere il giudizio; ai giudici arrivano le regole ufficiali della gara, prese alla lettera dal testo del
+problema. Al terzo giro entrambi i giudici hanno detto PASS e il sistema ha risposto "pronto per un umano": il primo
+ciclo completo chiuso davvero, su un risultato che nessuno aveva ancora calcolato.
 
 ---
 

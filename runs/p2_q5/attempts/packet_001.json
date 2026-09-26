@@ -70,7 +70,7 @@
      "claim_ids": [
       "main"
      ],
-     "submitted_excerpt": ""
+     "submitted_excerpt": "# Problema 2 — Parte 1 (C1) — bozza di consegna\n\n**Stato dichiarato: RISOLTA (bozza revisionata).** Entrambe le metà: $U(Q_3)=14$ e $U(Q_4)=34$, con valore,\netichettatura esplicita e prova completa a mano; calcoli esatti a conferma.\n\n## 1. Risultato e ambito\n$U(Q_3) = 14$ e $U(Q_4) = 34$.\nEtichettatura ottima di $Q_4$ (ordine crescente di etichetta; due valli, `0000` e `1111`):\n`0000, 1111, 0111, 1101, 1110, 1011, 0001, 1000, 0010, 0100, 1001, 0110, 0011, 1010, 0101, 1100`.\n\nPer $Q_3$: Etichettatura ottima (ordine crescente di etichetta; posizione $i$ della stringa = coordinata $i$;\nla convenzione è irrilevante perché le permutazioni di coordinate sono automorfismi di $Q_3$):\n`000, 100, 010, 110, 101, 011, 001, 111`.\n\n## 2. Dimostrazione\n## Result\n\n$$U(Q_3) = 14.$$\n\nAn optimal labelling, as the list of the 8 vertices in increasing label order (string position $i$ = coordinate $i$; the convention is irrelevant for the count since $\\mathrm{Aut}(Q_3)$ contains all coordinate permutations):\n\n$$\\texttt{000},\\ \\texttt{100},\\ \\texttt{010},\\ \\texttt{110},\\ \\texttt{101},\\ \\texttt{011},\\ \\texttt{001},\\ \\texttt{111}$$\n\ni.e. $f(000)=1,\\ f(100)=2,\\ f(010)=3,\\ f(110)=4,\\ f(101)=5,\\ f(011)=6,\\ f(001)=7,\\ f(111)=8$.\n\n## Notation and the counting identity\n\nFor a labelling $f$ of a graph $G$, orient every edge from the smaller to the larger label; this gives an acyclic orientation. Write $u \\to v$ if $uv\\in E$ and $f(u)<f(v)$, and $\\deg^-(v)=\\#\\{u: u\\to v\\}$. Let $p(v)$ be the number of uphill paths whose last vertex is $v$.\n\n**Lemma 1 (recursion).** $p(v) = [\\,v \\text{ is a valley}\\,] + \\sum_{u\\to v} p(u)$, and the total number of uphill paths is $\\sum_v p(v)$.\n\n*Proof.* An uphill path ending at $v$ has $k=1$ (then it is $(v)$ and $v$ must be a valley; conversely a valley gives exactly this one path) or $k\\ge2$; in the latter case deleting $v$ gives an uphill path ending at $v_{k-1}$ with $v_{k-1}\\to v$, and conversely appending $v$ to any uphill path ending at some $u$ with $u\\to v$ gives an uphill path ending at $v$ (the label condition $f(u)<f(v)$ is exactly $u\\to v$). These correspondences are bijective, and the sets for different $u$ are disjoint (they differ in the penultimate vertex). Every uphill path has a unique last vertex, hence the total is $\\sum_v p(v)$. $\\square$\n\n## Upper bound: the labelling above has exactly 14 uphill paths\n\nNeighbours in $Q_3$: flip one coordinate. Compute $p$ in increasing label order using Lemma 1:\n\n| vertex | label | lower neighbours "
     }
    ],
    "artifacts": [
@@ -136,10 +136,10 @@
    "allow_literature_as_proof": false,
    "allow_computation": true,
    "require_machine_verification": false,
-   "additional_rules": "ATTENZIONE: queste NON sono le regole ufficiali della gara; sono i vincoli interni del team, ricavati da CLAUDE.md, usati come default prudente finché il regolamento vero non viene inserito. Il Referee deve segnalare come MISSING ogni punto che dipende dal regolamento reale.\n\n(1) Citare un risultato non sostituisce la dimostrazione: se una cella chiede una prova, la sola letteratura non basta.\n(2) Il calcolo e' ammesso come supporto se la riduzione a un insieme finito e' giustificata matematicamente, l'insieme coperto e' dichiarato, l'aritmetica e' esatta o con errore controllato, e la verifica e' riproducibile in meno di 10 minuti su un portatile.\n(3) L'output in virgola mobile non e' mai una prova; resta esplorazione legittima e non invalida una prova indipendente corretta.\n(4) Il consenso di un altro modello non e' una prova.\n(5) Non inventare citazioni; una fonte non letta non va presentata come letta.\n(6) Nessuna verifica formale (Lean) e' richiesta: require_machine_verification resta false finche' la gara ammette prove scritte revisionate da umani.\n(7) Una ricerca interrotta e' incompleta; l'assenza di controesempi non dimostra nulla oltre il dominio coperto."
+   "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For C1 to C4, hand in the values, and for each value an explicit labelling that attains it as a list of the $2^d$ vertices in increasing label order, written as 0/1 strings. These cells are marked correct on the values alone, but a value with no labelling behind it will not survive the later cells, which build on the construction. For C5, hand in either a labelling of $Q_9$ in the same format, whose uphill paths will be counted mechanically, or a proof of the lower bound. For C6, hand in all three of: the value; an explicit labelling that attains it, in the same format; a proof that no labelling gives fewer uphill paths. A lower-bound proof may be computer-assisted. If it is, include the code; it must run in under 10 minutes on a laptop, and you must explain why the computation proves the bound. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
   }
  },
- "submission_digest": "9779d4fc73d57b9b3f96edecfffbadcf3269d00b50577c440441745151a4a3c4",
+ "submission_digest": "76bfe14ddca7a5b8ae92618560eb6fe0bde51f06432a1037323a82a1b8601f10",
  "math": {
   "report": {
    "mathematical_verdict": "PASS",
@@ -149,25 +149,17 @@
    ],
    "unproved_claims": [],
    "missing_cases": [],
-   "math_notes": "Checked every step of the argument as an adversarial reader. Lemmas 1–3 (recursion p(v)=[valley]+Σ_{u→v}p(u); p(v)≥max(1,deg^-(v)); T=|E|+v+X with X=Σ_edges(p(tail)−1)≥0) are correct and complete. Lemma 4 (light vertex ⇒ valley or in-degree 1 with light in-neighbour; light sets induce forests, via the max-label vertex of a cycle having two in-neighbours) is correct. Lemma 5: for heavy u with in-degree i∈{1,..,4}, c(u)=(5−i)(p(u)−1) with p(u)≥i; the four cases give c≥4,≥3,≥4,≥3 respectively, so c≥3, and c=3 iff (i,p)∈{(2,2),(4,4)}; the i=1 case correctly forces a second heavy vertex. Lemma 7 (in-degree sum 80=5q+s_H+(32−q−|H|−v)) is correct: peaks, heavy vertices and valleys are pairwise disjoint (peak has deg^-=5 so p≥5; heavy needs deg^+≥1; valley has p=1), and every remaining vertex is light with in-degree exactly 1. Case analysis for T≤87 (v+X≤7, X≤6, |H|≤2): |H|=2 forces X=6, v=1, s_H∈{4,6,8}, 4q∈{47,45,43} – impossible; |H|=0 forces v=4, q=13, T=84; |H|=1 forces (i,v,q,T)∈{(2,1,12,84),(3,2,12,86),(4,3,12,86)}; all residues and inequalities re-verified. Reduction to (★) (independent 12-set I, u∉I, Q_5−(I∪{u}) a forest) is valid, including the A-case trick of removing one peak. The finite reduction by XOR-translations is justified (vertex-transitive automorphisms, (★) automorphism-invariant); the backtracking prunes only by remaining-vertex count (trivially sound); acyclicity criterion |E|=|V|−#components is exact. Independent hand check of the count: independent 12-sets of Q_5 are 2·C(16,12)=3640 one-class sets plus 16+16 mixed sets (|A|=1 or |B|=1, since two same-class vertices forbid ≥8 of the other class), total 3672, matching the script and 3672·12/32=1377. Orchestrator re-runs confirm 0 acyclic complements over all 27540 (resp. 73440) pairs, so T≥88. Upper bound: the labelling was checked by hand (R={00000,11110} at distance 4, disjoint neighbourhoods, F a forest with 18 vertices/10 edges/8 components; valleys 1–8 have all neighbours higher; leaves 9–18 have exactly one lower neighbour; peaks 19–32 have all 5 neighbours odd with p=1) giving 18+14·5=88, and confirmed by two independent exact scripts re-run by the orchestrator. The labelling is given in the required 32-string format. Conclusion U(Q_5)=88 is established; the lower bound depends on the exact exhaustive computation (code_2/code_3, <1 s, outputs confirmed by trusted observations), with the reduction to that finite set fully proved in the text. Consistency: the same framework reproduces U(Q_4)=34 (3q=16+v) and the known impossibility of 81 for Q_5 (4q=49)."
+   "math_notes": "Target: U(Q_5) exactly plus an optimal labelling in the required format. Both directions established. LOWER BOUND: T = 80 + v + X (Lemma 3) with X = sum over oriented edges of (p(tail)-1) >= 0 is verified. Lemma 4 (light vertices have in-degree <= 1, light sets induce forests) and Lemma 5 (each heavy vertex contributes c >= 3, with c = 3 only for (deg-, p) in {(2,2),(4,4)}) are correct. Lemma 7's in-degree count 4q = 48 + v + |H| - s_H is correct since every vertex outside peaks and heavy vertices has p = 1 and in-degree 0 or 1. The case split |H| in {0,1,2} for T <= 87 is exhaustive; |H|=2 is killed by divisibility, |H|=0 gives 13 independent peaks with forest complement, |H|=1 gives 12 independent peaks, u not a peak, forest on the other 19 vertices. Reduction to (*) is valid. (*) is a finite statement on Q_5; the XOR-translation reduction is sound; I read code_2 and code_3: code_2 enumerates each independent 12-set containing 0 exactly once (only pruning is the trivially necessary remaining-vertex count) and tests forests by |E| = |V| - #components; code_3 enumerates all 3672 independent 12-sets via (even part, odd part) with no symmetry reduction and tests by union-find. The count 3672 matches an independent hand count (C(16,12)*2 pure + 32 mixed sets), and 3672*12/32 = 1377 matches. Orchestrator re-runs report 0 acyclic complements in both, covering all 73440 pairs (I,u). Hence no labelling has T <= 87. UPPER BOUND: the listed 32 strings are distinct; peaks = the 14 even vertices other than 00000 and 11110; the two stars have disjoint neighbourhoods (distance 4); the 6 remaining odd vertices are isolated in F. Hand count 18 + 14*5 = 88 checks, and two independent scripts (recursion, explicit DFS) return 88 under orchestrator re-run. Conclusion U(Q_5) = 88 with the explicit labelling is established. The proof is self-contained (verified_1/verified_4 are not actually needed). Dependency to expose: the lower bound rests on the exhaustive finite check of (*), whose reduction to a finite set is proved in Section 2 and whose execution is confirmed by trusted orchestrator observations; no pruning rules beyond the proved symmetry reduction are used."
   },
   "limitation": null
  },
  "evidence": {
   "report": {
-   "evidence_verdict": "PARTIAL",
+   "evidence_verdict": "PASS",
    "source_issues": [
     {
-     "code": "SRC_CONTEXT_ONLY_UNCHECKED",
-     "detail": "src_1 (AoPS wiki, IMO 2022 P6) and src_2 (Evan Chen notes) are cited with empty excerpts and declared 'context only'. Not retrieved (no browsing) and not treated as checked; they are not load-bearing: every lemma used is re-proved in §0–§1. No result is taken on citation and no misattribution is made.",
-     "severity": "INFO",
-     "claim_ids": [
-      "main"
-     ]
-    },
-    {
-     "code": "SRC_INTERNAL_NOT_INSPECTED",
-     "detail": "src_3 (problema-2/submission/parte-1.md) is an internal repo file not included in the envelope. The candidate restates its Lemmas with proofs, so the argument does not depend on reading it. Attach the file if a citation trail is wanted.",
+     "code": "SRC_CONTEXT_ONLY_NOT_RETRIEVED",
+     "detail": "src_1 (AoPS wiki IMO 2022 P6) and src_2 (Evan Chen IMO 2022 notes) are declared 'context only' and no step of the proof depends on them; they were not retrieved (no browsing available) and need not be, since the proof is self-contained. src_3 is an internal repo file whose lemmas are re-proved in §0.",
      "severity": "INFO",
      "claim_ids": [
       "main"
@@ -176,32 +168,31 @@
    ],
    "computation_issues": [
     {
-     "code": "REPRO_ENV_UNRECORDED",
-     "detail": "Python version not recorded (standard library only; orchestrator re-runs with python3 succeeded). Reported timings (0.24s/0.39s) differ slightly from trusted re-runs (0.47s/0.71s) — immaterial, both far below 10 minutes. code_2, code_4, code_6, code_7 import code_1 as module `conta_cammini`; the artifact bundle must keep that filename.",
+     "code": "COMPUTATION_REPRODUCED",
+     "detail": "Trusted orchestrator re-runs: code_2 -> 1377 independent 12-sets containing 0, 27540 pairs, 0 acyclic complements (0.44s); code_3 (no symmetry, different enumeration and different acyclicity test) -> 3672 sets, 73440 pairs, 0 acyclic complements (0.77s); code_4 and code_5 (recursion vs explicit DFS, no shared code) both -> 88 with identical 8 valleys, and code_4's printed order matches the §4 labelling verbatim. All integer arithmetic; counts consistent (3672*12/32 = 1377). The computed statement (★) is exactly what §2 reduces T<=87 to, including Structure A via I=P\\{u0}, u=u0. Symmetry reduction (XOR translations, vertex-transitive, (★) automorphism-invariant) and the sole pruning rule in code_2 (insufficient remaining vertices) are valid.",
      "severity": "INFO",
      "claim_ids": [
       "main"
      ]
     },
     {
-     "code": "EXPLORATION_NOT_PROOF_OK",
-     "detail": "code_6 (200k random labellings, exact integers) and code_7 (annealing, 8 seeds all reaching 88, exact scoring) are correctly labelled evidence-only and are not used in the proof. The annealing optimum (5 valleys, 88 paths) is consistent with Lemma 7 (X=3, |H|=1, i=2, q=13: 4q=47+5).",
+     "code": "EVIDENCE_ONLY_ARTIFACTS",
+     "detail": "code_6 (200k random labellings) and code_7 (simulated annealing, best 88 on seeds 0-7) are correctly labelled as sanity/exploration and are not used in the proof. The §5 remark that Lemmas 3-7 reproduce U(Q_4)=34 and U(Q_3)=14 is stated as a consistency check, not verified here, and does not bear on the result.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "ENV_VERSION_UNSTATED",
+     "detail": "Python version is not recorded in the artifacts; the scripts use only the standard library and were reproduced by the orchestrator with python3, so this is cosmetic.",
      "severity": "INFO",
      "claim_ids": [
       "main"
      ]
     }
    ],
-   "rule_violations": [
-    {
-     "code": "OFFICIAL_RULES_MISSING",
-     "detail": "The supplied rules are the team's internal defaults (CLAUDE.md), which themselves instruct the Referee to flag as MISSING every point depending on the real regulation. Points to close with the official rules: (a) admissibility of a computer-assisted lower bound with a written reduction (under supplied rules it is permitted: allow_computation=true, reduction to (★) proved in §2, covered set declared, exact integer arithmetic, <1s runtime); (b) required reporting format for node counts / wall-clock; (c) whether the labelling format (32 comma-separated 0/1 strings, coordinate 1 on the left) matches the checker's convention — irrelevant for the value, which is what is scored. This is the only reason the verdict is not PASS: evidence and reproducibility checks are complete.",
-     "severity": "MISSING",
-     "claim_ids": [
-      "main"
-     ]
-    }
-   ],
+   "rule_violations": [],
    "claim_provenance": [
     {
      "claim_id": "main",
@@ -217,42 +208,12 @@
       "code_2",
       "code_3",
       "code_4",
-      "code_5",
-      "trusted_observations (orchestrator re-runs of code_2..code_5)"
+      "code_5"
      ],
-     "notes": "Lower bound: hand case analysis (§1–§2) reduces T<=87 to predicate (★): an independent 12-set I and u∉I with Q_5−(I∪{u}) a forest. I checked the algebra of Lemmas 5–7 and the case split to the extent needed to confirm the scripts test exactly (★): code_2 enumerates all independent 12-sets containing vertex 0 (XOR translations are transitive automorphisms preserving (★)) and every u outside, forest test by edges = vertices − components; code_3 enumerates all 3672 independent 12-sets without symmetry via the bipartite split and union-find. Outputs (1377/27540/0 and 3672/73440/0, consistent via 3672·12/32=1377) were reproduced by the orchestrator. Upper bound: explicit labelling, bijection asserted, 88 reproduced by recursion (code_4) and by explicit DFS (code_5), identical valleys and order as in §4. Full mathematical review of the case analysis is Referee A's remit; permitted_by_rules is under the supplied internal rules, pending the official regulation."
-    },
-    {
-     "claim_id": "verified_1",
-     "categories": [
-      "REPRODUCED_BY_US",
-      "KNOWN_IN_LITERATURE"
-     ],
-     "evidence_sufficient": true,
-     "permitted_by_rules": true,
-     "relies_on_external_result": false,
-     "uses_computation_as_proof": false,
-     "references": [
-      "Lemma 2, Lemma 3 of the candidate proof"
-     ],
-     "notes": "#paths >= |E| + #valleys is re-derived as T = 80 + v + X with X >= 0; the candidate does not depend on the repo-verified version."
-    },
-    {
-     "claim_id": "verified_4",
-     "categories": [
-      "KNOWN_IN_LITERATURE"
-     ],
-     "evidence_sufficient": true,
-     "permitted_by_rules": true,
-     "relies_on_external_result": false,
-     "uses_computation_as_proof": false,
-     "references": [
-      "state.claims verified_4 (repo-verified)"
-     ],
-     "notes": "Listed as a dependency but not actually used: the candidate's bound (>=88) supersedes >=82 via an independent argument."
+     "notes": "Upper bound 88: explicit labelling in required format, count reproduced by two independent exact scripts (trusted re-run). Lower bound 88: hand case analysis (§0-§2) reducing T<=87 to statement (★), then exhaustive exact search over all independent 12-sets (two independent implementations, one with proved symmetry reduction, one without), both reproduced by orchestrator with 0 witnesses; runtime <1s. Computer-assisted lower bound is explicitly permitted by the column rules and the code plus explanation are included."
     }
    ],
-   "reproducibility_notes": "All seven artifacts were re-run by the orchestrator from a clean copy: code_2 (0.5s) and code_3 (0.7s) reproduce the exact counts claimed with 0 acyclic complements; code_4 and code_5 both print 88 with the same 8 valleys and the same 32-vertex order as §4; code_6 confirms the identity on 200k random labellings; code_7 reaches 88 on all 8 seeds (79s). Standard-library Python, integer arithmetic throughout; proof-relevant scripts (code_2..code_5) run in under 2 seconds total, far below the 10-minute limit. The two lower-bound certificates use genuinely different enumerations (backtracking with symmetry vs. bipartite bitmask scan) and different acyclicity tests, so they are independently checkable. Evidence checks are complete; the verdict is PARTIAL solely because the official competition rules are not supplied."
+   "reproducibility_notes": "All seven artifacts re-executed by the orchestrator in a clean sandbox with exit 0 and outputs matching the submission (code_2: 1377/27540/0 in 0.44s; code_3: 3672/73440/0 in 0.77s; code_4 and code_5: 88, same valleys, same 32-string order). Certificates are stdlib-only, exact-integer, deterministic, and run in about 1 second total, far below the 10-minute limit. The submitted labelling can be independently re-checked by any uphill-path counter. No external source is required for validity."
   },
   "limitation": null
  },
@@ -271,19 +232,11 @@
    "missing_cases": []
   },
   "evidence_review": {
-   "verdict": "PARTIAL",
+   "verdict": "PASS",
    "source_issues": [
     {
-     "code": "SRC_CONTEXT_ONLY_UNCHECKED",
-     "detail": "src_1 (AoPS wiki, IMO 2022 P6) and src_2 (Evan Chen notes) are cited with empty excerpts and declared 'context only'. Not retrieved (no browsing) and not treated as checked; they are not load-bearing: every lemma used is re-proved in §0–§1. No result is taken on citation and no misattribution is made.",
-     "severity": "INFO",
-     "claim_ids": [
-      "main"
-     ]
-    },
-    {
-     "code": "SRC_INTERNAL_NOT_INSPECTED",
-     "detail": "src_3 (problema-2/submission/parte-1.md) is an internal repo file not included in the envelope. The candidate restates its Lemmas with proofs, so the argument does not depend on reading it. Attach the file if a citation trail is wanted.",
+     "code": "SRC_CONTEXT_ONLY_NOT_RETRIEVED",
+     "detail": "src_1 (AoPS wiki IMO 2022 P6) and src_2 (Evan Chen IMO 2022 notes) are declared 'context only' and no step of the proof depends on them; they were not retrieved (no browsing available) and need not be, since the proof is self-contained. src_3 is an internal repo file whose lemmas are re-proved in §0.",
      "severity": "INFO",
      "claim_ids": [
       "main"
@@ -292,32 +245,31 @@
    ],
    "computation_issues": [
     {
-     "code": "REPRO_ENV_UNRECORDED",
-     "detail": "Python version not recorded (standard library only; orchestrator re-runs with python3 succeeded). Reported timings (0.24s/0.39s) differ slightly from trusted re-runs (0.47s/0.71s) — immaterial, both far below 10 minutes. code_2, code_4, code_6, code_7 import code_1 as module `conta_cammini`; the artifact bundle must keep that filename.",
+     "code": "COMPUTATION_REPRODUCED",
+     "detail": "Trusted orchestrator re-runs: code_2 -> 1377 independent 12-sets containing 0, 27540 pairs, 0 acyclic complements (0.44s); code_3 (no symmetry, different enumeration and different acyclicity test) -> 3672 sets, 73440 pairs, 0 acyclic complements (0.77s); code_4 and code_5 (recursion vs explicit DFS, no shared code) both -> 88 with identical 8 valleys, and code_4's printed order matches the §4 labelling verbatim. All integer arithmetic; counts consistent (3672*12/32 = 1377). The computed statement (★) is exactly what §2 reduces T<=87 to, including Structure A via I=P\\{u0}, u=u0. Symmetry reduction (XOR translations, vertex-transitive, (★) automorphism-invariant) and the sole pruning rule in code_2 (insufficient remaining vertices) are valid.",
      "severity": "INFO",
      "claim_ids": [
       "main"
      ]
     },
     {
-     "code": "EXPLORATION_NOT_PROOF_OK",
-     "detail": "code_6 (200k random labellings, exact integers) and code_7 (annealing, 8 seeds all reaching 88, exact scoring) are correctly labelled evidence-only and are not used in the proof. The annealing optimum (5 valleys, 88 paths) is consistent with Lemma 7 (X=3, |H|=1, i=2, q=13: 4q=47+5).",
+     "code": "EVIDENCE_ONLY_ARTIFACTS",
+     "detail": "code_6 (200k random labellings) and code_7 (simulated annealing, best 88 on seeds 0-7) are correctly labelled as sanity/exploration and are not used in the proof. The §5 remark that Lemmas 3-7 reproduce U(Q_4)=34 and U(Q_3)=14 is stated as a consistency check, not verified here, and does not bear on the result.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "ENV_VERSION_UNSTATED",
+     "detail": "Python version is not recorded in the artifacts; the scripts use only the standard library and were reproduced by the orchestrator with python3, so this is cosmetic.",
      "severity": "INFO",
      "claim_ids": [
       "main"
      ]
     }
    ],
-   "rule_violations": [
-    {
-     "code": "OFFICIAL_RULES_MISSING",
-     "detail": "The supplied rules are the team's internal defaults (CLAUDE.md), which themselves instruct the Referee to flag as MISSING every point depending on the real regulation. Points to close with the official rules: (a) admissibility of a computer-assisted lower bound with a written reduction (under supplied rules it is permitted: allow_computation=true, reduction to (★) proved in §2, covered set declared, exact integer arithmetic, <1s runtime); (b) required reporting format for node counts / wall-clock; (c) whether the labelling format (32 comma-separated 0/1 strings, coordinate 1 on the left) matches the checker's convention — irrelevant for the value, which is what is scored. This is the only reason the verdict is not PASS: evidence and reproducibility checks are complete.",
-     "severity": "MISSING",
-     "claim_ids": [
-      "main"
-     ]
-    }
-   ],
+   "rule_violations": [],
    "claim_provenance": [
     {
      "claim_id": "main",
@@ -333,47 +285,19 @@
       "code_2",
       "code_3",
       "code_4",
-      "code_5",
-      "trusted_observations (orchestrator re-runs of code_2..code_5)"
+      "code_5"
      ],
-     "notes": "Lower bound: hand case analysis (§1–§2) reduces T<=87 to predicate (★): an independent 12-set I and u∉I with Q_5−(I∪{u}) a forest. I checked the algebra of Lemmas 5–7 and the case split to the extent needed to confirm the scripts test exactly (★): code_2 enumerates all independent 12-sets containing vertex 0 (XOR translations are transitive automorphisms preserving (★)) and every u outside, forest test by edges = vertices − components; code_3 enumerates all 3672 independent 12-sets without symmetry via the bipartite split and union-find. Outputs (1377/27540/0 and 3672/73440/0, consistent via 3672·12/32=1377) were reproduced by the orchestrator. Upper bound: explicit labelling, bijection asserted, 88 reproduced by recursion (code_4) and by explicit DFS (code_5), identical valleys and order as in §4. Full mathematical review of the case analysis is Referee A's remit; permitted_by_rules is under the supplied internal rules, pending the official regulation."
-    },
-    {
-     "claim_id": "verified_1",
-     "categories": [
-      "REPRODUCED_BY_US",
-      "KNOWN_IN_LITERATURE"
-     ],
-     "evidence_sufficient": true,
-     "permitted_by_rules": true,
-     "relies_on_external_result": false,
-     "uses_computation_as_proof": false,
-     "references": [
-      "Lemma 2, Lemma 3 of the candidate proof"
-     ],
-     "notes": "#paths >= |E| + #valleys is re-derived as T = 80 + v + X with X >= 0; the candidate does not depend on the repo-verified version."
-    },
-    {
-     "claim_id": "verified_4",
-     "categories": [
-      "KNOWN_IN_LITERATURE"
-     ],
-     "evidence_sufficient": true,
-     "permitted_by_rules": true,
-     "relies_on_external_result": false,
-     "uses_computation_as_proof": false,
-     "references": [
-      "state.claims verified_4 (repo-verified)"
-     ],
-     "notes": "Listed as a dependency but not actually used: the candidate's bound (>=88) supersedes >=82 via an independent argument."
+     "notes": "Upper bound 88: explicit labelling in required format, count reproduced by two independent exact scripts (trusted re-run). Lower bound 88: hand case analysis (§0-§2) reducing T<=87 to statement (★), then exhaustive exact search over all independent 12-sets (two independent implementations, one with proved symmetry reduction, one without), both reproduced by orchestrator with 0 witnesses; runtime <1s. Computer-assisted lower bound is explicitly permitted by the column rules and the code plus explanation are included."
     }
    ]
   },
   "accepted_progress": [],
-  "blocking_issue": "B references unregistered provenance",
-  "next_required_step": "Regenerate a contract-valid report",
+  "blocking_issue": "Both model reviews passed. A human must read and approve the argument; this is not formal verification.",
+  "next_required_step": "Human reviews the exact target, proof and evidence, then approves explicit claims",
   "stagnation_signal": false
  },
- "review_status": "INCOMPLETE",
- "proposed_claim_ids": []
+ "review_status": "READY_FOR_HUMAN",
+ "proposed_claim_ids": [
+  "main"
+ ]
 }

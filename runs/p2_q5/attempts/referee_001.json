@@ -1,37 +1,17 @@
 {
  "attempt_id": "attempt_001",
  "verdict": "UNKNOWN_STATUS",
- "review_status": "INCOMPLETE",
+ "review_status": "READY_FOR_HUMAN",
  "highest_verified_cell": 1,
  "accepted_claims": [],
- "proposed_claim_ids": [],
+ "proposed_claim_ids": [
+  "main"
+ ],
  "fatal_error": null,
  "citation_issue": true,
  "computation_issue": true,
- "next_blocker": "Regenerate a contract-valid report",
- "reasoning_summary": "review_status=INCOMPLETE; math=PASS; evidence=PARTIAL; B references unregistered provenance",
+ "next_blocker": "Human reviews the exact target, proof and evidence, then approves explicit claims",
+ "reasoning_summary": "review_status=READY_FOR_HUMAN; math=PASS; evidence=PASS; Both model reviews passed. A human must read and approve the argument; this is not formal verification.",
  "stagnation_signal": false,
- "usage": [
-  {
-   "role": "B",
-   "cost_usd": 0.77427325,
-   "model": [
-    "claude-fable-5-1"
-   ]
-  },
-  {
-   "role": "A",
-   "cost_usd": 0.8556297500000001,
-   "model": [
-    "claude-fable-5-1"
-   ]
-  },
-  {
-   "role": "B",
-   "cost_usd": 0.69999325,
-   "model": [
-    "claude-fable-5-1"
-   ]
-  }
- ]
+ "usage": []
 }

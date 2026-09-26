@@ -94,20 +94,34 @@ def cartelle_run(pid, k):
     return [ROOT / "runs" / n for n in nomi if (ROOT / "runs" / n).exists()]
 
 
+def voce_da_file(run: Path, i, att: Path):
+    """Una voce di traccia ricostruita da attempt_NNN.json + referee_NNN.json (quest'ultimo è l'ULTIMO verdetto dato
+    a quel tentativo: se il Referee è stato rilanciato, conta il verdetto più recente)."""
+    a = leggi_json(att)
+    r = leggi_json(run / "attempts" / att.name.replace("attempt_", "referee_")) or {}
+    return {"iter": i, "attempt_id": a["attempt_id"], "family": a.get("approach_family"), "subgoal": a.get("subgoal"),
+            "claimed_status": a.get("claimed_status"), "researcher_reason": a.get("reason_for_choice", ""),
+            "literature_position": a.get("literature_position", ""), "verdict": r.get("verdict", "(nessun verdetto)"),
+            "review_status": r.get("review_status"), "fatal_error": r.get("fatal_error"),
+            "next_blocker": r.get("next_blocker"), "creative": "", "creative_analysis": ""}
+
+
 def iterazioni(run: Path):
-    """Traccia delle iterazioni: loop_log.jsonl se c'è, altrimenti ricostruita dalle coppie attempt/referee."""
+    """Traccia delle iterazioni: una voce per tentativo, ricostruita dai file (verdetto più recente), arricchita con
+    i campi del loop_log.jsonl (intervento del Creative e suo motivo) quando la riga esiste."""
     log = run / "loop_log.jsonl"
+    righe = {}
     if log.exists():
-        return [json.loads(r) for r in log.read_text(encoding="utf-8").splitlines() if r.strip()]
+        for r in log.read_text(encoding="utf-8").splitlines():
+            if r.strip():
+                voce = json.loads(r)
+                righe[voce["attempt_id"]] = voce
     voci = []
     for i, att in enumerate(sorted((run / "attempts").glob("attempt_*.json")), start=1):
-        a = leggi_json(att)
-        r = leggi_json(run / "attempts" / att.name.replace("attempt_", "referee_")) or {}
-        voci.append({"iter": i, "attempt_id": a["attempt_id"], "family": a.get("approach_family"), "subgoal": a.get("subgoal"),
-                     "claimed_status": a.get("claimed_status"), "researcher_reason": a.get("reason_for_choice", ""),
-                     "literature_position": a.get("literature_position", ""), "verdict": r.get("verdict", "(nessun verdetto)"),
-                     "review_status": r.get("review_status"), "fatal_error": r.get("fatal_error"),
-                     "next_blocker": r.get("next_blocker"), "creative": "", "creative_analysis": ""})
+        voce = voce_da_file(run, i, att)
+        dal_log = righe.get(voce["attempt_id"], {})
+        voce.update({k: dal_log[k] for k in ("creative", "creative_analysis", "new_claims", "ts") if dal_log.get(k)})
+        voci.append(voce)
     return voci
 
 
