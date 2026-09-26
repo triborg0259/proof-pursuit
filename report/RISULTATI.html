@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="it" xml:lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Proof Pursuit — risultati raggiunti</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <link rel="stylesheet" href="_stile.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — risultati raggiunti</h1>
+<p class="subtitle">Team: T. Tumini (Researcher), gabundos (Referee), M.
+Renzi (Creative), gio3r3gio · 26 settembre 2026</p>
+</header>
+<h2 id="in-una-riga">In una riga</h2>
+<p>Su 24 celle, <strong>10 chiuse</strong> con prova completa, verdetto
+positivo di due giudici automatici indipendenti e approvazione umana (18
+punti), <strong>1 candidato</strong> sul valore, <strong>13
+parziali</strong> onesti, tutti pubblicati. Il sistema multi-agente ha
+funzionato end-to-end e ha chiuso da solo 5 celle; le altre 5 le ha
+chiuse con prove scritte a mano dal team e giudicate dallo stesso
+Referee.</p>
+<h2 id="cosa-abbiamo-chiuso">Cosa abbiamo chiuso</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Cella</th>
+<th>Come</th>
+<th>Punti</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Problema 1, parte 1</td>
+<td>prova scritta dal team (semigiro casuale), giudicata dal Referee,
+approvata</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Problema 1, parte 2</td>
+<td>prova scritta dal team (induzione con proiezione), giudicata,
+approvata</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Problema 2, parte 1</td>
+<td>loop autonomo: Researcher con shell + Referee, revisione umana</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Problema 2, parte 2</td>
+<td>loop autonomo, tre run del Referee, riduzione riletta a mano</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Problema 2, parte 3</td>
+<td>loop autonomo, una iterazione: valore, etichettatura e bound
+inferiore</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Problema 3, parte 1</td>
+<td>loop autonomo, una iterazione</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Problema 3, parte 2</td>
+<td>loop autonomo, <strong>due iterazioni</strong>: REJECT motivato, poi
+prova completata</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Problema 4, parte 1</td>
+<td>prova scritta dal team (parità), giudicata, approvata</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Problema 4, parte 2</td>
+<td>prova scritta dal team (clique per primo), giudicata, approvata</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Problema 4, parte 3</td>
+<td>loop autonomo: riduzione a insieme finito + ricerca certificata con
+due implementazioni</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>Autonomamente (Researcher → Referee, senza intervento umano sul
+contenuto): problema 2 parti 1, 2, 3; problema 3 parti 1, 2; problema 4
+parte 3. Con prova umana e giudizio automatico: problema 1 parti 1, 2;
+problema 4 parti 1, 2.</p>
+<h2 id="cosa-è-rimasto-parziale-e-cosa-contiene">Cosa è rimasto
+parziale, e cosa contiene</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Cella</th>
+<th>Contenuto del parziale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Problema 1, parte 3–5</td>
+<td>formalizzazione, riduzione ai deficit, lemma della parte 2 come
+mattone, letteratura</td>
+</tr>
+<tr>
+<td>Problema 1, parte 6</td>
+<td>lemmi di trasferimento fra dimensioni (dimostrati), nessuna famiglia
+infinita nuova; aperta dal 1959</td>
+</tr>
+<tr>
+<td>Problema 2, parte 4</td>
+<td>valore candidato per costruzione a stelle, ottimalità dimostrata
+dentro la famiglia; bound inferiore mancante</td>
+</tr>
+<tr>
+<td>Problema 2, parte 5–6</td>
+<td>identità strutturale esatta e riduzione agli insiemi decycling;
+bound noti non migliorati</td>
+</tr>
+<tr>
+<td>Problema 3, parte 3</td>
+<td>bound generale dimostrato per rango ≥ 5, tabella esatta fino a rango
+11, valore della famiglia congetturato con estremali esplicite</td>
+</tr>
+<tr>
+<td>Problema 3, parte 4–5</td>
+<td>tabella esatta, formule congetturate, valori residui, estremali;
+prova uniforme mancante</td>
+</tr>
+<tr>
+<td>Problema 3, parte 6</td>
+<td>tabella come base per la congettura; aperta</td>
+</tr>
+<tr>
+<td>Problema 4, parte 4</td>
+<td>certificato scritto e matematica giudicata PASS fino a taglia 13;
+riesecuzioni non riprodotte per argomenti mancanti negli script</td>
+</tr>
+<tr>
+<td>Problema 4, parte 5</td>
+<td>prova a mano del punto sulle due taglie isolate; certificato
+rafforzato mancante</td>
+</tr>
+<tr>
+<td>Problema 4, parte 6</td>
+<td>ricorsione e bound incondizionato più debole; segnalato il lavoro
+arXiv del luglio 2026 che migliora il bound citato</td>
+</tr>
+</tbody>
+</table>
+<h2 id="perché-parziali-il-tempo">Perché parziali: il tempo</h2>
+<ol type="1">
+<li><strong>Costruzione del sistema in gara.</strong> Delle 7 ore, circa
+3 sono andate a costruire e integrare il harness: Researcher, ponte,
+Referee di due giudici, Creative, loop, ricerca arXiv, pacchetti di
+consegna. I primi run reali sono partiti a metà pomeriggio.</li>
+<li><strong>Latenza per tentativo.</strong> Un tentativo del Researcher
+con shell dura 10–25 minuti, il Referee 4: un’iterazione vale 15–30
+minuti, due iterazioni un’ora. La macchina aspetta il modello; più CPU
+non aiuta, il parallelismo era già a undici celle.</li>
+<li><strong>Quattro difetti di contratto trovati dai run</strong> (flag
+variadico che ingoiava il prompt; riserva del giudice che annullava un
+PASS; riesecuzioni fidate e regole ufficiali mancanti; provenienza dei
+claim non ammessa dal validatore). Ogni correzione è costata un run del
+Referee e 10–15 minuti; ma senza i run reali non sarebbero emersi.</li>
+<li><strong>Un riavvio accidentale della sessione</strong> a 35 minuti
+dalla fine ha ucciso sette loop in corso, di cui quattro già col
+tentativo scritto; sono stati recuperati come parziali, due seconde
+iterazioni sono andate perse.</li>
+<li><strong>Difficoltà intrinseca.</strong> Le parti 6 sono problemi
+aperti; le parti 5 richiedono argomenti uniformi o certificati
+rafforzati a ore di lavoro. Il piano dichiarava dall’inizio 14–18 punti
+realistici: siamo a 18 più il candidato.</li>
+</ol>
+<h2 id="cosa-ha-funzionato-e-va-tenuto">Cosa ha funzionato e va
+tenuto</h2>
+<ul>
+<li>Referee a due giudici con merge deterministico: nessun falso
+positivo; i REJECT hanno sempre indicato il passo esatto mancante.</li>
+<li>Ciclo dell’errore: su problema 3 parte 2 il Researcher ha letto il
+rigetto, recuperato la fonte e completato la prova al secondo giro.</li>
+<li>Prove scritte a mano giudicate dal Referee: quattro celle chiuse in
+venti minuti.</li>
+<li>Costruzione esplicita più verifica esatta: per problema 2 il metodo
+della parte 2 si è esteso alla parte 3 in una iterazione.</li>
+<li>Tracciabilità: ogni consegna riporta le decisioni degli agenti, i
+token, le fonti arXiv e il codice rieseguito.</li>
+</ul>
+<h2 id="cosa-cambiare-la-prossima-volta">Cosa cambiare la prossima
+volta</h2>
+<p>Harness pronto prima della gara; portfolio di Researcher paralleli
+per cella con famiglie diverse; Referee da subito sui tentativi umani;
+script con argomenti espliciti e limiti di tempo dichiarati; niente
+riavvii della sessione con loop attivi.</p>
+<p>Repository e write-up: https://github.com/triborg0259/proof-pursuit ·
+https://triborg0259.github.io/proof-pursuit/</p>
+</body>
+</html>
