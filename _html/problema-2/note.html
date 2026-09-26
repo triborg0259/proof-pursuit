@@ -357,6 +357,33 @@ enorme; serve un argomento strutturale, non una enumerazione).</li>
 generalizzazioni di IMO 2022 P6 (es. arXiv 2023–2026), OEIS per la
 sequenza <span class="math inline">\(U(Q_d)\)</span>.</li>
 </ul>
+<h2 id="risultati">Risultati</h2>
+<ul>
+<li><strong><span class="math inline">\(U(Q_3)=14\)</span></strong>
+(2026-09-26): prova completa (lower bound a mano: Cor. 3 dà <span
+class="math inline">\(\ge13\)</span>, Prop. 4 esclude 13 via vertice 8 e
+antipodo 7; upper bound: etichettatura
+<code>000,100,010,110,101,011,001,111</code>). Tre enumerazioni
+esaustive concordi (7104 ottime su 40320; nessuna con 13 o 15). Bozza in
+<code>submission/parte-1.md</code>. Prodotto dal Researcher con shell
+<code>full</code> in 150 s / $1.57, revisionato a mano e verificato con
+script indipendente.</li>
+<li><strong><span class="math inline">\(U(Q_4)=34\)</span></strong>
+(2026-09-26): prova a mano (totale 33 ⇒ gradi entranti in <span
+class="math inline">\(\{0,1,4\}\)</span> ⇒ <span
+class="math inline">\(3s=17\)</span> assurdo); etichettatura per classi
+di peso 0,4,3,1,2 con due valli; verificata con tre script (due del
+Researcher, uno indipendente). B&amp;B con simmetria a conferma.
+Researcher shell <code>full</code>: 482 s, $2.53, 10 turni.</li>
+<li><strong>C1 completa.</strong> Bozza revisionata in
+<code>submission/parte-1.md</code>.</li>
+<li>Pattern da sfruttare per <span
+class="math inline">\(Q_5..Q_8\)</span>: etichettare per classi di peso
+(prima 0 e <span class="math inline">\(d\)</span>, poi <span
+class="math inline">\(d-1\)</span>, poi 1, …) crea poche valli e molti
+vertici con <span class="math inline">\(p=\deg^-\)</span>; da provare
+nel harness come mossa strutturata / programma evoluto.</li>
+</ul>
 <h2 id="priorità">Priorità</h2>
 <p>C1 (esatto, quasi gratis) → C2–C4 con harness discreto + costruzione
 ricorsiva → C5 solo se la costruzione scala a <span

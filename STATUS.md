@@ -10,7 +10,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | Problema | Titolo | Celle con evidenza | Stato complessivo |
 |---|---|---|---|
 | 1 | Angles between lines (Fejes Tóth), 32 pt | 0/6 | in corso (tutte le 6 parti ricevute) |
-| 2 | Uphill paths on the hypercube, 32 pt | 0/6 | in analisi (tutte le 6 parti ricevute) |
+| 2 | Uphill paths on the hypercube, 32 pt | 1/6 | in corso (C1 revisionata) |
 | 3 | Bulgarian solitaire, 32 pt | 0/6 | in analisi (tutte le 6 parti ricevute) |
 | 4 | Disjoint classes / gcd of moduli, 32 pt | 0/6 | in analisi (tutte le 6 parti ricevute) |
 
@@ -29,7 +29,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 
 | Parte | Richiesta | Stato | Evidenza |
 |---|---|---|---|
-| 1 | $U(Q_3)$, $U(Q_4)$ + etichettature (1 pt, checked) | in analisi | $Q_3$ brute-force fattibile; $Q_4$ serve B&B |
+| 1 | $U(Q_3)$, $U(Q_4)$ + etichettature (1 pt, checked) | revisionato | $U(Q_3)=14$, $U(Q_4)=34$: prove a mano rilette passo per passo + verifiche esatte indipendenti; bozza in submission/parte-1.md |
 | 2 | $U(Q_5)$ (2 pt, checked) | in analisi | harness discreto |
 | 3 | $U(Q_6)$ (3 pt, checked) | in analisi | |
 | 4 | $U(Q_7)$, $U(Q_8)$ (5 pt, checked) | in analisi | |
@@ -59,6 +59,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | 6 | oltre (13 pt, open) | in analisi | |
 
 ## Registro decisioni e ostacoli
+- 2026-09-26 ~13:15: integrato il Referee di gabundos (branch gabundos-patch-1, zip) in `referee/`; ponte `researcher/bridge_referee.py` testato offline. Il branch NON è stato mergiato (base vecchia, cancellerebbe runs/).
 - 2026-09-26: MVP Researcher (Persona 1 del brief) costruito e testato: `researcher/`, schemi in `shared/schemas/`, 4 test mock + 2 run reali via CLI. Repo reso privato.
 - 2026-09-26: letteratura P1 (Bilyk–Matzke, letta): solo il piano è risolto; P3/P5/P6 e '6 in R^4' aperti al 2018. Fonti in problema-1/fonti/.
 - 2026-09-26: ricerca web sui harness (tools/HARNESS_RICERCA.md): evolutivo solo per costruzioni; Lean non fattibile; LLM-giudice solo come critico.

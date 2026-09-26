@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>problema-2/submission/parte-1.md</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">problema-2/submission/parte-1.md</h1>
+</header>
+<h1 id="problema-2-parte-1-c1-bozza-di-consegna">Problema 2 — Parte 1
+(C1) — bozza di consegna</h1>
+<p><strong>Stato dichiarato: RISOLTA (bozza revisionata).</strong>
+Entrambe le metà: <span class="math inline">\(U(Q_3)=14\)</span> e <span
+class="math inline">\(U(Q_4)=34\)</span>, con valore, etichettatura
+esplicita e prova completa a mano; calcoli esatti a conferma.</p>
+<h2 id="risultato-e-ambito">1. Risultato e ambito</h2>
+<p><span class="math inline">\(U(Q_3) = 14\)</span> e <span
+class="math inline">\(U(Q_4) = 34\)</span>. Etichettatura ottima di
+<span class="math inline">\(Q_4\)</span> (ordine crescente di etichetta;
+due valli, <code>0000</code> e <code>1111</code>):
+<code>0000, 1111, 0111, 1101, 1110, 1011, 0001, 1000, 0010, 0100, 1001, 0110, 0011, 1010, 0101, 1100</code>.</p>
+<p>Per <span class="math inline">\(Q_3\)</span>: Etichettatura ottima
+(ordine crescente di etichetta; posizione <span
+class="math inline">\(i\)</span> della stringa = coordinata <span
+class="math inline">\(i\)</span>; la convenzione è irrilevante perché le
+permutazioni di coordinate sono automorfismi di <span
+class="math inline">\(Q_3\)</span>):
+<code>000, 100, 010, 110, 101, 011, 001, 111</code>.</p>
+<h2 id="dimostrazione">2. Dimostrazione</h2>
+<h2 id="result">Result</h2>
+<p><span class="math display">\[U(Q_3) = 14.\]</span></p>
+<p>An optimal labelling, as the list of the 8 vertices in increasing
+label order (string position <span class="math inline">\(i\)</span> =
+coordinate <span class="math inline">\(i\)</span>; the convention is
+irrelevant for the count since <span
+class="math inline">\(\mathrm{Aut}(Q_3)\)</span> contains all coordinate
+permutations):</p>
+<p><span class="math display">\[\texttt{000},\ \texttt{100},\
+\texttt{010},\ \texttt{110},\ \texttt{101},\ \texttt{011},\
+\texttt{001},\ \texttt{111}\]</span></p>
+<p>i.e. <span class="math inline">\(f(000)=1,\ f(100)=2,\ f(010)=3,\
+f(110)=4,\ f(101)=5,\ f(011)=6,\ f(001)=7,\ f(111)=8\)</span>.</p>
+<h2 id="notation-and-the-counting-identity">Notation and the counting
+identity</h2>
+<p>For a labelling <span class="math inline">\(f\)</span> of a graph
+<span class="math inline">\(G\)</span>, orient every edge from the
+smaller to the larger label; this gives an acyclic orientation. Write
+<span class="math inline">\(u \to v\)</span> if <span
+class="math inline">\(uv\in E\)</span> and <span
+class="math inline">\(f(u)&lt;f(v)\)</span>, and <span
+class="math inline">\(\deg^-(v)=\#\{u: u\to v\}\)</span>. Let <span
+class="math inline">\(p(v)\)</span> be the number of uphill paths whose
+last vertex is <span class="math inline">\(v\)</span>.</p>
+<p><strong>Lemma 1 (recursion).</strong> <span
+class="math inline">\(p(v) = [\,v \text{ is a valley}\,] + \sum_{u\to v}
+p(u)\)</span>, and the total number of uphill paths is <span
+class="math inline">\(\sum_v p(v)\)</span>.</p>
+<p><em>Proof.</em> An uphill path ending at <span
+class="math inline">\(v\)</span> has <span
+class="math inline">\(k=1\)</span> (then it is <span
+class="math inline">\((v)\)</span> and <span
+class="math inline">\(v\)</span> must be a valley; conversely a valley
+gives exactly this one path) or <span
+class="math inline">\(k\ge2\)</span>; in the latter case deleting <span
+class="math inline">\(v\)</span> gives an uphill path ending at <span
+class="math inline">\(v_{k-1}\)</span> with <span
+class="math inline">\(v_{k-1}\to v\)</span>, and conversely appending
+<span class="math inline">\(v\)</span> to any uphill path ending at some
+<span class="math inline">\(u\)</span> with <span
+class="math inline">\(u\to v\)</span> gives an uphill path ending at
+<span class="math inline">\(v\)</span> (the label condition <span
+class="math inline">\(f(u)&lt;f(v)\)</span> is exactly <span
+class="math inline">\(u\to v\)</span>). These correspondences are
+bijective, and the sets for different <span
+class="math inline">\(u\)</span> are disjoint (they differ in the
+penultimate vertex). Every uphill path has a unique last vertex, hence
+the total is <span class="math inline">\(\sum_v p(v)\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<h2
+id="upper-bound-the-labelling-above-has-exactly-14-uphill-paths">Upper
+bound: the labelling above has exactly 14 uphill paths</h2>
+<p>Neighbours in <span class="math inline">\(Q_3\)</span>: flip one
+coordinate. Compute <span class="math inline">\(p\)</span> in increasing
+label order using Lemma 1:</p>
+<table>
+<thead>
+<tr>
+<th>vertex</th>
+<th>label</th>
+<th>lower neighbours</th>
+<th><span class="math inline">\(p\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>000</td>
+<td>1</td>
+<td>none (valley)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>100</td>
+<td>2</td>
+<td>000</td>
+<td>1</td>
+</tr>
+<tr>
+<td>010</td>
+<td>3</td>
+<td>000</td>
+<td>1</td>
+</tr>
+<tr>
+<td>110</td>
+<td>4</td>
+<td>100, 010</td>
+<td>1+1 = 2</td>
+</tr>
+<tr>
+<td>101</td>
+<td>5</td>
+<td>100 (001 has label 7, 111 has 8)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>011</td>
+<td>6</td>
+<td>010 (001 has 7, 111 has 8)</td>
+<td>1</td>
+</tr>
+<tr>
+<td>001</td>
+<td>7</td>
+<td>000, 101, 011</td>
+<td>1+1+1 = 3</td>
+</tr>
+<tr>
+<td>111</td>
+<td>8</td>
+<td>110, 101, 011</td>
+<td>2+1+1 = 4</td>
+</tr>
+</tbody>
+</table>
+<p>Only 000 is a valley (every other vertex has a lower neighbour, as
+the table shows). Total <span class="math inline">\(=1+1+1+2+1+1+3+4 =
+14\)</span>. Hence <span class="math inline">\(U(Q_3)\le
+14\)</span>.</p>
+<h2
+id="lower-bound-hand-proof-no-labelling-of-q_3-has-le-13-uphill-paths">Lower
+bound (hand proof): no labelling of <span
+class="math inline">\(Q_3\)</span> has <span class="math inline">\(\le
+13\)</span> uphill paths</h2>
+<p><strong>Lemma 2.</strong> For every labelling of any graph and every
+vertex <span class="math inline">\(v\)</span>: <span
+class="math inline">\(p(v)\ge 1\)</span>, and <span
+class="math inline">\(p(v)\ge \deg^-(v)\)</span>.</p>
+<p><em>Proof.</em> Starting from <span class="math inline">\(v\)</span>,
+repeatedly move to a neighbour with smaller label while one exists;
+labels strictly decrease so this stops, at a valley <span
+class="math inline">\(v_1\)</span>. Reversing the walk gives an uphill
+path ending at <span class="math inline">\(v\)</span>, so <span
+class="math inline">\(p(v)\ge1\)</span>. Applying this to each <span
+class="math inline">\(u\)</span> with <span class="math inline">\(u\to
+v\)</span> gives <span class="math inline">\(p(u)\ge1\)</span>, so by
+Lemma 1 <span class="math inline">\(p(v)\ge\sum_{u\to
+v}p(u)\ge\deg^-(v)\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Corollary 3.</strong> Total <span class="math inline">\(\ \ge
+\sum_v \max(1,\deg^-(v)) = \#\{\text{valleys}\} + \sum_{v \text{ not
+valley}}\deg^-(v) = \#\{\text{valleys}\} + |E|\)</span>, since valleys
+are exactly the vertices with <span
+class="math inline">\(\deg^-=0\)</span> and <span
+class="math inline">\(\sum_v\deg^-(v)=|E|\)</span> (each edge has
+exactly one head). For <span class="math inline">\(Q_3\)</span>, <span
+class="math inline">\(|E|=12\)</span> and the vertex with label 1 is
+always a valley, so the total is <span class="math inline">\(\ge
+13\)</span>.</p>
+<p><strong>Proposition 4.</strong> The total is never exactly 13 for
+<span class="math inline">\(Q_3\)</span>; hence <span
+class="math inline">\(U(Q_3)\ge 14\)</span>.</p>
+<p><em>Proof.</em> Suppose a labelling has total 13. Then every
+inequality in Corollary 3 is an equality: (a) there is exactly one
+valley, and (b) for every non-valley <span
+class="math inline">\(v\)</span>, <span
+class="math inline">\(p(v)=\deg^-(v)\)</span>, i.e. <span
+class="math inline">\(\sum_{u\to v}p(u)=\deg^-(v)\)</span> with each
+<span class="math inline">\(p(u)\ge1\)</span>, so <span
+class="math inline">\(p(u)=1\)</span> for every <span
+class="math inline">\(u\to v\)</span>. By Lemma 2, <span
+class="math inline">\(p(u)=1\)</span> forces <span
+class="math inline">\(\deg^-(u)\le1\)</span>.</p>
+<p>Let <span class="math inline">\(x\)</span> be the vertex with label
+8. All 3 neighbours of <span class="math inline">\(x\)</span> are lower,
+so <span class="math inline">\(\deg^-(x)=3\)</span> and by (b) every
+<span class="math inline">\(a\in N(x)\)</span> has <span
+class="math inline">\(\deg^-(a)\le1\)</span>.</p>
+<p>Let <span class="math inline">\(y\)</span> be the vertex with label
+7. At most one neighbour of <span class="math inline">\(y\)</span>
+(namely <span class="math inline">\(x\)</span>) is higher, so <span
+class="math inline">\(\deg^-(y)\ge2\)</span>. If <span
+class="math inline">\(y\in N(x)\)</span> we would have <span
+class="math inline">\(\deg^-(y)\le1\)</span>, a contradiction; so <span
+class="math inline">\(y\notin N(x)\)</span>, <span
+class="math inline">\(y\ne x\)</span>, hence <span
+class="math inline">\(y\)</span> is the antipode <span
+class="math inline">\(\bar x\)</span> of <span
+class="math inline">\(x\)</span> (in <span
+class="math inline">\(Q_3\)</span> the only vertex at distance 3). Then
+<span class="math inline">\(N(y)\)</span> is the set of the 3 vertices
+at distance 2 from <span class="math inline">\(x\)</span>, all lower
+than <span class="math inline">\(y\)</span>, so <span
+class="math inline">\(\deg^-(y)=3\)</span> and by (b) every <span
+class="math inline">\(b\in N(y)\)</span> has <span
+class="math inline">\(\deg^-(b)\le1\)</span>.</p>
+<p><span class="math inline">\(N(x)\cup N(y)\)</span> is the set <span
+class="math inline">\(S\)</span> of the 6 vertices other than <span
+class="math inline">\(x,y\)</span>. Count edges inside <span
+class="math inline">\(S\)</span>: <span
+class="math inline">\(Q_3\)</span> has 12 edges, 3 are incident to <span
+class="math inline">\(x\)</span>, 3 to <span
+class="math inline">\(y\)</span>, and <span
+class="math inline">\(xy\)</span> is not an edge, so exactly <span
+class="math inline">\(12-6=6\)</span> edges have both ends in <span
+class="math inline">\(S\)</span>. Each such edge is oriented towards its
+higher endpoint, which lies in <span class="math inline">\(S\)</span>,
+so <span class="math inline">\(\sum_{s\in S}\deg^-(s)\ge 6\)</span>. But
+each <span class="math inline">\(s\in S\)</span> has <span
+class="math inline">\(\deg^-(s)\le1\)</span>, so <span
+class="math inline">\(\sum_{s\in S}\deg^-(s)\le6\)</span>; therefore
+<span class="math inline">\(\deg^-(s)=1\)</span> for every <span
+class="math inline">\(s\in S\)</span>. Thus no vertex of <span
+class="math inline">\(S\)</span> is a valley; <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(y\)</span> are not valleys either (<span
+class="math inline">\(\deg^-\ge2\)</span>). So the labelling has no
+valley, contradicting the fact that the vertex with label 1 is a valley
+(all its neighbours have larger labels). <span
+class="math inline">\(\square\)</span></p>
+<p>Combining: <span class="math inline">\(U(Q_3)=14\)</span>, attained
+by the labelling above.</p>
+<h2
+id="independent-confirmation-exhaustive-exact-computation">Independent
+confirmation: exhaustive exact computation</h2>
+<p>Script <code>q3_esaustivo.py</code> (saved in
+<code>runs/p2_q3/sandbox/</code> and copied to
+<code>problema-2/certificati/</code>) enumerates <strong>all</strong>
+<span class="math inline">\(8!=40320\)</span> bijections <span
+class="math inline">\(V(Q_3)\to\{1,\dots,8\}\)</span>
+(<code>itertools.permutations</code>), with vertices encoded as integers
+<span class="math inline">\(0..7\)</span> (bit <span
+class="math inline">\(i\)</span> = coordinate <span
+class="math inline">\(i\)</span>) and adjacency = XOR with a single bit.
+For each labelling it computes the number of uphill paths in two
+independent ways — (i) an explicit recursive DFS that enumerates every
+uphill path from every valley, (ii) the DP of Lemma 1 processed in
+increasing label order — and <code>assert</code>s that the two agree.
+All arithmetic is Python integers (exact; rigor =
+<code>exact</code>).</p>
+<p>Output (Python 3.14.7, wall-clock 0.36 s):</p>
+<pre><code>etichettature esaminate: 40320
+U(Q_3) = 14; etichettature ottime: 7104
+distribuzione (cammini -&gt; numero etichettature): [(14, 7104), (16, 14112), (17, 6720), (18, 4704), (19, 576), (20, 3648), (21, 1920), (22, 480), (23, 192), (24, 768), (26, 96)]
+prima etichettatura ottima (ordine crescente di etichetta): [&#39;000&#39;, &#39;100&#39;, &#39;010&#39;, &#39;110&#39;, &#39;101&#39;, &#39;011&#39;, &#39;001&#39;, &#39;111&#39;]</code></pre>
+<p>The distribution confirms Proposition 4 (no labelling with 13, and
+also none with 15) and Corollary 3 (none below 13). Reproduce with
+<code>.venv/bin/python problema-2/certificati/q3_esaustivo.py</code>. A
+second script <code>verifica_etichettatura_q3.py</code> checks only the
+submitted labelling (bijection check, valleys, per-vertex <span
+class="math inline">\(p\)</span>, total 14) and prints the table
+above.</p>
+<h2 id="b.-dimostrazione-per-q_4">2b. Dimostrazione per <span
+class="math inline">\(Q_4\)</span></h2>
+<h1 id="uq_434"><span class="math inline">\(U(Q_4)=34\)</span></h1>
+<p><strong>Conventions.</strong> <span
+class="math inline">\(V(Q_4)=\{0,1\}^4\)</span>, <span
+class="math inline">\(u\sim v\)</span> iff they differ in exactly one
+coordinate; <span class="math inline">\(|V|=16\)</span>, <span
+class="math inline">\(|E|=32\)</span>, every vertex has degree 4. In a
+0/1 string the <span class="math inline">\(i\)</span>-th character (from
+the left) is coordinate <span class="math inline">\(i\)</span>; the
+convention is irrelevant for the count, since every coordinate
+permutation is an automorphism of <span
+class="math inline">\(Q_4\)</span> and automorphisms preserve the number
+of uphill paths (they map valleys to valleys and uphill paths to uphill
+paths bijectively when the labelling is transported). For a labelling
+<span class="math inline">\(f\)</span> orient each edge from the smaller
+to the larger label (<span class="math inline">\(u\to v\)</span> iff
+<span class="math inline">\(uv\in E\)</span>, <span
+class="math inline">\(f(u)&lt;f(v)\)</span>); <span
+class="math inline">\(\deg^-(v)=\#\{u:u\to v\}\)</span>, <span
+class="math inline">\(\deg^+(v)=\#\{w: v\to w\}\)</span>, so <span
+class="math inline">\(\deg^-(v)+\deg^+(v)=4\)</span>. Let <span
+class="math inline">\(p(v)\)</span> be the number of uphill paths whose
+last vertex is <span class="math inline">\(v\)</span>.</p>
+<h2
+id="preliminaries-verified-claims-restated-with-proof-for-self-containedness">Preliminaries
+(verified claims, restated with proof for self-containedness)</h2>
+<p><strong>Lemma 1.</strong> <span class="math inline">\(p(v)=[v\text{
+is a valley}]+\sum_{u\to v}p(u)\)</span>, and the total number of uphill
+paths is <span class="math inline">\(\sum_v p(v)\)</span>.</p>
+<p><em>Proof.</em> An uphill path ending at <span
+class="math inline">\(v\)</span> either has length <span
+class="math inline">\(1\)</span> — then it is <span
+class="math inline">\((v)\)</span> and <span
+class="math inline">\(v\)</span> is a valley, and conversely a valley
+<span class="math inline">\(v\)</span> gives exactly this path — or has
+length <span class="math inline">\(\ge2\)</span>; deleting <span
+class="math inline">\(v\)</span> gives an uphill path ending at its
+penultimate vertex <span class="math inline">\(u\)</span>, with <span
+class="math inline">\(u\to v\)</span>, and conversely appending <span
+class="math inline">\(v\)</span> to an uphill path ending at <span
+class="math inline">\(u\)</span> with <span class="math inline">\(u\to
+v\)</span> gives an uphill path ending at <span
+class="math inline">\(v\)</span> (the increasing condition is exactly
+<span class="math inline">\(f(u)&lt;f(v)\)</span>). These maps are
+mutually inverse, and different <span class="math inline">\(u\)</span>
+give disjoint sets (they differ in the penultimate vertex). Each uphill
+path has a unique last vertex, hence the total is <span
+class="math inline">\(\sum_v p(v)\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Lemma 2.</strong> For every vertex <span
+class="math inline">\(v\)</span>: <span
+class="math inline">\(p(v)\ge1\)</span> and <span
+class="math inline">\(p(v)\ge\deg^-(v)\)</span>.</p>
+<p><em>Proof.</em> From <span class="math inline">\(v\)</span>
+repeatedly move to a neighbour with a smaller label while one exists;
+the labels strictly decrease, so the walk stops, at a vertex with no
+smaller neighbour, i.e. a valley <span
+class="math inline">\(v_1\)</span>. The reversed walk is an uphill path
+ending at <span class="math inline">\(v\)</span>, so <span
+class="math inline">\(p(v)\ge1\)</span>. Applying this to every <span
+class="math inline">\(u\)</span> with <span class="math inline">\(u\to
+v\)</span> and using Lemma 1, <span
+class="math inline">\(p(v)\ge\sum_{u\to v}p(u)\ge\sum_{u\to
+v}1=\deg^-(v)\)</span>. <span class="math inline">\(\square\)</span></p>
+<p><strong>Corollary 3.</strong> Total <span class="math inline">\(\
+\ge\sum_v\max(1,\deg^-(v))=\#\{\text{valleys}\}+|E|\)</span>.</p>
+<p><em>Proof.</em> Termwise from Lemma 2 and Lemma 1. Valleys are
+exactly the vertices with <span class="math inline">\(\deg^-=0\)</span>,
+and <span class="math inline">\(\sum_v\deg^-(v)=|E|\)</span> because
+every edge has exactly one head. So <span
+class="math inline">\(\sum_v\max(1,\deg^-(v))=\#\{v:\deg^-(v)=0\}+\sum_{v:\deg^-(v)\ge1}\deg^-(v)=\#\{\text{valleys}\}+|E|\)</span>.
+<span class="math inline">\(\square\)</span></p>
+<p>The vertex with label <span class="math inline">\(1\)</span> is
+always a valley (all its neighbours have larger labels). Hence for <span
+class="math inline">\(Q_4\)</span>: total <span
+class="math inline">\(\ge 32+1=33\)</span>.</p>
+<h2
+id="lower-bound-no-labelling-of-q_4-has-exactly-33-uphill-paths-hence-uq_4ge34">Lower
+bound: no labelling of <span class="math inline">\(Q_4\)</span> has
+exactly 33 uphill paths, hence <span
+class="math inline">\(U(Q_4)\ge34\)</span></h2>
+<p>Suppose some labelling <span class="math inline">\(f\)</span> of
+<span class="math inline">\(Q_4\)</span> has total exactly <span
+class="math inline">\(33\)</span>.</p>
+<p><strong>Step 1 (all inequalities are tight).</strong> By Corollary 3,
+<span class="math inline">\(33=\text{total}\ge\#\{\text{valleys}\}+32\ge
+33\)</span>, so <span
+class="math inline">\(\#\{\text{valleys}\}=1\)</span> and <span
+class="math inline">\(\sum_v p(v)=\sum_v\max(1,\deg^-(v))\)</span>.
+Since <span class="math inline">\(p(v)\ge\max(1,\deg^-(v))\)</span>
+holds for every <span class="math inline">\(v\)</span> (Lemma 2),
+equality of the sums forces equality for every term: <span
+class="math inline">\(p(v)=\max(1,\deg^-(v))\)</span> for all <span
+class="math inline">\(v\)</span>. In particular, for every non-valley
+<span class="math inline">\(v\)</span> (i.e. <span
+class="math inline">\(\deg^-(v)\ge1\)</span>): <span
+class="math inline">\(p(v)=\deg^-(v)\)</span>.</p>
+<p><strong>Step 2 (every in-neighbour of a non-valley has <span
+class="math inline">\(p=1\)</span>, hence <span
+class="math inline">\(\deg^-\le1\)</span>).</strong> Let <span
+class="math inline">\(v\)</span> be a non-valley. By Lemma 1 (with <span
+class="math inline">\([v\text{ valley}]=0\)</span>) and Step 1, <span
+class="math display">\[\sum_{u\to v}p(u)=p(v)=\deg^-(v)=\sum_{u\to v}1
+.\]</span> Each term satisfies <span
+class="math inline">\(p(u)\ge1\)</span> (Lemma 2), and there are <span
+class="math inline">\(\deg^-(v)\)</span> terms on each side, so <span
+class="math inline">\(p(u)=1\)</span> for every <span
+class="math inline">\(u\to v\)</span>. By Lemma 2 again, <span
+class="math inline">\(\deg^-(u)\le p(u)=1\)</span>.</p>
+<p><strong>Step 3 (in-degrees lie in <span
+class="math inline">\(\{0,1,4\}\)</span>).</strong> Let <span
+class="math inline">\(u\)</span> be any vertex. If <span
+class="math inline">\(\deg^+(u)\ge1\)</span>, pick <span
+class="math inline">\(w\)</span> with <span class="math inline">\(u\to
+w\)</span>; then <span class="math inline">\(w\)</span> has an
+in-neighbour, so <span class="math inline">\(w\)</span> is not a valley,
+and Step 2 applied to <span class="math inline">\(v=w\)</span> gives
+<span class="math inline">\(\deg^-(u)\le1\)</span>. If <span
+class="math inline">\(\deg^+(u)=0\)</span>, then <span
+class="math inline">\(\deg^-(u)=4-\deg^+(u)=4\)</span>. Hence <span
+class="math inline">\(\deg^-(u)\in\{0,1,4\}\)</span> for every vertex
+<span class="math inline">\(u\)</span>.</p>
+<p><strong>Step 4 (counting edges).</strong> Let <span
+class="math inline">\(s=\#\{u:\deg^-(u)=4\}\)</span>. The vertices with
+<span class="math inline">\(\deg^-(u)=0\)</span> are exactly the
+valleys, and there is exactly one (Step 1). The remaining <span
+class="math inline">\(16-1-s=15-s\)</span> vertices have <span
+class="math inline">\(\deg^-(u)=1\)</span>. Summing in-degrees over all
+vertices, and using <span
+class="math inline">\(\sum_u\deg^-(u)=|E|=32\)</span>: <span
+class="math display">\[4s+1\cdot(15-s)+0\cdot
+1=32\quad\Longrightarrow\quad 3s=17,\]</span> which has no integer
+solution. Contradiction.</p>
+<p>Therefore no labelling of <span class="math inline">\(Q_4\)</span>
+has exactly <span class="math inline">\(33\)</span> uphill paths;
+combined with total <span class="math inline">\(\ge33\)</span>
+(Corollary 3), every labelling has at least <span
+class="math inline">\(34\)</span> uphill paths: <span
+class="math inline">\(U(Q_4)\ge34\)</span>.</p>
+<p>(<em>Remark, not needed for the cell:</em> the same argument for
+<span class="math inline">\(Q_d\)</span>, <span
+class="math inline">\(d\ge2\)</span>, gives total <span
+class="math inline">\(=|E|+1\)</span> only if <span
+class="math inline">\((d-1)s=2^{d-1}(d-2)+1\)</span> has an integer
+solution; for <span class="math inline">\(d=3\)</span> this is <span
+class="math inline">\(2s=5\)</span>, recovering Proposition 4 of the
+<span class="math inline">\(Q_3\)</span> proof.)</p>
+<h2
+id="upper-bound-an-explicit-labelling-with-exactly-34-uphill-paths">Upper
+bound: an explicit labelling with exactly 34 uphill paths</h2>
+<p>Labelling <span class="math inline">\(f\)</span>, as the list of the
+16 vertices in increasing label order (label <span
+class="math inline">\(1\)</span> first):</p>
+<p><span class="math display">\[\texttt{0000},\ \texttt{1111},\
+\texttt{0111},\ \texttt{1101},\ \texttt{1110},\ \texttt{1011},\
+\texttt{0001},\ \texttt{1000},\ \texttt{0010},\ \texttt{0100},\
+\texttt{1001},\ \texttt{0110},\ \texttt{0011},\ \texttt{1010},\
+\texttt{0101},\ \texttt{1100}.\]</span></p>
+<p>Structure: label <span class="math inline">\(1\)</span> = weight
+<span class="math inline">\(0\)</span>; label <span
+class="math inline">\(2\)</span> = weight <span
+class="math inline">\(4\)</span>; labels <span
+class="math inline">\(3\)</span>–<span class="math inline">\(6\)</span>
+= the four vertices of weight <span class="math inline">\(3\)</span>;
+labels <span class="math inline">\(7\)</span>–<span
+class="math inline">\(10\)</span> = the four vertices of weight <span
+class="math inline">\(1\)</span>; labels <span
+class="math inline">\(11\)</span>–<span
+class="math inline">\(16\)</span> = the six vertices of weight <span
+class="math inline">\(2\)</span>. (This is a bijection: the sixteen
+strings are pairwise distinct and are all of <span
+class="math inline">\(\{0,1\}^4\)</span>.)</p>
+<p>Computation of <span class="math inline">\(p\)</span> in increasing
+label order (Lemma 1). Neighbours of a vertex of weight <span
+class="math inline">\(k\)</span> have weights <span
+class="math inline">\(k\pm1\)</span>.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>vertex</th>
+<th>label</th>
+<th>lower neighbours</th>
+<th><span class="math inline">\(p\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0000</td>
+<td>1</td>
+<td>none (its neighbours are the weight-1 vertices, labels 7–10) —
+<strong>valley</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td>1111</td>
+<td>2</td>
+<td>none (its neighbours are the weight-3 vertices, labels 3–6) —
+<strong>valley</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td>0111</td>
+<td>3</td>
+<td>1111 (label 2); the other neighbours 0011, 0101, 0110 have labels
+13, 15, 12</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1101</td>
+<td>4</td>
+<td>1111; others 0101, 1001, 1100 have labels 15, 11, 16</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1110</td>
+<td>5</td>
+<td>1111; others 0110, 1010, 1100 have labels 12, 14, 16</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1011</td>
+<td>6</td>
+<td>1111; others 0011, 1001, 1010 have labels 13, 11, 14</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0001</td>
+<td>7</td>
+<td>0000 (label 1); others 1001, 0101, 0011 have labels 11, 15, 13</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1000</td>
+<td>8</td>
+<td>0000; others 1100, 1010, 1001 have labels 16, 14, 11</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0010</td>
+<td>9</td>
+<td>0000; others 1010, 0110, 0011 have labels 14, 12, 13</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0100</td>
+<td>10</td>
+<td>0000; others 1100, 0110, 0101 have labels 16, 12, 15</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1001</td>
+<td>11</td>
+<td>0001, 1000 (weight 1) and 1101, 1011 (weight 3): all four lower,
+each with <span class="math inline">\(p=1\)</span></td>
+<td>4</td>
+</tr>
+<tr>
+<td>0110</td>
+<td>12</td>
+<td>0010, 0100, 1110, 0111</td>
+<td>4</td>
+</tr>
+<tr>
+<td>0011</td>
+<td>13</td>
+<td>0001, 0010, 1011, 0111</td>
+<td>4</td>
+</tr>
+<tr>
+<td>1010</td>
+<td>14</td>
+<td>1000, 0010, 1110, 1011</td>
+<td>4</td>
+</tr>
+<tr>
+<td>0101</td>
+<td>15</td>
+<td>0001, 0100, 1101, 0111</td>
+<td>4</td>
+</tr>
+<tr>
+<td>1100</td>
+<td>16</td>
+<td>1000, 0100, 1110, 1101</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>Every weight-2 vertex has exactly two weight-1 and two weight-3
+neighbours, all with labels <span
+class="math inline">\(\le10&lt;11\)</span>, so all four neighbours are
+lower and each has <span class="math inline">\(p=1\)</span>, giving
+<span class="math inline">\(p=4\)</span>. The valleys are exactly 0000
+and 1111 (every other vertex has a lower neighbour, as the table shows).
+Total <span class="math display">\[\sum_v
+p(v)=1+1+4\cdot1+4\cdot1+6\cdot4=34 .\]</span> Hence <span
+class="math inline">\(U(Q_4)\le34\)</span>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p><span class="math display">\[U(Q_4)=34,\]</span> attained by the
+labelling above. (For comparison <span
+class="math inline">\(U(Q_3)=14=|E|+2\)</span> and <span
+class="math inline">\(U(Q_4)=34=|E|+2\)</span>.)</p>
+<h2
+id="computational-checks-exact-integer-arithmetic-independent-of-the-proof">Computational
+checks (exact integer arithmetic; independent of the proof)</h2>
+<ol type="1">
+<li><p><code>verifica_etichettatura_q4.py</code> checks the submitted
+labelling: bijection, valleys, per-vertex <span
+class="math inline">\(p\)</span> (the table above), and the total by two
+independent methods — the DP of Lemma 1 in label order and an explicit
+recursive DFS enumerating every uphill path from every valley. Output:
+both totals <span class="math inline">\(=34\)</span>, valleys <span
+class="math inline">\(\{0000,1111\}\)</span>. Wall-clock 0.02 s (Python
+3.14.7, macOS).</p></li>
+<li><p><code>q4_branch_and_bound.py T</code> is an exact,
+symmetry-reduced search for labellings with <span
+class="math inline">\(&lt;T\)</span> uphill paths. Vertices are placed
+in increasing label order; when <span class="math inline">\(v\)</span>
+is placed all its lower neighbours are already placed, so <span
+class="math inline">\(p(v)\)</span> is fixed at that moment (Lemma 1).
+<em>Symmetry reduction:</em> at each node only one candidate per orbit
+of the pointwise stabiliser (inside <span
+class="math inline">\(\mathrm{Aut}(Q_4)\)</span>, order <span
+class="math inline">\(384\)</span>, generated explicitly as coordinate
+permutation followed by XOR with a mask) of the already-placed set is
+tried; this is sound because if <span class="math inline">\(g\)</span>
+fixes the placed vertices pointwise and <span
+class="math inline">\(g(v)=v&#39;\)</span>, then <span
+class="math inline">\(f\mapsto f\circ g^{-1}\)</span> maps labellings
+with prefix <span class="math inline">\((\dots,v)\)</span> bijectively
+onto labellings with prefix <span
+class="math inline">\((\dots,v&#39;)\)</span> and preserves the number
+of uphill paths. <em>Lower bound at a node</em> (placed set <span
+class="math inline">\(S\)</span>, unplaced set <span
+class="math inline">\(U\)</span>, <span
+class="math inline">\(a(v)=\sum_{u\in N(v)\cap S}p(u)\)</span>, <span
+class="math inline">\(d(v)\)</span> = number of in-neighbours of <span
+class="math inline">\(v\)</span> inside <span
+class="math inline">\(U\)</span> in the final orientation, so <span
+class="math inline">\(\sum_{v\in U}d(v)=E(U)\)</span>, the number of
+edges inside <span class="math inline">\(U\)</span>): for <span
+class="math inline">\(v\in U\)</span> all <span
+class="math inline">\(S\)</span>-neighbours are lower and all unplaced
+in-neighbours have <span class="math inline">\(p\ge1\)</span>, so <span
+class="math inline">\(p(v)\ge\max(1,a(v)+d(v))\)</span>; minimising
+<span class="math inline">\(\sum_{v\in U}\max(1,a(v)+d(v))\)</span> over
+nonnegative <span class="math inline">\(d\)</span> with <span
+class="math inline">\(\sum d=E(U)\)</span> gives <span
+class="math inline">\(\sum_{v\in U,a(v)\ge1}a(v)+\max(\#\{v\in
+U:a(v)=0\},E(U))\)</span>, so <span
+class="math inline">\(\text{LB}=\sum_{v\in S}p(v)+\sum_{v\in
+U,a(v)\ge1}a(v)+\max(\#\{a=0\},E(U))\)</span> is a valid lower bound for
+every completion; a node is pruned iff <span
+class="math inline">\(\text{LB}\ge T\)</span>. Results: <span
+class="math inline">\(T=34\)</span>: <strong>0 labellings
+found</strong>, 47 978 nodes, 0.3 s. <span
+class="math inline">\(T=35\)</span>: 19 525 440 labellings with exactly
+34 reached by the reduced search, 54 814 700 nodes, 156.8 s (shows the
+pruning is not over-aggressive at the optimum). Sanity check on <span
+class="math inline">\(Q_3\)</span> (same code with <code>D = 3</code>):
+<span class="math inline">\(T=13\)</span>: 0 found; <span
+class="math inline">\(T=14\)</span>: 0 found (83 nodes); <span
+class="math inline">\(T=15\)</span>: 148 found, and <span
+class="math inline">\(148\cdot48=7104\)</span> is exactly the known
+number of optimal labellings of <span class="math inline">\(Q_3\)</span>
+(<span class="math inline">\(|\mathrm{Aut}(Q_3)|=48\)</span>). This
+search is a confirmation only; the proof of <span
+class="math inline">\(U(Q_4)\ge34\)</span> is the hand argument
+above.</p></li>
+<li><p><code>q4_ricerca_locale.py</code> (simulated annealing, 12 seeds,
+200 000 steps each, 12.8 s) found the value 34 in every run and never
+below; heuristic only, proves nothing, used to find the
+incumbent.</p></li>
+</ol>
+<h2 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
+dipendenze, tempi</h2>
+<p>Tre programmi indipendenti, solo Python 3 standard (interi esatti),
+ciascuno enumera tutte le <span class="math inline">\(8!=40320\)</span>
+etichettature: - <code>problema-2/certificati/q3_esaustivo.py</code> —
+DFS esplicita dei cammini + programmazione dinamica di Lemma 1, con
+<code>assert</code> di uguaglianza su ogni etichettatura. Tempo
+misurato: 0.37 s. -
+<code>problema-2/certificati/q3_verifica_indipendente.py</code> —
+scritto separatamente, metodo diverso: costruzione esplicita livello per
+livello di tutte le sequenze crescenti a partire dalle valli. Tempo
+misurato: 0.20 s. -
+<code>problema-2/certificati/verifica_etichettatura_q3.py</code> —
+controlla la sola etichettatura consegnata (biiezione, valli, <span
+class="math inline">\(p(v)\)</span> per vertice, totale 14). Comando:
+<code>python3 problema-2/certificati/q3_verifica_indipendente.py</code>
+(e analoghi). Python 3.14.7, macOS. Tutti riportano: minimo 14, 7104
+etichettature ottime, distribuzione senza valori 13 e 15.</p>
+<p>Per <span class="math inline">\(Q_4\)</span> (la prova del lower
+bound è a mano; il calcolo è solo conferma): -
+<code>verifica_etichettatura_q4.py</code> (Researcher, due metodi) e
+<code>q4_verifica_etichettatura_indipendente.py</code> (scritto a parte,
+costruzione esplicita dei cammini): entrambi 34 cammini, valli
+<code>0000</code> e <code>1111</code>, biiezione verificata. -
+<code>q4_branch_and_bound.py SOGLIA</code>: branch-and-bound esatto con
+riduzione per simmetria (384 automorfismi); con soglia 34 nessuna
+etichettatura sotto 34 (47978 nodi, 0.3 s); con soglia 35 trova
+etichettature con 34 (54.8M nodi, 157 s). La correttezza della riduzione
+è argomentata nello script ma la cella non ne dipende. -
+<code>q4_ricerca_locale.py</code>: simulated annealing, solo
+esplorazione (12 seed, miglior valore 34 in ogni run).</p>
+<h2 id="fonti-e-contributo">4. Fonti e contributo</h2>
+<p>Nessuna fonte esterna usata. L’argomento del lower bound generalizza
+l’idea di IMO 2022 P6 (ogni vertice è fine di almeno un cammino; <span
+class="math inline">\(p(v)\ge\deg^-(v)\)</span>), aggiungendo
+l’ostruzione specifica di <span class="math inline">\(Q_3\)</span>
+(Proposizione 4). Prova prodotta dal Researcher automatico (Claude Fable
+5.1, run <code>runs/p2_q3/attempts/attempt_001.json</code>) e
+revisionata a mano passo per passo; verifica numerica indipendente
+scritta a parte.</p>
+<h2 id="limiti-e-osservazioni">5. Limiti e osservazioni</h2>
+<ul>
+<li>Nessuna parte irrisolta per C1.</li>
+<li><span class="math inline">\(U(Q_3)=|E|+2\)</span> e <span
+class="math inline">\(U(Q_4)=|E|+2\)</span>. L’argomento di parità di
+<span class="math inline">\(Q_4\)</span> (Step 3–4) si generalizza: il
+totale <span class="math inline">\(|E|+1\)</span> è impossibile su <span
+class="math inline">\(Q_d\)</span> quando <span
+class="math inline">\((d-1)\nmid 2^{d-1}(d-2)+1\)</span>, cioè per ogni
+<span class="math inline">\(d\)</span> da 3 a 10 almeno. Quindi <span
+class="math inline">\(U(Q_d)\ge|E|+2\)</span> in quel range: bound
+debole rispetto ai 2368 noti per <span
+class="math inline">\(Q_9\)</span>, ma gratuito.</li>
+<li>L’ottimo di <span class="math inline">\(Q_4\)</span> ha DUE valli e
+realizza esattamente <span
+class="math inline">\(|E|+\#\text{valli}\)</span>: per i cubi grandi
+conviene cercare etichettature con poche valli in cui quasi tutti i
+vertici abbiano <span
+class="math inline">\(p(v)=\max(1,\deg^-(v))\)</span>.</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,4 @@
+{"problem_id": "p2_q4", "highest_verified_cell": 0, "current_target": "cell_1",
+ "current_blocker": "Determine U(Q_4) with certainty and exhibit an optimal labelling",
+ "verified_claims": ["For any labelling of any graph: #uphill paths >= |E| + #valleys (Lemma 1, Lemma 2, Corollary 3 in problema-2/submission/parte-1.md)", "U(Q_3) = 14, attained by 000,100,010,110,101,011,001,111"],
+ "failed_attempts": [], "stagnation_count": 0, "cell_status": {}}

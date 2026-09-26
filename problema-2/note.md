@@ -61,6 +61,18 @@ Prove computer-assisted ammesse (< 10 min, codice incluso, spiegazione del perch
 - **F. Letteratura**: cercare "uphill paths hypercube", generalizzazioni di IMO 2022 P6 (es. arXiv 2023–2026),
   OEIS per la sequenza $U(Q_d)$.
 
+## Risultati
+- **$U(Q_3)=14$** (2026-09-26): prova completa (lower bound a mano: Cor. 3 dà $\ge13$, Prop. 4 esclude 13 via vertice 8
+  e antipodo 7; upper bound: etichettatura `000,100,010,110,101,011,001,111`). Tre enumerazioni esaustive concordi
+  (7104 ottime su 40320; nessuna con 13 o 15). Bozza in `submission/parte-1.md`. Prodotto dal Researcher con
+  shell `full` in 150 s / $1.57, revisionato a mano e verificato con script indipendente.
+- **$U(Q_4)=34$** (2026-09-26): prova a mano (totale 33 ⇒ gradi entranti in $\{0,1,4\}$ ⇒ $3s=17$ assurdo);
+  etichettatura per classi di peso 0,4,3,1,2 con due valli; verificata con tre script (due del Researcher, uno
+  indipendente). B&B con simmetria a conferma. Researcher shell `full`: 482 s, $2.53, 10 turni.
+- **C1 completa.** Bozza revisionata in `submission/parte-1.md`.
+- Pattern da sfruttare per $Q_5..Q_8$: etichettare per classi di peso (prima 0 e $d$, poi $d-1$, poi 1, ...) crea
+  poche valli e molti vertici con $p=\deg^-$; da provare nel harness come mossa strutturata / programma evoluto.
+
 ## Priorità
 C1 (esatto, quasi gratis) → C2–C4 con harness discreto + costruzione ricorsiva → C5 solo se la costruzione
 scala a $\le2399$ (upper bound è la via più realistica; il lower bound $\ge2369$ è "unpublished" e difficile).

@@ -1,0 +1,3 @@
+soglia 34: etichettature con < 34 cammini trovate: 0
+nodi visitati: 47978; tempo: 0.3 s
+timeout 540 python3 q4_branch_and_bound.py 34  0.27s user 0.01s system 89% cpu 0.314 total
