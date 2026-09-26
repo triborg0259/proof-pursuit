@@ -1,0 +1,29 @@
+{
+ "attempt_id": "attempt_001",
+ "problem_id": "toy_x2",
+ "ts": "2026-09-26T11:59:19",
+ "meta": {
+  "backend": "cli",
+  "model": [
+   "claude-fable-5-1"
+  ],
+  "cost_usd": 0.47695,
+  "seconds": 16.9,
+  "session_id": "3878941d-5462-463b-a376-a82c9be0ae66"
+ },
+ "stagnation_detected": false,
+ "schema_errors": [],
+ "target_cell": 1,
+ "subgoal": "Prove x^2 + 1 >= 2x for every real x (the entire cell).",
+ "approach": "Rewrite the difference x^2 + 1 - 2x as the perfect square (x-1)^2 and use that squares of real numbers are nonnegative.",
+ "approach_family": "direct_proof",
+ "reason_for_choice": "No prior attempts or verified claims exist; the completing-the-square argument is the most direct fully rigorous route and depends only on the ordered-field axioms of the reals.",
+ "proof_attempt": "**Claim.** For every real number $x$, $x^2 + 1 \\ge 2x$.\n\n**Proof.**\n\n*Step 1 (algebraic identity).* For every real $x$,\n$$\n(x-1)^2 = (x-1)(x-1) = x\\cdot x - x\\cdot 1 - 1\\cdot x + 1\\cdot 1 = x^2 - 2x + 1 .\n$$\nThis uses only distributivity, commutativity of multiplication, and $1\\cdot 1 = 1$ in the field $\\mathbb{R}$. Hence\n$$\nx^2 + 1 - 2x = (x-1)^2 . \\tag{1}\n$$\n\n*Step 2 (squares are nonnegative).* Let $y$ be any real number. We show $y^2 \\ge 0$ using the ordered-field axioms of $\\mathbb{R}$ (for all $a,b$: if $a \\ge 0$ and $b \\ge 0$ then $ab \\ge 0$; and $a \\ge 0 \\iff -a \\le 0$; and the order is total).\n- If $y \\ge 0$, then $y^2 = y\\cdot y \\ge 0$ as a product of two nonnegative numbers.\n- If $y < 0$, then $-y > 0$, so $(-y)(-y) \\ge 0$; and $(-y)(-y) = y\\cdot y = y^2$ (since $(-1)(-1)=1$ in any field). Hence $y^2 \\ge 0$.\nBy totality of the order, one of the two cases holds, so $y^2 \\ge 0$ for every real $y$.\n\n*Step 3 (conclusion).* Apply Step 2 with $y = x - 1$: $(x-1)^2 \\ge 0$. By (1), $x^2 + 1 - 2x \\ge 0$. Adding $2x$ to both sides (compatibility of the order with addition: $a \\ge b \\Rightarrow a + c \\ge b + c$) gives\n$$\nx^2 + 1 \\ge 2x .\n$$\nSince $x$ was an arbitrary real number, the claim holds for every real $x$. $\\blacksquare$\n\n*Remark (sharpness).* Equality holds exactly when $(x-1)^2 = 0$, i.e. $x = 1$ (a field has no zero divisors), where both sides equal $2$.",
+ "claims_used": [],
+ "sources_used": [],
+ "code_used": [],
+ "claimed_progress": "Complete proof of Cell 1: x^2 + 1 >= 2x for all real x, via the identity x^2 + 1 - 2x = (x-1)^2 and nonnegativity of real squares (derived from the ordered-field axioms). Equality case x = 1 identified.",
+ "claimed_status": "CELL_SOLVED_CANDIDATE",
+ "self_reported_gaps": [],
+ "request_creative": false
+}

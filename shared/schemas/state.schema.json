@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SharedState",
+  "type": "object",
+  "required": ["problem_id", "highest_verified_cell", "current_target", "current_blocker",
+               "verified_claims", "failed_attempts", "stagnation_count"],
+  "properties": {
+    "problem_id": {"type": "string"},
+    "highest_verified_cell": {"type": "integer", "minimum": 0},
+    "current_target": {"type": "string", "description": "es. cell_3"},
+    "current_blocker": {"type": "string"},
+    "verified_claims": {"type": "array", "items": {"type": "string"}},
+    "failed_attempts": {"type": "array", "items": {"type": "string"}, "description": "attempt_id dei tentativi respinti"},
+    "stagnation_count": {"type": "integer", "minimum": 0},
+    "cell_status": {"type": "object", "additionalProperties": {"type": "string",
+      "enum": ["SOLVED", "SOLVED_BY_COMPUTATION", "PARTIAL_PROGRESS", "UNRESOLVED", "KNOWN_OPEN", "FALSE"]}}
+  },
+  "additionalProperties": true
+}

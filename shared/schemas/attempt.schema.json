@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ResearcherAttempt",
+  "description": "Output del Researcher, input del Referee. Il Researcher non giudica e non aggiorna highest_verified_cell.",
+  "type": "object",
+  "required": ["target_cell", "subgoal", "approach", "approach_family", "reason_for_choice",
+               "proof_attempt", "claims_used", "sources_used", "code_used", "claimed_progress",
+               "claimed_status", "self_reported_gaps"],
+  "properties": {
+    "target_cell": {"type": "integer", "minimum": 1},
+    "subgoal": {"type": "string", "description": "UN solo obiettivo per iterazione"},
+    "approach": {"type": "string", "description": "descrizione breve del metodo"},
+    "approach_family": {"type": "string", "enum": [
+      "direct_proof", "contradiction", "induction", "extremal", "symmetry", "algebraic_reformulation",
+      "matrix_formulation", "graph_formulation", "projective_spherical", "probabilistic",
+      "exact_computation", "special_case", "equivalent_statement", "counterexample_search",
+      "stronger_or_weaker_lemma", "reduction", "case_analysis", "other"]},
+    "reason_for_choice": {"type": "string"},
+    "proof_attempt": {"type": "string", "description": "prova completa in Markdown+LaTeX, ogni passo giustificato"},
+    "claims_used": {"type": "array", "items": {"type": "string"}, "description": "claim gia' verificati (da verified_claims) usati come ipotesi"},
+    "sources_used": {"type": "array", "items": {"type": "string"}, "description": "riferimenti precisi; vuoto se nessuno"},
+    "code_used": {"type": "array", "items": {"type": "object", "required": ["language", "purpose", "code"],
+      "properties": {"language": {"type": "string"}, "purpose": {"type": "string"}, "code": {"type": "string"},
+                     "rigor": {"type": "string", "enum": ["exact", "interval", "float_exploration_only"]}}}},
+    "claimed_progress": {"type": "string"},
+    "claimed_status": {"type": "string", "enum": [
+      "CELL_SOLVED_CANDIDATE", "LEMMA_CANDIDATE", "NUMERICAL_EVIDENCE_ONLY", "LITERATURE_ONLY",
+      "COUNTEREXAMPLE_CANDIDATE", "NO_PROGRESS"],
+      "description": "etichetta onesta di cosa il Researcher CREDE di aver ottenuto; il Referee decide"},
+    "self_reported_gaps": {"type": "array", "items": {"type": "string"}, "description": "passi non completamente giustificati"},
+    "request_creative": {"type": "boolean", "description": "impostato dal Researcher quando rileva stagnazione"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,1 @@
+- attempt_001 [induction] Prove that for every integer n ≥ 1, 1^3 + 2^3 + ... + n^3 = (1 + 2 + ... + n)^2.: REJECT — The inductive step expands (T_{n+1})^2 - (T_n)^2 but then asserts the result equals (n+1)^3 'after simplification' without showing the algebra; the referee could not reproduce it. The key algebraic identity is asserted, not proved.

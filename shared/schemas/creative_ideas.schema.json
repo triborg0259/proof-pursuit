@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CreativeIdeas",
+  "type": "object",
+  "required": ["blocker_analysis", "avoid", "ideas"],
+  "properties": {
+    "blocker_analysis": {"type": "string"},
+    "avoid": {"type": "array", "items": {"type": "string"}},
+    "ideas": {"type": "array", "items": {"type": "object",
+      "required": ["id", "risk", "method", "why_different", "why_it_might_work", "first_test", "expected_gain", "main_risk"],
+      "properties": {
+        "id": {"type": "string"}, "risk": {"type": "string", "enum": ["SAFE", "MEDIUM", "WILD"]},
+        "method": {"type": "string"}, "why_different": {"type": "string"}, "why_it_might_work": {"type": "string"},
+        "first_test": {"type": "string"}, "expected_gain": {"type": "string"}, "main_risk": {"type": "string"},
+        "approach_family": {"type": "string"}
+      }}}
+  },
+  "additionalProperties": true
+}

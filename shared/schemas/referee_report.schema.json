@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "RefereeReport",
+  "type": "object",
+  "required": ["verdict", "highest_verified_cell", "accepted_claims", "fatal_error",
+               "citation_issue", "computation_issue", "next_blocker", "reasoning_summary"],
+  "properties": {
+    "attempt_id": {"type": "string"},
+    "verdict": {"type": "string", "enum": ["ACCEPT", "PARTIAL_PROGRESS", "REJECT", "COUNTEREXAMPLE_FOUND", "KNOWN_OPEN", "UNKNOWN_STATUS"]},
+    "highest_verified_cell": {"type": "integer", "minimum": 0},
+    "accepted_claims": {"type": "array", "items": {"type": "string"}},
+    "fatal_error": {"type": ["string", "null"], "description": "il PRIMO errore fatale, preciso"},
+    "citation_issue": {"type": "boolean"},
+    "computation_issue": {"type": "boolean"},
+    "next_blocker": {"type": "string"},
+    "reasoning_summary": {"type": "string"}
+  },
+  "additionalProperties": true
+}
