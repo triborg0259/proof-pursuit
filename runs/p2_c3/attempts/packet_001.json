@@ -1,0 +1,353 @@
+{
+ "job": {
+  "problem_id": "p2_c3",
+  "original_problem": "# Problema 2 — Uphill paths on the hypercube\n\n*(Enunciato formattato in LaTeX, contenuto fedele all'originale; ricevuto il 2026-09-26.)*\n\n## Preambolo\n\n**Uphill paths on the hypercube.** Label the vertices of the hypercube to make as few uphill paths as possible.\nIMO 2022 settled the grid; the cube is still open.\n\nLet $G$ be a finite simple graph on $n$ vertices. A labelling of $G$ is a bijection $f$ from $V(G)$ to\n$\\{1,2,\\ldots,n\\}$. Fix a labelling.\n\n- A vertex $v$ is a *valley* if every neighbour $w$ of $v$ has $f(w) > f(v)$. An isolated vertex counts as a valley.\n- An *uphill path* is a sequence $(v_1, v_2, \\ldots, v_k)$ with $k \\ge 1$ in which $v_1$ is a valley, $v_i$ and\n  $v_{i+1}$ are adjacent for each $i$, and $f(v_1) < f(v_2) < \\cdots < f(v_k)$. A valley on its own ($k=1$) counts\n  as an uphill path.\n\nLet $U(G)$ be the smallest possible number of uphill paths, taken over all labellings of $G$.\n\nIMO 2022 Problem 6 asks for $U$ of the $n \\times n$ grid graph. The answer is $2n^2 - 2n + 1$.\n\nThis column asks about the $d$-dimensional hypercube $Q_d$. Its vertex set is $\\{0,1\\}^d$, and two vertices are\nadjacent when they differ in exactly one coordinate. $Q_d$ has $2^d$ vertices and $d \\cdot 2^{d-1}$ edges.\n\n**What to hand in.** For C1 to C4, hand in the values, and for each value an explicit labelling that attains it\nas a list of the $2^d$ vertices in increasing label order, written as 0/1 strings. These cells are marked correct\non the values alone, but a value with no labelling behind it will not survive the later cells, which build on\nthe construction.\n\nFor C5, hand in either a labelling of $Q_9$ in the same format, whose uphill paths will be counted mechanically,\nor a proof of the lower bound.\n\nFor C6, hand in all three of: the value; an explicit labelling that attains it, in the same format; a proof that\nno labelling gives fewer uphill paths.\n\nA lower-bound proof may be computer-assisted. If it is, include the code; it must run in under 10 minutes on a\nlaptop, and you must explain why the computation proves the bound. Say clearly which cells you consider solved\nand which are partial.\n\n## Parte 1 (C1) — $U(Q_3)$ and $U(Q_4)$\n\n**Punteggio:** 1 point · **Valutazione:** Checked instantly\n\nThe two smallest interesting cubes: $Q_3$ has $8$ vertices and $12$ edges, $Q_4$ has $16$ vertices and $32$ edges.\nDetermine $U(Q_3)$ and $U(Q_4)$.\n\n## Parte 2 (C2) — $U(Q_5)$\n\n**Punteggio:** 2 points · **Valutazione:** Checked instantly\n\n$Q_5$ has $32$ vertices and $80$ edges. Determine $U(Q_5)$.\n\n## Parte 3 (C3) — $U(Q_6)$\n\n**Punteggio:** 3 points · **Valutazione:** Checked instantly\n\n$Q_6$ has $64$ vertices and $192$ edges. Determine $U(Q_6)$.\n\n## Parte 4 (C4) — $U(Q_7)$ and $U(Q_8)$\n\n**Punteggio:** 5 points · **Valutazione:** Checked instantly\n\nTwo larger cubes: $Q_7$ has $128$ vertices and $448$ edges, $Q_8$ has $256$ vertices and $1024$ edges.\nDetermine $U(Q_7)$ and $U(Q_8)$.\n\n## Parte 5 (C5) — Bounds for $U(Q_9)$\n\n**Punteggio:** 8 points · **Valutazione:** Judged\n\n$Q_9$ has $512$ vertices and $2304$ edges. The best bounds known to the organisers are\n$$\n2368 \\le U(Q_9) \\le 2400;\n$$\nthe lower bound is unpublished. Improve either one: prove that $U(Q_9) \\ge 2369$, or exhibit a labelling of $Q_9$\nwith at most $2399$ uphill paths.\n\n## Parte 6 (C6) — $U(Q_9)$\n\n**Punteggio:** 13 points · **Valutazione:** Judged · **Open question**\n\nThe same cube, settled completely. Determine $U(Q_9)$ exactly, with proof of both bounds.\n\n*(Fine del problema 2. Punteggi: 1+2+3+5+8+13 = 32.)*\n\n\n# TARGET CELL 3\nDetermine U(Q_6) exactly (64 vertices, 192 edges) and exhibit an optimal labelling in the required format. Checked on the value: it must be the true minimum, so a lower-bound proof (hand or certified computation < 10 min) is needed.\n",
+  "cell": {
+   "id": "cell_3",
+   "number": 3,
+   "target_claim_id": "main",
+   "statement": "Determine U(Q_6) exactly (64 vertices, 192 edges) and exhibit an optimal labelling in the required format. Checked on the value: it must be the true minimum, so a lower-bound proof (hand or certified computation < 10 min) is needed."
+  },
+  "state": {
+   "highest_verified_cell": 0,
+   "claims": [
+    {
+     "id": "verified_1",
+     "statement": "For any labelling of any graph: #uphill paths >= |E| + #valleys",
+     "depends_on": []
+    },
+    {
+     "id": "verified_2",
+     "statement": "U(Q_3) = 14",
+     "depends_on": []
+    },
+    {
+     "id": "verified_3",
+     "statement": "U(Q_4) = 34, attained by 0000,1111,0111,1101,1110,1011,0001,1000,0010,0100,1001,0110,0011,1010,0101,1100",
+     "depends_on": []
+    }
+   ]
+  },
+  "candidate": {
+   "attempt_id": "attempt_001",
+   "proof": "# $U(Q_6)=204$\n\n**Conventions.** $V=\\{0,1\\}^6$, $u\\sim v$ iff they differ in exactly one coordinate; $|V|=64$, $|E|=192$, every vertex has degree $6$. Vertices are written as 0/1 strings whose $i$-th character (from the left) is coordinate $i$ (the choice is irrelevant: coordinate permutations are automorphisms). $E_0$ = even-weight vertices, $O$ = odd-weight vertices ($|E_0|=|O|=32$); each class is an independent set (bipartition). For a labelling $f$ orient every edge from the smaller to the larger label; $\\deg^-(v)$, $\\deg^+(v)$ are in/out-degrees, $\\deg^-+\\deg^+=6$. $p(v)$ = number of uphill paths ending at $v$; a **valley** has $\\deg^-=0$, a **peak** has $\\deg^+=0$. $v$ = number of valleys ($\\ge1$: the vertex labelled $1$), $P$ = set of peaks, $q=|P|$, $T$ = total number of uphill paths.\n\n## 0. Lemmas (restated with proof; identical to the $Q_5$ case)\n\n**Lemma 1.** $p(v)=[v\\text{ valley}]+\\sum_{u\\to v}p(u)$ and $T=\\sum_v p(v)$.\n*Proof.* A path ending at $v$ has length 1 (then $v$ is a valley and the path is $(v)$; conversely a valley gives exactly this one) or length $\\ge2$; deleting $v$ gives an uphill path ending at an in-neighbour $u$, and appending $v$ to any uphill path ending at $u$ with $u\\to v$ gives an uphill path ending at $v$. These maps are inverse bijections and distinct $u$ give disjoint sets. Every path has a unique last vertex. $\\square$\n\n**Lemma 2.** $p(v)\\ge1$ and $p(v)\\ge\\deg^-(v)$ for all $v$.\n*Proof.* From $v$ repeatedly move to a neighbour with smaller label until none exists; labels strictly decrease so we stop at a valley, and the reversed walk is an uphill path ending at $v$. Hence $p\\ge1$ everywhere, and by Lemma 1 $p(v)\\ge\\sum_{u\\to v}p(u)\\ge\\deg^-(v)$. $\\square$\n\n**Lemma 3 (excess identity).** Let $X=\\sum_{(u\\to w)\\in E}(p(u)-1)\\ge0$. Then $T=192+v+X$.\n*Proof.* $T=\\sum_w p(w)=v+\\sum_w\\sum_{u\\to w}p(u)=v+\\sum_{(u\\to w)}(1+(p(u)-1))=v+|E|+X$. $\\square$\n\nCall $u$ **heavy** if $\\deg^+(u)\\ge1$ and $p(u)\\ge2$; $H$ = set of heavy vertices; $c(u)=\\deg^+(u)(p(u)-1)$, so $X=\\sum_{u\\in H}c(u)$. Call $u$ **light** if $p(u)=1$.\n\n**Lemma 4 (light vertices).** If $p(u)=1$ then $u$ is a valley, or $\\deg^-(u)=1$ and its unique in-neighbour is light. Hence for any set $L$ of light vertices, the subgraph induced by $L$ is acyclic, and every edge inside $L$ goes from a light vertex to a light vertex of in-degree $1$ inside $L$.\n*Proof.* $\\deg^-(u)\\le p(u)=1$ by Lemma 2; if $\\deg^-(u)=1$ with in-neighbour $u'$ then $1=p(u)=p(u')$ by Lemma 1. A cycle inside $L$ would contain a vertex of maximal label with two in-neighbours on the cycle, contradicting $\\deg^-\\le1$. $\\square$\n\n**Lemma 5 (cost of a heavy vertex).** Let $u\\in H$, $i=\\deg^-(u)$, so $\\deg^+(u)=6-i$, $1\\le i\\le5$, $p(u)\\ge\\max(2,i)$. Then\n- $i=1$: $p(u)=p(u')\\ge2$ for the unique in-neighbour $u'$, which is therefore heavy (it has $\\deg^+\\ge1$ because $u'\\to u$); $c(u)=5(p(u)-1)\\ge5$;\n- $i=2$: $c(u)=4(p(u)-1)\\ge4$; $i=3$: $c(u)=3(p(u)-1)\\ge6$; $i=4$: $c(u)=2(p(u)-1)\\ge6$; $i=5$: $c(u)=p(u)-1\\ge4$.\nIn particular $c(u)\\ge4$ for every heavy vertex, so $X\\ge4|H|$. Moreover, an in-neighbour $u'$ of a heavy vertex with $p(u')\\ge2$ is heavy (it has $\\deg^+\\ge1$).\n*Proof.* Direct from Lemmas 1–2. $\\square$\n\n**Lemma 6 (partition).** $V$ is the disjoint union of $P$, $H$ and the set $L$ of light vertices. Indeed a peak has $\\deg^-=6$, so $p\\ge6$: not light, and not heavy ($\\deg^+=0$). A non-peak has $\\deg^+\\ge1$, so it is heavy iff $p\\ge2$, i.e. non-heavy iff light. Valleys are light. Also $P$ is an **independent set** (of two adjacent peaks, the lower one has $\\deg^+\\ge1$).\n\n**Lemma 7 (in-degree count).** With $s_H=\\sum_{u\\in H}\\deg^-(u)$: $\\;5q=128+v+|H|-s_H$.\n*Proof.* $192=\\sum_x\\deg^-(x)=6q+s_H+\\sum_{x\\in L}\\deg^-(x)$, and by Lemma 4 light vertices have $\\deg^-=0$ (the $v$ valleys) or $1$ (the other $64-q-|H|-v$ light vertices). So $192=6q+s_H+64-q-|H|-v$. $\\square$\n\n## 1. Reduction: every labelling with $T\\le203$ has a forbidden structure\n\nAssume $T\\le203$. By Lemma 3, $v+X\\le11$; $v\\ge1$ gives $X\\le10$, and Lemma 5 ($X\\ge4|H|$) gives $|H|\\le2$.\n\n*Case $|H|=0$.* $X=0$, Lemma 7: $5q=128+v$ with $1\\le v\\le11$, so $v\\in\\{2,7\\}$, $q\\in\\{26,27\\}$.\n\n*Case $|H|=1$, $H=\\{u\\}$, $i=\\deg^-(u)$.* $i=1$ is impossible (it needs a second heavy vertex). Lemma 7: $5q=129+v-i$, and $v\\le11-c(u)$.\n$i=2$: $c\\ge4$, $v\\le7$, $5q=127+v\\Rightarrow v=3$, $q=26$. $i=3$: $c\\ge6$, $v\\le5$, $5q=126+v\\Rightarrow v=4$, $q=26$. $i=4$: $c\\ge6$, $v\\le5$, $5q=125+v\\Rightarrow v=5$, $q=26$. $i=5$: $c\\ge4$, $v\\le7$, $5q=124+v\\Rightarrow v\\in\\{1,6\\}$, $q\\in\\{25,26\\}$.\n\n*Case $|H|=2$.* $X\\ge8$, so $v\\le3$. Lemma 7: $5q=130+v-s_H$ with $2\\le s_H\\le10$. If $q\\ge27$: $v=s_H+5\\ge7$, impossible. If $q\\le24$: $s_H=v+10\\ge11$, impossible. If $q=26$: $s_H=v\\le3$; $s_H=2$ means both heavy vertices have in-degree $1$, each needing the other as heavy in-neighbour ($u_1\\to u_2\\to u_1$), impossible in an acyclic orientation; $s_H=3$ means in-degrees $1$ and $2$: the in-degree-1 vertex $u$ has the other heavy vertex $u'$ as in-neighbour, $c(u)\\ge5$, $c(u')\\ge4$, $X\\ge9$, $v=3$, $v+X\\ge12$, contradiction. Hence $q=25$.\n\n**Summary.** In every case: $P$ is independent, $|H|\\le2$, $25\\le q$, $q+|H|\\le27$ (indeed $q+|H|\\in\\{26,27\\}$), and by Lemma 6 and Lemma 4 the set $L=V\\setminus(P\\cup H)$ induces a forest. So $T\\le203$ implies\n\n> **(★)** there exist an independent set $P\\subseteq V(Q_6)$ and a set $H\\subseteq V\\setminus P$ with $|H|\\le2$, $|P|\\ge25$, $|P|+|H|\\le27$, such that $Q_6-(P\\cup H)$ is a forest.\n\n## 2. Splitting (★) by parity classes\n\nWrite $P=A\\cup B$ with $A=P\\cap E_0$, $B=P\\cap O$, $b=|B|$. The map $x\\mapsto x\\oplus 100000$ is an automorphism of $Q_6$ exchanging $E_0$ and $O$ and preserving all properties in (★), so **WLOG $|A|\\ge b$**; then $b\\le13$ (as $2b\\le|A|+b\\le27$) and $|A|=q-b\\ge25-b$. Put $R=E_0\\setminus A$, so $|R|=32-q+b\\le7+b$. Since $P$ is independent, every neighbour of a vertex of $B$ lies outside $A$, i.e. $N(B)\\subseteq R$, hence $|N(B)|\\le|R|\\le7+b$. The forest of (★) is $F=(R\\cup(O\\setminus B))\\setminus H$ with $|H|\\le27-q=|R|-5-b$.\n\n**Sub-case $b\\ge2$.** Then (★) needs a set $B$ of odd vertices with $2\\le|B|\\le13$ and $|N(B)|\\le7+|B|$. By translation by an even vector (an automorphism preserving $E_0$, $O$ and transitive on $O$) we may assume $100000\\in B$. *Computation 1a* (`verifica_q6_picchi_miste.py`, part A; exact bitmask arithmetic) enumerates by DFS all $B\\ni100000$, $B\\subseteq O$, with $|N(B)|\\le20$ — a valid pruning since $N(B)$ only grows along the DFS and $7+b\\le20$ for $b\\le13$ — and tests $|N(B)|\\le7+|B|$ for $2\\le|B|\\le13$. Output: `nodi DFS visitati 18878, insiemi B con |N(B)| ≤ 7+|B| trovati: 0`. So $b\\ge2$ is impossible.\n\n**Sub-case $b=1$.** WLOG $B=\\{o\\}$ with $o=100000$ (translation). Then $R\\supseteq N(o)$ (6 even vertices $r_1,\\dots,r_6$, $r_i=o\\oplus e_i$), $|R|=33-q\\in\\{6,7,8\\}$, $|H|\\le|R|-6$. *Hand argument:* for $i<j<k$ the odd vertices $o_{ij}=o\\oplus e_i\\oplus e_j$ etc. give the 6-cycle $r_i\\,o_{ij}\\,r_j\\,o_{jk}\\,r_k\\,o_{ik}\\,r_i$ inside $R\\cup(O\\setminus\\{o\\})$; the 20 triples $\\{i,j,k\\}$ give 20 such cycles, each $o_{ij}$ lies on 4 of them and each $r_i$ on 10. With $|H|\\le2$: removing two even vertices leaves 4 of the $r_i$ and the 4 triples among them are intact; removing one even and one odd leaves 10 triples of which at most 4 are hit; removing two odd vertices hits at most 8 of 20 triples. So $F$ contains a cycle: impossible. *Computation 1b* (same script, part B) confirms this directly: for all $R=N(o)\\cup\\{\\le2\\text{ extra even vertices}\\}$ and all $H$ of the allowed size, union–find acyclicity: `coppie (R,H) esaminate 254840, foreste trovate 0`.\n\n**Sub-case $b=0$** (all peaks even). Then $|R|=32-q\\in\\{5,6,7\\}$, $H=H_E\\cup H_O$ with $H_E\\subseteq R$, $H_O\\subseteq O$, $|H|\\le|R|-5$. Put $R'=R\\setminus H_E$ and $h=|H_O|$: $|R'|\\ge|R|-|H_E|\\ge5+h$, and $R'\\cup(O\\setminus H_O)$ is an induced forest; an induced subgraph of a forest is a forest, so we may shrink $R'$ to exactly $5+h$ vertices. By translation, $100000\\in H_O$ if $h\\ge1$. Hence (★) with $b=0$ implies\n\n> **(★₀)** there are $h\\in\\{0,1,2\\}$, $H_O\\subseteq O$ with $|H_O|=h$ ($100000\\in H_O$ if $h\\ge1$), and $R'\\subseteq E_0$ with $|R'|=5+h$, such that $R'\\cup(O\\setminus H_O)$ induces a forest in $Q_6$.\n\n*Computation 2* (`verifica_q6_foreste.c`, brute force, exact): for $h=0$ all $\\binom{32}{5}=201376$ sets $R'$; for $h=1$, $H_O=\\{100000\\}$, all $\\binom{32}{6}=906192$ sets; for $h=2$, $H_O=\\{100000,o\\}$ for each of the 31 other odd $o$, all $\\binom{32}{7}$ sets — $104{,}341{,}536$ pairs in total — each tested by union–find on the induced subgraph. Output: `foreste 0` in all three cases; 10.3 s wall-clock.\n\n*Computation 3* (`verifica_q6_picchi_una_classe.py`, different method, exact): two even vertices at distance $2$ have exactly two common (odd) neighbours; if neither is in $H_O$ they form a 4-cycle in $F$. So every distance-2 pair of $R'$ must lie inside $N(o)$ for some $o\\in H_O$. A DFS builds $R'$ vertex by vertex, adding a vertex only if all its new distance-2 pairs are covered, and runs union–find on the completed candidates. Output: `h=0: candidati 0, foreste 0; h=1: candidati 37, foreste 0; h=2: 31 insiemi H_O, candidati 1892, foreste 0`, 0.6 s. (For $h=0$ this is the statement that no 5 even vertices are pairwise at distance $\\ge4$, i.e. $A(6,4)\\le4$ on the even class.)\n\nTherefore (★₀) is false, so (★) is false, so **no labelling of $Q_6$ has $T\\le203$: $U(Q_6)\\ge204$.**\n\n## 3. Upper bound: a labelling with exactly 204 uphill paths\n\nLet $R=\\{000000,\\,111100,\\,001111,\\,110011\\}$ (even vertices, pairwise at distance $4$), $P=E_0\\setminus R$ (28 vertices, independent). Two vertices of $R$ at distance $4$ have no common neighbour, so the 24 odd neighbours of $R$ are distinct; the subgraph induced by $F=R\\cup O$ consists of 4 stars (centres $R$, 24 leaves) and the 8 remaining odd vertices, isolated: a forest with 12 components. Labelling (increasing label order, coordinate 1 on the left):\n\n```\n000000,111100,110011,001111,101010,011010,100110,010110,101001,011001,100101,010101,\n100000,010000,001000,111000,000100,110100,101100,011100,000010,110010,001110,111110,\n000001,110001,001101,111101,100011,010011,001011,111011,000111,110111,101111,011111,\n110000,101000,011000,100100,010100,001100,100010,010010,001010,111010,000110,110110,\n101110,011110,100001,010001,001001,111001,000101,110101,101101,011101,000011,101011,\n011011,100111,010111,111111\n```\n\nLabels 1–4: the four centres; 5–12: the eight isolated odd vertices; 13–36: the 24 leaves; 37–64: the 28 peaks.\n\n*Count.* The 12 vertices with labels 1–12 have all neighbours higher (leaves or peaks): valleys, $p=1$. Each leaf has exactly one lower neighbour, its centre, so $p=1$. Each peak has all 6 neighbours lower and in $F$, each with $p=1$, so $p=6$. $T=36\\cdot1+28\\cdot6=204$. Verified exactly by `costruzione_204.py` (Lemma 1 recursion) and, independently, by `verifica_dfs_204.py` (explicit DFS enumeration of all uphill paths from the 12 valleys, string-based, no shared code): both print $204$ and $12$ valleys.\n\n## 4. Conclusion\n\n$U(Q_6)=204=|E|+12$, attained by the labelling of §3. The lower bound is computer-assisted at exactly one point, the finite statement (★₀) (plus the two mixed sub-cases), refuted by exact enumeration in three programs (two methods, two languages), total wall-clock $<15$ s. Evidence (not part of the proof): 20000 random labellings satisfy $T=192+v+X$ and $X\\in\\{0\\}\\cup[4,\\infty)$ (`sanity_eccesso_q6.py`); simulated annealing over labellings (`ricottura_q6.py`, 300k swap moves, seeds 0–5) reached $204$ with 12 valleys in 5 of 6 seeds and never less. Consistency: the same construction gives $U(Q_3)=14$, $U(Q_4)=34$, $U(Q_5)=88$ with codes of sizes $1,2,2$ (i.e. $T=2^d+(d-1)(2^{d-1}-A_{\\text{even}}(d,4))$), matching the verified values.",
+   "method_tag": "reduction",
+   "claims": [
+    {
+     "id": "main",
+     "statement": "Determine U(Q_6) exactly (64 vertices, 192 edges) and exhibit an optimal labelling in the required format. Checked on the value: it must be the true minimum, so a lower-bound proof (hand or certified computation < 10 min) is needed.",
+     "depends_on": [
+      "verified_1",
+      "verified_3",
+      "verified_2"
+     ]
+    }
+   ],
+   "sources": [
+    {
+     "id": "src_1",
+     "reference": "D. A. Pike, Decycling hypercubes, Graphs and Combinatorics 19 (2003) 547–550 — abstract only (https://link.springer.com/article/10.1007/s00373-003-0529-9), cited for context: ∇(Q_n)=2^{n-1}−A(n,4) iff Q_n has an independent minimum decycling set; not used in the proof",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_2",
+     "reference": "Problem-2 Q_5 proof (problema-2/submission/parte-2.md, runs/p2_q5/attempts/attempt_001.json): Lemmas 1–7 restated and re-proved here for d=6",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": "# Problema 2 — Parte 2 (C2) — bozza di consegna\n\n**Stato dichiarato: REVISIONATA (pronta per consegna).** Valore $U(Q_5)=88$ con etichettatura esplicita; lower bound per\nriduzione a un enunciato finito (★) confutato per enumerazione esaustiva (tre implementazioni concordi, una indipendente\nper metodo). Referee automatico: **READY_FOR_HUMAN** (giudice A, matematica: PASS su entrambe le direzioni in tre run\nindipendenti; giudice B, evidenze: PASS, con sole note INFO, dopo la riesecuzione fidata del codice da parte\ndell'orchestratore). Revisione umana della riduzione: fatta lemma per lemma (STATUS.md). L'approvazione finale resta umana.\n\n## 1. Risultato e ambito\n$U(Q_5) = 88 = |E(Q_5)| + 8$. Etichettatura ottima (ordine crescente di etichetta; posizione $i$ della stringa =\ncoordinata $i$; convenzione irrilevante perché le permutazioni di coordinate sono automorfismi di $Q_5$), con 8 valli:\n`00000, 11110, 11001, 10101, 01101, 10011, 01011, 00111` sono le etichette 1–8 (le valli), seguite dalle foglie e dai\npicchi come nella lista completa in §2 (tabella dell'upper bound). La lista completa a 32 elementi è prodotta e\nverificata da `certificati/costruzione_88.py` e `certificati/verifica_dfs_88.py`.\n\n## 2. Dimostrazione\n*(Testo del tentativo `runs/p2_q5/attempts/attempt_001.json` del Researcher, riletto lemma per lemma dal team; le\nverifiche computazionali sono state rieseguite dall'orchestratore in `runs/p2_q5/verifica/attempt_001/`.)*\n\n\n# $U(Q_5) = 88$\n\n**Conventions.** $V(Q_5)=\\{0,1\\}^5$, $u\\sim v$ iff they differ in exactly one coordinate; $|V|=32$, $|E|=80$, every vertex has degree $5$. In a 0/1 string the $i$-th character from the left is coordinate $i$ (irrelevant for the count: coordinate permutations are automorphisms). For a labelling $f$, orient each edge from the smaller to the larger label ($u\\to v$ iff $uv\\in E$, $f(u)<f(v)$); $\\deg^-(v)=\\#\\{u:u\\to v\\}$, $\\deg^+(v)=\\#\\{w:v\\to w\\}$, $\\deg^-(v)+\\deg^+(v)=5$. Let $p(v)$ be the number of uphill paths whose last vertex is $v$. A *valley* is a vertex with $\\deg^-=0$; a *peak* is a vertex with $\\deg^+=0$. The vertex with label $1$ is a valley, so $v:=\\#\\text{valleys}\\ge1$.\n\n## 0. Preliminaries (restated with proof for self-containedness)\n\n**Lemma 1 (recursion).** $p(v)=[v\\text{ valley}]+\\sum_{u\\to v}p(u)$ and the total number of uphill paths is $T=\\sum_v p(v)$.\n\n*Proof.* An uphill path ending at $v$ has length $1$ — then it is $(v)$ and $v$ is a valley; conversely a valley gives exactly this path — or leng"
+    },
+    {
+     "id": "src_3",
+     "reference": "Scripts in runs/p2_c3/sandbox: cubo6.py, verifica_q6_picchi_una_classe.py, verifica_q6_foreste.c, verifica_q6_picchi_miste.py, costruzione_204.py, verifica_dfs_204.py, sanity_eccesso_q6.py, ricottura_q6.py, sa_0..5.log",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    }
+   ],
+   "artifacts": [
+    {
+     "id": "code_1",
+     "kind": "CODE",
+     "content": "# Shared exact utilities for Q_6 (parity classes, neighbour bitmasks, union-find forest test).\n# rigor: exact\n\"\"\"Utilita' esatte (interi/bitmask) per Q_6: classi di parita', vicini, foreste.\"\"\"\nD = 6\nN = 1 << D\nPARI = [v for v in range(N) if bin(v).count(\"1\") % 2 == 0]\nDISPARI = [v for v in range(N) if bin(v).count(\"1\") % 2 == 1]\n\ndef vicini(v):\n    return [v ^ (1 << i) for i in range(D)]\n\ndef maschera_vicini(v):\n    m = 0\n    for u in vicini(v):\n        m |= 1 << u\n    return m\n\nMASCHERA_VICINI = [maschera_vicini(v) for v in range(N)]\n\ndef bit_a_lista(m):\n    return [v for v in range(N) if (m >> v) & 1]\n\ndef e_foresta(maschera_vertici):\n    \"\"\"True se il sottografo indotto e' aciclico (union-find esatto).\"\"\"\n    genitore = {}\n    def trova(x):\n        while genitore[x] != x:\n            genitore[x] = genitore[genitore[x]]\n            x = genitore[x]\n        return x\n    vertici = bit_a_lista(maschera_vertici)\n    for v in vertici:\n        genitore[v] = v\n    for v in vertici:\n        for u in vicini(v):\n            if u > v and (maschera_vertici >> u) & 1:\n                ru, rv = trova(u), trova(v)\n                if ru == rv:\n                    return False\n                genitore[ru] = rv\n    return True\n\ndef stringa(v):\n    return \"\".join(str((v >> i) & 1) for i in range(D))\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_2",
+     "kind": "CODE",
+     "content": "# Computation 3: refutes (★₀) (all peaks in one class) by pruned DFS over R' (every distance-2 pair of R' must lie in N(o) for some o in H_O) plus union-find; covers h=0,1,2, H_O ∋ 100000 (WLOG by translation), all R' of size 5+h. Output: 0 forests, 0.6 s.\n# rigor: exact\nimport itertools, time\nfrom cubo6 import DISPARI, MASCHERA_VICINI, PARI, e_foresta\nMASCHERA_O = sum(1 << o for o in DISPARI)\nE1 = 1\n\ndef coppia_coperta(a, b, H_O):\n    return any((MASCHERA_VICINI[o] >> a) & 1 and (MASCHERA_VICINI[o] >> b) & 1 for o in H_O)\n\ndef compatibile(v, R, H_O):\n    return all(bin(v ^ r).count(\"1\") != 2 or coppia_coperta(v, r, H_O) for r in R)\n\ndef dfs(R, idx, taglia, H_O, contatori):\n    if len(R) == taglia:\n        contatori[\"candidati\"] += 1\n        m = sum(1 << r for r in R) | (MASCHERA_O & ~sum(1 << o for o in H_O))\n        if e_foresta(m):\n            contatori[\"foreste\"] += 1\n            print(\"FORESTA TROVATA\", R, H_O)\n        return\n    for k in range(idx, len(PARI)):\n        if compatibile(PARI[k], R, H_O):\n            R.append(PARI[k])\n            dfs(R, k + 1, taglia, H_O, contatori)\n            R.pop()\n\ndef main():\n    inizio = time.time()\n    altri = [o for o in DISPARI if o != E1]\n    scelte_H = {0: [()], 1: [(E1,)], 2: [(E1, o) for o in altri]}\n    for h in (0, 1, 2):\n        contatori = {\"candidati\": 0, \"foreste\": 0}\n        for H_O in scelte_H[h]:\n            dfs([], 0, 5 + h, list(H_O), contatori)\n        print(f\"h={h}: insiemi H_O {len(scelte_H[h])}, candidati R' sopravvissuti alla potatura \"\n              f\"{contatori['candidati']}, foreste {contatori['foreste']}, tempo {time.time()-inizio:.1f}s\")\n\nif __name__ == \"__main__\":\n    main()\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_3",
+     "kind": "CODE",
+     "content": "# Computation 2 (independent, brute force): refutes (★₀) by testing with union-find every R' of size 5+h for h=0 (201376 sets), h=1 with H_O={100000} (906192 sets), h=2 with H_O={100000,o} for all 31 other odd o (104,341,536 pairs). Output: 0 forests; 10.3 s wall-clock (cc -O2).\n# rigor: exact\n#include <stdio.h>\n#include <stdint.h>\nstatic int genitore[64];\nstatic int trova(int x) { while (genitore[x] != x) x = genitore[x] = genitore[genitore[x]]; return x; }\nstatic int e_foresta(uint64_t m) {\n    for (int v = 0; v < 64; v++) genitore[v] = v;\n    for (int v = 0; v < 64; v++) {\n        if (!((m >> v) & 1)) continue;\n        for (int i = 0; i < 6; i++) {\n            int u = v ^ (1 << i);\n            if (u < v || !((m >> u) & 1)) continue;\n            int a = trova(u), b = trova(v);\n            if (a == b) return 0;\n            genitore[a] = b;\n        }\n    }\n    return 1;\n}\nstatic int pari[32], n_pari = 0;\nstatic uint64_t maschera_O = 0;\nstatic long esaminati = 0, foreste = 0;\nstatic void combinazioni(int da, int k, uint64_t m) {\n    if (k == 0) {\n        esaminati++;\n        if (e_foresta(m)) { foreste++; printf(\"FORESTA TROVATA maschera %llx\\n\", (unsigned long long)m); }\n        return;\n    }\n    for (int i = da; i <= n_pari - k; i++) combinazioni(i + 1, k - 1, m | (1ULL << pari[i]));\n}\nint main(void) {\n    for (int v = 0; v < 64; v++) {\n        if (__builtin_popcount(v) % 2 == 0) pari[n_pari++] = v; else maschera_O |= 1ULL << v;\n    }\n    combinazioni(0, 5, maschera_O);\n    printf(\"h=0: R' di taglia 5 esaminati %ld, foreste %ld\\n\", esaminati, foreste);\n    esaminati = foreste = 0;\n    combinazioni(0, 6, maschera_O & ~(1ULL << 1));\n    printf(\"h=1: R' di taglia 6 esaminati %ld, foreste %ld\\n\", esaminati, foreste);\n    esaminati = foreste = 0;\n    for (int o = 0; o < 64; o++) {\n        if (o == 1 || __builtin_popcount(o) % 2 == 0) continue;\n        combinazioni(0, 7, maschera_O & ~(1ULL << 1) & ~(1ULL << o));\n    }\n    printf(\"h=2: coppie (H_O, R') di taglia 7 esaminate %ld, foreste %ld\\n\", esaminati, foreste);\n    return 0;\n}\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_4",
+     "kind": "CODE",
+     "content": "# Computations 1a/1b (mixed parity classes): part A enumerates all B ⊆ O with 100000 ∈ B and |N(B)| ≤ 20 by DFS (18878 nodes) and finds no B with 2 ≤ |B| ≤ 13 and |N(B)| ≤ 7+|B|; part B (b=1) tests all R = N(100000) ∪ (≤2 extra even) and all H of allowed size with union-find: 254840 pairs, 0 forests. 3.6 s.\n# rigor: exact\nimport itertools, time\nfrom cubo6 import DISPARI, MASCHERA_VICINI, PARI, e_foresta\nMASCHERA_O = sum(1 << o for o in DISPARI)\nE1 = 1\n\ndef conta(m):\n    return bin(m).count(\"1\")\n\ndef parte_A():\n    trovati, contatore = [], [0]\n    altri = [o for o in DISPARI if o != E1]\n    def dfs(B, mN, idx):\n        contatore[0] += 1\n        b = len(B)\n        if 2 <= b <= 13 and conta(mN) <= 7 + b:\n            trovati.append(list(B))\n        if b == 13:\n            return\n        for k in range(idx, len(altri)):\n            mN2 = mN | MASCHERA_VICINI[altri[k]]\n            if conta(mN2) <= 20:\n                B.append(altri[k])\n                dfs(B, mN2, k + 1)\n                B.pop()\n    dfs([E1], MASCHERA_VICINI[E1], 0)\n    print(f\"parte A: nodi DFS visitati {contatore[0]}, insiemi B con |N(B)| <= 7+|B| trovati: {len(trovati)}\")\n    return trovati\n\ndef parte_B():\n    mNB = MASCHERA_VICINI[E1]\n    base = [v for v in PARI if (mNB >> v) & 1]\n    extra_pari = [v for v in PARI if not (mNB >> v) & 1]\n    esaminati, foreste = 0, 0\n    for k in range(0, 3):\n        for extra in itertools.combinations(extra_pari, k):\n            R = base + list(extra)\n            mR = sum(1 << r for r in R)\n            base_m = (mR | MASCHERA_O) & ~(1 << E1)\n            cand = [v for v in range(64) if (base_m >> v) & 1]\n            for h in range(0, k + 1):\n                for H in itertools.combinations(cand, h):\n                    esaminati += 1\n                    if e_foresta(base_m & ~sum(1 << x for x in H)):\n                        foreste += 1\n                        print(\"FORESTA TROVATA\", R, H)\n    print(f\"parte B: coppie (R,H) esaminate {esaminati}, foreste trovate {foreste}\")\n\nif __name__ == \"__main__\":\n    t = time.time()\n    parte_A()\n    parte_B()\n    print(f\"tempo {time.time()-t:.1f}s\")\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_5",
+     "kind": "CODE",
+     "content": "# Upper bound: builds the 204-path labelling (peaks = even vertices minus the distance-4 code {000000,111100,001111,110011}) and counts exactly with the Lemma 1 recursion (conta_cammini.py from the Q_5 certificate): prints 204, 12 valleys, and the 64-vertex order.\n# rigor: exact\nfrom conta_cammini import conta_cammini, stringa\nfrom cubo6 import DISPARI, MASCHERA_VICINI, PARI\nD = 6\nR = [0b000000, 0b001111, 0b110011, 0b111100]  # bit i = coordinata i+1\n\ndef costruisci():\n    m_foglie = 0\n    for r in R:\n        m_foglie |= MASCHERA_VICINI[r]\n    foglie = [o for o in DISPARI if (m_foglie >> o) & 1]\n    isolati = [o for o in DISPARI if not (m_foglie >> o) & 1]\n    picchi = [v for v in PARI if v not in R]\n    assert len(foglie) == 24 and len(isolati) == 8 and len(picchi) == 28\n    return R + isolati + foglie + picchi\n\nif __name__ == \"__main__\":\n    ordine = costruisci()\n    totale, p, valli = conta_cammini(ordine, D)\n    print(\"cammini in salita:\", totale, \"valli:\", len(valli))\n    print(\"ordine:\", \",\".join(stringa(v, D) for v in ordine))\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_6",
+     "kind": "CODE",
+     "content": "# Independent verification of the submitted labelling (string-based, no shared code): reads the 64 strings from stdin and enumerates every uphill path by DFS from each valley. Prints 204, 12 valleys.\n# rigor: exact\nimport sys\n\ndef vicini_stringa(s):\n    return [s[:i] + (\"1\" if s[i] == \"0\" else \"0\") + s[i + 1:] for i in range(len(s))]\n\ndef conta(ordine):\n    etichetta = {s: i + 1 for i, s in enumerate(ordine)}\n    assert len(etichetta) == 64 and all(len(s) == 6 for s in ordine)\n    valli = [s for s in ordine if all(etichetta[t] > etichetta[s] for t in vicini_stringa(s))]\n    def cammini_da(s):\n        return 1 + sum(cammini_da(t) for t in vicini_stringa(s) if etichetta[t] > etichetta[s])\n    return sum(cammini_da(v) for v in valli), len(valli)\n\nif __name__ == \"__main__\":\n    ordine = sys.stdin.read().replace(\"\\n\", \"\").replace(\" \", \"\").split(\",\")\n    totale, n_valli = conta(ordine)\n    print(\"cammini in salita (DFS):\", totale, \"valli:\", n_valli)\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_7",
+     "kind": "CODE",
+     "content": "# Sanity check (evidence only): T = 192 + #valleys + X and X ∈ {0} ∪ [4,∞) on 20000 random labellings (all asserts pass; smallest positive X seen: 238).\n# rigor: exact\nimport random\nfrom conta_cammini import conta_cammini, vicini\nD, N = 6, 64\nrng = random.Random(0)\nminimo_X_positivo = None\nfor _ in range(20000):\n    ordine = list(range(N)); rng.shuffle(ordine)\n    etichetta = {v: i for i, v in enumerate(ordine)}\n    totale, p, valli = conta_cammini(ordine, D)\n    X = sum(p[u] - 1 for u in range(N) for w in vicini(u, D) if etichetta[u] < etichetta[w])\n    assert totale == 192 + len(valli) + X\n    assert X == 0 or X >= 4\n    if X > 0 and (minimo_X_positivo is None or X < minimo_X_positivo):\n        minimo_X_positivo = X\nprint(\"20000 etichettature casuali: identita' verificata; minimo X positivo osservato:\", minimo_X_positivo)\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_8",
+     "kind": "CODE",
+     "content": "# Simulated annealing over labellings of Q_6 (exploration only, 300k swap moves per seed, exact integer scoring): seeds 0,1,2,3,5 reached 204 with 12 valleys, seed 4 stuck at 253; never below 204.\n# rigor: float_exploration_only\nimport random, sys, time\nfrom conta_cammini import conta_cammini, stringa\nD = 6\nN = 1 << D\n\ndef ricottura(seed, passi, t0=3.0, t1=0.05):\n    rng = random.Random(seed)\n    ordine = list(range(N)); rng.shuffle(ordine)\n    val = conta_cammini(ordine, D)[0]\n    migliore, miglior_ordine = val, ordine[:]\n    for k in range(passi):\n        t = t0 * (t1 / t0) ** (k / passi)\n        i, j = rng.randrange(N), rng.randrange(N)\n        ordine[i], ordine[j] = ordine[j], ordine[i]\n        nuovo = conta_cammini(ordine, D)[0]\n        if nuovo <= val or rng.random() < 2.718 ** ((val - nuovo) / t):\n            val = nuovo\n            if val < migliore:\n                migliore, miglior_ordine = val, ordine[:]\n        else:\n            ordine[i], ordine[j] = ordine[j], ordine[i]\n    return migliore, miglior_ordine\n\nif __name__ == \"__main__\":\n    seed = int(sys.argv[1]); passi = int(sys.argv[2]) if len(sys.argv) > 2 else 300000\n    v, o = ricottura(seed, passi)\n    tot, p, valli = conta_cammini(o, D)\n    print(f\"seed {seed}: migliore {v}, valli {len(valli)}\")\n    print(\"ordine:\", \",\".join(stringa(x, D) for x in o))\n",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ]
+  },
+  "rules": {
+   "allow_literature_as_proof": false,
+   "allow_computation": true,
+   "require_machine_verification": false,
+   "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For C1 to C4, hand in the values, and for each value an explicit labelling that attains it as a list of the $2^d$ vertices in increasing label order, written as 0/1 strings. These cells are marked correct on the values alone, but a value with no labelling behind it will not survive the later cells, which build on the construction. For C5, hand in either a labelling of $Q_9$ in the same format, whose uphill paths will be counted mechanically, or a proof of the lower bound. For C6, hand in all three of: the value; an explicit labelling that attains it, in the same format; a proof that no labelling gives fewer uphill paths. A lower-bound proof may be computer-assisted. If it is, include the code; it must run in under 10 minutes on a laptop, and you must explain why the computation proves the bound. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+  }
+ },
+ "submission_digest": "784730b7bdcaf151e51b73502d915543590fdd3c1b3a4daa5e1ac8c86334a47a",
+ "math": {
+  "report": {
+   "mathematical_verdict": "PASS",
+   "first_fatal_error": null,
+   "accepted_mathematical_claims": [
+    "main"
+   ],
+   "unproved_claims": [],
+   "missing_cases": [],
+   "math_notes": "Checked line by line. Lemmas 1–7 are correct (Lemma 7: 192 = 6q + s_H + (64−q−|H|−v) ⇒ 5q = 128+v+|H|−s_H). Section 1 case analysis under T ≤ 203 (v+X ≤ 11, X ≥ 4|H| ⇒ |H| ≤ 2) is exhaustive and each arithmetic elimination checks: |H|=0 gives (v,q) ∈ {(2,26),(7,27)}; |H|=1 gives q ∈ {25,26} with i=1 excluded because the in-neighbour would be a second heavy vertex; |H|=2 forces q=25 (q=26 killed by the mutual-in-neighbour/acyclicity argument for s_H=2 and by X ≥ 9 > 11−3 for s_H=3). Hence (★): P independent, |H| ≤ 2, 25 ≤ q, q+|H| ∈ {26,27}, V∖(P∪H) induces a forest (Lemma 4). Section 2: the parity split and WLOG reductions (class-swapping automorphism, translation by even vectors transitive on O) are valid; N(B) ⊆ R follows from independence of P; |H| ≤ 27−q = |R|−5−b is right. b ≥ 2 reduces to a finite statement on |N(B)| ≤ 7+|B| whose DFS pruning (|N(B)| monotone, 7+b ≤ 20 for b ≤ 13) is complete; orchestrator re-run confirms 0 sets. b = 1: the hand argument via the twenty 6-cycles r_i o_ij r_j o_jk r_k o_ik r_i is correct (2 even removed leave ≥4 intact triples; 1 even + 1 odd leave ≥ 10−4; 2 odd hit ≤ 8 of 20), so no computation is even needed there. b = 0: reduction to (★₀) is sound (H_E ⊆ R, |R'| ≥ 5+h, induced subgraph of a forest is a forest); Computation 3's pruning (every distance-2 pair of R' has two common odd neighbours, so one must lie in H_O) is hereditary hence the DFS is complete, and the orchestrator re-run reports 0 forests for h=0,1,2. h=0 is also the classical A(6,4)=4 fact. The C brute force (Computation 2) was not re-run by the orchestrator, but it is redundant with the re-run Python Computation 3, so the lower bound does not depend on it. Upper bound: R = {000000,111100,001111,110011} is pairwise at distance 4 (checked all 6 pairs), so R∪O induces 4 disjoint stars plus 8 isolated odd vertices; with the given order the 12 lowest labels are valleys (p=1), the 24 leaves have exactly one lower neighbour (p=1), the 28 peaks have all six neighbours lower with p=1, giving T = 36 + 28·6 = 204; I checked the listed order matches this description (labels 1–4 centres, 5–12 isolated odd, 13–36 the 24 neighbours of R, 37–64 the remaining even vertices), and code_5 re-run prints 204 with 12 valleys. The code_6 failure in the re-run is an empty-stdin invocation (assert on 64 strings), not a mathematical defect; code_8 failure is a missing CLI argument and is evidence-only. The lower bound is computer-assisted only at the finite statements (Computations 1a and 3), each well within the 10-minute limit. Declared dependencies verified_1–3 are not actually used by the argument. Target U(Q_6) = 204 is established with both directions."
+  },
+  "limitation": null
+ },
+ "evidence": {
+  "report": {
+   "evidence_verdict": "PASS",
+   "source_issues": [
+    {
+     "code": "SRC_CONTEXT_ONLY",
+     "detail": "src_1 (Pike 2003) is declared abstract-only and 'not used in the proof'; the proof indeed never invokes it. Not checked by me (no browsing); no reliance, so no issue.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_INTERNAL_REPROVED",
+     "detail": "src_2 (Q_5 draft) is internal prior work; Lemmas 1–7 are restated with proofs in the candidate text, so the argument is self-contained and does not depend on the citation.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "CODE3_NOT_RERUN_REDUNDANT",
+     "detail": "code_3 (C brute force, Computation 2) was not re-run by the orchestrator. It is redundant: code_2 (trusted re-run, 0.6 s, 0 forests) refutes the same finite statement (★₀) for h=0,1,2 with a pruning rule justified in the text (two even vertices at distance 2 share exactly two odd neighbours; if neither is removed they close a 4-cycle), which I checked and is valid. Optional request: compile with cc -O2 and run (claimed 10.3 s) to obtain the promised independent confirmation.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "CODE6_HARNESS_FAILURE",
+     "detail": "code_6 (independent string-based DFS count of the labelling) failed under the orchestrator only because no stdin was supplied (assert on 64 strings). Not evidence of invalidity. Request: re-run with the 64-string list from code_5's stdout piped in; expected output 204 / 12 valleys. Upper bound is already established by the trusted re-run of code_5 (204, 12 valleys) and by the hand count 36·1+28·6.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "HIDDEN_DEPENDENCY",
+     "detail": "code_5, code_7, code_8 import conta_cammini.py (from the Q_5 certificate), which is not among the submitted artifacts. The orchestrator's clean-copy re-run of code_5 and code_7 succeeded, so the module is present in the sandbox; for hand-in it must be shipped with the code.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "CODE8_ARGV",
+     "detail": "code_8 (simulated annealing, exploration only, not part of the proof) needs a seed argument; orchestrator ran it without one. Irrelevant to the bound.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "PRUNING_VALIDITY_CHECKED",
+     "detail": "code_4 part A: DFS pruning |N(B)|≤20 is valid because N(B) is monotone in B and 7+b≤20 for b≤13; enumeration is exhaustive over B∋100000 (WLOG by even translation, transitive on the odd class, after the class-swap WLOG |A|≥b). Part B: R=N(o)∪(≤2 extra even), |H|≤#extra, H drawn from R∪(O∖{o}) — matches the derived constraints |R|=33−q∈{6,7,8}, |H|≤|R|−6. Trusted re-run: 18878 nodes / 0 sets; 254840 pairs / 0 forests.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "COMPUTATIONALLY_VERIFIED"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": true,
+     "references": [
+      "code_2 (trusted re-run: 0 forests, 0.6 s)",
+      "code_4 (trusted re-run: 0 sets, 0 forests, 3.6 s)",
+      "code_5 (trusted re-run: 204 paths, 12 valleys, labelling printed)"
+     ],
+     "notes": "Lower bound = hand reduction to finite statements (★) refuted by exact integer/bitmask enumeration; all essential computations (code_2, code_4) re-run by the orchestrator with matching output, total <5 s, well under the 10-minute limit; code included and its role explained, as the official rules require. Upper bound = explicit labelling in the required format with trusted exact count. No literature used as proof. Consistency with verified_2/verified_3 is stated but not needed."
+    }
+   ],
+   "reproducibility_notes": "Essential lower-bound computations code_2 and code_4 and upper-bound count code_5 reproduced by the orchestrator (python3, clean copies) with outputs identical to the candidate's claims; exact integer arithmetic throughout, no floating point in the proof path; total runtime ≈4.2 s. Not reproduced: code_3 (C, redundant with code_2), code_6 (needs stdin — pipe code_5's 64-string output), code_8 (needs seed argv; exploration only). For hand-in, bundle conta_cammini.py and cubo6.py with the scripts and give the exact commands (including `cc -O2 verifica_q6_foreste.c` and `python3 verifica_dfs_204.py < ordine.txt`)."
+  },
+  "limitation": null
+ },
+ "checks": [],
+ "check_errors": [],
+ "report": {
+  "final_verdict": "UNKNOWN_STATUS",
+  "highest_verified_cell": 0,
+  "math_review": {
+   "verdict": "PASS",
+   "first_fatal_error": null,
+   "accepted_claims": [
+    "main"
+   ],
+   "unproved_claims": [],
+   "missing_cases": []
+  },
+  "evidence_review": {
+   "verdict": "PASS",
+   "source_issues": [
+    {
+     "code": "SRC_CONTEXT_ONLY",
+     "detail": "src_1 (Pike 2003) is declared abstract-only and 'not used in the proof'; the proof indeed never invokes it. Not checked by me (no browsing); no reliance, so no issue.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_INTERNAL_REPROVED",
+     "detail": "src_2 (Q_5 draft) is internal prior work; Lemmas 1–7 are restated with proofs in the candidate text, so the argument is self-contained and does not depend on the citation.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "CODE3_NOT_RERUN_REDUNDANT",
+     "detail": "code_3 (C brute force, Computation 2) was not re-run by the orchestrator. It is redundant: code_2 (trusted re-run, 0.6 s, 0 forests) refutes the same finite statement (★₀) for h=0,1,2 with a pruning rule justified in the text (two even vertices at distance 2 share exactly two odd neighbours; if neither is removed they close a 4-cycle), which I checked and is valid. Optional request: compile with cc -O2 and run (claimed 10.3 s) to obtain the promised independent confirmation.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "CODE6_HARNESS_FAILURE",
+     "detail": "code_6 (independent string-based DFS count of the labelling) failed under the orchestrator only because no stdin was supplied (assert on 64 strings). Not evidence of invalidity. Request: re-run with the 64-string list from code_5's stdout piped in; expected output 204 / 12 valleys. Upper bound is already established by the trusted re-run of code_5 (204, 12 valleys) and by the hand count 36·1+28·6.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "HIDDEN_DEPENDENCY",
+     "detail": "code_5, code_7, code_8 import conta_cammini.py (from the Q_5 certificate), which is not among the submitted artifacts. The orchestrator's clean-copy re-run of code_5 and code_7 succeeded, so the module is present in the sandbox; for hand-in it must be shipped with the code.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "CODE8_ARGV",
+     "detail": "code_8 (simulated annealing, exploration only, not part of the proof) needs a seed argument; orchestrator ran it without one. Irrelevant to the bound.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "PRUNING_VALIDITY_CHECKED",
+     "detail": "code_4 part A: DFS pruning |N(B)|≤20 is valid because N(B) is monotone in B and 7+b≤20 for b≤13; enumeration is exhaustive over B∋100000 (WLOG by even translation, transitive on the odd class, after the class-swap WLOG |A|≥b). Part B: R=N(o)∪(≤2 extra even), |H|≤#extra, H drawn from R∪(O∖{o}) — matches the derived constraints |R|=33−q∈{6,7,8}, |H|≤|R|−6. Trusted re-run: 18878 nodes / 0 sets; 254840 pairs / 0 forests.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "COMPUTATIONALLY_VERIFIED"
+     ],
+     "evidence_sufficient": true,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": true,
+     "references": [
+      "code_2 (trusted re-run: 0 forests, 0.6 s)",
+      "code_4 (trusted re-run: 0 sets, 0 forests, 3.6 s)",
+      "code_5 (trusted re-run: 204 paths, 12 valleys, labelling printed)"
+     ],
+     "notes": "Lower bound = hand reduction to finite statements (★) refuted by exact integer/bitmask enumeration; all essential computations (code_2, code_4) re-run by the orchestrator with matching output, total <5 s, well under the 10-minute limit; code included and its role explained, as the official rules require. Upper bound = explicit labelling in the required format with trusted exact count. No literature used as proof. Consistency with verified_2/verified_3 is stated but not needed."
+    }
+   ]
+  },
+  "accepted_progress": [],
+  "blocking_issue": "Both model reviews passed. A human must read and approve the argument; this is not formal verification.",
+  "next_required_step": "Human reviews the exact target, proof and evidence, then approves explicit claims",
+  "stagnation_signal": false
+ },
+ "review_status": "READY_FOR_HUMAN",
+ "proposed_claim_ids": [
+  "main"
+ ]
+}

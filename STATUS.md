@@ -11,8 +11,8 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 |---|---|---|---|
 | 1 | Angles between lines (Fejes Tóth), 32 pt | 2/6 | in corso (parti 1–2 revisionate e approvate) |
 | 2 | Uphill paths on the hypercube, 32 pt | 2/6 | in corso (C1 e C2 revisionate) |
-| 3 | Bulgarian solitaire, 32 pt | 0/6 | in analisi (tutte le 6 parti ricevute) |
-| 4 | Disjoint classes / gcd of moduli, 32 pt | 2/6 | in corso (parti 1–2 revisionate e approvate) |
+| 3 | Bulgarian solitaire, 32 pt | 1/6 | in corso (parte 1 approvata; parte 2 nel loop) |
+| 4 | Disjoint classes / gcd of moduli, 32 pt | 3/6 | in corso (parti 1–3 approvate) |
 
 ## Problema 1 — Lines / somma di angoli
 
@@ -40,7 +40,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 
 | Parte | Richiesta | Stato | Evidenza |
 |---|---|---|---|
-| 1 | Cicliche e numero di cicli, prove (1 pt) | parziale |struttura nota (collane), prova da scrivere; bozza parziale in inglese in submission/ (parziali.py) |
+| 1 | Cicliche e numero di cicli, prove (1 pt) | revisionato | loop p3_c1 attempt_002: Referee READY_FOR_HUMAN (A PASS, B PASS); approvata da Thomas Tumini (human); submission/parte-1.en.md |
 | 2 | $D_B(T_k)$ esatto (2 pt) | parziale |atteso $k^2-k$ (Igusa/Etienne, da verificare); bozza parziale in inglese in submission/ (parziali.py) |
 | 3 | Bound $k^2-2k-1$ e $D_B(T_k-1)$ (3 pt) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
 | 4 | $D_B(T_{k-1}+1)$ (5 pt) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
@@ -53,7 +53,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 |---|---|---|---|
 | 1 | $k=3$ (1 pt) | revisionato | prova completa (parità); Referee READY_FOR_HUMAN (A PASS, B PASS); approvata; submission/parte-1.md |
 | 2 | $k=4$ (2 pt) | revisionato | prova completa (clique per primo, casi su $|T|$); Referee READY_FOR_HUMAN (A PASS, B PASS); approvata; submission/parte-2.md |
-| 3 | $k\le8$ (3 pt) | parziale |riduzione a insieme finito abbozzata (note.md); bozza parziale in inglese in submission/ (parziali.py) |
+| 3 | $k\le8$ (3 pt) | revisionato | loop p4_c3 attempt_001: Referee READY_FOR_HUMAN (A PASS, B PASS); approvata da Thomas Tumini (human); submission/parte-3.en.md |
 | 4 | $k\le12$ + report 9–16 (5 pt) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
 | 5 | boundary certificato + $k=24,30$ (8 pt) | parziale |richiede 2 implementazioni indipendenti; bozza parziale in inglese in submission/ (parziali.py) |
 | 6 | oltre (13 pt, open) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
