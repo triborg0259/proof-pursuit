@@ -130,6 +130,12 @@ def build_user_prompt(ctx, stagnating, reason):
     if stagnating:
         parts.append(f"# STAGNATION DETECTED\n{reason}\nYou MUST change approach_family. If no creative ideas are listed, "
                      "pick a different family yourself and explain why it escapes the repeated fatal error.")
+    if ctx.get("shell_dir"):
+        parts.append("# SANDBOX SHELL AVAILABLE\nYou may run `python3` (no network, no pip, no other commands) in the current "
+                     "directory to explore and to run EXACT computations (integers, fractions, exhaustive enumeration). "
+                     "Save every script you rely on as a file here and copy it into `code_used` with `rigor` set honestly; "
+                     "state the finite set the computation covers and its wall-clock time. Floating point is exploration only. "
+                     f"Keep total runtime under 10 minutes. Sandbox: {ctx['shell_dir']}")
     parts.append(f"# TASK\nTarget: {state.get('current_target')} (cell {target_cell_from_state(state)}). "
                  f"Blocker: {state.get('current_blocker') or '(none stated: choose the first natural subgoal of the cell)'}.\n"
                  "Produce ONE attempt as JSON per the schema.")
@@ -137,17 +143,35 @@ def build_user_prompt(ctx, stagnating, reason):
 
 
 # ----------------------------------------------------------------------------- backends
-def call_cli(system_prompt, user_prompt, schema, model=None, effort=None, timeout=1800):
+SHELL_TOOLS = "Bash,Read,Write,Edit,Glob,Grep"
+SHELL_ALLOWED = ["Bash(python3 *)", "Bash(python3:*)", "Bash(timeout *)", "Bash(ls *)", "Bash(ls)", "Bash(cat *)",
+                 "Bash(wc *)", "Bash(head *)", "Bash(tail *)", "Read", "Write", "Edit", "Glob", "Grep"]
+SHELL_DENIED = ["Bash(curl *)", "Bash(wget *)", "Bash(pip *)", "Bash(rm *)", "Bash(git *)", "Bash(ssh *)", "WebFetch", "WebSearch"]
+
+
+def call_cli(system_prompt, user_prompt, schema, model=None, effort=None, timeout=3600, shell=None,
+             max_turns=60, max_budget_usd=8.0):
+    """shell=None: nessuno strumento. shell=<dir>: Bash limitato a python3 dentro <dir> (sandbox), file R/W solo lì.
+    NOTA: con shell attiva la CLI gira con --permission-mode dontAsk (le chiamate non in allowlist vengono negate,
+    non chieste). Lanciare solo da un terminale umano, mai da un altro agente."""
     cli_schema = {k: v for k, v in schema.items() if k not in ("$schema", "title")}  # il validatore CLI rifiuta $schema 2020-12
-    cmd = ["claude", "-p", "--no-session-persistence", "--output-format", "json", "--tools", "",
-           "--json-schema", json.dumps(cli_schema), "--system-prompt", system_prompt]
+    cmd = ["claude", "-p", "--no-session-persistence", "--output-format", "json",
+           "--json-schema", json.dumps(cli_schema), "--system-prompt", system_prompt,
+           "--max-budget-usd", str(max_budget_usd)]
+    cwd = None
+    if shell:
+        cwd = str(shell)
+        cmd += ["--tools", SHELL_TOOLS, "--allowedTools", *SHELL_ALLOWED, "--disallowedTools", *SHELL_DENIED,
+                "--permission-mode", "dontAsk", "--max-turns", str(max_turns)]
+    else:
+        cmd += ["--tools", ""]
     if model:
         cmd += ["--model", model]
     if effort:
         cmd += ["--effort", effort]
     cmd.append(user_prompt)
     t0 = time.time()
-    res = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, stdin=subprocess.DEVNULL)
+    res = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, stdin=subprocess.DEVNULL, cwd=cwd)
     if res.returncode != 0:
         raise RuntimeError(f"claude CLI exit {res.returncode}: {res.stderr[:500]}")
     out = json.loads(res.stdout)
@@ -155,11 +179,12 @@ def call_cli(system_prompt, user_prompt, schema, model=None, effort=None, timeou
         raise RuntimeError(f"claude CLI error: {out.get('result')}")
     data = out.get("structured_output") or json.loads(out["result"])
     meta = {"backend": "cli", "model": list((out.get("modelUsage") or {}).keys()), "cost_usd": out.get("total_cost_usd"),
-            "seconds": round(time.time() - t0, 1), "session_id": out.get("session_id")}
+            "seconds": round(time.time() - t0, 1), "session_id": out.get("session_id"), "num_turns": out.get("num_turns"),
+            "shell": bool(shell), "permission_denials": len(out.get("permission_denials") or [])}
     return data, meta
 
 
-def call_api(system_prompt, user_prompt, schema, model=None, effort=None):
+def call_api(system_prompt, user_prompt, schema, model=None, effort=None, **_):
     import anthropic  # pip install anthropic
     client = anthropic.Anthropic()
     model = model or "claude-opus-5"
@@ -180,7 +205,7 @@ def call_api(system_prompt, user_prompt, schema, model=None, effort=None):
     return json.loads(text), meta
 
 
-def call_mock(system_prompt, user_prompt, schema, model=None, effort=None):
+def call_mock(system_prompt, user_prompt, schema, model=None, effort=None, **_):
     """Backend deterministico per i test: sceglie una famiglia diversa da quelle già fallite; legge CREATIVE IDEAS."""
     families = ["direct_proof", "induction", "contradiction", "algebraic_reformulation", "extremal"]
     used = re.findall(r"family=(\w+)", user_prompt)
@@ -245,13 +270,19 @@ def cmd_run(a):
         (workdir / "state.json").write_text(json.dumps(state, indent=1, ensure_ascii=False) + "\n")
         print(f"[researcher] STAGNAZIONE: {reason} -> stagnation_count={state['stagnation_count']}", file=sys.stderr)
 
+    shell_dir = None
+    if a.shell:
+        shell_dir = workdir / "sandbox"
+        shell_dir.mkdir(exist_ok=True)
+        ctx["shell_dir"] = str(shell_dir.resolve())
     user_prompt = build_user_prompt(ctx, stagnating, reason)
     if a.dry_run:
         print(user_prompt)
         return 0
 
     backend = a.backend or ("api" if os.environ.get("ANTHROPIC_API_KEY") else "cli")
-    data, meta = BACKENDS[backend](system_prompt, user_prompt, schema, model=a.model, effort=a.effort)
+    data, meta = BACKENDS[backend](system_prompt, user_prompt, schema, model=a.model, effort=a.effort,
+                                   shell=shell_dir, max_turns=a.max_turns, max_budget_usd=a.max_budget_usd)
     data.setdefault("request_creative", False)
     if stagnating:
         data["request_creative"] = True
@@ -306,6 +337,8 @@ def main():
     r = sub.add_parser("run"); r.add_argument("--workdir", required=True)
     r.add_argument("--backend", choices=list(BACKENDS)); r.add_argument("--model"); r.add_argument("--effort")
     r.add_argument("--dry-run", action="store_true", help="stampa solo il prompt"); r.add_argument("--strict", action="store_true")
+    r.add_argument("--shell", action="store_true", help="abilita Bash(python3) in <workdir>/sandbox (solo backend cli)")
+    r.add_argument("--max-turns", type=int, default=60); r.add_argument("--max-budget-usd", type=float, default=8.0)
     rc = sub.add_parser("record"); rc.add_argument("--workdir", required=True); rc.add_argument("--report", required=True)
     h = sub.add_parser("history"); h.add_argument("--workdir", required=True)
     a = ap.parse_args()

@@ -1,6 +1,6 @@
 # STATUS — Proof Pursuit
 
-Tempo totale: 7 ore. Tempo rimanente: (da indicare)
+Tempo totale: 7 ore. Tempo rimanente: 5 ore (dichiarato alle ~11:45 del 2026-09-26 ⇒ fine ~16:45)
 Ultimo aggiornamento: 2026-09-26, inizializzazione
 
 Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pronta · revisionato · bloccato

@@ -42,8 +42,17 @@ Run reali (CLI, effort medium): `runs/toy_x2` (17 s, $0.48, prova completa del g
 `runs/toy_fail` (tentativo → REJECT iniettato → secondo tentativo che corregge esattamente l'errore segnalato, 30 s, $0.25).
 Costo indicativo su problemi veri con effort high/xhigh: 1–5 $ e 1–5 min per tentativo.
 
+## Shell recintata (`--shell`, solo backend cli)
+`python3 researcher/researcher.py run --workdir runs/X --backend cli --shell --effort high --strict`
+Il modello ottiene Bash limitato a `python3` (più ls/cat/head/tail/wc), Read/Write/Edit, dentro `runs/X/sandbox/`;
+niente rete, pip, git, rm. La CLI gira con `--permission-mode dontAsk`: ogni chiamata fuori allowlist è negata,
+non chiesta (`meta.permission_denials` le conta). Limiti: `--max-turns` (60) e `--max-budget-usd` (8).
+**Va lanciato da un terminale umano**: un agente che lancia un altro agente con permessi pre-autorizzati viene
+bloccato dal classificatore di sicurezza di Claude Code (è successo in fase di sviluppo). Il prompt istruisce a salvare
+ogni script nel sandbox, a copiarlo in `code_used` con `rigor` onesto, e a dichiarare l'insieme finito coperto e il tempo.
+
 ## Limiti noti
 - La similarità dei `fatal_error` è lessicale: un Referee che riformula lo stesso errore con parole diverse può
   ritardare la rilevazione della stagnazione (il Researcher può comunque impostare `request_creative` da solo).
-- Nessun uso di strumenti (`--tools ""`): il Researcher non esegue codice; se propone calcoli li allega in
-  `code_used` e spetta al Referee eseguirli. Da valutare l'abilitazione di Bash in sandbox per le celle computazionali.
+- Senza `--shell` il Researcher non esegue codice: allega i calcoli in `code_used` e spetta al Referee eseguirli.
+- Il run reale con `--shell` su `runs/p2_q3` (U(Q_3) per enumerazione esaustiva) non è ancora stato eseguito: farlo da terminale.
