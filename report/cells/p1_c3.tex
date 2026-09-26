@@ -1,0 +1,127 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage[italian,english]{babel}
+\usepackage{amsmath,amssymb,amsthm}\usepackage[margin=2.2cm]{geometry}\usepackage{longtable,booktabs,array,calc}
+\usepackage{listings,xcolor}\usepackage{hyperref}\usepackage{url}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,frame=single,captionpos=b,columns=fullflexible,keepspaces=true,inputencoding=utf8,extendedchars=true}
+\title{Proof Pursuit --- Problem 1, part 3\\ \large prove, decisioni degli agenti, codice verificato, letteratura}
+\author{Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)}
+\date{\today}
+\begin{document}\maketitle\tableofcontents
+\section*{Come leggere questo rapporto}
+Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team (mai ``risolto'' senza revisione umana), la consegna
+con la prova, poi la traccia delle decisioni degli agenti (Researcher: famiglia e motivo; Referee: verdetto ed errore
+fatale; Creative: quando e perché è intervenuto) e il codice su cui il tentativo poggia con l'esito della riesecuzione
+fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO e CONGETTURA restano distinti. L'architettura del sistema
+è descritta nel README del repository.
+\section{Problem 1 — Angles between lines (Fejes Toth)}
+\subsection{Cella 3 (3 punti) — stato: parziale}
+\subparagraph{\texorpdfstring{Parte 3 --- \(d+1\) lines in
+\(\mathbb{R}^d\)}{Parte 3 --- d+1 lines in \textbackslash mathbb\{R\}\^{}d}}\label{parte-3-d1-lines-in-mathbbrd}
+
+\textbf{Punteggio:} 3 points · \textbf{Valutazione:} Judged
+
+The first case in every dimension: one line more than the dimension,
+\(N = d+1\), where the conjectured optimum repeats exactly one of the
+\(d\) coordinate axes. Let \(d \ge 1\). Prove that any \(d+1\) lines in
+\(\mathbb{R}^d\) satisfy \[
+S \;\le\; \left( \binom{d+1}{2} - 1 \right) \cdot \frac{\pi}{2}.
+\]
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Let d \textgreater{}= 1. Prove that any d+1 lines through the origin in R\textasciicircum{}d satisfy S \textless{}= (C(d+1,2) - 1) pi/2.}
+
+\textbf{Evidenza registrata in STATUS.md.} triage in note.md; dipende dal lemma P2; bozza parziale in inglese in submission/ (parziali.py)
+
+\subsubsection{Consegna (prova)}
+\paragraph{Problema 1 --- Parte 3 --- bozza di consegna
+PARZIALE}\label{problema-1-parte-3-bozza-di-consegna-parziale}
+
+\textbf{Stato dichiarato: PARZIALE.} Nessuna soluzione completa: qui
+sotto ciò che è stabilito, la formalizzazione, la posizione rispetto
+alla letteratura e ciò che resta aperto. Nulla è dichiarato dimostrato
+oltre quanto scritto.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+\textbf{Richiesta ufficiale.} \#\# Parte 3 --- \(d+1\) lines in
+\(\mathbb{R}^d\)
+
+\textbf{Punteggio:} 3 points · \textbf{Valutazione:} Judged
+
+The first case in every dimension: one line more than the dimension,
+\(N = d+1\), where the conjectured optimum repeats exactly one of the
+\(d\) coordinate axes. Let \(d \ge 1\). Prove that any \(d+1\) lines in
+\(\mathbb{R}^d\) satisfy \[
+S \;\le\; \left( \binom{d+1}{2} - 1 \right) \cdot \frac{\pi}{2}.
+\]
+
+\textbf{Cosa consegniamo.} Riduzione dell'enunciato a una disuguaglianza
+sui deficit \(\delta_{ij}=\pi/2-\theta_{ij}\): la tesi equivale a
+\(\sum_{i<j}\delta_{ij}\ge\pi/2\) per \(d+1\) versori in
+\(\mathbb R^d\). Il lemma della parte 2 (dimostrato e approvato)
+fornisce esattamente un deficit totale \(\ge\pi/2\) lungo una catena. Il
+caso \(d=1\) è banale (due rette coincidenti, \(S=0\)).
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+\textbf{Fatto 1 (dimostrato, parte 2).} Una catena di \(m\) versori in
+\(\mathbb R^{m-1}\) ha \(\sum\theta(x_i,x_{i+1})\le(m-2)\pi/2\), cioè
+deficit totale sui passi consecutivi \(\ge\pi/2\).
+
+\textbf{Fatto 2 (dimostrato).} \(d+1\) versori in \(\mathbb R^d\) sono
+linearmente dipendenti; esiste un circuito minimale
+\(x_{i_1},\dots,x_{i_m}\) (\(m\le d+1\)) con \(\sum a_j x_{i_j}=0\),
+\(a_j\ne0\), e ogni \(m-1\) di essi indipendenti.
+
+\textbf{Strategia (non completata).} Costruire dal circuito una catena
+di \(m\) versori in uno spazio di dimensione \(m-1\) (proiezioni
+successive sugli ortogonali di \(\mathrm{span}(x_{i_1},\dots,x_{i_k})\))
+e confrontare gli angoli della catena con quelli originali tramite la
+disuguaglianza triangolare sferica; il confronto diretto perde un
+termine \(\sum_i\delta_i\) per ogni proiezione e non basta: serve una
+scelta migliore dell'ordine del circuito o una stima più fine. Verifica
+numerica (harness, \texttt{problema-1/esperimenti}): nessuna
+configurazione trovata supera il bound per \(d\le6\).
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Codice disponibile (Python 3, libreria standard; ogni script gira in
+meno di un minuto): - \texttt{problema-1/esperimenti/lines\_Rd.py} -
+\texttt{problema-1/esperimenti/p1\_somma\_angoli.py}
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+Letteratura arXiv (ricerca deterministica
+\texttt{tools/cerca\_letteratura.sh}, abstract letti, non usata come
+prova): - arXiv:1801.07837v1 --- On the Fejes Tóth Problem about the Sum
+of Angles Between Lines (Dmitriy Bilyk, Ryan W Matzke, 2018); solo
+abstract letto. - arXiv:2007.08698v2 --- On Fejes Tóth's conjectured
+maximizer for the sum of angles between lines (Tongseok Lim, Robert J.
+McCann, 2020); solo abstract letto. - arXiv:1204.3850v1 --- Simple
+Agents Learn to Find Their Way: An Introduction on Mapping Polygons
+(Jérémie Chalopin, Shantanu Das, Yann Disser, 2012); solo abstract
+letto. Bilyk--Matzke {[}1801.07837{]} dichiarano risolto solo il caso
+del piano; Lim--McCann {[}2007.08698{]} trattano una deformazione a un
+parametro: il caso \(N=d+1\) non risulta noto, coerente con il fatto che
+la gara fornisce il lemma della parte 2 come mattone.
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Manca il passaggio da rette generiche a una catena senza perdita di
+deficit. Le parti 1--2 approvate restano utilizzabili come ipotesi.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p1\_c3}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\section{arXiv literature consulted}
+\begin{thebibliography}{99}
+\bibitem{1801.07837v1} Dmitriy Bilyk, Ryan W Matzke. \emph{On the Fejes Tóth Problem about the Sum of Angles Between Lines}. arXiv:1801.07837v1 (2018). \url{http://arxiv.org/abs/1801.07837v1}
+\bibitem{2007.08698v2} Tongseok Lim, Robert J. McCann. \emph{On Fejes Tóth's conjectured maximizer for the sum of angles between lines}. arXiv:2007.08698v2 (2020). \url{http://arxiv.org/abs/2007.08698v2}
+\bibitem{1204.3850v1} Jérémie Chalopin, Shantanu Das, Yann Disser, Matúš Mihalák, Peter Widmayer. \emph{Simple Agents Learn to Find Their Way: An Introduction on Mapping Polygons}. arXiv:1204.3850v1 (2012). \url{http://arxiv.org/abs/1204.3850v1}
+\end{thebibliography}
+\end{document}

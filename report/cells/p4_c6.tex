@@ -1,0 +1,149 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage[italian,english]{babel}
+\usepackage{amsmath,amssymb,amsthm}\usepackage[margin=2.2cm]{geometry}\usepackage{longtable,booktabs,array,calc}
+\usepackage{listings,xcolor}\usepackage{hyperref}\usepackage{url}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,frame=single,captionpos=b,columns=fullflexible,keepspaces=true,inputencoding=utf8,extendedchars=true}
+\title{Proof Pursuit --- Problem 4, part 6\\ \large prove, decisioni degli agenti, codice verificato, letteratura}
+\author{Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)}
+\date{\today}
+\begin{document}\maketitle\tableofcontents
+\section*{Come leggere questo rapporto}
+Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team (mai ``risolto'' senza revisione umana), la consegna
+con la prova, poi la traccia delle decisioni degli agenti (Researcher: famiglia e motivo; Referee: verdetto ed errore
+fatale; Creative: quando e perché è intervenuto) e il codice su cui il tentativo poggia con l'esito della riesecuzione
+fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO e CONGETTURA restano distinti. L'architettura del sistema
+è descritta nel README del repository.
+\section{Problem 4 — Disjoint congruence classes and large gcd}
+\subsection{Cella 6 (13 punti) — stato: parziale}
+\subparagraph{Parte 6 (C6) --- Beyond the
+boundary}\label{parte-6-c6-beyond-the-boundary}
+
+\textbf{Punteggio:} 13 points · \textbf{Valutazione:} Judged ·
+\textbf{Open question}
+
+Three directions beyond the certified range; any one of them counts. Any
+of the following.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  Decide a size \(k \ge 25\).
+\item
+  The asymptotic form. It is known that a pairwise disjoint family of
+  size \(k\) always has a pair with \[
+  \gcd(m_i, m_j) \;\ge\; k \cdot \exp\!\left( -(2 + o(1)) \frac{\log k}{\log\log k} \right),
+  \] which is \(k^{1 - o(1)}\) but not linear in \(k\). Prove the
+  statement in full, or prove the weaker bound \(\gcd(m_i, m_j) \ge ck\)
+  for some absolute constant \(c > 0\), or improve the exponential
+  factor above.
+\item
+  The group form. Let \(G\) be a group, let \(G_1, \ldots, G_k\) be
+  subgroups of finite index \(n_i = [G : G_i]\), and let
+  \(x_1 G_1, \ldots, x_k G_k\) be pairwise disjoint cosets. Is there a
+  pair \(i < j\) with \(\gcd(n_i, n_j) \ge k\)? This is known for
+  \(k \le 5\) and open for every \(k \ge 6\); settling \(k = 6\) counts
+  as progress.
+\end{enumerate}
+
+\emph{(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)}
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{OPEN. Any of: (a) decide a size k \textgreater{}= 25; (b) prove gcd \textgreater{}= ck for an absolute c \textgreater{} 0 or improve the known factor k exp(-(2+o(1)) log k / log log k); (c) the group form (disjoint cosets of finite-index subgroups), settle k = 6.}
+
+\textbf{Evidenza registrata in STATUS.md.} bozza parziale in inglese in submission/ (parziali.py)
+
+\subsubsection{Consegna (prova)}
+\paragraph{Problema 4 --- Parte 6 --- bozza di consegna
+PARZIALE}\label{problema-4-parte-6-bozza-di-consegna-parziale}
+
+\textbf{Stato dichiarato: PARZIALE.} Nessuna soluzione completa: qui
+sotto ciò che è stabilito, la formalizzazione, la posizione rispetto
+alla letteratura e ciò che resta aperto. Nulla è dichiarato dimostrato
+oltre quanto scritto.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+\textbf{Richiesta ufficiale.} \#\# Parte 6 (C6) --- Beyond the boundary
+
+\textbf{Punteggio:} 13 points · \textbf{Valutazione:} Judged ·
+\textbf{Open question}
+
+Three directions beyond the certified range; any one of them counts. Any
+of the following.
+
+\begin{enumerate}
+\def\labelenumi{(\alph{enumi})}
+\item
+  Decide a size \(k \ge 25\).
+\item
+  The asymptotic form. It is known that a pairwise disjoint family of
+  size \(k\) always has a pair with \[
+  \gcd(m_i, m_j) \;\ge\; k \cdot \exp\!\left( -(2 + o(1)) \frac{\log k}{\log\log k} \right),
+  \] which is \(k^{1 - o(1)}\) but not linear in \(k\). Prove the
+  statement in full, or prove the weaker bound \(\gcd(m_i, m_j) \ge ck\)
+  for some absolute constant \(c > 0\), or improve the exponential
+  factor above.
+\item
+  The group form. Let \(G\) be a group, let \(G_1, \ldots, G_k\) be
+  subgroups of finite index \(n_i = [G : G_i]\), and let
+  \(x_1 G_1, \ldots, x_k G_k\) be pairwise disjoint cosets. Is there a
+  pair \(i < j\) with \(\gcd(n_i, n_j) \ge k\)? This is known for
+  \(k \le 5\) and open for every \(k \ge 6\); settling \(k = 6\) counts
+  as progress.
+\end{enumerate}
+
+\emph{(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)}
+
+\textbf{Cosa consegniamo.} Nessuna prova. Segnalazione rilevante: il
+bound asintotico citato nell'enunciato è già stato migliorato in
+letteratura.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+Fornal--Sun {[}2607.24655{]} (luglio 2026) dimostrano
+\(\max\gcd(m_i,m_j)\gg k\exp(-(2+o(1))\sqrt{\log k/\log\log k})\), con
+radice quadrata all'esponente: un miglioramento del fattore esponenziale
+richiesto in (b). Riprodurre la loro prova per esteso (grafo dei gcd,
+lemma strutturale, partizione crivellante, inversione di Möbius,
+trasformata di Fourier discreta) conterebbe secondo le regole; non
+fatto.
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Codice disponibile (Python 3, libreria standard; ogni script gira in
+meno di un minuto): - Nessun codice ancora.
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+Letteratura arXiv (ricerca deterministica
+\texttt{tools/cerca\_letteratura.sh}, abstract letti, non usata come
+prova): - arXiv:2603.26043v1 --- Finiteness of Disjoint Covering Systems
+with Precisely One Repeated Modulus (Yu Hashimoto, 2026); solo abstract
+letto. - arXiv:1511.04293v1 --- Searching for Disjoint Covering Systems
+with Precisely One Repeated Modulus (Shalosh B. Ekhad, Aviezri S.
+Fraenkel, Doron Zeilberger, 2015); solo abstract letto. -
+arXiv:2607.24655v1 --- On the problem of large gcd for disjoint residue
+classes (Jan Fornal, Yu-Chen Sun, 2026); solo abstract letto. -
+arXiv:2608.15873v1 --- Two Questions on \(G\)-harmonic Tuples (Murali
+Menon, 2026); solo abstract letto. {[}2607.24655{]}.
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Tutto; la via (b) via riproduzione della prova è quella indicata.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p4\_c6}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\section{arXiv literature consulted}
+\begin{thebibliography}{99}
+\bibitem{2603.26043v1} Yu Hashimoto. \emph{Finiteness of Disjoint Covering Systems with Precisely One Repeated Modulus}. arXiv:2603.26043v1 (2026). \url{http://arxiv.org/abs/2603.26043v1}
+\bibitem{1511.04293v1} Shalosh B. Ekhad, Aviezri S. Fraenkel, Doron Zeilberger. \emph{Searching for Disjoint Covering Systems with Precisely One Repeated Modulus}. arXiv:1511.04293v1 (2015). \url{http://arxiv.org/abs/1511.04293v1}
+\bibitem{2607.24655v1} Jan Fornal, Yu-Chen Sun. \emph{On the problem of large gcd for disjoint residue classes}. arXiv:2607.24655v1 (2026). \url{http://arxiv.org/abs/2607.24655v1}
+\bibitem{2608.15873v1} Murali Menon. \emph{Two Questions on \$G\$-harmonic Tuples}. arXiv:2608.15873v1 (2026). \url{http://arxiv.org/abs/2608.15873v1}
+\end{thebibliography}
+\end{document}

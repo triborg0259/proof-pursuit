@@ -1,0 +1,108 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage[italian,english]{babel}
+\usepackage{amsmath,amssymb,amsthm}\usepackage[margin=2.2cm]{geometry}\usepackage{longtable,booktabs,array,calc}
+\usepackage{listings,xcolor}\usepackage{hyperref}\usepackage{url}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,frame=single,captionpos=b,columns=fullflexible,keepspaces=true,inputencoding=utf8,extendedchars=true}
+\title{Proof Pursuit --- Problem 2, part 6\\ \large prove, decisioni degli agenti, codice verificato, letteratura}
+\author{Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)}
+\date{\today}
+\begin{document}\maketitle\tableofcontents
+\section*{Come leggere questo rapporto}
+Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team (mai ``risolto'' senza revisione umana), la consegna
+con la prova, poi la traccia delle decisioni degli agenti (Researcher: famiglia e motivo; Referee: verdetto ed errore
+fatale; Creative: quando e perché è intervenuto) e il codice su cui il tentativo poggia con l'esito della riesecuzione
+fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO e CONGETTURA restano distinti. L'architettura del sistema
+è descritta nel README del repository.
+\section{Problem 2 — Uphill paths on the hypercube}
+\subsection{Cella 6 (13 punti) — stato: parziale}
+\subparagraph{\texorpdfstring{Parte 6 (C6) ---
+\(U(Q_9)\)}{Parte 6 (C6) --- U(Q\_9)}}\label{parte-6-c6-uq_9}
+
+\textbf{Punteggio:} 13 points · \textbf{Valutazione:} Judged ·
+\textbf{Open question}
+
+The same cube, settled completely. Determine \(U(Q_9)\) exactly, with
+proof of both bounds.
+
+\emph{(Fine del problema 2. Punteggi: 1+2+3+5+8+13 = 32.)}
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{OPEN. Determine U(Q\_9) exactly, with an optimal labelling and a proof of both bounds.}
+
+\textbf{Evidenza registrata in STATUS.md.} bozza parziale in inglese in submission/ (parziali.py)
+
+\subsubsection{Consegna (prova)}
+\paragraph{Problema 2 --- Parte 6 --- bozza di consegna
+PARZIALE}\label{problema-2-parte-6-bozza-di-consegna-parziale}
+
+\textbf{Stato dichiarato: PARZIALE.} Nessuna soluzione completa: qui
+sotto ciò che è stabilito, la formalizzazione, la posizione rispetto
+alla letteratura e ciò che resta aperto. Nulla è dichiarato dimostrato
+oltre quanto scritto.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+\textbf{Richiesta ufficiale.} \#\# Parte 6 (C6) --- \(U(Q_9)\)
+
+\textbf{Punteggio:} 13 points · \textbf{Valutazione:} Judged ·
+\textbf{Open question}
+
+The same cube, settled completely. Determine \(U(Q_9)\) exactly, with
+proof of both bounds.
+
+\emph{(Fine del problema 2. Punteggi: 1+2+3+5+8+13 = 32.)}
+
+\textbf{Cosa consegniamo.} Problema aperto. Nessun contributo oltre la
+parte 5.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+Vedi parte 5: il valore esatto richiede entrambi i bound; per il bound
+inferiore l'identità dell'eccesso \(T=|E|+v+X\) (parte 2) è lo
+strumento, ma l'analisi dei casi non scala a 512 vertici senza un
+argomento strutturale.
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Codice disponibile (Python 3, libreria standard; ogni script gira in
+meno di un minuto): - \texttt{problema-2/certificati/costruzione\_88.py}
+- \texttt{problema-2/certificati/q3\_esaustivo.py} -
+\texttt{problema-2/certificati/q3\_verifica\_indipendente.py} -
+\texttt{problema-2/certificati/q4\_branch\_and\_bound.py} -
+\texttt{problema-2/certificati/q4\_ricerca\_locale.py} -
+\texttt{problema-2/certificati/q4\_verifica\_etichettatura\_indipendente.py}
+- \texttt{problema-2/certificati/q5\_stella\_verifica\_indipendente.py}
+- \texttt{problema-2/certificati/verifica\_dfs\_88.py} -
+\texttt{problema-2/certificati/verifica\_etichettatura\_q3.py} -
+\texttt{problema-2/certificati/verifica\_etichettatura\_q4.py} -
+\texttt{problema-2/certificati/verifica\_q5\_bipartita.py} -
+\texttt{problema-2/certificati/verifica\_q5\_indipendenti.py} -
+\texttt{problema-2/esperimenti/conta\_cammini.py} -
+\texttt{problema-2/esperimenti/costruzione\_stelle.py} -
+\texttt{problema-2/esperimenti/ricottura\_controllo.py}
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+Letteratura arXiv (ricerca deterministica
+\texttt{tools/cerca\_letteratura.sh}, abstract letti, non usata come
+prova): - arXiv:1412.3893v1 --- The competition between simple and
+complex evolutionary trajectories in asexual populations (Ian E. Ochs,
+Michael M. Desai, 2014); solo abstract letto. Nessuna.
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Tutto.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p2\_c6}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\section{arXiv literature consulted}
+\begin{thebibliography}{99}
+\bibitem{1412.3893v1} Ian E. Ochs, Michael M. Desai. \emph{The competition between simple and complex evolutionary trajectories in asexual populations}. arXiv:1412.3893v1 (2014). \url{http://arxiv.org/abs/1412.3893v1}
+\end{thebibliography}
+\end{document}

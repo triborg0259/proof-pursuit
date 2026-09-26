@@ -1,0 +1,854 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage[italian,english]{babel}
+\usepackage{amsmath,amssymb,amsthm}\usepackage[margin=2.2cm]{geometry}\usepackage{longtable,booktabs,array,calc}
+\usepackage{listings,xcolor}\usepackage{hyperref}\usepackage{url}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,frame=single,captionpos=b,columns=fullflexible,keepspaces=true,inputencoding=utf8,extendedchars=true}
+\title{Proof Pursuit --- Problem 2, part 1\\ \large prove, decisioni degli agenti, codice verificato, letteratura}
+\author{Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)}
+\date{\today}
+\begin{document}\maketitle\tableofcontents
+\section*{Come leggere questo rapporto}
+Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team (mai ``risolto'' senza revisione umana), la consegna
+con la prova, poi la traccia delle decisioni degli agenti (Researcher: famiglia e motivo; Referee: verdetto ed errore
+fatale; Creative: quando e perché è intervenuto) e il codice su cui il tentativo poggia con l'esito della riesecuzione
+fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO e CONGETTURA restano distinti. L'architettura del sistema
+è descritta nel README del repository.
+\section{Problem 2 — Uphill paths on the hypercube}
+\subsection{Cella 1 (1 punti) — stato: revisionato}
+\subparagraph{\texorpdfstring{Parte 1 (C1) --- \(U(Q_3)\) and
+\(U(Q_4)\)}{Parte 1 (C1) --- U(Q\_3) and U(Q\_4)}}\label{parte-1-c1-uq_3-and-uq_4}
+
+\textbf{Punteggio:} 1 point · \textbf{Valutazione:} Checked instantly
+
+The two smallest interesting cubes: \(Q_3\) has \(8\) vertices and
+\(12\) edges, \(Q_4\) has \(16\) vertices and \(32\) edges. Determine
+\(U(Q_3)\) and \(U(Q_4)\).
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine U(Q\_3) and U(Q\_4), each with an explicit optimal labelling (list of the 2\textasciicircum{}d vertices in increasing label order as 0/1 strings).}
+
+\textbf{Evidenza registrata in STATUS.md.} \$U(Q\_3)=14\$, \$U(Q\_4)=34\$: prove a mano rilette passo per passo + verifiche esatte indipendenti; bozza in submission/parte-1.md
+
+\subsubsection{Consegna (prova)}
+\paragraph{Problema 2 --- Parte 1 (C1) --- bozza di
+consegna}\label{problema-2-parte-1-c1-bozza-di-consegna}
+
+\textbf{Stato dichiarato: RISOLTA (bozza revisionata).} Entrambe le
+metà: \(U(Q_3)=14\) e \(U(Q_4)=34\), con valore, etichettatura esplicita
+e prova completa a mano; calcoli esatti a conferma.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+\(U(Q_3) = 14\) e \(U(Q_4) = 34\). Etichettatura ottima di \(Q_4\)
+(ordine crescente di etichetta; due valli, \texttt{0000} e
+\texttt{1111}):
+\texttt{0000,\ 1111,\ 0111,\ 1101,\ 1110,\ 1011,\ 0001,\ 1000,\ 0010,\ 0100,\ 1001,\ 0110,\ 0011,\ 1010,\ 0101,\ 1100}.
+
+Per \(Q_3\): Etichettatura ottima (ordine crescente di etichetta;
+posizione \(i\) della stringa = coordinata \(i\); la convenzione è
+irrilevante perché le permutazioni di coordinate sono automorfismi di
+\(Q_3\)): \texttt{000,\ 100,\ 010,\ 110,\ 101,\ 011,\ 001,\ 111}.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+\subparagraph{Result}\label{result}
+
+\[U(Q_3) = 14.\]
+
+An optimal labelling, as the list of the 8 vertices in increasing label
+order (string position \(i\) = coordinate \(i\); the convention is
+irrelevant for the count since \(\mathrm{Aut}(Q_3)\) contains all
+coordinate permutations):
+
+\[\texttt{000},\ \texttt{100},\ \texttt{010},\ \texttt{110},\ \texttt{101},\ \texttt{011},\ \texttt{001},\ \texttt{111}\]
+
+i.e.~\(f(000)=1,\ f(100)=2,\ f(010)=3,\ f(110)=4,\ f(101)=5,\ f(011)=6,\ f(001)=7,\ f(111)=8\).
+
+\subparagraph{Notation and the counting
+identity}\label{notation-and-the-counting-identity}
+
+For a labelling \(f\) of a graph \(G\), orient every edge from the
+smaller to the larger label; this gives an acyclic orientation. Write
+\(u \to v\) if \(uv\in E\) and \(f(u)<f(v)\), and
+\(\deg^-(v)=\#\{u: u\to v\}\). Let \(p(v)\) be the number of uphill
+paths whose last vertex is \(v\).
+
+\textbf{Lemma 1 (recursion).}
+\(p(v) = [\,v \text{ is a valley}\,] + \sum_{u\to v} p(u)\), and the
+total number of uphill paths is \(\sum_v p(v)\).
+
+\emph{Proof.} An uphill path ending at \(v\) has \(k=1\) (then it is
+\((v)\) and \(v\) must be a valley; conversely a valley gives exactly
+this one path) or \(k\ge2\); in the latter case deleting \(v\) gives an
+uphill path ending at \(v_{k-1}\) with \(v_{k-1}\to v\), and conversely
+appending \(v\) to any uphill path ending at some \(u\) with \(u\to v\)
+gives an uphill path ending at \(v\) (the label condition \(f(u)<f(v)\)
+is exactly \(u\to v\)). These correspondences are bijective, and the
+sets for different \(u\) are disjoint (they differ in the penultimate
+vertex). Every uphill path has a unique last vertex, hence the total is
+\(\sum_v p(v)\). \(\square\)
+
+\subparagraph{Upper bound: the labelling above has exactly 14 uphill
+paths}\label{upper-bound-the-labelling-above-has-exactly-14-uphill-paths}
+
+Neighbours in \(Q_3\): flip one coordinate. Compute \(p\) in increasing
+label order using Lemma 1:
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}llll@{}}
+\toprule\noalign{}
+vertex & label & lower neighbours & \(p\) \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+000 & 1 & none (valley) & 1 \\
+100 & 2 & 000 & 1 \\
+010 & 3 & 000 & 1 \\
+110 & 4 & 100, 010 & 1+1 = 2 \\
+101 & 5 & 100 (001 has label 7, 111 has 8) & 1 \\
+011 & 6 & 010 (001 has 7, 111 has 8) & 1 \\
+001 & 7 & 000, 101, 011 & 1+1+1 = 3 \\
+111 & 8 & 110, 101, 011 & 2+1+1 = 4 \\
+\end{longtable}
+}
+
+Only 000 is a valley (every other vertex has a lower neighbour, as the
+table shows). Total \(=1+1+1+2+1+1+3+4 = 14\). Hence \(U(Q_3)\le 14\).
+
+\subparagraph{\texorpdfstring{Lower bound (hand proof): no labelling of
+\(Q_3\) has \(\le 13\) uphill
+paths}{Lower bound (hand proof): no labelling of Q\_3 has \textbackslash le 13 uphill paths}}\label{lower-bound-hand-proof-no-labelling-of-q_3-has-le-13-uphill-paths}
+
+\textbf{Lemma 2.} For every labelling of any graph and every vertex
+\(v\): \(p(v)\ge 1\), and \(p(v)\ge \deg^-(v)\).
+
+\emph{Proof.} Starting from \(v\), repeatedly move to a neighbour with
+smaller label while one exists; labels strictly decrease so this stops,
+at a valley \(v_1\). Reversing the walk gives an uphill path ending at
+\(v\), so \(p(v)\ge1\). Applying this to each \(u\) with \(u\to v\)
+gives \(p(u)\ge1\), so by Lemma 1
+\(p(v)\ge\sum_{u\to v}p(u)\ge\deg^-(v)\). \(\square\)
+
+\textbf{Corollary 3.} Total
+\(\ \ge \sum_v \max(1,\deg^-(v)) = \#\{\text{valleys}\} + \sum_{v \text{ not valley}}\deg^-(v) = \#\{\text{valleys}\} + |E|\),
+since valleys are exactly the vertices with \(\deg^-=0\) and
+\(\sum_v\deg^-(v)=|E|\) (each edge has exactly one head). For \(Q_3\),
+\(|E|=12\) and the vertex with label 1 is always a valley, so the total
+is \(\ge 13\).
+
+\textbf{Proposition 4.} The total is never exactly 13 for \(Q_3\); hence
+\(U(Q_3)\ge 14\).
+
+\emph{Proof.} Suppose a labelling has total 13. Then every inequality in
+Corollary 3 is an equality: (a) there is exactly one valley, and (b) for
+every non-valley \(v\), \(p(v)=\deg^-(v)\),
+i.e.~\(\sum_{u\to v}p(u)=\deg^-(v)\) with each \(p(u)\ge1\), so
+\(p(u)=1\) for every \(u\to v\). By Lemma 2, \(p(u)=1\) forces
+\(\deg^-(u)\le1\).
+
+Let \(x\) be the vertex with label 8. All 3 neighbours of \(x\) are
+lower, so \(\deg^-(x)=3\) and by (b) every \(a\in N(x)\) has
+\(\deg^-(a)\le1\).
+
+Let \(y\) be the vertex with label 7. At most one neighbour of \(y\)
+(namely \(x\)) is higher, so \(\deg^-(y)\ge2\). If \(y\in N(x)\) we
+would have \(\deg^-(y)\le1\), a contradiction; so \(y\notin N(x)\),
+\(y\ne x\), hence \(y\) is the antipode \(\bar x\) of \(x\) (in \(Q_3\)
+the only vertex at distance 3). Then \(N(y)\) is the set of the 3
+vertices at distance 2 from \(x\), all lower than \(y\), so
+\(\deg^-(y)=3\) and by (b) every \(b\in N(y)\) has \(\deg^-(b)\le1\).
+
+\(N(x)\cup N(y)\) is the set \(S\) of the 6 vertices other than \(x,y\).
+Count edges inside \(S\): \(Q_3\) has 12 edges, 3 are incident to \(x\),
+3 to \(y\), and \(xy\) is not an edge, so exactly \(12-6=6\) edges have
+both ends in \(S\). Each such edge is oriented towards its higher
+endpoint, which lies in \(S\), so \(\sum_{s\in S}\deg^-(s)\ge 6\). But
+each \(s\in S\) has \(\deg^-(s)\le1\), so
+\(\sum_{s\in S}\deg^-(s)\le6\); therefore \(\deg^-(s)=1\) for every
+\(s\in S\). Thus no vertex of \(S\) is a valley; \(x\) and \(y\) are not
+valleys either (\(\deg^-\ge2\)). So the labelling has no valley,
+contradicting the fact that the vertex with label 1 is a valley (all its
+neighbours have larger labels). \(\square\)
+
+Combining: \(U(Q_3)=14\), attained by the labelling above.
+
+\subparagraph{Independent confirmation: exhaustive exact
+computation}\label{independent-confirmation-exhaustive-exact-computation}
+
+Script \texttt{q3\_esaustivo.py} (saved in \texttt{runs/p2\_q3/sandbox/}
+and copied to \texttt{problema-2/certificati/}) enumerates \textbf{all}
+\(8!=40320\) bijections \(V(Q_3)\to\{1,\dots,8\}\)
+(\texttt{itertools.permutations}), with vertices encoded as integers
+\(0..7\) (bit \(i\) = coordinate \(i\)) and adjacency = XOR with a
+single bit. For each labelling it computes the number of uphill paths in
+two independent ways --- (i) an explicit recursive DFS that enumerates
+every uphill path from every valley, (ii) the DP of Lemma 1 processed in
+increasing label order --- and \texttt{assert}s that the two agree. All
+arithmetic is Python integers (exact; rigor = \texttt{exact}).
+
+Output (Python 3.14.7, wall-clock 0.36 s):
+
+\begin{verbatim}
+etichettature esaminate: 40320
+U(Q_3) = 14; etichettature ottime: 7104
+distribuzione (cammini -> numero etichettature): [(14, 7104), (16, 14112), (17, 6720), (18, 4704), (19, 576), (20, 3648), (21, 1920), (22, 480), (23, 192), (24, 768), (26, 96)]
+prima etichettatura ottima (ordine crescente di etichetta): ['000', '100', '010', '110', '101', '011', '001', '111']
+\end{verbatim}
+
+The distribution confirms Proposition 4 (no labelling with 13, and also
+none with 15) and Corollary 3 (none below 13). Reproduce with
+\texttt{.venv/bin/python\ problema-2/certificati/q3\_esaustivo.py}. A
+second script \texttt{verifica\_etichettatura\_q3.py} checks only the
+submitted labelling (bijection check, valleys, per-vertex \(p\), total
+14) and prints the table above.
+
+\subparagraph{\texorpdfstring{2b. Dimostrazione per
+\(Q_4\)}{2b. Dimostrazione per Q\_4}}\label{b.-dimostrazione-per-q_4}
+
+\paragraph{\texorpdfstring{\(U(Q_4)=34\)}{U(Q\_4)=34}}\label{uq_434}
+
+\textbf{Conventions.} \(V(Q_4)=\{0,1\}^4\), \(u\sim v\) iff they differ
+in exactly one coordinate; \(|V|=16\), \(|E|=32\), every vertex has
+degree 4. In a 0/1 string the \(i\)-th character (from the left) is
+coordinate \(i\); the convention is irrelevant for the count, since
+every coordinate permutation is an automorphism of \(Q_4\) and
+automorphisms preserve the number of uphill paths (they map valleys to
+valleys and uphill paths to uphill paths bijectively when the labelling
+is transported). For a labelling \(f\) orient each edge from the smaller
+to the larger label (\(u\to v\) iff \(uv\in E\), \(f(u)<f(v)\));
+\(\deg^-(v)=\#\{u:u\to v\}\), \(\deg^+(v)=\#\{w: v\to w\}\), so
+\(\deg^-(v)+\deg^+(v)=4\). Let \(p(v)\) be the number of uphill paths
+whose last vertex is \(v\).
+
+\subparagraph{Preliminaries (verified claims, restated with proof for
+self-containedness)}\label{preliminaries-verified-claims-restated-with-proof-for-self-containedness}
+
+\textbf{Lemma 1.} \(p(v)=[v\text{ is a valley}]+\sum_{u\to v}p(u)\), and
+the total number of uphill paths is \(\sum_v p(v)\).
+
+\emph{Proof.} An uphill path ending at \(v\) either has length \(1\) ---
+then it is \((v)\) and \(v\) is a valley, and conversely a valley \(v\)
+gives exactly this path --- or has length \(\ge2\); deleting \(v\) gives
+an uphill path ending at its penultimate vertex \(u\), with \(u\to v\),
+and conversely appending \(v\) to an uphill path ending at \(u\) with
+\(u\to v\) gives an uphill path ending at \(v\) (the increasing
+condition is exactly \(f(u)<f(v)\)). These maps are mutually inverse,
+and different \(u\) give disjoint sets (they differ in the penultimate
+vertex). Each uphill path has a unique last vertex, hence the total is
+\(\sum_v p(v)\). \(\square\)
+
+\textbf{Lemma 2.} For every vertex \(v\): \(p(v)\ge1\) and
+\(p(v)\ge\deg^-(v)\).
+
+\emph{Proof.} From \(v\) repeatedly move to a neighbour with a smaller
+label while one exists; the labels strictly decrease, so the walk stops,
+at a vertex with no smaller neighbour, i.e.~a valley \(v_1\). The
+reversed walk is an uphill path ending at \(v\), so \(p(v)\ge1\).
+Applying this to every \(u\) with \(u\to v\) and using Lemma 1,
+\(p(v)\ge\sum_{u\to v}p(u)\ge\sum_{u\to v}1=\deg^-(v)\). \(\square\)
+
+\textbf{Corollary 3.} Total
+\(\ \ge\sum_v\max(1,\deg^-(v))=\#\{\text{valleys}\}+|E|\).
+
+\emph{Proof.} Termwise from Lemma 2 and Lemma 1. Valleys are exactly the
+vertices with \(\deg^-=0\), and \(\sum_v\deg^-(v)=|E|\) because every
+edge has exactly one head. So
+\(\sum_v\max(1,\deg^-(v))=\#\{v:\deg^-(v)=0\}+\sum_{v:\deg^-(v)\ge1}\deg^-(v)=\#\{\text{valleys}\}+|E|\).
+\(\square\)
+
+The vertex with label \(1\) is always a valley (all its neighbours have
+larger labels). Hence for \(Q_4\): total \(\ge 32+1=33\).
+
+\subparagraph{\texorpdfstring{Lower bound: no labelling of \(Q_4\) has
+exactly 33 uphill paths, hence
+\(U(Q_4)\ge34\)}{Lower bound: no labelling of Q\_4 has exactly 33 uphill paths, hence U(Q\_4)\textbackslash ge34}}\label{lower-bound-no-labelling-of-q_4-has-exactly-33-uphill-paths-hence-uq_4ge34}
+
+Suppose some labelling \(f\) of \(Q_4\) has total exactly \(33\).
+
+\textbf{Step 1 (all inequalities are tight).} By Corollary 3,
+\(33=\text{total}\ge\#\{\text{valleys}\}+32\ge 33\), so
+\(\#\{\text{valleys}\}=1\) and \(\sum_v p(v)=\sum_v\max(1,\deg^-(v))\).
+Since \(p(v)\ge\max(1,\deg^-(v))\) holds for every \(v\) (Lemma 2),
+equality of the sums forces equality for every term:
+\(p(v)=\max(1,\deg^-(v))\) for all \(v\). In particular, for every
+non-valley \(v\) (i.e.~\(\deg^-(v)\ge1\)): \(p(v)=\deg^-(v)\).
+
+\textbf{Step 2 (every in-neighbour of a non-valley has \(p=1\), hence
+\(\deg^-\le1\)).} Let \(v\) be a non-valley. By Lemma 1 (with
+\([v\text{ valley}]=0\)) and Step 1,
+\[\sum_{u\to v}p(u)=p(v)=\deg^-(v)=\sum_{u\to v}1 .\] Each term
+satisfies \(p(u)\ge1\) (Lemma 2), and there are \(\deg^-(v)\) terms on
+each side, so \(p(u)=1\) for every \(u\to v\). By Lemma 2 again,
+\(\deg^-(u)\le p(u)=1\).
+
+\textbf{Step 3 (in-degrees lie in \(\{0,1,4\}\)).} Let \(u\) be any
+vertex. If \(\deg^+(u)\ge1\), pick \(w\) with \(u\to w\); then \(w\) has
+an in-neighbour, so \(w\) is not a valley, and Step 2 applied to \(v=w\)
+gives \(\deg^-(u)\le1\). If \(\deg^+(u)=0\), then
+\(\deg^-(u)=4-\deg^+(u)=4\). Hence \(\deg^-(u)\in\{0,1,4\}\) for every
+vertex \(u\).
+
+\textbf{Step 4 (counting edges).} Let \(s=\#\{u:\deg^-(u)=4\}\). The
+vertices with \(\deg^-(u)=0\) are exactly the valleys, and there is
+exactly one (Step 1). The remaining \(16-1-s=15-s\) vertices have
+\(\deg^-(u)=1\). Summing in-degrees over all vertices, and using
+\(\sum_u\deg^-(u)=|E|=32\):
+\[4s+1\cdot(15-s)+0\cdot 1=32\quad\Longrightarrow\quad 3s=17,\] which
+has no integer solution. Contradiction.
+
+Therefore no labelling of \(Q_4\) has exactly \(33\) uphill paths;
+combined with total \(\ge33\) (Corollary 3), every labelling has at
+least \(34\) uphill paths: \(U(Q_4)\ge34\).
+
+(\emph{Remark, not needed for the cell:} the same argument for \(Q_d\),
+\(d\ge2\), gives total \(=|E|+1\) only if \((d-1)s=2^{d-1}(d-2)+1\) has
+an integer solution; for \(d=3\) this is \(2s=5\), recovering
+Proposition 4 of the \(Q_3\) proof.)
+
+\subparagraph{Upper bound: an explicit labelling with exactly 34 uphill
+paths}\label{upper-bound-an-explicit-labelling-with-exactly-34-uphill-paths}
+
+Labelling \(f\), as the list of the 16 vertices in increasing label
+order (label \(1\) first):
+
+\[\texttt{0000},\ \texttt{1111},\ \texttt{0111},\ \texttt{1101},\ \texttt{1110},\ \texttt{1011},\ \texttt{0001},\ \texttt{1000},\ \texttt{0010},\ \texttt{0100},\ \texttt{1001},\ \texttt{0110},\ \texttt{0011},\ \texttt{1010},\ \texttt{0101},\ \texttt{1100}.\]
+
+Structure: label \(1\) = weight \(0\); label \(2\) = weight \(4\);
+labels \(3\)--\(6\) = the four vertices of weight \(3\); labels
+\(7\)--\(10\) = the four vertices of weight \(1\); labels \(11\)--\(16\)
+= the six vertices of weight \(2\). (This is a bijection: the sixteen
+strings are pairwise distinct and are all of \(\{0,1\}^4\).)
+
+Computation of \(p\) in increasing label order (Lemma 1). Neighbours of
+a vertex of weight \(k\) have weights \(k\pm1\).
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+vertex
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+label
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+lower neighbours
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(p\)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+0000 & 1 & none (its neighbours are the weight-1 vertices, labels 7--10)
+--- \textbf{valley} & 1 \\
+1111 & 2 & none (its neighbours are the weight-3 vertices, labels 3--6)
+--- \textbf{valley} & 1 \\
+0111 & 3 & 1111 (label 2); the other neighbours 0011, 0101, 0110 have
+labels 13, 15, 12 & 1 \\
+1101 & 4 & 1111; others 0101, 1001, 1100 have labels 15, 11, 16 & 1 \\
+1110 & 5 & 1111; others 0110, 1010, 1100 have labels 12, 14, 16 & 1 \\
+1011 & 6 & 1111; others 0011, 1001, 1010 have labels 13, 11, 14 & 1 \\
+0001 & 7 & 0000 (label 1); others 1001, 0101, 0011 have labels 11, 15,
+13 & 1 \\
+1000 & 8 & 0000; others 1100, 1010, 1001 have labels 16, 14, 11 & 1 \\
+0010 & 9 & 0000; others 1010, 0110, 0011 have labels 14, 12, 13 & 1 \\
+0100 & 10 & 0000; others 1100, 0110, 0101 have labels 16, 12, 15 & 1 \\
+1001 & 11 & 0001, 1000 (weight 1) and 1101, 1011 (weight 3): all four
+lower, each with \(p=1\) & 4 \\
+0110 & 12 & 0010, 0100, 1110, 0111 & 4 \\
+0011 & 13 & 0001, 0010, 1011, 0111 & 4 \\
+1010 & 14 & 1000, 0010, 1110, 1011 & 4 \\
+0101 & 15 & 0001, 0100, 1101, 0111 & 4 \\
+1100 & 16 & 1000, 0100, 1110, 1101 & 4 \\
+\end{longtable}
+}
+
+Every weight-2 vertex has exactly two weight-1 and two weight-3
+neighbours, all with labels \(\le10<11\), so all four neighbours are
+lower and each has \(p=1\), giving \(p=4\). The valleys are exactly 0000
+and 1111 (every other vertex has a lower neighbour, as the table shows).
+Total \[\sum_v p(v)=1+1+4\cdot1+4\cdot1+6\cdot4=34 .\] Hence
+\(U(Q_4)\le34\).
+
+\subparagraph{Conclusion}\label{conclusion}
+
+\[U(Q_4)=34,\] attained by the labelling above. (For comparison
+\(U(Q_3)=14=|E|+2\) and \(U(Q_4)=34=|E|+2\).)
+
+\subparagraph{Computational checks (exact integer arithmetic;
+independent of the
+proof)}\label{computational-checks-exact-integer-arithmetic-independent-of-the-proof}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \texttt{verifica\_etichettatura\_q4.py} checks the submitted
+  labelling: bijection, valleys, per-vertex \(p\) (the table above), and
+  the total by two independent methods --- the DP of Lemma 1 in label
+  order and an explicit recursive DFS enumerating every uphill path from
+  every valley. Output: both totals \(=34\), valleys \(\{0000,1111\}\).
+  Wall-clock 0.02 s (Python 3.14.7, macOS).
+\item
+  \texttt{q4\_branch\_and\_bound.py\ T} is an exact, symmetry-reduced
+  search for labellings with \(<T\) uphill paths. Vertices are placed in
+  increasing label order; when \(v\) is placed all its lower neighbours
+  are already placed, so \(p(v)\) is fixed at that moment (Lemma 1).
+  \emph{Symmetry reduction:} at each node only one candidate per orbit
+  of the pointwise stabiliser (inside \(\mathrm{Aut}(Q_4)\), order
+  \(384\), generated explicitly as coordinate permutation followed by
+  XOR with a mask) of the already-placed set is tried; this is sound
+  because if \(g\) fixes the placed vertices pointwise and \(g(v)=v'\),
+  then \(f\mapsto f\circ g^{-1}\) maps labellings with prefix
+  \((\dots,v)\) bijectively onto labellings with prefix \((\dots,v')\)
+  and preserves the number of uphill paths. \emph{Lower bound at a node}
+  (placed set \(S\), unplaced set \(U\),
+  \(a(v)=\sum_{u\in N(v)\cap S}p(u)\), \(d(v)\) = number of
+  in-neighbours of \(v\) inside \(U\) in the final orientation, so
+  \(\sum_{v\in U}d(v)=E(U)\), the number of edges inside \(U\)): for
+  \(v\in U\) all \(S\)-neighbours are lower and all unplaced
+  in-neighbours have \(p\ge1\), so \(p(v)\ge\max(1,a(v)+d(v))\);
+  minimising \(\sum_{v\in U}\max(1,a(v)+d(v))\) over nonnegative \(d\)
+  with \(\sum d=E(U)\) gives
+  \(\sum_{v\in U,a(v)\ge1}a(v)+\max(\#\{v\in U:a(v)=0\},E(U))\), so
+  \(\text{LB}=\sum_{v\in S}p(v)+\sum_{v\in U,a(v)\ge1}a(v)+\max(\#\{a=0\},E(U))\)
+  is a valid lower bound for every completion; a node is pruned iff
+  \(\text{LB}\ge T\). Results: \(T=34\): \textbf{0 labellings found}, 47
+  978 nodes, 0.3 s. \(T=35\): 19 525 440 labellings with exactly 34
+  reached by the reduced search, 54 814 700 nodes, 156.8 s (shows the
+  pruning is not over-aggressive at the optimum). Sanity check on
+  \(Q_3\) (same code with \texttt{D\ =\ 3}): \(T=13\): 0 found;
+  \(T=14\): 0 found (83 nodes); \(T=15\): 148 found, and
+  \(148\cdot48=7104\) is exactly the known number of optimal labellings
+  of \(Q_3\) (\(|\mathrm{Aut}(Q_3)|=48\)). This search is a confirmation
+  only; the proof of \(U(Q_4)\ge34\) is the hand argument above.
+\item
+  \texttt{q4\_ricerca\_locale.py} (simulated annealing, 12 seeds, 200
+  000 steps each, 12.8 s) found the value 34 in every run and never
+  below; heuristic only, proves nothing, used to find the incumbent.
+\end{enumerate}
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Tre programmi indipendenti, solo Python 3 standard (interi esatti),
+ciascuno enumera tutte le \(8!=40320\) etichettature: -
+\texttt{problema-2/certificati/q3\_esaustivo.py} --- DFS esplicita dei
+cammini + programmazione dinamica di Lemma 1, con \texttt{assert} di
+uguaglianza su ogni etichettatura. Tempo misurato: 0.37 s. -
+\texttt{problema-2/certificati/q3\_verifica\_indipendente.py} ---
+scritto separatamente, metodo diverso: costruzione esplicita livello per
+livello di tutte le sequenze crescenti a partire dalle valli. Tempo
+misurato: 0.20 s. -
+\texttt{problema-2/certificati/verifica\_etichettatura\_q3.py} ---
+controlla la sola etichettatura consegnata (biiezione, valli, \(p(v)\)
+per vertice, totale 14). Comando:
+\texttt{python3\ problema-2/certificati/q3\_verifica\_indipendente.py}
+(e analoghi). Python 3.14.7, macOS. Tutti riportano: minimo 14, 7104
+etichettature ottime, distribuzione senza valori 13 e 15.
+
+Per \(Q_4\) (la prova del lower bound è a mano; il calcolo è solo
+conferma): - \texttt{verifica\_etichettatura\_q4.py} (Researcher, due
+metodi) e \texttt{q4\_verifica\_etichettatura\_indipendente.py} (scritto
+a parte, costruzione esplicita dei cammini): entrambi 34 cammini, valli
+\texttt{0000} e \texttt{1111}, biiezione verificata. -
+\texttt{q4\_branch\_and\_bound.py\ SOGLIA}: branch-and-bound esatto con
+riduzione per simmetria (384 automorfismi); con soglia 34 nessuna
+etichettatura sotto 34 (47978 nodi, 0.3 s); con soglia 35 trova
+etichettature con 34 (54.8M nodi, 157 s). La correttezza della riduzione
+è argomentata nello script ma la cella non ne dipende. -
+\texttt{q4\_ricerca\_locale.py}: simulated annealing, solo esplorazione
+(12 seed, miglior valore 34 in ogni run).
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+Nessuna fonte esterna usata. L'argomento del lower bound generalizza
+l'idea di IMO 2022 P6 (ogni vertice è fine di almeno un cammino;
+\(p(v)\ge\deg^-(v)\)), aggiungendo l'ostruzione specifica di \(Q_3\)
+(Proposizione 4). Prova prodotta dal Researcher automatico (Claude Fable
+5.1, run \texttt{runs/p2\_q3/attempts/attempt\_001.json}) e revisionata
+a mano passo per passo; verifica numerica indipendente scritta a parte.
+
+\subparagraph{5. Limiti e osservazioni}\label{limiti-e-osservazioni}
+
+\begin{itemize}
+\tightlist
+\item
+  Nessuna parte irrisolta per C1.
+\item
+  \(U(Q_3)=|E|+2\) e \(U(Q_4)=|E|+2\). L'argomento di parità di \(Q_4\)
+  (Step 3--4) si generalizza: il totale \(|E|+1\) è impossibile su
+  \(Q_d\) quando \((d-1)\nmid 2^{d-1}(d-2)+1\), cioè per ogni \(d\) da 3
+  a 10 almeno. Quindi \(U(Q_d)\ge|E|+2\) in quel range: bound debole
+  rispetto ai 2368 noti per \(Q_9\), ma gratuito.
+\item
+  L'ottimo di \(Q_4\) ha DUE valli e realizza esattamente
+  \(|E|+\#\text{valli}\): per i cubi grandi conviene cercare
+  etichettature con poche valli in cui quasi tutti i vertici abbiano
+  \(p(v)=\max(1,\deg^-(v))\).
+\end{itemize}
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p2\_c1}}
+\paragraph{Run \texttt{p2\_q3}}
+\begin{description}
+\item[Iterazione 1 — attempt\_001]
+\textbf{Researcher}: famiglia \texttt{exact\_computation}, sotto-obiettivo: Determine U(Q\_3) exactly (value + explicit optimal labelling in the required format), with certainty via exhaustive exact enumeration of all 8! labellings, plus an independent hand proof of the lower bound.. Stato dichiarato: \texttt{CELL\_SOLVED\_CANDIDATE}.
+\emph{Perché questa scelta}: No prior attempts exist. The cell explicitly allows exhaustive exact computation with code and stated finite set; 8! = 40320 labellings is tiny (0.36 s). To make the result robust against a coding bug, two genuinely different counting routines are cross-checked on every labelling, and the lower bound is also proved by hand so the value does not rest on the code alone.
+\textbf{Referee}: verdetto \texttt{(nessun verdetto)}.
+\end{description}
+\paragraph{Run \texttt{p2\_q4}}
+\begin{description}
+\item[Iterazione 1 — attempt\_001]
+\textbf{Researcher}: famiglia \texttt{direct\_proof}, sotto-obiettivo: Determine U(Q\_4) exactly: prove the lower bound U(Q\_4) \textgreater{}= 34 by hand and exhibit an explicit labelling with exactly 34 uphill paths (route (b) of the cell), with an independent exact computer confirmation.. Stato dichiarato: \texttt{CELL\_SOLVED\_CANDIDATE}.
+\emph{Perché questa scelta}: No failed attempts recorded. Simulated annealing (12 seeds) never went below 34 = |E| + 2, while the verified bound gives 33; the gap of 1 suggested a tightness analysis of the verified bound |E| + \#valleys, exactly as Proposition 4 did for Q\_3. The tightness analysis turned out to close with a pure counting argument (no case analysis), so I chose route (b) (hand proof + explicit labelling), and added a symmetry-reduced exact search only as an independent check, not as the proof.
+\textbf{Referee}: verdetto \texttt{(nessun verdetto)}.
+\end{description}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+\begin{lstlisting}[caption={attempt\_001 code\_1 [python, rigore exact] — Exhaustive exact enumeration of all 8! = 40320 labellings of Q\_3; two independent counts ( — verdetto del Referee: (nessun verdetto)}]
+"""
+Calcolo esatto di U(Q_3) per enumerazione esaustiva di tutte le 8! = 40320 etichettature.
+
+Due conteggi indipendenti per ogni etichettatura:
+  1. DFS: enumera esplicitamente ogni cammino in salita (v_1,...,v_k) partendo da ogni valle.
+  2. DP:  p(v) = [v valle] + somma_{u vicino, f(u)<f(v)} p(u);  totale = somma_v p(v).
+Aritmetica: solo interi Python (esatta). Insieme coperto: TUTTE le biiezioni V(Q_3) -> {1..8}.
+"""
+from itertools import permutations
+from collections import Counter
+import time
+
+D = 3
+VERTICI = list(range(2 ** D))                      # vertice = intero, bit i = coordinata i
+VICINI = [[v ^ (1 << i) for i in range(D)] for v in VERTICI]
+
+
+def stringa(v):
+    """Vertice intero -> stringa 0/1 di lunghezza D (bit 0 a sinistra)."""
+    return "".join(str((v >> i) & 1) for i in range(D))
+
+
+def valli(etichetta):
+    """Vertici con tutti i vicini di etichetta maggiore."""
+    return [v for v in VERTICI if all(etichetta[w] > etichetta[v] for w in VICINI[v])]
+
+
+def conta_dfs(etichetta):
+    """Conteggio 1: enumera esplicitamente ogni cammino in salita."""
+    def cammini_da(v):
+        # il cammino che termina in v conta 1, piu' tutte le estensioni ai vicini maggiori
+        return 1 + sum(cammini_da(w) for w in VICINI[v] if etichetta[w] > etichetta[v])
+    return sum(cammini_da(v) for v in valli(etichetta))
+
+
+def conta_dp(etichetta):
+    """Conteggio 2: programmazione dinamica in ordine crescente di etichetta."""
+    ordine = sorted(VERTICI, key=lambda v: etichetta[v])
+    p = {}
+    for v in ordine:
+        minori = [w for w in VICINI[v] if etichetta[w] < etichetta[v]]
+        p[v] = (1 if not minori else 0) + sum(p[w] for w in minori)
+    return sum(p.values())
+
+
+def esplora_tutte():
+    """Enumera tutte le 8! etichettature; restituisce (minimo, distribuzione, ottime)."""
+    distribuzione = Counter()
+    ottime = []
+    minimo = None
+    for perm in permutations(range(1, 2 ** D + 1)):
+        etichetta = list(perm)                     # etichetta[v] = f(v)
+        n_dfs = conta_dfs(etichetta)
+        n_dp = conta_dp(etichetta)
+        assert n_dfs == n_dp, (etichetta, n_dfs, n_dp)
+        distribuzione[n_dfs] += 1
+        if minimo is None or n_dfs < minimo:
+            minimo, ottime = n_dfs, [etichetta]
+        elif n_dfs == minimo:
+            ottime.append(etichetta)
+    return minimo, distribuzione, ottime
+
+
+def lista_ordinata(etichetta):
+    """Formato di consegna: vertici in ordine crescente di etichetta, come stringhe 0/1."""
+    return [stringa(v) for v in sorted(VERTICI, key=lambda v: etichetta[v])]
+
+
+if __name__ == "__main__":
+    inizio = time.time()
+    minimo, distribuzione, ottime = esplora_tutte()
+    print(f"etichettature esaminate: {sum(distribuzione.values())}")
+    print(f"U(Q_3) = {minimo}; etichettature ottime: {len(ottime)}")
+    print("distribuzione (cammini -> numero etichettature):", sorted(distribuzione.items()))
+    print("prima etichettatura ottima (ordine crescente di etichetta):", lista_ordinata(ottime[0]))
+    print(f"tempo: {time.time() - inizio:.2f} s")
+
+\end{lstlisting}
+\begin{lstlisting}[caption={attempt\_001 code\_2 [python, rigore exact] — Independent check of the single submitted labelling (bijection check, valleys, per-vertex  — verdetto del Referee: (nessun verdetto)}]
+"""
+Verifica indipendente della singola etichettatura consegnata per Q_3:
+stampa valli, p(v) per ogni vertice e il totale dei cammini in salita (interi esatti).
+"""
+D = 3
+CONSEGNA = ['000', '100', '010', '110', '101', '011', '001', '111']   # ordine crescente di etichetta
+
+
+def vicini(s):
+    """Stringhe 0/1 che differiscono da s in esattamente una coordinata."""
+    return [s[:i] + ('1' if s[i] == '0' else '0') + s[i + 1:] for i in range(D)]
+
+
+def verifica(consegna):
+    """Calcola p(v) in ordine di etichetta e restituisce (valli, p, totale)."""
+    assert sorted(consegna) == sorted(format(k, f'0{D}b') for k in range(2 ** D)), "non e' una biiezione"
+    etichetta = {s: k + 1 for k, s in enumerate(consegna)}
+    p, valli = {}, []
+    for s in consegna:
+        minori = [w for w in vicini(s) if etichetta[w] < etichetta[s]]
+        if not minori:
+            valli.append(s)
+        p[s] = (1 if not minori else 0) + sum(p[w] for w in minori)
+    return valli, p, sum(p.values())
+
+
+if __name__ == "__main__":
+    valli, p, totale = verifica(CONSEGNA)
+    print("valli:", valli)
+    for s in CONSEGNA:
+        print(f"  {s}  etichetta {CONSEGNA.index(s)+1}  p = {p[s]}")
+    print("cammini in salita totali:", totale)
+
+\end{lstlisting}
+\begin{lstlisting}[caption={attempt\_001 code\_1 [python, rigore exact] — Exact verification of the submitted labelling of Q\_4: bijection check, valleys, per-vertex — verdetto del Referee: (nessun verdetto)}]
+"""Verifica ESATTA (interi Python) dell'etichettatura candidata di Q_4 con 34 cammini in salita.
+Due metodi indipendenti: (i) DP di Lemma 1 in ordine di etichetta; (ii) enumerazione esplicita
+(DFS) di tutti i cammini in salita da ogni valle. Stampa la tabella p(v) per la consegna."""
+D = 4
+N = 1 << D
+# Convenzione: carattere i-esimo della stringa (da sinistra) = coordinata i; bit i dell'intero.
+ETICHETTATURA = ['0000', '1111', '0111', '1101', '1110', '1011', '0001', '1000',
+                 '0010', '0100', '1001', '0110', '0011', '1010', '0101', '1100']
+
+
+def da_stringa(s):
+    """Converte la stringa 0/1 (carattere i = coordinata i) nell'intero con bit i = coordinata i."""
+    return sum(int(c) << i for i, c in enumerate(s))
+
+
+def vicini(v):
+    """I d vicini di v in Q_d: si cambia esattamente una coordinata."""
+    return [v ^ (1 << i) for i in range(D)]
+
+
+def conta_con_dp(ordine, etichetta):
+    """Metodo (i): p(v) = [v valle] + somma p(u) sui vicini u con etichetta minore."""
+    p = {}
+    righe = []
+    for v in ordine:
+        minori = [u for u in vicini(v) if etichetta[u] < etichetta[v]]
+        p[v] = 1 if not minori else sum(p[u] for u in minori)
+        righe.append((format(v, f'0{D}b')[::-1], etichetta[v], [format(u, f'0{D}b')[::-1] for u in minori], p[v]))
+    return sum(p.values()), righe
+
+
+def conta_con_dfs(etichetta):
+    """Metodo (ii): enumera esplicitamente ogni cammino in salita partendo da ogni valle."""
+    def estendi(v):
+        totale = 1  # il cammino che termina qui
+        for w in vicini(v):
+            if etichetta[w] > etichetta[v]:
+                totale += estendi(w)
+        return totale
+    valli = [v for v in range(N) if all(etichetta[w] > etichetta[v] for w in vicini(v))]
+    return sum(estendi(v) for v in valli), valli
+
+
+def main():
+    ordine = [da_stringa(s) for s in ETICHETTATURA]
+    assert sorted(ordine) == list(range(N)), "non e' una biiezione"
+    etichetta = {v: i + 1 for i, v in enumerate(ordine)}
+    totale_dp, righe = conta_con_dp(ordine, etichetta)
+    totale_dfs, valli = conta_con_dfs(etichetta)
+    for stringa, lab, minori, p in righe:
+        print(f"{stringa}  etichetta {lab:2d}  vicini minori {minori}  p = {p}")
+    print("valli:", [format(v, f'0{D}b')[::-1] for v in valli])
+    print("totale (DP di Lemma 1):", totale_dp)
+    print("totale (DFS esplicita):", totale_dfs)
+    assert totale_dp == totale_dfs == 34
+
+
+if __name__ == "__main__":
+    main()
+
+\end{lstlisting}
+\begin{lstlisting}[caption={attempt\_001 code\_2 [python, rigore exact] — Independent exact confirmation of the lower bound: symmetry-reduced branch-and-bound over  — verdetto del Referee: (nessun verdetto)}]
+"""Branch-and-bound ESATTO (interi) su Q_4: cerca un'etichettatura con < SOGLIA cammini in salita.
+Si piazzano i vertici in ordine crescente di etichetta; p(v) e' determinato al piazzamento (Lemma 1).
+Riduzione per simmetria: a ogni nodo si prova un solo candidato per orbita dello stabilizzatore
+puntuale (in Aut(Q_4), ordine 384) dell'insieme gia' piazzato. Bound inferiore dimostrato nel testo.
+Conferma indipendente della prova a mano; NON e' la prova principale."""
+import sys, time
+from itertools import permutations
+
+D = 4
+N = 1 << D
+VICINI = [[v ^ (1 << i) for i in range(D)] for v in range(N)]
+
+
+def automorfismi():
+    """Tutti i 384 automorfismi di Q_4 come tuple immagine: v -> perm(coordinate) XOR maschera."""
+    gruppo = []
+    for perm in permutations(range(D)):
+        for maschera in range(N):
+            immagine = tuple(sum(((v >> i) & 1) << perm[i] for i in range(D)) ^ maschera for v in range(N))
+            gruppo.append(immagine)
+    return gruppo
+
+
+GRUPPO = automorfismi()
+
+
+def bound_inferiore(p, piazzati, non_piazzati):
+    """Bound: per v non piazzato p(v) >= max(1, a(v) + d(v)), a(v) = somma p sui vicini piazzati,
+    d(v) = archi entranti da vertici non piazzati (somma dei d(v) = archi interni E(U)).
+    Minimizzando sui d(v) a somma fissata: somma_{a>=1} a(v) + max(|U0|, E(U)), U0 = {a(v)=0}."""
+    totale = sum(p[v] for v in piazzati)
+    zeri, archi_interni = 0, 0
+    for v in non_piazzati:
+        a = sum(p[u] for u in VICINI[v] if u in piazzati)
+        if a == 0:
+            zeri += 1
+        else:
+            totale += a
+        archi_interni += sum(1 for u in VICINI[v] if u not in piazzati)
+    return totale + max(zeri, archi_interni // 2)
+
+
+def rappresentanti(non_piazzati, stabilizzatore):
+    """Un candidato per orbita dello stabilizzatore sui vertici non piazzati."""
+    visti, scelti = set(), []
+    for v in sorted(non_piazzati):
+        if v in visti:
+            continue
+        scelti.append(v)
+        visti.update(g[v] for g in stabilizzatore)
+    return scelti
+
+
+class Ricerca:
+    def __init__(self, soglia):
+        self.soglia = soglia
+        self.nodi = 0
+        self.trovate = []
+
+    def esplora(self, ordine, p, piazzati, stabilizzatore):
+        """Espande un nodo: prova ogni rappresentante d'orbita come prossimo vertice."""
+        self.nodi += 1
+        non_piazzati = [v for v in range(N) if v not in piazzati]
+        if not non_piazzati:
+            self.trovate.append(list(ordine))
+            return
+        if bound_inferiore(p, piazzati, non_piazzati) >= self.soglia:
+            return
+        for v in rappresentanti(non_piazzati, stabilizzatore):
+            minori = [u for u in VICINI[v] if u in piazzati]
+            p[v] = 1 if not minori else sum(p[u] for u in minori)
+            piazzati.add(v)
+            ordine.append(v)
+            self.esplora(ordine, p, piazzati, [g for g in stabilizzatore if g[v] == v])
+            ordine.pop()
+            piazzati.discard(v)
+            del p[v]
+
+
+def main():
+    soglia = int(sys.argv[1]) if len(sys.argv) > 1 else 34
+    inizio = time.time()
+    ricerca = Ricerca(soglia)
+    ricerca.esplora([], {}, set(), GRUPPO)
+    print(f"soglia {soglia}: etichettature con < {soglia} cammini trovate: {len(ricerca.trovate)}")
+    for ordine in ricerca.trovate[:5]:
+        print("  ", [format(v, f'0{D}b')[::-1] for v in ordine])
+    print(f"nodi visitati: {ricerca.nodi}; tempo: {time.time() - inizio:.1f} s")
+
+
+if __name__ == "__main__":
+    main()
+
+\end{lstlisting}
+\begin{lstlisting}[caption={attempt\_001 code\_3 [python, rigore float\_exploration\_only] — Heuristic simulated annealing to find an incumbent labelling (upper bound candidate). 12 s — verdetto del Referee: (nessun verdetto)}]
+"""Ricerca locale (simulated annealing) di etichettature di Q_4 con pochi cammini in salita.
+Serve solo a trovare un buon candidato (upper bound): NON dimostra nulla.
+Aritmetica: interi esatti (il conteggio), float solo nella regola di accettazione di SA."""
+import random, sys, math
+
+D = 4
+N = 1 << D
+VICINI = [[v ^ (1 << i) for i in range(D)] for v in range(N)]
+
+
+def conta_cammini(ordine):
+    """Numero di cammini in salita dell'etichettatura data come lista di vertici
+    in ordine crescente di etichetta (Lemma 1: p(v) = [valle] + somma p(u) sui vicini minori)."""
+    etichetta = [0] * N
+    for pos, v in enumerate(ordine):
+        etichetta[v] = pos
+    p = [0] * N
+    totale = 0
+    for v in ordine:
+        minori = [u for u in VICINI[v] if etichetta[u] < etichetta[v]]
+        p[v] = 1 if not minori else sum(p[u] for u in minori)
+        totale += p[v]
+    return totale
+
+
+def ricottura(seme, passi=200000):
+    """Una corsa di simulated annealing con mosse di scambio e di spostamento."""
+    rng = random.Random(seme)
+    ordine = list(range(N))
+    rng.shuffle(ordine)
+    valore = conta_cammini(ordine)
+    migliore, migliore_ordine = valore, ordine[:]
+    for passo in range(passi):
+        temperatura = 2.0 * (1 - passo / passi) + 0.05
+        nuovo = ordine[:]
+        i, j = rng.randrange(N), rng.randrange(N)
+        if rng.random() < 0.5:
+            nuovo[i], nuovo[j] = nuovo[j], nuovo[i]
+        else:
+            nuovo.insert(j, nuovo.pop(i))
+        nuovo_valore = conta_cammini(nuovo)
+        if nuovo_valore <= valore or rng.random() < math.exp((valore - nuovo_valore) / temperatura):
+            ordine, valore = nuovo, nuovo_valore
+            if valore < migliore:
+                migliore, migliore_ordine = valore, ordine[:]
+    return migliore, migliore_ordine
+
+
+def main():
+    corse = int(sys.argv[1]) if len(sys.argv) > 1 else 20
+    globale, globale_ordine = None, None
+    for seme in range(corse):
+        valore, ordine = ricottura(seme)
+        if globale is None or valore < globale:
+            globale, globale_ordine = valore, ordine
+        print(f"seme {seme}: {valore} (migliore finora {globale})", flush=True)
+    stringhe = [format(v, f"0{D}b") for v in globale_ordine]
+    print("MIGLIORE:", globale, stringhe)
+
+
+if __name__ == "__main__":
+    main()
+
+\end{lstlisting}
+
+\section{arXiv literature consulted}
+\begin{thebibliography}{99}
+\bibitem{1412.3893v1} Ian E. Ochs, Michael M. Desai. \emph{The competition between simple and complex evolutionary trajectories in asexual populations}. arXiv:1412.3893v1 (2014). \url{http://arxiv.org/abs/1412.3893v1}
+\end{thebibliography}
+\end{document}

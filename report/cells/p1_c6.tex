@@ -1,0 +1,122 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage[italian,english]{babel}
+\usepackage{amsmath,amssymb,amsthm}\usepackage[margin=2.2cm]{geometry}\usepackage{longtable,booktabs,array,calc}
+\usepackage{listings,xcolor}\usepackage{hyperref}\usepackage{url}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,frame=single,captionpos=b,columns=fullflexible,keepspaces=true,inputencoding=utf8,extendedchars=true}
+\title{Proof Pursuit --- Problem 1, part 6\\ \large prove, decisioni degli agenti, codice verificato, letteratura}
+\author{Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)}
+\date{\today}
+\begin{document}\maketitle\tableofcontents
+\section*{Come leggere questo rapporto}
+Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team (mai ``risolto'' senza revisione umana), la consegna
+con la prova, poi la traccia delle decisioni degli agenti (Researcher: famiglia e motivo; Referee: verdetto ed errore
+fatale; Creative: quando e perché è intervenuto) e il codice su cui il tentativo poggia con l'esito della riesecuzione
+fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO e CONGETTURA restano distinti. L'architettura del sistema
+è descritta nel README del repository.
+\section{Problem 1 — Angles between lines (Fejes Toth)}
+\subsection{Cella 6 (13 punti) — stato: parziale}
+\subparagraph{\texorpdfstring{Parte 6 --- \(N\) lines in
+\(\mathbb{R}^d\)}{Parte 6 --- N lines in \textbackslash mathbb\{R\}\^{}d}}\label{parte-6-n-lines-in-mathbbrd}
+
+\textbf{Punteggio:} 13 points · \textbf{Valutazione:} Judged ·
+\textbf{Open question}
+
+Fejes Tóth's conjecture from the Setting, for every \(N\) and every
+\(d\). For \(N\) lines in \(\mathbb{R}^d\), write \(N = qd + s\) with
+\(0 \le s < d\), and let \[
+M(N,d) = s \binom{q+1}{2} + (d-s) \binom{q}{2}.
+\] Prove or disprove: every \(N\) lines in \(\mathbb{R}^d\) satisfy \[
+S \;\le\; \left( \binom{N}{2} - M(N,d) \right) \frac{\pi}{2}.
+\] This is the value attained by splitting the lines as evenly as
+possible among \(d\) mutually orthogonal directions. Settling any
+infinite family not already covered above counts as partial progress.
+
+\emph{(Fine del problema 1. Punteggi: 1+2+3+5+8+13 = 32.)}
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{OPEN. For N lines in R\textasciicircum{}d write N = qd+s, 0 \textless{}= s \textless{} d, M(N,d) = s C(q+1,2) + (d-s) C(q,2). Prove or disprove: S \textless{}= (C(N,2) - M(N,d)) pi/2. Settling any infinite family not covered by cells 1-5 counts as partial progress.}
+
+\textbf{Evidenza registrata in STATUS.md.} triage; solo ricerca controesempi / famiglie infinite; bozza parziale in inglese in submission/ (parziali.py)
+
+\subsubsection{Consegna (prova)}
+\paragraph{Problema 1 --- Parte 6 --- bozza di consegna
+PARZIALE}\label{problema-1-parte-6-bozza-di-consegna-parziale}
+
+\textbf{Stato dichiarato: PARZIALE.} Nessuna soluzione completa: qui
+sotto ciò che è stabilito, la formalizzazione, la posizione rispetto
+alla letteratura e ciò che resta aperto. Nulla è dichiarato dimostrato
+oltre quanto scritto.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+\textbf{Richiesta ufficiale.} \#\# Parte 6 --- \(N\) lines in
+\(\mathbb{R}^d\)
+
+\textbf{Punteggio:} 13 points · \textbf{Valutazione:} Judged ·
+\textbf{Open question}
+
+Fejes Tóth's conjecture from the Setting, for every \(N\) and every
+\(d\). For \(N\) lines in \(\mathbb{R}^d\), write \(N = qd + s\) with
+\(0 \le s < d\), and let \[
+M(N,d) = s \binom{q+1}{2} + (d-s) \binom{q}{2}.
+\] Prove or disprove: every \(N\) lines in \(\mathbb{R}^d\) satisfy \[
+S \;\le\; \left( \binom{N}{2} - M(N,d) \right) \frac{\pi}{2}.
+\] This is the value attained by splitting the lines as evenly as
+possible among \(d\) mutually orthogonal directions. Settling any
+infinite family not already covered above counts as partial progress.
+
+\emph{(Fine del problema 1. Punteggi: 1+2+3+5+8+13 = 32.)}
+
+\textbf{Cosa consegniamo.} Problema aperto. Nessuna famiglia infinita
+nuova. Contributo: verifica numerica del bound per \(N\le10\) nel piano
+(harness) e impostazione della ricerca di controesempi.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+Congettura di Fejes Tóth completa. Con il harness numerico
+(\texttt{tools/autoloop.py}, hill climbing con riavvii) il massimo
+trovato coincide con il valore congetturato entro \(2\cdot10^{-5}\) per
+tutti i casi provati; nessun superamento. Non è una prova (virgola
+mobile).
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Codice disponibile (Python 3, libreria standard; ogni script gira in
+meno di un minuto): - \texttt{problema-1/esperimenti/lines\_Rd.py} -
+\texttt{problema-1/esperimenti/p1\_somma\_angoli.py}
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+Letteratura arXiv (ricerca deterministica
+\texttt{tools/cerca\_letteratura.sh}, abstract letti, non usata come
+prova): - arXiv:1801.07837v1 --- On the Fejes Tóth Problem about the Sum
+of Angles Between Lines (Dmitriy Bilyk, Ryan W Matzke, 2018); solo
+abstract letto. - arXiv:2007.08698v2 --- On Fejes Tóth's conjectured
+maximizer for the sum of angles between lines (Tongseok Lim, Robert J.
+McCann, 2020); solo abstract letto. - arXiv:1204.3850v1 --- Simple
+Agents Learn to Find Their Way: An Introduction on Mapping Polygons
+(Jérémie Chalopin, Shantanu Das, Yann Disser, 2012); solo abstract
+letto. Bilyk--Matzke {[}1801.07837{]}: bound generale via energia e
+riduzione dimensione alta → bassa; Lim--McCann {[}2007.08698{]}:
+equivalenza con l'unicità dell'ottimizzatore per ogni \(\alpha>1\),
+dimostrata per \(\alpha=\infty\).
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Tutto.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p1\_c6}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\section{arXiv literature consulted}
+\begin{thebibliography}{99}
+\bibitem{1801.07837v1} Dmitriy Bilyk, Ryan W Matzke. \emph{On the Fejes Tóth Problem about the Sum of Angles Between Lines}. arXiv:1801.07837v1 (2018). \url{http://arxiv.org/abs/1801.07837v1}
+\bibitem{2007.08698v2} Tongseok Lim, Robert J. McCann. \emph{On Fejes Tóth's conjectured maximizer for the sum of angles between lines}. arXiv:2007.08698v2 (2020). \url{http://arxiv.org/abs/2007.08698v2}
+\bibitem{1204.3850v1} Jérémie Chalopin, Shantanu Das, Yann Disser, Matúš Mihalák, Peter Widmayer. \emph{Simple Agents Learn to Find Their Way: An Introduction on Mapping Polygons}. arXiv:1204.3850v1 (2012). \url{http://arxiv.org/abs/1204.3850v1}
+\end{thebibliography}
+\end{document}

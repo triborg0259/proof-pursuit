@@ -1,0 +1,115 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage[italian,english]{babel}
+\usepackage{amsmath,amssymb,amsthm}\usepackage[margin=2.2cm]{geometry}\usepackage{longtable,booktabs,array,calc}
+\usepackage{listings,xcolor}\usepackage{hyperref}\usepackage{url}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,frame=single,captionpos=b,columns=fullflexible,keepspaces=true,inputencoding=utf8,extendedchars=true}
+\title{Proof Pursuit --- Problem 1, part 4\\ \large prove, decisioni degli agenti, codice verificato, letteratura}
+\author{Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)}
+\date{\today}
+\begin{document}\maketitle\tableofcontents
+\section*{Come leggere questo rapporto}
+Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team (mai ``risolto'' senza revisione umana), la consegna
+con la prova, poi la traccia delle decisioni degli agenti (Researcher: famiglia e motivo; Referee: verdetto ed errore
+fatale; Creative: quando e perché è intervenuto) e il codice su cui il tentativo poggia con l'esito della riesecuzione
+fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO e CONGETTURA restano distinti. L'architettura del sistema
+è descritta nel README del repository.
+\section{Problem 1 — Angles between lines (Fejes Toth)}
+\subsection{Cella 4 (5 punti) — stato: parziale}
+\subparagraph{\texorpdfstring{Parte 4 --- Five lines in
+\(\mathbb{R}^3\), six in
+\(\mathbb{R}^4\)}{Parte 4 --- Five lines in \textbackslash mathbb\{R\}\^{}3, six in \textbackslash mathbb\{R\}\^{}4}}\label{parte-4-five-lines-in-mathbbr3-six-in-mathbbr4}
+
+\textbf{Punteggio:} 5 points · \textbf{Valutazione:} Judged
+
+Two concrete instances of the next case, \(N = d+2\): five lines in
+three dimensions and six lines in four. In each, the conjectured optimum
+repeats two of the coordinate axes. Prove that any \(5\) lines in
+\(\mathbb{R}^3\) satisfy \(S \le 4\pi\), and that any \(6\) lines in
+\(\mathbb{R}^4\) satisfy \(S \le 13\pi/2\).
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Prove that any 5 lines through the origin in R\textasciicircum{}3 satisfy S \textless{}= 4 pi, and that any 6 lines in R\textasciicircum{}4 satisfy S \textless{}= 13 pi/2. A rigorous computation (exact/interval arithmetic, \textless{} 10 min, code included) is admissible.}
+
+\textbf{Evidenza registrata in STATUS.md.} triage; possibile via P5 o calcolo rigoroso; bozza parziale in inglese in submission/ (parziali.py)
+
+\subsubsection{Consegna (prova)}
+\paragraph{Problema 1 --- Parte 4 --- bozza di consegna
+PARZIALE}\label{problema-1-parte-4-bozza-di-consegna-parziale}
+
+\textbf{Stato dichiarato: PARZIALE.} Nessuna soluzione completa: qui
+sotto ciò che è stabilito, la formalizzazione, la posizione rispetto
+alla letteratura e ciò che resta aperto. Nulla è dichiarato dimostrato
+oltre quanto scritto.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+\textbf{Richiesta ufficiale.} \#\# Parte 4 --- Five lines in
+\(\mathbb{R}^3\), six in \(\mathbb{R}^4\)
+
+\textbf{Punteggio:} 5 points · \textbf{Valutazione:} Judged
+
+Two concrete instances of the next case, \(N = d+2\): five lines in
+three dimensions and six lines in four. In each, the conjectured optimum
+repeats two of the coordinate axes. Prove that any \(5\) lines in
+\(\mathbb{R}^3\) satisfy \(S \le 4\pi\), and that any \(6\) lines in
+\(\mathbb{R}^4\) satisfy \(S \le 13\pi/2\).
+
+\textbf{Cosa consegniamo.} Nessuna prova. Riformulazione: entrambe le
+istanze sono il caso \(N=d+2\), equivalente a deficit totale \(\ge\pi\).
+Verifica numerica (non prova) del bound su entrambe le istanze.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+Le due disuguaglianze richieste sono i casi \((d,N)=(3,5)\) e \((4,6)\)
+della parte 5. Con
+\(\delta_{ij}=\pi/2-\theta_{ij}=\arcsin|\langle x_i,x_j\rangle|\) le
+tesi diventano \(\sum_{i<j}\delta_{ij}\ge\pi\). Via computazionale
+ammessa dalla cella: massimizzazione rigorosa di \(S\) su \((S^2)^5\) e
+\((S^3)^6\) con aritmetica a intervalli e branch-and-bound; parametri
+liberi 7 e 12 dopo le simmetrie, con massimi non lisci (coppie
+ortogonali o coincidenti), quindi serve un argomento locale attorno agli
+ottimi. Impostato, non eseguito: il caso in \(\mathbb R^4\) è al limite
+dei 10 minuti.
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Codice disponibile (Python 3, libreria standard; ogni script gira in
+meno di un minuto): - \texttt{problema-1/esperimenti/lines\_Rd.py} -
+\texttt{problema-1/esperimenti/p1\_somma\_angoli.py}
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+Letteratura arXiv (ricerca deterministica
+\texttt{tools/cerca\_letteratura.sh}, abstract letti, non usata come
+prova): - arXiv:1801.07837v1 --- On the Fejes Tóth Problem about the Sum
+of Angles Between Lines (Dmitriy Bilyk, Ryan W Matzke, 2018); solo
+abstract letto. - arXiv:2007.08698v2 --- On Fejes Tóth's conjectured
+maximizer for the sum of angles between lines (Tongseok Lim, Robert J.
+McCann, 2020); solo abstract letto. - arXiv:1204.3850v1 --- Simple
+Agents Learn to Find Their Way: An Introduction on Mapping Polygons
+(Jérémie Chalopin, Shantanu Das, Yann Disser, 2012); solo abstract
+letto. Fejes Tóth (1959) copre \(\mathbb R^3\) con \(N\le6\) secondo
+Bilyk--Matzke {[}1801.07837{]}: la prima istanza è nota in letteratura,
+ma la citazione non vale come prova.
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Entrambe le istanze: prova mancante. Strada realistica: dedurle dalla
+parte 5 oppure completare il branch-and-bound a intervalli per
+\(\mathbb R^3\).
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p1\_c4}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\section{arXiv literature consulted}
+\begin{thebibliography}{99}
+\bibitem{1801.07837v1} Dmitriy Bilyk, Ryan W Matzke. \emph{On the Fejes Tóth Problem about the Sum of Angles Between Lines}. arXiv:1801.07837v1 (2018). \url{http://arxiv.org/abs/1801.07837v1}
+\bibitem{2007.08698v2} Tongseok Lim, Robert J. McCann. \emph{On Fejes Tóth's conjectured maximizer for the sum of angles between lines}. arXiv:2007.08698v2 (2020). \url{http://arxiv.org/abs/2007.08698v2}
+\bibitem{1204.3850v1} Jérémie Chalopin, Shantanu Das, Yann Disser, Matúš Mihalák, Peter Widmayer. \emph{Simple Agents Learn to Find Their Way: An Introduction on Mapping Polygons}. arXiv:1204.3850v1 (2012). \url{http://arxiv.org/abs/1204.3850v1}
+\end{thebibliography}
+\end{document}

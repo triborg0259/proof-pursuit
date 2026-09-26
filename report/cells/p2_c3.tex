@@ -1,0 +1,417 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage[italian,english]{babel}
+\usepackage{amsmath,amssymb,amsthm}\usepackage[margin=2.2cm]{geometry}\usepackage{longtable,booktabs,array,calc}
+\usepackage{listings,xcolor}\usepackage{hyperref}\usepackage{url}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,frame=single,captionpos=b,columns=fullflexible,keepspaces=true,inputencoding=utf8,extendedchars=true}
+\title{Proof Pursuit --- Problem 2, part 3\\ \large prove, decisioni degli agenti, codice verificato, letteratura}
+\author{Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)}
+\date{\today}
+\begin{document}\maketitle\tableofcontents
+\section*{Come leggere questo rapporto}
+Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team (mai ``risolto'' senza revisione umana), la consegna
+con la prova, poi la traccia delle decisioni degli agenti (Researcher: famiglia e motivo; Referee: verdetto ed errore
+fatale; Creative: quando e perché è intervenuto) e il codice su cui il tentativo poggia con l'esito della riesecuzione
+fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO e CONGETTURA restano distinti. L'architettura del sistema
+è descritta nel README del repository.
+\section{Problem 2 — Uphill paths on the hypercube}
+\subsection{Cella 3 (3 punti) — stato: parziale}
+\subparagraph{\texorpdfstring{Parte 3 (C3) ---
+\(U(Q_6)\)}{Parte 3 (C3) --- U(Q\_6)}}\label{parte-3-c3-uq_6}
+
+\textbf{Punteggio:} 3 points · \textbf{Valutazione:} Checked instantly
+
+\(Q_6\) has \(64\) vertices and \(192\) edges. Determine \(U(Q_6)\).
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine U(Q\_6) exactly (64 vertices, 192 edges) and exhibit an optimal labelling in the required format. Checked on the value: it must be the true minimum, so a lower-bound proof (hand or certified computation \textless{} 10 min) is needed.}
+
+\textbf{Evidenza registrata in STATUS.md.} valore candidato 204 =
+
+\subsubsection{Consegna (prova)}
+\paragraph{Problema 2 --- Parte 3 --- bozza di consegna (valore per
+costruzione)}\label{problema-2-parte-3-bozza-di-consegna-valore-per-costruzione}
+
+\textbf{Stato dichiarato: PARZIALE.} Bound superiore per costruzione
+esplicita, contato esattamente; il bound inferiore (minimalità) NON è
+dimostrato. La cella è valutata sul valore: se il valore è il minimo
+vero, conta; lo dichiariamo come candidato, non come teorema.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+\(Q_6\): valore candidato \(204\) (\(=|E|+12\))
+
+Etichettatura (ordine crescente di etichetta, posizione \(i\) =
+coordinata \(i\)):
+
+\texttt{000000,111100,110011,001111,101010,011010,100110,010110,101001,011001,100101,010101,100000,010000,001000,111000,000100,110100,101100,011100,000010,110010,001110,111110,000001,110001,001101,111101,100011,010011,001011,111011,000111,110111,101111,011111,110000,101000,011000,100100,010100,001100,100010,010010,001010,111010,000110,110110,101110,011110,100001,010001,001001,111001,000101,110101,101101,011101,000011,101011,011011,100111,010111,111111}
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+\textbf{Costruzione ``a stelle''.} Sia \(R\) un insieme di vertici di
+peso pari a due a due a distanza di Hamming \(\ge4\) (un codice a
+distanza 4 fra le parole di peso pari; qui il lexicode). Non-picchi
+\(=R\cup\{\text{peso dispari}\}\), picchi \(=\) vertici pari fuori da
+\(R\). Etichette: prima \(R\) e i dispari non adiacenti a \(R\) (valli),
+poi i dispari adiacenti a una radice (ciascuno ha esattamente una radice
+vicina, perché due radici distano \(\ge4\)), infine i picchi. Ogni
+non-picco ha \(p=1\) (valle, oppure una sola radice come unico vicino
+minore); ogni picco ha tutti i \(d\) vicini minori con \(p=1\), quindi
+\(p=d\). Totale \(=(d+1)2^{d-1}-(d-1)|R|\): per \(d=3,4,5\) dà
+\(14,34,88\), cioè esattamente i minimi dimostrati nelle parti 1--2; per
+\(d=6,7,8\) dà \(204,464,1040\) con \(|R|=4,8,16\) (codici ottimi:
+\(A(5,3)=4\), \(A(6,3)=8\), \(A(7,3)=16\), Hamming).
+
+\textbf{Ottimalità dentro la famiglia (dimostrata).} Per
+un'etichettatura di questo tipo (picchi indipendenti, complemento
+foresta, \(p=1\) su tutti i non-picchi) il totale è \(|E|+c\) con \(c\)
+= numero di componenti della foresta, e \(c=(d-1)|P|-2^{d-1}(d-2)\) con
+\(P\) l'insieme dei picchi. Ridurre \(c\) richiede un insieme
+indipendente \(P\) più piccolo con complemento aciclico. Un insieme
+indipendente di \(Q_d\) di taglia \(2^{d-1}-s\) con \(s\) piccolo
+contiene al più un vertice della classe minoritaria (se \(B\) sono i
+vertici dispari di \(P\), \(|N(B)|\ge 2d-2\) per \(|B|\ge2\) e la taglia
+non torna); se \(P\) è tutto pari, il complemento è aciclico solo se i
+\(2^{d-1}-|P|\) vertici pari fuori da \(P\) sono a due a due a distanza
+\(\ge4\) (due pari a distanza 2 hanno due vicini dispari comuni: un
+4-ciclo), cioè formano un codice pari a distanza 4, di taglia al più
+\(A(d-1,3)\); se \(P\) contiene un dispari \(o\), il complemento
+contiene i \(d\) vicini pari di \(o\) e i vertici
+\(o\oplus e_i\oplus e_j\), che formano 6-cicli. Quindi nella famiglia il
+minimo di \(c\) è \(2^{d-1}-(d-1)A(d-1,3)\): \(12,16,16\) per
+\(d=6,7,8\). \textbf{Ciò che manca:} escludere etichettature fuori dalla
+famiglia (eccesso \(X>0\)), come fatto per \(d=5\) nella parte 2 con
+l'analisi dei casi.
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+\begin{verbatim}
+cd problema-2/esperimenti && python3 costruzione_stelle.py 6   # ricostruisce e conta (< 1 s ciascuno)
+\end{verbatim}
+
+Conteggio con \texttt{conta\_cammini.py} (interi esatti). Ricottura di
+controllo (\texttt{ricottura\_controllo.py}): vedi
+\texttt{ricottura\_q*.log}.
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+Costruzione e argomento interamente nostri; codici a distanza 4 standard
+(lexicode/Hamming). Nessuna citazione usata.
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Bound inferiore generale non dimostrato: il valore è un candidato
+motivato (coincide con i minimi noti per \(d\le5\) e, per \(d=9\), con
+\(|R|=20\) la stessa formula dà \(2400\), il bound superiore noto agli
+organizzatori).
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p2\_c3}}
+\begin{description}
+\item[Iterazione 1 — attempt\_001]
+\textbf{Researcher}: famiglia \texttt{reduction}, sotto-obiettivo: Determine U(Q\_6) = 204: explicit labelling with 204 uphill paths, and a lower-bound proof (hand reduction to a finite statement about induced forests of Q\_6, refuted by exact enumeration in seconds).. Stato dichiarato: \texttt{CELL\_SOLVED\_CANDIDATE}.
+\emph{Perché questa scelta}: No prior attempt on this cell. The Q\_5 proof (accepted READY\_FOR\_HUMAN) reduces the lower bound to a small finite statement; the same lemmas hold verbatim for Q\_6 and the bound 204 = |E|+12 is exactly where the resulting finite statement becomes false, while simulated annealing (5 of 6 seeds) never beat 204. The construction generalises the Q\_3/Q\_4/Q\_5 optima (peaks = one parity class minus a distance-4 code), consistent with Pike's characterisation of decycling numbers of hypercubes.
+\emph{Rispetto allo stato dell'arte}: The deterministic arXiv search returned only 1412.3893v1 (evolutionary biology, "uphill" in a fitness-landscape sense) — irrelevant. I searched the web for the related notion that my reduction produces: decycling (feedback vertex) sets of hypercubes. D. A. Pike, "Decycling hypercubes", Graphs and Combinatorics 19 (2003) 547–550 (abstract read on link.springer.com/article/10.1007/s00373-003-0529-9, paper NOT read): "∇(Q\_n) = 2\textasciicircum{}\{n-1\} − A(n,4) if and only if Q\_n has a minimum decycling set that consists of pairwise non-adjacent vertices". This is CITED for context only: it explains why the optimal construction takes peaks = a parity class minus a distance-4 code (A(6,4)=4 gives 28 peaks), and it is consistent with our computed fact that Q\_6 has no independent-plus-≤2 decycling set of size ≤ 27. No statement from the literature is used in the proof; every finite fact is established by our own exact enumeration.
+\textbf{Referee}: verdetto \texttt{UNKNOWN\_STATUS} (review\_status \texttt{READY\_FOR\_HUMAN}).
+\emph{Prossimo passo richiesto}: Human reviews the exact target, proof and evidence, then approves explicit claims
+\end{description}
+
+\subsubsection{Codice su cui poggia il tentativo}
+\begin{lstlisting}[caption={attempt\_001 code\_1 [python, rigore exact] — Shared exact utilities for Q\_6 (parity classes, neighbour bitmasks, union-find forest test — approvato dal Referee}]
+"""Utilita' esatte (interi/bitmask) per Q_6: classi di parita', vicini, foreste."""
+D = 6
+N = 1 << D
+PARI = [v for v in range(N) if bin(v).count("1") % 2 == 0]
+DISPARI = [v for v in range(N) if bin(v).count("1") % 2 == 1]
+
+def vicini(v):
+    return [v ^ (1 << i) for i in range(D)]
+
+def maschera_vicini(v):
+    m = 0
+    for u in vicini(v):
+        m |= 1 << u
+    return m
+
+MASCHERA_VICINI = [maschera_vicini(v) for v in range(N)]
+
+def bit_a_lista(m):
+    return [v for v in range(N) if (m >> v) & 1]
+
+def e_foresta(maschera_vertici):
+    """True se il sottografo indotto e' aciclico (union-find esatto)."""
+    genitore = {}
+    def trova(x):
+        while genitore[x] != x:
+            genitore[x] = genitore[genitore[x]]
+            x = genitore[x]
+        return x
+    vertici = bit_a_lista(maschera_vertici)
+    for v in vertici:
+        genitore[v] = v
+    for v in vertici:
+        for u in vicini(v):
+            if u > v and (maschera_vertici >> u) & 1:
+                ru, rv = trova(u), trova(v)
+                if ru == rv:
+                    return False
+                genitore[ru] = rv
+    return True
+
+def stringa(v):
+    return "".join(str((v >> i) & 1) for i in range(D))
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_1.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: ''; stderr: ''}
+\begin{lstlisting}[caption={attempt\_001 code\_2 [python, rigore exact] — Computation 3: refutes (★₀) (all peaks in one class) by pruned DFS over R' (every distance — approvato dal Referee}]
+import itertools, time
+from cubo6 import DISPARI, MASCHERA_VICINI, PARI, e_foresta
+MASCHERA_O = sum(1 << o for o in DISPARI)
+E1 = 1
+
+def coppia_coperta(a, b, H_O):
+    return any((MASCHERA_VICINI[o] >> a) & 1 and (MASCHERA_VICINI[o] >> b) & 1 for o in H_O)
+
+def compatibile(v, R, H_O):
+    return all(bin(v ^ r).count("1") != 2 or coppia_coperta(v, r, H_O) for r in R)
+
+def dfs(R, idx, taglia, H_O, contatori):
+    if len(R) == taglia:
+        contatori["candidati"] += 1
+        m = sum(1 << r for r in R) | (MASCHERA_O & ~sum(1 << o for o in H_O))
+        if e_foresta(m):
+            contatori["foreste"] += 1
+            print("FORESTA TROVATA", R, H_O)
+        return
+    for k in range(idx, len(PARI)):
+        if compatibile(PARI[k], R, H_O):
+            R.append(PARI[k])
+            dfs(R, k + 1, taglia, H_O, contatori)
+            R.pop()
+
+def main():
+    inizio = time.time()
+    altri = [o for o in DISPARI if o != E1]
+    scelte_H = {0: [()], 1: [(E1,)], 2: [(E1, o) for o in altri]}
+    for h in (0, 1, 2):
+        contatori = {"candidati": 0, "foreste": 0}
+        for H_O in scelte_H[h]:
+            dfs([], 0, 5 + h, list(H_O), contatori)
+        print(f"h={h}: insiemi H_O {len(scelte_H[h])}, candidati R' sopravvissuti alla potatura "
+              f"{contatori['candidati']}, foreste {contatori['foreste']}, tempo {time.time()-inizio:.1f}s")
+
+if __name__ == "__main__":
+    main()
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_2.py (python3, clean copy of the researcher sandbox): exit 0 in 0.6s; stdout: "h=0: insiemi H\_O 1, candidati R' sopravvissuti alla potatura 0, foreste 0, tempo 0.0s\textbackslash{}nh=1: insiemi H\_O 1, candidati R' sopravvissuti alla potatura 37, foreste 0, tempo 0.0s\textbackslash{}nh=2: insiemi H\_O 31, candidati R' sopravvissuti alla potatura 1892, foreste 0, tempo 0.6s"; stderr: ''}
+\begin{lstlisting}[caption={attempt\_001 code\_3 [c, rigore exact] — Computation 2 (independent, brute force): refutes (★₀) by testing with union-find every R' — approvato dal Referee}]
+#include <stdio.h>
+#include <stdint.h>
+static int genitore[64];
+static int trova(int x) { while (genitore[x] != x) x = genitore[x] = genitore[genitore[x]]; return x; }
+static int e_foresta(uint64_t m) {
+    for (int v = 0; v < 64; v++) genitore[v] = v;
+    for (int v = 0; v < 64; v++) {
+        if (!((m >> v) & 1)) continue;
+        for (int i = 0; i < 6; i++) {
+            int u = v ^ (1 << i);
+            if (u < v || !((m >> u) & 1)) continue;
+            int a = trova(u), b = trova(v);
+            if (a == b) return 0;
+            genitore[a] = b;
+        }
+    }
+    return 1;
+}
+static int pari[32], n_pari = 0;
+static uint64_t maschera_O = 0;
+static long esaminati = 0, foreste = 0;
+static void combinazioni(int da, int k, uint64_t m) {
+    if (k == 0) {
+        esaminati++;
+        if (e_foresta(m)) { foreste++; printf("FORESTA TROVATA maschera %llx\n", (unsigned long long)m); }
+        return;
+    }
+    for (int i = da; i <= n_pari - k; i++) combinazioni(i + 1, k - 1, m | (1ULL << pari[i]));
+}
+int main(void) {
+    for (int v = 0; v < 64; v++) {
+        if (__builtin_popcount(v) % 2 == 0) pari[n_pari++] = v; else maschera_O |= 1ULL << v;
+    }
+    combinazioni(0, 5, maschera_O);
+    printf("h=0: R' di taglia 5 esaminati %ld, foreste %ld\n", esaminati, foreste);
+    esaminati = foreste = 0;
+    combinazioni(0, 6, maschera_O & ~(1ULL << 1));
+    printf("h=1: R' di taglia 6 esaminati %ld, foreste %ld\n", esaminati, foreste);
+    esaminati = foreste = 0;
+    for (int o = 0; o < 64; o++) {
+        if (o == 1 || __builtin_popcount(o) % 2 == 0) continue;
+        combinazioni(0, 7, maschera_O & ~(1ULL << 1) & ~(1ULL << o));
+    }
+    printf("h=2: coppie (H_O, R') di taglia 7 esaminate %ld, foreste %ld\n", esaminati, foreste);
+    return 0;
+}
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{code\_3: not re-run (language 'c' not supported by the orchestrator)}
+\begin{lstlisting}[caption={attempt\_001 code\_4 [python, rigore exact] — Computations 1a/1b (mixed parity classes): part A enumerates all B ⊆ O with 100000 ∈ B and — approvato dal Referee}]
+import itertools, time
+from cubo6 import DISPARI, MASCHERA_VICINI, PARI, e_foresta
+MASCHERA_O = sum(1 << o for o in DISPARI)
+E1 = 1
+
+def conta(m):
+    return bin(m).count("1")
+
+def parte_A():
+    trovati, contatore = [], [0]
+    altri = [o for o in DISPARI if o != E1]
+    def dfs(B, mN, idx):
+        contatore[0] += 1
+        b = len(B)
+        if 2 <= b <= 13 and conta(mN) <= 7 + b:
+            trovati.append(list(B))
+        if b == 13:
+            return
+        for k in range(idx, len(altri)):
+            mN2 = mN | MASCHERA_VICINI[altri[k]]
+            if conta(mN2) <= 20:
+                B.append(altri[k])
+                dfs(B, mN2, k + 1)
+                B.pop()
+    dfs([E1], MASCHERA_VICINI[E1], 0)
+    print(f"parte A: nodi DFS visitati {contatore[0]}, insiemi B con |N(B)| <= 7+|B| trovati: {len(trovati)}")
+    return trovati
+
+def parte_B():
+    mNB = MASCHERA_VICINI[E1]
+    base = [v for v in PARI if (mNB >> v) & 1]
+    extra_pari = [v for v in PARI if not (mNB >> v) & 1]
+    esaminati, foreste = 0, 0
+    for k in range(0, 3):
+        for extra in itertools.combinations(extra_pari, k):
+            R = base + list(extra)
+            mR = sum(1 << r for r in R)
+            base_m = (mR | MASCHERA_O) & ~(1 << E1)
+            cand = [v for v in range(64) if (base_m >> v) & 1]
+            for h in range(0, k + 1):
+                for H in itertools.combinations(cand, h):
+                    esaminati += 1
+                    if e_foresta(base_m & ~sum(1 << x for x in H)):
+                        foreste += 1
+                        print("FORESTA TROVATA", R, H)
+    print(f"parte B: coppie (R,H) esaminate {esaminati}, foreste trovate {foreste}")
+
+if __name__ == "__main__":
+    t = time.time()
+    parte_A()
+    parte_B()
+    print(f"tempo {time.time()-t:.1f}s")
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_4.py (python3, clean copy of the researcher sandbox): exit 0 in 3.6s; stdout: 'parte A: nodi DFS visitati 18878, insiemi B con |N(B)| \textless{}= 7+|B| trovati: 0\textbackslash{}nparte B: coppie (R,H) esaminate 254840, foreste trovate 0\textbackslash{}ntempo 3.6s'; stderr: ''}
+\begin{lstlisting}[caption={attempt\_001 code\_5 [python, rigore exact] — Upper bound: builds the 204-path labelling (peaks = even vertices minus the distance-4 cod — approvato dal Referee}]
+from conta_cammini import conta_cammini, stringa
+from cubo6 import DISPARI, MASCHERA_VICINI, PARI
+D = 6
+R = [0b000000, 0b001111, 0b110011, 0b111100]  # bit i = coordinata i+1
+
+def costruisci():
+    m_foglie = 0
+    for r in R:
+        m_foglie |= MASCHERA_VICINI[r]
+    foglie = [o for o in DISPARI if (m_foglie >> o) & 1]
+    isolati = [o for o in DISPARI if not (m_foglie >> o) & 1]
+    picchi = [v for v in PARI if v not in R]
+    assert len(foglie) == 24 and len(isolati) == 8 and len(picchi) == 28
+    return R + isolati + foglie + picchi
+
+if __name__ == "__main__":
+    ordine = costruisci()
+    totale, p, valli = conta_cammini(ordine, D)
+    print("cammini in salita:", totale, "valli:", len(valli))
+    print("ordine:", ",".join(stringa(v, D) for v in ordine))
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_5.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: 'cammini in salita: 204 valli: 12\textbackslash{}nordine: 000000,111100,110011,001111,101010,011010,100110,010110,101001,011001,100101,010101,100000,010000,001000,111000,000100,110100,101100,011100,000010,110010,001110,111110,000001,110001,001101,111101,100011,010011,001011,111011,000111,110111,101111,011111,11}
+\begin{lstlisting}[caption={attempt\_001 code\_6 [python, rigore exact] — Independent verification of the submitted labelling (string-based, no shared code): reads  — approvato dal Referee}]
+import sys
+
+def vicini_stringa(s):
+    return [s[:i] + ("1" if s[i] == "0" else "0") + s[i + 1:] for i in range(len(s))]
+
+def conta(ordine):
+    etichetta = {s: i + 1 for i, s in enumerate(ordine)}
+    assert len(etichetta) == 64 and all(len(s) == 6 for s in ordine)
+    valli = [s for s in ordine if all(etichetta[t] > etichetta[s] for t in vicini_stringa(s))]
+    def cammini_da(s):
+        return 1 + sum(cammini_da(t) for t in vicini_stringa(s) if etichetta[t] > etichetta[s])
+    return sum(cammini_da(v) for v in valli), len(valli)
+
+if __name__ == "__main__":
+    ordine = sys.stdin.read().replace("\n", "").replace(" ", "").split(",")
+    totale, n_valli = conta(ordine)
+    print("cammini in salita (DFS):", totale, "valli:", n_valli)
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_6.py (python3, clean copy of the researcher sandbox): exit 1 in 0.0s; stdout: ''; stderr: '(ordine)\textbackslash{}n                      \textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textbackslash{}n  File "/Users/thomastumini/proof-pursuit/runs/p2\_c3/verifica/attempt\_001/code\_6.py", line 8, in conta\textbackslash{}n    assert len(etichetta) == 64 and all(len(s) == 6 for s in ordine)\textbackslash{}n           \textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textasciicircum{}}
+\begin{lstlisting}[caption={attempt\_001 code\_7 [python, rigore exact] — Sanity check (evidence only): T = 192 + \#valleys + X and X ∈ \{0\} ∪ [4,∞) on 20000 random l — approvato dal Referee}]
+import random
+from conta_cammini import conta_cammini, vicini
+D, N = 6, 64
+rng = random.Random(0)
+minimo_X_positivo = None
+for _ in range(20000):
+    ordine = list(range(N)); rng.shuffle(ordine)
+    etichetta = {v: i for i, v in enumerate(ordine)}
+    totale, p, valli = conta_cammini(ordine, D)
+    X = sum(p[u] - 1 for u in range(N) for w in vicini(u, D) if etichetta[u] < etichetta[w])
+    assert totale == 192 + len(valli) + X
+    assert X == 0 or X >= 4
+    if X > 0 and (minimo_X_positivo is None or X < minimo_X_positivo):
+        minimo_X_positivo = X
+print("20000 etichettature casuali: identita' verificata; minimo X positivo osservato:", minimo_X_positivo)
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_7.py (python3, clean copy of the researcher sandbox): exit 0 in 2.9s; stdout: "20000 etichettature casuali: identita' verificata; minimo X positivo osservato: 238"; stderr: ''}
+\begin{lstlisting}[caption={attempt\_001 code\_8 [python, rigore float\_exploration\_only] — Simulated annealing over labellings of Q\_6 (exploration only, 300k swap moves per seed, ex — approvato dal Referee}]
+import random, sys, time
+from conta_cammini import conta_cammini, stringa
+D = 6
+N = 1 << D
+
+def ricottura(seed, passi, t0=3.0, t1=0.05):
+    rng = random.Random(seed)
+    ordine = list(range(N)); rng.shuffle(ordine)
+    val = conta_cammini(ordine, D)[0]
+    migliore, miglior_ordine = val, ordine[:]
+    for k in range(passi):
+        t = t0 * (t1 / t0) ** (k / passi)
+        i, j = rng.randrange(N), rng.randrange(N)
+        ordine[i], ordine[j] = ordine[j], ordine[i]
+        nuovo = conta_cammini(ordine, D)[0]
+        if nuovo <= val or rng.random() < 2.718 ** ((val - nuovo) / t):
+            val = nuovo
+            if val < migliore:
+                migliore, miglior_ordine = val, ordine[:]
+        else:
+            ordine[i], ordine[j] = ordine[j], ordine[i]
+    return migliore, miglior_ordine
+
+if __name__ == "__main__":
+    seed = int(sys.argv[1]); passi = int(sys.argv[2]) if len(sys.argv) > 2 else 300000
+    v, o = ricottura(seed, passi)
+    tot, p, valli = conta_cammini(o, D)
+    print(f"seed {seed}: migliore {v}, valli {len(valli)}")
+    print("ordine:", ",".join(stringa(x, D) for x in o))
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_8.py (python3, clean copy of the researcher sandbox): exit 1 in 0.0s; stdout: ''; stderr: 'Traceback (most recent call last):\textbackslash{}n  File "/Users/thomastumini/proof-pursuit/runs/p2\_c3/verifica/attempt\_001/code\_8.py", line 25, in \textless{}module\textgreater{}\textbackslash{}n    seed = int(sys.argv[1]); passi = int(sys.argv[2]) if len(sys.argv) \textgreater{} 2 else 300000\textbackslash{}n               \textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textbackslash{}nIndexError: list index o}
+
+\section{arXiv literature consulted}
+\begin{thebibliography}{99}
+\bibitem{1412.3893v1} Ian E. Ochs, Michael M. Desai. \emph{The competition between simple and complex evolutionary trajectories in asexual populations}. arXiv:1412.3893v1 (2014). \url{http://arxiv.org/abs/1412.3893v1}
+\end{thebibliography}
+\end{document}

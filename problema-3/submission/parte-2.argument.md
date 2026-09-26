@@ -1,0 +1,54 @@
+# Problem 3 — Part 2 — PARTIAL submission draft
+
+**Declared status: PARTIAL.** No complete solution: below is what has been established, the formalization,
+the position with respect to the literature, and what remains open. Nothing is claimed as proven beyond what is written.
+
+## 1. Result and scope
+**Official request.**
+## Parte 2 (C2) — $D_B$ at triangular $n$
+
+**Punteggio:** 2 points · **Valutazione:** Judged
+
+Next, how long the process can take to reach a cycle, starting with the triangular numbers.
+Determine $D_B(T_k)$ for every $k$, with proof of both bounds.
+
+**What we deliver.** Expected value $D_B(T_k)=k^2-k$ (cited: Igusa 1985, Etienne 1991); construction and upper bound to be reproduced in full.
+
+## 2. Proof
+Lower bound: exhibit a partition of $T_k$ with $d_B=k^2-k$ as a function of $k$ (candidate: the single-part partition $(T_k)$ or $(k-1,\dots)$, to be confirmed by exact computation for $k\le9$). Upper bound: a potential that decreases by at least 1 every $k$ moves after an initial phase. Not completed.
+
+## 3. Verification: instructions, dependencies, timings
+Available code (Python 3, standard library; each script runs in under a minute):
+- No code yet.
+
+## 4. Sources and contribution
+arXiv literature (deterministic search `tools/cerca_letteratura.sh`, abstracts read, not used as proof):
+- arXiv:math/0401385v2 — Random Bulgarian solitaire (Serguei Popov, 2004); abstract only read.
+- arXiv:1503.00885v1 — The Bulgarian solitaire and the mathematics around it (Vesselin Drensky, 2015); abstract only read.
+- arXiv:2607.17194v1 — A short survey the game Bulgarian solitaire and related games (Romeo Meštrović, 2026); abstract only read.
+- arXiv:1101.1546v3 — Revisiting Toom's proof of Bulgarian Solitaire (Therese A. Hart, Gabriel Khan, Mizan R. Khan, 2011); abstract only read.
+- arXiv:1703.07102v1 — An exponential limit shape of random $q$-proportion Bulgarian solitaire (Kimmo Eriksson, Markus Jonsson abd Jonas Sjöstrand, 2017); abstract only read.
+- arXiv:2208.14496v1 — Limiting behavior in growth of Bulgarian Solitaire orbits (Nhung Pham, 2022); abstract only read.
+Igusa (1985), Etienne (1991): $D_B(T_k)=k(k-1)$; survey [1503.00885], [2607.17194].
+
+## 5. Limits and unresolved parts
+Complete rewrite of both directions.
+
+
+## 6. How this result was obtained (multi-agent trace)
+Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
+- No agent run on this cell; the text was written by the team from its notes.
+
+## 7. arXiv literature consulted
+- arXiv:math/0401385v2 — *Random Bulgarian solitaire* (Serguei Popov, 2004), found by query `Bulgarian solitaire`; abstract read, full text not relied upon.
+- arXiv:1503.00885v1 — *The Bulgarian solitaire and the mathematics around it* (Vesselin Drensky, 2015), found by query `Bulgarian solitaire`; abstract read, full text not relied upon.
+- arXiv:2607.17194v1 — *A short survey the game Bulgarian solitaire and related games* (Romeo Meštrović, 2026), found by query `Bulgarian solitaire`; abstract read, full text not relied upon.
+- arXiv:1101.1546v3 — *Revisiting Toom's proof of Bulgarian Solitaire* (Therese A. Hart, Gabriel Khan, Mizan R. Khan, 2011), found by query `Bulgarian solitaire`; abstract read, full text not relied upon.
+- arXiv:1703.07102v1 — *An exponential limit shape of random $q$-proportion Bulgarian solitaire* (Kimmo Eriksson, Markus Jonsson abd Jonas Sjöstrand, 2017), found by query `Bulgarian solitaire`; abstract read, full text not relied upon.
+- arXiv:2208.14496v1 — *Limiting behavior in growth of Bulgarian Solitaire orbits* (Nhung Pham, 2022), found by query `Bulgarian solitaire`; abstract read, full text not relied upon.
+
+## 8. Code
+See the certificates listed in section 3.
+
+---
+Full write-up (LaTeX, all resources): https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p3_c2.tex · Repository: https://github.com/triborg0259/proof-pursuit/blob/main/

@@ -1,0 +1,146 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage[italian,english]{babel}
+\usepackage{amsmath,amssymb,amsthm}\usepackage[margin=2.2cm]{geometry}\usepackage{longtable,booktabs,array,calc}
+\usepackage{listings,xcolor}\usepackage{hyperref}\usepackage{url}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,frame=single,captionpos=b,columns=fullflexible,keepspaces=true,inputencoding=utf8,extendedchars=true}
+\title{Proof Pursuit --- Problem 4, part 1\\ \large prove, decisioni degli agenti, codice verificato, letteratura}
+\author{Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)}
+\date{\today}
+\begin{document}\maketitle\tableofcontents
+\section*{Come leggere questo rapporto}
+Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team (mai ``risolto'' senza revisione umana), la consegna
+con la prova, poi la traccia delle decisioni degli agenti (Researcher: famiglia e motivo; Referee: verdetto ed errore
+fatale; Creative: quando e perché è intervenuto) e il codice su cui il tentativo poggia con l'esito della riesecuzione
+fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO e CONGETTURA restano distinti. L'architettura del sistema
+è descritta nel README del repository.
+\section{Problem 4 — Disjoint congruence classes and large gcd}
+\subsection{Cella 1 (1 punti) — stato: revisionato}
+\subparagraph{Parte 1 (C1) --- Three
+classes}\label{parte-1-c1-three-classes}
+
+\textbf{Punteggio:} 1 point · \textbf{Valutazione:} Judged
+
+The first size that the two trivial observations above do not settle.
+Prove the statement for \(k = 3\): any three pairwise disjoint classes
+have \(\gcd(m_i, m_j) \ge 3\) for some \(i < j\).
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Prove: any three pairwise disjoint congruence classes a\_i (mod m\_i) have gcd(m\_i,m\_j) \textgreater{}= 3 for some i \textless{} j.}
+
+\textbf{Evidenza registrata in STATUS.md.} prova completa (parità); Referee READY\_FOR\_HUMAN (A PASS, B PASS); approvata; submission/parte-1.md
+
+\subsubsection{Consegna (prova)}
+\paragraph{Problema 4 --- Parte 1 --- bozza di
+consegna}\label{problema-4-parte-1-bozza-di-consegna}
+
+\textbf{Stato dichiarato: RISOLTA (approvata).} Prova completa scritta
+dal team; Referee automatico READY\_FOR\_HUMAN (giudice A matematica
+PASS, giudice B evidenze PASS); approvazione umana registrata in
+\texttt{runs/p4\_c1/approval.json}.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+Tre classi disgiunte: l'enunciato della parte è dimostrato
+integralmente, nella generalità richiesta (vedi la prova per le ipotesi
+esatte). Nessun calcolo al computer è necessario.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+\paragraph{\texorpdfstring{Cell 1: three pairwise disjoint classes have
+a pair of moduli with
+\(\gcd\ge3\)}{Cell 1: three pairwise disjoint classes have a pair of moduli with \textbackslash gcd\textbackslash ge3}}\label{cell-1-three-pairwise-disjoint-classes-have-a-pair-of-moduli-with-gcdge3}
+
+\textbf{Target.} If \(a_1\ (\mathrm{mod}\ m_1)\),
+\(a_2\ (\mathrm{mod}\ m_2)\), \(a_3\ (\mathrm{mod}\ m_3)\) are pairwise
+disjoint congruence classes (\(m_i\ge1\)), then \(\gcd(m_i,m_j)\ge3\)
+for some \(i<j\).
+
+\subparagraph{\texorpdfstring{Lemma 0 (the direction of \((*)\) that we
+use)}{Lemma 0 (the direction of (*) that we use)}}\label{lemma-0-the-direction-of-that-we-use}
+
+Let \(g=\gcd(m,m')\). If \(g\mid a-a'\) then the classes
+\(a\ (\mathrm{mod}\ m)\) and \(a'\ (\mathrm{mod}\ m')\) have a common
+element. Equivalently: if the two classes are disjoint then
+\(g\nmid a-a'\). \emph{Proof.} Write \(m=g\mu\), \(m'=g\mu'\) with
+\(\gcd(\mu,\mu')=1\), and \(a-a'=g\delta\) with \(\delta\in\mathbb Z\).
+An element of the first class has the form \(a+mt=a+g\mu t\),
+\(t\in\mathbb Z\); it lies in the second class iff
+\(m'\mid a+g\mu t-a'\), i.e.~\(g\mu'\mid g(\delta+\mu t)\),
+i.e.~\(\mu'\mid\delta+\mu t\). Since \(\gcd(\mu,\mu')=1\), \(\mu\) is
+invertible modulo \(\mu'\), so \(t\equiv-\delta\mu^{-1}\pmod{\mu'}\)
+solves it. \(\square\) (This is the statement \((*)\) quoted in the
+problem; we include the short proof so that the argument is
+self-contained.)
+
+\subparagraph{Proof of the cell}\label{proof-of-the-cell}
+
+Let the three classes be pairwise disjoint and suppose, for a
+contradiction, that \(\gcd(m_i,m_j)\le2\) for all three pairs. 1.
+\emph{Every pairwise gcd equals \(2\).} If \(\gcd(m_i,m_j)=1\) then
+\(1\mid a_i-a_j\), so by Lemma 0 the classes \(i\) and \(j\) meet,
+contradicting disjointness. Hence \(\gcd(m_i,m_j)=2\) for all \(i<j\).
+2. \emph{The residues are pairwise of different parity.} For \(i<j\),
+disjointness and Lemma 0 give \(\gcd(m_i,m_j)=2\nmid a_i-a_j\),
+i.e.~\(a_i\not\equiv a_j\pmod 2\). 3. \emph{Contradiction.}
+\(a_1,a_2,a_3\) would be three integers with pairwise different residues
+modulo \(2\); but there are only two residues modulo \(2\), so two of
+them coincide (pigeonhole).
+
+Hence the assumption fails: some pair satisfies \(\gcd(m_i,m_j)\ge3\).
+\(\blacksquare\)
+
+\emph{Remark.} Step 1 is the first ``trivial bound'' of the problem
+statement; it is re-derived here only because the argument needs the
+exact value \(2\) of every gcd, not merely \(\ge2\).
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Prova a mano, nessuna dipendenza. Verifica meccanica non necessaria; il
+Referee automatico (due giudici indipendenti,
+\texttt{runs/p4\_c1/attempts/packet\_001.json}) non ha trovato passaggi
+non giustificati.
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+\begin{itemize}
+\tightlist
+\item
+  arXiv:2607.24655 Fornal, Sun, On the problem of large gcd for disjoint
+  residue classes (context only: asymptotic result, not used)
+\item
+  Posizione rispetto allo stato dell'arte: Fornal-Sun {[}2607.24655{]}
+  prove an asymptotic lower bound for the largest gcd; the small cases
+  k=3,4 are elementary and are not treated there. Our proof is
+  independent.
+\item
+  Contributo: la prova qui scritta è del team, per esteso.
+\end{itemize}
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Nessuna: la parte è dimostrata. Gap dichiarati: nessuno.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p4\_c1}}
+\begin{description}
+\item[Iterazione 1 — attempt\_001]
+\textbf{Researcher}: famiglia \texttt{direct\_proof}, sotto-obiettivo: Prove the case k=3 by parity: all gcds would be 2, forcing pairwise distinct parities of three residues.. Stato dichiarato: \texttt{CELL\_SOLVED\_CANDIDATE}.
+\emph{Perché questa scelta}: For three classes the only escape from the conclusion is that every gcd equals 2; the disjointness criterion (*) then forces three pairwise different parities, which is impossible. The criterion (*) is re-proved in one paragraph so that the argument is self-contained.
+\emph{Rispetto allo stato dell'arte}: Fornal-Sun [2607.24655] prove an asymptotic lower bound for the largest gcd; the small cases k=3,4 are elementary and are not treated there. Our proof is independent.
+\textbf{Referee}: verdetto \texttt{UNKNOWN\_STATUS} (review\_status \texttt{READY\_FOR\_HUMAN}).
+\emph{Prossimo passo richiesto}: Human reviews the exact target, proof and evidence, then approves explicit claims
+\end{description}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\section{arXiv literature consulted}
+\begin{thebibliography}{99}
+\bibitem{2603.26043v1} Yu Hashimoto. \emph{Finiteness of Disjoint Covering Systems with Precisely One Repeated Modulus}. arXiv:2603.26043v1 (2026). \url{http://arxiv.org/abs/2603.26043v1}
+\bibitem{1511.04293v1} Shalosh B. Ekhad, Aviezri S. Fraenkel, Doron Zeilberger. \emph{Searching for Disjoint Covering Systems with Precisely One Repeated Modulus}. arXiv:1511.04293v1 (2015). \url{http://arxiv.org/abs/1511.04293v1}
+\bibitem{2607.24655v1} Jan Fornal, Yu-Chen Sun. \emph{On the problem of large gcd for disjoint residue classes}. arXiv:2607.24655v1 (2026). \url{http://arxiv.org/abs/2607.24655v1}
+\bibitem{2608.15873v1} Murali Menon. \emph{Two Questions on \$G\$-harmonic Tuples}. arXiv:2608.15873v1 (2026). \url{http://arxiv.org/abs/2608.15873v1}
+\end{thebibliography}
+\end{document}

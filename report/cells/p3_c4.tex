@@ -1,0 +1,103 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}\usepackage[T1]{fontenc}\usepackage[italian,english]{babel}
+\usepackage{amsmath,amssymb,amsthm}\usepackage[margin=2.2cm]{geometry}\usepackage{longtable,booktabs,array,calc}
+\usepackage{listings,xcolor}\usepackage{hyperref}\usepackage{url}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\lstset{basicstyle=\ttfamily\scriptsize,breaklines=true,frame=single,captionpos=b,columns=fullflexible,keepspaces=true,inputencoding=utf8,extendedchars=true}
+\title{Proof Pursuit --- Problem 3, part 4\\ \large prove, decisioni degli agenti, codice verificato, letteratura}
+\author{Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)}
+\date{\today}
+\begin{document}\maketitle\tableofcontents
+\section*{Come leggere questo rapporto}
+Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team (mai ``risolto'' senza revisione umana), la consegna
+con la prova, poi la traccia delle decisioni degli agenti (Researcher: famiglia e motivo; Referee: verdetto ed errore
+fatale; Creative: quando e perché è intervenuto) e il codice su cui il tentativo poggia con l'esito della riesecuzione
+fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO e CONGETTURA restano distinti. L'architettura del sistema
+è descritta nel README del repository.
+\section{Problem 3 — Bulgarian solitaire}
+\subsection{Cella 4 (5 punti) — stato: parziale}
+\subparagraph{Parte 4 (C4) --- One above a triangular
+number}\label{parte-4-c4-one-above-a-triangular-number}
+
+\textbf{Punteggio:} 5 points · \textbf{Valutazione:} Judged
+
+The first family just above a triangular number: \(n = T_{k-1} + 1\),
+that is \(n = 11, 16, 22, 29, \ldots\) for \(k = 5, 6, 7, 8, \ldots\).
+Determine \(D_B(T_{k-1} + 1)\) for every \(k \ge 5\), with proof of both
+bounds.
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine D\_B(T\_\{k-1\} + 1) for every k \textgreater{}= 5, with proof of both bounds.}
+
+\textbf{Evidenza registrata in STATUS.md.} bozza parziale in inglese in submission/ (parziali.py)
+
+\subsubsection{Consegna (prova)}
+\paragraph{Problema 3 --- Parte 4 --- bozza di consegna
+PARZIALE}\label{problema-3-parte-4-bozza-di-consegna-parziale}
+
+\textbf{Stato dichiarato: PARZIALE.} Nessuna soluzione completa: qui
+sotto ciò che è stabilito, la formalizzazione, la posizione rispetto
+alla letteratura e ciò che resta aperto. Nulla è dichiarato dimostrato
+oltre quanto scritto.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+\textbf{Richiesta ufficiale.} \#\# Parte 4 (C4) --- One above a
+triangular number
+
+\textbf{Punteggio:} 5 points · \textbf{Valutazione:} Judged
+
+The first family just above a triangular number: \(n = T_{k-1} + 1\),
+that is \(n = 11, 16, 22, 29, \ldots\) for \(k = 5, 6, 7, 8, \ldots\).
+Determine \(D_B(T_{k-1} + 1)\) for every \(k \ge 5\), with proof of both
+bounds.
+
+\textbf{Cosa consegniamo.} Nessuna prova.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+Stesso piano della parte 3 sulla famiglia \(n=T_{k-1}+1\).
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Codice disponibile (Python 3, libreria standard; ogni script gira in
+meno di un minuto): - Nessun codice ancora.
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+Letteratura arXiv (ricerca deterministica
+\texttt{tools/cerca\_letteratura.sh}, abstract letti, non usata come
+prova): - arXiv:math/0401385v2 --- Random Bulgarian solitaire (Serguei
+Popov, 2004); solo abstract letto. - arXiv:1503.00885v1 --- The
+Bulgarian solitaire and the mathematics around it (Vesselin Drensky,
+2015); solo abstract letto. - arXiv:2607.17194v1 --- A short survey the
+game Bulgarian solitaire and related games (Romeo Meštrović, 2026); solo
+abstract letto. - arXiv:1101.1546v3 --- Revisiting Toom's proof of
+Bulgarian Solitaire (Therese A. Hart, Gabriel Khan, Mizan R. Khan,
+2011); solo abstract letto. - arXiv:1703.07102v1 --- An exponential
+limit shape of random \(q\)-proportion Bulgarian solitaire (Kimmo
+Eriksson, Markus Jonsson abd Jonas Sjöstrand, 2017); solo abstract
+letto. - arXiv:2208.14496v1 --- Limiting behavior in growth of Bulgarian
+Solitaire orbits (Nhung Pham, 2022); solo abstract letto. Come parte 3.
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Tutto.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p3\_c4}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\section{arXiv literature consulted}
+\begin{thebibliography}{99}
+\bibitem{math/0401385v2} Serguei Popov. \emph{Random Bulgarian solitaire}. arXiv:math/0401385v2 (2004). \url{http://arxiv.org/abs/math/0401385v2}
+\bibitem{1503.00885v1} Vesselin Drensky. \emph{The Bulgarian solitaire and the mathematics around it}. arXiv:1503.00885v1 (2015). \url{http://arxiv.org/abs/1503.00885v1}
+\bibitem{2607.17194v1} Romeo Meštrović. \emph{A short survey the game Bulgarian solitaire and related games}. arXiv:2607.17194v1 (2026). \url{http://arxiv.org/abs/2607.17194v1}
+\bibitem{1101.1546v3} Therese A. Hart, Gabriel Khan, Mizan R. Khan. \emph{Revisiting Toom's proof of Bulgarian Solitaire}. arXiv:1101.1546v3 (2011). \url{http://arxiv.org/abs/1101.1546v3}
+\bibitem{1703.07102v1} Kimmo Eriksson, Markus Jonsson abd Jonas Sjöstrand. \emph{An exponential limit shape of random \$q\$-proportion Bulgarian solitaire}. arXiv:1703.07102v1 (2017). \url{http://arxiv.org/abs/1703.07102v1}
+\bibitem{2208.14496v1} Nhung Pham. \emph{Limiting behavior in growth of Bulgarian Solitaire orbits}. arXiv:2208.14496v1 (2022). \url{http://arxiv.org/abs/2208.14496v1}
+\end{thebibliography}
+\end{document}
