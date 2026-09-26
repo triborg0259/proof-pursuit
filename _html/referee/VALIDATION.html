@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>README.md</title>
+  <title>referee/VALIDATION.md</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -172,49 +172,22 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">README.md</h1>
+<h1 class="title">referee/VALIDATION.md</h1>
 </header>
-<h1 id="proof-pursuit-workspace-di-squadra">Proof Pursuit — workspace di
-squadra</h1>
-<p>Gara di ricerca matematica assistita da AI (7 ore, 4 problemi × 6
-parti). <strong>Repo privato: non pubblicare.</strong></p>
-<ul>
-<li><code>CLAUDE.md</code> — protocollo di lavoro (vale per umani e
-agenti).</li>
-<li><code>STATUS.md</code> — stato di tutte le 24 parti, con evidenze.
-Aggiornarlo a ogni avanzamento.</li>
-<li><code>problema-N/</code> — <code>enunciato.md</code> (testo
-ufficiale in LaTeX), <code>note.md</code> (triage, approcci, stato),
-<code>esperimenti/</code> (ricerca), <code>certificati/</code>
-(verifica), <code>submission/</code> (bozze consegna),
-<code>fonti/</code> (letteratura verificata).</li>
-<li><code>referee/</code> — pacchetto Referee del team (gabundos): due
-giudici modello in parallelo + controlli esatti;
-<code>researcher/bridge_referee.py</code> lo collega al Researcher.</li>
-<li><code>researcher/loop.py</code> — ciclo end-to-end
-Researcher→Referee (con aggancio per il Creative);
-<code>researcher/literature.py</code> — ricerca arXiv.</li>
-<li><code>tools/</code> — harness di ricerca numerica
-(<code>autoloop.py</code>, protocollo in <code>program.md</code>),
-<code>render.sh</code> (Markdown→HTML con formule),
-<code>HARNESS_RICERCA.md</code> (stato dell’arte sui loop AI per la
-matematica).</li>
-</ul>
-<h2 id="setup">Setup</h2>
-<pre><code>python3 -m venv .venv &amp;&amp; .venv/bin/pip install numpy mpmath
-sh tools/render.sh        # opzionale: rende i .md in _html/ (serve pandoc); GitHub rende già il LaTeX</code></pre>
-<h2 id="regole-minime-per-collaborare">Regole minime per
-collaborare</h2>
-<ol type="1">
-<li>Un branch per persona/parte (<code>p3-c2-nome</code>), PR piccole
-verso <code>main</code>; <code>STATUS.md</code> si aggiorna nella stessa
-PR.</li>
-<li>Distinguere sempre DIMOSTRATO / CITATO / VERIFICATO SU INTERVALLO
-FINITO / CONGETTURA.</li>
-<li>Ogni esperimento: comando riproducibile, seed, tempi, nel README
-della cartella <code>esperimenti/</code>.</li>
-<li>Nessuna submission alla piattaforma dal repo: le bozze restano in
-<code>submission/</code> per la revisione.</li>
-</ol>
+<h1 id="verifica-versione-0.2">Verifica versione 0.2</h1>
+<p>50 test software offline superati. Test di dipendenze, timeout,
+separazione A/B, certificati, approvazione umana firmata, manomissioni,
+dati float e controlli esatti nei quattro ambiti.</p>
+<p>Eseguiti realmente gli esempi rational_vectors, hypercube_paths,
+unrestricted_partitions_allowed_parts e residue_classes: tutti MATCH per
+i soli dati degli esempi. Eseguita anche enumerazione di tutte le 40320
+etichettature di Q3 nel test dedicato.</p>
+<p>Verificata CLI offline: non inventa revisioni né approvazioni.
+Nessuna chiamata API reale e nessun consumo di crediti; i test A/B usano
+backend simulati. Lo script adversarial_eval.py deve essere eseguito sul
+modello reale prima della gara/demo.</p>
+<p>Lean e lake non risultano installati in questo ambiente; non sono
+dipendenze di questa versione. La firma della ricevuta attesta la
+decisione umana e non è una prova matematica.</p>
 </body>
 </html>

@@ -353,7 +353,10 @@ predecessori hanno <span class="math inline">\(\deg^-\ge2\)</span>;
 oppure LP/ILP sul DAG; oppure prova computer-assisted per C6 (dubbio:
 <span class="math inline">\(Q_9\)</span> ha 512 vertici, lo spazio è
 enorme; serve un argomento strutturale, non una enumerazione).</li>
-<li><strong>F. Letteratura</strong>: cercare “uphill paths hypercube”,
+<li><strong>F. Letteratura</strong>: ricerca arXiv fatta (13:30) con
+“uphill path”, “Nordic square”, “hypercube labelling”, “acyclic
+orientations of the hypercube”: nessun risultato pertinente. Il problema
+sul cubo è inedito. Originale: cercare “uphill paths hypercube”,
 generalizzazioni di IMO 2022 P6 (es. arXiv 2023–2026), OEIS per la
 sequenza <span class="math inline">\(U(Q_d)\)</span>.</li>
 </ul>
@@ -377,6 +380,25 @@ Researcher, uno indipendente). B&amp;B con simmetria a conferma.
 Researcher shell <code>full</code>: 482 s, $2.53, 10 turni.</li>
 <li><strong>C1 completa.</strong> Bozza revisionata in
 <code>submission/parte-1.md</code>.</li>
+<li><strong><span class="math inline">\(U(Q_5)=88\)</span> — BOZZA, in
+attesa del verdetto del Referee automatico</strong> (2026-09-26 ~13:50).
+Researcher shell <code>full</code>, 652 s, $4.25. Lower bound: identità
+dell’eccesso <span class="math inline">\(T=|E|+v+X\)</span>,
+classificazione picchi/pesanti/valli/leggeri, conteggio dei gradi
+entranti mod 4 ⇒ ogni etichettatura con <span
+class="math inline">\(T\le87\)</span> implica (★): “esiste un insieme
+indipendente di 12 vertici <span class="math inline">\(I\)</span> e
+<span class="math inline">\(u\notin I\)</span> con <span
+class="math inline">\(Q_5-(I\cup\{u\})\)</span> foresta”; (★) confutata
+per enumerazione (3672 insiemi, 73440 coppie, 0 aciclici) da DUE script
+del Researcher e da UNO mio con metodo diverso (potatura delle foglie):
+<code>certificati/q5_stella_verifica_indipendente.py</code>. Riduzione
+riletta a mano lemma per lemma: corretta. Upper bound: etichettatura con
+8 valli e 88 cammini, verificata indipendentemente. Nota: l’eccesso è
+<span class="math inline">\(|E|+8\)</span>, il pattern <span
+class="math inline">\(|E|+2\)</span> si rompe già a <span
+class="math inline">\(d=5\)</span>. Bozza di consegna da scrivere dopo
+il verdetto.</li>
 <li>Pattern da sfruttare per <span
 class="math inline">\(Q_5..Q_8\)</span>: etichettare per classi di peso
 (prima 0 e <span class="math inline">\(d\)</span>, poi <span

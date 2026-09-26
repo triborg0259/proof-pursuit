@@ -1,0 +1,30 @@
+{
+ "attempt_id": "attempt_001",
+ "verdict": "UNKNOWN_STATUS",
+ "review_status": "INCOMPLETE",
+ "highest_verified_cell": 1,
+ "accepted_claims": [],
+ "proposed_claim_ids": [],
+ "fatal_error": null,
+ "citation_issue": false,
+ "computation_issue": false,
+ "next_blocker": "Provide the missing review or independently checked evidence",
+ "reasoning_summary": "review_status=INCOMPLETE; math=UNAVAILABLE; evidence=UNAVAILABLE; A: ValidationError; B: ValidationError",
+ "stagnation_signal": false,
+ "usage": [
+  {
+   "role": "B",
+   "cost_usd": 1.21487,
+   "model": [
+    "claude-fable-5-1"
+   ]
+  },
+  {
+   "role": "A",
+   "cost_usd": 1.47498,
+   "model": [
+    "claude-fable-5-1"
+   ]
+  }
+ ]
+}

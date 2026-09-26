@@ -1,0 +1,2 @@
+insiemi indipendenti di taglia 13 con 0: 455; strutture A trovate: 0
+tempo 0.0s

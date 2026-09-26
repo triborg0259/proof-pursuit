@@ -237,17 +237,34 @@ directions because the old ones stalled. Say which idea you follow.</li>
 natural approaches you know have been tried and rejected for the same
 reason (the harness also detects stagnation automatically).</li>
 </ul>
+<h2 id="literature-state-of-the-art">Literature (state of the art)</h2>
+<ul>
+<li>If a LITERATURE section is present, it lists arXiv abstracts found
+by a deterministic search. Write <code>literature_position</code>: what
+those papers already establish for this cell, and whether your approach
+follows, adapts or departs from them, and why. Cite by arXiv id. This is
+how you justify the choice of method against the state of the art, not
+just against your own taste.</li>
+<li>Abstracts are not proofs. A result you take from a paper is CITED,
+not proved: say so, quote the statement, and remember that citing the
+cell’s own statement never solves the cell. With a full shell you may
+fetch the paper (arxiv.org/abs/<id>, arxiv.org/pdf/<id>) and reproduce a
+proof in full; then it counts.</li>
+<li>If no literature is listed or none is relevant, write “none found”
+and say what you searched for.</li>
+</ul>
 <h2 id="output">Output</h2>
 <p>Return ONLY a JSON object matching the attempt schema (fields:
 target_cell, subgoal, approach, approach_family, reason_for_choice,
-proof_attempt, claims_used, sources_used, code_used, claimed_progress,
-claimed_status, self_reported_gaps, request_creative).
-<code>proof_attempt</code> is Markdown with LaTeX; write the full
-argument, not a sketch. Choose <code>approach_family</code> from:
-direct_proof, contradiction, induction, extremal, symmetry,
-algebraic_reformulation, matrix_formulation, graph_formulation,
-projective_spherical, probabilistic, exact_computation, special_case,
-equivalent_statement, counterexample_search, stronger_or_weaker_lemma,
-reduction, case_analysis, other.</p>
+literature_position, proof_attempt, claims_used, sources_used,
+code_used, claimed_progress, claimed_status, self_reported_gaps,
+request_creative). <code>proof_attempt</code> is Markdown with LaTeX;
+write the full argument, not a sketch. Choose
+<code>approach_family</code> from: direct_proof, contradiction,
+induction, extremal, symmetry, algebraic_reformulation,
+matrix_formulation, graph_formulation, projective_spherical,
+probabilistic, exact_computation, special_case, equivalent_statement,
+counterexample_search, stronger_or_weaker_lemma, reduction,
+case_analysis, other.</p>
 </body>
 </html>

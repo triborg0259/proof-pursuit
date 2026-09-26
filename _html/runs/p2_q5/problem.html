@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>README.md</title>
+  <title>runs/p2_q5/problem.md</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -172,49 +172,30 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">README.md</h1>
+<h1 class="title">runs/p2_q5/problem.md</h1>
 </header>
-<h1 id="proof-pursuit-workspace-di-squadra">Proof Pursuit — workspace di
-squadra</h1>
-<p>Gara di ricerca matematica assistita da AI (7 ore, 4 problemi × 6
-parti). <strong>Repo privato: non pubblicare.</strong></p>
-<ul>
-<li><code>CLAUDE.md</code> — protocollo di lavoro (vale per umani e
-agenti).</li>
-<li><code>STATUS.md</code> — stato di tutte le 24 parti, con evidenze.
-Aggiornarlo a ogni avanzamento.</li>
-<li><code>problema-N/</code> — <code>enunciato.md</code> (testo
-ufficiale in LaTeX), <code>note.md</code> (triage, approcci, stato),
-<code>esperimenti/</code> (ricerca), <code>certificati/</code>
-(verifica), <code>submission/</code> (bozze consegna),
-<code>fonti/</code> (letteratura verificata).</li>
-<li><code>referee/</code> — pacchetto Referee del team (gabundos): due
-giudici modello in parallelo + controlli esatti;
-<code>researcher/bridge_referee.py</code> lo collega al Researcher.</li>
-<li><code>researcher/loop.py</code> — ciclo end-to-end
-Researcher→Referee (con aggancio per il Creative);
-<code>researcher/literature.py</code> — ricerca arXiv.</li>
-<li><code>tools/</code> — harness di ricerca numerica
-(<code>autoloop.py</code>, protocollo in <code>program.md</code>),
-<code>render.sh</code> (Markdown→HTML con formule),
-<code>HARNESS_RICERCA.md</code> (stato dell’arte sui loop AI per la
-matematica).</li>
-</ul>
-<h2 id="setup">Setup</h2>
-<pre><code>python3 -m venv .venv &amp;&amp; .venv/bin/pip install numpy mpmath
-sh tools/render.sh        # opzionale: rende i .md in _html/ (serve pandoc); GitHub rende già il LaTeX</code></pre>
-<h2 id="regole-minime-per-collaborare">Regole minime per
-collaborare</h2>
-<ol type="1">
-<li>Un branch per persona/parte (<code>p3-c2-nome</code>), PR piccole
-verso <code>main</code>; <code>STATUS.md</code> si aggiorna nella stessa
-PR.</li>
-<li>Distinguere sempre DIMOSTRATO / CITATO / VERIFICATO SU INTERVALLO
-FINITO / CONGETTURA.</li>
-<li>Ogni esperimento: comando riproducibile, seed, tempi, nel README
-della cartella <code>esperimenti/</code>.</li>
-<li>Nessuna submission alla piattaforma dal repo: le bozze restano in
-<code>submission/</code> per la revisione.</li>
-</ol>
+<h1
+id="uphill-paths-on-the-hypercube-competition-problem-2-cell-2-uq_5">Uphill
+paths on the hypercube (competition problem 2, cell 2: U(Q_5))</h1>
+<p>A labelling of a graph G on n vertices is a bijection f: V(G) -&gt;
+{1..n}. A vertex v is a valley if every neighbour w has f(w) &gt; f(v).
+An uphill path is a sequence (v_1,…,v_k), k &gt;= 1, with v_1 a valley,
+consecutive vertices adjacent, and f(v_1) &lt; … &lt; f(v_k). A valley
+alone (k=1) is an uphill path. U(G) = min over labellings of the number
+of uphill paths. Q_d is the d-dimensional hypercube on {0,1}^d. Q_5 has
+32 vertices and 80 edges.</p>
+<p>Cell 2: Determine U(Q_5), and give an explicit labelling attaining it
+as the list of the 32 vertices in increasing label order, written as 0/1
+strings. The cell is checked on the value alone, so the value must be
+the TRUE minimum: a labelling gives an upper bound; a lower bound needs
+a proof (hand argument, or exhaustive search over a reduced finite set
+with the reduction and every pruning rule proved, node counts and
+wall-clock under 10 minutes). Known and usable (verified in this repo,
+problema-2/submission/parte-1.md): for any labelling, #paths &gt;= |E| +
+#valleys; U(Q_3) = 14 = |E|+2 and U(Q_4) = 34 = |E|+2; the optimal Q_4
+labelling has two valleys (0000 and 1111) and is built by weight classes
+in the order 0, 4, 3, 1, 2; the parity argument (in-degrees in {0,1,d}
+when the total is |E|+1) rules out |E|+1 for Q_5 as well (4s = 49 has no
+solution), so U(Q_5) &gt;= 82.</p>
 </body>
 </html>

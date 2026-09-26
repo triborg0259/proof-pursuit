@@ -265,6 +265,61 @@ Code: prefisso <code>!</code>): un agente che lancia un altro agente con
 permessi pre-autorizzati viene bloccato dal classificatore di sicurezza
 di Claude Code, anche in <code>--dry-run</code>.</li>
 </ul>
+<h2 id="ponte-con-il-referee-bridge_referee.py">Ponte con il Referee
+(<code>bridge_referee.py</code>)</h2>
+<p>Il Referee del team (pacchetto <code>referee/</code>, di gabundos)
+legge un <code>ReviewInput</code> e produce un
+<code>ReviewPacket</code>; il ponte traduce nei due sensi e archivia il
+verdetto come <code>researcher.py record</code>:</p>
+<pre><code>.venv/bin/python researcher/bridge_referee.py review --workdir runs/X            # Referee via CLI claude (abbonamento)
+.venv/bin/python researcher/bridge_referee.py review --workdir runs/X --offline  # solo controlli esatti, nessun modello
+.venv/bin/python researcher/bridge_referee.py to-review --workdir runs/X         # scrive solo review_input.json
+.venv/bin/python researcher/bridge_referee.py from-packet --workdir runs/X --packet packet.json</code></pre>
+<p>Mappatura: <code>final_verdict</code>→<code>verdict</code>,
+<code>first_fatal_error.detail</code>→<code>fatal_error</code>,
+<code>next_required_step</code>→<code>next_blocker</code>;
+<code>review_status</code> è conservato: <strong>READY_FOR_HUMAN non è
+ACCEPT</strong>, l’approvazione resta umana
+(<code>python -m referees approve</code>). L’enunciato protetto della
+cella è <code>cell_statement</code> in state.json (se manca,
+<code>current_blocker</code>). Il backend CLI (<code>CliBackend</code>)
+implementa il loro protocollo <code>JSONBackend</code> con
+<code>claude -p --json-schema</code>; il loro <code>ClaudeBackend</code>
+(SDK, chiave API) usa <code>tool_choice</code> forzato, che su Claude
+Fable 5.1 restituisce 400: usare Opus. Test:
+<code>.venv/bin/python tests/test_bridge_referee.py</code>
+(offline).</p>
+<h2 id="ciclo-end-to-end-loop.py">Ciclo end-to-end
+(<code>loop.py</code>)</h2>
+<p>Researcher → Referee → decisione → (REJECT) Researcher rilegge
+<code>fatal_error</code> → … fino a READY_FOR_HUMAN.</p>
+<pre><code>python3 researcher/loop.py --workdir runs/X --max-iter 4 --researcher-backend cli --shell full --effort high --referee cli \
+    --literature &quot;frase esatta 1&quot; --literature &quot;frase esatta 2&quot; [--creative-cmd &quot;python3 creative/creative.py --workdir {workdir}&quot;]
+python3 researcher/loop.py --workdir runs/X --researcher-backend mock --referee mock --mock-rejects 2   # test senza modelli</code></pre>
+<p>Regole di arresto: READY_FOR_HUMAN/ACCEPT (approvazione umana),
+COUNTEREXAMPLE_FOUND, KNOWN_OPEN, UNKNOWN_STATUS,
+<code>--max-iter</code>. PARTIAL_PROGRESS: i claim accettati entrano in
+<code>state.verified_claims</code>. Creative: punto d’aggancio
+<code>--creative-cmd</code> (deve scrivere
+<code>{workdir}/creative_ideas.json</code>), chiamato su
+<code>request_creative</code>, <code>stagnation_signal</code> o aumento
+di <code>stagnation_count</code>; se assente, avviso e si prosegue.
+Traccia per iterazione in <code>loop_log.jsonl</code>. Test:
+<code>.venv/bin/python tests/test_loop.py</code>.</p>
+<h2 id="letteratura-literature.py-arxiv">Letteratura
+(<code>literature.py</code>, arXiv)</h2>
+<p>Ricerca deterministica sull’API pubblica di arXiv (frasi esatte per
+query multi-parola; sintassi nativa <code>ti:</code>, <code>au:</code>
+passata com’è), salvata in <code>literature.json</code> e iniettata nel
+prompt come sezione LITERATURE con gli abstract. Il tentativo deve
+contenere <code>literature_position</code>: cosa dà lo stato dell’arte
+per la cella e perché l’approccio lo segue, lo adatta o se ne discosta,
+con id arXiv. Gli abstract non sono prove: un risultato preso da un
+paper è CITED, non provato, salvo riproduzione completa (possibile con
+shell <code>full</code> scaricando il PDF). Esito onesto quando non c’è
+nulla: <code>literature.json = []</code> e
+<code>literature_position = "none found"</code> (è il caso del problema
+2, inedito).</p>
 <h2 id="limiti-noti">Limiti noti</h2>
 <ul>
 <li>La similarità dei <code>fatal_error</code> è lessicale: un Referee

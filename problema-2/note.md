@@ -70,6 +70,14 @@ Prove computer-assisted ammesse (< 10 min, codice incluso, spiegazione del perch
   etichettatura per classi di peso 0,4,3,1,2 con due valli; verificata con tre script (due del Researcher, uno
   indipendente). B&B con simmetria a conferma. Researcher shell `full`: 482 s, $2.53, 10 turni.
 - **C1 completa.** Bozza revisionata in `submission/parte-1.md`.
+- **$U(Q_5)=88$ — BOZZA, in attesa del verdetto del Referee automatico** (2026-09-26 ~13:50). Researcher shell `full`,
+  652 s, $4.25. Lower bound: identità dell'eccesso $T=|E|+v+X$, classificazione picchi/pesanti/valli/leggeri,
+  conteggio dei gradi entranti mod 4 ⇒ ogni etichettatura con $T\le87$ implica (★): "esiste un insieme indipendente
+  di 12 vertici $I$ e $u\notin I$ con $Q_5-(I\cup\{u\})$ foresta"; (★) confutata per enumerazione (3672 insiemi,
+  73440 coppie, 0 aciclici) da DUE script del Researcher e da UNO mio con metodo diverso (potatura delle foglie):
+  `certificati/q5_stella_verifica_indipendente.py`. Riduzione riletta a mano lemma per lemma: corretta.
+  Upper bound: etichettatura con 8 valli e 88 cammini, verificata indipendentemente. Nota: l'eccesso è $|E|+8$,
+  il pattern $|E|+2$ si rompe già a $d=5$. Bozza di consegna da scrivere dopo il verdetto.
 - Pattern da sfruttare per $Q_5..Q_8$: etichettare per classi di peso (prima 0 e $d$, poi $d-1$, poi 1, ...) crea
   poche valli e molti vertici con $p=\deg^-$; da provare nel harness come mossa strutturata / programma evoluto.
 

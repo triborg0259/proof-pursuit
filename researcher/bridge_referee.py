@@ -151,10 +151,27 @@ class CliBackend:
     """Adatta `claude -p --json-schema` al protocollo JSONBackend del Referee (generate(role, system, payload, schema)).
     Ogni richiesta è indipendente, senza strumenti; il modello A e B possono differire."""
 
-    def __init__(self, model_a=None, model_b=None, timeout=300):
+    def __init__(self, model_a=None, model_b=None, timeout=300, log_dir=None):
         self.models = {"A": model_a, "B": model_b or model_a}
         self.timeout = timeout
         self.usage = []
+        self.log_dir = Path(log_dir) if log_dir else None   # dove salvare gli output grezzi dei giudici
+
+    def _salva_grezzo(self, role, tentativo, raw):
+        """Conserva la risposta grezza del giudice: senza questo un ValidationError è indiagnosticabile."""
+        if self.log_dir:
+            write_json(self.log_dir / f"referee_raw_{role}_{tentativo}.json", raw)
+
+    @staticmethod
+    def _valida(role, raw):
+        """Applica le stesse regole pydantic del Referee (coerenza PASS/FAIL/PARTIAL). Ritorna il testo dell'errore o ''."""
+        from referees.contracts import AgentEnvelope, MathReport, EvidenceReport
+        envelope = AgentEnvelope[MathReport if role == "A" else EvidenceReport]
+        try:
+            envelope.model_validate(raw)
+            return ""
+        except Exception as err:
+            return str(err)[:2000]
 
     def _comando(self, role, system, schema):
         cmd = ["claude", "-p", "--no-session-persistence", "--output-format", "json", "--tools", "",
@@ -176,7 +193,19 @@ class CliBackend:
         return out.get("structured_output") or json.loads(out["result"])
 
     async def generate(self, *, role, system, payload, schema):
-        return await asyncio.to_thread(self._chiama, role, system, payload, schema)
+        """Prima chiamata; se il rapporto viola le regole di coerenza del Referee, un solo ritentativo con l'errore
+        esatto nel payload (il modello di solito corregge il campo incriminato). Poi si lascia decidere al Referee."""
+        raw = await asyncio.to_thread(self._chiama, role, system, payload, schema)
+        self._salva_grezzo(role, 1, raw)
+        errore = self._valida(role, raw)
+        if not errore:
+            return raw
+        print(f"[referee-cli] {role}: rapporto non valido, ritento una volta: {errore[:200]}", file=sys.stderr)
+        payload_bis = {**payload, "previous_report_rejected_by_validator": raw, "validation_error": errore,
+                       "instruction": "Return a report that satisfies the validator; keep your mathematical judgement."}
+        raw = await asyncio.to_thread(self._chiama, role, system, payload_bis, schema)
+        self._salva_grezzo(role, 2, raw)
+        return raw
 
     async def close(self):
         return None
@@ -223,7 +252,7 @@ def _scegli_backend(args):
     if args.backend == "api":
         from referees.provider import ClaudeBackend
         return ClaudeBackend(args.model or "claude-opus-5", args.model_b)
-    return CliBackend(args.model, args.model_b, timeout=args.timeout)
+    return CliBackend(args.model, args.model_b, timeout=args.timeout, log_dir=Path(args.workdir) / "attempts")
 
 
 def cmd_review(args):
