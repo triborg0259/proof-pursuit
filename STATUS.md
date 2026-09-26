@@ -23,7 +23,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | 3 | $N=d+1$: $S\le(\binom{d+1}{2}-1)\pi/2$ (3 pt) | parziale |triage in note.md; dipende dal lemma P2; bozza parziale in inglese in submission/ (parziali.py) |
 | 4 | 5 rette in $\mathbb{R}^3$ ($4\pi$), 6 in $\mathbb{R}^4$ ($13\pi/2$) (5 pt) | parziale |triage; possibile via P5 o calcolo rigoroso; bozza parziale in inglese in submission/ (parziali.py) |
 | 5 | $N=d+2$: $S\le(\binom{d+2}{2}-2)\pi/2$ (8 pt) | parziale |triage; bozza parziale in inglese in submission/ (parziali.py) |
-| 6 | Congettura completa, open (13 pt) | parziale |triage; solo ricerca controesempi / famiglie infinite; bozza parziale in inglese in submission/ (parziali.py) |
+| 6 | Congettura completa, open (13 pt) | parziale | loop p1_c6 attempt_001: REJECT (The only declared claim is `main` (Fejes Tóth's bound for all N, d). The submission explicitly states in §8 that no non-); lemmi intermedi in submission/parte-6.en.md |
 
 ## Problema 2 — Uphill paths on the hypercube
 
@@ -42,7 +42,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 |---|---|---|---|
 | 1 | Cicliche e numero di cicli, prove (1 pt) | revisionato | loop p3_c1 attempt_002: Referee READY_FOR_HUMAN (A PASS, B PASS); approvata da Thomas Tumini (human); submission/parte-1.en.md |
 | 2 | $D_B(T_k)$ esatto (2 pt) | revisionato | loop p3_c2 attempt_002: Referee READY_FOR_HUMAN (A PASS, B PASS); approvata da Thomas Tumini (human); submission/parte-2.en.md |
-| 3 | Bound $k^2-2k-1$ e $D_B(T_k-1)$ (3 pt) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
+| 3 | Bound $k^2-2k-1$ e $D_B(T_k-1)$ (3 pt) | parziale | loop p3_c3 attempt_001: UNKNOWN_STATUS (); lemmi intermedi in submission/parte-3.en.md |
 | 4 | $D_B(T_{k-1}+1)$ (5 pt) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
 | 5 | $D_B(T_{k-1}+2)$ (8 pt) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
 | 6 | $D_B(n)$ per ogni $n$ (13 pt, open) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
@@ -54,8 +54,8 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | 1 | $k=3$ (1 pt) | revisionato | prova completa (parità); Referee READY_FOR_HUMAN (A PASS, B PASS); approvata; submission/parte-1.md |
 | 2 | $k=4$ (2 pt) | revisionato | prova completa (clique per primo, casi su $|T|$); Referee READY_FOR_HUMAN (A PASS, B PASS); approvata; submission/parte-2.md |
 | 3 | $k\le8$ (3 pt) | revisionato | loop p4_c3 attempt_001: Referee READY_FOR_HUMAN (A PASS, B PASS); approvata da Thomas Tumini (human); submission/parte-3.en.md |
-| 4 | $k\le12$ + report 9–16 (5 pt) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
-| 5 | boundary certificato + $k=24,30$ (8 pt) | parziale |richiede 2 implementazioni indipendenti; bozza parziale in inglese in submission/ (parziali.py) |
+| 4 | $k\le12$ + report 9–16 (5 pt) | parziale | loop p4_c4 attempt_001: UNKNOWN_STATUS (); lemmi intermedi in submission/parte-4.en.md |
+| 5 | boundary certificato + $k=24,30$ (8 pt) | parziale | loop p4_c5 attempt_001: REJECT (The declared target 'main' is the whole of cell 5: (A) determine and certify the largest contiguous range k ≤ K with the); lemmi intermedi in submission/parte-5.en.md |
 | 6 | oltre (13 pt, open) | parziale | loop p4_c6 attempt_001: REJECT (The strongest result actually proved is Corollary 6: max gcd(m_i,m_j) >= k^{1/3} unconditionally, and >= c*sqrt(k)/log k); lemmi intermedi in submission/parte-6.en.md |
 
 ## Registro decisioni e ostacoli

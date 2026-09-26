@@ -1,67 +1,120 @@
-Problem 4 — Part 5 — PARTIAL submission draft
+Problem 4 — Part 5 — submission (PARTIAL)
 
-Declared status: PARTIAL. No complete solution: below is what has been established, the formalization,
-the position with respect to the literature, and what remains open. Nothing is declared proven beyond what is written.
+Declared status: PARTIAL. The cell is not solved. What follows is the intermediate progress actually established,
+as judged by the automatic Referee (verdict REJECT: The declared target 'main' is the whole of cell 5: (A) determine and certify the largest contiguous range k ≤ K with the strengthened certificate (i)–(v) [non-vacuity demonstration, individual survivor decisions with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, second independent implementation compared elementwise], and (B) show that neither k=24 nor k=30 i).
+The author's own declared status was LEMMA_CANDIDATE.
 
 1. Result and scope
 
-Official request.
-
-Parte 5 (C5) — The certified boundary
-
-Punteggio: 8 points · Valutazione: Judged
-
-The main certification cell: an initial range of sizes as long as you can make it, plus two isolated sizes
-further out. Determine the largest $k$ for which you can certify the statement for all sizes up to and including
-$k$, and certify it. The range you claim must be contiguous, and if your argument at a given size assumes that
-all smaller sizes have already been settled you must say so. Then decide the two isolated sizes $k = 24$ and
-$k = 30$: show that neither is the least size at which the statement can fail.
-
-For this cell the exhaustiveness certificate of the hand-in rules is not enough on its own. Add:
-
-(i) a demonstration that your method is not vacuous. Construct a case in which an admissible configuration
-genuinely exists, run your machinery on it unmodified, and show it returns that configuration. A method that
-reports "nothing survives" at every size it is pointed at is indistinguishable from a method with a bug, and will
-be graded as one;
-
-(ii) for every object your pruning leaves undecided, at every $k$ you claim — not a sample — an individual
-decision, plus the smallest part of that object which already forces the decision, plus a proof that no smaller
-part does;
-
-(iii) the exact list, not merely the count, of what survives at each $k$;
-
-(iv) every pruning rule you use beyond those you have proved, proved. If your search needs a rule you invented
-to finish a size, that rule is part of your claim: state it, prove it, and show the survivor list is unchanged
-when you switch it off. A size that only closes with an unproved rule is not certified;
-
-(v) a second implementation, written independently of your first, that differs in method — not the same
-algorithm twice — and the two survivor lists compared elementwise at every $k$ you claim. Report any difference
-rather than reconciling it silently: a disagreement means one of them is wrong, and finding which is part of the
-cell.
-
-What we deliver. No certificate. Observation: for $k=24,30$ brute force on $L_k$ is impractical; a size-reduction argument is needed (if a counterexample exists at $k$, one exists at some $k'<k$).
+Complete hand proof of the "two isolated sizes" requirement of cell 5: if the statement holds for all sizes s < k then it holds for k = 24 and for k = 30, i.e. neither is the least size at which it can fail. Along the way four reusable, fully proved lemmas for the range search: normalisation to divisors of L_k (Lemma 1), the divide-out-a-prime-power lemma (Lemma 3), the residue bound |{i : q | m_i, a_i ≡ b (mod q)}| ≤ ⌊(k−1)/q⌋ under minimality (Lemma 4), no prime-power modulus (Cor. 5), and ≥ 3 multiples of k−1 (Lemma 6). A gap in O'Bryant's published k=30 argument is identified and repaired. NOT done in this iteration: the contiguous certified range with certificate items (i)–(v); the colleague cell-4 sandbox reaches k ≤ 13 with a modulus-stage search that times out at k = 14, so the range half needs a new search design (next iteration: use Lemma 4 and Lemma 6 as proved pruning rules, plus a residue CSP, two independent implementations).
 
 2. Proof
 
-Not developed.
+Statement proved
+
+Notation. A class is $a \pmod m$ with $m\ge1$. For a family $a_i \pmod{m_i}$ ($i\in I$) write $g_{ij}:=\gcd(m_i,m_j)$. For $k\ge2$ let $S(k)$ denote: every family of $k$ pairwise disjoint classes has a pair $i<j$ with $g_{ij}\ge k$. A counterexample of size $k$ is a pairwise disjoint family of $k$ classes with $g_{ij}\le k-1$ for all $i<j$; $S(k)$ fails iff a counterexample of size $k$ exists. Put $L_k:=\operatorname{lcm}(1,2,\dots,k-1)$. Throughout we use only the definitions and the criterion $(*)$ of the problem statement: two classes $a_i \pmod{m_i}$, $a_j\pmod{m_j}$ meet iff $g_{ij}\mid a_i-a_j$.
+
+Theorem. Let $k\in\{24,30\}$ and assume that $S(s)$ holds for every $s$ with $2\le s<k$. Then $S(k)$ holds.
+
+Equivalently: neither $24$ nor $30$ is the least size at which the statement can fail. (The hypothesis "all smaller sizes settled" is used, as the cell explicitly permits provided it is stated; it is used in Lemmas 4, 6 and Corollary 5 only, exactly where indicated.)
+
+Step 0. Two elementary facts
+
+Lemma 0. (a) In a pairwise disjoint family with at least two classes, $g_{ij}\ge2$ for all $i\ne j$. (b) A sub-family of a pairwise disjoint family is pairwise disjoint, with the same $g_{ij}$.
+
+Proof. (a) If $g_{ij}=1$ then $g_{ij}\mid a_i-a_j$, so the classes meet by $(*)$. (b) Disjointness is a condition on pairs and $g_{ij}$ depends only on $m_i,m_j$. $\square$
+
+Step 1. Normalisation (the moduli may be taken to divide $L_k$)
+
+Lemma 1. Let $a_1\pmod{m_1},\dots,a_k\pmod{m_k}$ be a counterexample of size $k\ge2$. Put $m_i':=\operatorname{lcm}\{g_{ij}: j\ne i\}$ and $a_i':=a_i \bmod m_i'$. Then (1) $2\le m_i'$, $m_i'\mid m_i$, $m_i'\mid L_k$; (2) $\gcd(m_i',m_j')=g_{ij}$ for all $i\ne j$; (3) the classes $a_i'\pmod{m_i'}$ form a counterexample of size $k$.
+
+Proof. (1) By Lemma 0(a) every $g_{ij}\ge2$, so $m_i'\ge2$. Each $g_{ij}$ divides $m_i$, hence so does their lcm. Each $g_{ij}\le k-1$ divides $L_k$, hence so does their lcm. (2) $g_{ij}$ is one of the numbers whose lcm is $m_i'$ and one of those whose lcm is $m_j'$, so $g_{ij}\mid\gcd(m_i',m_j')$; conversely $\gcd(m_i',m_j')\mid\gcd(m_i,m_j)=g_{ij}$ because $m_i'\mid m_i$ and $m_j'\mid m_j$. (3) Fix $i<j$. By (2) the new gcd is $g_{ij}\le k-1$. Since $g_{ij}\mid m_i'$ and $a_i'\equiv a_i\pmod{m_i'}$, we have $a_i'\equiv a_i\pmod{g_{ij}}$; likewise for $j$; so $a_i'-a_j'\equiv a_i-a_j\pmod{g_{ij}}$. The original classes are disjoint, so by $()$ $g_{ij}\nmid a_i-a_j$, hence $g_{ij}\nmid a_i'-a_j'$, and by $()$ the new classes $i,j$ are disjoint. $\square$
+
+Step 2. Dividing out a prime power
+
+Lemma 3. Let $a_i\pmod{m_i}$ ($i\in I$, $|I|\ge2$) be pairwise disjoint, let $q=p^e$ ($e\ge1$) be a prime power with $q\mid m_i$ for all $i\in I$, and let $b$ be an integer with $a_i\equiv b\pmod q$ for all $i\in I$. Then the classes
+$$\frac{a_i-b}{q}\pmod{\frac{m_i}{q}},\qquad i\in I,$$
+are pairwise disjoint and $\gcd(m_i/q,\,m_j/q)=g_{ij}/q$ for all $i\ne j$ in $I$.
+
+Proof. All quantities are integers since $q\mid m_i$ and $q\mid a_i-b$. For a prime $r$ write $v_r$ for the $r$-adic valuation. For $i\ne j$: $v_r(m_i/q)=v_r(m_i)-e[r=p]$ and likewise for $j$; since $v_p(m_i),v_p(m_j)\ge e$, $\min(v_r(m_i)-e[r=p],\,v_r(m_j)-e[r=p])=\min(v_r(m_i),v_r(m_j))-e[r=p]=v_r(g_{ij})-e[r=p]=v_r(g_{ij}/q)$. Hence $\gcd(m_i/q,m_j/q)=g_{ij}/q$ (note $q\mid g_{ij}$ because $v_p(g_{ij})\ge e$). Now $(g_{ij}/q)\mid\big(\tfrac{a_i-b}{q}-\tfrac{a_j-b}{q}\big)=\tfrac{a_i-a_j}{q}$ holds iff $g_{ij}\mid a_i-a_j$ (multiply/divide by $q$). Since the original classes $i,j$ are disjoint, $()$ gives $g_{ij}\nmid a_i-a_j$, so $g_{ij}/q\nmid (a_i-a_j)/q$, and by $()$ (applied with the new moduli, whose gcd is $g_{ij}/q$) the new classes $i,j$ are disjoint. $\square$
+
+Lemma 4 (residue bound). Let $k\ge2$, assume $S(s)$ for all $2\le s<k$, and let $a_i\pmod{m_i}$ ($1\le i\le k$) be a counterexample of size $k$ with $m_i\mid L_k$ for all $i$. Let $q=p^e$ be a prime power and $b$ an integer. Then
+$$\#\{\,i:\ q\mid m_i\ \text{and}\ a_i\equiv b\pmod q\,\}\ \le\ \Big\lfloor\frac{k-1}{q}\Big\rfloor .$$
+
+Proof. Let $I$ be the set in question and suppose $|I|\ge s:=\lfloor (k-1)/q\rfloor+1$. If $I=\emptyset$ there is nothing to prove, so let $i\in I$; then $q\mid m_i\mid L_k$, which forces $q\le k-1$ (a prime power divides $\operatorname{lcm}(1,\dots,k-1)$ only if it is $\le k-1$), hence $\lfloor (k-1)/q\rfloor\ge1$ and $s\ge2$. Also $s\le (k-1)/q+1\le (k-1)/2+1<k$ because $k\ge2$. Choose any $s$ indices $i_1,\dots,i_s\in I$. By Lemma 0(b) they are pairwise disjoint, and Lemma 3 (with this $q$ and $b$) yields $s$ pairwise disjoint classes with pairwise gcds $g_{i_ti_u}/q\le (k-1)/q$; being integers, these gcds are $\le\lfloor (k-1)/q\rfloor=s-1$. This contradicts $S(s)$ ($2\le s<k$). $\square$
+
+Corollary 5 (no prime-power modulus). Under the hypotheses of Lemma 4, no $m_i$ is a prime power.
+
+Proof. Suppose $m_1=p^r$ with $r\ge1$. For every $j\ne1$, Lemma 0(a) gives $g_{1j}\ge2$, and $g_{1j}\mid p^r$, so $p\mid m_j$. Thus $p\mid m_i$ for all $i$. Among the $k$ residues $a_i\bmod p$ some value $b$ occurs at least $\lceil k/p\rceil$ times (pigeonhole). Lemma 4 with $q=p$ gives $\lceil k/p\rceil\le\lfloor (k-1)/p\rfloor$. But $\lceil k/p\rceil\ge k/p>(k-1)/p\ge\lfloor (k-1)/p\rfloor$, a contradiction. $\square$
+
+Step 3. At least three multiples of $k-1$
+
+Lemma 6. Let $k\ge3$, assume $S(k-1)$, and let $a_i\pmod{m_i}$ ($1\le i\le k$) be a counterexample of size $k$. Then at least three of the $m_i$ are multiples of $k-1$.
+
+Proof. Let $J=\{i:(k-1)\mid m_i\}$ and suppose $|J|\le2$. Delete one index: an element of $J$ if $J\ne\emptyset$, otherwise any index. The remaining $k-1$ classes are pairwise disjoint (Lemma 0(b)) and at most one of them has modulus divisible by $k-1$. For two remaining indices $i<j$ we have $g_{ij}\le k-1$, and $g_{ij}=k-1$ would force $(k-1)\mid m_i$ and $(k-1)\mid m_j$, i.e. two remaining multiples of $k-1$, which is impossible; hence $g_{ij}\le k-2$. So the remaining family is a counterexample of size $k-1\ge2$, contradicting $S(k-1)$. $\square$
+
+Step 4. Proof of the Theorem
+
+Let $k\in\{24,30\}$, so $p:=k-1\in\{23,29\}$ is prime, and assume $S(s)$ for all $2\le s<k$. Suppose, for contradiction, that a counterexample of size $k$ exists. By Lemma 1 we may assume $m_i\mid L_k$ for all $i$ (Lemma 1 produces a counterexample of the same size $k$, so all hypotheses of Lemmas 4, 6 and Corollary 5 hold for it). Let
+$$J:=\{\,i: p\mid m_i\,\},\qquad \ell:=|J|.$$
+By Lemma 6, $\ell\ge3$.
+
+(4a) Structure of the moduli in $J$. Since $p^2>k-1$, $p^2\nmid L_k$, so $v_p(m_i)=1$ for $i\in J$; write $m_i=p\,n_i$ with $p\nmid n_i$. For $i\ne j$ in $J$: $p\mid g_{ij}\le k-1=p$, hence $g_{ij}=p$ and therefore $\gcd(n_i,n_j)=1$. By Corollary 5, $m_i$ is not a prime power, so $n_i>1$. Let $P_i$ be the set of primes dividing $n_i$ ($i\in J$). Then: each $P_i$ is nonempty; the $P_i$ ($i\in J$) are pairwise disjoint; every element of $P_i$ is a prime $<k$ different from $p$ (because $n_i\mid L_k$ and $p\nmid n_i$). Let $R$ be the set of primes $<k$ other than $p$:
+$$k=24:\ R=\{2,3,5,7,11,13,17,19\},\ |R|=8;\qquad k=30:\ R=\{2,3,5,7,11,13,17,19,23\},\ |R|=9 .$$
+Hence $\sum_{i\in J}|P_i|\le|R|$, and in particular $\ell\le|R|$.
+
+(4b) The map $\omega$. Let $i\notin J$, so $p\nmid m_i$. For each $j\in J$, Lemma 0(a) gives $g_{ij}\ge2$; $g_{ij}\mid m_i$ so $p\nmid g_{ij}$; take a prime $r\mid g_{ij}$: then $r\ne p$, $r\mid m_j$, so $r\mid n_j$, i.e. $r\in P_j$, and $r\mid m_i$. Thus $P_j\cap\{\text{primes dividing }m_i\}\ne\emptyset$ for every $j\in J$, and we may define
+$$\omega(i):=\big(\min(P_j\cap\{\text{primes dividing }m_i\})\big)_{j\in J}\ \in\ \prod_{j\in J}P_j .$$
+Claim: $\omega$ is injective on $\{1,\dots,k\}\setminus J$. If $i\ne i'$ are outside $J$ with $\omega(i)=\omega(i')=(r_j)_{j\in J}$, then the $r_j$ are $\ell$ pairwise distinct primes (the $P_j$ are disjoint) each dividing both $m_i$ and $m_{i'}$, so $g_{ii'}\ge\prod_{j\in J}r_j\ge 2\cdot3\cdot5=30\ge k$ (as $\ell\ge3$ and the product of $\ell$ distinct primes is at least the product of the $\ell$ smallest primes), contradicting $g_{ii'}\le k-1$. Hence
+$$k-\ell\ \le\ \prod_{j\in J}|P_j| . \qquad(1)$$
+
+(4c) Counting. By AM–GM, $\prod_{j\in J}|P_j|\le\big(\tfrac1\ell\sum_{j\in J}|P_j|\big)^{\ell}\le(|R|/\ell)^{\ell}$, and the product is an integer.
+
+Case $k=24$, $|R|=8$. For $\ell=3,\dots,8$ the bound $\lfloor (8/\ell)^\ell\rfloor$ is $18,16,10,5,2,1$ respectively ($ (8/3)^3=512/27<19$, $2^4=16$, $(8/5)^5=32768/3125<11$, $(4/3)^6=4096/729<6$, $(8/7)^7<3$, $1$), while $k-\ell=21,20,19,18,17,16$. In every case $k-\ell>\prod|P_j|$, contradicting (1). (Exact brute-force confirmation of the maxima: script prodotto_massimo.py, output below.) Hence no counterexample of size $24$ exists: $S(24)$ holds.
+
+Case $k=30$, $|R|=9$. For $\ell=4,\dots,9$ the bound $\lfloor (9/\ell)^\ell\rfloor$ is $25,18,11,5,2,1$ ($(9/4)^4=6561/256<26$, $(9/5)^5=59049/3125<19$, $(3/2)^6=729/64<12$, $(9/7)^7<6$, $(9/8)^8<3$, $1$), while $k-\ell=26,25,24,23,22,21$; again $k-\ell>\prod|P_j|$, contradicting (1). So $\ell=3$, $J=\{j_1,j_2,j_3\}$, and (1) reads $27\le|P_{j_1}||P_{j_2}||P_{j_3}|\le(\tfrac13\sum|P_j|)^3\le 3^3=27$. Equality throughout forces (equality case of AM–GM and $\sum|P_j|=9=|R|$):
+$$|P_{j_1}|=|P_{j_2}|=|P_{j_3}|=3,\qquad P_{j_1}\sqcup P_{j_2}\sqcup P_{j_3}=R,$$
+and $\omega$ is an injection from a $27$-element set into a $27$-element set, hence a bijection onto $P_{j_1}\times P_{j_2}\times P_{j_3}$.
+
+(4d) Cross products. Claim: if $j\ne j'$ in $J$, $r\in P_j$, $r'\in P_{j'}$, then $r r'\le 29$. Let $j''$ be the third element of $J$ and pick two distinct primes $r''_1,r''_2\in P_{j''}$ (possible since $|P_{j''}|=3$). The two triples of $P_{j_1}\times P_{j_2}\times P_{j_3}$ having coordinates $r$ at $j$, $r'$ at $j'$ and $r''_1$ resp. $r''_2$ at $j''$ are distinct, so by surjectivity of $\omega$ there are distinct $i_1,i_2\notin J$ with $\omega(i_1),\omega(i_2)$ equal to them. By definition of $\omega$, every coordinate of $\omega(i)$ is a prime dividing $m_i$; so $r$ and $r'$ divide both $m_{i_1}$ and $m_{i_2}$, whence $rr'\mid g_{i_1i_2}\le k-1=29$. $\square$
+
+Now consider the seven primes $5,7,11,13,17,19,23\in R$. Any two of them have product $\ge5\cdot7=35>29$, so by the Claim no two of them lie in different $P_j$'s; i.e. all seven lie in the same $P_j$. But $|P_j|=3$. Contradiction. Hence no counterexample of size $30$ exists: $S(30)$ holds. $\blacksquare$
+
+Where the hypothesis "all smaller sizes settled" is used
+
+Lemma 4 uses $S(s)$ for $s=\lfloor (k-1)/q\rfloor+1\le (k-1)/2+1$ (in Corollary 5 with $q=p$ the prime of the assumed prime-power modulus); Lemma 6 uses $S(k-1)$. Nothing else about smaller sizes is used, and minimality of $\sum m_i$ is never used.
+
+Exact computational check (not needed for the proof, included for the reader)
+
+prodotto_massimo.py enumerates, for $\ell=3,\dots,|R|$, all $\ell$-tuples of positive integers with sum $\le|R|$ and prints the maximal product next to $k-\ell$ (exact integer arithmetic; finite set: all tuples in $\{1,\dots,|R|\}^\ell$, $\ell\le|R|$; wall clock 75 s on Apple M4). Output:
+This agrees with (and is slightly sharper than) the AM–GM bounds used in the text.
+
+Comparison with the source consulted (read in full)
+
+K. O'Bryant, arXiv:math/0604347v2, proves the same two facts via his Lemma 6 items 4, 5, 8. Items 4 and 5 correspond to our Corollary 5 and Lemma 6 (re-proved here; our Lemma 3/4 formalises his "divide the classes with equal residue by $p$" step). His item 8 corresponds to our (4a)–(4c); for $k=30$, $\ell=3$ his text concludes "Thus two of the four primes 17, 19, 23, 29 are in separate $P_i$'s", which does not follow from $|P_1|=|P_2|=|P_3|=3$ alone (with $p=29$ the primes $17,19,23$ might all lie in one $P_i$). Our step (4d) replaces this sentence by a proved argument, so the result stands, but the published proof as written has a gap at that point. We rely on nothing from the paper.
 
 3. Verification: instructions, dependencies, timings
 
-Available code (Python 3, standard library; each script runs in under a minute):
-- No code yet.
+Python 3 standard library. Scripts (re-run by the orchestrator, see runs/p4_c5/verifica/):
+- code_1 (python, rigor exact): Exact brute-force confirmation of the counting table used in Step 4c: for l = 3..|R| the maximal product of l positive integers with sum <= |R| (|R| = 8 for k=24, 9 for k=30), compared with k-l. Finite set: all l-tuples in {1..|R|}^l. Wall clock 75 s (Apple M4, .venv python). File runs/p4_c5/sandbox/prodotto_massimo.py
 
 4. Sources and contribution
 
-arXiv literature (deterministic search tools/cerca_letteratura.sh, abstracts read, not used as proof):
-- arXiv:2603.26043v1 — Finiteness of Disjoint Covering Systems with Precisely One Repeated Modulus (Yu Hashimoto, 2026); abstract only read.
-- arXiv:1511.04293v1 — Searching for Disjoint Covering Systems with Precisely One Repeated Modulus (Shalosh B. Ekhad, Aviezri S. Fraenkel, Doron Zeilberger, 2015); abstract only read.
-- arXiv:2607.24655v1 — On the problem of large gcd for disjoint residue classes (Jan Fornal, Yu-Chen Sun, 2026); abstract only read.
-- arXiv:2608.15873v1 — Two Questions on $G$-harmonic Tuples (Murali Menon, 2026); abstract only read.
-As in part 3.
+- K. O'Bryant, On Z.-W. Sun's disjoint congruence classes conjecture, arXiv:math/0604347v2 (2006) — read in full (pdf downloaded to runs/p4_c5/sandbox/obryant.pdf, text in obryant.txt); Theorem 3 and Lemma 6 items 4, 5, 8 consulted; nothing used as a hypothesis; a gap in the k=30 step of item 8 reported above
+- Problem statement of Problema 4 (definitions and criterion (*)), problema-4/enunciato.md
+- runs/p4_c4/sandbox/attempt_cell4.md (colleague loop, cell 4): Lemma A there is the same normalisation as our Lemma 1; re-proved here, not cited as verified
+- Position with respect to the literature: The listed abstracts do not touch this cell directly: [2607.24655] (Fornal–Sun) is the asymptotic bound max gcd ≫ k·exp(−(2+o(1))√(log k/log log k)) — relevant to C6(b) only; [2608.15873] (Menon) is the group form C6(c); [2603.26043] and [1511.04293] are about disjoint covering systems with a repeated modulus. Not listed by the search but found and READ IN FULL (downloaded from arxiv.org/pdf/math/0604347v2, text extracted): K. O'Bryant, "On Z.-W. Sun's disjoint congruence classes conjecture" (2006), Theorem 3: "The DCCC holds for k ≤ 20. Moreover, a counterexample to the DCCC with minimal k does not have k ∈ {24, 30}." His route for 24 and 30 is: item 5 (a minimal counterexample has ≥3 multiples of k−1) contradicts item 8 (for 7 ≤ k ≤ 30 a prime p ≥ k/2 divides exactly 0 or 2 moduli). My proof FOLLOWS his overall strategy (items 4, 5, 8 re-proved here from scratch, with our own Lemma 3/4 replacing his pigeonhole-on-residues paragraph) but DEPARTS at the k=30 end-game: his text says "each of the 27 possible values of ω must actually occur: |P1|=|P2|=|P3|=3. Thus two of the four primes 17, 19, 23, 29 are in separate Pi's" — with p=29 the three primes 17,19,23 could all lie in the same P_j, so that sentence does not follow from what precedes it. I close the gap with a different argument (cross products of primes from different P_j must be ≤ 29, forcing seven primes into one 3-element set). Also, unlike his Lemma 6 I never use minimality of Σm_i. Nothing from the paper is used as a hypothesis; the whole proof is written out. His k ≤ 20 claim (a week of Mathematica in 2006) is CITED only, not used and not reproduced.
 
 5. Limits and unresolved parts
 
-Everything.
+Referee's blocking point: The declared target 'main' is the whole of cell 5: (A) determine and certify the largest contiguous range k ≤ K with the strengthened certificate (i)–(v) [non-vacuity demonstration, individual survivor decisions with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, second independent implementation compared elementwise], and (B) show that neither k=24 nor k=30 is the least failing size. The submission addresses only (B): it proves 'S(s) for all 2≤s<k ⇒ S(k)' for k∈{24,30}. Nothing in the submission determines a contiguous certified range, and no certificate components (i)–(v) are present; the state also carries no previously verified claims (highest_verified_cell=0) that the argument could lean on. The only declared claim is 'main', so no declared claim is established and PARTIAL is unavailable. The argument for (B) contains no invalid inference (see math_notes) and should be re-declared as its own claim.
+Next step required: Address the stated blocking obligation without silently changing the target
+Gaps declared by the author:
+- This attempt covers only the 'two isolated sizes' part of cell 5; the contiguous certified range (with certificate items (i)–(v), survivor lists, second implementation) is not addressed here, so the cell as a whole is not solved.
+- The Theorem is conditional on S(s) for all s < k, as the cell allows when stated; unconditional truth for k = 24, 30 would require the statement up to 23 resp. 29, far beyond any certified range.
+- AM–GM floor values in (4c) were computed by hand and confirmed by the exact script; the script is brute force (75 s) and covers exactly the tuples in {1..|R|}^l, l ≤ |R|.
+- In (4b) the bound 'product of ℓ ≥ 3 distinct primes ≥ 30' uses that the three smallest primes are 2, 3, 5; stated, not belaboured.
+- O'Bryant's k ≤ 20 computational claim is cited only and neither used nor reproduced.
 
 6. How this result was obtained (multi-agent trace)
 

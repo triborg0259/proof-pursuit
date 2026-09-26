@@ -239,59 +239,622 @@ right and why. An answer that reports agreement with a source it did not
 test will be marked wrong.</p>
 <p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
 <code>Prove the statement for every k &lt;= 12; then for each k = 9..16 report exactly what the method leaves undecided (nothing: prove it; something: exhibit it in full); compare with sources only if tested.</code></p>
-<p><strong>Evidenza registrata in STATUS.md.</strong> bozza parziale in
-inglese in submission/ (parziali.py)</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> loop p4_c4
+attempt_001: UNKNOWN_STATUS (); lemmi intermedi in
+submission/parte-4.en.md</p>
 <h3 id="consegna-prova">Consegna (prova)</h3>
-<h4 id="problema-4-parte-4-bozza-di-consegna-parziale">Problema 4 —
-Parte 4 — bozza di consegna PARZIALE</h4>
-<p><strong>Stato dichiarato: PARZIALE.</strong> Nessuna soluzione
-completa: qui sotto ciò che è stabilito, la formalizzazione, la
-posizione rispetto alla letteratura e ciò che resta aperto. Nulla è
-dichiarato dimostrato oltre quanto scritto.</p>
-<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
-<p><strong>Richiesta ufficiale.</strong> ## Parte 4 (C4) — Every <span
-class="math inline">\(k\)</span> up to 12</p>
-<p><strong>Punteggio:</strong> 5 points · <strong>Valutazione:</strong>
-Judged</p>
-<p>A longer range, and a precise account of your method at the sizes
-just beyond it. Prove the statement for every <span
-class="math inline">\(k \le 12\)</span>. Then, for each <span
-class="math inline">\(k\)</span> from <span
-class="math inline">\(9\)</span> to <span
-class="math inline">\(16\)</span> in turn, report exactly what your
-method leaves undecided at that <span class="math inline">\(k\)</span>:
-if nothing, say so and prove it; if something, exhibit it in full. If
-that disagrees with any source you consulted, say which of the two is
-right and why. An answer that reports agreement with a source it did not
-test will be marked wrong.</p>
-<p><strong>Cosa consegniamo.</strong> Come parte 3, esteso a <span
-class="math inline">\(k\le12\)</span> (<span
-class="math inline">\(L_{12}=27720\)</span>, 96 divisori); non
-eseguito.</p>
-<h5 id="dimostrazione">2. Dimostrazione</h5>
-<p>Stessa riduzione e stesso schema di ricerca; il rapporto sui casi
-<span class="math inline">\(9\le k\le16\)</span> richiede di elencare i
-sopravvissuti alla potatura senza deciderli con regole non
-dimostrate.</p>
-<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
-dipendenze, tempi</h5>
-<p>Codice disponibile (Python 3, libreria standard; ogni script gira in
-meno di un minuto): - Nessun codice ancora.</p>
-<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
-<p>Letteratura arXiv (ricerca deterministica
-<code>tools/cerca_letteratura.sh</code>, abstract letti, non usata come
-prova): - arXiv:2603.26043v1 — Finiteness of Disjoint Covering Systems
-with Precisely One Repeated Modulus (Yu Hashimoto, 2026); solo abstract
-letto. - arXiv:1511.04293v1 — Searching for Disjoint Covering Systems
-with Precisely One Repeated Modulus (Shalosh B. Ekhad, Aviezri S.
-Fraenkel, Doron Zeilberger, 2015); solo abstract letto. -
-arXiv:2607.24655v1 — On the problem of large gcd for disjoint residue
-classes (Jan Fornal, Yu-Chen Sun, 2026); solo abstract letto. -
-arXiv:2608.15873v1 — Two Questions on <span
-class="math inline">\(G\)</span>-harmonic Tuples (Murali Menon, 2026);
-solo abstract letto. Come parte 3.</p>
-<h5 id="limiti-e-parti-irrisolte">5. Limiti e parti irrisolte</h5>
-<p>Tutto tranne la riduzione.</p>
+<h4 id="problem-4-part-4-submission-partial">Problem 4 — Part 4 —
+submission (PARTIAL)</h4>
+<p><strong>Declared status: PARTIAL.</strong> The cell is not solved.
+What follows is the intermediate progress actually established, as
+judged by the automatic Referee (verdict <code>UNKNOWN_STATUS</code>:
+Provide the missing review or independently checked evidence). The
+author’s own declared status was <code>CELL_SOLVED_CANDIDATE</code>.</p>
+<h5 id="result-and-scope">1. Result and scope</h5>
+<p>Complete proof of the statement for every 3 ≤ k ≤ 12 (the cell) and
+for k = 13, with an exhaustiveness certificate: finite set + proof
+(Lemma A, Corollary D), pruning rules each proved (Lemma B with all
+admissible M, R3, translation), node counts and wall clock per k, reruns
+reproducing the counts, zero stage-A survivors for k ≤ 12, one survivor
+at k = 13 decided by exhaustive residue search plus a hand proof of its
+7-class forcing part (computer check that no part of size ≤ 6 forces
+it). Report for k = 9..13: nothing undecided. k = 14,15,16: runs
+launched (unconditional, and with the proved extra rules M4/M5) but
+unfinished at hand-in; reported as unfinished and not claimed.
+Non-vacuity demonstrated: the unmodified code at threshold k returns
+(k,…,k) with residues 0..k-1 at every k ≤ 12 (at threshold 12, 2 other
+tuples NON_DECISO by the node budget and 14 not reached by the
+wall-clock cap, reported). Source O’Bryant (k ≤ 20) tested: agreement
+for k ≤ 12; at k = 13 modulus-only rules (even with his items 4–5) leave
+one tuple that only the residue stage kills.</p>
+<h5 id="proof">2. Proof</h5>
+<h4
+id="problem-4-cell-4-proof-for-every-k-12-and-k-13-report-for-k-9..16">Problem
+4, cell 4 — proof for every k ≤ 12 (and k = 13), report for k =
+9..16</h4>
+<h5 id="statement-proved">Statement proved</h5>
+<p><strong>Theorem.</strong> Let <span class="math inline">\(3\le k\le
+12\)</span> (and also <span class="math inline">\(k=13\)</span>) and let
+<span class="math inline">\(a_1 \pmod{m_1},\dots,a_k\pmod{m_k}\)</span>
+be pairwise disjoint congruence classes (<span
+class="math inline">\(m_i\ge1\)</span>). Then <span
+class="math inline">\(\gcd(m_i,m_j)\ge k\)</span> for some <span
+class="math inline">\(i&lt;j\)</span>.</p>
+<p>A <em>counterexample of size <span
+class="math inline">\(k\)</span></em> is a pairwise disjoint family of
+<span class="math inline">\(k\)</span> classes with <span
+class="math inline">\(g_{ij}:=\gcd(m_i,m_j)\le k-1\)</span> for all
+<span class="math inline">\(i&lt;j\)</span>. We use only the definitions
+and the criterion <span class="math inline">\((*)\)</span> of the
+problem statement: two classes meet iff <span
+class="math inline">\(\gcd(m_i,m_j)\mid a_i-a_j\)</span>. <strong>No
+minimality of <span class="math inline">\(k\)</span> is used</strong>
+for <span class="math inline">\(k\le13\)</span>. Put <span
+class="math inline">\(L_k:=\operatorname{lcm}(1,2,\dots,k-1)\)</span>.</p>
+<h5 id="step-1.-three-lemmas-all-proved-here">Step 1. Three lemmas (all
+proved here)</h5>
+<p><strong>Lemma A (reduction to the gcd-lcm).</strong> Let <span
+class="math inline">\(a_1\pmod{m_1},\dots,a_k\pmod{m_k}\)</span> be a
+counterexample of size <span class="math inline">\(k\ge2\)</span>. Put
+<span class="math inline">\(m_i&#39;:=\operatorname{lcm}\{g_{ij}: j\ne
+i\}\)</span> and <span class="math inline">\(a_i&#39;:=a_i \bmod
+m_i&#39;\)</span>. Then 1. <span class="math inline">\(2\le
+m_i&#39;\)</span>, <span class="math inline">\(m_i&#39;\mid m_i\)</span>
+and <span class="math inline">\(m_i&#39;\mid L_k\)</span>; 2. <span
+class="math inline">\(\gcd(m_i&#39;,m_j&#39;)=g_{ij}\)</span> for all
+<span class="math inline">\(i\ne j\)</span>; 3. the classes <span
+class="math inline">\(a_i&#39;\pmod{m_i&#39;}\)</span> are pairwise
+disjoint (so they form a counterexample of size <span
+class="math inline">\(k\)</span> again); 4. <strong>(R3)</strong> every
+prime power <span class="math inline">\(q\)</span> dividing some <span
+class="math inline">\(m_i&#39;\)</span> divides <span
+class="math inline">\(m_j&#39;\)</span> for some <span
+class="math inline">\(j\ne i\)</span>.</p>
+<p><em>Proof.</em> If some <span class="math inline">\(g_{ij}=1\)</span>
+then <span class="math inline">\(g_{ij}\mid a_i-a_j\)</span> and classes
+<span class="math inline">\(i,j\)</span> meet by <span
+class="math inline">\((*)\)</span>, contradicting disjointness; so every
+<span class="math inline">\(g_{ij}\ge2\)</span>, hence <span
+class="math inline">\(m_i&#39;\ge2\)</span>. Each <span
+class="math inline">\(g_{ij}\)</span> divides <span
+class="math inline">\(m_i\)</span>, so their lcm <span
+class="math inline">\(m_i&#39;\)</span> divides <span
+class="math inline">\(m_i\)</span>; each <span
+class="math inline">\(g_{ij}\le k-1\)</span> divides <span
+class="math inline">\(L_k\)</span>, so <span
+class="math inline">\(m_i&#39;\mid L_k\)</span>. This is (1). (2): <span
+class="math inline">\(g_{ij}\)</span> divides <span
+class="math inline">\(m_i&#39;\)</span> and <span
+class="math inline">\(m_j&#39;\)</span> (it is one of the numbers whose
+lcm defines each), so <span
+class="math inline">\(g_{ij}\mid\gcd(m_i&#39;,m_j&#39;)\)</span>;
+conversely <span
+class="math inline">\(\gcd(m_i&#39;,m_j&#39;)\mid\gcd(m_i,m_j)=g_{ij}\)</span>
+because <span class="math inline">\(m_i&#39;\mid m_i\)</span>, <span
+class="math inline">\(m_j&#39;\mid m_j\)</span>. (3): fix <span
+class="math inline">\(i&lt;j\)</span>. By (2) <span
+class="math inline">\(\gcd(m_i&#39;,m_j&#39;)=g_{ij}\)</span>; since
+<span class="math inline">\(g_{ij}\mid m_i&#39;\)</span> and <span
+class="math inline">\(a_i&#39;\equiv a_i\pmod{m_i&#39;}\)</span> we get
+<span class="math inline">\(a_i&#39;\equiv a_i\pmod{g_{ij}}\)</span>,
+likewise for <span class="math inline">\(j\)</span>, so <span
+class="math inline">\(a_i&#39;-a_j&#39;\equiv
+a_i-a_j\pmod{g_{ij}}\)</span>. The original classes are disjoint, so
+<span class="math inline">\(g_{ij}\nmid a_i-a_j\)</span> by <span
+class="math inline">\((*)\)</span>, hence <span
+class="math inline">\(g_{ij}\nmid a_i&#39;-a_j&#39;\)</span> and the
+reduced classes <span class="math inline">\(i,j\)</span> are disjoint by
+<span class="math inline">\((*)\)</span>. (4): if <span
+class="math inline">\(q=p^e\)</span> divides <span
+class="math inline">\(m_i&#39;=\operatorname{lcm}_{j\ne i}
+g_{ij}\)</span> then <span class="math inline">\(e\le
+v_p(m_i&#39;)=\max_{j\ne i}v_p(g_{ij})\)</span>, so <span
+class="math inline">\(q\mid g_{ij}\)</span> for some <span
+class="math inline">\(j\ne i\)</span>, and <span
+class="math inline">\(g_{ij}\mid m_j&#39;\)</span> by (2). <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Lemma B (density criterion, Huhn–Megyesi type).</strong> Let
+<span class="math inline">\(a_i\pmod{m_i}\)</span>, <span
+class="math inline">\(i\in I\)</span> (<span
+class="math inline">\(|I|\ge2\)</span>), be pairwise disjoint and let
+<span class="math inline">\(M\ge1\)</span> be a common multiple of all
+<span class="math inline">\(g_{ij}\)</span>, <span
+class="math inline">\(i&lt;j\)</span> in <span
+class="math inline">\(I\)</span>. Then <span
+class="math inline">\(\sum_{i\in I} M/\gcd(m_i,M)\le M\)</span>.</p>
+<p><em>Proof.</em> Put <span
+class="math inline">\(d_i=\gcd(m_i,M)\)</span>. For <span
+class="math inline">\(0\le t&lt;M/d_i\)</span> the integers <span
+class="math inline">\(a_i+tm_i\)</span> are pairwise incongruent modulo
+<span class="math inline">\(M\)</span>: if <span
+class="math inline">\(a_i+tm_i\equiv a_i+t&#39;m_i\pmod M\)</span> then
+<span class="math inline">\(M\mid (t-t&#39;)m_i\)</span>, so <span
+class="math inline">\((M/d_i)\mid (t-t&#39;)(m_i/d_i)\)</span>, and
+since <span class="math inline">\(\gcd(M/d_i,m_i/d_i)=1\)</span> we get
+<span class="math inline">\((M/d_i)\mid t-t&#39;\)</span>, forcing <span
+class="math inline">\(t=t&#39;\)</span>. Suppose <span
+class="math inline">\(\sum_i M/d_i&gt;M\)</span>. By pigeonhole two of
+the listed integers, necessarily from different indices <span
+class="math inline">\(i\ne j\)</span> (within one index they are
+pairwise incongruent), are congruent modulo <span
+class="math inline">\(M\)</span>: <span
+class="math inline">\(a_i+tm_i\equiv a_j+sm_j\pmod M\)</span>. Then
+<span class="math inline">\(a_i-a_j=sm_j-tm_i+uM\)</span> for an integer
+<span class="math inline">\(u\)</span>. Since <span
+class="math inline">\(g_{ij}\)</span> divides <span
+class="math inline">\(m_i\)</span>, <span
+class="math inline">\(m_j\)</span> and <span
+class="math inline">\(M\)</span>, it divides <span
+class="math inline">\(a_i-a_j\)</span>, so classes <span
+class="math inline">\(i\)</span> and <span
+class="math inline">\(j\)</span> meet by <span
+class="math inline">\((*)\)</span> — contradiction. <span
+class="math inline">\(\square\)</span></p>
+<p><em>Remark.</em> With <span
+class="math inline">\(M=\operatorname{lcm}(m_i)\)</span> this is the
+trivial bound <span class="math inline">\(\sum 1/m_i\le1\)</span>; the
+strength lies in small <span class="math inline">\(M\)</span> and
+sub-families <span class="math inline">\(I\)</span> (the sub-family
+criterion is not implied by the full-family one; e.g. <span
+class="math inline">\((6,6,6,6,12,15,20)\)</span> passes the full-family
+test and fails on the sub-family without <span
+class="math inline">\(20\)</span> with <span
+class="math inline">\(M=12\)</span>).</p>
+<p><strong>Lemma C (translation).</strong> If <span
+class="math inline">\(a_i\pmod{m_i}\)</span> are pairwise disjoint then
+so are <span class="math inline">\(a_i-a_1\pmod{m_i}\)</span> (same
+moduli). <em>Proof:</em> <span
+class="math inline">\((a_i-a_1)-(a_j-a_1)=a_i-a_j\)</span>, so <span
+class="math inline">\((*)\)</span> gives the same verdict for every
+pair. <span class="math inline">\(\square\)</span></p>
+<h5
+id="step-2.-the-finite-set-and-the-pruning-rules-certificate-items-12">Step
+2. The finite set and the pruning rules (certificate items 1–2)</h5>
+<p><strong>Corollary D.</strong> If a counterexample of size <span
+class="math inline">\(k\)</span> exists, then there is one whose moduli,
+in non-decreasing order, form a <span
+class="math inline">\(k\)</span>-tuple <span
+class="math inline">\((m_1\le\dots\le m_k)\)</span> with -
+<strong>(R1)</strong> <span class="math inline">\(m_i\mid L_k\)</span>,
+<span class="math inline">\(m_i\ge2\)</span>, and <span
+class="math inline">\(2\le\gcd(m_i,m_j)\le k-1\)</span> for all <span
+class="math inline">\(i&lt;j\)</span>; - <strong>(R2)</strong> for every
+sub-multiset <span class="math inline">\(I\)</span> of indices with
+<span class="math inline">\(|I|\ge2\)</span> and every divisor <span
+class="math inline">\(M\)</span> of <span
+class="math inline">\(L_k\)</span> that is a multiple of <span
+class="math inline">\(\operatorname{lcm}\{g_{ij}:i&lt;j\in I\}\)</span>:
+<span class="math inline">\(\sum_{i\in I} M/\gcd(m_i,M)\le M\)</span>; -
+<strong>(R3)</strong> every prime power dividing some <span
+class="math inline">\(m_i\)</span> divides some other <span
+class="math inline">\(m_j\)</span>; - <strong>(R5)</strong> there exist
+residues <span class="math inline">\(a_1=0,a_2,\dots,a_k\)</span> with
+<span class="math inline">\(g_{ij}\nmid a_i-a_j\)</span> for all <span
+class="math inline">\(i&lt;j\)</span>.</p>
+<p><em>Proof.</em> Apply Lemma A: the reduced family is a counterexample
+of size <span class="math inline">\(k\)</span> with (R1) (Lemma A
+(1),(2) and <span class="math inline">\(g_{ij}\le k-1\)</span>) and (R3)
+(Lemma A (4)). (R2) is Lemma B applied to every sub-family of the
+reduced family, which is pairwise disjoint (Lemma A (3)). (R5) is Lemma
+C plus <span class="math inline">\((*)\)</span>. Sorting indices affects
+nothing. <span class="math inline">\(\square\)</span></p>
+<p>Hence <strong>if for a given <span class="math inline">\(k\)</span>
+no non-decreasing tuple of divisors of <span
+class="math inline">\(L_k\)</span> satisfies (R1)–(R3) and (R5), the
+Theorem holds for that <span class="math inline">\(k\)</span>.</strong>
+Everything the search discards is discarded by one of (R1), (R2), (R3),
+(R5); there is no other rule in the code (the optional flags M4/M5 are
+off in all runs used for the claims).</p>
+<p><strong>Finite set enumerated (item 1):</strong> <span
+class="math inline">\(S_k=\{(m_1\le\dots\le m_k): m_i\mid L_k,\
+m_i\ge2,\ 2\le\gcd(m_i,m_j)\le k-1\}\)</span>; by Corollary D nothing
+outside <span class="math inline">\(S_k\)</span> can be (the modulus
+tuple of a reduced) counterexample.</p>
+<p><strong>Stage A (<code>ricerca_moduli_hm.py</code>).</strong>
+Depth-first construction of non-decreasing tuples over the divisors
+<span class="math inline">\(\ge2\)</span> of <span
+class="math inline">\(L_k\)</span>. A candidate <span
+class="math inline">\(m\)</span> is appended to the partial tuple <span
+class="math inline">\(T\)</span> only if (R1) holds against every
+element of <span class="math inline">\(T\)</span> and (R2) holds for the
+<em>prefix</em> <span class="math inline">\(T\cup\{m\}\)</span> with
+every divisor <span class="math inline">\(M\)</span> of <span
+class="math inline">\(L_k\)</span> that is a multiple of the lcm of the
+gcds of <span class="math inline">\(T\cup\{m\}\)</span> (sums <span
+class="math inline">\(\sum M/\gcd(m_i,M)\)</span> are maintained
+incrementally for all divisors <span class="math inline">\(M\)</span>,
+exact integers). At a full tuple (leaf) the code applies (R3) and then
+(R2) for <em>every</em> sub-multiset <span
+class="math inline">\(I\)</span>, <span
+class="math inline">\(|I|\ge2\)</span>, with every admissible <span
+class="math inline">\(M\)</span>. Tuples passing everything are the
+<strong>stage-A survivors</strong>, printed in full.</p>
+<p><strong>Stage B (<code>decidi_residui.py</code>).</strong> For each
+survivor: exhaustive backtracking over <span
+class="math inline">\(a_1=0\)</span>, <span
+class="math inline">\(a_i\in\{0,\dots,m_i-1\}\)</span> in index order,
+extending only if <span class="math inline">\(g_{ij}\nmid
+a_i-a_j\)</span> for all earlier <span class="math inline">\(j\)</span>.
+Returns a witness (re-verified by the direct criterion <span
+class="math inline">\((*)\)</span> on all pairs) or
+<code>INFATTIBILE</code> after exhausting the tree (or
+<code>NON_DECISO</code> if a node budget is hit — this never occurred at
+threshold <span class="math inline">\(k-1\)</span>; it occurred twice in
+the non-vacuity run at threshold 12, see below).</p>
+<p>Only Python integer arithmetic (<code>math.gcd</code>,
+<code>math.lcm</code>, <code>//</code>, <code>%</code>) is used; no
+floating point.</p>
+<h5 id="step-3.-results-certificate-items-35">Step 3. Results
+(certificate items 3–5)</h5>
+<p>Apple M4, Python 3.14.7, single thread. Command
+<code>python ricerca_moduli_hm.py ricerca 3 ... 13</code> (threshold
+<span class="math inline">\(k-1\)</span>):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><div class="minipage">
+<p><span class="math inline">\(k\)</span></p>
+</div></th>
+<th style="text-align: left;"><div class="minipage">
+<p><span class="math inline">\(L_k\)</span></p>
+</div></th>
+<th style="text-align: left;"><div class="minipage">
+<p>candidates</p>
+</div></th>
+<th style="text-align: left;"><div class="minipage">
+<p>nodes</p>
+</div></th>
+<th style="text-align: left;"><div class="minipage">
+<p>leaves</p>
+</div></th>
+<th style="text-align: left;"><div class="minipage">
+<p>stage-A survivors</p>
+</div></th>
+<th style="text-align: left;"><div class="minipage">
+<p>wall clock</p>
+</div></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">s</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">s</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">s</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">s</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">s</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">s</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">s</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">s</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">s</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">s</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>1</strong></td>
+<td style="text-align: left;">s / 93.8 s</td>
+</tr>
+</tbody>
+</table>
+<p>“Nodes” = calls of <code>estendi</code> (root included); “leaves” =
+full tuples reaching the leaf test (at <span
+class="math inline">\(k=11,12\)</span> all leaves were removed by (R3)
+or by sub-multiset (R2)). <strong>Reruns:</strong>
+<code>run2_k3_12.txt</code> reproduces every count for <span
+class="math inline">\(k\le12\)</span> (diff contains only timing
+fields); <span class="math inline">\(k=13\)</span> was run twice (old
+and time-limited version of the script) with identical counts 1224204 /
+3889 / 1.</p>
+<p><strong>Conclusion for <span class="math inline">\(k\le12\)</span>:
+zero stage-A survivors, so by Corollary D no counterexample of size
+<span class="math inline">\(k\)</span> exists for <span
+class="math inline">\(3\le k\le12\)</span>.</strong> (Sizes <span
+class="math inline">\(3\le k\le8\)</span> are re-proved here
+independently of cells 1–3.)</p>
+<p><span class="math inline">\(k=13\)</span>: exactly one object left by
+stage A, decided in stage B</p>
+<p>Stage A leaves exactly one tuple: <span
+class="math inline">\((10,10,10,10,10,12,12,12,12,24,36,40,45)\)</span>.
+Stage B (<code>parte_minima.py</code>, no budget cut) exhausts the
+residue tree in 154 235 nodes (4.6 s): <strong>no residues
+exist</strong>. The smallest part forcing the decision has 7 classes:
+the script tests every sub-multiset in order of increasing size; every
+sub-multiset of size <span class="math inline">\(\le6\)</span> admits
+residues (all tested exhaustively), and the smallest infeasible parts
+are e.g. <span class="math inline">\((10,10,10,10,10,12,45)\)</span>
+(full list of the 36 minimal infeasible index sets, sizes 7, 9, 10, in
+<code>k13_sopravvissuto.txt</code>). <strong>Hand proof for this
+part:</strong> five pairwise disjoint classes modulo <span
+class="math inline">\(10\)</span> have pairwise gcd <span
+class="math inline">\(10\)</span>, hence residues pairwise distinct mod
+<span class="math inline">\(10\)</span>. If they cover all five residues
+mod <span class="math inline">\(5\)</span>, the class with modulus <span
+class="math inline">\(45\)</span> (gcd <span
+class="math inline">\(5\)</span> with each) agrees mod <span
+class="math inline">\(5\)</span> with one of them and they meet by <span
+class="math inline">\((*)\)</span>. Otherwise two of the five agree mod
+<span class="math inline">\(5\)</span> and, being distinct mod <span
+class="math inline">\(10\)</span>, have different parities; the class
+with modulus <span class="math inline">\(12\)</span> (gcd <span
+class="math inline">\(2\)</span> with each) then agrees mod <span
+class="math inline">\(2\)</span> with one of them and they meet by <span
+class="math inline">\((*)\)</span>. So this 7-tuple, hence the 13-tuple,
+is not the modulus tuple of a disjoint family, and the Theorem holds at
+<span class="math inline">\(k=13\)</span>.</p>
+<p>Report for <span class="math inline">\(k=9,\dots,16\)</span>: what
+the method leaves undecided</p>
+<ul>
+<li><p><span class="math inline">\(k=9,10,11,12\)</span>:
+<strong>nothing</strong> — stage A has zero survivors (table), proved by
+Corollary D + the exhaustive run.</p></li>
+<li><p><span class="math inline">\(k=13\)</span>: stage A leaves exactly
+the tuple above; stage B decides it (infeasible), with the 7-class
+forcing part proved by hand. Nothing undecided; <span
+class="math inline">\(k=13\)</span> holds. Modulus-only rules (R1)–(R3)
+do <em>not</em> close <span class="math inline">\(k=13\)</span>, and
+neither does adding the two extra rules (M4) “no prime-power modulus”
+and (M5) “at least three multiples of <span
+class="math inline">\(k-1\)</span>” (run with flags: 669 090 nodes, 3812
+leaves, the same single survivor, 56 s); residues are needed.</p></li>
+<li><p><span class="math inline">\(k=14,15,16\)</span>:
+<strong>unfinished at the time of hand-in, not claimed.</strong> Two
+runs were launched (600 s per size): the unconditional method, and the
+method plus (M4)/(M5), both of which are proved under explicit
+hypotheses — (M4) needs the statement at sizes <span
+class="math inline">\(\le\lceil k/2\rceil\le8\)</span> (proved above):
+if <span class="math inline">\(m_1=p^r\)</span> then <span
+class="math inline">\(p\mid\)</span> every <span
+class="math inline">\(m_j\)</span>, some <span
+class="math inline">\(\lceil k/p\rceil\)</span> residues agree mod <span
+class="math inline">\(p\)</span>, dividing by <span
+class="math inline">\(p\)</span> gives a disjoint family of that size
+with gcds <span class="math inline">\(g_{ij}/p\)</span>, so some <span
+class="math inline">\(g_{ij}\ge p\lceil k/p\rceil\ge k\)</span>; (M5)
+needs size <span class="math inline">\(k-1\)</span> settled: otherwise
+drop one multiple of <span class="math inline">\(k-1\)</span> (if any)
+and the remaining <span class="math inline">\(k-1\)</span> classes have
+all gcds <span class="math inline">\(\le k-2\)</span>, a counterexample
+of size <span class="math inline">\(k-1\)</span>. At hand-in both files
+(<code>run_k13_16_incond.txt</code>, <code>run_k13_16_m45.txt</code>)
+contain only the finished <span class="math inline">\(k=13\)</span>
+lines; <span class="math inline">\(k=14\)</span> was still running in
+both modes. Whatever they show later (finished with survivor list, or
+<code>NON_TERMINATA</code> with counts reached) is the exact report for
+those sizes; no claim is made here for <span
+class="math inline">\(k\ge14\)</span>.</p></li>
+</ul>
+<p>Non-vacuity (unmodified machinery at threshold <span
+class="math inline">\(k\)</span>)</p>
+<p><code>python decidi_residui.py nonvacuita ...</code> runs both stages
+with threshold <span class="math inline">\(k\)</span> instead of <span
+class="math inline">\(k-1\)</span> (the only change is the parameter).
+For every <span class="math inline">\(k\in\{3,\dots,12\}\)</span> stage
+A returns <span class="math inline">\((k,\dots,k)\)</span> among its
+survivors and stage B returns the witness <span
+class="math inline">\(0,1,\dots,k-1\pmod k\)</span>, re-verified by
+<span class="math inline">\((*)\)</span> (files
+<code>nonvacuita_k3_12.txt</code>,
+<code>nonvacuita_residui_k3_11.txt</code>,
+<code>nonvacuita_residui_k12.txt</code>). Stage A also returns other
+tuples at threshold <span class="math inline">\(k\)</span> (e.g. <span
+class="math inline">\((6,6,6,12,15,20)\)</span> at <span
+class="math inline">\(k=6\)</span>, two at <span
+class="math inline">\(k=10\)</span>, 57 at <span
+class="math inline">\(k=12\)</span>), each passed to stage B: for <span
+class="math inline">\(k\le11\)</span> all decided (feasible or
+infeasible). At <span class="math inline">\(k=12\)</span> (57 survivors,
+node budget <span class="math inline">\(3\cdot10^6\)</span>, 590 s
+wall-clock cap): 21 feasible (incl. <span
+class="math inline">\((12^{12})\)</span> with witness <span
+class="math inline">\(0..11\)</span>), 20 infeasible, <strong>2
+NON_DECISO by the node budget</strong> — <span
+class="math inline">\((12,12,12,12,12,12,12,12,12,24,30,40)\)</span> and
+<span
+class="math inline">\((12,12,12,12,12,12,12,12,36,40,56,315)\)</span> —
+and the remaining 14 not reached before the wall-clock cap. This
+concerns only the non-vacuity demonstration at threshold 12 (not the
+proof, at threshold 11) and is reported as such; it shows the method is
+not vacuous and that stage B is genuinely needed.</p>
+<h5 id="step-4.-comparison-with-sources-tested">Step 4. Comparison with
+sources (tested)</h5>
+<p>O’Bryant, arXiv:math/0604347v2 (read in full) proves <span
+class="math inline">\(k\le20\)</span> with a modulus-only method (Lemma
+5 = our Lemma B; Lemma 6 items using minimality of <span
+class="math inline">\(k\)</span> and of <span class="math inline">\(\sum
+m_i\)</span>; a week-long Mathematica search applying Lemma 5 with <span
+class="math inline">\(M=\operatorname{lcm}\)</span> of the gcds of each
+subset). Tested agreement for <span
+class="math inline">\(k\le12\)</span>: both give no counterexample. At
+<span class="math inline">\(k=13\)</span> our modulus-only rules, even
+with his items 4 and 5 added, leave one tuple; we did not run his code
+and cannot reproduce from his paper a modulus-only refutation; our own
+stage B decides it, so our claims do not rest on him. Fornal–Sun
+arXiv:2607.24655 (read) is asymptotic and gives nothing at these
+sizes.</p>
+<h5 id="scope-and-honesty">Scope and honesty</h5>
+<p>Claimed: the Theorem for <span class="math inline">\(3\le
+k\le12\)</span> (the cell) and additionally <span
+class="math inline">\(k=13\)</span>; the report “nothing undecided” for
+<span class="math inline">\(k=9..13\)</span>; <span
+class="math inline">\(k=14,15,16\)</span> reported as unfinished and not
+claimed. Everything rests on Lemmas A, B, C, Corollary D, and the
+exhaustive runs whose code, counts, reruns and survivor lists are
+included.</p>
+<h5 id="verification-instructions-dependencies-timings">3. Verification:
+instructions, dependencies, timings</h5>
+<p>Python 3 standard library. Scripts (re-run by the orchestrator, see
+<code>runs/p4_c4/verifica/</code>): - code_1 (python, rigor
+<code>exact</code>): Stage A (certificate): enumerate non-decreasing
+k-tuples of divisors of L_k with pairwise gcd in
+<span>[</span>2,k-1<span>]</span>; prune by Lemma B on every prefix with
+every admissible divisor M of L_k; at leaves apply (R3) and Lemma B on
+every sub-multiset; print node/leaf counts, survivors, wall clock. Mode
+‘nonvacuita’ uses threshold k. Exact integer arithmetic. Runs: k=3..12
+in 16 s total (counts in the table), k=13 in 80 s, reruns identical.
+File runs/p4_c4/sandbox/ricerca_moduli_hm.py (the on-disk version
+additionally has a 600 s time limit with count snapshot and optional
+flags –senza-potenze (M4) / –tre-multipli (M5), off by default; counts
+unchanged, checked for k=9,10,11,13). - code_2 (python, rigor
+<code>exact</code>): Stage B: for each stage-A survivor, exhaustive
+backtracking on residues (a_1 = 0 by Lemma C), witness re-verified by
+criterion (*). Used for the non-vacuity runs (threshold k): every k in
+3..12 returns the witness 0..k-1 (mod k). File
+runs/p4_c4/sandbox/decidi_residui.py. - code_3 (python, rigor
+<code>exact</code>): Decision of the unique k=13 stage-A survivor
+(10,10,10,10,10,12,12,12,12,24,36,40,45): exhaustive residue search
+(INFATTIBILE, 154235 nodes, 4.6 s) and enumeration of all minimal
+residue-infeasible sub-multisets (smallest has 7 classes; all
+sub-multisets of size &lt;= 6 are feasible). Output in
+runs/p4_c4/sandbox/k13_sopravvissuto.txt. Command: python
+parte_minima.py 10 10 10 10 10 12 12 12 12 24 36 40 45 (23 s).</p>
+<h5 id="sources-and-contribution">4. Sources and contribution</h5>
+<ul>
+<li><p>Problem statement of Problema 4 (definitions and criterion (*)),
+problema-4/enunciato.md</p></li>
+<li><p>K. O’Bryant, On Z.-W. Sun’s disjoint congruence classes
+conjecture, arXiv:math/0604347v2 (2006), read in full (PDF): Theorem 3
+(k ≤ 20; minimal counterexample has k ∉ {24,30}), Lemma 5 (density
+criterion, attributed to Huhn–Megyesi), Lemma 6 items 1–8, Mathematica
+‘Grow’ search — used for comparison and for the statement/proof idea of
+Lemma B and rules M4/M5 (all reproved above); nothing relied
+upon</p></li>
+<li><p>J. Fornal, Y.-C. Sun, On the problem of large gcd for disjoint
+residue classes, arXiv:2607.24655v1, read (intro + Lemma 4.1):
+asymptotic only; context and pointer to O’Bryant</p></li>
+<li><p>A. P. Huhn, L. Megyesi, On disjoint residue classes, Discrete
+Math. 41 (1982) — cited by O’Bryant as origin of the density criterion;
+NOT read by us</p></li>
+<li><p>Approved submission problema-4/submission/parte-3.en.md (cell 3
+method), read; not relied upon (cell 4 re-proves k ≤ 8)</p></li>
+<li><p>Position with respect to the literature: Fornal–Sun
+arXiv:2607.24655 (read in full via the PDF): asymptotic bound max gcd ≫
+k·exp(−(2+o(1))√(log k/log log k)); their Lemma 4.1 is asymptotic and
+gives nothing at fixed small k; they cite O’Bryant for k ≤ 20. O’Bryant,
+arXiv:math/0604347v2 (read in full): proves the statement for k ≤ 20 and
+that a minimal counterexample has k ∉ {24,30}, using a modulus-only
+method: Lemma 5 (= our Lemma B, stated with the Huhn–Megyesi reference),
+Lemma 6 (items 1–8, several requiring minimality of k and of Σm_i) and a
+week-long Mathematica search ‘Grow’ for k ≤ 19 applying Lemma 5 only
+with M = lcm of the gcds of each subset. Our method ADAPTS his: (i)
+Lemma A gives his items 1 and 3 without any minimality assumption; (ii)
+Lemma B is applied with ALL divisors M of L_k that are multiples of the
+gcd-lcm (strictly stronger pruning; his whole k ≤ 19 search is replaced
+by seconds); (iii) we add a residue stage, which is needed: at k = 13
+the modulus-only rules (R1)–(R3) leave one tuple, and so do the rules
+with his items 4–5 added (tested: 669 090 nodes, same single survivor).
+Tested agreement with O’Bryant: k ≤ 12 both give ‘no counterexample’; at
+k = 13 we could not reproduce a modulus-only refutation of
+(10,10,10,10,10,12,12,12,12,24,36,40,45) from his paper (we did not run
+his code), but our stage B decides it, so nothing we claim depends on
+him. Abstracts 2603.26043, 1511.04293 (disjoint covering systems) and
+2608.15873 (group form, tuple (6,6,6,10,15)) are not relevant to this
+cell.</p></li>
+</ul>
+<h5 id="limits-and-unresolved-parts">5. Limits and unresolved parts</h5>
+<p>Referee’s blocking point: — Next step required: Provide the missing
+review or independently checked evidence Gaps declared by the author: -
+k = 14, 15, 16: the cell asks for a report on these sizes; the searches
+(unconditional and with M4/M5, 600 s per size) had not finished when
+this attempt was written (only the k = 13 lines are in
+run_k13_16_incond.txt / run_k13_16_m45.txt); the report for them is
+‘unfinished, no claim’. The Referee should read the final files from
+disk. - Non-vacuity at threshold 12: of the 57 stage-A survivors, 21
+feasible, 20 infeasible, 2 NON_DECISO (node budget 3e6) and 14 not
+reached within the 590 s cap. This affects only the non-vacuity
+demonstration, not the proof (which is at threshold 11). - The
+exhaustiveness rests on the correctness of ~100 lines of Python in stage
+A (enumeration invariant argued in prose only); there is no second,
+independently written implementation in this attempt (required for cell
+5, not for cell 4). - The k = 13 ‘no smaller part forces the decision’
+claim is by exhaustive computation over all sub-multisets of size &lt;=
+6 (each found feasible), not by hand; the hand proof covers only the
+7-class part. - The comparison with O’Bryant is by reading his paper,
+not by running his Mathematica code. - The code_used text of
+ricerca_moduli_hm.py is the version that produced the tabulated counts;
+the on-disk file was later extended with a time limit and optional flags
+(default off) and re-checked to give identical counts for k = 9, 10, 11,
+13.</p>
 <h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
 <h4 id="run-p4_c4">Run <code>p4_c4</code></h4>
 <dl>
@@ -466,8 +1029,6 @@ if __name__ == &quot;__main__&quot;:
     for k in ks:
         Ricerca(k, k - 1 if modo == &quot;ricerca&quot; else k).esegui()
 </code></pre>
-<p><em>Riesecuzione fidata dell’orchestratore</em>:
-<code>orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): TIMEOUT after 600s; killed: exceeds the verification time limit</code></p>
 <pre
 data-caption="attempt\_001 code\_2 [python, rigore exact] — Stage B: for each stage-A survivor, exhaustive backtracking on residues (a\_1 = 0 by Lemma  — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;
 Stadio B per il problema 4, parte 4: decisione sui residui di un multinsieme di moduli.
@@ -542,8 +1103,6 @@ if __name__ == &quot;__main__&quot;:
     for k in map(int, sys.argv[3:]):
         decidi_tutti(k, k - 1 if modo == &quot;ricerca&quot; else k, limite)
 </code></pre>
-<p><em>Riesecuzione fidata dell’orchestratore</em>:
-<code>orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 1 in 0.0s; stdout: ’’; stderr: ’Traceback (most recent call last):\n File "/Users/thomastumini/proof-pursuit/runs/p4_c4/verifica/attempt_001/code_2.py", line 69, in &lt;module&gt;\n modo = sys.argv[1]\n ~~~~~~~~^^^\nIndexError: list index out of range’</code></p>
 <pre
 data-caption="attempt\_001 code\_3 [python, rigore exact] — Decision of the unique k=13 stage-A survivor (10,10,10,10,10,12,12,12,12,24,36,40,45): exh — verdetto del Referee: UNKNOWN\_STATUS"><code>&quot;&quot;&quot;
 Trova le parti minime (sotto-multinsiemi) di un multinsieme di moduli che sono gia&#39;
@@ -585,8 +1144,6 @@ if __name__ == &quot;__main__&quot;:
         print(&quot;   parte minima infattibile: indici&quot;, idx, &quot;moduli&quot;, tuple(moduli[i] for i in idx))
     print(f&quot;tempo totale {time.time()-t0:.2f}s&quot;)
 </code></pre>
-<p><em>Riesecuzione fidata dell’orchestratore</em>:
-<code>orchestrator re-ran code_3.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: ’moduli=() esito=FATTIBILE nodi_B=1 tempo=0.00s testimone=()\ntempo totale 0.00s’; stderr: ’’</code></p>
 <h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
 <div class="thebibliography">
 <p><span>99</span> Yu Hashimoto. <em>Finiteness of Disjoint Covering

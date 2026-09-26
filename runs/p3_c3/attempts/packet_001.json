@@ -86,7 +86,7 @@
  "submission_digest": "1e442798c01a34fefe5e5bef17c3968d6ea72317f110d56dffa2bc5161d427fc",
  "math": {
   "report": null,
-  "limitation": "A: TimeoutError"
+  "limitation": "A: FileNotFoundError"
  },
  "evidence": {
   "report": {
@@ -227,7 +227,7 @@
    ]
   },
   "accepted_progress": [],
-  "blocking_issue": "A: TimeoutError",
+  "blocking_issue": "A: FileNotFoundError",
   "next_required_step": "Provide the missing review or independently checked evidence",
   "stagnation_signal": false
  },

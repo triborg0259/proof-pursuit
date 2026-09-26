@@ -1,0 +1,63 @@
+k=15 soglia=14 L=360360 candidati=191 nodi=138265515 foglie=2681308 sopravvissuti=30 tempo=85.00s
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 56, 70, 90, 520, 819)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 28, 70, 90, 520, 819)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 30, 56, 70, 72, 520, 819)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 28, 30, 70, 72, 520, 819)
+   sopravvissuto: (12, 12, 14, 14, 14, 14, 14, 14, 24, 30, 36, 56, 70, 520, 819)
+   sopravvissuto: (12, 12, 14, 14, 14, 14, 14, 14, 24, 28, 30, 36, 70, 520, 819)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 56, 70, 90, 440, 693)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 28, 70, 90, 440, 693)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 30, 56, 70, 72, 440, 693)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 28, 30, 70, 72, 440, 693)
+   sopravvissuto: (12, 12, 14, 14, 14, 14, 14, 14, 24, 30, 36, 56, 70, 440, 693)
+   sopravvissuto: (12, 12, 14, 14, 14, 14, 14, 14, 24, 28, 30, 36, 70, 440, 693)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 30, 56, 70, 273, 520)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 30, 56, 70, 231, 440)
+   sopravvissuto: (12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 56, 63, 70, 360)
+   sopravvissuto: (12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 56, 63, 70, 180)
+   sopravvissuto: (12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 28, 63, 70, 180)
+   sopravvissuto: (12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 36, 56, 63, 70, 120)
+   sopravvissuto: (12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 42, 56, 70, 120)
+   sopravvissuto: (12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 21, 56, 70, 120)
+   sopravvissuto: (12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 56, 60, 63, 70, 72)
+   sopravvissuto: (12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 14, 56, 63, 72)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 36, 56, 60, 63, 70)
+   sopravvissuto: (12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 28, 36, 60, 63, 70)
+   sopravvissuto: (12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 42, 56, 60, 70)
+   sopravvissuto: (12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 21, 24, 56, 60, 70)
+   sopravvissuto: (12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 28, 42, 60, 70)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 30, 40, 42, 56, 70)
+   sopravvissuto: (12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 28, 30, 40, 42, 70)
+   sopravvissuto: (12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 14, 24, 36, 56, 63)
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 56, 70, 90, 520, 819) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 28, 70, 90, 520, 819) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 30, 56, 70, 72, 520, 819) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 28, 30, 70, 72, 520, 819) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 14, 14, 14, 14, 14, 14, 24, 30, 36, 56, 70, 520, 819) nodi_B=114 testimone=None
+   INFATTIBILE moduli=(12, 12, 14, 14, 14, 14, 14, 14, 24, 28, 30, 36, 70, 520, 819) nodi_B=114 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 56, 70, 90, 440, 693) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 28, 70, 90, 440, 693) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 30, 56, 70, 72, 440, 693) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 28, 30, 70, 72, 440, 693) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 14, 14, 14, 14, 14, 14, 24, 30, 36, 56, 70, 440, 693) nodi_B=114 testimone=None
+   INFATTIBILE moduli=(12, 12, 14, 14, 14, 14, 14, 14, 24, 28, 30, 36, 70, 440, 693) nodi_B=114 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 30, 56, 70, 273, 520) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 30, 56, 70, 231, 440) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 56, 63, 70, 360) nodi_B=604 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 56, 63, 70, 180) nodi_B=772 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 28, 63, 70, 180) nodi_B=604 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 36, 56, 63, 70, 120) nodi_B=285700 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 42, 56, 70, 120) nodi_B=2854084 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 21, 56, 70, 120) nodi_B=604 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 56, 60, 63, 70, 72) nodi_B=285700 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 14, 56, 63, 72) nodi_B=604 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 36, 56, 60, 63, 70) nodi_B=285448 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 28, 36, 60, 63, 70) nodi_B=225220 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 42, 56, 60, 70) nodi_B=28537084 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 21, 24, 56, 60, 70) nodi_B=772 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 28, 42, 60, 70) nodi_B=11244844 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 30, 40, 42, 56, 70) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 14, 14, 14, 14, 14, 14, 24, 28, 30, 40, 42, 70) nodi_B=100 testimone=None
+   INFATTIBILE moduli=(12, 12, 12, 12, 14, 14, 14, 14, 14, 14, 14, 24, 36, 56, 63) nodi_B=772 testimone=None
+timeout 590 ./clique_moduli ricerca 15  85.94s user 0.73s system 96% cpu 1:29.75 total
+exit=0

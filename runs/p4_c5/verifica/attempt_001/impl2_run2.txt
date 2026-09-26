@@ -1,0 +1,15 @@
+k=3 soglia=2 L=2 candidati=1 nodi=3 foglie=0 sopravvissuti=0 tempo=0.00s
+k=4 soglia=3 L=6 candidati=3 nodi=10 foglie=0 sopravvissuti=0 tempo=0.00s
+k=5 soglia=4 L=12 candidati=5 nodi=26 foglie=0 sopravvissuti=0 tempo=0.00s
+k=6 soglia=5 L=60 candidati=11 nodi=103 foglie=0 sopravvissuti=0 tempo=0.00s
+k=7 soglia=6 L=60 candidati=11 nodi=231 foglie=4 sopravvissuti=0 tempo=0.00s
+k=8 soglia=7 L=420 candidati=23 nodi=1131 foglie=13 sopravvissuti=0 tempo=0.00s
+k=9 soglia=8 L=840 candidati=31 nodi=4167 foglie=6 sopravvissuti=0 tempo=0.00s
+k=10 soglia=9 L=2520 candidati=47 nodi=17652 foglie=3 sopravvissuti=0 tempo=0.00s
+k=11 soglia=10 L=2520 candidati=47 nodi=68606 foglie=929 sopravvissuti=0 tempo=0.01s
+k=12 soglia=11 L=27720 candidati=95 nodi=467787 foglie=4189 sopravvissuti=0 tempo=0.12s
+k=13 soglia=12 L=27720 candidati=95 nodi=1972963 foglie=35616 sopravvissuti=1 tempo=0.94s
+   sopravvissuto: (10, 10, 10, 10, 10, 12, 12, 12, 12, 24, 36, 40, 45)
+   INFATTIBILE moduli=(10, 10, 10, 10, 10, 12, 12, 12, 12, 24, 36, 40, 45) nodi_B=392 testimone=None
+k=14 soglia=13 L=360360 candidati=191 nodi=17282694 foglie=240549 sopravvissuti=0 tempo=8.49s
+./clique_moduli ricerca 3 4 5 6 7 8 9 10 11 12 13 14  9.51s user 0.05s system 97% cpu 9.782 total

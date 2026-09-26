@@ -246,72 +246,408 @@ covered above counts as partial progress.</p>
 <p><em>(Fine del problema 1. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
 <p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
 <code>OPEN. For N lines in R^d write N = qd+s, 0 &lt;= s &lt; d, M(N,d) = s C(q+1,2) + (d-s) C(q,2). Prove or disprove: S &lt;= (C(N,2) - M(N,d)) pi/2. Settling any infinite family not covered by cells 1-5 counts as partial progress.</code></p>
-<p><strong>Evidenza registrata in STATUS.md.</strong> triage; solo
-ricerca controesempi / famiglie infinite; bozza parziale in inglese in
-submission/ (parziali.py)</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> loop p1_c6
+attempt_001: REJECT (The only declared claim is ‘main‘ (Fejes Tóth’s
+bound for all N, d). The submission explicitly states in §8 that no
+non-); lemmi intermedi in submission/parte-6.en.md</p>
 <h3 id="consegna-prova">Consegna (prova)</h3>
-<h4 id="problema-1-parte-6-bozza-di-consegna-parziale">Problema 1 —
-Parte 6 — bozza di consegna PARZIALE</h4>
-<p><strong>Stato dichiarato: PARZIALE.</strong> Nessuna soluzione
-completa: qui sotto ciò che è stabilito, la formalizzazione, la
-posizione rispetto alla letteratura e ciò che resta aperto. Nulla è
-dichiarato dimostrato oltre quanto scritto.</p>
-<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
-<p><strong>Richiesta ufficiale.</strong> ## Parte 6 — <span
-class="math inline">\(N\)</span> lines in <span
-class="math inline">\(\mathbb{R}^d\)</span></p>
-<p><strong>Punteggio:</strong> 13 points · <strong>Valutazione:</strong>
-Judged · <strong>Open question</strong></p>
-<p>Fejes Tóth’s conjecture from the Setting, for every <span
-class="math inline">\(N\)</span> and every <span
-class="math inline">\(d\)</span>. For <span
-class="math inline">\(N\)</span> lines in <span
-class="math inline">\(\mathbb{R}^d\)</span>, write <span
-class="math inline">\(N = qd + s\)</span> with <span
-class="math inline">\(0 \le s &lt; d\)</span>, and let <span
-class="math display">\[M(N,d) = s \binom{q+1}{2} + (d-s)
-\binom{q}{2}.\]</span> Prove or disprove: every <span
-class="math inline">\(N\)</span> lines in <span
-class="math inline">\(\mathbb{R}^d\)</span> satisfy <span
-class="math display">\[S \;\le\; \left( \binom{N}{2} - M(N,d) \right)
-\frac{\pi}{2}.\]</span> This is the value attained by splitting the
-lines as evenly as possible among <span class="math inline">\(d\)</span>
-mutually orthogonal directions. Settling any infinite family not already
-covered above counts as partial progress.</p>
-<p><em>(Fine del problema 1. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
-<p><strong>Cosa consegniamo.</strong> Problema aperto. Nessuna famiglia
-infinita nuova. Contributo: verifica numerica del bound per <span
-class="math inline">\(N\le10\)</span> nel piano (harness) e impostazione
-della ricerca di controesempi.</p>
-<h5 id="dimostrazione">2. Dimostrazione</h5>
-<p>Congettura di Fejes Tóth completa. Con il harness numerico
-(<code>tools/autoloop.py</code>, hill climbing con riavvii) il massimo
-trovato coincide con il valore congetturato entro <span
-class="math inline">\(2\cdot10^{-5}\)</span> per tutti i casi provati;
-nessun superamento. Non è una prova (virgola mobile).</p>
-<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
-dipendenze, tempi</h5>
-<p>Codice disponibile (Python 3, libreria standard; ogni script gira in
-meno di un minuto): - <code>problema-1/esperimenti/lines_Rd.py</code> -
-<code>problema-1/esperimenti/p1_somma_angoli.py</code></p>
-<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
-<p>Letteratura arXiv (ricerca deterministica
-<code>tools/cerca_letteratura.sh</code>, abstract letti, non usata come
-prova): - arXiv:1801.07837v1 — On the Fejes Tóth Problem about the Sum
-of Angles Between Lines (Dmitriy Bilyk, Ryan W Matzke, 2018); solo
-abstract letto. - arXiv:2007.08698v2 — On Fejes Tóth’s conjectured
-maximizer for the sum of angles between lines (Tongseok Lim, Robert J.
-McCann, 2020); solo abstract letto. - arXiv:1204.3850v1 — Simple Agents
-Learn to Find Their Way: An Introduction on Mapping Polygons (Jérémie
-Chalopin, Shantanu Das, Yann Disser, 2012); solo abstract letto.
-Bilyk–Matzke <span>[</span>1801.07837<span>]</span>: bound generale via
-energia e riduzione dimensione alta → bassa; Lim–McCann
-<span>[</span>2007.08698<span>]</span>: equivalenza con l’unicità
-dell’ottimizzatore per ogni <span
-class="math inline">\(\alpha&gt;1\)</span>, dimostrata per <span
-class="math inline">\(\alpha=\infty\)</span>.</p>
-<h5 id="limiti-e-parti-irrisolte">5. Limiti e parti irrisolte</h5>
-<p>Tutto.</p>
+<h4 id="problem-1-part-6-submission-partial">Problem 1 — Part 6 —
+submission (PARTIAL)</h4>
+<p><strong>Declared status: PARTIAL.</strong> The cell is not solved.
+What follows is the intermediate progress actually established, as
+judged by the automatic Referee (verdict <code>REJECT</code>: The only
+declared claim is <code>main</code> (Fejes Tóth’s bound for all N, d).
+The submission explicitly states in §8 that no non-trivial infinite
+family is proved and that cell 6 remains open; Lemmas 0–4 and
+Corollaries 5–6 are conditional transfer statements (FT(N,d) ⇒ FT(N+1,d)
+for s=d−1; FT(N+1,d) ⇒ FT(N,d) for d N; FT(N+q’,d) ⇒ FT(N,d−1)) whose
+hypotheses are themselves the unproved conjecture. None ). The author’s
+own declared status was <code>LEMMA_CANDIDATE</code>.</p>
+<h5 id="result-and-scope">1. Result and scope</h5>
+<p>Rigorous, self-contained proofs of: (i) exact identities for M(N,d);
+(ii) the trivial infinite family N ≤ d (and d = 1), not covered by cells
+1–5 but of no depth; (iii) three transfer lemmas: FT(N,d) ⟹ FT(N+1,d)
+when N ≡ −1 (mod d); FT(N+1,d) ⟹ FT(N,d) when d N; FT(N+q,d) ⟹ FT(N,d−1)
+with q = ⌊N/(d−1)⌋ (finite-N analogue of Bilyk–Matzke’s continuous
+dimension reduction); (iv) conditional corollary: cell 4’s (5,3) implies
+S ≤ 6π for six lines in R^3. Float search in R<sup>3..R</sup>6 (13
+pairs) found no counterexample. No non-trivial infinite family is
+settled; cell 6 remains open.</p>
+<h5 id="proof">2. Proof</h5>
+<h4
+id="cell-6-transfer-lemmas-the-trivial-family-and-a-counterexample-search">Cell
+6 — transfer lemmas, the trivial family, and a counterexample
+search</h4>
+<h5 id="notation">0. Notation</h5>
+<p>Lines are lines through the origin of <span
+class="math inline">\(\mathbb R^d\)</span>, spanned by unit vectors;
+<span class="math inline">\(\theta(\ell,\ell&#39;)=\arccos|\langle
+x,x&#39;\rangle|\in[0,\pi/2]\)</span>; <span
+class="math inline">\(S=\sum_{i&lt;j}\theta(\ell_i,\ell_j)\)</span>. For
+integers <span class="math inline">\(N\ge1\)</span>, <span
+class="math inline">\(d\ge1\)</span> write <span
+class="math inline">\(N=qd+s\)</span> with <span
+class="math inline">\(q=\lfloor N/d\rfloor\)</span>, <span
+class="math inline">\(0\le s&lt;d\)</span>, and <span
+class="math display">\[M(N,d)=s\binom{q+1}{2}+(d-s)\binom{q}{2},\qquad
+B(N,d)=\Big(\binom N2-M(N,d)\Big)\frac{\pi}{2}.\]</span>
+<strong>Definition.</strong> <span
+class="math inline">\(\mathrm{FT}(N,d)\)</span> is the statement:
+<em>every <span class="math inline">\(N\)</span> lines in <span
+class="math inline">\(\mathbb R^d\)</span> satisfy <span
+class="math inline">\(S\le B(N,d)\)</span>.</em> Cell 6 asks whether
+<span class="math inline">\(\mathrm{FT}(N,d)\)</span> holds for all
+<span class="math inline">\(N,d\)</span>.</p>
+<p>Throughout, <span
+class="math inline">\(\binom{0}{2}=\binom{1}{2}=0\)</span>.</p>
+<h5 id="exact-identities-for-m">1. Exact identities for <span
+class="math inline">\(M\)</span></h5>
+<p><strong>Lemma 0.</strong> Let <span
+class="math inline">\(N=qd+s\)</span>, <span class="math inline">\(0\le
+s&lt;d\)</span>. (a) <span
+class="math inline">\(2M(N,d)=q\,(N+s-d)\)</span>. (b) <span
+class="math inline">\(M(N+1,d)=M(N,d)+q\)</span>. (c) If <span
+class="math inline">\(d\ge2\)</span> and <span
+class="math inline">\(N=q&#39;(d-1)+s&#39;\)</span> with <span
+class="math inline">\(0\le s&#39;&lt;d-1\)</span> (so <span
+class="math inline">\(q&#39;=\lfloor N/(d-1)\rfloor\)</span>), then
+<span
+class="math inline">\(M(N+q&#39;,d)=M(N,d-1)+\binom{q&#39;}{2}\)</span>.</p>
+<p><em>Proof.</em> (a) <span
+class="math inline">\(M=s\frac{q(q+1)}2+(d-s)\frac{q(q-1)}2=\frac
+q2\big[s(q+1)+(d-s)(q-1)\big]=\frac q2\big[dq+2s-d\big]=\frac
+q2(N+s-d)\)</span>, using <span
+class="math inline">\(dq+s=N\)</span>.</p>
+<ol>
+<li><p>If <span class="math inline">\(s\le d-2\)</span>, then <span
+class="math inline">\(N+1=qd+(s+1)\)</span> with <span
+class="math inline">\(0\le s+1&lt;d\)</span> is the canonical
+representation, and <span
+class="math inline">\(M(N+1,d)-M(N,d)=\binom{q+1}2-\binom q2=q\)</span>.
+If <span class="math inline">\(s=d-1\)</span>, then <span
+class="math inline">\(N+1=(q+1)d+0\)</span>, so <span
+class="math inline">\(M(N+1,d)=d\binom{q+1}2\)</span>, while <span
+class="math inline">\(M(N,d)=(d-1)\binom{q+1}2+\binom q2\)</span>; the
+difference is again <span class="math inline">\(\binom{q+1}2-\binom
+q2=q\)</span>.</p></li>
+<li><p><span
+class="math inline">\(N+q&#39;=q&#39;(d-1)+s&#39;+q&#39;=q&#39;d+s&#39;\)</span>
+with <span class="math inline">\(0\le s&#39;&lt;d-1&lt;d\)</span>, so
+this is the canonical representation of <span
+class="math inline">\(N+q&#39;\)</span> modulo <span
+class="math inline">\(d\)</span>, and <span
+class="math inline">\(M(N+q&#39;,d)=s&#39;\binom{q&#39;+1}2+(d-s&#39;)\binom{q&#39;}2=\Big[s&#39;\binom{q&#39;+1}2+(d-1-s&#39;)\binom{q&#39;}2\Big]+\binom{q&#39;}2=M(N,d-1)+\binom{q&#39;}2.\)</span>
+<span class="math inline">\(\square\)</span></p></li>
+</ol>
+<p>(These identities were also checked by exact integer arithmetic for
+all <span class="math inline">\(1\le d\le40\)</span>, <span
+class="math inline">\(1\le N\le400\)</span> — file
+<code>verifica_identita_M.py</code>; the proof above does not depend on
+that check.)</p>
+<h5 id="the-trivial-infinite-family-nle-d-and-d1">2. The trivial
+infinite family <span class="math inline">\(N\le d\)</span> (and <span
+class="math inline">\(d=1\)</span>)</h5>
+<p><strong>Lemma 1.</strong> <span
+class="math inline">\(\mathrm{FT}(N,d)\)</span> holds whenever <span
+class="math inline">\(N\le d\)</span>, and whenever <span
+class="math inline">\(d=1\)</span>.</p>
+<p><em>Proof.</em> If <span class="math inline">\(N\le d\)</span> then
+<span class="math inline">\(q=0\)</span>, <span
+class="math inline">\(s=N\)</span>, so <span
+class="math inline">\(M(N,d)=N\binom12+(d-N)\binom02=0\)</span> and
+<span class="math inline">\(B(N,d)=\binom N2\frac\pi2\)</span>. Since
+every <span class="math inline">\(\theta\le\pi/2\)</span>, <span
+class="math inline">\(S\le\binom N2\frac\pi2\)</span>. If <span
+class="math inline">\(d=1\)</span>, all lines equal <span
+class="math inline">\(\mathbb R^1\)</span>, so <span
+class="math inline">\(S=0\)</span>; here <span
+class="math inline">\(N=N\cdot1+0\)</span>, <span
+class="math inline">\(M(N,1)=\binom N2\)</span>, <span
+class="math inline">\(B(N,1)=0\)</span>, and <span
+class="math inline">\(S\le0\)</span> holds. <span
+class="math inline">\(\square\)</span></p>
+<p><em>Honest remark.</em> This family is not covered by cells 1–5 (cell
+3 starts at <span class="math inline">\(N=d+1\)</span>) but it is
+trivial; I list it only for completeness, not as substantive
+progress.</p>
+<h5 id="adding-a-line-when-nequiv-1pmod-d">3. Adding a line when <span
+class="math inline">\(N\equiv-1\pmod d\)</span></h5>
+<p><strong>Lemma 2.</strong> Let <span
+class="math inline">\(d\ge1\)</span>, <span
+class="math inline">\(N\ge2\)</span>, <span
+class="math inline">\(N=qd+s\)</span> with <span
+class="math inline">\(s=d-1\)</span> (i.e. <span
+class="math inline">\(N\equiv-1\pmod d\)</span>). If <span
+class="math inline">\(\mathrm{FT}(N,d)\)</span> holds, then <span
+class="math inline">\(\mathrm{FT}(N+1,d)\)</span> holds.</p>
+<p><em>Proof.</em> Let <span
+class="math inline">\(\ell_1,\dots,\ell_{N+1}\)</span> be lines in <span
+class="math inline">\(\mathbb R^d\)</span> and <span
+class="math inline">\(S\)</span> their angle sum. For <span
+class="math inline">\(k=1,\dots,N+1\)</span> let <span
+class="math inline">\(S_k\)</span> be the angle sum of the <span
+class="math inline">\(N\)</span> lines obtained by deleting <span
+class="math inline">\(\ell_k\)</span>. A pair <span
+class="math inline">\(\{i,j\}\)</span> contributes <span
+class="math inline">\(\theta(\ell_i,\ell_j)\)</span> to <span
+class="math inline">\(S_k\)</span> exactly for the <span
+class="math inline">\(N+1-2=N-1\)</span> indices <span
+class="math inline">\(k\notin\{i,j\}\)</span>, hence <span
+class="math display">\[\sum_{k=1}^{N+1}S_k=(N-1)\,S.\]</span> By <span
+class="math inline">\(\mathrm{FT}(N,d)\)</span>, <span
+class="math inline">\(S_k\le B(N,d)\)</span> for each <span
+class="math inline">\(k\)</span>, so <span
+class="math inline">\((N-1)S\le(N+1)B(N,d)\)</span>, i.e. <span
+class="math inline">\(S\le\frac{N+1}{N-1}B(N,d)\)</span> (here <span
+class="math inline">\(N-1\ge1\)</span>). It remains to show <span
+class="math inline">\(\frac{N+1}{N-1}B(N,d)\le B(N+1,d)\)</span>, i.e.
+<span class="math display">\[(N+1)\Big(\binom
+N2-M(N,d)\Big)\le(N-1)\Big(\binom{N+1}2-M(N+1,d)\Big).\tag{1}\]</span>
+Since <span class="math inline">\((N+1)\binom
+N2=\frac{(N+1)N(N-1)}2=(N-1)\binom{N+1}2\)</span>, and <span
+class="math inline">\(M(N+1,d)=M(N,d)+q\)</span> by Lemma 0(b), (1) is
+equivalent to <span
+class="math inline">\(-(N+1)M(N,d)\le-(N-1)M(N,d)-(N-1)q\)</span>,
+i.e. to <span class="math inline">\((N-1)q\le2M(N,d)\)</span>. By Lemma
+0(a), <span class="math inline">\(2M(N,d)=q(N+s-d)=q(N-1)\)</span>
+because <span class="math inline">\(s=d-1\)</span>. So (1) holds with
+equality, and <span class="math inline">\(S\le B(N+1,d)\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p><em>Remark.</em> If <span class="math inline">\(s\ne d-1\)</span> and
+<span class="math inline">\(q\ge1\)</span>, the inequality <span
+class="math inline">\((N-1)q\le q(N+s-d)\)</span> fails, so this
+averaging argument gives exactly the residue class <span
+class="math inline">\(s=d-1\)</span> and nothing else (exact check in
+<code>verifica_identita_M.py</code>, item (d)).</p>
+<h5 id="removing-a-line-when-dmid-n">4. Removing a line when <span
+class="math inline">\(d\mid N\)</span></h5>
+<p><strong>Lemma 3.</strong> Let <span
+class="math inline">\(d\ge1\)</span>, <span
+class="math inline">\(N=qd\)</span> with <span
+class="math inline">\(q\ge1\)</span>. If <span
+class="math inline">\(\mathrm{FT}(N+1,d)\)</span> holds, then <span
+class="math inline">\(\mathrm{FT}(N,d)\)</span> holds.</p>
+<p><em>Proof.</em> If <span class="math inline">\(N=1\)</span> then
+<span class="math inline">\(S=0\le B(1,d)\)</span>. Let <span
+class="math inline">\(N\ge2\)</span> and let <span
+class="math inline">\(\ell_1,\dots,\ell_N\)</span> be lines in <span
+class="math inline">\(\mathbb R^d\)</span> with angle sum <span
+class="math inline">\(S\)</span>. For each <span
+class="math inline">\(k\)</span> put <span
+class="math inline">\(A_k=\sum_{j\ne k}\theta(\ell_k,\ell_j)\)</span>.
+Each unordered pair <span class="math inline">\(\{i,j\}\)</span> appears
+in exactly <span class="math inline">\(A_i\)</span> and <span
+class="math inline">\(A_j\)</span>, so <span
+class="math inline">\(\sum_kA_k=2S\)</span> and some index <span
+class="math inline">\(k\)</span> satisfies <span
+class="math inline">\(A_k\ge2S/N\)</span>. Consider the <span
+class="math inline">\(N+1\)</span> lines <span
+class="math inline">\(\ell_1,\dots,\ell_N,\ell_{N+1}\)</span> with <span
+class="math inline">\(\ell_{N+1}=\ell_k\)</span> (a repeated line,
+allowed by the problem). Its angle sum is <span
+class="math inline">\(S&#39;=S+\sum_{j\le
+N}\theta(\ell_{N+1},\ell_j)=S+A_k+\theta(\ell_k,\ell_k)=S+A_k\ge
+S\,(1+\tfrac2N)=\tfrac{N+2}{N}S\)</span>, since <span
+class="math inline">\(\theta(\ell_k,\ell_k)=\arccos1=0\)</span>. By
+<span class="math inline">\(\mathrm{FT}(N+1,d)\)</span>, <span
+class="math inline">\(S&#39;\le B(N+1,d)\)</span>, hence <span
+class="math inline">\(S\le\frac{N}{N+2}B(N+1,d)\)</span>. It remains to
+show <span class="math inline">\(\frac N{N+2}B(N+1,d)\le
+B(N,d)\)</span>, i.e. <span
+class="math display">\[N\Big(\binom{N+1}2-M(N+1,d)\Big)\le(N+2)\Big(\binom
+N2-M(N,d)\Big).\tag{2}\]</span> Compute <span
+class="math inline">\(N\binom{N+1}2-(N+2)\binom
+N2=\frac{N}{2}\big[(N^2+N)-(N^2+N-2)\big]=N\)</span>. With Lemma 0(b),
+(2) is equivalent to <span class="math inline">\(N\le
+N\,(M(N,d)+q)-(N+2)M(N,d)=Nq-2M(N,d)\)</span>, and by Lemma 0(a) with
+<span class="math inline">\(s=0\)</span>: <span
+class="math inline">\(Nq-2M(N,d)=Nq-q(N-d)=qd=N\)</span>. So (2) holds
+with equality and <span class="math inline">\(S\le B(N,d)\)</span>.
+<span class="math inline">\(\square\)</span></p>
+<p><em>Remark.</em> For <span class="math inline">\(s\ne0\)</span> one
+gets <span class="math inline">\(Nq-2M=q(d-s)&lt;qd+s=N\)</span>, so the
+argument works exactly when <span class="math inline">\(d\mid N\)</span>
+(exact check, item (e)).</p>
+<h5 id="dropping-one-dimension">5. Dropping one dimension</h5>
+<p><strong>Lemma 4.</strong> Let <span
+class="math inline">\(d\ge2\)</span>, <span
+class="math inline">\(N\ge1\)</span>, <span
+class="math inline">\(q&#39;=\lfloor N/(d-1)\rfloor\)</span>. If <span
+class="math inline">\(\mathrm{FT}(N+q&#39;,d)\)</span> holds, then <span
+class="math inline">\(\mathrm{FT}(N,d-1)\)</span> holds.</p>
+<p><em>Proof.</em> Let <span
+class="math inline">\(\ell_1,\dots,\ell_N\)</span> be lines in <span
+class="math inline">\(\mathbb R^{d-1}\)</span> spanned by unit vectors
+<span class="math inline">\(x_1,\dots,x_N\)</span>, with angle sum <span
+class="math inline">\(S\)</span>. Embed <span
+class="math inline">\(\iota:\mathbb R^{d-1}\to\mathbb R^d\)</span>,
+<span class="math inline">\(\iota(x)=(x,0)\)</span>; this is a linear
+isometry, so <span class="math inline">\(\langle\iota x_i,\iota
+x_j\rangle=\langle x_i,x_j\rangle\)</span> and all angles <span
+class="math inline">\(\theta\)</span> are preserved. Let <span
+class="math inline">\(e_d=(0,\dots,0,1)\)</span> and consider the <span
+class="math inline">\(N+q&#39;\)</span> lines in <span
+class="math inline">\(\mathbb R^d\)</span> spanned by <span
+class="math inline">\(\iota x_1,\dots,\iota x_N\)</span> and <span
+class="math inline">\(q&#39;\)</span> copies of <span
+class="math inline">\(e_d\)</span>. Their angle sum is <span
+class="math display">\[S&#39;=S+\sum_{i=1}^{N}q&#39;\,\theta(\iota
+x_i,e_d)+\binom{q&#39;}2\theta(e_d,e_d)=S+q&#39;N\frac\pi2+0,\]</span>
+because <span class="math inline">\(\langle\iota
+x_i,e_d\rangle=0\)</span> gives <span
+class="math inline">\(\theta=\arccos0=\pi/2\)</span> and <span
+class="math inline">\(\theta(e_d,e_d)=0\)</span>. By <span
+class="math inline">\(\mathrm{FT}(N+q&#39;,d)\)</span>, <span
+class="math display">\[S\le\Big(\binom{N+q&#39;}2-M(N+q&#39;,d)-q&#39;N\Big)\frac\pi2.\]</span>
+Now <span
+class="math inline">\(\binom{N+q&#39;}2-q&#39;N=\frac{(N+q&#39;)(N+q&#39;-1)}2-q&#39;N=\frac{N^2-N+q&#39;^2-q&#39;}2=\binom
+N2+\binom{q&#39;}2\)</span>, and <span
+class="math inline">\(M(N+q&#39;,d)=M(N,d-1)+\binom{q&#39;}2\)</span> by
+Lemma 0(c). Therefore <span class="math inline">\(S\le\big(\binom
+N2-M(N,d-1)\big)\frac\pi2=B(N,d-1)\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<h5 id="consequences">6. Consequences</h5>
+<p><strong>Corollary 5 (conditional).</strong> If cell 4’s statement for
+five lines in <span class="math inline">\(\mathbb R^3\)</span> holds
+(<span class="math inline">\(\mathrm{FT}(5,3)\)</span>, i.e. <span
+class="math inline">\(S\le4\pi\)</span>), then every six lines in <span
+class="math inline">\(\mathbb R^3\)</span> satisfy <span
+class="math inline">\(S\le6\pi\)</span>, i.e. <span
+class="math inline">\(\mathrm{FT}(6,3)\)</span>. <em>Proof.</em> <span
+class="math inline">\(N=5=1\cdot3+2\)</span>, so <span
+class="math inline">\(s=2=d-1\)</span> and <span
+class="math inline">\(N\ge2\)</span>; Lemma 2 gives <span
+class="math inline">\(\mathrm{FT}(6,3)\)</span>. Here <span
+class="math inline">\(B(6,3)=(15-3)\frac\pi2=6\pi\)</span> since <span
+class="math inline">\(6=2\cdot3+0\)</span> and <span
+class="math inline">\(M(6,3)=3\binom22=3\)</span>. <span
+class="math inline">\(\square\)</span> (This recovers, conditionally on
+cell 4, the range <span class="math inline">\(N\le6\)</span> in <span
+class="math inline">\(\mathbb R^3\)</span> attributed by Bilyk–Matzke to
+Fejes Tóth 1959; cell 4 itself is not proved here.)</p>
+<p><strong>Corollary 6.</strong> In the plane, Lemma 2 with <span
+class="math inline">\(d=2\)</span> says <span
+class="math inline">\(\mathrm{FT}(N,2)\Rightarrow\mathrm{FT}(N+1,2)\)</span>
+for odd <span class="math inline">\(N\ge3\)</span>, and Lemma 3 says
+<span
+class="math inline">\(\mathrm{FT}(N+1,2)\Rightarrow\mathrm{FT}(N,2)\)</span>
+for even <span class="math inline">\(N\)</span>. (Consistent with cell
+1, which is already proved by the team; not needed.)</p>
+<p><strong>What the lemmas do not give.</strong> Starting from the
+families of cells 3–5 (<span class="math inline">\(N=d+1\)</span>, <span
+class="math inline">\(N=d+2\)</span>), Lemma 2 applies only when <span
+class="math inline">\(d+2\equiv-1\pmod d\)</span>, i.e. <span
+class="math inline">\(d\mid3\)</span>, and Lemma 4 maps <span
+class="math inline">\((d+2,d)\)</span> to <span
+class="math inline">\((d+1,d-1)\)</span>, the same family. So no new
+<em>infinite</em> family follows from cells 1–5 plus these lemmas; they
+are transfer tools for future attempts (e.g. any proof of <span
+class="math inline">\(\mathrm{FT}(2d-1,d)\)</span> would yield <span
+class="math inline">\(\mathrm{FT}(2d,d)\)</span> by Lemma 2, and <span
+class="math inline">\(\mathrm{FT}(2d,d)\)</span> for all <span
+class="math inline">\(d\)</span> would yield <span
+class="math inline">\(\mathrm{FT}(2d-2,d-1)\)</span> by Lemma 4).</p>
+<h5 id="counterexample-search-float-exploration-only-proves-nothing">7.
+Counterexample search (float, exploration only — proves nothing)</h5>
+<p>Using the team’s hill-climbing harness
+(<code>tools/autoloop.py</code> on
+<code>problema-1/esperimenti/lines_Rd.py</code>; Gaussian perturbations
+plus structured moves: copy a vector, orthogonalise against a random
+subset, random jump; 3 seeds × 8 restarts × 5 s per pair), the best
+<span class="math inline">\(S\)</span> found versus <span
+class="math inline">\(B(N,d)\)</span> for <span
+class="math inline">\((d,N)\in\{(3,6),(3,7),(3,8),(3,9),(4,7),(4,8),(4,9),(4,10),(5,8),(5,9),(5,11),(6,10),(6,13)\}\)</span>
+(each <span class="math inline">\(\approx5\)</span> s wall, <span
+class="math inline">\(\approx2.3\)</span>–<span
+class="math inline">\(3.2\cdot10^5\)</span> iterations): - in 12 of 13
+cases the best value agrees with <span
+class="math inline">\(B(N,d)\)</span> to within <span
+class="math inline">\(2\cdot10^{-7}\)</span>; the sign of the residual
+is negative (<span class="math inline">\(\approx-10^{-7}\)</span>) in
+these cases, which is the expected floating-point artefact of
+<code>arccos</code> at arguments clipped to <span
+class="math inline">\(1-\varepsilon\)</span> (<span
+class="math inline">\(\arccos(1-\varepsilon)\approx\sqrt{2\varepsilon}\)</span>),
+<strong>not</strong> evidence of a violation; - for <span
+class="math inline">\((3,6)\)</span> the search did not converge (best
+<span class="math inline">\(18.8287&lt;6\pi=18.8496\)</span>). No
+configuration exceeding the conjectured bound was found. This is float
+arithmetic on a finite random sample: it supports “prove” over
+“disprove” heuristically and settles nothing.</p>
+<h5 id="summary-of-status">8. Summary of status</h5>
+<ul>
+<li><p>Proved (rigorously, self-contained): Lemma 0 (identities), Lemma
+1 (trivial family <span class="math inline">\(N\le d\)</span> and <span
+class="math inline">\(d=1\)</span>), Lemmas 2–4 (transfer implications),
+Corollaries 5–6.</p></li>
+<li><p>Not proved: any non-trivial infinite family; cell 6 remains open.
+Nothing here is claimed as a solution of the cell.</p></li>
+</ul>
+<h5 id="verification-instructions-dependencies-timings">3. Verification:
+instructions, dependencies, timings</h5>
+<p>Python 3 standard library. Scripts (re-run by the orchestrator, see
+<code>runs/p1_c6/verifica/</code>): - code_1 (python, rigor
+<code>exact</code>): Exact integer check of the identities of Lemma 0
+and of the equality/inequality conditions in Lemmas 2–3, for 1≤d≤40,
+1≤N≤400 (0.1 s). Saved as runs/p1_c6/sandbox/verifica_identita_M.py. The
+proofs do not depend on it. - code_2 (bash, rigor
+<code>float_exploration_only</code>): Float-only hill-climbing search
+for configurations exceeding the conjectured bound in R<sup>3..R</sup>6
+(13 pairs (d,N), 3 seeds x 8 restarts x 5 s each, ~70 s total), using
+the team’s existing harness tools/autoloop.py with objective
+problema-1/esperimenti/lines_Rd.py; ledger saved in
+runs/p1_c6/sandbox/esplora_Rd.jsonl. Proves nothing.</p>
+<h5 id="sources-and-contribution">4. Sources and contribution</h5>
+<ul>
+<li><p>arXiv:1801.07837 (Bilyk–Matzke) — context only: Prop. 3.1
+(dimension reduction for the continuous energy) motivates Lemma 4; the
+‘only settled case is d=1’ statement; nothing cited as a proof
+step</p></li>
+<li><p>problema-1/fonti/README.md (team reading notes on Bilyk–Matzke;
+attribution of N≤6 in R^3 to Fejes Tóth 1959, unread original)</p></li>
+<li><p>Position with respect to the literature:
+<span>[</span>1801.07837<span>]</span> Bilyk–Matzke (read in full by the
+team earlier, see problema-1/fonti/README.md): the only settled case is
+the plane; they give a general non-sharp energy bound π/2 − 69/(50(d+1))
+via the frame potential and, for the continuous (measure) version, a
+dimension-reduction Prop. 3.1 (conjecture in S^d ⟹ conjecture in
+S^{d−1}). Lemma 4 below is the finite-N analogue of that reduction,
+proved from scratch by embedding and adding q copies of a new orthogonal
+axis; the exact identity M(N+q,d) = M(N,d−1) + C(q,2) is what makes it
+sharp for finite N. Lemmas 2–3 (averaging over deleting/duplicating a
+line) do not appear in the abstracts and are our own.
+<span>[</span>2007.08698<span>]</span> Lim–McCann (abstract only):
+deformation to α-powers, optimality for α = ∞; not used.
+<span>[</span>1204.3850<span>]</span> is irrelevant (polygon mapping).
+Nothing in the literature I have settles any new infinite family; my
+approach departs from the energy method (known non-sharp) and instead
+builds exact transfer lemmas.</p></li>
+</ul>
+<h5 id="limits-and-unresolved-parts">5. Limits and unresolved parts</h5>
+<p>Referee’s blocking point: The only declared claim is
+<code>main</code> (Fejes Tóth’s bound for all N, d). The submission
+explicitly states in §8 that no non-trivial infinite family is proved
+and that cell 6 remains open; Lemmas 0–4 and Corollaries 5–6 are
+conditional transfer statements (FT(N,d) ⇒ FT(N+1,d) for s=d−1;
+FT(N+1,d) ⇒ FT(N,d) for d N; FT(N+q’,d) ⇒ FT(N,d−1)) whose hypotheses
+are themselves the unproved conjecture. None of them, alone or combined
+with cells 1–5 (which are moreover not verified in the state:
+highest_verified_cell = 0), yields FT(N,d) for any family beyond the
+trivial N ≤ d / d = 1 case. Hence the declared target is not
+established, and no other declared claim exists to accept. The float
+search of §7 is exploration only and proves nothing (correctly
+acknowledged by the author). Next step required: Address the stated
+blocking obligation without silently changing the target Gaps declared
+by the author: - No non-trivial infinite family is settled; the only
+‘family’ proved outright (N ≤ d, d = 1) is trivial and should not be
+scored as substantive progress on cell 6. - Corollary 5 (six lines in
+R^3) is conditional on cell 4 (five lines in R^3), which is not proved
+in this attempt and is not among the verified claims. - Section 7 is
+floating-point hill climbing on a finite random sample: it is
+exploration only and proves nothing; the (3,6) run did not even converge
+to the conjectured value. - The transfer lemmas, combined with cells
+1–5, do not yield any new infinite family (shown in §6); their value is
+as reusable tools for later attempts.</p>
 <h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
 <h4 id="run-p1_c6">Run <code>p1_c6</code></h4>
 <dl>

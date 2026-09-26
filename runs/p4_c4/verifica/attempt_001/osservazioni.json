@@ -1,5 +1,0 @@
-[
- "orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): TIMEOUT after 600s; killed: exceeds the verification time limit",
- "orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 1 in 0.0s; stdout: ''; stderr: 'Traceback (most recent call last):\\n  File \"/Users/thomastumini/proof-pursuit/runs/p4_c4/verifica/attempt_001/code_2.py\", line 69, in <module>\\n    modo = sys.argv[1]\\n           ~~~~~~~~^^^\\nIndexError: list index out of range'",
- "orchestrator re-ran code_3.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: 'moduli=() esito=FATTIBILE nodi_B=1 tempo=0.00s testimone=()\\ntempo totale 0.00s'; stderr: ''"
-]
