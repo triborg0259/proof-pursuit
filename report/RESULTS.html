@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Proof Pursuit — results achieved</title>
+  <style>
+
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+  <style type="text/css">body{font-family:-apple-system,Helvetica,Arial,sans-serif;max-width:800px;margin:40px auto;line-height:1.45;color:#111}
+table{border-collapse:collapse;width:100%;font-size:0.92em}th,td{border:1px solid #bbb;padding:5px 8px;vertical-align:top}th{background:#eee}
+h1{font-size:1.7em}h2{font-size:1.25em;margin-top:1.4em}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — results achieved</h1>
+<p class="subtitle">Team: T. Tumini (Researcher), gabundos (Referee), M.
+Renzi (Creative), gio3r3gio · 26 September 2026</p>
+</header>
+<h2 id="in-one-line">In one line</h2>
+<p>Out of 24 cells, <strong>10 closed</strong> with a complete proof, a
+positive verdict from two independent automatic judges and human
+approval (18 points), <strong>1 candidate</strong> on the value,
+<strong>13 honest partials</strong>, all published. The multi-agent
+system worked end-to-end and closed 5 cells on its own; the other 5 were
+closed with proofs written by hand by the team and judged by the same
+Referee.</p>
+<h2 id="what-we-closed">What we closed</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Cell</th>
+<th>How</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Problem 1, part 1</td>
+<td>proof written by the team (random half-turn), judged by the Referee,
+approved</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Problem 1, part 2</td>
+<td>proof written by the team (induction with projection), judged,
+approved</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Problem 2, part 1</td>
+<td>autonomous loop: Researcher with shell + Referee, human review</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Problem 2, part 2</td>
+<td>autonomous loop, three Referee runs, reduction re-read by hand</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Problem 2, part 3</td>
+<td>autonomous loop, one iteration: value, labelling and lower
+bound</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Problem 3, part 1</td>
+<td>autonomous loop, one iteration</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Problem 3, part 2</td>
+<td>autonomous loop, <strong>two iterations</strong>: motivated REJECT,
+then the proof completed</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Problem 4, part 1</td>
+<td>proof written by the team (parity), judged, approved</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Problem 4, part 2</td>
+<td>proof written by the team (prime cliques), judged, approved</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Problem 4, part 3</td>
+<td>autonomous loop: reduction to a finite set + certified search with
+two implementations</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>Autonomously (Researcher → Referee, no human intervention on the
+content): problem 2 parts 1, 2, 3; problem 3 parts 1, 2; problem 4 part
+3. With a human proof and automatic judging: problem 1 parts 1, 2;
+problem 4 parts 1, 2.</p>
+<h2 id="what-remained-partial-and-what-it-contains">What remained
+partial, and what it contains</h2>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Cell</th>
+<th>Content of the partial</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Problem 1, parts 3–5</td>
+<td>formalisation, reduction to deficits, the part-2 lemma as the
+building block, literature</td>
+</tr>
+<tr>
+<td>Problem 1, part 6</td>
+<td>dimension-transfer lemmas (proved), no new infinite family; open
+since 1959</td>
+</tr>
+<tr>
+<td>Problem 2, part 4</td>
+<td>candidate value by the star construction, optimality proved within
+the family; lower bound missing</td>
+</tr>
+<tr>
+<td>Problem 2, parts 5–6</td>
+<td>exact structural identity and reduction to decycling sets; known
+bounds not improved</td>
+</tr>
+<tr>
+<td>Problem 3, part 3</td>
+<td>general bound proved for rank ≥ 5, exact table up to rank 11, value
+of the family conjectured with explicit extremals</td>
+</tr>
+<tr>
+<td>Problem 3, parts 4–5</td>
+<td>exact table, conjectured formulas, residual values, extremals;
+uniform proof missing</td>
+</tr>
+<tr>
+<td>Problem 3, part 6</td>
+<td>table as the basis for the conjecture; open</td>
+</tr>
+<tr>
+<td>Problem 4, part 4</td>
+<td>certificate written and mathematics judged PASS up to size 13;
+re-runs not reproduced because of missing script arguments</td>
+</tr>
+<tr>
+<td>Problem 4, part 5</td>
+<td>hand proof of the two isolated sizes; strengthened certificate
+missing</td>
+</tr>
+<tr>
+<td>Problem 4, part 6</td>
+<td>recursion and an unconditional but weaker bound; the July 2026 arXiv
+paper improving the quoted bound is flagged</td>
+</tr>
+</tbody>
+</table>
+<h2 id="why-partial-the-time">Why partial: the time</h2>
+<ol type="1">
+<li><strong>Building the system during the contest.</strong> Of the 7
+hours, about 3 went into building and integrating the harness:
+Researcher, bridge, two-judge Referee, Creative, loop, arXiv search,
+submission packages. The first real runs started mid-afternoon.</li>
+<li><strong>Latency per attempt.</strong> A Researcher attempt with a
+shell takes 10–25 minutes, the Referee 4: one iteration is 15–30
+minutes, two iterations an hour. The machine waits for the model; more
+CPU does not help, and parallelism was already at eleven cells.</li>
+<li><strong>Four contract defects found by real runs</strong> (a
+variadic flag swallowing the prompt; a judge’s reservation voiding a
+PASS; missing trusted re-runs and official rules; claim provenance not
+admitted by the validator). Each fix cost one Referee run and 10–15
+minutes; without real runs they would not have surfaced.</li>
+<li><strong>An accidental session restart</strong> 35 minutes before the
+end killed seven running loops, four of which already had an attempt
+written; they were recovered as partials, two second iterations were
+lost.</li>
+<li><strong>Intrinsic difficulty.</strong> The part-6 cells are open
+problems; the part-5 cells need uniform arguments or strengthened
+certificates worth hours of work. The plan declared 14–18 realistic
+points from the start: we are at 18 plus the candidate.</li>
+</ol>
+<h2 id="what-worked-and-should-be-kept">What worked and should be
+kept</h2>
+<ul>
+<li>Two-judge Referee with a deterministic merge: no false positives;
+every REJECT pointed to the exact missing step.</li>
+<li>The error loop: on problem 3 part 2 the Researcher read the
+rejection, fetched the source and completed the proof on the second
+round.</li>
+<li>Hand-written proofs judged by the Referee: four cells closed in
+twenty minutes.</li>
+<li>Explicit construction plus exact verification: for problem 2 the
+method of part 2 extended to part 3 in one iteration.</li>
+<li>Traceability: every submission reports the agents’ decisions, the
+tokens, the arXiv sources and the re-run code.</li>
+</ul>
+<h2 id="what-to-change-next-time">What to change next time</h2>
+<p>Harness ready before the contest; a portfolio of parallel Researchers
+per cell with different approach families; the Referee on human attempts
+from the start; scripts with explicit arguments and declared time
+limits; no session restarts with loops running.</p>
+<p>Repository and write-ups:
+https://github.com/triborg0259/proof-pursuit ·
+https://triborg0259.github.io/proof-pursuit/</p>
+</body>
+</html>
