@@ -35,13 +35,21 @@ CONTEXT_FILES = ["problem.md", "state.json", "verified_claims.md", "failed_attem
 # Regola del brief: tre tentativi consecutivi, stesso metodo, stesso motivo ⇒ stagnazione.
 STAGNATION_WINDOW = 3
 
-# Strumenti concessi alla CLI quando si attiva --shell: solo Python e lettura/scrittura nel sandbox.
-# Perché: il Researcher deve poter fare calcoli ESATTI, ma non deve toccare rete, pacchetti o il repo.
-SHELL_TOOLS = "Bash,Read,Write,Edit,Glob,Grep"
-SHELL_ALLOWED = ["Bash(python3 *)", "Bash(python3:*)", "Bash(timeout *)", "Bash(ls *)", "Bash(ls)", "Bash(cat *)",
-                 "Bash(wc *)", "Bash(head *)", "Bash(tail *)", "Read", "Write", "Edit", "Glob", "Grep"]
-SHELL_DENIED = ["Bash(curl *)", "Bash(wget *)", "Bash(pip *)", "Bash(rm *)", "Bash(git *)", "Bash(ssh *)",
-                "WebFetch", "WebSearch"]
+# Due modalità di shell per il backend CLI (scelte con --shell sandbox|full):
+#  - sandbox: solo Python e lettura/scrittura dentro runs/<problema>/sandbox; niente rete, pip, git, rm.
+#    Perché: calcoli ESATTI e riproducibili senza rischi per il repo.
+#  - full: tutti gli strumenti di Claude Code (Bash libero, WebSearch, WebFetch), nessuna richiesta di permesso,
+#    accesso al repo intero. Perché: il team vuole che il Researcher cerchi letteratura, installi pacchetti nel
+#    venv e riusi gli esperimenti esistenti. Va lanciato da un terminale umano.
+SHELL_MODES = {
+    "sandbox": ["--tools", "Bash,Read,Write,Edit,Glob,Grep",
+                "--allowedTools", "Bash(python3 *)", "Bash(python3:*)", "Bash(timeout *)", "Bash(ls *)", "Bash(ls)",
+                "Bash(cat *)", "Bash(wc *)", "Bash(head *)", "Bash(tail *)", "Read", "Write", "Edit", "Glob", "Grep",
+                "--disallowedTools", "Bash(curl *)", "Bash(wget *)", "Bash(pip *)", "Bash(rm *)", "Bash(git *)",
+                "Bash(ssh *)", "WebFetch", "WebSearch",
+                "--permission-mode", "dontAsk"],
+    "full": ["--permission-mode", "bypassPermissions", "--add-dir", str(ROOT)],
+}
 
 
 # =============================================================================== lettura/scrittura file
@@ -159,16 +167,23 @@ def _history_section(history):
     return "# RECENT ATTEMPT HISTORY (structured)\n" + "\n".join(lines) if lines else ""
 
 
-def _sandbox_section(shell_dir):
-    """Istruzioni per l'uso della shell recintata: calcoli esatti, script salvati e dichiarati, tempo limitato."""
-    return ("# SANDBOX SHELL AVAILABLE\nYou may run `python3` (no network, no pip, no other commands) in the current "
-            "directory to explore and to run EXACT computations (integers, fractions, exhaustive enumeration). "
-            "Save every script you rely on as a file here and copy it into `code_used` with `rigor` set honestly; "
-            "state the finite set the computation covers and its wall-clock time. Floating point is exploration only. "
-            f"Keep total runtime under 10 minutes. Sandbox: {shell_dir}")
+def _shell_section(shell_dir, mode):
+    """Istruzioni per l'uso della shell. Le regole di rigore (script salvati, insieme finito dichiarato, float solo
+    per esplorare) valgono in entrambe le modalità; in `full` si aggiungono rete e repo, con l'obbligo di citare
+    con precisione ciò che si legge online e di non presentare come letta una fonte non letta."""
+    rigor = ("Save every script you rely on as a file in the working directory and copy it into `code_used` with "
+             "`rigor` set honestly; state the finite set the computation covers and its wall-clock time. "
+             "Floating point is exploration only. Keep each computation under 10 minutes.")
+    if mode == "sandbox":
+        return ("# SANDBOX SHELL AVAILABLE\nYou may run `python3` only (no network, no pip, no other commands) in the "
+                f"current directory for exploration and EXACT computations. {rigor} Working directory: {shell_dir}")
+    return ("# FULL SHELL AVAILABLE\nYou have a full shell, network access (WebSearch, WebFetch, curl) and the whole "
+            f"repository at {ROOT}: read the problem folders, reuse tools/ and the .venv (numpy, mpmath); install "
+            "packages in .venv only. Use the network to check literature: record exact references and quote the "
+            f"statement you rely on; never present an unread source as read. {rigor} Working directory: {shell_dir}")
 
 
-def build_user_prompt(context, stagnating, reason, shell_dir=None):
+def build_user_prompt(context, stagnating, reason, shell_dir=None, shell_mode="sandbox"):
     """Assembla il prompt utente dalle sezioni disponibili. L'ordine va dal più stabile (problema) al più
     volatile (task), così la parte iniziale resta uguale fra iterazioni e si presta alla cache."""
     state = context["state.json"]
@@ -188,7 +203,7 @@ def build_user_prompt(context, stagnating, reason, shell_dir=None):
         sections.append(f"# STAGNATION DETECTED\n{reason}\nYou MUST change approach_family. If no creative ideas are listed, "
                         "pick a different family yourself and explain why it escapes the repeated fatal error.")
     if shell_dir:
-        sections.append(_sandbox_section(shell_dir))
+        sections.append(_shell_section(shell_dir, shell_mode))
     blocker = state.get("current_blocker") or "(none stated: choose the first natural subgoal of the cell)"
     sections.append(f"# TASK\nTarget: {state.get('current_target')} (cell {target_cell_from_state(state)}). "
                     f"Blocker: {blocker}.\nProduce ONE attempt as JSON per the schema.")
@@ -196,16 +211,16 @@ def build_user_prompt(context, stagnating, reason, shell_dir=None):
 
 
 # =============================================================================== backend: CLI
-def _cli_command(system_prompt, user_prompt, schema, model, effort, shell, max_turns, max_budget_usd):
-    """Costruisce la riga di comando di `claude -p`. Con shell attiva concede solo gli strumenti in allowlist e
-    usa --permission-mode dontAsk: in headless nessuno può rispondere ai prompt, quindi il resto viene negato."""
+def _cli_command(system_prompt, user_prompt, schema, model, effort, shell, max_turns, max_budget_usd, shell_mode):
+    """Costruisce la riga di comando di `claude -p`. Senza shell nessuno strumento; con shell applica la modalità
+    scelta (vedi SHELL_MODES). In headless nessuno risponde ai prompt di permesso, per questo ogni modalità
+    fissa a priori cosa è concesso."""
     cli_schema = {k: v for k, v in schema.items() if k not in ("$schema", "title")}  # il validatore CLI rifiuta $schema 2020-12
     cmd = ["claude", "-p", "--no-session-persistence", "--output-format", "json",
            "--json-schema", json.dumps(cli_schema), "--system-prompt", system_prompt,
            "--max-budget-usd", str(max_budget_usd)]
     if shell:
-        cmd += ["--tools", SHELL_TOOLS, "--allowedTools", *SHELL_ALLOWED, "--disallowedTools", *SHELL_DENIED,
-                "--permission-mode", "dontAsk", "--max-turns", str(max_turns)]
+        cmd += [*SHELL_MODES[shell_mode], "--max-turns", str(max_turns)]
     else:
         cmd += ["--tools", ""]
     if model:
@@ -215,20 +230,20 @@ def _cli_command(system_prompt, user_prompt, schema, model, effort, shell, max_t
     return cmd + [user_prompt]
 
 
-def _cli_meta(output, started, shell):
+def _cli_meta(output, started, shell, shell_mode):
     """Metadati del run (modello, costo, tempo, turni, permessi negati) salvati nel tentativo per la tracciabilità."""
     return {"backend": "cli", "model": list((output.get("modelUsage") or {}).keys()), "cost_usd": output.get("total_cost_usd"),
             "seconds": round(time.time() - started, 1), "session_id": output.get("session_id"),
-            "num_turns": output.get("num_turns"), "shell": bool(shell),
+            "num_turns": output.get("num_turns"), "shell": shell_mode if shell else None,
             "permission_denials": len(output.get("permission_denials") or [])}
 
 
 def call_cli(system_prompt, user_prompt, schema, model=None, effort=None, shell=None,
-             max_turns=60, max_budget_usd=8.0, timeout=3600):
+             max_turns=150, max_budget_usd=15.0, timeout=3600, shell_mode="sandbox"):
     """Chiama Claude Code headless e ritorna (attempt, meta). L'output è strutturato dallo schema (--json-schema).
     NOTA: con shell attiva va lanciato da un terminale umano; un agente che lancia un altro agente con permessi
     pre-autorizzati viene bloccato dal classificatore di sicurezza."""
-    cmd = _cli_command(system_prompt, user_prompt, schema, model, effort, shell, max_turns, max_budget_usd)
+    cmd = _cli_command(system_prompt, user_prompt, schema, model, effort, shell, max_turns, max_budget_usd, shell_mode)
     started = time.time()
     result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
                             stdin=subprocess.DEVNULL, cwd=str(shell) if shell else None)
@@ -238,7 +253,7 @@ def call_cli(system_prompt, user_prompt, schema, model=None, effort=None, shell=
     if output.get("is_error"):
         raise RuntimeError(f"claude CLI error: {output.get('result')}")
     attempt = output.get("structured_output") or json.loads(output["result"])
-    return attempt, _cli_meta(output, started, shell)
+    return attempt, _cli_meta(output, started, shell, shell_mode)
 
 
 # =============================================================================== backend: SDK
@@ -346,9 +361,9 @@ def cmd_run(args):
 
     shell_dir = None
     if args.shell:
-        shell_dir = (workdir / "sandbox").resolve()
+        shell_dir = (workdir / "sandbox").resolve()  # cartella di lavoro del modello, anche in modalità full
         shell_dir.mkdir(exist_ok=True)
-    user_prompt = build_user_prompt(context, stagnating, reason, shell_dir)
+    user_prompt = build_user_prompt(context, stagnating, reason, shell_dir, args.shell or "sandbox")
     if args.dry_run:
         print(user_prompt)
         return 0
@@ -357,7 +372,8 @@ def cmd_run(args):
     backend = args.backend or ("api" if os.environ.get("ANTHROPIC_API_KEY") else "cli")
     schema = json.loads(SCHEMA_PATH.read_text())
     data, meta = BACKENDS[backend](PROMPT_PATH.read_text(), user_prompt, schema, model=args.model, effort=args.effort,
-                                   shell=shell_dir, max_turns=args.max_turns, max_budget_usd=args.max_budget_usd)
+                                   shell=shell_dir, max_turns=args.max_turns, max_budget_usd=args.max_budget_usd,
+                                   shell_mode=args.shell or "sandbox")
     data.setdefault("request_creative", False)
     if stagnating:
         data["request_creative"] = True  # la richiesta al Creative parte anche se il modello non l'ha impostata
@@ -419,9 +435,10 @@ def build_parser():
     run.add_argument("--backend", choices=list(BACKENDS))
     run.add_argument("--model")
     run.add_argument("--effort", choices=["low", "medium", "high", "xhigh", "max"])
-    run.add_argument("--shell", action="store_true", help="Bash(python3) in <workdir>/sandbox (solo backend cli)")
-    run.add_argument("--max-turns", type=int, default=60)
-    run.add_argument("--max-budget-usd", type=float, default=8.0)
+    run.add_argument("--shell", choices=list(SHELL_MODES),
+                     help="sandbox = solo python3 in <workdir>/sandbox; full = tutti gli strumenti, rete inclusa (solo backend cli)")
+    run.add_argument("--max-turns", type=int, default=150)
+    run.add_argument("--max-budget-usd", type=float, default=15.0)
     run.add_argument("--dry-run", action="store_true", help="stampa solo il prompt costruito")
     run.add_argument("--strict", action="store_true", help="esci con errore se l'output viola lo schema")
     record = sub.add_parser("record")

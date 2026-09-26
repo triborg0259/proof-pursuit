@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit(researcher/**)",
+      "Edit(shared/**)",
+      "Edit(tests/**)",
+      "Edit(runs/**)",
+      "Edit(tools/**)",
+      "Bash(python3 researcher/researcher.py *)",
+      "Bash(python3 tests/*)",
+      "Bash(.venv/bin/python researcher/researcher.py *)",
+      "Bash(.venv/bin/python tests/*)"
+    ]
+  }
+}

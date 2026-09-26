@@ -42,14 +42,20 @@ Run reali (CLI, effort medium): `runs/toy_x2` (17 s, $0.48, prova completa del g
 `runs/toy_fail` (tentativo → REJECT iniettato → secondo tentativo che corregge esattamente l'errore segnalato, 30 s, $0.25).
 Costo indicativo su problemi veri con effort high/xhigh: 1–5 $ e 1–5 min per tentativo.
 
-## Shell recintata (`--shell`, solo backend cli)
-`python3 researcher/researcher.py run --workdir runs/X --backend cli --shell --effort high --strict`
-Il modello ottiene Bash limitato a `python3` (più ls/cat/head/tail/wc), Read/Write/Edit, dentro `runs/X/sandbox/`;
-niente rete, pip, git, rm. La CLI gira con `--permission-mode dontAsk`: ogni chiamata fuori allowlist è negata,
-non chiesta (`meta.permission_denials` le conta). Limiti: `--max-turns` (60) e `--max-budget-usd` (8).
-**Va lanciato da un terminale umano**: un agente che lancia un altro agente con permessi pre-autorizzati viene
-bloccato dal classificatore di sicurezza di Claude Code (è successo in fase di sviluppo). Il prompt istruisce a salvare
-ogni script nel sandbox, a copiarlo in `code_used` con `rigor` onesto, e a dichiarare l'insieme finito coperto e il tempo.
+## Shell (`--shell sandbox|full`, solo backend cli)
+```
+python3 researcher/researcher.py run --workdir runs/X --backend cli --shell sandbox --effort high --strict
+python3 researcher/researcher.py run --workdir runs/X --backend cli --shell full    --effort high --strict
+```
+- `sandbox`: Bash limitato a `python3` (più ls/cat/head/tail/wc), Read/Write/Edit, dentro `runs/X/sandbox/`;
+  niente rete, pip, git, rm. `--permission-mode dontAsk`: ogni chiamata fuori allowlist è negata, non chiesta
+  (`meta.permission_denials` le conta).
+- `full`: tutti gli strumenti di Claude Code, Bash libero, rete (WebSearch, WebFetch, curl), accesso all'intero repo
+  (`--add-dir`), `--permission-mode bypassPermissions`. Il prompt obbliga a citare con precisione ciò che si legge
+  online, a installare pacchetti solo nel `.venv`, e alle stesse regole di rigore del sandbox.
+La cartella di lavoro del modello è sempre `runs/X/sandbox/`. Limiti: `--max-turns` (150) e `--max-budget-usd` (15).
+**Va lanciato da un terminale umano** (in Claude Code: prefisso `!`): un agente che lancia un altro agente con
+permessi pre-autorizzati viene bloccato dal classificatore di sicurezza di Claude Code, anche in `--dry-run`.
 
 ## Limiti noti
 - La similarità dei `fatal_error` è lessicale: un Referee che riformula lo stesso errore con parole diverse può
