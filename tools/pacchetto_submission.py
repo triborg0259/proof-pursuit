@@ -21,6 +21,12 @@ PAGES = "https://triborg0259.github.io/proof-pursuit/"          # GitHub Pages: 
 OVERLEAF = "https://www.overleaf.com/docs?snip_uri="            # apre un progetto Overleaf dal .tex pubblico
 
 
+def link_overleaf(pid, k):
+    """Il valore di snip_uri va percent-encoded (":" e "/" compresi), altrimenti Overleaf non trova il file."""
+    from urllib.parse import quote
+    return OVERLEAF + quote(RAW + f"report/cells/{pid}_c{k}.tex", safe="") + f"&snip_name={pid}_c{k}.tex"
+
+
 def html_cella(pid, k):
     """Versione HTML (MathJax) del LaTeX della cella in docs/cells/, servita da GitHub Pages."""
     import subprocess
@@ -126,7 +132,7 @@ def argument(pid, n, k):
     testo = base + "\n\n## 6. How this result was obtained (multi-agent trace)\n" \
         "Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:\n" \
         + "\n".join(decisioni_md(r) for r in runs) + "\n\n## 6b. Tokens used by the agents\n" + "\n".join(token_md(r) for r in runs) + "\n\n## 7. arXiv literature consulted\n" + fonti_md(n, pid) \
-        + f"\n\n## 8. Code\nThe complete code, with the orchestrator's trusted re-runs, is in the write-up: {PAGES}cells/{pid}_c{k}.html (rendered), {OVERLEAF}{RAW}report/cells/{pid}_c{k}.tex (open in Overleaf), source in the repository {REPO}.\n" \
+        + f"\n\n## 8. Code\nThe complete code, with the orchestrator's trusted re-runs, is in the write-up: {PAGES}cells/{pid}_c{k}.html (rendered), {link_overleaf(pid, k)} (open in Overleaf), source in the repository {REPO}.\n" \
         + f"\n\n---\nFull write-up (LaTeX, all resources): {REPO}report/cells/{pid}_c{k}.tex · Repository: {REPO}\n"
     (sub / f"parte-{k}.argument.md").write_text(pulisci_markdown(normalizza_math(testo)), encoding="utf-8")
     return testo
@@ -149,7 +155,7 @@ def main():
         for k in CELLE[pid]["cells"]:
             argument(pid, n, k); cella_tex(pid, n, k); html = html_cella(pid, k)
             stato, _ = br.stato_cella(n, k)
-            righe.append(f"| /p/{pid}/c{k} | problem {n}, part {k} | {stato} | `problema-{n}/submission/parte-{k}.argument.md` | {html} | {OVERLEAF}{RAW}report/cells/{pid}_c{k}.tex |")
+            righe.append(f"| /p/{pid}/c{k} | problem {n}, part {k} | {stato} | `problema-{n}/submission/parte-{k}.argument.md` | {html} | {link_overleaf(pid, k)} |")
     righe.append("\nNumeric cells (p2/c1–c4): paste the value(s) in *Your answer* (see section 1 of the argument file) and put the argument file's content or link in the write-up. *Claude conversation*: leave empty unless a shareable link exists.")
     (ROOT / "SUBMISSIONS.md").write_text("\n".join(righe) + "\n", encoding="utf-8")
     print("scritti 24 argument.md, 24 report/cells/*.tex, SUBMISSIONS.md")

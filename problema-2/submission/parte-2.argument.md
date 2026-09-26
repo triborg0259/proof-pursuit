@@ -161,6 +161,6 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
 
 8. Code
 
-The complete code, with the orchestrator's trusted re-runs, is in the write-up: https://triborg0259.github.io/proof-pursuit/cells/p2_c2.html (rendered), https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/triborg0259/proof-pursuit/main/report/cells/p2_c2.tex (open in Overleaf), source in the repository https://github.com/triborg0259/proof-pursuit/blob/main/.
+The complete code, with the orchestrator's trusted re-runs, is in the write-up: https://triborg0259.github.io/proof-pursuit/cells/p2_c2.html (rendered), https://www.overleaf.com/docs?snip_uri=https%3A%2F%2Fraw.githubusercontent.com%2Ftriborg0259%2Fproof-pursuit%2Fmain%2Freport%2Fcells%2Fp2_c2.tex&snip_name=p2_c2.tex (open in Overleaf), source in the repository https://github.com/triborg0259/proof-pursuit/blob/main/.
 
 Full write-up (LaTeX, all resources): https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p2_c2.tex · Repository: https://github.com/triborg0259/proof-pursuit/blob/main/
