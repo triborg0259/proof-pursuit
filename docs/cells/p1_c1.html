@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)" />
+  <meta name="dcterms.date" content="2026-09-26" />
+  <title>Proof Pursuit — problem 1, part 1</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — problem 1, part 1</h1>
+<p class="author">Team Proof Pursuit (Researcher: T. Tumini; Referee:
+gabundos; Creative: M. Renzi; gio3r3gio)</p>
+<p class="date">2026-09-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#come-leggere-questo-rapporto"
+id="toc-come-leggere-questo-rapporto">Come leggere questo
+rapporto</a></li>
+<li><a href="#problem-1-angles-between-lines-fejes-toth"
+id="toc-problem-1-angles-between-lines-fejes-toth">Problem 1 — Angles
+between lines (Fejes Toth)</a>
+<ul>
+<li><a href="#cella-1-1-punti-stato-revisionato"
+id="toc-cella-1-1-punti-stato-revisionato">Cella 1 (1 punti) — stato:
+revisionato</a>
+<ul>
+<li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti"
+id="toc-decisioni-degli-agenti">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo"
+id="toc-codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arxiv-literature-consulted"
+id="toc-arxiv-literature-consulted">arXiv literature consulted</a></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="come-leggere-questo-rapporto">Come leggere
+questo rapporto</h1>
+<p>Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team
+(mai “risolto” senza revisione umana), la consegna con la prova, poi la
+traccia delle decisioni degli agenti (Researcher: famiglia e motivo;
+Referee: verdetto ed errore fatale; Creative: quando e perché è
+intervenuto) e il codice su cui il tentativo poggia con l’esito della
+riesecuzione fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO
+e CONGETTURA restano distinti. L’architettura del sistema è descritta
+nel README del repository.</p>
+<h1 id="problem-1-angles-between-lines-fejes-toth">Problem 1 — Angles
+between lines (Fejes Toth)</h1>
+<h2 id="cella-1-1-punti-stato-revisionato">Cella 1 (1 punti) — stato:
+revisionato</h2>
+<h5 id="parte-1-lines-in-the-plane">Parte 1 — Lines in the plane</h5>
+<p><strong>Punteggio:</strong> 1 point · <strong>Valutazione:</strong>
+Judged</p>
+<p>We begin in the plane (<span class="math inline">\(d = 2\)</span>),
+where the conjectured optimum splits the <span
+class="math inline">\(N\)</span> lines as evenly as possible between two
+perpendicular directions. Let <span class="math inline">\(\ell_1,
+\ldots, \ell_N\)</span> be lines in <span
+class="math inline">\(\mathbb{R}^2\)</span>. Prove that <span
+class="math display">\[S(\ell_1, \ldots, \ell_N) \;\le\; \frac{\pi}{2}
+\cdot \left\lfloor \frac{N^2}{4} \right\rfloor .\]</span></p>
+<p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
+<code>Let l_1..l_N be lines through the origin in R^2. Prove S(l_1..l_N) = sum_{i&lt;j} theta(l_i,l_j) &lt;= (pi/2) * floor(N^2/4).</code></p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> prova completa
+(semigiro casuale, argomento E) scritta a mano; Referee READY_FOR_HUMAN
+(A PASS, B PASS); approvata; submission/parte-1.md</p>
+<h3 id="consegna-prova">Consegna (prova)</h3>
+<h4 id="problema-1-parte-1-bozza-di-consegna">Problema 1 — Parte 1 —
+bozza di consegna</h4>
+<p><strong>Stato dichiarato: RISOLTA (approvata).</strong> Prova
+completa scritta dal team; Referee automatico READY_FOR_HUMAN (giudice A
+matematica PASS, giudice B evidenze PASS); approvazione umana registrata
+in <code>runs/p1_c1/approval.json</code>.</p>
+<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
+<p>Somma degli angoli fra rette nel piano: l’enunciato della parte è
+dimostrato integralmente, nella generalità richiesta (vedi la prova per
+le ipotesi esatte). Nessun calcolo al computer è necessario.</p>
+<h5 id="dimostrazione">2. Dimostrazione</h5>
+<h4 id="cell-1-the-sum-of-the-angles-between-n-lines-in-the-plane">Cell
+1: the sum of the angles between <span class="math inline">\(N\)</span>
+lines in the plane</h4>
+<p><strong>Target.</strong> For lines <span
+class="math inline">\(\ell_1,\dots,\ell_N\)</span> through the origin of
+<span class="math inline">\(\mathbb R^2\)</span> (repetitions allowed),
+<span class="math inline">\(S=\sum_{i&lt;j}\theta(\ell_i,\ell_j)\le
+\frac{\pi}{2}\left\lfloor \frac{N^2}{4}\right\rfloor\)</span>, where
+<span class="math inline">\(\theta(\ell,\ell&#39;)=\arccos|\langle
+x,x&#39;\rangle|\)</span> for unit vectors <span
+class="math inline">\(x,x&#39;\)</span> spanning <span
+class="math inline">\(\ell,\ell&#39;\)</span>.</p>
+<h5 id="directions-and-angles">1. Directions and angles</h5>
+<p>Every line <span class="math inline">\(\ell\)</span> through the
+origin of <span class="math inline">\(\mathbb R^2\)</span> is spanned by
+exactly one unit vector of the form <span class="math inline">\((\cos
+t,\sin t)\)</span> with <span class="math inline">\(t\in[0,\pi)\)</span>
+(the two unit vectors of <span class="math inline">\(\ell\)</span> are
+<span class="math inline">\(\pm(\cos t,\sin t)\)</span>, and exactly one
+of the two angles <span class="math inline">\(t,t+\pi\)</span> lies in
+<span class="math inline">\([0,\pi)\)</span>). Call <span
+class="math inline">\(t=\tau(\ell)\)</span> the <em>direction</em> of
+<span class="math inline">\(\ell\)</span>. For two lines with directions
+<span class="math inline">\(t,t&#39;\in[0,\pi)\)</span> we have <span
+class="math inline">\(\langle(\cos t,\sin t),(\cos t&#39;,\sin
+t&#39;)\rangle=\cos(t-t&#39;)\)</span>, hence <span
+class="math inline">\(\theta(\ell,\ell&#39;)=\arccos|\cos(t-t&#39;)|\)</span>.
+Put <span class="math inline">\(u=|t-t&#39;|\in[0,\pi)\)</span>. If
+<span class="math inline">\(u\le\pi/2\)</span> then <span
+class="math inline">\(\cos u\ge 0\)</span>, so <span
+class="math inline">\(|\cos u|=\cos u\)</span> and <span
+class="math inline">\(\arccos(\cos u)=u\)</span> because <span
+class="math inline">\(u\in[0,\pi]\)</span>. If <span
+class="math inline">\(u&gt;\pi/2\)</span> then <span
+class="math inline">\(\cos u&lt;0\)</span>, so <span
+class="math inline">\(|\cos u|=-\cos u=\cos(\pi-u)\)</span> with <span
+class="math inline">\(\pi-u\in(0,\pi/2)\)</span>, and <span
+class="math inline">\(\arccos(\cos(\pi-u))=\pi-u\)</span>. In both cases
+<span class="math display">\[\theta(\ell,\ell&#39;)=\min(u,\pi-u),\qquad
+u=|\tau(\ell)-\tau(\ell&#39;)|.\tag{1}\]</span> Coincident lines have
+<span class="math inline">\(u=0\)</span> and angle <span
+class="math inline">\(0\)</span>, as they should. Note also that <span
+class="math inline">\(\min(u,\pi-u)\)</span> is unchanged if <span
+class="math inline">\(u\)</span> is replaced by <span
+class="math inline">\(\pi-u\)</span>, so (1) also holds with <span
+class="math inline">\(u=(\tau(\ell&#39;)-\tau(\ell))\bmod\pi\)</span>
+(the representative in <span class="math inline">\([0,\pi)\)</span>):
+indeed this quantity equals <span
+class="math inline">\(|t-t&#39;|\)</span> or <span
+class="math inline">\(\pi-|t-t&#39;|\)</span>.</p>
+<h5 id="a-random-half-turn-of-directions">2. A random half-turn of
+directions</h5>
+<p>For <span class="math inline">\(x\in\mathbb R\)</span> write <span
+class="math inline">\(x\bmod\pi\)</span> for the unique representative
+of <span class="math inline">\(x+\pi\mathbb Z\)</span> in <span
+class="math inline">\([0,\pi)\)</span>. For <span
+class="math inline">\(\psi\in[0,\pi)\)</span> define <span
+class="math display">\[A_\psi=\{t\in[0,\pi):\
+(t-\psi)\bmod\pi\in[0,\pi/2)\}.\]</span> Let <span
+class="math inline">\(\psi\)</span> be a random variable with the
+uniform distribution on <span class="math inline">\([0,\pi)\)</span>,
+i.e. <span class="math inline">\(\Pr[\psi\in B]=|B|/\pi\)</span> for
+every Borel set <span class="math inline">\(B\subseteq[0,\pi)\)</span>,
+where <span class="math inline">\(|B|\)</span> is Lebesgue measure.</p>
+<p><strong>Lemma 1.</strong> For fixed <span
+class="math inline">\(t,t&#39;\in[0,\pi)\)</span> let <span
+class="math inline">\(u=(t&#39;-t)\bmod\pi\)</span> and <span
+class="math inline">\(\varphi=\min(u,\pi-u)\)</span>. Then <span
+class="math display">\[\Pr\big[\text{exactly one of } t,t&#39; \text{
+lies in } A_\psi\big]=\frac{2\varphi}{\pi}.\]</span></p>
+<p><em>Proof.</em> Step 1 (reduction to <span
+class="math inline">\(t=0\)</span>). Put <span
+class="math inline">\(\psi&#39;=(\psi-t)\bmod\pi\)</span>. The map <span
+class="math inline">\(x\mapsto(x-t)\bmod\pi\)</span> is a bijection of
+<span class="math inline">\([0,\pi)\)</span> onto itself which is a
+translation on each of the two pieces <span
+class="math inline">\([0,t)\)</span> and <span
+class="math inline">\([t,\pi)\)</span>, hence it preserves Lebesgue
+measure; therefore <span class="math inline">\(\psi&#39;\)</span> is
+again uniform on <span class="math inline">\([0,\pi)\)</span>. Moreover
+<span
+class="math inline">\((t-\psi)\bmod\pi=(-(\psi-t))\bmod\pi=(-\psi&#39;)\bmod\pi=(0-\psi&#39;)\bmod\pi\)</span>
+and <span
+class="math inline">\((t&#39;-\psi)\bmod\pi=((t&#39;-t)-(\psi-t))\bmod\pi=(u-\psi&#39;)\bmod\pi\)</span>.
+Hence <span class="math inline">\(t\in A_\psi\iff 0\in
+A_{\psi&#39;}\)</span> and <span class="math inline">\(t&#39;\in
+A_\psi\iff u\in A_{\psi&#39;}\)</span>. So it suffices to prove the
+claim for the pair <span class="math inline">\((0,u)\)</span> with <span
+class="math inline">\(u\in[0,\pi)\)</span> and a uniform <span
+class="math inline">\(\psi\)</span> (we rename <span
+class="math inline">\(\psi&#39;\)</span> as <span
+class="math inline">\(\psi\)</span>).</p>
+<p>Step 2 (the two sets). For <span
+class="math inline">\(s\in[0,\pi)\)</span> let <span
+class="math inline">\(J_s=\{\psi\in[0,\pi): s\in A_\psi\}=\{\psi:
+(s-\psi)\bmod\pi&lt;\pi/2\}\)</span>. Since <span
+class="math inline">\(s-\psi\in(-\pi,\pi)\)</span>: if <span
+class="math inline">\(\psi\le s\)</span> then <span
+class="math inline">\((s-\psi)\bmod\pi=s-\psi\)</span> and the condition
+reads <span class="math inline">\(\psi&gt;s-\pi/2\)</span>; if <span
+class="math inline">\(\psi&gt;s\)</span> then <span
+class="math inline">\((s-\psi)\bmod\pi=s-\psi+\pi\)</span> and the
+condition reads <span class="math inline">\(\psi&gt;s+\pi/2\)</span>.
+Therefore <span
+class="math display">\[J_s=\big(\max(0,s-\tfrac{\pi}{2}),\,s\big]\ \cup\
+\big(s+\tfrac{\pi}{2},\,\pi\big)\cap[0,\pi),\]</span> where the second
+interval is empty when <span
+class="math inline">\(s+\pi/2\ge\pi\)</span>. In particular <span
+class="math inline">\(|J_s|=\pi/2\)</span> for every <span
+class="math inline">\(s\)</span>: if <span
+class="math inline">\(s&lt;\pi/2\)</span> the two pieces have lengths
+<span class="math inline">\(s\)</span> and <span
+class="math inline">\(\pi/2-s\)</span>; if <span
+class="math inline">\(s\ge\pi/2\)</span> the first piece has length
+<span class="math inline">\(\pi/2\)</span> and the second is empty. For
+<span class="math inline">\(s=0\)</span> the first piece is <span
+class="math inline">\(\{0\}\)</span> (measure <span
+class="math inline">\(0\)</span>) and <span
+class="math inline">\(J_0=\{0\}\cup(\pi/2,\pi)\)</span>.</p>
+<p>Step 3 (the symmetric difference). The event “exactly one of <span
+class="math inline">\(0,u\)</span> lies in <span
+class="math inline">\(A_\psi\)</span>” is <span
+class="math inline">\(\{\psi\in J_0\triangle J_u\}\)</span>, and <span
+class="math inline">\(|J_0\triangle J_u|=|J_0|+|J_u|-2|J_0\cap
+J_u|=\pi-2|J_0\cap J_u|\)</span>. <em>Case <span
+class="math inline">\(u\le\pi/2\)</span>.</em> Then <span
+class="math inline">\(J_u=(0,u]\cup(u+\pi/2,\pi)\)</span> (the second
+piece is empty if <span class="math inline">\(u=\pi/2\)</span>). Up to
+the null set <span class="math inline">\(\{0\}\)</span>, <span
+class="math inline">\(J_0=(\pi/2,\pi)\)</span>; since <span
+class="math inline">\(u\le\pi/2\)</span>, <span
+class="math inline">\((0,u]\cap(\pi/2,\pi)=\emptyset\)</span>, so <span
+class="math inline">\(J_0\cap J_u=(u+\pi/2,\pi)\)</span> up to a null
+set, of measure <span class="math inline">\(\pi/2-u\)</span>. Hence
+<span class="math inline">\(|J_0\triangle
+J_u|=\pi-2(\pi/2-u)=2u=2\varphi\)</span>. <em>Case <span
+class="math inline">\(u&gt;\pi/2\)</span>.</em> Then <span
+class="math inline">\(u+\pi/2&gt;\pi\)</span>, so <span
+class="math inline">\(J_u=(u-\pi/2,u]\)</span> with <span
+class="math inline">\(0&lt;u-\pi/2&lt;\pi/2\)</span>. Thus <span
+class="math inline">\(J_0\cap
+J_u=(\pi/2,\pi)\cap(u-\pi/2,u]=(\pi/2,u]\)</span> up to a null set, of
+measure <span class="math inline">\(u-\pi/2\)</span>. Hence <span
+class="math inline">\(|J_0\triangle
+J_u|=\pi-2(u-\pi/2)=2(\pi-u)=2\varphi\)</span>. In both cases the
+probability is <span class="math inline">\(|J_0\triangle
+J_u|/\pi=2\varphi/\pi\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<h5 id="counting-the-pairs-separated-by-a_psi">3. Counting the pairs
+separated by <span class="math inline">\(A_\psi\)</span></h5>
+<p>Let <span class="math inline">\(t_i=\tau(\ell_i)\)</span> and, for
+<span class="math inline">\(\psi\in[0,\pi)\)</span>, <span
+class="math inline">\(k_\psi=\#\{i: t_i\in
+A_\psi\}\in\{0,1,\dots,N\}\)</span>. A pair <span
+class="math inline">\(\{i,j\}\)</span> has exactly one member with
+direction in <span class="math inline">\(A_\psi\)</span> if and only if
+one index is among the <span class="math inline">\(k_\psi\)</span>
+“inside” indices and the other among the <span
+class="math inline">\(N-k_\psi\)</span> “outside” indices; hence the
+number of such pairs is exactly <span
+class="math inline">\(k_\psi(N-k_\psi)\)</span>. Writing <span
+class="math inline">\(X_{ij}(\psi)\)</span> for the indicator of the
+event of Lemma 1 for the pair <span
+class="math inline">\((t_i,t_j)\)</span>, we have <span
+class="math inline">\(k_\psi(N-k_\psi)=\sum_{i&lt;j}X_{ij}(\psi)\)</span>
+for every <span class="math inline">\(\psi\)</span> (each <span
+class="math inline">\(X_{ij}\)</span> is the indicator of a finite union
+of intervals, so everything is measurable), and by linearity of
+expectation, Lemma 1 and (1), <span class="math display">\[\mathbb
+E\big[k_\psi(N-k_\psi)\big]=\sum_{i&lt;j}\Pr[X_{ij}=1]=\sum_{i&lt;j}\frac{2}{\pi}\theta(\ell_i,\ell_j)=\frac{2}{\pi}S.\tag{2}\]</span></p>
+<h5 id="conclusion">4. Conclusion</h5>
+<p>For every integer <span class="math inline">\(k\)</span> we have
+<span class="math inline">\(N^2-4k(N-k)=(N-2k)^2\ge0\)</span>, so <span
+class="math inline">\(k(N-k)\le N^2/4\)</span>; as <span
+class="math inline">\(k(N-k)\)</span> is an integer, <span
+class="math inline">\(k(N-k)\le\lfloor N^2/4\rfloor\)</span>. Applying
+this to <span class="math inline">\(k=k_\psi\)</span> for every <span
+class="math inline">\(\psi\)</span> and taking expectations, (2) gives
+<span class="math display">\[S=\frac{\pi}{2}\,\mathbb
+E\big[k_\psi(N-k_\psi)\big]\le\frac{\pi}{2}\left\lfloor\frac{N^2}{4}\right\rfloor.\qquad\blacksquare\]</span></p>
+<p><em>Remark (not needed for the cell).</em> The bound is attained: put
+<span class="math inline">\(\lceil N/2\rceil\)</span> lines along the
+<span class="math inline">\(x\)</span>-axis and <span
+class="math inline">\(\lfloor N/2\rfloor\)</span> along the <span
+class="math inline">\(y\)</span>-axis; the only nonzero angles are the
+<span class="math inline">\(\lceil N/2\rceil\lfloor N/2\rfloor=\lfloor
+N^2/4\rfloor\)</span> cross pairs, each equal to <span
+class="math inline">\(\pi/2\)</span>.</p>
+<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
+dipendenze, tempi</h5>
+<p>Prova a mano, nessuna dipendenza. Verifica meccanica non necessaria;
+il Referee automatico (due giudici indipendenti,
+<code>runs/p1_c1/attempts/packet_001.json</code>) non ha trovato
+passaggi non giustificati.</p>
+<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
+<ul>
+<li><p>arXiv:1801.07837 Bilyk, Matzke, On the Fejes Toth problem about
+the sum of angles between lines (context only: the planar case is the
+only settled case; the proof below is self-contained and does not use
+the paper)</p></li>
+<li><p>Posizione rispetto allo stato dell’arte: Bilyk-Matzke
+<span>[</span>1801.07837<span>]</span> state that d=1 (the plane) is the
+only settled case and give several proofs, one of which is a
+Stolarsky-type identity; our argument is of the same nature but written
+independently and in full, so nothing is cited as a black box.
+Lim-McCann <span>[</span>2007.08698<span>]</span> concern a
+one-parameter deformation and are not used.</p></li>
+<li><p>Contributo: la prova qui scritta è del team, per esteso.</p></li>
+</ul>
+<h5 id="limiti-e-parti-irrisolte">5. Limiti e parti irrisolte</h5>
+<p>Nessuna: la parte è dimostrata. Gap dichiarati: nessuno.</p>
+<h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
+<h4 id="run-p1_c1">Run <code>p1_c1</code></h4>
+<dl>
+<dt>Iterazione 1 — attempt_001</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>direct_proof</code>,
+sotto-obiettivo: Prove the planar bound by a random-half-turn
+(Crofton/Stolarsky-type) double counting: S = (pi/2) E[k(N-k)].. Stato
+dichiarato: <code>CELL_SOLVED_CANDIDATE</code>. <em>Perché questa
+scelta</em>: The planar case admits an elementary integral-geometric
+proof: the angle between two lines is proportional to the probability
+that a random half-turn of directions separates them, and a separator
+splits N lines into k and N-k, so the sum is (pi/2) E[k(N-k)] &lt;=
+(pi/2) floor(N^2/4). Chosen because it is short, exact, and needs no
+case analysis on the configuration. <em>Rispetto allo stato
+dell’arte</em>: Bilyk-Matzke [1801.07837] state that d=1 (the plane) is
+the only settled case and give several proofs, one of which is a
+Stolarsky-type identity; our argument is of the same nature but written
+independently and in full, so nothing is cited as a black box.
+Lim-McCann [2007.08698] concern a one-parameter deformation and are not
+used. <strong>Referee</strong>: verdetto <code>UNKNOWN_STATUS</code>
+(review_status <code>READY_FOR_HUMAN</code>). <em>Prossimo passo
+richiesto</em>: Human reviews the exact target, proof and evidence, then
+approves explicit claims</p>
+</dd>
+</dl>
+<h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
+<div class="thebibliography">
+<p><span>99</span> Dmitriy Bilyk, Ryan W Matzke. <em>On the Fejes Tóth
+Problem about the Sum of Angles Between Lines</em>. arXiv:1801.07837v1
+(2018). <a href="http://arxiv.org/abs/1801.07837v1"
+class="uri">http://arxiv.org/abs/1801.07837v1</a> Tongseok Lim, Robert
+J. McCann. <em>On Fejes Tóth’s conjectured maximizer for the sum of
+angles between lines</em>. arXiv:2007.08698v2 (2020). <a
+href="http://arxiv.org/abs/2007.08698v2"
+class="uri">http://arxiv.org/abs/2007.08698v2</a> Jérémie Chalopin,
+Shantanu Das, Yann Disser, Matúš Mihalák, Peter Widmayer. <em>Simple
+Agents Learn to Find Their Way: An Introduction on Mapping
+Polygons</em>. arXiv:1204.3850v1 (2012). <a
+href="http://arxiv.org/abs/1204.3850v1"
+class="uri">http://arxiv.org/abs/1204.3850v1</a></p>
+</div>
+</body>
+</html>

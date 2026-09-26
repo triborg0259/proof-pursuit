@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)" />
+  <meta name="dcterms.date" content="2026-09-26" />
+  <title>Proof Pursuit — problem 2, part 5</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — problem 2, part 5</h1>
+<p class="author">Team Proof Pursuit (Researcher: T. Tumini; Referee:
+gabundos; Creative: M. Renzi; gio3r3gio)</p>
+<p class="date">2026-09-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#come-leggere-questo-rapporto"
+id="toc-come-leggere-questo-rapporto">Come leggere questo
+rapporto</a></li>
+<li><a href="#problem-2-uphill-paths-on-the-hypercube"
+id="toc-problem-2-uphill-paths-on-the-hypercube">Problem 2 — Uphill
+paths on the hypercube</a>
+<ul>
+<li><a href="#cella-5-8-punti-stato-parziale"
+id="toc-cella-5-8-punti-stato-parziale">Cella 5 (8 punti) — stato:
+parziale</a>
+<ul>
+<li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti"
+id="toc-decisioni-degli-agenti">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo"
+id="toc-codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arxiv-literature-consulted"
+id="toc-arxiv-literature-consulted">arXiv literature consulted</a></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="come-leggere-questo-rapporto">Come leggere
+questo rapporto</h1>
+<p>Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team
+(mai “risolto” senza revisione umana), la consegna con la prova, poi la
+traccia delle decisioni degli agenti (Researcher: famiglia e motivo;
+Referee: verdetto ed errore fatale; Creative: quando e perché è
+intervenuto) e il codice su cui il tentativo poggia con l’esito della
+riesecuzione fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO
+e CONGETTURA restano distinti. L’architettura del sistema è descritta
+nel README del repository.</p>
+<h1 id="problem-2-uphill-paths-on-the-hypercube">Problem 2 — Uphill
+paths on the hypercube</h1>
+<h2 id="cella-5-8-punti-stato-parziale">Cella 5 (8 punti) — stato:
+parziale</h2>
+<h5 id="parte-5-c5-bounds-for-uq_9">Parte 5 (C5) — Bounds for <span
+class="math inline">\(U(Q_9)\)</span></h5>
+<p><strong>Punteggio:</strong> 8 points · <strong>Valutazione:</strong>
+Judged</p>
+<p><span class="math inline">\(Q_9\)</span> has <span
+class="math inline">\(512\)</span> vertices and <span
+class="math inline">\(2304\)</span> edges. The best bounds known to the
+organisers are <span class="math display">\[2368 \le U(Q_9) \le
+2400;\]</span> the lower bound is unpublished. Improve either one: prove
+that <span class="math inline">\(U(Q_9) \ge 2369\)</span>, or exhibit a
+labelling of <span class="math inline">\(Q_9\)</span> with at most <span
+class="math inline">\(2399\)</span> uphill paths.</p>
+<p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
+<code>Improve one of the known bounds 2368 &lt;= U(Q_9) &lt;= 2400: either prove U(Q_9) &gt;= 2369, or exhibit a labelling of Q_9 with at most 2399 uphill paths (its paths are counted mechanically).</code></p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> la costruzione a
+stelle con un codice (8,20,3) dà esattamente 2400: il bound noto è
+questa famiglia; per scendere serve una foresta non a stelle; bozza
+parziale in inglese in submission/ (parziali.py)</p>
+<h3 id="consegna-prova">Consegna (prova)</h3>
+<h4 id="problema-2-parte-5-bozza-di-consegna-parziale">Problema 2 —
+Parte 5 — bozza di consegna PARZIALE</h4>
+<p><strong>Stato dichiarato: PARZIALE.</strong> Nessuna soluzione
+completa: qui sotto ciò che è stabilito, la formalizzazione, la
+posizione rispetto alla letteratura e ciò che resta aperto. Nulla è
+dichiarato dimostrato oltre quanto scritto.</p>
+<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
+<p><strong>Richiesta ufficiale.</strong> ## Parte 5 (C5) — Bounds for
+<span class="math inline">\(U(Q_9)\)</span></p>
+<p><strong>Punteggio:</strong> 8 points · <strong>Valutazione:</strong>
+Judged</p>
+<p><span class="math inline">\(Q_9\)</span> has <span
+class="math inline">\(512\)</span> vertices and <span
+class="math inline">\(2304\)</span> edges. The best bounds known to the
+organisers are <span class="math display">\[2368 \le U(Q_9) \le
+2400;\]</span> the lower bound is unpublished. Improve either one: prove
+that <span class="math inline">\(U(Q_9) \ge 2369\)</span>, or exhibit a
+labelling of <span class="math inline">\(Q_9\)</span> with at most <span
+class="math inline">\(2399\)</span> uphill paths.</p>
+<p><strong>Cosa consegniamo.</strong> Nessun miglioramento dei bound
+noti. Contributo: la costruzione a stelle con un codice pari a distanza
+4 di taglia 20 dà esattamente il bound superiore noto; dimostrazione che
+dentro questa famiglia non si può scendere.</p>
+<h5 id="dimostrazione">2. Dimostrazione</h5>
+<p>Costruzione a stelle (vedi parte 3): totale <span
+class="math inline">\(=(d+1)2^{d-1}-(d-1)|R|\)</span> con <span
+class="math inline">\(R\)</span> codice pari a distanza 4. Per <span
+class="math inline">\(d=9\)</span>, <span class="math inline">\(|R|\le
+A(8,3)=20\)</span> e il totale minimo della famiglia è <span
+class="math inline">\(2560-160=2400\)</span>, cioè il bound superiore
+degli organizzatori. Quindi il bound noto è (con ogni probabilità)
+proprio questa costruzione, e migliorarlo richiede una foresta di
+non-picchi non a stelle (alberi più grandi, che riducano il numero di
+componenti sotto 96). Impostato: cercare insiemi indipendenti <span
+class="math inline">\(P\)</span> di <span
+class="math inline">\(Q_9\)</span> con <span
+class="math inline">\(|P|&lt;236\)</span> e complemento aciclico; non
+eseguito.</p>
+<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
+dipendenze, tempi</h5>
+<p>Codice disponibile (Python 3, libreria standard; ogni script gira in
+meno di un minuto): -
+<code>problema-2/certificati/costruzione_88.py</code> -
+<code>problema-2/certificati/q3_esaustivo.py</code> -
+<code>problema-2/certificati/q3_verifica_indipendente.py</code> -
+<code>problema-2/certificati/q4_branch_and_bound.py</code> -
+<code>problema-2/certificati/q4_ricerca_locale.py</code> -
+<code>problema-2/certificati/q4_verifica_etichettatura_indipendente.py</code>
+- <code>problema-2/certificati/q5_stella_verifica_indipendente.py</code>
+- <code>problema-2/certificati/verifica_dfs_88.py</code> -
+<code>problema-2/certificati/verifica_etichettatura_q3.py</code> -
+<code>problema-2/certificati/verifica_etichettatura_q4.py</code> -
+<code>problema-2/certificati/verifica_q5_bipartita.py</code> -
+<code>problema-2/certificati/verifica_q5_indipendenti.py</code> -
+<code>problema-2/esperimenti/conta_cammini.py</code> -
+<code>problema-2/esperimenti/costruzione_stelle.py</code> -
+<code>problema-2/esperimenti/ricottura_controllo.py</code></p>
+<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
+<p>Letteratura arXiv (ricerca deterministica
+<code>tools/cerca_letteratura.sh</code>, abstract letti, non usata come
+prova): - arXiv:1412.3893v1 — The competition between simple and complex
+evolutionary trajectories in asexual populations (Ian E. Ochs, Michael
+M. Desai, 2014); solo abstract letto. Nessun lavoro arXiv sui cammini in
+salita sull’ipercubo: il problema risulta inedito.</p>
+<h5 id="limiti-e-parti-irrisolte">5. Limiti e parti irrisolte</h5>
+<p>Sia il bound inferiore sia quello superiore.</p>
+<h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
+<h4 id="run-p2_c5">Run <code>p2_c5</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
+<div class="thebibliography">
+<p><span>99</span> Ian E. Ochs, Michael M. Desai. <em>The competition
+between simple and complex evolutionary trajectories in asexual
+populations</em>. arXiv:1412.3893v1 (2014). <a
+href="http://arxiv.org/abs/1412.3893v1"
+class="uri">http://arxiv.org/abs/1412.3893v1</a></p>
+</div>
+</body>
+</html>

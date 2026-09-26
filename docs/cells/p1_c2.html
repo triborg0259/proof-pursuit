@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)" />
+  <meta name="dcterms.date" content="2026-09-26" />
+  <title>Proof Pursuit — problem 1, part 2</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — problem 1, part 2</h1>
+<p class="author">Team Proof Pursuit (Researcher: T. Tumini; Referee:
+gabundos; Creative: M. Renzi; gio3r3gio)</p>
+<p class="date">2026-09-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#come-leggere-questo-rapporto"
+id="toc-come-leggere-questo-rapporto">Come leggere questo
+rapporto</a></li>
+<li><a href="#problem-1-angles-between-lines-fejes-toth"
+id="toc-problem-1-angles-between-lines-fejes-toth">Problem 1 — Angles
+between lines (Fejes Toth)</a>
+<ul>
+<li><a href="#cella-2-2-punti-stato-revisionato"
+id="toc-cella-2-2-punti-stato-revisionato">Cella 2 (2 punti) — stato:
+revisionato</a>
+<ul>
+<li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti"
+id="toc-decisioni-degli-agenti">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo"
+id="toc-codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arxiv-literature-consulted"
+id="toc-arxiv-literature-consulted">arXiv literature consulted</a></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="come-leggere-questo-rapporto">Come leggere
+questo rapporto</h1>
+<p>Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team
+(mai “risolto” senza revisione umana), la consegna con la prova, poi la
+traccia delle decisioni degli agenti (Researcher: famiglia e motivo;
+Referee: verdetto ed errore fatale; Creative: quando e perché è
+intervenuto) e il codice su cui il tentativo poggia con l’esito della
+riesecuzione fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO
+e CONGETTURA restano distinti. L’architettura del sistema è descritta
+nel README del repository.</p>
+<h1 id="problem-1-angles-between-lines-fejes-toth">Problem 1 — Angles
+between lines (Fejes Toth)</h1>
+<h2 id="cella-2-2-punti-stato-revisionato">Cella 2 (2 punti) — stato:
+revisionato</h2>
+<h5 id="parte-2-an-orthogonality-lemma">Parte 2 — An orthogonality
+lemma</h5>
+<p><strong>Punteggio:</strong> 2 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>A statement about a chain of vectors, in which each vector may fail
+to be orthogonal only to its immediate neighbours in the list. Let <span
+class="math inline">\(m \ge 2\)</span> and let <span
+class="math inline">\(x_1, \ldots, x_m\)</span> be unit vectors in <span
+class="math inline">\(\mathbb{R}^{m-1}\)</span> with <span
+class="math inline">\(\langle x_i, x_j \rangle = 0\)</span> whenever
+<span class="math inline">\(|i - j| \ge 2\)</span>. Prove that <span
+class="math display">\[\sum_{i=1}^{m-1} \theta(x_i, x_{i+1}) \;\le\;
+(m-2) \cdot \frac{\pi}{2},\]</span> where <span
+class="math inline">\(\theta(x,y) = \arccos\,\lvert \langle x, y \rangle
+\rvert\)</span>.</p>
+<p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
+<code>Let m &gt;= 2 and x_1..x_m unit vectors in R^{m-1} with &lt;x_i,x_j&gt; = 0 whenever |i-j| &gt;= 2. Prove sum_{i=1}^{m-1} theta(x_i,x_{i+1}) &lt;= (m-2) pi/2, where theta(x,y) = arccos|&lt;x,y&gt;|.</code></p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> prova completa per
+induzione con proiezione (argomento F); Referee READY_FOR_HUMAN (A PASS,
+B PASS); approvata; submission/parte-2.md</p>
+<h3 id="consegna-prova">Consegna (prova)</h3>
+<h4 id="problema-1-parte-2-bozza-di-consegna">Problema 1 — Parte 2 —
+bozza di consegna</h4>
+<p><strong>Stato dichiarato: RISOLTA (approvata).</strong> Prova
+completa scritta dal team; Referee automatico READY_FOR_HUMAN (giudice A
+matematica PASS, giudice B evidenze PASS); approvazione umana registrata
+in <code>runs/p1_c2/approval.json</code>.</p>
+<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
+<p>Lemma di ortogonalità per una catena di versori: l’enunciato della
+parte è dimostrato integralmente, nella generalità richiesta (vedi la
+prova per le ipotesi esatte). Nessun calcolo al computer è
+necessario.</p>
+<h5 id="dimostrazione">2. Dimostrazione</h5>
+<h4 id="cell-2-the-orthogonality-lemma-for-a-chain-of-unit-vectors">Cell
+2: the orthogonality lemma for a chain of unit vectors</h4>
+<p><strong>Target.</strong> Let <span
+class="math inline">\(m\ge2\)</span> and let <span
+class="math inline">\(x_1,\dots,x_m\)</span> be unit vectors in <span
+class="math inline">\(\mathbb R^{m-1}\)</span> with <span
+class="math inline">\(\langle x_i,x_j\rangle=0\)</span> whenever <span
+class="math inline">\(|i-j|\ge2\)</span>. Then <span
+class="math inline">\(\sum_{i=1}^{m-1}\theta(x_i,x_{i+1})\le(m-2)\frac{\pi}{2}\)</span>,
+where <span class="math inline">\(\theta(x,y)=\arccos|\langle
+x,y\rangle|\in[0,\pi/2]\)</span>.</p>
+<p>Write <span
+class="math inline">\(\theta_i=\theta(x_i,x_{i+1})\)</span> for <span
+class="math inline">\(1\le i\le m-1\)</span>. We say that a list of unit
+vectors <span class="math inline">\(y_1,\dots,y_r\)</span> in a
+Euclidean space <span class="math inline">\(V\)</span> is a
+<em>chain</em> if <span class="math inline">\(\langle
+y_i,y_j\rangle=0\)</span> whenever <span
+class="math inline">\(|i-j|\ge2\)</span>. The statement to prove is:
+(P<span class="math inline">\(_m\)</span>) every chain of <span
+class="math inline">\(m\)</span> unit vectors in a Euclidean space of
+dimension <span class="math inline">\(m-1\)</span> satisfies <span
+class="math inline">\(\sum_{i=1}^{m-1}\theta(y_i,y_{i+1})\le(m-2)\pi/2\)</span>.
+(Stating it for an arbitrary Euclidean space of dimension <span
+class="math inline">\(m-1\)</span> instead of <span
+class="math inline">\(\mathbb R^{m-1}\)</span> is harmless: choosing an
+orthonormal basis gives a linear isometry onto <span
+class="math inline">\(\mathbb R^{m-1}\)</span>, which preserves inner
+products, hence the chain condition and all the angles.)</p>
+<h5 id="two-elementary-facts">Two elementary facts</h5>
+<p><strong>Fact A.</strong> For <span
+class="math inline">\(\beta,\psi\in[0,\pi/2]\)</span>: <span
+class="math inline">\(\arccos(\cos\beta\cos\psi)\le\beta+\psi\)</span>.
+<em>Proof.</em> <span
+class="math inline">\(\cos(\beta+\psi)=\cos\beta\cos\psi-\sin\beta\sin\psi\le\cos\beta\cos\psi\)</span>
+because <span class="math inline">\(\sin\beta,\sin\psi\ge0\)</span>.
+Both <span class="math inline">\(\cos(\beta+\psi)\)</span> and <span
+class="math inline">\(\cos\beta\cos\psi\)</span> lie in <span
+class="math inline">\([-1,1]\)</span> and <span
+class="math inline">\(\arccos\)</span> is decreasing on <span
+class="math inline">\([-1,1]\)</span>, so <span
+class="math inline">\(\arccos(\cos\beta\cos\psi)\le\arccos(\cos(\beta+\psi))=\beta+\psi\)</span>,
+the last equality because <span
+class="math inline">\(\beta+\psi\in[0,\pi]\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Fact B.</strong> If <span class="math inline">\(V\)</span> is
+a Euclidean space of dimension <span
+class="math inline">\(n\ge1\)</span> and <span
+class="math inline">\(v_1,\dots,v_{n-1}\in V\)</span> (possibly fewer
+vectors, possibly none), there is a unit vector <span
+class="math inline">\(y\in V\)</span> orthogonal to all of them.
+<em>Proof.</em> The orthogonal complement of <span
+class="math inline">\(\mathrm{span}(v_1,\dots,v_{n-1})\)</span> in <span
+class="math inline">\(V\)</span> has dimension <span
+class="math inline">\(\ge n-(n-1)=1\)</span>, so it contains a nonzero
+vector; normalise it. <span class="math inline">\(\square\)</span></p>
+<h5 id="induction-on-m">Induction on <span
+class="math inline">\(m\)</span></h5>
+<p><strong>Base <span class="math inline">\(m=2\)</span>.</strong> <span
+class="math inline">\(x_1,x_2\)</span> are unit vectors in a <span
+class="math inline">\(1\)</span>-dimensional space, so <span
+class="math inline">\(x_2=\pm x_1\)</span>, <span
+class="math inline">\(|\langle x_1,x_2\rangle|=1\)</span> and <span
+class="math inline">\(\theta_1=\arccos 1=0\le0=(m-2)\pi/2\)</span>.</p>
+<p><strong>Step.</strong> Let <span class="math inline">\(m\ge3\)</span>
+and assume (P<span class="math inline">\(_{m-1}\)</span>). Let <span
+class="math inline">\(x_1,\dots,x_m\)</span> be a chain of unit vectors
+in a Euclidean space <span class="math inline">\(W\)</span> of dimension
+<span class="math inline">\(m-1\)</span>. Put <span
+class="math inline">\(U=x_m^{\perp}=\{v\in W:\langle
+v,x_m\rangle=0\}\)</span>, a subspace of dimension <span
+class="math inline">\(m-2\)</span>. For <span class="math inline">\(j\le
+m-2\)</span> we have <span class="math inline">\(|j-m|\ge2\)</span>,
+hence <span class="math inline">\(\langle x_j,x_m\rangle=0\)</span>: so
+<span class="math inline">\(x_1,\dots,x_{m-2}\in U\)</span>. Let <span
+class="math inline">\(c=\langle x_{m-1},x_m\rangle\in[-1,1]\)</span> and
+<span class="math inline">\(w=x_{m-1}-c\,x_m\)</span>. Then <span
+class="math inline">\(\langle w,x_m\rangle=c-c=0\)</span>, so <span
+class="math inline">\(w\in U\)</span>, and <span
+class="math inline">\(\|w\|^2=1-2c^2+c^2=1-c^2\)</span>.</p>
+<p><em>Case 1: <span class="math inline">\(|c|&lt;1\)</span>.</em> Then
+<span class="math inline">\(w\neq0\)</span>; let <span
+class="math inline">\(y=w/\|w\|\)</span>, a unit vector of <span
+class="math inline">\(U\)</span>. For <span class="math inline">\(j\le
+m-3\)</span> we have <span class="math inline">\(|j-(m-1)|\ge2\)</span>
+and <span class="math inline">\(|j-m|\ge2\)</span>, so <span
+class="math inline">\(\langle y,x_j\rangle=(\langle
+x_{m-1},x_j\rangle-c\langle x_m,x_j\rangle)/\|w\|=0\)</span>.
+Consequently <span class="math inline">\(x_1,\dots,x_{m-2},y\)</span> is
+a chain of <span class="math inline">\(m-1\)</span> unit vectors in
+<span class="math inline">\(U\)</span> (pairs among <span
+class="math inline">\(x_1,\dots,x_{m-2}\)</span> inherit the chain
+condition from the original chain; the pairs <span
+class="math inline">\((x_j,y)\)</span> with <span
+class="math inline">\(j\le m-3\)</span>, i.e. <span
+class="math inline">\(|j-(m-1)|\ge2\)</span> in the new indexing, were
+just checked). Since <span class="math inline">\(\dim U=m-2\)</span>,
+(P<span class="math inline">\(_{m-1}\)</span>) gives <span
+class="math display">\[\sum_{i=1}^{m-3}\theta_i+\psi\le(m-3)\frac{\pi}{2},\qquad\text{where
+}\psi=\theta(x_{m-2},y)\in[0,\pi/2].\tag{3}\]</span> (For <span
+class="math inline">\(m=3\)</span> the sum is empty and (3) says <span
+class="math inline">\(\psi\le0\)</span>, i.e. <span
+class="math inline">\(\psi=0\)</span>, which is indeed what (P<span
+class="math inline">\(_2\)</span>) gives for the chain <span
+class="math inline">\(x_1,y\)</span> in the <span
+class="math inline">\(1\)</span>-dimensional space <span
+class="math inline">\(U\)</span>.) Now <span
+class="math inline">\(x_{m-1}=w+c\,x_m=\|w\|\,y+c\,x_m\)</span>. Let
+<span
+class="math inline">\(\varphi=\theta_{m-1}=\theta(x_{m-1},x_m)=\arccos|c|\)</span>,
+so <span class="math inline">\(|c|=\cos\varphi\)</span>, <span
+class="math inline">\(\|w\|=\sqrt{1-c^2}=\sin\varphi\)</span> and <span
+class="math inline">\(\varphi\in(0,\pi/2]\)</span>. Using <span
+class="math inline">\(\langle x_{m-2},x_m\rangle=0\)</span>, <span
+class="math display">\[\langle x_{m-2},x_{m-1}\rangle=\|w\|\langle
+x_{m-2},y\rangle+c\langle x_{m-2},x_m\rangle=\sin\varphi\,\langle
+x_{m-2},y\rangle,\]</span> so <span class="math inline">\(|\langle
+x_{m-2},x_{m-1}\rangle|=\sin\varphi\cos\psi=\cos\beta\cos\psi\)</span>
+with <span
+class="math inline">\(\beta=\pi/2-\varphi\in[0,\pi/2)\)</span>. By Fact
+A, <span
+class="math display">\[\theta_{m-2}=\arccos(\cos\beta\cos\psi)\le\beta+\psi=\frac{\pi}{2}-\varphi+\psi,\qquad\text{i.e.}\qquad
+\theta_{m-2}+\theta_{m-1}\le\frac{\pi}{2}+\psi.\]</span> Adding this to
+(3): <span
+class="math inline">\(\sum_{i=1}^{m-1}\theta_i\le(m-3)\frac{\pi}{2}-\psi+\frac{\pi}{2}+\psi=(m-2)\frac{\pi}{2}\)</span>.</p>
+<p><em>Case 2: <span class="math inline">\(|c|=1\)</span>, i.e. <span
+class="math inline">\(x_{m-1}=\pm x_m\)</span>.</em> Then <span
+class="math inline">\(\theta_{m-1}=\arccos1=0\)</span>, and <span
+class="math inline">\(\langle x_{m-2},x_{m-1}\rangle=\pm\langle
+x_{m-2},x_m\rangle=0\)</span>, so <span
+class="math inline">\(\theta_{m-2}=\arccos0=\pi/2\)</span>. By Fact B
+applied to <span class="math inline">\(V=U\)</span> (dimension <span
+class="math inline">\(m-2\ge1\)</span>) and the <span
+class="math inline">\(m-3\)</span> vectors <span
+class="math inline">\(x_1,\dots,x_{m-3}\)</span>, there is a unit vector
+<span class="math inline">\(y\in U\)</span> with <span
+class="math inline">\(\langle y,x_j\rangle=0\)</span> for all <span
+class="math inline">\(j\le m-3\)</span>. Then <span
+class="math inline">\(x_1,\dots,x_{m-2},y\)</span> is a chain of <span
+class="math inline">\(m-1\)</span> unit vectors in <span
+class="math inline">\(U\)</span> (same verification as in Case 1), and
+(P<span class="math inline">\(_{m-1}\)</span>) gives <span
+class="math inline">\(\sum_{i=1}^{m-3}\theta_i+\theta(x_{m-2},y)\le(m-3)\frac{\pi}{2}\)</span>,
+hence <span
+class="math inline">\(\sum_{i=1}^{m-3}\theta_i\le(m-3)\frac{\pi}{2}\)</span>
+because <span class="math inline">\(\theta(x_{m-2},y)\ge0\)</span>.
+Therefore <span
+class="math display">\[\sum_{i=1}^{m-1}\theta_i=\sum_{i=1}^{m-3}\theta_i+\frac{\pi}{2}+0\le(m-2)\frac{\pi}{2}.\]</span></p>
+<p>In both cases (P<span class="math inline">\(_m\)</span>) holds, which
+completes the induction. <span
+class="math inline">\(\blacksquare\)</span></p>
+<p><em>Remark (not needed).</em> For <span
+class="math inline">\(m=3\)</span> the argument shows <span
+class="math inline">\(\theta_1+\theta_2=\pi/2\)</span> always; for
+general <span class="math inline">\(m\)</span> equality is attained
+e.g. by <span class="math inline">\(x_i=e_i\)</span> (<span
+class="math inline">\(i\le m-1\)</span>), <span
+class="math inline">\(x_m=e_{m-1}\)</span>, where all consecutive angles
+are <span class="math inline">\(\pi/2\)</span> except the last, which is
+<span class="math inline">\(0\)</span>.</p>
+<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
+dipendenze, tempi</h5>
+<p>Prova a mano, nessuna dipendenza. Verifica meccanica non necessaria;
+il Referee automatico (due giudici indipendenti,
+<code>runs/p1_c2/attempts/packet_001.json</code>) non ha trovato
+passaggi non giustificati.</p>
+<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
+<ul>
+<li><p>Nessuna fonte usata: prova autocontenuta.</p></li>
+<li><p>Posizione rispetto allo stato dell’arte: No literature found for
+this lemma specifically (arXiv search: angles between lines / Fejes
+Toth); it is an elementary statement and is proved here from
+scratch.</p></li>
+<li><p>Contributo: la prova qui scritta è del team, per esteso.</p></li>
+</ul>
+<h5 id="limiti-e-parti-irrisolte">5. Limiti e parti irrisolte</h5>
+<p>Nessuna: la parte è dimostrata. Gap dichiarati: nessuno.</p>
+<h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
+<h4 id="run-p1_c2">Run <code>p1_c2</code></h4>
+<dl>
+<dt>Iterazione 1 — attempt_001</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>direct_proof</code>,
+sotto-obiettivo: Prove the chain lemma by induction on m, projecting the
+penultimate vector onto the orthogonal complement of the last one and
+using the spherical triangle inequality arccos(cos b cos p) &lt;= b +
+p.. Stato dichiarato: <code>CELL_SOLVED_CANDIDATE</code>. <em>Perché
+questa scelta</em>: Induction on m is natural because removing the last
+vector and projecting the penultimate one onto x_m^perp produces a chain
+one shorter in a space one dimension lower; the loss of angle in this
+projection is controlled exactly by the right-angle spherical triangle
+inequality. The degenerate case x_{m-1} = +-x_m is handled separately by
+choosing an auxiliary orthogonal unit vector. <em>Rispetto allo stato
+dell’arte</em>: No literature found for this lemma specifically (arXiv
+search: angles between lines / Fejes Toth); it is an elementary
+statement and is proved here from scratch. <strong>Referee</strong>:
+verdetto <code>UNKNOWN_STATUS</code> (review_status
+<code>READY_FOR_HUMAN</code>). <em>Prossimo passo richiesto</em>: Human
+reviews the exact target, proof and evidence, then approves explicit
+claims</p>
+</dd>
+</dl>
+<h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
+<div class="thebibliography">
+<p><span>99</span> Dmitriy Bilyk, Ryan W Matzke. <em>On the Fejes Tóth
+Problem about the Sum of Angles Between Lines</em>. arXiv:1801.07837v1
+(2018). <a href="http://arxiv.org/abs/1801.07837v1"
+class="uri">http://arxiv.org/abs/1801.07837v1</a> Tongseok Lim, Robert
+J. McCann. <em>On Fejes Tóth’s conjectured maximizer for the sum of
+angles between lines</em>. arXiv:2007.08698v2 (2020). <a
+href="http://arxiv.org/abs/2007.08698v2"
+class="uri">http://arxiv.org/abs/2007.08698v2</a> Jérémie Chalopin,
+Shantanu Das, Yann Disser, Matúš Mihalák, Peter Widmayer. <em>Simple
+Agents Learn to Find Their Way: An Introduction on Mapping
+Polygons</em>. arXiv:1204.3850v1 (2012). <a
+href="http://arxiv.org/abs/1204.3850v1"
+class="uri">http://arxiv.org/abs/1204.3850v1</a></p>
+</div>
+</body>
+</html>

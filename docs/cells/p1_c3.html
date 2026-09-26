@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)" />
+  <meta name="dcterms.date" content="2026-09-26" />
+  <title>Proof Pursuit — problem 1, part 3</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — problem 1, part 3</h1>
+<p class="author">Team Proof Pursuit (Researcher: T. Tumini; Referee:
+gabundos; Creative: M. Renzi; gio3r3gio)</p>
+<p class="date">2026-09-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#come-leggere-questo-rapporto"
+id="toc-come-leggere-questo-rapporto">Come leggere questo
+rapporto</a></li>
+<li><a href="#problem-1-angles-between-lines-fejes-toth"
+id="toc-problem-1-angles-between-lines-fejes-toth">Problem 1 — Angles
+between lines (Fejes Toth)</a>
+<ul>
+<li><a href="#cella-3-3-punti-stato-parziale"
+id="toc-cella-3-3-punti-stato-parziale">Cella 3 (3 punti) — stato:
+parziale</a>
+<ul>
+<li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti"
+id="toc-decisioni-degli-agenti">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo"
+id="toc-codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arxiv-literature-consulted"
+id="toc-arxiv-literature-consulted">arXiv literature consulted</a></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="come-leggere-questo-rapporto">Come leggere
+questo rapporto</h1>
+<p>Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team
+(mai “risolto” senza revisione umana), la consegna con la prova, poi la
+traccia delle decisioni degli agenti (Researcher: famiglia e motivo;
+Referee: verdetto ed errore fatale; Creative: quando e perché è
+intervenuto) e il codice su cui il tentativo poggia con l’esito della
+riesecuzione fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO
+e CONGETTURA restano distinti. L’architettura del sistema è descritta
+nel README del repository.</p>
+<h1 id="problem-1-angles-between-lines-fejes-toth">Problem 1 — Angles
+between lines (Fejes Toth)</h1>
+<h2 id="cella-3-3-punti-stato-parziale">Cella 3 (3 punti) — stato:
+parziale</h2>
+<h5 id="parte-3-d1-lines-in-mathbbrd">Parte 3 — <span
+class="math inline">\(d+1\)</span> lines in <span
+class="math inline">\(\mathbb{R}^d\)</span></h5>
+<p><strong>Punteggio:</strong> 3 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The first case in every dimension: one line more than the dimension,
+<span class="math inline">\(N = d+1\)</span>, where the conjectured
+optimum repeats exactly one of the <span
+class="math inline">\(d\)</span> coordinate axes. Let <span
+class="math inline">\(d \ge 1\)</span>. Prove that any <span
+class="math inline">\(d+1\)</span> lines in <span
+class="math inline">\(\mathbb{R}^d\)</span> satisfy <span
+class="math display">\[S \;\le\; \left( \binom{d+1}{2} - 1 \right) \cdot
+\frac{\pi}{2}.\]</span></p>
+<p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
+<code>Let d &gt;= 1. Prove that any d+1 lines through the origin in R^d satisfy S &lt;= (C(d+1,2) - 1) pi/2.</code></p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> triage in note.md;
+dipende dal lemma P2; bozza parziale in inglese in submission/
+(parziali.py)</p>
+<h3 id="consegna-prova">Consegna (prova)</h3>
+<h4 id="problema-1-parte-3-bozza-di-consegna-parziale">Problema 1 —
+Parte 3 — bozza di consegna PARZIALE</h4>
+<p><strong>Stato dichiarato: PARZIALE.</strong> Nessuna soluzione
+completa: qui sotto ciò che è stabilito, la formalizzazione, la
+posizione rispetto alla letteratura e ciò che resta aperto. Nulla è
+dichiarato dimostrato oltre quanto scritto.</p>
+<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
+<p><strong>Richiesta ufficiale.</strong> ## Parte 3 — <span
+class="math inline">\(d+1\)</span> lines in <span
+class="math inline">\(\mathbb{R}^d\)</span></p>
+<p><strong>Punteggio:</strong> 3 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The first case in every dimension: one line more than the dimension,
+<span class="math inline">\(N = d+1\)</span>, where the conjectured
+optimum repeats exactly one of the <span
+class="math inline">\(d\)</span> coordinate axes. Let <span
+class="math inline">\(d \ge 1\)</span>. Prove that any <span
+class="math inline">\(d+1\)</span> lines in <span
+class="math inline">\(\mathbb{R}^d\)</span> satisfy <span
+class="math display">\[S \;\le\; \left( \binom{d+1}{2} - 1 \right) \cdot
+\frac{\pi}{2}.\]</span></p>
+<p><strong>Cosa consegniamo.</strong> Riduzione dell’enunciato a una
+disuguaglianza sui deficit <span
+class="math inline">\(\delta_{ij}=\pi/2-\theta_{ij}\)</span>: la tesi
+equivale a <span
+class="math inline">\(\sum_{i&lt;j}\delta_{ij}\ge\pi/2\)</span> per
+<span class="math inline">\(d+1\)</span> versori in <span
+class="math inline">\(\mathbb R^d\)</span>. Il lemma della parte 2
+(dimostrato e approvato) fornisce esattamente un deficit totale <span
+class="math inline">\(\ge\pi/2\)</span> lungo una catena. Il caso <span
+class="math inline">\(d=1\)</span> è banale (due rette coincidenti,
+<span class="math inline">\(S=0\)</span>).</p>
+<h5 id="dimostrazione">2. Dimostrazione</h5>
+<p><strong>Fatto 1 (dimostrato, parte 2).</strong> Una catena di <span
+class="math inline">\(m\)</span> versori in <span
+class="math inline">\(\mathbb R^{m-1}\)</span> ha <span
+class="math inline">\(\sum\theta(x_i,x_{i+1})\le(m-2)\pi/2\)</span>,
+cioè deficit totale sui passi consecutivi <span
+class="math inline">\(\ge\pi/2\)</span>.</p>
+<p><strong>Fatto 2 (dimostrato).</strong> <span
+class="math inline">\(d+1\)</span> versori in <span
+class="math inline">\(\mathbb R^d\)</span> sono linearmente dipendenti;
+esiste un circuito minimale <span
+class="math inline">\(x_{i_1},\dots,x_{i_m}\)</span> (<span
+class="math inline">\(m\le d+1\)</span>) con <span
+class="math inline">\(\sum a_j x_{i_j}=0\)</span>, <span
+class="math inline">\(a_j\ne0\)</span>, e ogni <span
+class="math inline">\(m-1\)</span> di essi indipendenti.</p>
+<p><strong>Strategia (non completata).</strong> Costruire dal circuito
+una catena di <span class="math inline">\(m\)</span> versori in uno
+spazio di dimensione <span class="math inline">\(m-1\)</span>
+(proiezioni successive sugli ortogonali di <span
+class="math inline">\(\mathrm{span}(x_{i_1},\dots,x_{i_k})\)</span>) e
+confrontare gli angoli della catena con quelli originali tramite la
+disuguaglianza triangolare sferica; il confronto diretto perde un
+termine <span class="math inline">\(\sum_i\delta_i\)</span> per ogni
+proiezione e non basta: serve una scelta migliore dell’ordine del
+circuito o una stima più fine. Verifica numerica (harness,
+<code>problema-1/esperimenti</code>): nessuna configurazione trovata
+supera il bound per <span class="math inline">\(d\le6\)</span>.</p>
+<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
+dipendenze, tempi</h5>
+<p>Codice disponibile (Python 3, libreria standard; ogni script gira in
+meno di un minuto): - <code>problema-1/esperimenti/lines_Rd.py</code> -
+<code>problema-1/esperimenti/p1_somma_angoli.py</code></p>
+<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
+<p>Letteratura arXiv (ricerca deterministica
+<code>tools/cerca_letteratura.sh</code>, abstract letti, non usata come
+prova): - arXiv:1801.07837v1 — On the Fejes Tóth Problem about the Sum
+of Angles Between Lines (Dmitriy Bilyk, Ryan W Matzke, 2018); solo
+abstract letto. - arXiv:2007.08698v2 — On Fejes Tóth’s conjectured
+maximizer for the sum of angles between lines (Tongseok Lim, Robert J.
+McCann, 2020); solo abstract letto. - arXiv:1204.3850v1 — Simple Agents
+Learn to Find Their Way: An Introduction on Mapping Polygons (Jérémie
+Chalopin, Shantanu Das, Yann Disser, 2012); solo abstract letto.
+Bilyk–Matzke <span>[</span>1801.07837<span>]</span> dichiarano risolto
+solo il caso del piano; Lim–McCann
+<span>[</span>2007.08698<span>]</span> trattano una deformazione a un
+parametro: il caso <span class="math inline">\(N=d+1\)</span> non
+risulta noto, coerente con il fatto che la gara fornisce il lemma della
+parte 2 come mattone.</p>
+<h5 id="limiti-e-parti-irrisolte">5. Limiti e parti irrisolte</h5>
+<p>Manca il passaggio da rette generiche a una catena senza perdita di
+deficit. Le parti 1–2 approvate restano utilizzabili come ipotesi.</p>
+<h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
+<h4 id="run-p1_c3">Run <code>p1_c3</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
+<div class="thebibliography">
+<p><span>99</span> Dmitriy Bilyk, Ryan W Matzke. <em>On the Fejes Tóth
+Problem about the Sum of Angles Between Lines</em>. arXiv:1801.07837v1
+(2018). <a href="http://arxiv.org/abs/1801.07837v1"
+class="uri">http://arxiv.org/abs/1801.07837v1</a> Tongseok Lim, Robert
+J. McCann. <em>On Fejes Tóth’s conjectured maximizer for the sum of
+angles between lines</em>. arXiv:2007.08698v2 (2020). <a
+href="http://arxiv.org/abs/2007.08698v2"
+class="uri">http://arxiv.org/abs/2007.08698v2</a> Jérémie Chalopin,
+Shantanu Das, Yann Disser, Matúš Mihalák, Peter Widmayer. <em>Simple
+Agents Learn to Find Their Way: An Introduction on Mapping
+Polygons</em>. arXiv:1204.3850v1 (2012). <a
+href="http://arxiv.org/abs/1204.3850v1"
+class="uri">http://arxiv.org/abs/1204.3850v1</a></p>
+</div>
+</body>
+</html>

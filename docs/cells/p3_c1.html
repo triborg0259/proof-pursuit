@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)" />
+  <meta name="dcterms.date" content="2026-09-26" />
+  <title>Proof Pursuit — problem 3, part 1</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — problem 3, part 1</h1>
+<p class="author">Team Proof Pursuit (Researcher: T. Tumini; Referee:
+gabundos; Creative: M. Renzi; gio3r3gio)</p>
+<p class="date">2026-09-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#come-leggere-questo-rapporto"
+id="toc-come-leggere-questo-rapporto">Come leggere questo
+rapporto</a></li>
+<li><a href="#problem-3-bulgarian-solitaire"
+id="toc-problem-3-bulgarian-solitaire">Problem 3 — Bulgarian
+solitaire</a>
+<ul>
+<li><a href="#cella-1-1-punti-stato-revisionato"
+id="toc-cella-1-1-punti-stato-revisionato">Cella 1 (1 punti) — stato:
+revisionato</a>
+<ul>
+<li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti"
+id="toc-decisioni-degli-agenti">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo"
+id="toc-codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arxiv-literature-consulted"
+id="toc-arxiv-literature-consulted">arXiv literature consulted</a></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="come-leggere-questo-rapporto">Come leggere
+questo rapporto</h1>
+<p>Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team
+(mai “risolto” senza revisione umana), la consegna con la prova, poi la
+traccia delle decisioni degli agenti (Researcher: famiglia e motivo;
+Referee: verdetto ed errore fatale; Creative: quando e perché è
+intervenuto) e il codice su cui il tentativo poggia con l’esito della
+riesecuzione fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO
+e CONGETTURA restano distinti. L’architettura del sistema è descritta
+nel README del repository.</p>
+<h1 id="problem-3-bulgarian-solitaire">Problem 3 — Bulgarian
+solitaire</h1>
+<h2 id="cella-1-1-punti-stato-revisionato">Cella 1 (1 punti) — stato:
+revisionato</h2>
+<h5 id="parte-1-c1-cyclic-partitions-and-cycles">Parte 1 (C1) — Cyclic
+partitions and cycles</h5>
+<p><strong>Punteggio:</strong> 1 point · <strong>Valutazione:</strong>
+Judged</p>
+<p>First, the long-run behaviour: which partitions repeat under the
+shift, and how they fall into cycles. Let <span class="math inline">\(n
+= T_k\)</span>. Prove that for every partition <span
+class="math inline">\(\lambda\)</span> of <span
+class="math inline">\(n\)</span> there is an <span
+class="math inline">\(i\)</span> with <span
+class="math inline">\(B^i(\lambda) = \delta_k\)</span>, and that <span
+class="math inline">\(\delta_k\)</span> is the only cyclic partition of
+<span class="math inline">\(n\)</span>. Then let <span
+class="math inline">\(n\)</span> be arbitrary of rank <span
+class="math inline">\(k\)</span>, say <span class="math inline">\(n =
+T_{k-1} + r\)</span> with <span class="math inline">\(1 \le r \le
+k\)</span>: determine all cyclic partitions of <span
+class="math inline">\(n\)</span>, and determine the number of distinct
+cycles of <span class="math inline">\(B\)</span> on the partitions of
+<span class="math inline">\(n\)</span>. Prove both.</p>
+<p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
+<code>Let n = T_k. Prove that every partition of n reaches delta_k = (k,k-1,...,1) under iterated B and that delta_k is the only cyclic partition. Then for n = T_{k-1} + r, 1 &lt;= r &lt;= k, determine all cyclic partitions of n and the number of distinct cycles of B on partitions of n, with proofs.</code></p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> loop p3_c1
+attempt_002: Referee READY_FOR_HUMAN (A PASS, B PASS); approvata da
+Thomas Tumini (human); submission/parte-1.en.md</p>
+<h3 id="consegna-prova">Consegna (prova)</h3>
+<h4 id="problem-3-part-1-submission">Problem 3 — Part 1 —
+submission</h4>
+<p><strong>Declared status: SOLVED (approved).</strong> Complete proof;
+automatic Referee READY_FOR_HUMAN (judge A, mathematics: PASS; judge B,
+evidence: PASS; code re-run by the orchestrator); human approval
+recorded in <code>runs/p3_c1/approval.json</code>.</p>
+<h5 id="result-and-scope">1. Result and scope</h5>
+<p>Full written proof of all parts of cell 1: (i) for n=T_k every
+partition reaches δ_k and δ_k is the unique cyclic partition; (ii) for
+n=T_{k-1}+r the cyclic partitions are exactly the C(k,r) partitions λ^ε
+(positive numbers among k-i+ε_i, ε∈{0,1}^k of weight r), on which B acts
+as cyclic rotation of ε; (iii) the number of cycles is
+(1/k)Σ_{dgcd(k,r)} φ(d) C(k/d, r/d). The convergence step is proved via
+an ordered dynamics, a diagonal potential Φ with exact equality
+characterisation, and a hole-chasing lemma. Exact brute-force check
+agrees for all n≤40.</p>
+<h5 id="proof">2. Proof</h5>
+<h5 id="notation">Notation</h5>
+<p>Throughout <span class="math inline">\(n\ge 1\)</span> has rank <span
+class="math inline">\(k\)</span>, i.e. <span
+class="math inline">\(n=T_{k-1}+r\)</span> with <span
+class="math inline">\(1\le r\le k\)</span> (equivalently <span
+class="math inline">\(T_{k-1}&lt;n\le T_k\)</span>). For a <span
+class="math inline">\(0/1\)</span>-word <span
+class="math inline">\(\varepsilon=(\varepsilon_1,\dots,\varepsilon_k)\)</span>
+of weight <span
+class="math inline">\(|\varepsilon|=\sum\varepsilon_i=r\)</span> put
+<span class="math display">\[\lambda^{\varepsilon}:=\text{the partition
+whose parts are the positive numbers among } k-i+\varepsilon_i,\quad
+i=1,\dots,k,\]</span> <span
+class="math display">\[W_{k,r}:=\{\varepsilon\in\{0,1\}^k:|\varepsilon|=r\},\qquad
+S_{k,r}:=\{\lambda^{\varepsilon}:\varepsilon\in W_{k,r}\}.\]</span></p>
+<p><strong>Fact 0.</strong> <span
+class="math inline">\(\lambda^\varepsilon\)</span> is a partition of
+<span class="math inline">\(n\)</span>; the sequence <span
+class="math inline">\((k-i+\varepsilon_i)_{i=1}^k\)</span> is weakly
+decreasing, its first <span class="math inline">\(k-1\)</span> entries
+are <span class="math inline">\(\ge1\)</span>, and the <span
+class="math inline">\(k\)</span>-th is <span
+class="math inline">\(\varepsilon_k\)</span>. Moreover <span
+class="math inline">\(\varepsilon\mapsto\lambda^\varepsilon\)</span> is
+injective on <span class="math inline">\(W_{k,r}\)</span>, and <span
+class="math inline">\(S_{k,k}=\{\delta_k\}\)</span>.</p>
+<p><em>Proof.</em> Sum: <span
+class="math inline">\(\sum_i(k-i)+\sum_i\varepsilon_i=T_{k-1}+r=n\)</span>.
+Monotone: <span
+class="math inline">\((k-i+\varepsilon_i)-(k-i-1+\varepsilon_{i+1})=1+\varepsilon_i-\varepsilon_{i+1}\ge0\)</span>.
+For <span class="math inline">\(i\le k-1\)</span>, <span
+class="math inline">\(k-i+\varepsilon_i\ge1\)</span>. Injective: <span
+class="math inline">\(\lambda^\varepsilon\)</span> has <span
+class="math inline">\(k-1\)</span> or <span
+class="math inline">\(k\)</span> parts; pad it with zeros to length
+exactly <span class="math inline">\(k\)</span>; the padded weakly
+decreasing sequence of a multiset is unique, and <span
+class="math inline">\((k-i+\varepsilon_i)_i\)</span> is such a sequence,
+so the <span class="math inline">\(i\)</span>-th padded part equals
+<span class="math inline">\(k-i+\varepsilon_i\)</span> and <span
+class="math inline">\(\varepsilon_i\)</span> is recovered. For <span
+class="math inline">\(r=k\)</span> the only word is <span
+class="math inline">\((1,\dots,1)\)</span> and <span
+class="math inline">\(\lambda^\varepsilon=(k,k-1,\dots,1)=\delta_k\)</span>.
+<span class="math inline">\(\square\)</span></p>
+<h5 id="part-i.-b-acts-on-s_kr-as-a-rotation">Part I. <span
+class="math inline">\(B\)</span> acts on <span
+class="math inline">\(S_{k,r}\)</span> as a rotation</h5>
+<p><strong>Lemma 1.</strong> For <span
+class="math inline">\(\varepsilon\in W_{k,r}\)</span>, <span
+class="math inline">\(B(\lambda^\varepsilon)=\lambda^{\sigma\varepsilon}\)</span>
+where <span
+class="math inline">\(\sigma\varepsilon:=(\varepsilon_k,\varepsilon_1,\varepsilon_2,\dots,\varepsilon_{k-1})\)</span>.
+In particular <span class="math inline">\(S_{k,r}\)</span> is <span
+class="math inline">\(B\)</span>-invariant, <span
+class="math inline">\(B^k\)</span> is the identity on <span
+class="math inline">\(S_{k,r}\)</span>, and every element of <span
+class="math inline">\(S_{k,r}\)</span> is cyclic.</p>
+<p><em>Proof.</em> By Fact 0, <span
+class="math inline">\(\lambda^\varepsilon\)</span> has <span
+class="math inline">\(s=k-1+\varepsilon_k\)</span> parts: the parts
+<span class="math inline">\(k-i+\varepsilon_i\)</span> for <span
+class="math inline">\(i\le k-1\)</span>, plus the part <span
+class="math inline">\(1\)</span> (coming from <span
+class="math inline">\(i=k\)</span>) iff <span
+class="math inline">\(\varepsilon_k=1\)</span>. Applying <span
+class="math inline">\(B\)</span>: each part <span
+class="math inline">\(k-i+\varepsilon_i\)</span> (<span
+class="math inline">\(i\le k-1\)</span>) becomes <span
+class="math inline">\(k-(i+1)+\varepsilon_i\)</span>, which is positive
+for <span class="math inline">\(i\le k-2\)</span> and equals <span
+class="math inline">\(\varepsilon_{k-1}\)</span> for <span
+class="math inline">\(i=k-1\)</span> (kept iff it is <span
+class="math inline">\(1\)</span>); the part <span
+class="math inline">\(1\)</span> present when <span
+class="math inline">\(\varepsilon_k=1\)</span> becomes <span
+class="math inline">\(0\)</span> and is discarded; the new part is <span
+class="math inline">\(s=k-1+\varepsilon_k\)</span>. Hence <span
+class="math inline">\(B(\lambda^\varepsilon)\)</span> has as parts the
+positive numbers among <span class="math display">\[k-1+\varepsilon_k\ \
+(\text{index }i&#39;=1),\qquad k-i&#39;+\varepsilon_{i&#39;-1}\ \
+(i&#39;=2,\dots,k),\]</span> which are exactly the numbers <span
+class="math inline">\(k-i&#39;+(\sigma\varepsilon)_{i&#39;}\)</span>,
+<span class="math inline">\(i&#39;=1,\dots,k\)</span>. So <span
+class="math inline">\(B(\lambda^\varepsilon)=\lambda^{\sigma\varepsilon}\)</span>.
+Since <span class="math inline">\(\sigma\)</span> preserves weight and
+<span class="math inline">\(\sigma^k=\mathrm{id}\)</span>, <span
+class="math inline">\(B^k(\lambda^\varepsilon)=\lambda^{\sigma^k\varepsilon}=\lambda^\varepsilon\)</span>
+with <span class="math inline">\(k\ge1\)</span>, so <span
+class="math inline">\(\lambda^\varepsilon\)</span> is cyclic. <span
+class="math inline">\(\square\)</span></p>
+<h5 id="part-ii.-every-partition-of-n-enters-s_kr">Part II. Every
+partition of <span class="math inline">\(n\)</span> enters <span
+class="math inline">\(S_{k,r}\)</span></h5>
+<p>II.1 Ordered dynamics</p>
+<p>A <em>composition</em> is a finite sequence <span
+class="math inline">\(c=(c_1,\dots,c_s)\)</span> of positive integers.
+Define <span class="math display">\[\tilde B(c):=\text{the sequence
+}(s,\ c_1-1,\ \dots,\ c_s-1)\text{ with all zero entries
+deleted}.\]</span> The multiset of entries of <span
+class="math inline">\(\tilde B(c)\)</span> is <span
+class="math inline">\(\{s\}\cup\{c_i-1:c_i\ge2\}\)</span>, which is by
+definition the multiset of parts of <span
+class="math inline">\(B(\mathrm{sort}(c))\)</span>. Hence, starting from
+<span class="math inline">\(c^{(0)}:=\lambda\)</span> (as a sequence)
+and putting <span class="math inline">\(c^{(t+1)}:=\tilde
+B(c^{(t)})\)</span>, we have <span
+class="math display">\[B^t(\lambda)=\mathrm{sort}(c^{(t)})\quad\text{for
+all }t\ge0. \tag{1}\]</span> Write <span
+class="math inline">\(s_t\)</span> for the length of <span
+class="math inline">\(c^{(t)}\)</span>. The <em>cell set</em> of a
+composition is <span class="math inline">\(C(c):=\{(i,j):1\le i\le s,\
+1\le j\le c_i\}\subset\mathbb Z_{\ge1}^2\)</span>; put <span
+class="math inline">\(C_t:=C(c^{(t)})\)</span>. Cell <span
+class="math inline">\((i,j)\)</span> lies on <em>diagonal</em> <span
+class="math inline">\(i+j\)</span>. Two properties hold for every
+composition, by definition: (<strong>closed</strong>) if <span
+class="math inline">\((i,j)\in C(c)\)</span> and <span
+class="math inline">\(1\le j&#39;\le j\)</span> then <span
+class="math inline">\((i,j&#39;)\in C(c)\)</span>;
+(<strong>gap-free</strong>) if <span class="math inline">\((i,1)\in
+C(c)\)</span> and <span class="math inline">\(1\le i&#39;\le i\)</span>
+then <span class="math inline">\((i&#39;,1)\in C(c)\)</span>; and <span
+class="math inline">\((i,1)\notin C(c)\)</span> iff <span
+class="math inline">\(i&gt;s\)</span>.</p>
+<p>II.2 The potential</p>
+<p>For a finite sequence <span
+class="math inline">\(e=(e_1,\dots,e_m)\)</span> of non-negative
+integers put <span
+class="math inline">\(\Phi(e):=\sum_{i=1}^m\sum_{j=1}^{e_i}(i+j)\in\mathbb
+Z_{\ge0}\)</span> (zero entries contribute nothing).</p>
+<p><strong>Lemma 2.</strong> For every composition <span
+class="math inline">\(c\)</span>, <span
+class="math inline">\(\Phi(\tilde B(c))\le\Phi(c)\)</span>, with
+equality if and only if the set <span class="math inline">\(\{i:
+c_i=1\}\)</span> is a terminal segment of <span
+class="math inline">\(\{1,\dots,s\}\)</span> (i.e. <span
+class="math inline">\(c_i=1\Rightarrow c_j=1\)</span> for all <span
+class="math inline">\(j&gt;i\)</span>).</p>
+<p><em>Proof.</em> Let <span
+class="math inline">\(e:=(s,c_1-1,\dots,c_s-1)\)</span> (length <span
+class="math inline">\(s+1\)</span>, zeros allowed). Then <span
+class="math display">\[\Phi(e)=\sum_{j=1}^{s}(1+j)+\sum_{i=1}^{s}\sum_{j=1}^{c_i-1}(i+1+j)=\sum_{i=1}^{s}(i+1)+\sum_{i=1}^{s}\sum_{j&#39;=2}^{c_i}(i+j&#39;)=\sum_{i=1}^{s}\sum_{j&#39;=1}^{c_i}(i+j&#39;)=\Phi(c),\]</span>
+where we substituted <span class="math inline">\(j&#39;=j+1\)</span> and
+used that the term <span class="math inline">\(j&#39;=1\)</span> of
+column <span class="math inline">\(i\)</span> is <span
+class="math inline">\(i+1\)</span>. Now <span
+class="math inline">\(\tilde B(c)\)</span> is obtained from <span
+class="math inline">\(e\)</span> by deleting its zero entries; an entry
+<span class="math inline">\(e_q&gt;0\)</span> preceded by <span
+class="math inline">\(z_q\)</span> zeros moves to position <span
+class="math inline">\(q-z_q\)</span>, so <span
+class="math inline">\(\Phi\)</span> decreases by <span
+class="math inline">\(\sum_{q:e_q&gt;0}z_q e_q\ge0\)</span>, with
+equality iff no positive entry is preceded by a zero, i.e. iff the zeros
+of <span class="math inline">\(e\)</span> form a terminal segment. Since
+<span class="math inline">\(e_1=s\ge1\)</span> and <span
+class="math inline">\(e_{i+1}=0\iff c_i=1\)</span>, this says exactly
+that <span class="math inline">\(\{i:c_i=1\}\)</span> is terminal in
+<span class="math inline">\(\{1,\dots,s\}\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p>By Lemma 2, <span
+class="math inline">\((\Phi(c^{(t)}))_{t\ge0}\)</span> is a
+non-increasing sequence of non-negative integers, hence eventually
+constant: there is <span class="math inline">\(t_0\)</span> with <span
+class="math inline">\(\Phi(c^{(t+1)})=\Phi(c^{(t)})\)</span> for all
+<span class="math inline">\(t\ge t_0\)</span>. By the equality case of
+Lemma 2: <span class="math display">\[\text{for all }t\ge t_0:\quad
+\{i:c^{(t)}_i=1\}\text{ is a terminal segment of }\{1,\dots,s_t\}.
+\tag{2}\]</span></p>
+<p>II.3 Diagonal motion in the steady regime</p>
+<p>Define <span class="math inline">\(\rho:\mathbb Z_{\ge1}^2\to\mathbb
+Z_{\ge1}^2\)</span> by <span
+class="math inline">\(\rho(i,j)=(i+1,j-1)\)</span> if <span
+class="math inline">\(j\ge2\)</span> and <span
+class="math inline">\(\rho(i,1)=(1,i)\)</span>. Then <span
+class="math inline">\(\rho\)</span> preserves <span
+class="math inline">\(i+j\)</span>, and <span
+class="math inline">\(\rho\)</span> is a bijection (inverse: <span
+class="math inline">\((i,j)\mapsto(i-1,j+1)\)</span> for <span
+class="math inline">\(i\ge2\)</span>, <span
+class="math inline">\((1,j)\mapsto(j,1)\)</span>). On diagonal <span
+class="math inline">\(d\ge2\)</span>, whose cells are <span
+class="math inline">\((i,d-i)\)</span>, <span class="math inline">\(1\le
+i\le d-1\)</span>, <span class="math inline">\(\rho\)</span> sends
+column <span class="math inline">\(i\)</span> to column <span
+class="math inline">\(i+1\)</span> for <span class="math inline">\(i\le
+d-2\)</span> and column <span class="math inline">\(d-1\)</span> to
+column <span class="math inline">\(1\)</span>; hence <span
+class="math inline">\(\rho^m\)</span> sends the cell of diagonal <span
+class="math inline">\(d\)</span> in column <span
+class="math inline">\(i\)</span> to the cell in the unique column <span
+class="math inline">\(\equiv i+m \pmod{d-1}\)</span> in <span
+class="math inline">\(\{1,\dots,d-1\}\)</span>.</p>
+<p><strong>Lemma 3.</strong> For all <span class="math inline">\(t\ge
+t_0\)</span>: <span
+class="math inline">\(C_{t+1}=\rho(C_t)\)</span>.</p>
+<p><em>Proof.</em> Let <span class="math inline">\(c=c^{(t)}\)</span>,
+<span class="math inline">\(e=(s,c_1-1,\dots,c_s-1)\)</span> as in Lemma
+2. The cells of <span class="math inline">\(e\)</span> (defined as for
+compositions, zero entries giving no cells) are <span
+class="math inline">\(\{(1,j):1\le j\le s\}=\rho(\{(j,1):1\le j\le
+s\})\)</span> together with <span class="math inline">\(\{(i+1,j-1):2\le
+j\le c_i\}=\rho(\{(i,j)\in C_t: j\ge2\})\)</span>; so the cell set of
+<span class="math inline">\(e\)</span> is <span
+class="math inline">\(\rho(C_t)\)</span>. By (2), the zeros of <span
+class="math inline">\(e\)</span> form a terminal segment, so deleting
+them does not move any positive entry, and <span
+class="math inline">\(C_{t+1}=C(\tilde B(c))\)</span> is the cell set of
+<span class="math inline">\(e\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p>Consequently, for <span class="math inline">\(t\ge t_0\)</span> and
+<span class="math inline">\(m\ge0\)</span>, <span
+class="math inline">\(C_{t+m}=\rho^m(C_t)\)</span>, and since <span
+class="math inline">\(\rho^m\)</span> is injective, <span
+class="math display">\[x\in C_t\iff\rho^m(x)\in
+C_{t+m}\qquad(x\in\mathbb Z_{\ge1}^2). \tag{3}\]</span></p>
+<p>II.4 The hole lemma</p>
+<p><strong>Lemma 4.</strong> Let <span class="math inline">\(t\ge
+t_0\)</span> and <span class="math inline">\(d\ge2\)</span>. If some
+cell of diagonal <span class="math inline">\(d\)</span> is not in <span
+class="math inline">\(C_t\)</span> (a <em>hole</em>), then no cell of
+any diagonal <span class="math inline">\(D&gt;d\)</span> lies in <span
+class="math inline">\(C_t\)</span>.</p>
+<p><em>Proof.</em> Diagonal <span class="math inline">\(2\)</span>
+consists of the single cell <span class="math inline">\((1,1)\in
+C_t\)</span> (as <span class="math inline">\(n\ge1\)</span>, <span
+class="math inline">\(s_t\ge1\)</span>), so <span
+class="math inline">\(d\ge3\)</span>. Suppose <span
+class="math inline">\((p,d-p)\notin C_t\)</span> and <span
+class="math inline">\((q,D-q)\in C_t\)</span> with <span
+class="math inline">\(D&gt;d\)</span>. For <span
+class="math inline">\(m\ge0\)</span> let <span
+class="math inline">\(h_m\in\{1,\dots,d-1\}\)</span> be the column of
+<span class="math inline">\(\rho^m(p,d-p)\)</span> and <span
+class="math inline">\(\kappa_m\in\{1,\dots,D-1\}\)</span> the column of
+<span class="math inline">\(\rho^m(q,D-q)\)</span>; by (3), <span
+class="math inline">\(\rho^m(p,d-p)\notin C_{t+m}\)</span> and <span
+class="math inline">\(\rho^m(q,D-q)\in C_{t+m}\)</span>. By II.3, <span
+class="math inline">\(h_{m+1}\equiv h_m+1\pmod{d-1}\)</span> and <span
+class="math inline">\(\kappa_{m+1}\equiv\kappa_m+1\pmod{D-1}\)</span>.</p>
+<p><em>Constraint (ii).</em> If <span
+class="math inline">\(h_m=d-1\)</span> then <span
+class="math inline">\(\kappa_m\le d-2\)</span>. Indeed the hole is then
+the cell <span class="math inline">\((d-1,1)\notin C_{t+m}\)</span>, so
+<span class="math inline">\(d-1&gt;s_{t+m}\)</span> (II.1), i.e. <span
+class="math inline">\(s_{t+m}\le d-2\)</span>, and every cell of <span
+class="math inline">\(C_{t+m}\)</span> has column <span
+class="math inline">\(\le d-2\)</span>.</p>
+<p>Since <span class="math inline">\(h_m\)</span> runs cyclically
+through <span class="math inline">\(1,\dots,d-1\)</span>, there are
+infinitely many <span class="math inline">\(m\)</span> with <span
+class="math inline">\(h_m=d-1\)</span>. Take one such <span
+class="math inline">\(m\)</span> and put <span
+class="math inline">\(u:=\kappa_m\in\{1,\dots,d-2\}\)</span> (by (ii)).
+For <span class="math inline">\(l=1,\dots,d-1\)</span> we have <span
+class="math inline">\(h_{m+l}=l\)</span> (the hole goes from column
+<span class="math inline">\(d-1\)</span> to <span
+class="math inline">\(1,2,\dots,d-1\)</span>), and <span
+class="math inline">\(\kappa_{m+l}=u+l\)</span> as long as <span
+class="math inline">\(u+l\le D-1\)</span>.</p>
+<p><em>Case A: <span class="math inline">\(u\le D-d\)</span>.</em> Then
+<span class="math inline">\(u+(d-1)\le D-1\)</span>, so <span
+class="math inline">\(\kappa_{m+d-1}=u+d-1\ge d\)</span>, while <span
+class="math inline">\(h_{m+d-1}=d-1\)</span>: this contradicts (ii).</p>
+<p><em>Case B: <span class="math inline">\(u\ge D-d+1\)</span>.</em>
+Then <span class="math inline">\(D-u\le d-1\)</span>; the card is in
+column <span class="math inline">\(D-1\)</span> at <span
+class="math inline">\(l=D-1-u\)</span>, in column <span
+class="math inline">\(1\)</span> at <span
+class="math inline">\(l=D-u\)</span>, and in column <span
+class="math inline">\(l-(D-u)+1\)</span> for <span
+class="math inline">\(D-u\le l\le d-1\)</span> (no further wrap, since
+<span class="math inline">\(l-(D-u)+1\le d-D+u\le u\le
+d-2&lt;D-1\)</span>). At <span class="math inline">\(l=d-1\)</span> the
+hole is again in column <span class="math inline">\(d-1\)</span> and the
+card in column <span class="math inline">\(u&#39;:=u-(D-d)\)</span>,
+with <span class="math inline">\(1\le u&#39;\le u-1\)</span> because
+<span class="math inline">\(D-d\ge1\)</span> and <span
+class="math inline">\(u\ge D-d+1\)</span>.</p>
+<p>So each time the hole is in column <span
+class="math inline">\(d-1\)</span>, either Case A gives a contradiction,
+or Case B occurs and at the next such time the card’s column is a
+strictly smaller positive integer. Case B cannot occur forever (positive
+integers cannot decrease strictly infinitely often), so Case A occurs at
+some time — a contradiction. Hence no such card exists. <span
+class="math inline">\(\square\)</span></p>
+<p>II.5 Conclusion of Part II</p>
+<p><strong>Theorem A.</strong> For every partition <span
+class="math inline">\(\lambda\)</span> of <span
+class="math inline">\(n\)</span> (rank <span
+class="math inline">\(k\)</span>, <span
+class="math inline">\(n=T_{k-1}+r\)</span>, <span
+class="math inline">\(1\le r\le k\)</span>) there is <span
+class="math inline">\(t\)</span> with <span
+class="math inline">\(B^t(\lambda)\in S_{k,r}\)</span>. In particular
+for <span class="math inline">\(n=T_k\)</span> there is <span
+class="math inline">\(t\)</span> with <span
+class="math inline">\(B^t(\lambda)=\delta_k\)</span>.</p>
+<p><em>Proof.</em> Take <span class="math inline">\(t=t_0\)</span> and
+<span class="math inline">\(C:=C_{t}\)</span>. Diagonal <span
+class="math inline">\(2\)</span> is full (<span
+class="math inline">\(=\{(1,1)\}\subseteq C\)</span>); <span
+class="math inline">\(C\)</span> is finite, so <span
+class="math inline">\(K:=\max\{m\ge2:\text{diagonals }2,\dots,m\text{
+are all contained in }C\}\)</span> exists, and diagonal <span
+class="math inline">\(K+1\)</span> has a hole. By Lemma 4 no cell of
+diagonal <span class="math inline">\(\ge K+2\)</span> is in <span
+class="math inline">\(C\)</span>. Therefore <span
+class="math display">\[C=\{(i,j):i+j\le K\}\ \cup\ R,\qquad
+R\subseteq\{(i,K+1-i):1\le i\le K\},\quad r&#39;:=|R|\le K-1.\]</span>
+Set <span class="math inline">\(\varepsilon_i:=1\)</span> if <span
+class="math inline">\((i,K+1-i)\in R\)</span> and <span
+class="math inline">\(0\)</span> otherwise (<span
+class="math inline">\(1\le i\le K\)</span>). Column <span
+class="math inline">\(i\le K\)</span> of <span
+class="math inline">\(C\)</span> consists of <span
+class="math inline">\((i,1),\dots,(i,K-i)\)</span> plus possibly <span
+class="math inline">\((i,K+1-i)\)</span>, so it has height <span
+class="math inline">\(K-i+\varepsilon_i\)</span>; columns <span
+class="math inline">\(&gt;K\)</span> are empty. Hence <span
+class="math inline">\(c^{(t)}\)</span> is the sequence of positive
+numbers among <span class="math inline">\(K-i+\varepsilon_i\)</span>
+(<span class="math inline">\(i=1,\dots,K\)</span>), and <span
+class="math inline">\(n=|C|=T_{K-1}+r&#39;\)</span> with <span
+class="math inline">\(0\le r&#39;\le K-1\)</span>. If <span
+class="math inline">\(r&#39;\ge1\)</span>: then <span
+class="math inline">\(T_{K-1}&lt;n\le T_K\)</span>, so <span
+class="math inline">\(K=k\)</span>, <span
+class="math inline">\(r&#39;=r\)</span>, and by (1) <span
+class="math inline">\(B^t(\lambda)=\mathrm{sort}(c^{(t)})=\lambda^\varepsilon\in
+S_{k,r}\)</span> (the sequence is already weakly decreasing by Fact 0).
+If <span class="math inline">\(r&#39;=0\)</span>: then <span
+class="math inline">\(n=T_{K-1}\)</span>, so <span
+class="math inline">\(k=K-1\)</span>, <span
+class="math inline">\(r=k\)</span>, and <span
+class="math inline">\(c^{(t)}=(K-1,K-2,\dots,1)=\delta_k\)</span>,
+i.e. <span class="math inline">\(B^t(\lambda)=\delta_k\in
+S_{k,k}\)</span>. <span class="math inline">\(\square\)</span></p>
+<h5 id="part-iii.-cyclic-partitions-and-cycles">Part III. Cyclic
+partitions and cycles</h5>
+<p><strong>Theorem B.</strong> The cyclic partitions of <span
+class="math inline">\(n=T_{k-1}+r\)</span> (<span
+class="math inline">\(1\le r\le k\)</span>) are exactly the elements of
+<span class="math inline">\(S_{k,r}\)</span>, i.e. the partitions <span
+class="math inline">\(\lambda^\varepsilon\)</span> with <span
+class="math inline">\(\varepsilon\in\{0,1\}^k\)</span> of weight <span
+class="math inline">\(r\)</span> — explicitly, the partitions whose
+parts are the positive numbers among <span
+class="math inline">\(k-1+\varepsilon_1,\ k-2+\varepsilon_2,\ \dots,\
+1+\varepsilon_{k-1},\ \varepsilon_k\)</span> with exactly <span
+class="math inline">\(r\)</span> of the <span
+class="math inline">\(\varepsilon_i\)</span> equal to <span
+class="math inline">\(1\)</span>. There are <span
+class="math inline">\(\binom kr\)</span> of them. For <span
+class="math inline">\(n=T_k\)</span> (<span
+class="math inline">\(r=k\)</span>) the only cyclic partition is <span
+class="math inline">\(\delta_k\)</span>, and every partition of <span
+class="math inline">\(T_k\)</span> reaches <span
+class="math inline">\(\delta_k\)</span>.</p>
+<p><em>Proof.</em> (<span class="math inline">\(\supseteq\)</span>)
+Lemma 1. (<span class="math inline">\(\subseteq\)</span>) Let <span
+class="math inline">\(\lambda\)</span> be cyclic, <span
+class="math inline">\(B^i(\lambda)=\lambda\)</span> with <span
+class="math inline">\(i\ge1\)</span>. By Theorem A, <span
+class="math inline">\(B^t(\lambda)\in S_{k,r}\)</span> for some <span
+class="math inline">\(t\)</span>. Choose an integer <span
+class="math inline">\(q\)</span> with <span class="math inline">\(qi\ge
+t\)</span>. Then <span
+class="math inline">\(\lambda=B^{qi}(\lambda)=B^{qi-t}\big(B^t(\lambda)\big)\in
+S_{k,r}\)</span> by <span class="math inline">\(B\)</span>-invariance of
+<span class="math inline">\(S_{k,r}\)</span> (Lemma 1). The count <span
+class="math inline">\(\binom kr\)</span> is Fact 0 (injectivity) and
+<span class="math inline">\(|W_{k,r}|=\binom kr\)</span>. The triangular
+statements are the case <span class="math inline">\(r=k\)</span> (<span
+class="math inline">\(S_{k,k}=\{\delta_k\}\)</span>) together with
+Theorem A. <span class="math inline">\(\square\)</span></p>
+<p><strong>Theorem C.</strong> The number of distinct cycles of <span
+class="math inline">\(B\)</span> on the partitions of <span
+class="math inline">\(n=T_{k-1}+r\)</span> is <span
+class="math display">\[N(k,r)=\frac1k\sum_{d\mid\gcd(k,r)}\varphi(d)\binom{k/d}{r/d},\]</span>
+where <span class="math inline">\(\varphi\)</span> is Euler’s function.
+For <span class="math inline">\(n=T_k\)</span> this equals <span
+class="math inline">\(1\)</span>.</p>
+<p><em>Proof.</em> Every cycle of <span class="math inline">\(B\)</span>
+consists of cyclic partitions, hence (Theorem B) lies in <span
+class="math inline">\(S_{k,r}\)</span>, and every element of <span
+class="math inline">\(S_{k,r}\)</span> lies on a cycle (Lemma 1). By
+Lemma 1 and the injectivity of <span
+class="math inline">\(\varepsilon\mapsto\lambda^\varepsilon\)</span>,
+the cycles of <span class="math inline">\(B\)</span> on <span
+class="math inline">\(S_{k,r}\)</span> correspond bijectively to the
+orbits of the cyclic group <span
+class="math inline">\(G=\langle\sigma\rangle=\{\sigma^j:0\le j\le
+k-1\}\)</span> (of order <span class="math inline">\(k\)</span>) acting
+on <span class="math inline">\(W_{k,r}\)</span> by rotation.</p>
+<p><em>Orbit count (Burnside, with proof).</em> Count pairs <span
+class="math inline">\((g,\varepsilon)\in G\times W_{k,r}\)</span> with
+<span class="math inline">\(g\varepsilon=\varepsilon\)</span> in two
+ways: <span class="math inline">\(\sum_{g\in
+G}|\mathrm{Fix}(g)|=\sum_{\varepsilon}|\mathrm{Stab}(\varepsilon)|=\sum_{\varepsilon}\frac{|G|}{|G\varepsilon|}=|G|\cdot\#\text{orbits}\)</span>
+(orbit–stabiliser; each orbit <span class="math inline">\(O\)</span>
+contributes <span class="math inline">\(\sum_{\varepsilon\in
+O}|G|/|O|=|G|\)</span>). Hence <span
+class="math inline">\(\#\text{orbits}=\frac1k\sum_{j=0}^{k-1}|\mathrm{Fix}(\sigma^j)|\)</span>.</p>
+<p><em>Fixed points of <span
+class="math inline">\(\sigma^j\)</span>.</em> <span
+class="math inline">\(\sigma^j\)</span> shifts positions by <span
+class="math inline">\(j\)</span> modulo <span
+class="math inline">\(k\)</span>; its cycles on <span
+class="math inline">\(\{1,\dots,k\}\cong\mathbb Z_k\)</span> are the
+cosets <span class="math inline">\(i+g\mathbb Z_k\)</span> where <span
+class="math inline">\(g=\gcd(j,k)\)</span> (because <span
+class="math inline">\(\{jm\bmod k\}=g\mathbb Z_k\)</span>), so there are
+<span class="math inline">\(g\)</span> cycles each of length <span
+class="math inline">\(k/g\)</span>. A word is fixed by <span
+class="math inline">\(\sigma^j\)</span> iff it is constant on each
+cycle; choosing <span class="math inline">\(a\)</span> cycles to carry
+<span class="math inline">\(1\)</span>’s gives weight <span
+class="math inline">\(a\,k/g\)</span>. So <span
+class="math inline">\(|\mathrm{Fix}(\sigma^j)|=\binom{g}{rg/k}\)</span>
+if <span class="math inline">\((k/g)\mid r\)</span>, and <span
+class="math inline">\(0\)</span> otherwise. The number of <span
+class="math inline">\(j\in\{0,\dots,k-1\}\)</span> with <span
+class="math inline">\(\gcd(j,k)=g\)</span> is <span
+class="math inline">\(\varphi(k/g)\)</span> (write <span
+class="math inline">\(j=gj&#39;\)</span>, <span
+class="math inline">\(0\le j&#39;&lt;k/g\)</span>, <span
+class="math inline">\(\gcd(j&#39;,k/g)=1\)</span>). Putting <span
+class="math inline">\(d=k/g\)</span> (so <span
+class="math inline">\(d\mid k\)</span>, and the term is nonzero iff
+<span class="math inline">\(d\mid r\)</span>): <span
+class="math display">\[N(k,r)=\frac1k\sum_{d\mid k,\ d\mid
+r}\varphi(d)\binom{k/d}{r/d}=\frac1k\sum_{d\mid\gcd(k,r)}\varphi(d)\binom{k/d}{r/d}.\]</span>
+For <span class="math inline">\(r=k\)</span>: <span
+class="math inline">\(\sum_{d\mid
+k}\varphi(d)\binom{k/d}{k/d}=\sum_{d\mid k}\varphi(d)=k\)</span>, so
+<span class="math inline">\(N(k,k)=1\)</span> (consistent with <span
+class="math inline">\(S_{k,k}=\{\delta_k\}\)</span>, <span
+class="math inline">\(B(\delta_k)=\delta_k\)</span>). <span
+class="math inline">\(\square\)</span></p>
+<h5 id="summary-of-the-answers-to-cell-1">Summary of the answers to cell
+1</h5>
+<ul>
+<li><p><span class="math inline">\(n=T_k\)</span>: every partition
+reaches <span class="math inline">\(\delta_k\)</span> (Theorem A), and
+<span class="math inline">\(\delta_k\)</span> is the unique cyclic
+partition (Theorem B), forming the unique cycle (a fixed
+point).</p></li>
+<li><p><span class="math inline">\(n=T_{k-1}+r\)</span>, <span
+class="math inline">\(1\le r\le k\)</span>: the cyclic partitions are
+exactly the <span class="math inline">\(\binom kr\)</span> partitions
+<span class="math inline">\(\lambda^\varepsilon\)</span>, <span
+class="math inline">\(\varepsilon\in\{0,1\}^k\)</span> of weight <span
+class="math inline">\(r\)</span> (Theorem B); <span
+class="math inline">\(B\)</span> acts on them by the rotation <span
+class="math inline">\(\varepsilon\mapsto(\varepsilon_k,\varepsilon_1,\dots,\varepsilon_{k-1})\)</span>
+(Lemma 1); the number of cycles is <span
+class="math inline">\(\frac1k\sum_{d\mid\gcd(k,r)}\varphi(d)\binom{k/d}{r/d}\)</span>
+(Theorem C).</p></li>
+</ul>
+<p><em>Examples.</em> <span class="math inline">\(n=8=T_3+2\)</span>
+(<span class="math inline">\(k=4,r=2\)</span>): cyclic partitions <span
+class="math inline">\(\lambda^\varepsilon\)</span> for <span
+class="math inline">\(\varepsilon\in\{1100,1010,1001,0110,0101,0011\}\)</span>:
+<span
+class="math inline">\((4,3,1),(4,2,2),(4,2,1,1),(3,3,2),(3,3,1,1),(3,2,2,1)\)</span>;
+cycles: <span class="math inline">\(\{1100,0110,0011,1001\}\)</span> and
+<span class="math inline">\(\{1010,0101\}\)</span>, so <span
+class="math inline">\(N(4,2)=\frac14(\binom42+\varphi(2)\binom21)=2\)</span>.</p>
+<p><em>Independent exact check (not part of the proof).</em> The script
+<code>verifica_cella1.py</code> (exact integer arithmetic) enumerates
+all partitions of every <span class="math inline">\(n\le40\)</span>,
+computes the cyclic partitions and the number of cycles by brute force,
+and confirms they equal <span class="math inline">\(S_{k,r}\)</span> and
+<span class="math inline">\(N(k,r)\)</span>; it also checks Lemma 2 on
+all compositions of <span class="math inline">\(n\le14\)</span>. Runtime
+7.0 s.</p>
+<h5 id="verification-instructions-dependencies-timings">3. Verification:
+instructions, dependencies, timings</h5>
+<p>Python 3 standard library only. Scripts (also saved in
+<code>runs/p3_c1/sandbox/</code> and re-run in
+<code>runs/p3_c1/verifica/</code>): - code_1 (python, rigor
+<code>exact</code>): Exact brute-force check for n=1..40: cyclic
+partitions equal S_{k,r}; number of cycles equals the necklace formula;
+for n=T_k the only cyclic partition is delta_k. Also checks the
+potential Lemma 2 (monotonicity and exact equality condition) on all
+compositions of n&lt;=14. Finite set covered: all partitions of
+n&lt;=40, all compositions of n&lt;=14. Wall-clock 7.0 s. File:
+runs/p3_c1/sandbox/verifica_cella1.py</p>
+<p>Trusted re-runs by the orchestrator (exit code, wall clock, output):
+- orchestrator re-ran code_1.py (python3, clean copy of the researcher
+sandbox): exit 0 in 7.0s; stdout: ‘OK: n=1..40 e potenziale su
+composizioni di n&lt;=14, tempo 7.0s’; stderr: ’ ’</p>
+<h5 id="sources-and-contribution">4. Sources and contribution</h5>
+<ul>
+<li><p>arXiv:1503.00885 (Drensky, survey; abstract only — context:
+attribution of the characterisation to Brandt 1982)</p></li>
+<li><p>arXiv:2607.17194 (Meštrović, survey; abstract only —
+context)</p></li>
+<li><p>arXiv:1101.1546 (Hart–Khan–Khan, exposition of Toom’s proof;
+abstract only — context)</p></li>
+<li><p>arXiv:2208.14496 (Pham; abstract only — context: necklace
+parametrisation of orbits)</p></li>
+<li><p>Position with respect to the literature: The cell’s statement is
+classical: 1503.00885 (Drensky) and 2607.17194 (Meštrović) survey it and
+attribute the characterisation of cyclic partitions and the necklace
+count of cycles to Brandt (1982); 1101.1546 (Hart–Khan–Khan) expounds
+Toom’s proof of convergence to δ_k for triangular n; 2208.14496 (Pham)
+uses Brandt’s necklace parametrisation of orbits. I have not read the
+full papers, only the abstracts; nothing from them is used as a
+hypothesis. My proof follows the general strategy of “diagonal invariant
++ monotone potential” but the hole-chasing lemma and all details are
+written out in full here, so the result is proved, not cited.</p></li>
+<li><p>Contribution: the proof above is written out in full by the
+team’s Researcher and checked by two independent judges and by a
+human.</p></li>
+</ul>
+<h5 id="limits-and-unresolved-parts">5. Limits and unresolved parts</h5>
+<p>Gaps declared by the author (all accepted by the judges): - Lemma 4
+(hole lemma) is the most delicate step; the case analysis A/B on the
+card’s column is written out, but the referee should re-check the index
+bookkeeping (in particular that in Case B the card wraps exactly once
+before the hole returns to column d-1, and that u’ = u-(D-d) is ≥ 1). -
+Burnside’s lemma and the orbit structure of a rotation on Z_k are proved
+briefly inline (orbit–stabiliser is used without proof); these are
+textbook facts.</p>
+<h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
+<h4 id="run-p3_c1">Run <code>p3_c1</code></h4>
+<dl>
+<dt>Iterazione 1 — attempt_001</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>direct_proof</code>,
+sotto-obiettivo: Prove the complete statement of cell 1: (a) for n = T_k
+every partition reaches δ_k and δ_k is the only cyclic partition; (b)
+for n = T_{k-1}+r, 1 ≤ r ≤ k, the cyclic partitions are exactly
+δ_{k-1}+ε with ε ∈ {0,1}^k of weight r, and the number of cycles is the
+number of binary necklaces of length k with r black beads, (1/k) Σ_{d |
+gcd(k,r)} φ(d) C(k/d, r/d).. Stato dichiarato:
+<code>CELL_SOLVED_CANDIDATE</code>. <em>Perché questa scelta</em>: No
+previous attempt or blocker; this is the first natural subgoal and it
+covers the whole cell. The potential + diagonal-rotation + CRT route is
+the shortest fully self-contained argument I know that handles all n at
+once (not only triangular n), and it yields the cyclic set and the cycle
+count with the same machinery. An exact brute-force enumeration for n ≤
+60 was run as a sanity check of the statement (not as part of the
+proof). <em>Rispetto allo stato dell’arte</em>: The abstracts say the
+cyclic partitions were characterized and counted by Brandt (1982), with
+orbits parametrized by necklaces of black and white beads (2208.14496v1,
+2607.17194v1), and that for triangular n the process converges to the
+unique fixed point (1503.00885v1). 1101.1546v3 (Hart–Khan–Khan) states
+that Toom’s proof of the triangular case can be generalized via the
+Chinese Remainder Theorem. I have NOT read the full papers; only the
+abstracts. My proof follows the spirit indicated in the abstract of
+1101.1546v3 (CRT on diagonals of coprime lengths), combined with a
+potential-function argument to justify that B is a pure diagonal
+rotation along every cycle; every step is written out here in full, so
+nothing is cited as a proof. The necklace formula is Brandt’s statement
+(CITED for context only); it is proved inline via Burnside’s lemma,
+which is also proved inline. <strong>Referee</strong>: verdetto
+<code>(nessun verdetto)</code>.</p>
+</dd>
+</dl>
+<dl>
+<dt>Iterazione 2 — attempt_002</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>direct_proof</code>,
+sotto-obiettivo: Complete proof of cell 1: (a) every partition of n
+eventually enters the B-invariant family S_{k,r}; (b) S_{k,r} is exactly
+the set of cyclic partitions (for n=T_k this is {δ_k}); (c) the number
+of cycles is the necklace number (1/k)Σ_{d|gcd(k,r)} φ(d) C(k/d,r/d)..
+Stato dichiarato: <code>CELL_SOLVED_CANDIDATE</code>. <em>Perché questa
+scelta</em>: No blocker/failed attempts recorded; this is the first
+attempt. The diagonal-potential route (in the spirit of Akin–Davis/Toom)
+gives a single self-contained argument covering both the triangular and
+non-triangular case at once, with every step elementary and checkable;
+the cycle count then follows from the explicit rotation action.
+<em>Rispetto allo stato dell’arte</em>: The cell’s statement is
+classical: 1503.00885 (Drensky) and 2607.17194 (Meštrović) survey it and
+attribute the characterisation of cyclic partitions and the necklace
+count of cycles to Brandt (1982); 1101.1546 (Hart–Khan–Khan) expounds
+Toom’s proof of convergence to δ_k for triangular n; 2208.14496 (Pham)
+uses Brandt’s necklace parametrisation of orbits. I have not read the
+full papers, only the abstracts; nothing from them is used as a
+hypothesis. My proof follows the general strategy of "diagonal invariant
++ monotone potential" but the hole-chasing lemma and all details are
+written out in full here, so the result is proved, not cited.
+<strong>Referee</strong>: verdetto <code>UNKNOWN_STATUS</code>
+(review_status <code>READY_FOR_HUMAN</code>). <em>Prossimo passo
+richiesto</em>: Human reviews the exact target, proof and evidence, then
+approves explicit claims</p>
+</dd>
+</dl>
+<h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</h3>
+<pre
+data-caption="attempt\_001 code\_1 [python, rigore exact] — Sanity check (not part of the proof): exact brute-force enumeration of all partitions of n — verdetto del Referee: (nessun verdetto)"><code>&quot;&quot;&quot;Verifica esatta (interi) della descrizione delle partizioni cicliche e del numero di cicli
+del solitario bulgaro per n = 1..N_MAX. Confronta l&#39;enumerazione a forza bruta con:
+  - insieme S(n) = { delta_{k-1} + epsilon : epsilon in {0,1}^k, |epsilon| = r }, n = T_{k-1}+r;
+  - numero di cicli = (1/k) * sum_{d | gcd(k,r)} phi(d) * C(k/d, r/d)  (collane binarie).
+Serve solo come controllo di sanita&#39; della prova: non e&#39; una dimostrazione (copre un insieme finito).&quot;&quot;&quot;
+from math import comb, gcd
+from itertools import combinations
+import sys, time
+
+
+def partizioni(n, massimo=None):
+    &quot;&quot;&quot;Genera tutte le partizioni di n come tuple debolmente decrescenti.&quot;&quot;&quot;
+    if massimo is None:
+        massimo = n
+    if n == 0:
+        yield ()
+        return
+    for prima in range(min(n, massimo), 0, -1):
+        for resto in partizioni(n - prima, prima):
+            yield (prima,) + resto
+
+
+def shift(lam):
+    &quot;&quot;&quot;La mossa B: toglie una carta da ogni pila e crea una nuova pila di lunghezza s.&quot;&quot;&quot;
+    nuove = [p - 1 for p in lam if p &gt; 1] + [len(lam)]
+    return tuple(sorted(nuove, reverse=True))
+
+
+def rango(n):
+    &quot;&quot;&quot;Restituisce (k, r) con n = T_{k-1} + r, 1 &lt;= r &lt;= k.&quot;&quot;&quot;
+    k = 1
+    while k * (k + 1) // 2 &lt; n:
+        k += 1
+    return k, n - (k - 1) * k // 2
+
+
+def insieme_S(k, r):
+    &quot;&quot;&quot;Le partizioni delta_{k-1} + epsilon previste dalla prova.&quot;&quot;&quot;
+    risultato = set()
+    for posizioni in combinations(range(k), r):
+        parti = [k - 1 - i + (1 if i in posizioni else 0) for i in range(k)]
+        risultato.add(tuple(p for p in parti if p &gt; 0))
+    return risultato
+
+
+def phi(d):
+    &quot;&quot;&quot;Funzione di Eulero, per interi piccoli.&quot;&quot;&quot;
+    return sum(1 for j in range(1, d + 1) if gcd(j, d) == 1)
+
+
+def numero_collane(k, r):
+    &quot;&quot;&quot;Numero di collane binarie di lunghezza k con r perle nere (Burnside).&quot;&quot;&quot;
+    return sum(phi(d) * comb(k // d, r // d) for d in range(1, k + 1)
+               if k % d == 0 and r % d == 0) // k
+
+
+def cicli_forza_bruta(n):
+    &quot;&quot;&quot;Trova le partizioni cicliche e il numero di cicli iterando B da ogni partizione.&quot;&quot;&quot;
+    cicliche, visitate = set(), set()
+    for lam in partizioni(n):
+        orbita, corrente = [], lam
+        while corrente not in visitate and corrente not in orbita:
+            orbita.append(corrente)
+            corrente = shift(corrente)
+        if corrente in orbita:
+            cicliche.update(orbita[orbita.index(corrente):])
+        visitate.update(orbita)
+    # conta i cicli: componenti dell&#39;insieme ciclico sotto B
+    resto, numero_cicli = set(cicliche), 0
+    while resto:
+        mu = resto.pop()
+        numero_cicli += 1
+        corrente = shift(mu)
+        while corrente != mu:
+            resto.discard(corrente)
+            corrente = shift(corrente)
+    return cicliche, numero_cicli
+
+
+def main(n_max):
+    inizio = time.time()
+    for n in range(1, n_max + 1):
+        k, r = rango(n)
+        cicliche, numero_cicli = cicli_forza_bruta(n)
+        assert cicliche == insieme_S(k, r), f&quot;insieme ciclico errato per n={n}&quot;
+        assert numero_cicli == numero_collane(k, r), f&quot;numero di cicli errato per n={n}&quot;
+        if n == k * (k + 1) // 2:
+            assert cicliche == {tuple(range(k, 0, -1))}, f&quot;n={n} triangolare: attesa solo delta_k&quot;
+    print(f&quot;OK: n = 1..{n_max}, tempo {time.time() - inizio:.1f}s&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main(int(sys.argv[1]) if len(sys.argv) &gt; 1 else 45)
+</code></pre>
+<pre
+data-caption="attempt\_002 code\_1 [python, rigore exact] — Exact brute-force check for n=1..40: cyclic partitions equal S\_\{k,r\}; number of cycles equ — approvato dal Referee"><code>&quot;&quot;&quot;Verifica esatta (interi) delle conclusioni della cella 1 per n &lt;= N_MAX.
+
+Per ogni n: enumera tutte le partizioni, calcola le partizioni cicliche
+per forza bruta, le confronta con l&#39;insieme S_{k,r} = {lambda^eps},
+conta i cicli e confronta con la formula delle collane.
+Controlla anche la monotonia del potenziale Phi sulle composizioni.
+&quot;&quot;&quot;
+from math import comb, gcd
+from itertools import combinations, product
+import time
+
+N_MAX = 40
+
+
+def partizioni(n, massimo=None):
+    &quot;&quot;&quot;Genera tutte le partizioni di n come tuple decrescenti.&quot;&quot;&quot;
+    if massimo is None:
+        massimo = n
+    if n == 0:
+        yield ()
+        return
+    for prima in range(min(n, massimo), 0, -1):
+        for resto in partizioni(n - prima, prima):
+            yield (prima,) + resto
+
+
+def shift_B(lam):
+    &quot;&quot;&quot;Applica la mossa B: toglie 1 da ogni parte e aggiunge la parte len(lam).&quot;&quot;&quot;
+    parti = [p - 1 for p in lam if p &gt; 1] + [len(lam)]
+    return tuple(sorted(parti, reverse=True))
+
+
+def rango(n):
+    &quot;&quot;&quot;Restituisce (k, r) con n = T_{k-1} + r, 1 &lt;= r &lt;= k.&quot;&quot;&quot;
+    k = 1
+    while k * (k + 1) // 2 &lt; n:
+        k += 1
+    return k, n - (k - 1) * k // 2
+
+
+def famiglia_S(k, r):
+    &quot;&quot;&quot;Insieme S_{k,r}: parti positive tra k-i+eps_i, eps binaria di peso r.&quot;&quot;&quot;
+    insieme = set()
+    for posizioni in combinations(range(1, k + 1), r):
+        parti = [k - i + (1 if i in posizioni else 0) for i in range(1, k + 1)]
+        insieme.add(tuple(p for p in parti if p &gt; 0))
+    return insieme
+
+
+def cicliche_forza_bruta(n):
+    &quot;&quot;&quot;Partizioni cicliche di n: quelle che si trovano su un ciclo di B.&quot;&quot;&quot;
+    cicliche = set()
+    for lam in partizioni(n):
+        visto, corrente = set(), lam
+        while corrente not in visto:
+            visto.add(corrente)
+            corrente = shift_B(corrente)
+        # &#39;corrente&#39; e&#39; sul ciclo: percorrilo
+        inizio = corrente
+        while True:
+            cicliche.add(corrente)
+            corrente = shift_B(corrente)
+            if corrente == inizio:
+                break
+    return cicliche
+
+
+def numero_cicli(cicliche):
+    &quot;&quot;&quot;Conta i cicli di B sull&#39;insieme delle partizioni cicliche.&quot;&quot;&quot;
+    restanti, cicli = set(cicliche), 0
+    while restanti:
+        corrente = next(iter(restanti))
+        while corrente in restanti:
+            restanti.remove(corrente)
+            corrente = shift_B(corrente)
+        cicli += 1
+    return cicli
+
+
+def phi_eulero(m):
+    &quot;&quot;&quot;Funzione phi di Eulero.&quot;&quot;&quot;
+    return sum(1 for j in range(1, m + 1) if gcd(j, m) == 1)
+
+
+def formula_collane(k, r):
+    &quot;&quot;&quot;(1/k) * sum_{d | gcd(k,r)} phi(d) * C(k/d, r/d).&quot;&quot;&quot;
+    g = gcd(k, r)
+    totale = sum(phi_eulero(d) * comb(k // d, r // d)
+                 for d in range(1, g + 1) if g % d == 0)
+    assert totale % k == 0
+    return totale // k
+
+
+def potenziale(comp):
+    &quot;&quot;&quot;Phi(c) = somma su tutte le carte di (colonna + altezza).&quot;&quot;&quot;
+    return sum(i * c + c * (c + 1) // 2 for i, c in enumerate(comp, start=1))
+
+
+def shift_ordinato(comp):
+    &quot;&quot;&quot;B tilde: (s, c_1-1, ..., c_s-1) con gli zeri cancellati.&quot;&quot;&quot;
+    return tuple(x for x in (len(comp),) + tuple(c - 1 for c in comp) if x &gt; 0)
+
+
+def composizioni(n):
+    &quot;&quot;&quot;Tutte le composizioni di n (successioni di interi positivi).&quot;&quot;&quot;
+    if n == 0:
+        yield ()
+        return
+    for prima in range(1, n + 1):
+        for resto in composizioni(n - prima):
+            yield (prima,) + resto
+
+
+def controlla_potenziale(n_max):
+    &quot;&quot;&quot;Verifica Phi(B~c) &lt;= Phi(c), uguaglianza sse gli 1 sono un segmento finale.&quot;&quot;&quot;
+    for n in range(1, n_max + 1):
+        for comp in composizioni(n):
+            prima, dopo = potenziale(comp), potenziale(shift_ordinato(comp))
+            uni = [i for i, c in enumerate(comp) if c == 1]
+            terminale = all(c == 1 for c in comp[uni[0]:]) if uni else True
+            assert dopo &lt;= prima and (dopo == prima) == terminale, comp
+
+
+inizio = time.time()
+for n in range(1, N_MAX + 1):
+    k, r = rango(n)
+    cicliche = cicliche_forza_bruta(n)
+    assert cicliche == famiglia_S(k, r), n
+    assert numero_cicli(cicliche) == formula_collane(k, r), n
+    if r == k:
+        assert cicliche == {tuple(range(k, 0, -1))}
+controlla_potenziale(14)
+print(f&quot;OK: n=1..{N_MAX} e potenziale su composizioni di n&lt;=14, &quot;
+      f&quot;tempo {time.time()-inizio:.1f}s&quot;)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 7.0s; stdout: ’OK: n=1..40 e potenziale su composizioni di n&lt;=14, tempo 7.0s’; stderr: ’’</code></p>
+<h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
+<div class="thebibliography">
+<p><span>99</span> Serguei Popov. <em>Random Bulgarian solitaire</em>.
+arXiv:math/0401385v2 (2004). <a
+href="http://arxiv.org/abs/math/0401385v2"
+class="uri">http://arxiv.org/abs/math/0401385v2</a> Vesselin Drensky.
+<em>The Bulgarian solitaire and the mathematics around it</em>.
+arXiv:1503.00885v1 (2015). <a href="http://arxiv.org/abs/1503.00885v1"
+class="uri">http://arxiv.org/abs/1503.00885v1</a> Romeo Meštrović. <em>A
+short survey the game Bulgarian solitaire and related games</em>.
+arXiv:2607.17194v1 (2026). <a href="http://arxiv.org/abs/2607.17194v1"
+class="uri">http://arxiv.org/abs/2607.17194v1</a> Therese A. Hart,
+Gabriel Khan, Mizan R. Khan. <em>Revisiting Toom’s proof of Bulgarian
+Solitaire</em>. arXiv:1101.1546v3 (2011). <a
+href="http://arxiv.org/abs/1101.1546v3"
+class="uri">http://arxiv.org/abs/1101.1546v3</a> Kimmo Eriksson, Markus
+Jonsson abd Jonas Sjöstrand. <em>An exponential limit shape of random
+$q$-proportion Bulgarian solitaire</em>. arXiv:1703.07102v1 (2017). <a
+href="http://arxiv.org/abs/1703.07102v1"
+class="uri">http://arxiv.org/abs/1703.07102v1</a> Nhung Pham.
+<em>Limiting behavior in growth of Bulgarian Solitaire orbits</em>.
+arXiv:2208.14496v1 (2022). <a href="http://arxiv.org/abs/2208.14496v1"
+class="uri">http://arxiv.org/abs/2208.14496v1</a></p>
+</div>
+</body>
+</html>

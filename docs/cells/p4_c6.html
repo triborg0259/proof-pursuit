@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)" />
+  <meta name="dcterms.date" content="2026-09-26" />
+  <title>Proof Pursuit — problem 4, part 6</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — problem 4, part 6</h1>
+<p class="author">Team Proof Pursuit (Researcher: T. Tumini; Referee:
+gabundos; Creative: M. Renzi; gio3r3gio)</p>
+<p class="date">2026-09-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#come-leggere-questo-rapporto"
+id="toc-come-leggere-questo-rapporto">Come leggere questo
+rapporto</a></li>
+<li><a href="#problem-4-disjoint-congruence-classes-and-large-gcd"
+id="toc-problem-4-disjoint-congruence-classes-and-large-gcd">Problem 4 —
+Disjoint congruence classes and large gcd</a>
+<ul>
+<li><a href="#cella-6-13-punti-stato-parziale"
+id="toc-cella-6-13-punti-stato-parziale">Cella 6 (13 punti) — stato:
+parziale</a>
+<ul>
+<li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti"
+id="toc-decisioni-degli-agenti">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo"
+id="toc-codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arxiv-literature-consulted"
+id="toc-arxiv-literature-consulted">arXiv literature consulted</a></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="come-leggere-questo-rapporto">Come leggere
+questo rapporto</h1>
+<p>Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team
+(mai “risolto” senza revisione umana), la consegna con la prova, poi la
+traccia delle decisioni degli agenti (Researcher: famiglia e motivo;
+Referee: verdetto ed errore fatale; Creative: quando e perché è
+intervenuto) e il codice su cui il tentativo poggia con l’esito della
+riesecuzione fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO
+e CONGETTURA restano distinti. L’architettura del sistema è descritta
+nel README del repository.</p>
+<h1 id="problem-4-disjoint-congruence-classes-and-large-gcd">Problem 4 —
+Disjoint congruence classes and large gcd</h1>
+<h2 id="cella-6-13-punti-stato-parziale">Cella 6 (13 punti) — stato:
+parziale</h2>
+<h5 id="parte-6-c6-beyond-the-boundary">Parte 6 (C6) — Beyond the
+boundary</h5>
+<p><strong>Punteggio:</strong> 13 points · <strong>Valutazione:</strong>
+Judged · <strong>Open question</strong></p>
+<p>Three directions beyond the certified range; any one of them counts.
+Any of the following.</p>
+<ol>
+<li><p>Decide a size <span class="math inline">\(k \ge
+25\)</span>.</p></li>
+<li><p>The asymptotic form. It is known that a pairwise disjoint family
+of size <span class="math inline">\(k\)</span> always has a pair with
+<span class="math display">\[\gcd(m_i, m_j) \;\ge\; k \cdot \exp\!\left(
+-(2 + o(1)) \frac{\log k}{\log\log k} \right),\]</span> which is <span
+class="math inline">\(k^{1 - o(1)}\)</span> but not linear in <span
+class="math inline">\(k\)</span>. Prove the statement in full, or prove
+the weaker bound <span class="math inline">\(\gcd(m_i, m_j) \ge
+ck\)</span> for some absolute constant <span class="math inline">\(c
+&gt; 0\)</span>, or improve the exponential factor above.</p></li>
+<li><p>The group form. Let <span class="math inline">\(G\)</span> be a
+group, let <span class="math inline">\(G_1, \ldots, G_k\)</span> be
+subgroups of finite index <span class="math inline">\(n_i = [G :
+G_i]\)</span>, and let <span class="math inline">\(x_1 G_1, \ldots, x_k
+G_k\)</span> be pairwise disjoint cosets. Is there a pair <span
+class="math inline">\(i &lt; j\)</span> with <span
+class="math inline">\(\gcd(n_i, n_j) \ge k\)</span>? This is known for
+<span class="math inline">\(k \le 5\)</span> and open for every <span
+class="math inline">\(k \ge 6\)</span>; settling <span
+class="math inline">\(k = 6\)</span> counts as progress.</p></li>
+</ol>
+<p><em>(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
+<p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
+<code>OPEN. Any of: (a) decide a size k &gt;= 25; (b) prove gcd &gt;= ck for an absolute c &gt; 0 or improve the known factor k exp(-(2+o(1)) log k / log log k); (c) the group form (disjoint cosets of finite-index subgroups), settle k = 6.</code></p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> bozza parziale in
+inglese in submission/ (parziali.py)</p>
+<h3 id="consegna-prova">Consegna (prova)</h3>
+<h4 id="problema-4-parte-6-bozza-di-consegna-parziale">Problema 4 —
+Parte 6 — bozza di consegna PARZIALE</h4>
+<p><strong>Stato dichiarato: PARZIALE.</strong> Nessuna soluzione
+completa: qui sotto ciò che è stabilito, la formalizzazione, la
+posizione rispetto alla letteratura e ciò che resta aperto. Nulla è
+dichiarato dimostrato oltre quanto scritto.</p>
+<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
+<p><strong>Richiesta ufficiale.</strong> ## Parte 6 (C6) — Beyond the
+boundary</p>
+<p><strong>Punteggio:</strong> 13 points · <strong>Valutazione:</strong>
+Judged · <strong>Open question</strong></p>
+<p>Three directions beyond the certified range; any one of them counts.
+Any of the following.</p>
+<ol>
+<li><p>Decide a size <span class="math inline">\(k \ge
+25\)</span>.</p></li>
+<li><p>The asymptotic form. It is known that a pairwise disjoint family
+of size <span class="math inline">\(k\)</span> always has a pair with
+<span class="math display">\[\gcd(m_i, m_j) \;\ge\; k \cdot \exp\!\left(
+-(2 + o(1)) \frac{\log k}{\log\log k} \right),\]</span> which is <span
+class="math inline">\(k^{1 - o(1)}\)</span> but not linear in <span
+class="math inline">\(k\)</span>. Prove the statement in full, or prove
+the weaker bound <span class="math inline">\(\gcd(m_i, m_j) \ge
+ck\)</span> for some absolute constant <span class="math inline">\(c
+&gt; 0\)</span>, or improve the exponential factor above.</p></li>
+<li><p>The group form. Let <span class="math inline">\(G\)</span> be a
+group, let <span class="math inline">\(G_1, \ldots, G_k\)</span> be
+subgroups of finite index <span class="math inline">\(n_i = [G :
+G_i]\)</span>, and let <span class="math inline">\(x_1 G_1, \ldots, x_k
+G_k\)</span> be pairwise disjoint cosets. Is there a pair <span
+class="math inline">\(i &lt; j\)</span> with <span
+class="math inline">\(\gcd(n_i, n_j) \ge k\)</span>? This is known for
+<span class="math inline">\(k \le 5\)</span> and open for every <span
+class="math inline">\(k \ge 6\)</span>; settling <span
+class="math inline">\(k = 6\)</span> counts as progress.</p></li>
+</ol>
+<p><em>(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
+<p><strong>Cosa consegniamo.</strong> Nessuna prova. Segnalazione
+rilevante: il bound asintotico citato nell’enunciato è già stato
+migliorato in letteratura.</p>
+<h5 id="dimostrazione">2. Dimostrazione</h5>
+<p>Fornal–Sun <span>[</span>2607.24655<span>]</span> (luglio 2026)
+dimostrano <span class="math inline">\(\max\gcd(m_i,m_j)\gg
+k\exp(-(2+o(1))\sqrt{\log k/\log\log k})\)</span>, con radice quadrata
+all’esponente: un miglioramento del fattore esponenziale richiesto in
+(b). Riprodurre la loro prova per esteso (grafo dei gcd, lemma
+strutturale, partizione crivellante, inversione di Möbius, trasformata
+di Fourier discreta) conterebbe secondo le regole; non fatto.</p>
+<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
+dipendenze, tempi</h5>
+<p>Codice disponibile (Python 3, libreria standard; ogni script gira in
+meno di un minuto): - Nessun codice ancora.</p>
+<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
+<p>Letteratura arXiv (ricerca deterministica
+<code>tools/cerca_letteratura.sh</code>, abstract letti, non usata come
+prova): - arXiv:2603.26043v1 — Finiteness of Disjoint Covering Systems
+with Precisely One Repeated Modulus (Yu Hashimoto, 2026); solo abstract
+letto. - arXiv:1511.04293v1 — Searching for Disjoint Covering Systems
+with Precisely One Repeated Modulus (Shalosh B. Ekhad, Aviezri S.
+Fraenkel, Doron Zeilberger, 2015); solo abstract letto. -
+arXiv:2607.24655v1 — On the problem of large gcd for disjoint residue
+classes (Jan Fornal, Yu-Chen Sun, 2026); solo abstract letto. -
+arXiv:2608.15873v1 — Two Questions on <span
+class="math inline">\(G\)</span>-harmonic Tuples (Murali Menon, 2026);
+solo abstract letto. <span>[</span>2607.24655<span>]</span>.</p>
+<h5 id="limiti-e-parti-irrisolte">5. Limiti e parti irrisolte</h5>
+<p>Tutto; la via (b) via riproduzione della prova è quella indicata.</p>
+<h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
+<h4 id="run-p4_c6">Run <code>p4_c6</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
+<div class="thebibliography">
+<p><span>99</span> Yu Hashimoto. <em>Finiteness of Disjoint Covering
+Systems with Precisely One Repeated Modulus</em>. arXiv:2603.26043v1
+(2026). <a href="http://arxiv.org/abs/2603.26043v1"
+class="uri">http://arxiv.org/abs/2603.26043v1</a> Shalosh B. Ekhad,
+Aviezri S. Fraenkel, Doron Zeilberger. <em>Searching for Disjoint
+Covering Systems with Precisely One Repeated Modulus</em>.
+arXiv:1511.04293v1 (2015). <a href="http://arxiv.org/abs/1511.04293v1"
+class="uri">http://arxiv.org/abs/1511.04293v1</a> Jan Fornal, Yu-Chen
+Sun. <em>On the problem of large gcd for disjoint residue classes</em>.
+arXiv:2607.24655v1 (2026). <a href="http://arxiv.org/abs/2607.24655v1"
+class="uri">http://arxiv.org/abs/2607.24655v1</a> Murali Menon. <em>Two
+Questions on $G$-harmonic Tuples</em>. arXiv:2608.15873v1 (2026). <a
+href="http://arxiv.org/abs/2608.15873v1"
+class="uri">http://arxiv.org/abs/2608.15873v1</a></p>
+</div>
+</body>
+</html>

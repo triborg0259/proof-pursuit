@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)" />
+  <meta name="dcterms.date" content="2026-09-26" />
+  <title>Proof Pursuit — problem 2, part 2</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — problem 2, part 2</h1>
+<p class="author">Team Proof Pursuit (Researcher: T. Tumini; Referee:
+gabundos; Creative: M. Renzi; gio3r3gio)</p>
+<p class="date">2026-09-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#come-leggere-questo-rapporto"
+id="toc-come-leggere-questo-rapporto">Come leggere questo
+rapporto</a></li>
+<li><a href="#problem-2-uphill-paths-on-the-hypercube"
+id="toc-problem-2-uphill-paths-on-the-hypercube">Problem 2 — Uphill
+paths on the hypercube</a>
+<ul>
+<li><a href="#cella-2-2-punti-stato-revisionato"
+id="toc-cella-2-2-punti-stato-revisionato">Cella 2 (2 punti) — stato:
+revisionato</a>
+<ul>
+<li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti"
+id="toc-decisioni-degli-agenti">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo"
+id="toc-codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arxiv-literature-consulted"
+id="toc-arxiv-literature-consulted">arXiv literature consulted</a></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="come-leggere-questo-rapporto">Come leggere
+questo rapporto</h1>
+<p>Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team
+(mai “risolto” senza revisione umana), la consegna con la prova, poi la
+traccia delle decisioni degli agenti (Researcher: famiglia e motivo;
+Referee: verdetto ed errore fatale; Creative: quando e perché è
+intervenuto) e il codice su cui il tentativo poggia con l’esito della
+riesecuzione fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO
+e CONGETTURA restano distinti. L’architettura del sistema è descritta
+nel README del repository.</p>
+<h1 id="problem-2-uphill-paths-on-the-hypercube">Problem 2 — Uphill
+paths on the hypercube</h1>
+<h2 id="cella-2-2-punti-stato-revisionato">Cella 2 (2 punti) — stato:
+revisionato</h2>
+<h5 id="parte-2-c2-uq_5">Parte 2 (C2) — <span
+class="math inline">\(U(Q_5)\)</span></h5>
+<p><strong>Punteggio:</strong> 2 points · <strong>Valutazione:</strong>
+Checked instantly</p>
+<p><span class="math inline">\(Q_5\)</span> has <span
+class="math inline">\(32\)</span> vertices and <span
+class="math inline">\(80\)</span> edges. Determine <span
+class="math inline">\(U(Q_5)\)</span>.</p>
+<p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
+<code>Determine U(Q_5) exactly and exhibit an optimal labelling of Q_5 in the required format.</code></p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> $U(Q_5)=88$:
+riduzione a (★) riletta a mano lemma per lemma + 3 enumerazioni concordi
+(una indipendente per metodo); etichettatura verificata; Referee
+automatico READY_FOR_HUMAN (giudice A PASS in 3 run, giudice B PASS con
+sole note INFO, codice rieseguito dall’orchestratore); bozza in
+submission/parte-2.md</p>
+<h3 id="consegna-prova">Consegna (prova)</h3>
+<h4 id="problema-2-parte-2-c2-bozza-di-consegna">Problema 2 — Parte 2
+(C2) — bozza di consegna</h4>
+<p><strong>Stato dichiarato: REVISIONATA (pronta per consegna).</strong>
+Valore <span class="math inline">\(U(Q_5)=88\)</span> con etichettatura
+esplicita; lower bound per riduzione a un enunciato finito (★) confutato
+per enumerazione esaustiva (tre implementazioni concordi, una
+indipendente per metodo). Referee automatico:
+<strong>READY_FOR_HUMAN</strong> (giudice A, matematica: PASS su
+entrambe le direzioni in tre run indipendenti; giudice B, evidenze:
+PASS, con sole note INFO, dopo la riesecuzione fidata del codice da
+parte dell’orchestratore). Revisione umana della riduzione: fatta lemma
+per lemma (STATUS.md). L’approvazione finale resta umana.</p>
+<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
+<p><span class="math inline">\(U(Q_5) = 88 = |E(Q_5)| + 8\)</span>.
+Etichettatura ottima (ordine crescente di etichetta; posizione <span
+class="math inline">\(i\)</span> della stringa = coordinata <span
+class="math inline">\(i\)</span>; convenzione irrilevante perché le
+permutazioni di coordinate sono automorfismi di <span
+class="math inline">\(Q_5\)</span>), con 8 valli:
+<code>00000, 11110, 11001, 10101, 01101, 10011, 01011, 00111</code> sono
+le etichette 1–8 (le valli), seguite dalle foglie e dai picchi come
+nella lista completa in §2 (tabella dell’upper bound). La lista completa
+a 32 elementi è prodotta e verificata da
+<code>certificati/costruzione_88.py</code> e
+<code>certificati/verifica_dfs_88.py</code>.</p>
+<h5 id="dimostrazione">2. Dimostrazione</h5>
+<p><em>(Testo del tentativo
+<code>runs/p2_q5/attempts/attempt_001.json</code> del Researcher,
+riletto lemma per lemma dal team; le verifiche computazionali sono state
+rieseguite dall’orchestratore in
+<code>runs/p2_q5/verifica/attempt_001/</code>.)</em></p>
+<h4 id="uq_5-88"><span class="math inline">\(U(Q_5) = 88\)</span></h4>
+<p><strong>Conventions.</strong> <span
+class="math inline">\(V(Q_5)=\{0,1\}^5\)</span>, <span
+class="math inline">\(u\sim v\)</span> iff they differ in exactly one
+coordinate; <span class="math inline">\(|V|=32\)</span>, <span
+class="math inline">\(|E|=80\)</span>, every vertex has degree <span
+class="math inline">\(5\)</span>. In a 0/1 string the <span
+class="math inline">\(i\)</span>-th character from the left is
+coordinate <span class="math inline">\(i\)</span> (irrelevant for the
+count: coordinate permutations are automorphisms). For a labelling <span
+class="math inline">\(f\)</span>, orient each edge from the smaller to
+the larger label (<span class="math inline">\(u\to v\)</span> iff <span
+class="math inline">\(uv\in E\)</span>, <span
+class="math inline">\(f(u)&lt;f(v)\)</span>); <span
+class="math inline">\(\deg^-(v)=\#\{u:u\to v\}\)</span>, <span
+class="math inline">\(\deg^+(v)=\#\{w:v\to w\}\)</span>, <span
+class="math inline">\(\deg^-(v)+\deg^+(v)=5\)</span>. Let <span
+class="math inline">\(p(v)\)</span> be the number of uphill paths whose
+last vertex is <span class="math inline">\(v\)</span>. A <em>valley</em>
+is a vertex with <span class="math inline">\(\deg^-=0\)</span>; a
+<em>peak</em> is a vertex with <span
+class="math inline">\(\deg^+=0\)</span>. The vertex with label <span
+class="math inline">\(1\)</span> is a valley, so <span
+class="math inline">\(v:=\#\text{valleys}\ge1\)</span>.</p>
+<h5 id="preliminaries-restated-with-proof-for-self-containedness">0.
+Preliminaries (restated with proof for self-containedness)</h5>
+<p><strong>Lemma 1 (recursion).</strong> <span
+class="math inline">\(p(v)=[v\text{ valley}]+\sum_{u\to v}p(u)\)</span>
+and the total number of uphill paths is <span
+class="math inline">\(T=\sum_v p(v)\)</span>.</p>
+<p><em>Proof.</em> An uphill path ending at <span
+class="math inline">\(v\)</span> has length <span
+class="math inline">\(1\)</span> — then it is <span
+class="math inline">\((v)\)</span> and <span
+class="math inline">\(v\)</span> is a valley; conversely a valley gives
+exactly this path — or length <span class="math inline">\(\ge2\)</span>;
+deleting <span class="math inline">\(v\)</span> gives an uphill path
+ending at its penultimate vertex <span class="math inline">\(u\)</span>
+with <span class="math inline">\(u\to v\)</span>; conversely appending
+<span class="math inline">\(v\)</span> to an uphill path ending at <span
+class="math inline">\(u\)</span> with <span class="math inline">\(u\to
+v\)</span> gives an uphill path ending at <span
+class="math inline">\(v\)</span> (the increasing condition is exactly
+<span class="math inline">\(f(u)&lt;f(v)\)</span>). These maps are
+mutually inverse and different <span class="math inline">\(u\)</span>
+give disjoint sets. Every uphill path has a unique last vertex. <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Lemma 2.</strong> For every vertex <span
+class="math inline">\(v\)</span>: <span
+class="math inline">\(p(v)\ge1\)</span>, and <span
+class="math inline">\(p(v)\ge\deg^-(v)\)</span>.</p>
+<p><em>Proof.</em> From <span class="math inline">\(v\)</span> move
+repeatedly to a neighbour with smaller label while one exists; labels
+strictly decrease, so this stops at a valley; the reversed walk is an
+uphill path ending at <span class="math inline">\(v\)</span>. Hence
+<span class="math inline">\(p(v)\ge1\)</span> for all <span
+class="math inline">\(v\)</span>, and by Lemma 1, <span
+class="math inline">\(p(v)\ge\sum_{u\to v}p(u)\ge\deg^-(v)\)</span>.
+<span class="math inline">\(\square\)</span></p>
+<h5 id="the-excess-identity">1. The excess identity</h5>
+<p>Define the <strong>excess</strong> <span
+class="math inline">\(X:=\sum_{(u\to w)\in E}\bigl(p(u)-1\bigr)\)</span>
+(sum over all <span class="math inline">\(80\)</span> oriented edges).
+By Lemma 2 every term is <span class="math inline">\(\ge0\)</span>.</p>
+<p><strong>Lemma 3.</strong> <span class="math inline">\(T=|E|+v+X =
+80+v+X\)</span>.</p>
+<p><em>Proof.</em> By Lemma 1, <span class="math inline">\(T=\sum_v
+p(v)=v+\sum_{w}\sum_{u\to w}p(u)=v+\sum_{(u\to w)\in
+E}\bigl(1+(p(u)-1)\bigr)=v+|E|+X\)</span>, since each edge is counted
+once, at its head. <span class="math inline">\(\square\)</span></p>
+<p>Grouping the terms of <span class="math inline">\(X\)</span> by tail:
+<span class="math inline">\(X=\sum_u \deg^+(u)\,(p(u)-1)\)</span>. Call
+<span class="math inline">\(u\)</span> <strong>heavy</strong> if <span
+class="math inline">\(\deg^+(u)\ge1\)</span> and <span
+class="math inline">\(p(u)\ge2\)</span>; let <span
+class="math inline">\(H\)</span> be the set of heavy vertices and <span
+class="math inline">\(c(u):=\deg^+(u)(p(u)-1)\)</span> its contribution,
+so <span class="math inline">\(X=\sum_{u\in H}c(u)\)</span>. Vertices
+with <span class="math inline">\(p=1\)</span> are called
+<strong>light</strong>.</p>
+<p><strong>Lemma 4 (structure of light vertices).</strong> If <span
+class="math inline">\(p(u)=1\)</span> then either <span
+class="math inline">\(u\)</span> is a valley or <span
+class="math inline">\(\deg^-(u)=1\)</span> and its unique in-neighbour
+is light. Consequently, for any set <span
+class="math inline">\(L\)</span> of light vertices, the subgraph of
+<span class="math inline">\(Q_5\)</span> induced by <span
+class="math inline">\(L\)</span> is acyclic.</p>
+<p><em>Proof.</em> By Lemma 2, <span class="math inline">\(\deg^-(u)\le
+p(u)=1\)</span>. If <span class="math inline">\(\deg^-(u)=1\)</span>
+with in-neighbour <span class="math inline">\(u&#39;\)</span>, Lemma 1
+gives <span class="math inline">\(1=p(u)=p(u&#39;)\)</span>. For the
+second claim: a cycle inside <span class="math inline">\(L\)</span>
+contains a vertex of maximal label, which has two in-neighbours on the
+cycle, contradicting <span class="math inline">\(\deg^-\le1\)</span>.
+<span class="math inline">\(\square\)</span></p>
+<p><strong>Lemma 5 (every heavy vertex costs at least 3).</strong> For
+every heavy <span class="math inline">\(u\)</span>, <span
+class="math inline">\(c(u)\ge3\)</span>. Moreover, writing <span
+class="math inline">\(i=\deg^-(u)\)</span> (so <span
+class="math inline">\(\deg^+(u)=5-i\)</span>, <span
+class="math inline">\(1\le i\le4\)</span> since <span
+class="math inline">\(\deg^+\ge1\)</span> and <span
+class="math inline">\(p\ge2\)</span> excludes valleys): - if <span
+class="math inline">\(i=1\)</span>: <span
+class="math inline">\(p(u)=p(u&#39;)\ge2\)</span> for the in-neighbour
+<span class="math inline">\(u&#39;\)</span>, which is then itself heavy
+(<span class="math inline">\(\deg^+(u&#39;)\ge1\)</span> because <span
+class="math inline">\(u&#39;\to u\)</span>), and <span
+class="math inline">\(c(u)=4(p(u)-1)\ge4\)</span>; - if <span
+class="math inline">\(i=2\)</span>: <span
+class="math inline">\(c(u)=3(p(u)-1)\ge3\)</span>, with equality iff
+<span class="math inline">\(p(u)=2\)</span> iff both in-neighbours are
+light; - if <span class="math inline">\(i=3\)</span>: <span
+class="math inline">\(c(u)=2(p(u)-1)\ge4\)</span> (as <span
+class="math inline">\(p(u)\ge3\)</span>), with equality iff all three
+in-neighbours are light; - if <span class="math inline">\(i=4\)</span>:
+<span class="math inline">\(c(u)=p(u)-1\ge3\)</span>, with equality iff
+all four in-neighbours are light.</p>
+<p><em>Proof.</em> Direct from Lemma 2 (<span
+class="math inline">\(p(u)\ge i\)</span>) and Lemma 1 (<span
+class="math inline">\(p(u)=\sum_{u&#39;\to u}p(u&#39;)\)</span> with
+each <span class="math inline">\(p(u&#39;)\ge1\)</span>; equality <span
+class="math inline">\(p(u)=i\)</span> iff every in-neighbour has <span
+class="math inline">\(p=1\)</span>). Note also: if an in-neighbour <span
+class="math inline">\(u&#39;\)</span> of a heavy <span
+class="math inline">\(u\)</span> has <span
+class="math inline">\(p(u&#39;)\ge2\)</span> then <span
+class="math inline">\(u&#39;\)</span> is heavy (it has <span
+class="math inline">\(\deg^+\ge1\)</span>). <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Corollary 6.</strong> <span
+class="math inline">\(X\in\{0\}\cup[3,\infty)\)</span>, and <span
+class="math inline">\(X\le 7\)</span> forces <span
+class="math inline">\(|H|\le2\)</span>.</p>
+<p><strong>Lemma 7 (in-degree count).</strong> Let <span
+class="math inline">\(P\)</span> be the set of peaks, <span
+class="math inline">\(q=|P|\)</span>, <span
+class="math inline">\(s_H=\sum_{u\in H}\deg^-(u)\)</span>. If every
+non-heavy non-peak vertex is light (which holds automatically for every
+vertex with <span class="math inline">\(\deg^+\ge1\)</span> that is not
+heavy, by definition of heavy), then <span
+class="math display">\[4q=48+v+|H|-s_H .\]</span></p>
+<p><em>Proof.</em> Peaks have <span
+class="math inline">\(\deg^-=5\)</span>; no peak is heavy (heavy needs
+<span class="math inline">\(\deg^+\ge1\)</span>) and no valley is heavy.
+The vertices outside <span class="math inline">\(P\cup H\)</span> are
+light: valleys (<span class="math inline">\(\deg^-=0\)</span>, <span
+class="math inline">\(v\)</span> of them) and light non-valleys (<span
+class="math inline">\(\deg^-=1\)</span> by Lemma 4, <span
+class="math inline">\(32-q-|H|-v\)</span> of them). Summing in-degrees,
+<span
+class="math inline">\(80=\sum_u\deg^-(u)=5q+s_H+(32-q-|H|-v)\)</span>,
+i.e. <span class="math inline">\(4q=48+v+|H|-s_H\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p>Also note: <strong>peaks form an independent set</strong> (if two
+peaks were adjacent, the one with the smaller label would have <span
+class="math inline">\(\deg^+\ge1\)</span>).</p>
+<h5
+id="case-analysis-every-labelling-with-tle87-has-one-of-four-structures">2.
+Case analysis: every labelling with <span
+class="math inline">\(T\le87\)</span> has one of four structures</h5>
+<p>Assume <span class="math inline">\(T\le87\)</span>, i.e. (Lemma 3)
+<span class="math inline">\(v+X\le7\)</span> with <span
+class="math inline">\(v\ge1\)</span>, so <span
+class="math inline">\(X\le6\)</span>. By Corollary 6, <span
+class="math inline">\(X\in\{0,3,4,5,6\}\)</span> and <span
+class="math inline">\(|H|\le2\)</span>.</p>
+<p><strong>Case <span class="math inline">\(|H|=2\)</span>.</strong>
+Then <span class="math inline">\(X\ge6\)</span>, so <span
+class="math inline">\(X=6\)</span>, <span
+class="math inline">\(v=1\)</span>, and both heavy vertices have <span
+class="math inline">\(c=3\)</span>; by Lemma 5 each has <span
+class="math inline">\((\deg^-,p)\in\{(2,2),(4,4)\}\)</span>, so <span
+class="math inline">\(s_H\in\{4,6,8\}\)</span> and Lemma 7 gives <span
+class="math inline">\(4q=48+1+2-s_H\in\{47,45,43\}\)</span>, none
+divisible by <span class="math inline">\(4\)</span>.
+<strong>Impossible.</strong></p>
+<p><strong>Case <span class="math inline">\(|H|=0\)</span>.</strong>
+Then <span class="math inline">\(X=0\)</span>, <span
+class="math inline">\(T=80+v\)</span>, and Lemma 7 gives <span
+class="math inline">\(4q=48+v\)</span>, so <span
+class="math inline">\(v\equiv0\pmod 4\)</span>; with <span
+class="math inline">\(T\le87\)</span> this forces <span
+class="math inline">\(v=4\)</span>, <span
+class="math inline">\(q=13\)</span>, <span
+class="math inline">\(T=84\)</span>. Every non-peak vertex is light; so
+<span class="math inline">\(F:=V\setminus P\)</span> (19 vertices)
+induces an acyclic subgraph (Lemma 4), and <span
+class="math inline">\(P\)</span> is an independent set of size <span
+class="math inline">\(13\)</span>. <strong>(Structure A.)</strong></p>
+<p><strong>Case <span class="math inline">\(|H|=1\)</span>, <span
+class="math inline">\(H=\{u\}\)</span>.</strong> Then <span
+class="math inline">\(X=c(u)\le6\)</span>. By Lemma 5, if some
+in-neighbour of <span class="math inline">\(u\)</span> had <span
+class="math inline">\(p\ge2\)</span> it would be heavy, contradicting
+<span class="math inline">\(|H|=1\)</span>; hence all in-neighbours of
+<span class="math inline">\(u\)</span> are light and <span
+class="math inline">\(p(u)=\deg^-(u)=:i\)</span>; <span
+class="math inline">\(i=1\)</span> is excluded (it needs a heavy
+in-neighbour). So <span
+class="math inline">\((i,c(u))\in\{(2,3),(3,4),(4,3)\}\)</span>, and
+Lemma 7 with <span class="math inline">\(|H|=1\)</span>, <span
+class="math inline">\(s_H=i\)</span> gives <span
+class="math inline">\(4q=49+v-i\)</span>: - <span
+class="math inline">\(i=2\)</span>: <span
+class="math inline">\(4q=47+v\)</span>, <span
+class="math inline">\(v\equiv1\pmod4\)</span>, and <span
+class="math inline">\(v+X=v+3\le7\)</span> gives <span
+class="math inline">\(v=1\)</span>, <span
+class="math inline">\(q=12\)</span>, <span
+class="math inline">\(T=84\)</span>. <strong>(Structure B.)</strong> -
+<span class="math inline">\(i=3\)</span>: <span
+class="math inline">\(4q=46+v\)</span>, <span
+class="math inline">\(v\equiv2\pmod4\)</span>, <span
+class="math inline">\(v+4\le7\)</span> gives <span
+class="math inline">\(v=2\)</span>, <span
+class="math inline">\(q=12\)</span>, <span
+class="math inline">\(T=86\)</span>. <strong>(Structure C.)</strong> -
+<span class="math inline">\(i=4\)</span>: <span
+class="math inline">\(4q=45+v\)</span>, <span
+class="math inline">\(v\equiv3\pmod4\)</span>, <span
+class="math inline">\(v+3\le7\)</span> gives <span
+class="math inline">\(v=3\)</span>, <span
+class="math inline">\(q=12\)</span>, <span
+class="math inline">\(T=86\)</span>. <strong>(Structure D.)</strong></p>
+<p>In each of B, C, D: the out-neighbours <span
+class="math inline">\(w\)</span> of <span
+class="math inline">\(u\)</span> satisfy <span
+class="math inline">\(p(w)\ge p(u)\ge2\)</span> (Lemma 1), so if such a
+<span class="math inline">\(w\)</span> had <span
+class="math inline">\(\deg^+(w)\ge1\)</span> it would be heavy; hence
+<strong>all out-neighbours of <span class="math inline">\(u\)</span> are
+peaks</strong>. The in-neighbours of <span
+class="math inline">\(u\)</span> are non-peaks. All vertices other than
+<span class="math inline">\(u\)</span> and the peaks are light, so by
+Lemma 4 the set <span
+class="math inline">\(L:=V\setminus(P\cup\{u\})\)</span> induces an
+acyclic subgraph; <span class="math inline">\(P\)</span> is an
+independent set of size <span class="math inline">\(12\)</span> and
+<span class="math inline">\(u\notin P\)</span>.</p>
+<p><strong>Summary.</strong> If <span class="math inline">\(T\le
+87\)</span> then there exist an independent set <span
+class="math inline">\(I\subseteq V(Q_5)\)</span> and a vertex <span
+class="math inline">\(u\notin I\)</span> such that <span
+class="math inline">\(V\setminus(I\cup\{u\})\)</span> induces an acyclic
+subgraph, where either <span class="math inline">\(|I|=12\)</span>
+(structures B, C, D with <span class="math inline">\(I=P\)</span>), or
+<span class="math inline">\(|I|=13\)</span> and <span
+class="math inline">\(V\setminus I\)</span> is acyclic (structure A) —
+in which case, choosing any <span class="math inline">\(u_0\in
+I\)</span> and <span
+class="math inline">\(I&#39;=I\setminus\{u_0\}\)</span>, the pair <span
+class="math inline">\((I&#39;,u_0)\)</span> has <span
+class="math inline">\(|I&#39;|=12\)</span>, <span
+class="math inline">\(I&#39;\)</span> independent, <span
+class="math inline">\(u_0\notin I&#39;\)</span>, and <span
+class="math inline">\(V\setminus(I&#39;\cup\{u_0\})=V\setminus
+I\)</span> acyclic. So in all cases:</p>
+<blockquote>
+<p><strong>(★)</strong> there is an independent set <span
+class="math inline">\(I\)</span> of <span
+class="math inline">\(Q_5\)</span> with <span
+class="math inline">\(|I|=12\)</span> and a vertex <span
+class="math inline">\(u\notin I\)</span> such that <span
+class="math inline">\(Q_5-(I\cup\{u\})\)</span> is a forest.</p>
+</blockquote>
+<h5 id="exact-finite-verification-never-holds-in-q_5">3. Exact finite
+verification: (★) never holds in <span
+class="math inline">\(Q_5\)</span></h5>
+<p><strong>Reduction.</strong> The maps <span
+class="math inline">\(x\mapsto x\oplus t\)</span> are automorphisms of
+<span class="math inline">\(Q_5\)</span> and act transitively on
+vertices, and (★) is invariant under automorphisms. Hence it suffices to
+check all independent <span class="math inline">\(12\)</span>-sets <span
+class="math inline">\(I\)</span> containing the vertex <span
+class="math inline">\(00000\)</span> and all <span
+class="math inline">\(u\notin I\)</span>.</p>
+<p><strong>Computation 1</strong>
+(<code>verifica_q5_indipendenti.py</code>, exact integer arithmetic):
+backtracking enumerates all independent sets of size <span
+class="math inline">\(12\)</span> containing <span
+class="math inline">\(0\)</span> in increasing vertex order (a vertex
+may be added iff it is neither in the set nor adjacent to it), and for
+each of the <span class="math inline">\(20\)</span> vertices <span
+class="math inline">\(u\notin I\)</span> tests acyclicity of the induced
+subgraph on the <span class="math inline">\(19\)</span> remaining
+vertices by the exact criterion <em>#edges = #vertices −
+#components</em>. Output:
+<code>insiemi indipendenti di taglia 12 contenenti 0: 1377; coppie (I,u) esaminate: 27540; complementi aciclici trovati: 0; tempo 0.24s</code>.</p>
+<p><strong>Computation 2</strong>
+(<code>verifica_q5_bipartita.py</code>, independent method, no symmetry
+reduction): every independent set is <span class="math inline">\(A\cup
+B\)</span> with <span class="math inline">\(A\)</span> a subset of the
+16 even-weight vertices and <span class="math inline">\(B\)</span> a
+subset of the odd-weight vertices not adjacent to <span
+class="math inline">\(A\)</span>; the script scans all <span
+class="math inline">\(2^{16}\)</span> bitmasks <span
+class="math inline">\(A\)</span>, all <span
+class="math inline">\(B\)</span> of size <span
+class="math inline">\(12-|A|\)</span>, and tests acyclicity by
+union–find over the edge list. Output:
+<code>insiemi indipendenti di taglia 12 (tutti): 3672; coppie (I,u) esaminate: 73440; complementi aciclici: 0; tempo 0.39s</code>.
+Consistency: <span class="math inline">\(3672\cdot 12/32=1377\)</span>,
+as vertex-transitivity predicts.</p>
+<p>Hence (★) is false, so no labelling of <span
+class="math inline">\(Q_5\)</span> has <span
+class="math inline">\(T\le87\)</span>: <span
+class="math display">\[U(Q_5)\ge 88.\]</span></p>
+<p>(The counts also make the impossibility of the <span
+class="math inline">\(X=0\)</span>, <span
+class="math inline">\(v=4\)</span> structure transparent by hand: an
+independent <span class="math inline">\(12\)</span>- or <span
+class="math inline">\(13\)</span>-set turns out to lie in one parity
+class except for a few mixed sets, and any three even vertices contain
+two at distance <span class="math inline">\(2\)</span>, which share two
+odd neighbours and thus close a <span
+class="math inline">\(4\)</span>-cycle in the complement; but the proof
+relies only on the exhaustive check above.)</p>
+<h5 id="upper-bound-a-labelling-with-exactly-88-uphill-paths">4. Upper
+bound: a labelling with exactly 88 uphill paths</h5>
+<p>Let <span class="math inline">\(R=\{00000,11110\}\)</span> and let
+<span class="math inline">\(P\)</span> be the <span
+class="math inline">\(14\)</span> even-weight vertices other than <span
+class="math inline">\(R\)</span>. <span class="math inline">\(P\)</span>
+is independent (even-weight vertices are pairwise non-adjacent). The
+complement <span class="math inline">\(F=R\cup\{\text{16 odd
+vertices}\}\)</span> induces exactly the <span
+class="math inline">\(10\)</span> edges from <span
+class="math inline">\(R\)</span> to the odd vertices (the two vertices
+of <span class="math inline">\(R\)</span> are at distance <span
+class="math inline">\(4\)</span>, so their neighbourhoods <span
+class="math inline">\(\{10000,01000,00100,00010,00001\}\)</span> and
+<span class="math inline">\(\{01110,10110,11010,11100,11111\}\)</span>
+are disjoint): <span class="math inline">\(F\)</span> is a forest with
+<span class="math inline">\(18\)</span> vertices, <span
+class="math inline">\(10\)</span> edges and <span
+class="math inline">\(8\)</span> components, namely the two stars
+centred at <span class="math inline">\(R\)</span> and the <span
+class="math inline">\(6\)</span> isolated odd vertices <span
+class="math inline">\(11001,10101,01101,10011,01011,00111\)</span>.</p>
+<p>Labelling (increasing label order; coordinate 1 on the left):</p>
+<pre><code>00000,11110,11001,10101,01101,10011,01011,00111,
+10000,01000,00100,11100,00010,11010,10110,01110,00001,11111,
+11000,10100,01100,10010,01010,00110,10001,01001,00101,11101,00011,11011,10111,01111</code></pre>
+<p>i.e. labels <span class="math inline">\(1\)</span>–<span
+class="math inline">\(2\)</span>: the star centres; <span
+class="math inline">\(3\)</span>–<span class="math inline">\(8\)</span>:
+the six isolated odd vertices; <span
+class="math inline">\(9\)</span>–<span
+class="math inline">\(18\)</span>: the ten star leaves; <span
+class="math inline">\(19\)</span>–<span
+class="math inline">\(32\)</span>: the fourteen peaks <span
+class="math inline">\(P\)</span>.</p>
+<p><em>Count.</em> The <span class="math inline">\(8\)</span> vertices
+with labels <span class="math inline">\(1\)</span>–<span
+class="math inline">\(8\)</span> have all neighbours higher (their <span
+class="math inline">\(F\)</span>-neighbours, if any, are leaves labelled
+<span class="math inline">\(9\)</span>–<span
+class="math inline">\(18\)</span>; their other neighbours are in <span
+class="math inline">\(P\)</span>): they are valleys, <span
+class="math inline">\(p=1\)</span>. Each leaf (labels <span
+class="math inline">\(9\)</span>–<span
+class="math inline">\(18\)</span>) has exactly one lower neighbour, its
+star centre, so <span class="math inline">\(p=1\)</span>. Each peak has
+all <span class="math inline">\(5\)</span> neighbours lower, all in
+<span class="math inline">\(F\)</span> with <span
+class="math inline">\(p=1\)</span>, so <span
+class="math inline">\(p=5\)</span>. Total <span
+class="math inline">\(T=18\cdot1+14\cdot5=88\)</span>. Verified exactly
+by two independent scripts: <code>costruzione_88.py</code> (recursion of
+Lemma 1) and <code>verifica_dfs_88.py</code> (explicit DFS enumeration
+of all uphill paths from the <span class="math inline">\(8\)</span>
+valleys), both printing <span class="math inline">\(88\)</span> and the
+same <span class="math inline">\(8\)</span> valleys.</p>
+<h5 id="conclusion">5. Conclusion</h5>
+<p><span class="math inline">\(U(Q_5)=88=|E|+8\)</span>, attained by the
+labelling in §4. Consistency checks (not part of the proof): the same
+Lemmas 3–7 for <span class="math inline">\(Q_4\)</span> give <span
+class="math inline">\(c(u)\ge2\)</span> and <span
+class="math inline">\(3q=16+v\)</span>, reproducing <span
+class="math inline">\(U(Q_4)=34\)</span> with <span
+class="math inline">\(v=2\)</span>; for <span
+class="math inline">\(Q_3\)</span> they reproduce <span
+class="math inline">\(U(Q_3)=14\)</span>. The identity <span
+class="math inline">\(T=80+v+X\)</span> and the fact <span
+class="math inline">\(X\in\{0\}\cup[3,\infty)\)</span> were also
+sanity-checked on <span class="math inline">\(200{,}000\)</span> random
+labellings of <span class="math inline">\(Q_5\)</span>
+(<code>sanity_eccesso.py</code>; the smallest positive <span
+class="math inline">\(X\)</span> seen was <span
+class="math inline">\(14\)</span>). Simulated annealing over labellings
+(<code>ricottura_q5.py</code>, 200k swap moves per seed, exact scoring)
+never went below <span class="math inline">\(88\)</span> in any seed run
+so far (evidence only).</p>
+<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
+dipendenze, tempi</h5>
+<p>Dipendenze: Python 3 standard, nessun pacchetto. Tutti gli script
+usano aritmetica intera esatta.</p>
+<pre><code>cd problema-2/certificati
+python3 costruzione_88.py                 # costruisce l&#39;etichettatura e conta 88 cammini (&lt; 0.1 s)
+python3 verifica_dfs_88.py                # conteggio indipendente per DFS esplicita (&lt; 0.1 s)
+python3 verifica_q5_indipendenti.py       # (★) confutata: 1377 insiemi con 0, 27540 coppie, 0 aciclici (0.47 s)
+python3 verifica_q5_bipartita.py          # (★) confutata senza riduzione per simmetria: 3672 / 73440 / 0 (0.71 s)
+python3 q5_stella_verifica_indipendente.py  # (★) confutata con metodo diverso (potatura delle foglie): 3672 / 73440 / 0 (0.40 s)</code></pre>
+<p>Tempi misurati su portatile (riesecuzione fidata dell’orchestratore,
+2026-09-26). Codice del tentativo: - <code>code_1</code> (python, rigore
+<code>exact</code>): Exact count of uphill paths of a labelling of Q_d
+via the recursion p(v) = <span>[</span>valley<span>]</span> + sum of p
+over lower neighbours (shared module). - <code>code_2</code> (python,
+rigore <code>exact</code>): Certificate 1 for the lower bound: enumerate
+all independent 12-sets of Q_5 containing vertex 0 (1377 sets, symmetry
+reduction by XOR translations) and, for eac - <code>code_3</code>
+(python, rigore <code>exact</code>): Certificate 2 for the lower bound,
+independent method and no symmetry reduction: all independent 12-sets as
+A ∪ B (A ⊆ even class over all 2^16 bitmasks, B ⊆ od -
+<code>code_4</code> (python, rigore <code>exact</code>): Builds the
+88-path labelling (peaks = even vertices minus 00000, 11110) and counts
+exactly with the recursion: prints 88, the 8 valleys and the 32-vertex
+order. - <code>code_5</code> (python, rigore <code>exact</code>):
+Independent verification of the submitted labelling by explicit DFS
+enumeration of every uphill path from each valley (string-based, no
+shared code): prints 88. - <code>code_6</code> (python, rigore
+<code>exact</code>): Sanity check (evidence only, not part of the proof)
+of the identity T = 80 + #valleys + X and of X ∈ {0} ∪
+<span>[</span>3,∞) on 200000 random labellings of Q_5 (all asserts -
+<code>code_7</code> (python, rigore
+<code>float_exploration_only</code>): Simulated annealing over
+labellings (exploration only): best value found 88 in every seed run
+(seeds 0-5 in a first run, seeds 0-3 in a second run; 200k swap mo</p>
+<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
+<ul>
+<li><p>Lemma di conteggio <span
+class="math inline">\(p(v)=[\text{valle}]+\sum_{u\to v}p(u)\)</span> e
+bound <span class="math inline">\(\#\ge|E|+\#\text{valli}\)</span>:
+nostri (parte 1, ridimostrati qui).</p></li>
+<li><p>Contesto: IMO 2022 P6 (griglia), citato solo come contesto;
+nessun risultato preso dalla letteratura.</p></li>
+<li><p>Ricerca arXiv deterministica
+(<code>runs/p2_q5/literature.json</code>,
+<code>problema-2/fonti/arxiv.json</code>): nessun lavoro sui cammini in
+salita sull’ipercubo; il problema risulta inedito. Contributo
+interamente nostro.</p></li>
+</ul>
+<h5 id="limiti-e-parti-irrisolte">5. Limiti e parti irrisolte</h5>
+<ul>
+<li><p>Gap dichiarati dal Researcher nel tentativo:</p></li>
+<li><p>The lower bound is computer-assisted at one point: statement (★)
+(no independent 12-set I and vertex u with Q_5 − (I ∪ {u}) acyclic) is
+proved by exhaustive enumeration, not by hand. The reduction to (★) is
+fully by hand; the enumeration is exact, covers the whole finite set
+(all 3672 independent 12-sets × 20 outside vertices), runs in &lt; 1 s
+and was done by two methods. A hand proof of (★) was only sketched
+(parity-class argument), not written out.</p></li>
+<li><p>In Lemma 7 / §2 I use that every non-peak, non-heavy vertex is
+light; this is immediate from the definitions (a vertex with deg^+ ≥ 1
+and p ≥ 2 is heavy by definition) but the Referee should check that no
+case escapes: valleys (p=1), peaks (deg^+=0), heavy, light — these four
+classes cover V.</p></li>
+<li><p>The step ‘out-neighbours of the unique heavy vertex u are peaks’
+(needed for nothing in the final finite check, since (★) only uses I
+independent of size 12 and u ∉ I) is included for completeness; the
+final reduction deliberately uses only the weaker necessary conditions,
+so any slip there does not affect the proof.</p></li>
+<li><p>Simulated annealing results are exploration only and play no role
+in the proof; the second SA run (20 seeds) was still running when this
+report was written (4 seeds completed, all at 88).</p></li>
+<li><p>Il giudice B ha classificato tutte le osservazioni su fonti e
+calcoli come INFO (fonti di contesto non caricate e non necessarie;
+versione di Python non registrata: 3.14, libreria standard; tempi
+riprodotti 0.44–0.71 s). Nei primi due run l’unico punto MISSING
+riguardava le regole ufficiali, poi passate alla lettera dal preambolo
+dell’enunciato.</p></li>
+<li><p>La cella è “checked instantly” sul valore: il rischio residuo è
+un errore nella riduzione a (★); per questo la riduzione è stata riletta
+a mano e (★) confutata da tre programmi diversi.</p></li>
+</ul>
+<h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
+<h4 id="run-p2_c2">Run <code>p2_c2</code></h4>
+<h4 id="run-p2_q5">Run <code>p2_q5</code></h4>
+<dl>
+<dt>Iterazione 1 — attempt_001</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>case_analysis</code>,
+sotto-obiettivo: Determine U(Q_5) exactly: prove the lower bound U(Q_5)
+&gt;= 88 by a hand case analysis of the "excess" plus a small exact
+finite check, and exhibit an explicit labelling with exactly 88 uphill
+paths.. Stato dichiarato: <code>CELL_SOLVED_CANDIDATE</code>. <em>Perché
+questa scelta</em>: No previous attempt for this cell. The verified
+claims (total ≥ |E| + #valleys, and the parity argument that killed
+|E|+1 for Q_4/Q_5) suggested pushing the same equality analysis further:
+quantify the slack ("excess") vertex by vertex. The key new observation
+is that in a 5-regular graph any slack is at least 3 and the remaining
+cases are a tiny combinatorial statement about independent sets and
+induced forests of Q_5 that can be checked exactly in under a second,
+with the reduction proved by hand. <em>Rispetto allo stato
+dell’arte</em>: none found. No LITERATURE section was supplied. I
+searched the web for "uphill paths" hypercube labelling valley minimum
+(WebSearch, 2026-09-26): only IMO 2022 Problem 6 material (Nordic
+squares, answer 2n^2-2n+1: AoPS wiki
+https://artofproblemsolving.com/wiki/index.php/2022_IMO_Problems/Problem_6,
+Evan Chen’s notes https://web.evanchen.cc/exams/IMO-2022-notes.pdf, D.
+Grozev’s blog
+https://dgrozev.wordpress.com/2022/07/16/three-graph-problems-on-imo-2022-problem-6/)
+and unrelated hypercube papers (arXiv 2404.18014 on layered subgraphs,
+2310.18163 open problems). None treats the hypercube version. The repo
+notes (problema-2/note.md, item F) record an earlier arXiv search with
+the same conclusion. My approach follows the IMO 2022 lower-bound idea
+(p(v) ≥ max(1, deg^-(v))) and departs from it by quantifying the excess
+per vertex, which is what the hypercube (regular of odd degree 5) makes
+decisive. <strong>Referee</strong>: verdetto <code>UNKNOWN_STATUS</code>
+(review_status <code>READY_FOR_HUMAN</code>). <em>Prossimo passo
+richiesto</em>: Human reviews the exact target, proof and evidence, then
+approves explicit claims</p>
+</dd>
+</dl>
+<h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<pre
+data-caption="attempt\_001 code\_1 [python, rigore exact] — Exact count of uphill paths of a labelling of Q\_d via the recursion p(v) = [valley] + sum  — approvato dal Referee"><code>&quot;&quot;&quot;Conteggio esatto dei cammini in salita di una etichettatura di Q_d.
+
+Vertici = interi 0..2^d-1 (bit i = coordinata i); vicini = XOR con un bit.
+p(v) = [v valle] + somma p(u) sui vicini u con etichetta minore; totale = somma p(v).
+Aritmetica intera: risultato esatto.
+&quot;&quot;&quot;
+
+
+def vicini(v, d):
+    &quot;&quot;&quot;Restituisce i d vicini di v in Q_d.&quot;&quot;&quot;
+    return [v ^ (1 &lt;&lt; i) for i in range(d)]
+
+
+def conta_cammini(ordine, d):
+    &quot;&quot;&quot;ordine = lista dei vertici in ordine crescente di etichetta. Ritorna (totale, p, valli).&quot;&quot;&quot;
+    etichetta = {v: i for i, v in enumerate(ordine)}
+    assert sorted(ordine) == list(range(1 &lt;&lt; d)), &quot;non e&#39; una biiezione&quot;
+    p = {}
+    valli = []
+    for v in ordine:
+        minori = [u for u in vicini(v, d) if etichetta[u] &lt; etichetta[v]]
+        if not minori:
+            valli.append(v)
+            p[v] = 1
+        else:
+            p[v] = sum(p[u] for u in minori)
+    return sum(p.values()), p, valli
+
+
+def stringa(v, d):
+    &quot;&quot;&quot;Vertice intero -&gt; stringa 0/1, coordinata 1 a sinistra.&quot;&quot;&quot;
+    return &quot;&quot;.join(str((v &gt;&gt; i) &amp; 1) for i in range(d))
+
+
+def da_stringa(s):
+    &quot;&quot;&quot;Stringa 0/1 -&gt; vertice intero (coordinata 1 a sinistra).&quot;&quot;&quot;
+    return sum(int(c) &lt;&lt; i for i, c in enumerate(s))
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: ’’; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_001 code\_2 [python, rigore exact] — Certificate 1 for the lower bound: enumerate all independent 12-sets of Q\_5 containing ver — approvato dal Referee"><code>&quot;&quot;&quot;Certificato per il bound inferiore U(Q_5) &gt;= 88 (implementazione 1: backtracking).
+
+Enunciato verificato (Lemma computazionale):
+  per ogni insieme indipendente I di Q_5 con |I| = 12 e per ogni vertice u di Q_5,
+  il sottografo indotto da V meno (I u {u}) contiene un ciclo.
+Riduzione: le traslazioni x -&gt; x XOR t sono automorfismi di Q_5, quindi basta considerare
+gli I che contengono il vertice 0 (ogni I non vuoto si trasla a contenerne uno).
+Aciclicita&#39; decisa con conteggio esatto: componenti + spigoli (un grafo e&#39; una foresta sse
+spigoli = vertici - componenti). Tutto intero: rigore = exact.
+&quot;&quot;&quot;
+import time
+from conta_cammini import vicini
+
+D = 5
+N = 1 &lt;&lt; D
+ADJ = [set(vicini(v, D)) for v in range(N)]
+
+
+def e_foresta(S):
+    &quot;&quot;&quot;True sse il sottografo indotto da S e&#39; aciclico (spigoli = |S| - componenti).&quot;&quot;&quot;
+    S = set(S)
+    spigoli = sum(len(ADJ[v] &amp; S) for v in S) // 2
+    visti, comp = set(), 0
+    for s in S:
+        if s in visti:
+            continue
+        comp += 1
+        pila, visti = [s], visti | {s}
+        while pila:
+            v = pila.pop()
+            for w in ADJ[v] &amp; S:
+                if w not in visti:
+                    visti.add(w)
+                    pila.append(w)
+    return spigoli == len(S) - comp
+
+
+def indipendenti_con_zero(k):
+    &quot;&quot;&quot;Genera tutti gli insiemi indipendenti di taglia k contenenti 0 (vertici in ordine crescente).&quot;&quot;&quot;
+    def ric(I, prossimo, vietati):
+        if len(I) == k:
+            yield list(I)
+            return
+        for v in range(prossimo, N):
+            if v not in vietati and N - v &gt;= k - len(I):
+                yield from ric(I + [v], v + 1, vietati | ADJ[v] | {v})
+    yield from ric([0], 1, ADJ[0] | {0})
+
+
+if __name__ == &quot;__main__&quot;:
+    inizio = time.time()
+    n_insiemi, n_test, violazioni = 0, 0, []
+    for I in indipendenti_con_zero(12):
+        n_insiemi += 1
+        for u in range(N):
+            if u in I:
+                continue
+            n_test += 1
+            if e_foresta(set(range(N)) - set(I) - {u}):
+                violazioni.append((I, u))
+    print(f&quot;insiemi indipendenti di taglia 12 contenenti 0: {n_insiemi}&quot;)
+    print(f&quot;coppie (I,u) esaminate: {n_test}; complementi aciclici trovati: {len(violazioni)}&quot;)
+    print(f&quot;tempo {time.time()-inizio:.2f}s&quot;)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 0 in 0.5s; stdout: ’insiemi indipendenti di taglia 12 contenenti 0: 1377\ncoppie (I,u) esaminate: 27540; complementi aciclici trovati: 0\ntempo 0.44s’; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_001 code\_3 [python, rigore exact] — Certificate 2 for the lower bound, independent method and no symmetry reduction: all indep — approvato dal Referee"><code>&quot;&quot;&quot;Certificato per il bound inferiore U(Q_5) &gt;= 88 (implementazione 2, metodo diverso).
+
+Stesso enunciato di verifica_q5_indipendenti.py, ma senza usare la simmetria:
+ogni insieme indipendente e&#39; A u B con A sottoinsieme dei vertici di peso pari e
+B sottoinsieme dei vertici di peso dispari NON adiacenti ad A. Si scorrono tutti i 2^16
+sottoinsiemi A (bitmask), poi tutti i B di taglia 12-|A| tra i dispari disponibili.
+Aciclicita&#39; con union-find (metodo diverso dal conteggio componenti). Rigore = exact.
+&quot;&quot;&quot;
+import itertools
+import time
+
+D = 5
+N = 1 &lt;&lt; D
+PARI = [v for v in range(N) if bin(v).count(&quot;1&quot;) % 2 == 0]
+DISPARI = [v for v in range(N) if bin(v).count(&quot;1&quot;) % 2 == 1]
+SPIGOLI = [(v, v ^ (1 &lt;&lt; i)) for v in range(N) for i in range(D) if v &lt; v ^ (1 &lt;&lt; i)]
+
+
+def maschera_vicini(v):
+    &quot;&quot;&quot;Bitmask dei vicini di v.&quot;&quot;&quot;
+    return sum(1 &lt;&lt; (v ^ (1 &lt;&lt; i)) for i in range(D))
+
+
+VIC = [maschera_vicini(v) for v in range(N)]
+
+
+def ha_ciclo(maschera_vertici):
+    &quot;&quot;&quot;True sse il sottografo indotto dai vertici nella bitmask contiene un ciclo (union-find).&quot;&quot;&quot;
+    padre = list(range(N))
+
+    def trova(x):
+        while padre[x] != x:
+            padre[x] = padre[padre[x]]
+            x = padre[x]
+        return x
+
+    for a, b in SPIGOLI:
+        if (maschera_vertici &gt;&gt; a) &amp; 1 and (maschera_vertici &gt;&gt; b) &amp; 1:
+            ra, rb = trova(a), trova(b)
+            if ra == rb:
+                return True
+            padre[ra] = rb
+    return False
+
+
+def insiemi_indipendenti_12():
+    &quot;&quot;&quot;Genera le bitmask di tutti gli insiemi indipendenti di taglia 12.&quot;&quot;&quot;
+    for bits in range(1 &lt;&lt; 16):
+        A = [PARI[i] for i in range(16) if (bits &gt;&gt; i) &amp; 1]
+        if len(A) &gt; 12:
+            continue
+        vietati = 0
+        for a in A:
+            vietati |= VIC[a]
+        disponibili = [w for w in DISPARI if not (vietati &gt;&gt; w) &amp; 1]
+        for B in itertools.combinations(disponibili, 12 - len(A)):
+            m = 0
+            for x in A + list(B):
+                m |= 1 &lt;&lt; x
+            yield m
+
+
+if __name__ == &quot;__main__&quot;:
+    inizio = time.time()
+    tutti = (1 &lt;&lt; N) - 1
+    n_insiemi, n_test, aciclici = 0, 0, 0
+    for I in insiemi_indipendenti_12():
+        n_insiemi += 1
+        for u in range(N):
+            if (I &gt;&gt; u) &amp; 1:
+                continue
+            n_test += 1
+            if not ha_ciclo(tutti &amp; ~I &amp; ~(1 &lt;&lt; u)):
+                aciclici += 1
+    print(f&quot;insiemi indipendenti di taglia 12 (tutti, senza simmetria): {n_insiemi}&quot;)
+    print(f&quot;coppie (I,u) esaminate: {n_test}; complementi aciclici: {aciclici}&quot;)
+    print(f&quot;tempo {time.time()-inizio:.2f}s&quot;)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_3.py (python3, clean copy of the researcher sandbox): exit 0 in 0.8s; stdout: ’insiemi indipendenti di taglia 12 (tutti, senza simmetria): 3672\ncoppie (I,u) esaminate: 73440; complementi aciclici: 0\ntempo 0.77s’; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_001 code\_4 [python, rigore exact] — Builds the 88-path labelling (peaks = even vertices minus 00000, 11110) and counts exactly — approvato dal Referee"><code>&quot;&quot;&quot;Costruzione esplicita con 88 cammini in salita su Q_5 e verifica esatta.
+
+Idea: picchi = tutti i vertici di peso pari tranne 00000 e 11110 (14 picchi, indipendenti);
+il complemento (2 pari + 16 dispari) e&#39; una foresta con 10 spigoli e 8 componenti:
+etichettiamo prima le 8 radici (valli), poi le foglie, poi i picchi. Ogni non-picco ha p = 1,
+ogni picco ha p = 5: totale 18 + 14*5 = 88.
+&quot;&quot;&quot;
+from conta_cammini import conta_cammini, stringa, da_stringa
+
+D = 5
+N = 1 &lt;&lt; D
+peso = lambda v: bin(v).count(&quot;1&quot;)
+radici = [da_stringa(&quot;00000&quot;), da_stringa(&quot;11110&quot;)]
+dispari = [v for v in range(N) if peso(v) % 2 == 1]
+foglie = [v for v in dispari if any(v ^ r in [1 &lt;&lt; i for i in range(D)] for r in radici)]
+isolati = [v for v in dispari if v not in foglie]
+picchi = [v for v in range(N) if peso(v) % 2 == 0 and v not in radici]
+ordine = radici + isolati + foglie + picchi
+
+if __name__ == &quot;__main__&quot;:
+    tot, p, valli = conta_cammini(ordine, D)
+    print(&quot;totale cammini:&quot;, tot)
+    print(&quot;valli:&quot;, [stringa(v, D) for v in valli])
+    print(&quot;ordine:&quot;, &quot;,&quot;.join(stringa(v, D) for v in ordine))
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_4.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: "totale cammini: 88\nvalli: [’00000’, ’11110’, ’11001’, ’10101’, ’01101’, ’10011’, ’01011’, ’00111’]\nordine: 00000,11110,11001,10101,01101,10011,01011,00111,10000,01000,00100,11100,00010,11010,10110,01110,00001,11111,11000,10100,01100,10010,01010,00110,10001,01001,00101,11101,00011,11011,10111,0</code></p>
+<pre
+data-caption="attempt\_001 code\_5 [python, rigore exact] — Independent verification of the submitted labelling by explicit DFS enumeration of every u — approvato dal Referee"><code>&quot;&quot;&quot;Verifica indipendente dell&#39;etichettatura a 88 cammini: enumerazione esplicita per DFS.
+
+Metodo diverso dalla ricorsione p(v): da ogni valle si esplorano tutti i cammini con etichette
+crescenti e si contano uno a uno. Controlla anche che l&#39;input sia una biiezione.
+&quot;&quot;&quot;
+ORDINE = (&quot;00000,11110,11001,10101,01101,10011,01011,00111,10000,01000,00100,11100,00010,11010,&quot;
+          &quot;10110,01110,00001,11111,11000,10100,01100,10010,01010,00110,10001,01001,00101,11101,&quot;
+          &quot;00011,11011,10111,01111&quot;).split(&quot;,&quot;)
+D = 5
+
+
+def vicini(s):
+    &quot;&quot;&quot;Vicini della stringa s: cambia un carattere.&quot;&quot;&quot;
+    return [s[:i] + (&quot;1&quot; if s[i] == &quot;0&quot; else &quot;0&quot;) + s[i + 1:] for i in range(D)]
+
+
+def conta_da(s, etichetta):
+    &quot;&quot;&quot;Numero di cammini in salita che iniziano in s (s incluso come cammino di lunghezza 1).&quot;&quot;&quot;
+    return 1 + sum(conta_da(w, etichetta) for w in vicini(s) if etichetta[w] &gt; etichetta[s])
+
+
+if __name__ == &quot;__main__&quot;:
+    assert len(set(ORDINE)) == 32 and all(len(s) == 5 and set(s) &lt;= {&quot;0&quot;, &quot;1&quot;} for s in ORDINE)
+    etichetta = {s: i + 1 for i, s in enumerate(ORDINE)}
+    valli = [s for s in ORDINE if all(etichetta[w] &gt; etichetta[s] for w in vicini(s))]
+    totale = sum(conta_da(s, etichetta) for s in valli)
+    print(&quot;valli:&quot;, valli)
+    print(&quot;cammini in salita (DFS esplicita):&quot;, totale)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_5.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: "valli: [’00000’, ’11110’, ’11001’, ’10101’, ’01101’, ’10011’, ’01011’, ’00111’]\ncammini in salita (DFS esplicita): 88"; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_001 code\_6 [python, rigore exact] — Sanity check (evidence only, not part of the proof) of the identity T = 80 + \#valleys + X  — approvato dal Referee"><code>&quot;&quot;&quot;Controllo di sanita&#39; (solo evidenza) dell&#39;identita&#39; usata nella prova:
+totale = |E| + #valli + X, X = somma sugli spigoli u-&gt;w di (p(u)-1), e X in {0} u [3, inf).
+Etichettature casuali di Q_5 con aritmetica esatta.
+&quot;&quot;&quot;
+import random
+from conta_cammini import conta_cammini, vicini
+
+D, N = 5, 32
+rng = random.Random(1)
+valori_x = set()
+for _ in range(200000):
+    ordine = list(range(N))
+    rng.shuffle(ordine)
+    tot, p, valli = conta_cammini(ordine, D)
+    et = {v: i for i, v in enumerate(ordine)}
+    x = sum(p[u] - 1 for u in range(N) for w in vicini(u, D) if et[u] &lt; et[w])
+    assert tot == 80 + len(valli) + x
+    valori_x.add(x)
+print(&quot;identita&#39; verificata su 200000 etichettature casuali; min X&gt;0 osservato:&quot;, min(v for v in valori_x if v &gt; 0))
+print(&quot;valori di X osservati sotto 10:&quot;, sorted(v for v in valori_x if v &lt; 10))
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_6.py (python3, clean copy of the researcher sandbox): exit 0 in 13.4s; stdout: "identita’ verificata su 200000 etichettature casuali; min X&gt;0 osservato: 14\nvalori di X osservati sotto 10: []"; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_001 code\_7 [python, rigore float\_exploration\_only] — Simulated annealing over labellings (exploration only): best value found 88 in every seed  — approvato dal Referee"><code>&quot;&quot;&quot;Ricerca locale (simulated annealing) sul numero di cammini in salita di Q_5.
+
+Esplorazione: trova etichettature con pochi cammini. NON e&#39; una prova (minimo locale possibile).
+Stato = permutazione dei 32 vertici; mossa = scambio di due etichette; punteggio esatto (interi).
+&quot;&quot;&quot;
+import random
+import sys
+import time
+from conta_cammini import conta_cammini, stringa
+
+D = 5
+N = 1 &lt;&lt; D
+
+
+def ricottura(seed, passi=200000, t0=2.0, t1=0.05):
+    &quot;&quot;&quot;Un run di annealing con seed fissato; ritorna (miglior_valore, miglior_ordine).&quot;&quot;&quot;
+    rng = random.Random(seed)
+    ordine = list(range(N))
+    rng.shuffle(ordine)
+    val = conta_cammini(ordine, D)[0]
+    migliore, miglior_ordine = val, ordine[:]
+    for k in range(passi):
+        t = t0 * (t1 / t0) ** (k / passi)
+        i, j = rng.randrange(N), rng.randrange(N)
+        ordine[i], ordine[j] = ordine[j], ordine[i]
+        nuovo = conta_cammini(ordine, D)[0]
+        if nuovo &lt;= val or rng.random() &lt; 2.718 ** ((val - nuovo) / t):
+            val = nuovo
+            if val &lt; migliore:
+                migliore, miglior_ordine = val, ordine[:]
+        else:
+            ordine[i], ordine[j] = ordine[j], ordine[i]
+    return migliore, miglior_ordine
+
+
+if __name__ == &quot;__main__&quot;:
+    semi = int(sys.argv[1]) if len(sys.argv) &gt; 1 else 8
+    inizio = time.time()
+    globale = None
+    for seed in range(semi):
+        v, o = ricottura(seed)
+        print(f&quot;seed {seed}: {v}&quot;, flush=True)
+        if globale is None or v &lt; globale[0]:
+            globale = (v, o)
+    v, o = globale
+    tot, p, valli = conta_cammini(o, D)
+    print(&quot;migliore:&quot;, v, &quot;valli:&quot;, [stringa(x, D) for x in valli])
+    print(&quot;ordine:&quot;, &quot;,&quot;.join(stringa(x, D) for x in o))
+    print(f&quot;tempo {time.time()-inizio:.1f}s&quot;)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_7.py (python3, clean copy of the researcher sandbox): exit 0 in 60.5s; stdout: "seed 0: 88\nseed 1: 88\nseed 2: 88\nseed 3: 88\nseed 4: 88\nseed 5: 88\nseed 6: 88\nseed 7: 88\nmigliore: 88 valli: [’01001’, ’11100’, ’11010’, ’11111’, ’10011’]\nordine: 01001,11100,01000,11010,11111,01101,10100,10110,00110,00100,00111,01110,11001,01011,00001,11110,00010,10101,10011,10000,1100</code></p>
+<h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
+<div class="thebibliography">
+<p><span>99</span> Ian E. Ochs, Michael M. Desai. <em>The competition
+between simple and complex evolutionary trajectories in asexual
+populations</em>. arXiv:1412.3893v1 (2014). <a
+href="http://arxiv.org/abs/1412.3893v1"
+class="uri">http://arxiv.org/abs/1412.3893v1</a></p>
+</div>
+</body>
+</html>

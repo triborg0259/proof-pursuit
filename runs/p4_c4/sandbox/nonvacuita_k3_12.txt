@@ -1,0 +1,21 @@
+k=3 soglia=3 L=6 candidati=3 nodi=10 foglie=2 sopravvissuti=1 tempo=0.00s
+   sopravvissuto: (3, 3, 3)
+k=4 soglia=4 L=12 candidati=5 nodi=26 foglie=2 sopravvissuti=1 tempo=0.00s
+   sopravvissuto: (4, 4, 4, 4)
+k=5 soglia=5 L=60 candidati=11 nodi=103 foglie=8 sopravvissuti=1 tempo=0.00s
+   sopravvissuto: (5, 5, 5, 5, 5)
+k=6 soglia=6 L=60 candidati=11 nodi=218 foglie=9 sopravvissuti=2 tempo=0.00s
+   sopravvissuto: (6, 6, 6, 6, 6, 6)
+   sopravvissuto: (6, 6, 6, 12, 15, 20)
+k=7 soglia=7 L=420 candidati=23 nodi=1023 foglie=33 sopravvissuti=1 tempo=0.01s
+   sopravvissuto: (7, 7, 7, 7, 7, 7, 7)
+k=8 soglia=8 L=840 candidati=31 nodi=3632 foglie=44 sopravvissuti=1 tempo=0.06s
+   sopravvissuto: (8, 8, 8, 8, 8, 8, 8, 8)
+k=9 soglia=9 L=2520 candidati=47 nodi=14907 foglie=76 sopravvissuti=1 tempo=0.38s
+   sopravvissuto: (9, 9, 9, 9, 9, 9, 9, 9, 9)
+k=10 soglia=10 L=2520 candidati=47 nodi=41640 foglie=925 sopravvissuti=3 tempo=1.29s
+   sopravvissuto: (8, 8, 8, 10, 10, 10, 10, 20, 24, 30)
+   sopravvissuto: (8, 8, 8, 10, 10, 10, 10, 24, 30, 40)
+   sopravvissuto: (10, 10, 10, 10, 10, 10, 10, 10, 10, 10)
+k=11 soglia=11 L=27720 candidati=95 nodi=280821 foglie=1713 sopravvissuti=1 tempo=14.81s
+   sopravvissuto: (11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11)

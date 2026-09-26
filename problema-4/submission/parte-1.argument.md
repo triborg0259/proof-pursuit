@@ -68,6 +68,6 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
 
 8. Code
 
-The complete code, with the orchestrator's trusted re-runs, is in the write-up https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p4_c1.tex and in the repository.
+The complete code, with the orchestrator's trusted re-runs, is in the write-up: https://triborg0259.github.io/proof-pursuit/cells/p4_c1.html (rendered), https://www.overleaf.com/docs?snip_uri=https://raw.githubusercontent.com/triborg0259/proof-pursuit/main/report/cells/p4_c1.tex (open in Overleaf), source in the repository https://github.com/triborg0259/proof-pursuit/blob/main/.
 
 Full write-up (LaTeX, all resources): https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p4_c1.tex · Repository: https://github.com/triborg0259/proof-pursuit/blob/main/

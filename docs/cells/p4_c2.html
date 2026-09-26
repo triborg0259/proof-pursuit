@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)" />
+  <meta name="dcterms.date" content="2026-09-26" />
+  <title>Proof Pursuit — problem 4, part 2</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — problem 4, part 2</h1>
+<p class="author">Team Proof Pursuit (Researcher: T. Tumini; Referee:
+gabundos; Creative: M. Renzi; gio3r3gio)</p>
+<p class="date">2026-09-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#come-leggere-questo-rapporto"
+id="toc-come-leggere-questo-rapporto">Come leggere questo
+rapporto</a></li>
+<li><a href="#problem-4-disjoint-congruence-classes-and-large-gcd"
+id="toc-problem-4-disjoint-congruence-classes-and-large-gcd">Problem 4 —
+Disjoint congruence classes and large gcd</a>
+<ul>
+<li><a href="#cella-2-2-punti-stato-revisionato"
+id="toc-cella-2-2-punti-stato-revisionato">Cella 2 (2 punti) — stato:
+revisionato</a>
+<ul>
+<li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti"
+id="toc-decisioni-degli-agenti">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo"
+id="toc-codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arxiv-literature-consulted"
+id="toc-arxiv-literature-consulted">arXiv literature consulted</a></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="come-leggere-questo-rapporto">Come leggere
+questo rapporto</h1>
+<p>Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team
+(mai “risolto” senza revisione umana), la consegna con la prova, poi la
+traccia delle decisioni degli agenti (Researcher: famiglia e motivo;
+Referee: verdetto ed errore fatale; Creative: quando e perché è
+intervenuto) e il codice su cui il tentativo poggia con l’esito della
+riesecuzione fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO
+e CONGETTURA restano distinti. L’architettura del sistema è descritta
+nel README del repository.</p>
+<h1 id="problem-4-disjoint-congruence-classes-and-large-gcd">Problem 4 —
+Disjoint congruence classes and large gcd</h1>
+<h2 id="cella-2-2-punti-stato-revisionato">Cella 2 (2 punti) — stato:
+revisionato</h2>
+<h5 id="parte-2-c2-four-classes">Parte 2 (C2) — Four classes</h5>
+<p><strong>Punteggio:</strong> 2 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The same question for four classes. Prove the statement for <span
+class="math inline">\(k = 4\)</span>.</p>
+<p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
+<code>Prove the statement for k = 4: any four pairwise disjoint classes have a pair with gcd(m_i,m_j) &gt;= 4.</code></p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> prova completa
+(clique per primo, casi su $</p>
+<h3 id="consegna-prova">Consegna (prova)</h3>
+<h4 id="problema-4-parte-2-bozza-di-consegna">Problema 4 — Parte 2 —
+bozza di consegna</h4>
+<p><strong>Stato dichiarato: RISOLTA (approvata).</strong> Prova
+completa scritta dal team; Referee automatico READY_FOR_HUMAN (giudice A
+matematica PASS, giudice B evidenze PASS); approvazione umana registrata
+in <code>runs/p4_c2/approval.json</code>.</p>
+<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
+<p>Quattro classi disgiunte: l’enunciato della parte è dimostrato
+integralmente, nella generalità richiesta (vedi la prova per le ipotesi
+esatte). Nessun calcolo al computer è necessario.</p>
+<h5 id="dimostrazione">2. Dimostrazione</h5>
+<h4
+id="cell-2-four-pairwise-disjoint-classes-have-a-pair-of-moduli-with-gcdge4">Cell
+2: four pairwise disjoint classes have a pair of moduli with <span
+class="math inline">\(\gcd\ge4\)</span></h4>
+<p><strong>Target.</strong> If <span class="math inline">\(a_i\
+(\mathrm{mod}\ m_i)\)</span>, <span
+class="math inline">\(i=1,2,3,4\)</span>, are pairwise disjoint
+congruence classes (<span class="math inline">\(m_i\ge1\)</span>), then
+<span class="math inline">\(\gcd(m_i,m_j)\ge4\)</span> for some <span
+class="math inline">\(i&lt;j\)</span>.</p>
+<h5 id="lemma-0">Lemma 0</h5>
+<p>Let <span class="math inline">\(g=\gcd(m,m&#39;)\)</span>. If <span
+class="math inline">\(g\mid a-a&#39;\)</span> then the classes <span
+class="math inline">\(a\ (\mathrm{mod}\ m)\)</span> and <span
+class="math inline">\(a&#39;\ (\mathrm{mod}\ m&#39;)\)</span> meet;
+equivalently, disjoint classes satisfy <span
+class="math inline">\(g\nmid a-a&#39;\)</span>. <em>Proof.</em> Write
+<span class="math inline">\(m=g\mu\)</span>, <span
+class="math inline">\(m&#39;=g\mu&#39;\)</span> with <span
+class="math inline">\(\gcd(\mu,\mu&#39;)=1\)</span> and <span
+class="math inline">\(a-a&#39;=g\delta\)</span>. The element <span
+class="math inline">\(a+g\mu t\)</span> of the first class lies in the
+second iff <span class="math inline">\(g\mu&#39;\mid g(\delta+\mu
+t)\)</span> iff <span class="math inline">\(\mu&#39;\mid\delta+\mu
+t\)</span>, which has the solution <span
+class="math inline">\(t\equiv-\delta\mu^{-1}\pmod{\mu&#39;}\)</span>
+since <span class="math inline">\(\mu\)</span> is invertible modulo
+<span class="math inline">\(\mu&#39;\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<h5 id="proof-of-the-cell">Proof of the cell</h5>
+<p>Write <span class="math inline">\(g_{ij}=\gcd(m_i,m_j)\)</span> for
+<span class="math inline">\(i\ne j\)</span>. Suppose, for a
+contradiction, that <span class="math inline">\(g_{ij}\le3\)</span> for
+all pairs. By Lemma 0, <span class="math inline">\(g_{ij}=1\)</span> is
+impossible for disjoint classes (<span class="math inline">\(1\mid
+a_i-a_j\)</span>), hence <span
+class="math display">\[g_{ij}\in\{2,3\}\quad\text{for all } i\ne
+j.\tag{1}\]</span> Two consequences of (1) and Lemma 0, for <span
+class="math inline">\(i\ne j\)</span>: - (E) if <span
+class="math inline">\(2\mid m_i\)</span> and <span
+class="math inline">\(2\mid m_j\)</span>, then <span
+class="math inline">\(2\mid g_{ij}\)</span>, so by (1) <span
+class="math inline">\(g_{ij}=2\)</span>, and disjointness gives <span
+class="math inline">\(2\nmid a_i-a_j\)</span>, i.e. <span
+class="math inline">\(a_i\not\equiv a_j\pmod2\)</span>; - (T) if <span
+class="math inline">\(3\mid m_i\)</span> and <span
+class="math inline">\(3\mid m_j\)</span>, then <span
+class="math inline">\(3\mid g_{ij}\)</span>, so <span
+class="math inline">\(g_{ij}=3\)</span>, and disjointness gives <span
+class="math inline">\(a_i\not\equiv a_j\pmod3\)</span>.</p>
+<p>Let <span class="math inline">\(E=\{i: 2\mid m_i\}\)</span> and <span
+class="math inline">\(T=\{i:3\mid m_i\}\)</span>. <em>Claim 1: <span
+class="math inline">\(|E|\le2\)</span> and <span
+class="math inline">\(|T|\le3\)</span>.</em> By (E) the residues <span
+class="math inline">\(a_i\bmod2\)</span>, <span
+class="math inline">\(i\in E\)</span>, are pairwise distinct, and there
+are only <span class="math inline">\(2\)</span> residues; by (T) the
+residues <span class="math inline">\(a_i\bmod3\)</span>, <span
+class="math inline">\(i\in T\)</span>, are pairwise distinct, and there
+are only <span class="math inline">\(3\)</span> residues. <em>Claim 2:
+<span class="math inline">\(E\cup T=\{1,2,3,4\}\)</span>.</em> Given
+<span class="math inline">\(i\)</span>, pick any <span
+class="math inline">\(j\ne i\)</span>; by (1) <span
+class="math inline">\(g_{ij}\in\{2,3\}\)</span> and <span
+class="math inline">\(g_{ij}\mid m_i\)</span>, so <span
+class="math inline">\(2\mid m_i\)</span> or <span
+class="math inline">\(3\mid m_i\)</span>. <em>Claim 3: <span
+class="math inline">\(|T|\ge2\)</span>.</em> By Claims 1–2, <span
+class="math inline">\(|T|\ge4-|E|\ge2\)</span>.</p>
+<p>We now rule out the remaining sizes of <span
+class="math inline">\(T\)</span>. - <em><span
+class="math inline">\(|T|=4\)</span>.</em> Then all four residues <span
+class="math inline">\(a_i\bmod 3\)</span> are pairwise distinct by (T),
+impossible with three residues. - <em><span
+class="math inline">\(|T|=3\)</span>.</em> Say <span
+class="math inline">\(T=\{1,2,3\}\)</span> after relabelling, so <span
+class="math inline">\(3\nmid m_4\)</span>. For <span
+class="math inline">\(j\in T\)</span>: <span
+class="math inline">\(g_{4j}\in\{2,3\}\)</span> and <span
+class="math inline">\(3\nmid g_{4j}\)</span> (because <span
+class="math inline">\(g_{4j}\mid m_4\)</span>), hence <span
+class="math inline">\(g_{4j}=2\)</span>, so <span
+class="math inline">\(2\mid m_j\)</span>. Thus <span
+class="math inline">\(2\mid m_1,m_2,m_3\)</span>; also <span
+class="math inline">\(2\mid m_4\)</span> by Claim 2 (as <span
+class="math inline">\(3\nmid m_4\)</span>). So <span
+class="math inline">\(|E|=4\)</span>, contradicting Claim 1. - <em><span
+class="math inline">\(|T|=2\)</span>.</em> By Claim 2 the two indices
+outside <span class="math inline">\(T\)</span> lie in <span
+class="math inline">\(E\)</span>, so <span
+class="math inline">\(|E|\ge2\)</span>, hence <span
+class="math inline">\(|E|=2\)</span> by Claim 1 and <span
+class="math inline">\(E\)</span> is exactly the complement of <span
+class="math inline">\(T\)</span>; in particular <span
+class="math inline">\(E\cap T=\emptyset\)</span>. Take <span
+class="math inline">\(i\in E\)</span> and <span
+class="math inline">\(j\in T\)</span>. Then <span
+class="math inline">\(g_{ij}\in\{2,3\}\)</span> by (1). But <span
+class="math inline">\(j\notin E\)</span> means <span
+class="math inline">\(2\nmid m_j\)</span>, so <span
+class="math inline">\(2\nmid g_{ij}\)</span> and <span
+class="math inline">\(g_{ij}\ne2\)</span>; and <span
+class="math inline">\(i\notin T\)</span> means <span
+class="math inline">\(3\nmid m_i\)</span>, so <span
+class="math inline">\(3\nmid g_{ij}\)</span> and <span
+class="math inline">\(g_{ij}\ne3\)</span>. Contradiction.</p>
+<p>Since <span class="math inline">\(|T|\ge2\)</span> is forced by Claim
+3, all cases lead to a contradiction. Hence some pair satisfies <span
+class="math inline">\(g_{ij}\ge4\)</span>. <span
+class="math inline">\(\blacksquare\)</span></p>
+<p><em>Remark (not needed).</em> The case <span
+class="math inline">\(|T|=3\)</span> shows more generally the mechanism
+used: an index whose modulus misses a prime <span
+class="math inline">\(p\)</span> forces all its gcds to avoid <span
+class="math inline">\(p\)</span>.</p>
+<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
+dipendenze, tempi</h5>
+<p>Prova a mano, nessuna dipendenza. Verifica meccanica non necessaria;
+il Referee automatico (due giudici indipendenti,
+<code>runs/p4_c2/attempts/packet_001.json</code>) non ha trovato
+passaggi non giustificati.</p>
+<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
+<ul>
+<li><p>arXiv:2607.24655 Fornal, Sun, On the problem of large gcd for
+disjoint residue classes (context only: asymptotic result, not
+used)</p></li>
+<li><p>Posizione rispetto allo stato dell’arte: Fornal-Sun
+<span>[</span>2607.24655<span>]</span> use a gcd-coloured complete graph
+in the asymptotic regime; the same graph viewpoint underlies our finite
+argument, but the proof here is elementary and self-contained.</p></li>
+<li><p>Contributo: la prova qui scritta è del team, per esteso.</p></li>
+</ul>
+<h5 id="limiti-e-parti-irrisolte">5. Limiti e parti irrisolte</h5>
+<p>Nessuna: la parte è dimostrata. Gap dichiarati: nessuno.</p>
+<h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
+<h4 id="run-p4_c2">Run <code>p4_c2</code></h4>
+<dl>
+<dt>Iterazione 1 — attempt_001</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>direct_proof</code>,
+sotto-obiettivo: Prove the case k=4 by the ’prime cliques’ argument:
+indices whose moduli share a prime p form a set on which residues mod p
+are pairwise distinct, so |E|&lt;=2 for p=2 and |T|&lt;=3 for p=3; a
+case analysis on |T| closes.. Stato dichiarato:
+<code>CELL_SOLVED_CANDIDATE</code>. <em>Perché questa scelta</em>: With
+all gcds in {2,3}, each modulus is divisible by 2 or 3, and the indices
+divisible by a common prime p must carry pairwise distinct residues mod
+p; counting these residues bounds the sizes of the two ’prime cliques’
+and the remaining case analysis on their sizes is short and exhaustive.
+<em>Rispetto allo stato dell’arte</em>: Fornal-Sun [2607.24655] use a
+gcd-coloured complete graph in the asymptotic regime; the same graph
+viewpoint underlies our finite argument, but the proof here is
+elementary and self-contained. <strong>Referee</strong>: verdetto
+<code>UNKNOWN_STATUS</code> (review_status
+<code>READY_FOR_HUMAN</code>). <em>Prossimo passo richiesto</em>: Human
+reviews the exact target, proof and evidence, then approves explicit
+claims</p>
+</dd>
+</dl>
+<h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
+<div class="thebibliography">
+<p><span>99</span> Yu Hashimoto. <em>Finiteness of Disjoint Covering
+Systems with Precisely One Repeated Modulus</em>. arXiv:2603.26043v1
+(2026). <a href="http://arxiv.org/abs/2603.26043v1"
+class="uri">http://arxiv.org/abs/2603.26043v1</a> Shalosh B. Ekhad,
+Aviezri S. Fraenkel, Doron Zeilberger. <em>Searching for Disjoint
+Covering Systems with Precisely One Repeated Modulus</em>.
+arXiv:1511.04293v1 (2015). <a href="http://arxiv.org/abs/1511.04293v1"
+class="uri">http://arxiv.org/abs/1511.04293v1</a> Jan Fornal, Yu-Chen
+Sun. <em>On the problem of large gcd for disjoint residue classes</em>.
+arXiv:2607.24655v1 (2026). <a href="http://arxiv.org/abs/2607.24655v1"
+class="uri">http://arxiv.org/abs/2607.24655v1</a> Murali Menon. <em>Two
+Questions on $G$-harmonic Tuples</em>. arXiv:2608.15873v1 (2026). <a
+href="http://arxiv.org/abs/2608.15873v1"
+class="uri">http://arxiv.org/abs/2608.15873v1</a></p>
+</div>
+</body>
+</html>

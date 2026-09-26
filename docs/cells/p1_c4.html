@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)" />
+  <meta name="dcterms.date" content="2026-09-26" />
+  <title>Proof Pursuit — problem 1, part 4</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — problem 1, part 4</h1>
+<p class="author">Team Proof Pursuit (Researcher: T. Tumini; Referee:
+gabundos; Creative: M. Renzi; gio3r3gio)</p>
+<p class="date">2026-09-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#come-leggere-questo-rapporto"
+id="toc-come-leggere-questo-rapporto">Come leggere questo
+rapporto</a></li>
+<li><a href="#problem-1-angles-between-lines-fejes-toth"
+id="toc-problem-1-angles-between-lines-fejes-toth">Problem 1 — Angles
+between lines (Fejes Toth)</a>
+<ul>
+<li><a href="#cella-4-5-punti-stato-parziale"
+id="toc-cella-4-5-punti-stato-parziale">Cella 4 (5 punti) — stato:
+parziale</a>
+<ul>
+<li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti"
+id="toc-decisioni-degli-agenti">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo"
+id="toc-codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arxiv-literature-consulted"
+id="toc-arxiv-literature-consulted">arXiv literature consulted</a></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="come-leggere-questo-rapporto">Come leggere
+questo rapporto</h1>
+<p>Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team
+(mai “risolto” senza revisione umana), la consegna con la prova, poi la
+traccia delle decisioni degli agenti (Researcher: famiglia e motivo;
+Referee: verdetto ed errore fatale; Creative: quando e perché è
+intervenuto) e il codice su cui il tentativo poggia con l’esito della
+riesecuzione fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO
+e CONGETTURA restano distinti. L’architettura del sistema è descritta
+nel README del repository.</p>
+<h1 id="problem-1-angles-between-lines-fejes-toth">Problem 1 — Angles
+between lines (Fejes Toth)</h1>
+<h2 id="cella-4-5-punti-stato-parziale">Cella 4 (5 punti) — stato:
+parziale</h2>
+<h5 id="parte-4-five-lines-in-mathbbr3-six-in-mathbbr4">Parte 4 — Five
+lines in <span class="math inline">\(\mathbb{R}^3\)</span>, six in <span
+class="math inline">\(\mathbb{R}^4\)</span></h5>
+<p><strong>Punteggio:</strong> 5 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>Two concrete instances of the next case, <span
+class="math inline">\(N = d+2\)</span>: five lines in three dimensions
+and six lines in four. In each, the conjectured optimum repeats two of
+the coordinate axes. Prove that any <span
+class="math inline">\(5\)</span> lines in <span
+class="math inline">\(\mathbb{R}^3\)</span> satisfy <span
+class="math inline">\(S \le 4\pi\)</span>, and that any <span
+class="math inline">\(6\)</span> lines in <span
+class="math inline">\(\mathbb{R}^4\)</span> satisfy <span
+class="math inline">\(S \le 13\pi/2\)</span>.</p>
+<p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
+<code>Prove that any 5 lines through the origin in R^3 satisfy S &lt;= 4 pi, and that any 6 lines in R^4 satisfy S &lt;= 13 pi/2. A rigorous computation (exact/interval arithmetic, &lt; 10 min, code included) is admissible.</code></p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> triage; possibile
+via P5 o calcolo rigoroso; bozza parziale in inglese in submission/
+(parziali.py)</p>
+<h3 id="consegna-prova">Consegna (prova)</h3>
+<h4 id="problema-1-parte-4-bozza-di-consegna-parziale">Problema 1 —
+Parte 4 — bozza di consegna PARZIALE</h4>
+<p><strong>Stato dichiarato: PARZIALE.</strong> Nessuna soluzione
+completa: qui sotto ciò che è stabilito, la formalizzazione, la
+posizione rispetto alla letteratura e ciò che resta aperto. Nulla è
+dichiarato dimostrato oltre quanto scritto.</p>
+<h5 id="risultato-e-ambito">1. Risultato e ambito</h5>
+<p><strong>Richiesta ufficiale.</strong> ## Parte 4 — Five lines in
+<span class="math inline">\(\mathbb{R}^3\)</span>, six in <span
+class="math inline">\(\mathbb{R}^4\)</span></p>
+<p><strong>Punteggio:</strong> 5 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>Two concrete instances of the next case, <span
+class="math inline">\(N = d+2\)</span>: five lines in three dimensions
+and six lines in four. In each, the conjectured optimum repeats two of
+the coordinate axes. Prove that any <span
+class="math inline">\(5\)</span> lines in <span
+class="math inline">\(\mathbb{R}^3\)</span> satisfy <span
+class="math inline">\(S \le 4\pi\)</span>, and that any <span
+class="math inline">\(6\)</span> lines in <span
+class="math inline">\(\mathbb{R}^4\)</span> satisfy <span
+class="math inline">\(S \le 13\pi/2\)</span>.</p>
+<p><strong>Cosa consegniamo.</strong> Nessuna prova. Riformulazione:
+entrambe le istanze sono il caso <span
+class="math inline">\(N=d+2\)</span>, equivalente a deficit totale <span
+class="math inline">\(\ge\pi\)</span>. Verifica numerica (non prova) del
+bound su entrambe le istanze.</p>
+<h5 id="dimostrazione">2. Dimostrazione</h5>
+<p>Le due disuguaglianze richieste sono i casi <span
+class="math inline">\((d,N)=(3,5)\)</span> e <span
+class="math inline">\((4,6)\)</span> della parte 5. Con <span
+class="math inline">\(\delta_{ij}=\pi/2-\theta_{ij}=\arcsin|\langle
+x_i,x_j\rangle|\)</span> le tesi diventano <span
+class="math inline">\(\sum_{i&lt;j}\delta_{ij}\ge\pi\)</span>. Via
+computazionale ammessa dalla cella: massimizzazione rigorosa di <span
+class="math inline">\(S\)</span> su <span
+class="math inline">\((S^2)^5\)</span> e <span
+class="math inline">\((S^3)^6\)</span> con aritmetica a intervalli e
+branch-and-bound; parametri liberi 7 e 12 dopo le simmetrie, con massimi
+non lisci (coppie ortogonali o coincidenti), quindi serve un argomento
+locale attorno agli ottimi. Impostato, non eseguito: il caso in <span
+class="math inline">\(\mathbb R^4\)</span> è al limite dei 10
+minuti.</p>
+<h5 id="verifica-istruzioni-dipendenze-tempi">3. Verifica: istruzioni,
+dipendenze, tempi</h5>
+<p>Codice disponibile (Python 3, libreria standard; ogni script gira in
+meno di un minuto): - <code>problema-1/esperimenti/lines_Rd.py</code> -
+<code>problema-1/esperimenti/p1_somma_angoli.py</code></p>
+<h5 id="fonti-e-contributo">4. Fonti e contributo</h5>
+<p>Letteratura arXiv (ricerca deterministica
+<code>tools/cerca_letteratura.sh</code>, abstract letti, non usata come
+prova): - arXiv:1801.07837v1 — On the Fejes Tóth Problem about the Sum
+of Angles Between Lines (Dmitriy Bilyk, Ryan W Matzke, 2018); solo
+abstract letto. - arXiv:2007.08698v2 — On Fejes Tóth’s conjectured
+maximizer for the sum of angles between lines (Tongseok Lim, Robert J.
+McCann, 2020); solo abstract letto. - arXiv:1204.3850v1 — Simple Agents
+Learn to Find Their Way: An Introduction on Mapping Polygons (Jérémie
+Chalopin, Shantanu Das, Yann Disser, 2012); solo abstract letto. Fejes
+Tóth (1959) copre <span class="math inline">\(\mathbb R^3\)</span> con
+<span class="math inline">\(N\le6\)</span> secondo Bilyk–Matzke
+<span>[</span>1801.07837<span>]</span>: la prima istanza è nota in
+letteratura, ma la citazione non vale come prova.</p>
+<h5 id="limiti-e-parti-irrisolte">5. Limiti e parti irrisolte</h5>
+<p>Entrambe le istanze: prova mancante. Strada realistica: dedurle dalla
+parte 5 oppure completare il branch-and-bound a intervalli per <span
+class="math inline">\(\mathbb R^3\)</span>.</p>
+<h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
+<h4 id="run-p1_c4">Run <code>p1_c4</code></h4>
+<h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</h3>
+<p>Nessun codice nei tentativi.</p>
+<h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
+<div class="thebibliography">
+<p><span>99</span> Dmitriy Bilyk, Ryan W Matzke. <em>On the Fejes Tóth
+Problem about the Sum of Angles Between Lines</em>. arXiv:1801.07837v1
+(2018). <a href="http://arxiv.org/abs/1801.07837v1"
+class="uri">http://arxiv.org/abs/1801.07837v1</a> Tongseok Lim, Robert
+J. McCann. <em>On Fejes Tóth’s conjectured maximizer for the sum of
+angles between lines</em>. arXiv:2007.08698v2 (2020). <a
+href="http://arxiv.org/abs/2007.08698v2"
+class="uri">http://arxiv.org/abs/2007.08698v2</a> Jérémie Chalopin,
+Shantanu Das, Yann Disser, Matúš Mihalák, Peter Widmayer. <em>Simple
+Agents Learn to Find Their Way: An Introduction on Mapping
+Polygons</em>. arXiv:1204.3850v1 (2012). <a
+href="http://arxiv.org/abs/1204.3850v1"
+class="uri">http://arxiv.org/abs/1204.3850v1</a></p>
+</div>
+</body>
+</html>

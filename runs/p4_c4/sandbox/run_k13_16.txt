@@ -1,0 +1,2 @@
+k=13 soglia=12 L=27720 candidati=95 nodi=1224204 foglie=3889 sopravvissuti=1 tempo=79.69s
+   sopravvissuto: (10, 10, 10, 10, 10, 12, 12, 12, 12, 24, 36, 40, 45)

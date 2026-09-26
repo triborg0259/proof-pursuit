@@ -16,6 +16,19 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REPO = "https://github.com/triborg0259/proof-pursuit/blob/main/"
+RAW = "https://raw.githubusercontent.com/triborg0259/proof-pursuit/main/"
+PAGES = "https://triborg0259.github.io/proof-pursuit/"          # GitHub Pages: cartella docs/ del ramo main
+OVERLEAF = "https://www.overleaf.com/docs?snip_uri="            # apre un progetto Overleaf dal .tex pubblico
+
+
+def html_cella(pid, k):
+    """Versione HTML (MathJax) del LaTeX della cella in docs/cells/, servita da GitHub Pages."""
+    import subprocess
+    src = ROOT / "report" / "cells" / f"{pid}_c{k}.tex"
+    out = ROOT / "docs" / "cells" / f"{pid}_c{k}.html"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["pandoc", "-f", "latex", "-t", "html", "--mathjax", "-s", "--toc", "--metadata", f"title=Proof Pursuit — problem {pid[1]}, part {k}", str(src), "-o", str(out)], capture_output=True)
+    return PAGES + f"cells/{pid}_c{k}.html"
 CELLE = json.loads((ROOT / "runs" / "celle.json").read_text(encoding="utf-8"))
 spec = importlib.util.spec_from_file_location("br", ROOT / "tools" / "build_report.py")
 br = importlib.util.module_from_spec(spec); spec.loader.exec_module(br)
@@ -113,7 +126,7 @@ def argument(pid, n, k):
     testo = base + "\n\n## 6. How this result was obtained (multi-agent trace)\n" \
         "Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:\n" \
         + "\n".join(decisioni_md(r) for r in runs) + "\n\n## 6b. Tokens used by the agents\n" + "\n".join(token_md(r) for r in runs) + "\n\n## 7. arXiv literature consulted\n" + fonti_md(n, pid) \
-        + f"\n\n## 8. Code\nThe complete code, with the orchestrator's trusted re-runs, is in the write-up {REPO}report/cells/{pid}_c{k}.tex and in the repository.\n" \
+        + f"\n\n## 8. Code\nThe complete code, with the orchestrator's trusted re-runs, is in the write-up: {PAGES}cells/{pid}_c{k}.html (rendered), {OVERLEAF}{RAW}report/cells/{pid}_c{k}.tex (open in Overleaf), source in the repository {REPO}.\n" \
         + f"\n\n---\nFull write-up (LaTeX, all resources): {REPO}report/cells/{pid}_c{k}.tex · Repository: {REPO}\n"
     (sub / f"parte-{k}.argument.md").write_text(pulisci_markdown(normalizza_math(testo)), encoding="utf-8")
     return testo
@@ -130,13 +143,13 @@ def cella_tex(pid, n, k):
 
 
 def main():
-    righe = ["# Submission packages (one per platform slot)\n", "| Slot | Problem / part | Status (STATUS.md) | Paste into *Your argument* | *Write-up link* |", "|---|---|---|---|---|"]
+    righe = ["# Submission packages (one per platform slot)\n", "| Slot | Problem / part | Status (STATUS.md) | Paste into *Your argument* | *Write-up link* (rendered HTML) | Open in Overleaf |", "|---|---|---|---|---|---|"]
     for pid in CELLE:
         n = pid[1]
         for k in CELLE[pid]["cells"]:
-            argument(pid, n, k); cella_tex(pid, n, k)
+            argument(pid, n, k); cella_tex(pid, n, k); html = html_cella(pid, k)
             stato, _ = br.stato_cella(n, k)
-            righe.append(f"| /p/{pid}/c{k} | problem {n}, part {k} | {stato} | `problema-{n}/submission/parte-{k}.argument.md` | {REPO}report/cells/{pid}_c{k}.tex |")
+            righe.append(f"| /p/{pid}/c{k} | problem {n}, part {k} | {stato} | `problema-{n}/submission/parte-{k}.argument.md` | {html} | {OVERLEAF}{RAW}report/cells/{pid}_c{k}.tex |")
     righe.append("\nNumeric cells (p2/c1–c4): paste the value(s) in *Your answer* (see section 1 of the argument file) and put the argument file's content or link in the write-up. *Claude conversation*: leave empty unless a shareable link exists.")
     (ROOT / "SUBMISSIONS.md").write_text("\n".join(righe) + "\n", encoding="utf-8")
     print("scritti 24 argument.md, 24 report/cells/*.tex, SUBMISSIONS.md")

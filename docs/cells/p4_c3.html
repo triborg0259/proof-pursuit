@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Team Proof Pursuit (Researcher: T. Tumini; Referee: gabundos; Creative: M. Renzi; gio3r3gio)" />
+  <meta name="dcterms.date" content="2026-09-26" />
+  <title>Proof Pursuit — problem 4, part 3</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Proof Pursuit — problem 4, part 3</h1>
+<p class="author">Team Proof Pursuit (Researcher: T. Tumini; Referee:
+gabundos; Creative: M. Renzi; gio3r3gio)</p>
+<p class="date">2026-09-26</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#come-leggere-questo-rapporto"
+id="toc-come-leggere-questo-rapporto">Come leggere questo
+rapporto</a></li>
+<li><a href="#problem-4-disjoint-congruence-classes-and-large-gcd"
+id="toc-problem-4-disjoint-congruence-classes-and-large-gcd">Problem 4 —
+Disjoint congruence classes and large gcd</a>
+<ul>
+<li><a href="#cella-3-3-punti-stato-revisionato"
+id="toc-cella-3-3-punti-stato-revisionato">Cella 3 (3 punti) — stato:
+revisionato</a>
+<ul>
+<li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
+(prova)</a></li>
+<li><a href="#decisioni-degli-agenti"
+id="toc-decisioni-degli-agenti">Decisioni degli agenti</a></li>
+<li><a href="#codice-su-cui-poggia-il-tentativo"
+id="toc-codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arxiv-literature-consulted"
+id="toc-arxiv-literature-consulted">arXiv literature consulted</a></li>
+</ul>
+</nav>
+<h1 class="unnumbered" id="come-leggere-questo-rapporto">Come leggere
+questo rapporto</h1>
+<p>Per ogni cella: la richiesta ufficiale, lo stato dichiarato dal team
+(mai “risolto” senza revisione umana), la consegna con la prova, poi la
+traccia delle decisioni degli agenti (Researcher: famiglia e motivo;
+Referee: verdetto ed errore fatale; Creative: quando e perché è
+intervenuto) e il codice su cui il tentativo poggia con l’esito della
+riesecuzione fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO
+e CONGETTURA restano distinti. L’architettura del sistema è descritta
+nel README del repository.</p>
+<h1 id="problem-4-disjoint-congruence-classes-and-large-gcd">Problem 4 —
+Disjoint congruence classes and large gcd</h1>
+<h2 id="cella-3-3-punti-stato-revisionato">Cella 3 (3 punti) — stato:
+revisionato</h2>
+<h5 id="parte-3-c3-every-k-up-to-8">Parte 3 (C3) — Every <span
+class="math inline">\(k\)</span> up to 8</h5>
+<p><strong>Punteggio:</strong> 3 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>A first range of sizes: after C1 and C2, the sizes <span
+class="math inline">\(k = 5, 6, 7\)</span> and <span
+class="math inline">\(8\)</span> remain. Prove the statement for every
+<span class="math inline">\(k \le 8\)</span>.</p>
+<p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
+<code>Prove the statement for every k &lt;= 8 (sizes 5,6,7,8 remain after cells 1-2). A computation is admissible only with the full exhaustiveness certificate (finite set + proof, pruning rules proved, node counts, wall clock, rerun, decisions for every survivor).</code></p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> loop p4_c3
+attempt_001: Referee READY_FOR_HUMAN (A PASS, B PASS); approvata da
+Thomas Tumini (human); submission/parte-3.en.md</p>
+<h3 id="consegna-prova">Consegna (prova)</h3>
+<h4 id="problem-4-part-3-submission">Problem 4 — Part 3 —
+submission</h4>
+<p><strong>Declared status: SOLVED (approved).</strong> Complete proof;
+automatic Referee READY_FOR_HUMAN (judge A, mathematics: PASS; judge B,
+evidence: PASS; code re-run by the orchestrator); human approval
+recorded in <code>runs/p4_c3/approval.json</code>.</p>
+<h5 id="result-and-scope">1. Result and scope</h5>
+<p>Complete proof of the cell-3 statement for every k in {3,…,8}: (i)
+Lemma 1 reduces any size-k counterexample (all gcds ≤ 7) to a family
+with moduli dividing 420, identical pairwise gcds, still pairwise
+disjoint — full proof given; (ii) exhaustive enumeration of all
+k-cliques of the compatibility graph on the 1343 reduced classes finds
+no clique for k=3..8, with exhaustiveness certificate: finite set +
+proof (Corollary 2), no pruning beyond the definition, node counts (7118
+/ 20241 / 56208 / 234719 / 806717 / 3523544), wall clock (2.5 s total,
+Apple M4, Python 3.14.7), rerun reproducing all counts exactly, zero
+survivors; (iii) the unmodified machinery with threshold k recovers the
+trivial partition (non-vacuity); (iv) an independent second
+implementation agrees; (v) hand proofs for k=3 and k=4 included so the
+cell does not depend on cells 1–2.</p>
+<h5 id="proof">2. Proof</h5>
+<h5 id="statement-proved">Statement proved</h5>
+<p><strong>Theorem.</strong> Let <span class="math inline">\(3 \le k \le
+8\)</span> and let <span class="math inline">\(a_1 \pmod{m_1},\dots,a_k
+\pmod{m_k}\)</span> be pairwise disjoint congruence classes (<span
+class="math inline">\(m_i\ge 1\)</span>). Then <span
+class="math inline">\(\gcd(m_i,m_j)\ge k\)</span> for some <span
+class="math inline">\(i&lt;j\)</span>.</p>
+<p>Throughout, a <em>counterexample of size <span
+class="math inline">\(k\)</span></em> is a pairwise disjoint family of
+<span class="math inline">\(k\)</span> classes with <span
+class="math inline">\(\gcd(m_i,m_j)\le k-1\)</span> for all <span
+class="math inline">\(i&lt;j\)</span>. We use only the definitions and
+the criterion <span class="math inline">\((*)\)</span> from the problem
+statement: two classes meet iff <span
+class="math inline">\(\gcd(m_i,m_j)\mid a_i-a_j\)</span>.</p>
+<h5 id="step-0.-two-preliminary-facts">Step 0. Two preliminary
+facts</h5>
+<p><strong>(P1)</strong> In a pairwise disjoint family with <span
+class="math inline">\(k\ge2\)</span>, every <span
+class="math inline">\(m_i\ge 2\)</span>. Indeed, if <span
+class="math inline">\(m_i=1\)</span> then <span
+class="math inline">\(\gcd(m_i,m_j)=1\mid a_i-a_j\)</span> for any <span
+class="math inline">\(j\neq i\)</span>, so the classes <span
+class="math inline">\(i,j\)</span> meet by <span
+class="math inline">\((*)\)</span>.</p>
+<p><strong>(P2)</strong> Every integer <span
+class="math inline">\(g\)</span> with <span class="math inline">\(1\le
+g\le 7\)</span> divides <span
+class="math inline">\(N:=420=2^2\cdot3\cdot5\cdot7\)</span>. (Check:
+<span
+class="math inline">\(420=1\cdot420=2\cdot210=3\cdot140=4\cdot105=5\cdot84=6\cdot70=7\cdot60\)</span>.)</p>
+<h5 id="step-1.-reduction-lemma-the-finite-set">Step 1. Reduction lemma
+(the finite set)</h5>
+<p><strong>Lemma 1.</strong> Let <span class="math inline">\(a_1
+\pmod{m_1},\dots,a_k \pmod{m_k}\)</span> (<span
+class="math inline">\(k\ge2\)</span>) be pairwise disjoint with <span
+class="math inline">\(g_{ij}:=\gcd(m_i,m_j)\le 7\)</span> for all <span
+class="math inline">\(i&lt;j\)</span>. Put <span
+class="math inline">\(m_i&#39;:=\gcd(m_i,N)\)</span> with <span
+class="math inline">\(N=420\)</span> and <span
+class="math inline">\(a_i&#39;:=a_i \bmod m_i&#39;\)</span> (so <span
+class="math inline">\(0\le a_i&#39;&lt;m_i&#39;\)</span>). Then:</p>
+<ol>
+<li><p><span class="math inline">\(m_i&#39; \mid 420\)</span> and <span
+class="math inline">\(m_i&#39;\ge 2\)</span>;</p></li>
+<li><p><span
+class="math inline">\(\gcd(m_i&#39;,m_j&#39;)=g_{ij}\)</span> for all
+<span class="math inline">\(i&lt;j\)</span>;</p></li>
+<li><p>the classes <span class="math inline">\(a_1&#39;
+\pmod{m_1&#39;},\dots,a_k&#39;\pmod{m_k&#39;}\)</span> are pairwise
+disjoint;</p></li>
+<li><p>the <span class="math inline">\(k\)</span> pairs <span
+class="math inline">\((a_i&#39;,m_i&#39;)\)</span> are pairwise
+distinct.</p></li>
+</ol>
+<p><em>Proof.</em> (2): <span
+class="math inline">\(\gcd(m_i&#39;,m_j&#39;)=\gcd(\gcd(m_i,N),\gcd(m_j,N))=\gcd(m_i,m_j,N)=\gcd(g_{ij},N)\)</span>.
+Since <span class="math inline">\(1\le g_{ij}\le 7\)</span>, (P2) gives
+<span class="math inline">\(g_{ij}\mid N\)</span>, hence <span
+class="math inline">\(\gcd(g_{ij},N)=g_{ij}\)</span>.</p>
+<p>(1): <span class="math inline">\(m_i&#39;\mid N\)</span> by
+definition. For any <span class="math inline">\(j\ne i\)</span>, <span
+class="math inline">\(g_{ij}\mid m_i\)</span> and <span
+class="math inline">\(g_{ij}\mid N\)</span>, so <span
+class="math inline">\(g_{ij}\mid m_i&#39;\)</span>; by (P1) applied to
+the original family, <span class="math inline">\(g_{ij}\ge 2\)</span> —
+more precisely, disjointness of classes <span
+class="math inline">\(i,j\)</span> and <span
+class="math inline">\((*)\)</span> give <span
+class="math inline">\(g_{ij}\nmid a_i-a_j\)</span>, which is impossible
+for <span class="math inline">\(g_{ij}=1\)</span>; hence <span
+class="math inline">\(g_{ij}\ge2\)</span> and <span
+class="math inline">\(m_i&#39;\ge g_{ij}\ge2\)</span>.</p>
+<p>(3): Fix <span class="math inline">\(i&lt;j\)</span>. By (2), <span
+class="math inline">\(\gcd(m_i&#39;,m_j&#39;)=g_{ij}\)</span>. Since
+<span class="math inline">\(g_{ij}\mid m_i&#39;\)</span> and <span
+class="math inline">\(g_{ij}\mid m_j&#39;\)</span> (shown in (1)), and
+<span class="math inline">\(a_i&#39;\equiv a_i \pmod{m_i&#39;}\)</span>,
+<span class="math inline">\(a_j&#39;\equiv a_j\pmod{m_j&#39;}\)</span>,
+we get <span class="math inline">\(a_i&#39;-a_j&#39;\equiv a_i-a_j
+\pmod{g_{ij}}\)</span>. The original classes are disjoint, so by <span
+class="math inline">\((*)\)</span> <span
+class="math inline">\(g_{ij}\nmid a_i-a_j\)</span>, hence <span
+class="math inline">\(g_{ij}\nmid a_i&#39;-a_j&#39;\)</span>, and by
+<span class="math inline">\((*)\)</span> again the reduced classes <span
+class="math inline">\(i,j\)</span> are disjoint.</p>
+<p>(4): Two equal pairs would be the same nonempty class, contradicting
+(3). <span class="math inline">\(\square\)</span></p>
+<p><strong>Corollary 2.</strong> If a counterexample of size <span
+class="math inline">\(k\)</span> exists with <span
+class="math inline">\(3\le k\le8\)</span>, then there exist <span
+class="math inline">\(k\)</span> pairwise distinct pairs <span
+class="math inline">\((a_i,m_i)\)</span> with <span
+class="math inline">\(m_i\mid 420\)</span>, <span
+class="math inline">\(m_i\ge2\)</span>, <span class="math inline">\(0\le
+a_i&lt;m_i\)</span>, such that for every <span
+class="math inline">\(i&lt;j\)</span>: <span
+class="math inline">\(\gcd(m_i,m_j)\le k-1\)</span> and <span
+class="math inline">\(\gcd(m_i,m_j)\nmid a_i-a_j\)</span>.</p>
+<p><em>Proof.</em> In a counterexample of size <span
+class="math inline">\(k\le 8\)</span> all <span
+class="math inline">\(g_{ij}\le k-1\le 7\)</span>, so Lemma 1 applies;
+its conclusions (1)–(4) together with the preserved gcds (2) give
+exactly the listed properties. <span
+class="math inline">\(\square\)</span></p>
+<h5 id="step-2.-the-finite-search-and-its-certificate">Step 2. The
+finite search and its certificate</h5>
+<p><strong>Finite set (certificate item 1).</strong> Let <span
+class="math inline">\(V=\{(a,m): m\mid 420,\ m\ge2,\ 0\le
+a&lt;m\}\)</span>. Then <span
+class="math inline">\(|V|=\sigma(420)-1=1344-1=1343\)</span> (the script
+prints <code>vertici=1343</code>). For each <span
+class="math inline">\(k\in\{3,\dots,8\}\)</span> let <span
+class="math inline">\(G_k\)</span> be the graph on <span
+class="math inline">\(V\)</span> with an edge between <span
+class="math inline">\((a,m)\)</span> and <span
+class="math inline">\((a&#39;,m&#39;)\)</span> iff <span
+class="math display">\[\gcd(m,m&#39;)\le k-1\quad\text{and}\quad
+\gcd(m,m&#39;)\nmid (a-a&#39;).\]</span> By Corollary 2, <strong>a
+counterexample of size <span class="math inline">\(k\)</span> yields a
+<span class="math inline">\(k\)</span>-clique in <span
+class="math inline">\(G_k\)</span></strong>; so if <span
+class="math inline">\(G_k\)</span> has no <span
+class="math inline">\(k\)</span>-clique, the Theorem holds for that
+<span class="math inline">\(k\)</span>. Nothing outside <span
+class="math inline">\(V\)</span> needs to be examined: Lemma 1 maps
+every counterexample into <span class="math inline">\(V\)</span>.</p>
+<p><strong>Algorithm.</strong> Vertices are indexed <span
+class="math inline">\(0,\dots,1342\)</span> in a fixed order (moduli
+increasing, residues increasing).
+<code>adj</code><span><code>[</code></span><code>i</code><span><code>]</code></span>
+is the bitset of indices <span class="math inline">\(j&gt;i\)</span>
+adjacent to <span class="math inline">\(i\)</span> in <span
+class="math inline">\(G_k\)</span>, computed directly from the
+definition with exact integer arithmetic (<code>math.gcd</code>,
+<code>%</code>). The recursion
+<code>ricorsione(parziale, candidati)</code> starts with the empty tuple
+and the candidate set <span class="math inline">\(=V\)</span>; it
+iterates over candidates <span class="math inline">\(j\)</span> in
+increasing order and recurses with
+<code>parziale+</code><span><code>[</code></span><code>j</code><span><code>]</code></span>
+and
+<code>candidati &amp; adj</code><span><code>[</code></span><code>j</code><span><code>]</code></span>.</p>
+<p><em>Correctness (every <span class="math inline">\(k\)</span>-clique
+is found).</em> By induction on the length of <code>parziale</code>: the
+invariant is that <code>candidati</code> equals the set of indices
+greater than the last element of <code>parziale</code> (all of <span
+class="math inline">\(V\)</span> if it is empty) that are adjacent to
+every element of <code>parziale</code>. Initially true. If it holds for
+<code>parziale</code> and <span class="math inline">\(j\)</span> is a
+candidate, then
+<code>candidati &amp; adj</code><span><code>[</code></span><code>j</code><span><code>]</code></span>
+is the set of indices that are <span
+class="math inline">\(&gt;j\)</span> (since
+<code>adj</code><span><code>[</code></span><code>j</code><span><code>]</code></span>
+only contains indices <span class="math inline">\(&gt;j\)</span>),
+adjacent to every element of <code>parziale</code> (since they are in
+<code>candidati</code>) and adjacent to <span
+class="math inline">\(j\)</span>; this is the invariant for
+<code>parziale+</code><span><code>[</code></span><code>j</code><span><code>]</code></span>.
+Therefore every increasing tuple <span
+class="math inline">\((v_1&lt;\dots&lt;v_k)\)</span> of pairwise
+adjacent vertices is visited (each <span
+class="math inline">\(v_{t+1}\)</span> lies in the candidate set of the
+prefix <span class="math inline">\((v_1,\dots,v_t)\)</span>), and it is
+visited exactly once (a tuple is reached only through its unique chain
+of prefixes). Every <span class="math inline">\(k\)</span>-clique of
+<span class="math inline">\(G_k\)</span> is exactly one such tuple.
+Whenever <code>len(parziale)==k</code> the tuple is recorded as a
+survivor.</p>
+<p><strong>Pruning rules (certificate item 2).</strong> None beyond the
+definition: a partial tuple is extended only by vertices adjacent (in
+<span class="math inline">\(G_k\)</span>) to all its members. A set
+containing a non-adjacent pair contains either two classes that meet or
+a pair with gcd <span class="math inline">\(\ge k\)</span>, so it is not
+(a reduction of) a counterexample; hence nothing that can be completed
+to a counterexample is discarded. No symmetry reduction, no ordering
+heuristic beyond the fixed vertex order, no extra rules.</p>
+<p><strong>Node counts and wall clock (certificate item 3).</strong> A
+node is one recursive call with nonempty <code>parziale</code>, i.e. the
+number of nonempty pairwise-adjacent increasing tuples of length <span
+class="math inline">\(\le k\)</span> (so it equals <span
+class="math inline">\(\sum_{t=1}^{k}\#\{t\text{-cliques of
+}G_k\}\)</span>; e.g. for <span class="math inline">\(k=3\)</span>:
+<span class="math inline">\(7118 = 1343 + 5775 + 0\)</span>, i.e. <span
+class="math inline">\(G_3\)</span> has 5775 edges and no triangle). Run
+1 (<code>run1.txt</code>), Apple M4, Python 3.14.7, exact integer
+arithmetic:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><span
+class="math inline">\(k\)</span></th>
+<th style="text-align: left;">gcd threshold <span
+class="math inline">\(\le k-1\)</span></th>
+<th style="text-align: left;">vertices</th>
+<th style="text-align: left;">nodes</th>
+<th style="text-align: left;">survivors</th>
+<th style="text-align: left;">time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">1343</td>
+<td style="text-align: left;">7118</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0.10 s</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">1343</td>
+<td style="text-align: left;">20241</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0.11 s</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">1343</td>
+<td style="text-align: left;">56208</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0.12 s</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">1343</td>
+<td style="text-align: left;">234719</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0.20 s</td>
+</tr>
+<tr>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">1343</td>
+<td style="text-align: left;">806717</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0.46 s</td>
+</tr>
+<tr>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">1343</td>
+<td style="text-align: left;">3523544</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">1.51 s</td>
+</tr>
+</tbody>
+</table>
+<p>Total wall clock of the whole certificate run: 2.5 s (far below the
+10-minute limit). Command:
+<code>.venv/bin/python runs/p4_c3/sandbox/ricerca_clique_420.py certificato</code>.</p>
+<p><strong>Rerun (certificate item 4).</strong> A second run
+(<code>run2.txt</code>) reproduced every node count and survivor count
+exactly (verified by <code>diff</code> after stripping the timing field:
+<code>IDENTICI</code>); times were 0.10/0.11/0.12/0.20/0.43/1.50 s.</p>
+<p><strong>Survivors (certificate item 5).</strong> None at any <span
+class="math inline">\(k\in\{3,\dots,8\}\)</span>, so there is nothing to
+decide.</p>
+<p><strong>Conclusion of Step 2.</strong> For each <span
+class="math inline">\(k\in\{3,\dots,8\}\)</span>, <span
+class="math inline">\(G_k\)</span> has no <span
+class="math inline">\(k\)</span>-clique; by Corollary 2 there is no
+counterexample of size <span class="math inline">\(k\)</span>, i.e. the
+Theorem holds for <span class="math inline">\(k=3,4,5,6,7,8\)</span>.
+<span class="math inline">\(\blacksquare\)</span></p>
+<h5
+id="step-3.-non-vacuity-of-the-machinery-not-required-for-c3-included-as-evidence-the-code-is-not-silently-broken">Step
+3. Non-vacuity of the machinery (not required for C3, included as
+evidence the code is not silently broken)</h5>
+<p>Running the <em>same, unmodified</em> enumeration with the gcd
+threshold relaxed from <span class="math inline">\(k-1\)</span> to <span
+class="math inline">\(k\)</span> (mode <code>non_vacuita</code>), the
+trivial partition <span class="math inline">\(0,1,\dots,k-1 \pmod
+k\)</span> — which is an admissible configuration with all gcds equal to
+<span class="math inline">\(k\)</span> — is found among the cliques:
+<span class="math inline">\(k=3\)</span>: 6688 cliques, <span
+class="math inline">\(k=4\)</span>: 7917, <span
+class="math inline">\(k=5\)</span>: 17856, <span
+class="math inline">\(k=6\)</span>: 17329, <span
+class="math inline">\(k=7\)</span>: 34056 (universe <span
+class="math inline">\(N=420\)</span>), each run printing
+<code>partizione banale trovata: True</code>. For <span
+class="math inline">\(k=8\)</span> the modulus 8 does not divide 420, so
+the universe was enlarged to the divisors of 840 (2879 vertices): 32 097
+759 nodes, 58 425 cliques, 14.7 s, trivial partition found. (The
+certificate of Step 2 uses only <span
+class="math inline">\(N=420\)</span>, which Lemma 1 justifies for gcds
+<span class="math inline">\(\le7\)</span>.)</p>
+<h5
+id="step-4.-independent-second-implementation-cross-check-not-part-of-the-certificate">Step
+4. Independent second implementation (cross-check, not part of the
+certificate)</h5>
+<p><code>ricerca_moduli_residui.py</code> uses a different algorithm: it
+first enumerates non-decreasing <span
+class="math inline">\(k\)</span>-tuples of moduli (divisors of 420,
+<span class="math inline">\(\ge2\)</span>) with all pairwise gcds in
+<span class="math inline">\([2,\text{threshold}]\)</span>, then solves
+the residue CSP <span class="math inline">\(a_i\not\equiv a_j
+\pmod{\gcd(m_i,m_j)}\)</span> by backtracking with the translation
+normalisation <span class="math inline">\(a_1=0\)</span>. For thresholds
+<span class="math inline">\(k-1\)</span> it examined 51, 77, 221, 293,
+1249, 1668 modulus tuples for <span
+class="math inline">\(k=3,\dots,8\)</span> and found 0 families in every
+case (2.9 s total). With threshold <span
+class="math inline">\(k\)</span> it finds e.g. <span
+class="math inline">\(((0,3),(1,3),(2,3))\)</span>, <span
+class="math inline">\(((0,5),\dots,(4,5))\)</span>, <span
+class="math inline">\(((0,7),\dots,(6,7))\)</span>. Its counts are not
+directly comparable with those of the clique search (different
+normalisation); only the zero/non-zero outcomes are compared, and they
+agree.</p>
+<h5
+id="step-5.-hand-proofs-for-k3-and-k4-so-the-cell-does-not-depend-on-cells-12-being-accepted">Step
+5. Hand proofs for <span class="math inline">\(k=3\)</span> and <span
+class="math inline">\(k=4\)</span> (so the cell does not depend on cells
+1–2 being accepted)</h5>
+<p><strong><span class="math inline">\(k=3\)</span>.</strong> Suppose
+three pairwise disjoint classes have all <span
+class="math inline">\(g_{ij}\le 2\)</span>. By (P1)-type reasoning
+(<span class="math inline">\(g_{ij}=1\)</span> would force the classes
+to meet), <span class="math inline">\(g_{ij}=2\)</span> for all pairs,
+so <span class="math inline">\(g_{ij}\nmid a_i-a_j\)</span> says <span
+class="math inline">\(a_i-a_j\)</span> is odd for all <span
+class="math inline">\(i&lt;j\)</span>. Then <span
+class="math inline">\(a_1,a_2,a_3\)</span> have pairwise different
+parities, impossible for three integers with only two parities. Hence
+some <span class="math inline">\(g_{ij}\ge3\)</span>.</p>
+<p><strong><span class="math inline">\(k=4\)</span>.</strong> Suppose
+four pairwise disjoint classes have all <span
+class="math inline">\(g_{ij}\in\{2,3\}\)</span> (values <span
+class="math inline">\(\le3\)</span> and <span
+class="math inline">\(\ne1\)</span>). Let <span
+class="math inline">\(E=\{i: 2\mid m_i\}\)</span>, <span
+class="math inline">\(T=\{i:3\mid m_i\}\)</span>. (a) If <span
+class="math inline">\(g_{ij}=2\)</span> then <span
+class="math inline">\(i,j\in E\)</span>; if <span
+class="math inline">\(g_{ij}=3\)</span> then <span
+class="math inline">\(i,j\in T\)</span>. Hence every pair lies in <span
+class="math inline">\(E\)</span> or in <span
+class="math inline">\(T\)</span>. (b) If <span
+class="math inline">\(i\ne j\)</span> both lie in <span
+class="math inline">\(E\cap T\)</span> then <span
+class="math inline">\(6\mid g_{ij}\)</span>, contradicting <span
+class="math inline">\(g_{ij}\le3\)</span>; so <span
+class="math inline">\(|E\cap T|\le1\)</span>. (c) Two indices <span
+class="math inline">\(i,j\in E\)</span> have <span
+class="math inline">\(2\mid g_{ij}\)</span>, so <span
+class="math inline">\(g_{ij}=2\)</span> and <span
+class="math inline">\(a_i\not\equiv a_j\pmod 2\)</span>; thus residues
+mod 2 of <span class="math inline">\(E\)</span> are distinct and <span
+class="math inline">\(|E|\le2\)</span>. Similarly for <span
+class="math inline">\(i,j\in T\)</span>, <span
+class="math inline">\(3\mid g_{ij}\)</span> gives <span
+class="math inline">\(g_{ij}=3\)</span> and <span
+class="math inline">\(a_i\not\equiv a_j \pmod 3\)</span>, so <span
+class="math inline">\(|T|\le3\)</span>. (d) By (a) no <span
+class="math inline">\(i\in E\setminus T\)</span> and <span
+class="math inline">\(j\in T\setminus E\)</span> can coexist (the pair
+would lie in neither <span class="math inline">\(E\)</span> nor <span
+class="math inline">\(T\)</span>). Hence <span
+class="math inline">\(E\subseteq T\)</span> or <span
+class="math inline">\(T\subseteq E\)</span>; with (a) (every index lies
+in <span class="math inline">\(E\cup T\)</span>, as it forms a pair with
+some other index) we get <span
+class="math inline">\(\{1,2,3,4\}=T\)</span> or <span
+class="math inline">\(\{1,2,3,4\}=E\)</span>, contradicting <span
+class="math inline">\(|T|\le3\)</span>, <span
+class="math inline">\(|E|\le2\)</span>. Hence some <span
+class="math inline">\(g_{ij}\ge4\)</span>.</p>
+<p>(These two cases are also covered by the search at <span
+class="math inline">\(k=3,4\)</span>.)</p>
+<h5 id="scope-and-honesty">Scope and honesty</h5>
+<p>Claimed: the Theorem for <span
+class="math inline">\(k=3,4,5,6,7,8\)</span> (cell 3 in full, including
+the sizes of cells 1–2). Certified by: Lemma 1 (complete proof above) +
+exhaustive enumeration with the certificate items 1–5 + rerun. Nothing
+is claimed for <span class="math inline">\(k\ge9\)</span>; the reduction
+to <span class="math inline">\(N=420\)</span> is valid only for gcds
+<span class="math inline">\(\le7\)</span>, and for larger <span
+class="math inline">\(k\)</span> one would use <span
+class="math inline">\(N=\mathrm{lcm}(1,\dots,k-1)\)</span> in Lemma 1
+(same proof).</p>
+<h5 id="verification-instructions-dependencies-timings">3. Verification:
+instructions, dependencies, timings</h5>
+<p>Python 3 standard library only. Scripts (also saved in
+<code>runs/p4_c3/sandbox/</code> and re-run in
+<code>runs/p4_c3/verifica/</code>): - code_1 (python, rigor
+<code>exact</code>): Implementation 1 (certificate): exhaustive
+enumeration of all k-cliques in G_k on the 1343 classes (a,m), m,
+m&gt;=2; no pruning beyond the edge definition; prints node counts,
+survivors, wall clock; mode non_vacuita relaxes the gcd threshold to k
+and checks that the trivial partition 0..k-1 (mod k) is found. File
+runs/p4_c3/sandbox/ricerca_clique_420.py; outputs run1.txt, run2.txt,
+non_vacuita.txt, non_vacuita_k8_N840.txt. - code_2 (python, rigor
+<code>exact</code>): Implementation 2 (independent cross-check,
+different method): enumerate non-decreasing k-tuples of moduli dividing
+420 with pairwise gcd in <span>[</span>2, threshold<span>]</span>, then
+solve the residue CSP a_i != a_j (mod gcd) by backtracking with a_1 = 0.
+Found 0 families at thresholds k-1 for k=3..8 (51, 77, 221, 293, 1249,
+1668 modulus tuples examined; 2.9 s total) and finds the trivial
+partitions at threshold k. File
+runs/p4_c3/sandbox/ricerca_moduli_residui.py; outputs impl2_run1.txt,
+impl2_non_vacuita.txt.</p>
+<p>Trusted re-runs by the orchestrator (exit code, wall clock, output):
+- orchestrator re-ran code_1.py (python3, clean copy of the researcher
+sandbox): exit 0 in 2.5s; stdout: ’k=3 soglia_gcd&lt;=2 vertici=1343
+nodi=7118 sopravvissuti=0 tempo=0.10s soglia_gcd&lt;=3 vertici=1343
+nodi=20241 sopravvissuti=0 tempo=0.10s soglia_gcd&lt;=4 vertici=1343
+nodi=56208 sopravvissuti - orchestrator re-ran code_2.py (python3, clean
+copy of the researcher sandbox): exit 0 in 3.0s; stdout: ’k=3
+soglia_gcd&lt;=2 multinsiemi_moduli=51 famiglie(a1=0)=0 tempo=0.00s
+soglia_gcd&lt;=3 multinsiemi_moduli=77 famiglie(a1=0)=0 tempo=0.00s
+soglia_gcd&lt;=4 multinsiemi_moduli=221 famiglie(a1=0)=</p>
+<h5 id="sources-and-contribution">4. Sources and contribution</h5>
+<ul>
+<li><p>Problem statement of Problema 4 (criterion (*) and definitions),
+file problema-4/enunciato.md</p></li>
+<li><p>arXiv:2607.24655 (Fornal–Sun) — abstract only, used for
+literature_position, no result relied upon</p></li>
+<li><p>arXiv:2608.15873 (Menon) — abstract only, context for the group
+form, no result relied upon</p></li>
+<li><p>Position with respect to the literature: The listed abstracts do
+not settle this cell in a usable way:
+<span>[</span>2607.24655<span>]</span> (Fornal–Sun) proves the
+asymptotic bound max gcd ≫ k·exp(−(2+o(1))√(log k/log log k)), which is
+relevant to C6(b), not to small k;
+<span>[</span>2608.15873<span>]</span> (Menon) concerns the group form
+(C6(c)) and the tuple (6,6,6,10,15);
+<span>[</span>2603.26043<span>]</span> and
+<span>[</span>1511.04293<span>]</span> concern disjoint covering systems
+with one repeated modulus, unrelated to the gcd question. I did not read
+the full papers and cite nothing from them; my approach (finite
+reduction + exhaustive certified search) follows the column’s own
+hand-in rules rather than any of these papers. I recall that the k ≤ 8
+case is probably classical (Huhn–Megyesi / Z.-W. Sun on disjoint residue
+classes) but I have not verified any such source, so I do not cite it as
+read and I rely on it for nothing.</p></li>
+<li><p>Contribution: the proof above is written out in full by the
+team’s Researcher and checked by two independent judges and by a
+human.</p></li>
+</ul>
+<h5 id="limits-and-unresolved-parts">5. Limits and unresolved parts</h5>
+<p>Gaps declared by the author (all accepted by the judges): - The
+search is only as exhaustive as the code is correct; I proved the
+enumeration invariant in prose (Step 2) but a hostile reader must still
+read the ~80 lines of Python. The independent second implementation and
+the non-vacuity runs mitigate but do not replace this. - The k=8
+non-vacuity check needed a larger universe (divisors of 840) because 8
+does not divide 420; this is expected from Lemma 1 (valid only for gcds
+≤ 7) and does not affect the certificate, but it is a deviation from
+‘run the machinery unmodified’ in the strict C5 sense (not required for
+C3). - The survivor counts of the two implementations in non-vacuity
+mode are not directly comparable (unordered cliques vs. a_1=0-normalised
+ordered families with repeated moduli), so the cross-check compares only
+zero/non-zero outcomes at thresholds k−1, plus presence of the trivial
+partition. - Literature: I did not fetch or read the full papers listed;
+I recall that the small-k cases are probably classical (Huhn–Megyesi /
+Z.-W. Sun) but have not verified this and rely on it for nothing.</p>
+<h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
+<h4 id="run-p4_c3">Run <code>p4_c3</code></h4>
+<dl>
+<dt>Iterazione 1 — attempt_001</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>exact_computation</code>,
+sotto-obiettivo: Prove the statement for every k with 3 ≤ k ≤ 8
+(self-contained, not relying on cells 1–2 being verified): reduction
+lemma to moduli dividing 420 with pairwise gcds preserved, then a fully
+certified exhaustive clique search (finite set, proof of exhaustiveness,
+no pruning beyond the definition, node counts, wall clock, rerun, zero
+survivors), plus hand proofs for k=3,4 and a non-vacuity test.. Stato
+dichiarato: <code>CELL_SOLVED_CANDIDATE</code>. <em>Perché questa
+scelta</em>: First natural subgoal (no blocker recorded, no verified
+claims). The hand-in rules of this column explicitly admit a computation
+with an exhaustiveness certificate; the only genuinely mathematical step
+is the finite reduction, which I prove in full. I deliberately used NO
+pruning beyond the definition of a counterexample (so rule 2 of the
+certificate is trivially satisfied) and no symmetry reduction, because
+the search is small (3.5 million nodes at k=8). Since
+highest_verified_cell = 0, I do not assume cells 1–2 and give short hand
+proofs for k=3,4 as well; the computation covers them independently.
+<em>Rispetto allo stato dell’arte</em>: The listed abstracts do not
+settle this cell in a usable way: [2607.24655] (Fornal–Sun) proves the
+asymptotic bound max gcd ≫ k·exp(−(2+o(1))√(log k/log log k)), which is
+relevant to C6(b), not to small k; [2608.15873] (Menon) concerns the
+group form (C6(c)) and the tuple (6,6,6,10,15); [2603.26043] and
+[1511.04293] concern disjoint covering systems with one repeated
+modulus, unrelated to the gcd question. I did not read the full papers
+and cite nothing from them; my approach (finite reduction + exhaustive
+certified search) follows the column’s own hand-in rules rather than any
+of these papers. I recall that the k ≤ 8 case is probably classical
+(Huhn–Megyesi / Z.-W. Sun on disjoint residue classes) but I have not
+verified any such source, so I do not cite it as read and I rely on it
+for nothing. <strong>Referee</strong>: verdetto
+<code>UNKNOWN_STATUS</code> (review_status
+<code>READY_FOR_HUMAN</code>). <em>Prossimo passo richiesto</em>: Human
+reviews the exact target, proof and evidence, then approves explicit
+claims</p>
+</dd>
+</dl>
+<h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
+tentativo</h3>
+<pre
+data-caption="attempt\_001 code\_1 [python, rigore exact] — Implementation 1 (certificate): exhaustive enumeration of all k-cliques in G\_k on the 1343 — approvato dal Referee"><code>&quot;&quot;&quot;
+Ricerca esaustiva per il problema 4, parte 3 (k &lt;= 8).
+
+COSA: enumera tutte le famiglie di k classi a_i (mod m_i), a due a due disgiunte,
+con m_i | 420, 2 &lt;= m_i, 0 &lt;= a_i &lt; m_i, e con gcd(m_i, m_j) &lt;= soglia per ogni coppia.
+PERCHE&#39;: il Lemma di riduzione (nella prova) mostra che ogni controesempio di taglia k
+(famiglia disgiunta con tutti i gcd &lt;= k-1 &lt;= 7) si riduce a una tale famiglia con
+m_i | 420 = 2^2 * 3 * 5 * 7. Se non ne esiste nessuna, la tesi vale per quel k.
+
+Metodo: grafo G sui vertici (a, m); arco fra due vertici se e solo se le due classi
+sono disgiunte E il gcd dei moduli e&#39; &lt;= soglia. Enumerazione di TUTTE le clique di
+taglia k come tuple crescenti di indici (nessuna potatura oltre la definizione di arco).
+Aritmetica: esatta (interi Python).
+&quot;&quot;&quot;
+import sys
+import time
+from math import gcd
+
+N_RIDUZIONE = 420
+
+
+def divisori(n):
+    &quot;&quot;&quot;Tutti i divisori di n, in ordine crescente.&quot;&quot;&quot;
+    return [d for d in range(1, n + 1) if n % d == 0]
+
+
+def costruisci_vertici(n):
+    &quot;&quot;&quot;Lista delle classi (a, m) con m | n, m &gt;= 2, 0 &lt;= a &lt; m.&quot;&quot;&quot;
+    return [(a, m) for m in divisori(n) if m &gt;= 2 for a in range(m)]
+
+
+def compatibili(v, w, soglia):
+    &quot;&quot;&quot;Vero se le classi v, w sono disgiunte e gcd dei moduli &lt;= soglia (criterio (*)).&quot;&quot;&quot;
+    (a, m), (b, n) = v, w
+    g = gcd(m, n)
+    return g &lt;= soglia and (a - b) % g != 0
+
+
+def costruisci_adiacenza(vertici, soglia):
+    &quot;&quot;&quot;Bitset di adiacenza: bit j di adj[i] acceso se i e j compatibili (solo j &gt; i).&quot;&quot;&quot;
+    adj = []
+    for i, v in enumerate(vertici):
+        bits = 0
+        for j in range(i + 1, len(vertici)):
+            if compatibili(v, vertici[j], soglia):
+                bits |= 1 &lt;&lt; j
+        adj.append(bits)
+    return adj
+
+
+def enumera_clique(adj, k, raccogli):
+    &quot;&quot;&quot;
+    Enumera tutte le k-clique come tuple crescenti di indici.
+    Ritorna (numero_nodi_visitati, lista_clique). Un nodo = una chiamata ricorsiva
+    con clique parziale non vuota (ogni prefisso visitato una sola volta).
+    &quot;&quot;&quot;
+    nodi = 0
+    trovate = []
+
+    def ricorsione(parziale, candidati):
+        nonlocal nodi
+        nodi += 1
+        if len(parziale) == k:
+            trovate.append(tuple(parziale))
+            return
+        c = candidati
+        while c:
+            j = (c &amp; -c).bit_length() - 1
+            c &amp;= c - 1
+            ricorsione(parziale + [j], candidati &amp; adj[j])
+
+    tutti = (1 &lt;&lt; len(adj)) - 1
+    ricorsione([], tutti)
+    return nodi - 1, trovate  # il nodo radice (clique vuota) non si conta
+
+
+def esegui(k, soglia, vertici, stampa_sopravvissuti):
+    &quot;&quot;&quot;Una taglia k con una soglia gcd; stampa conteggi, tempo e sopravvissuti.&quot;&quot;&quot;
+    t0 = time.time()
+    adj = costruisci_adiacenza(vertici, soglia)
+    nodi, clique = enumera_clique(adj, k, True)
+    dt = time.time() - t0
+    print(f&quot;k={k} soglia_gcd&lt;={soglia} vertici={len(vertici)} nodi={nodi} &quot;
+          f&quot;sopravvissuti={len(clique)} tempo={dt:.2f}s&quot;)
+    if stampa_sopravvissuti:
+        for cl in clique:
+            print(&quot;   &quot;, [vertici[i] for i in cl])
+    return nodi, clique
+
+
+def main():
+    modo = sys.argv[1] if len(sys.argv) &gt; 1 else &quot;certificato&quot;
+    # Universo: divisori di N (default 420). Per il test di non vacuita&#39; a k=8
+    # serve N=840, perche&#39; 8 non divide 420 (il certificato usa sempre 420).
+    universo = int(sys.argv[3]) if len(sys.argv) &gt; 3 else N_RIDUZIONE
+    vertici = costruisci_vertici(universo)
+    if modo == &quot;certificato&quot;:
+        # Controesempio di taglia k: tutti i gcd &lt;= k-1.
+        for k in range(3, 9):
+            esegui(k, k - 1, vertici, stampa_sopravvissuti=True)
+    elif modo == &quot;non_vacuita&quot;:
+        # Soglia gcd &lt;= k: la partizione 0..k-1 (mod k) DEVE comparire.
+        k = int(sys.argv[2])
+        nodi, clique = esegui(k, k, vertici, stampa_sopravvissuti=False)
+        atteso = tuple(vertici.index((a, k)) for a in range(k))
+        print(&quot;   partizione banale trovata:&quot;, atteso in set(clique))
+    else:
+        raise SystemExit(&quot;modo: certificato | non_vacuita K [N]&quot;)
+
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 2.5s; stdout: ’k=3 soglia_gcd&lt;=2 vertici=1343 nodi=7118 sopravvissuti=0 tempo=0.10s\nk=4 soglia_gcd&lt;=3 vertici=1343 nodi=20241 sopravvissuti=0 tempo=0.10s\nk=5 soglia_gcd&lt;=4 vertici=1343 nodi=56208 sopravvissuti=0 tempo=0.12s\nk=6 soglia_gcd&lt;=5 vertici=1343 nodi=234719 sopravvissuti=0 tempo=0.20s\nk=7 soglia_g</code></p>
+<pre
+data-caption="attempt\_001 code\_2 [python, rigore exact] — Implementation 2 (independent cross-check, different method): enumerate non-decreasing k-t — approvato dal Referee"><code>&quot;&quot;&quot;
+Seconda implementazione (metodo diverso) per il problema 4, parte 3.
+
+COSA: cerca famiglie disgiunte di k classi con m_i | 420, tutti i gcd(m_i,m_j) &lt;= soglia.
+COME: (1) enumera i multinsiemi non decrescenti di moduli (divisori di 420, &gt;= 2) con
+gcd a coppie in [2, soglia]; (2) per ciascuno risolve il CSP sui residui
+a_i (mod m_i) con vincolo a_i != a_j (mod gcd), normalizzando a_1 = 0 (traslazione).
+PERCHE&#39;: controllo incrociato del risultato dell&#39;enumerazione di clique, con un
+algoritmo strutturalmente diverso. Aritmetica esatta.
+&quot;&quot;&quot;
+import sys
+import time
+from math import gcd
+
+MODULI = [d for d in range(2, 421) if 420 % d == 0]
+
+
+def multinsiemi_moduli(k, soglia):
+    &quot;&quot;&quot;Tuple non decrescenti di k moduli con gcd a coppie in [2, soglia].&quot;&quot;&quot;
+    def estendi(parziale, da):
+        if len(parziale) == k:
+            yield tuple(parziale)
+            return
+        for m in MODULI:
+            if m &lt; da:
+                continue
+            if all(2 &lt;= gcd(m, q) &lt;= soglia for q in parziale):
+                yield from estendi(parziale + [m], m)
+    yield from estendi([], 2)
+
+
+def residui_compatibili(moduli):
+    &quot;&quot;&quot;Tutte le assegnazioni di residui (a_1 = 0) che rendono le classi disgiunte.&quot;&quot;&quot;
+    soluzioni = []
+
+    def estendi(res):
+        i = len(res)
+        if i == len(moduli):
+            soluzioni.append(tuple(res))
+            return
+        for a in range(moduli[i]) if i &gt; 0 else [0]:
+            if all((a - res[j]) % gcd(moduli[i], moduli[j]) != 0 for j in range(i)):
+                estendi(res + [a])
+    estendi([])
+    return soluzioni
+
+
+def esegui(k, soglia):
+    &quot;&quot;&quot;Conta multinsiemi di moduli esaminati e famiglie trovate.&quot;&quot;&quot;
+    t0 = time.time()
+    n_moduli, famiglie = 0, []
+    for moduli in multinsiemi_moduli(k, soglia):
+        n_moduli += 1
+        for res in residui_compatibili(moduli):
+            famiglie.append(tuple(zip(res, moduli)))
+    dt = time.time() - t0
+    print(f&quot;k={k} soglia_gcd&lt;={soglia} multinsiemi_moduli={n_moduli} &quot;
+          f&quot;famiglie(a1=0)={len(famiglie)} tempo={dt:.2f}s&quot;)
+    return famiglie
+
+
+if __name__ == &quot;__main__&quot;:
+    if len(sys.argv) &gt; 1:
+        k, soglia = int(sys.argv[1]), int(sys.argv[2])
+        fam = esegui(k, soglia)
+        print(&quot;   esempio:&quot;, fam[0] if fam else None)
+    else:
+        for k in range(3, 9):
+            esegui(k, k - 1)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 0 in 3.0s; stdout: ’k=3 soglia_gcd&lt;=2 multinsiemi_moduli=51 famiglie(a1=0)=0 tempo=0.00s\nk=4 soglia_gcd&lt;=3 multinsiemi_moduli=77 famiglie(a1=0)=0 tempo=0.00s\nk=5 soglia_gcd&lt;=4 multinsiemi_moduli=221 famiglie(a1=0)=0 tempo=0.02s\nk=6 soglia_gcd&lt;=5 multinsiemi_moduli=293 famiglie(a1=0)=0 tempo=0.06s\nk=7 soglia_gcd</code></p>
+<h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
+<div class="thebibliography">
+<p><span>99</span> Yu Hashimoto. <em>Finiteness of Disjoint Covering
+Systems with Precisely One Repeated Modulus</em>. arXiv:2603.26043v1
+(2026). <a href="http://arxiv.org/abs/2603.26043v1"
+class="uri">http://arxiv.org/abs/2603.26043v1</a> Shalosh B. Ekhad,
+Aviezri S. Fraenkel, Doron Zeilberger. <em>Searching for Disjoint
+Covering Systems with Precisely One Repeated Modulus</em>.
+arXiv:1511.04293v1 (2015). <a href="http://arxiv.org/abs/1511.04293v1"
+class="uri">http://arxiv.org/abs/1511.04293v1</a> Jan Fornal, Yu-Chen
+Sun. <em>On the problem of large gcd for disjoint residue classes</em>.
+arXiv:2607.24655v1 (2026). <a href="http://arxiv.org/abs/2607.24655v1"
+class="uri">http://arxiv.org/abs/2607.24655v1</a> Murali Menon. <em>Two
+Questions on $G$-harmonic Tuples</em>. arXiv:2608.15873v1 (2026). <a
+href="http://arxiv.org/abs/2608.15873v1"
+class="uri">http://arxiv.org/abs/2608.15873v1</a></p>
+</div>
+</body>
+</html>
