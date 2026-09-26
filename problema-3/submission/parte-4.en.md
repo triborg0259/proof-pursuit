@@ -17,6 +17,22 @@ $k = 5, 6, 7, 8, \ldots$. Determine $D_B(T_{k-1} + 1)$ for every $k \ge 5$, with
 ## 2. Proof
 Same plan as part 3 on the family $n=T_{k-1}+1$.
 
+
+## 2b. Exact finite verification (computed 2026-09-26, integer arithmetic, 8 s for all n up to 56)
+Script: `problema-3/esperimenti/tabella_DB.py` (functional graph on all partitions of $n$, cycles marked, $d_B$ by memoised orbit following); output in `tabella_DB.txt`. This is VERIFIED ON A FINITE RANGE, not a proof for general $k$.
+For every rank $5\le k\le 11$ the exact value is $D_B(T_{k-1}+1)=(k-2)^2-1=k^2-4k+3$ (values 8, 15, 24, 35, 48, 63, 80). Conjectured formula for all $k\ge5$: $D_B(T_{k-1}+1)=k^2-4k+3$.
+
+Values for the family $n=T_{k-1}+1$:
+- k=3, n=4: D_B(n)=2; extremal partitions: 1, e.g. (1, 1, 1, 1)
+- k=4, n=7: D_B(n)=4; extremal partitions: 1, e.g. (1, 1, 1, 1, 1, 1, 1)
+- k=5, n=11: D_B(n)=8; extremal partitions: 3, e.g. (3, 3, 2, 2, 1)
+- k=6, n=16: D_B(n)=15; extremal partitions: 12, e.g. (4, 4, 3, 2, 2, 1)
+- k=7, n=22: D_B(n)=24; extremal partitions: 62, e.g. (5, 5, 4, 3, 2, 2, 1)
+- k=8, n=29: D_B(n)=35; extremal partitions: 288, e.g. (6, 6, 5, 4, 3, 2, 2, 1)
+- k=9, n=37: D_B(n)=48; extremal partitions: 1310, e.g. (7, 7, 6, 5, 4, 3, 2, 2, 1)
+- k=10, n=46: D_B(n)=63; extremal partitions: 5862, e.g. (8, 8, 7, 6, 5, 4, 3, 2, 2, 1)
+- k=11, n=56: D_B(n)=80; extremal partitions: 26399, e.g. (9, 9, 8, 7, 6, 5, 4, 3, 2, 2, 1)
+
 ## 3. Verification: instructions, dependencies, timings
 Available code (Python 3, standard library; each script runs in under a minute):
 - No code yet.

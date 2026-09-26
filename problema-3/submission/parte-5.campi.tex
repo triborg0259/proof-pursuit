@@ -26,6 +26,34 @@ and identify precisely what your proof supplies in its place.
 Same plan; the cell requires a single uniform argument and the analysis
 of where the extension of part 3 stops.
 
+\subparagraph{2b. Exact finite verification (computed 2026-09-26,
+integer arithmetic, 8 s for all n up to
+56)}\label{b.-exact-finite-verification-computed-2026-09-26-integer-arithmetic-8-s-for-all-n-up-to-56}
+
+Script: \texttt{problema-3/esperimenti/tabella\_DB.py} (functional graph
+on all partitions of \(n\), cycles marked, \(d_B\) by memoised orbit
+following); output in \texttt{tabella\_DB.txt}. This is VERIFIED ON A
+FINITE RANGE, not a proof for general \(k\). For every rank
+\(7\le k\le 10\) the exact value is
+\(D_B(T_{k-1}+2)=k^2-5k+4=(k-1)(k-4)\) (values 18, 28, 40, 54). The
+formula fails for small \(k\), where the residual values are \(D_B(3)=\)
+see table (\(k=2\)), \(D_B(5)=3\) (\(k=3\)), \(D_B(8)=5\) (\(k=4\)),
+\(D_B(12)=8\) (\(k=5\)), \(D_B(17)=12\) (\(k=6\)). Conjectured:
+\(D_B(T_{k-1}+2)=k^2-5k+4\) for all \(k\ge7\), residual values as listed
+for \(k\le6\). The straightforward extension of the cell-3 bound gives
+only \(k^2-2k-1\), strictly weaker.
+
+Values for the family \(n=T_{k-1}+2\): - k=4, n=8: D\_B(n)=5; extremal
+partitions: 1, e.g.~(1, 1, 1, 1, 1, 1, 1, 1) - k=5, n=12: D\_B(n)=8;
+extremal partitions: 2, e.g.~(3, 3, 2, 2, 1, 1) - k=6, n=17: D\_B(n)=12;
+extremal partitions: 1, e.g.~(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+1, 1, 1) - k=7, n=23: D\_B(n)=18; extremal partitions: 66, e.g.~(5, 5,
+4, 3, 3, 2, 1) - k=8, n=30: D\_B(n)=28; extremal partitions: 253,
+e.g.~(6, 6, 5, 4, 3, 3, 2, 1) - k=9, n=38: D\_B(n)=40; extremal
+partitions: 1341, e.g.~(7, 7, 6, 5, 4, 3, 3, 2, 1) - k=10, n=47:
+D\_B(n)=54; extremal partitions: 6335, e.g.~(8, 8, 7, 6, 5, 4, 3, 3, 2,
+1)
+
 
 % ===== CAMPO: 3. Verification: instructions, dependencies, timings =====
 Available code (Python 3, standard library; every script runs in under a

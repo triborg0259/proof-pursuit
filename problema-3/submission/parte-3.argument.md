@@ -115,6 +115,22 @@ Each $X_j$ ($0\le j\le J$) contains a cell of $D_{k+1}$, so $B^j(\lambda^_k)$ is
 
 Exact computation gives the number of $\lambda\vdash T_k-1$ with $d_B(\lambda)=k^2-2k-1$: $1,6,34,175,831,3911$ for $k=4,\dots,9$ (e.g. $k=5$: $(4,3,3,2,1,1),(4,3,2,2,2,1),(4,3,2,2,1,1,1),(3,3,3,2,2,1),(3,3,3,2,1,1,1),(3,3,2,2,2,1,1)$). A structural description is left to a later iteration; the proof of Theorem 2.6 shows that any extremal $\lambda$ must fall in Case B with all inequalities tight ($t=k^2-2k$, pattern (i) with $p=t-k$, $q-p=k-2$, and every descent step of Lemma 2.4 losing exactly $k$), which is the natural starting point.
 
+2b. Exact finite verification (computed 2026-09-26, integer arithmetic, 8 s for all n up to 56)
+
+Script: problema-3/esperimenti/tabella_DB.py (functional graph on all partitions of $n$, cycles marked, $d_B$ by memoised orbit following); output in tabella_DB.txt. This is VERIFIED ON A FINITE RANGE, not a proof for general $k$.
+For every rank $4\le k\le 10$ the exact value is $D_B(T_k-1)=k^2-2k-1$: the general bound of the cell is attained exactly at $n=T_k-1$. Extremal partitions found by exhaustive computation (one example each; the full lists are produced by the script). Conjectured formula for all $k\ge4$: $D_B(T_k-1)=k^2-2k-1$, with the extremal family shaped like $(k-1,k-2,k-2,k-3,\dots,2,1,1)$ (staircase with one repeated part and an extra 1).
+
+Values for the family $n=T_k-1$:
+- k=2, n=2: D_B(n)=0; extremal partitions: 2, e.g. (2,)
+- k=3, n=5: D_B(n)=3; extremal partitions: 1, e.g. (1, 1, 1, 1, 1)
+- k=4, n=9: D_B(n)=7; extremal partitions: 1, e.g. (3, 2, 2, 1, 1)
+- k=5, n=14: D_B(n)=14; extremal partitions: 6, e.g. (4, 3, 3, 2, 1, 1)
+- k=6, n=20: D_B(n)=23; extremal partitions: 34, e.g. (5, 4, 4, 3, 2, 1, 1)
+- k=7, n=27: D_B(n)=34; extremal partitions: 175, e.g. (6, 5, 5, 4, 3, 2, 1, 1)
+- k=8, n=35: D_B(n)=47; extremal partitions: 831, e.g. (7, 6, 6, 5, 4, 3, 2, 1, 1)
+- k=9, n=44: D_B(n)=62; extremal partitions: 3911, e.g. (8, 7, 7, 6, 5, 4, 3, 2, 1, 1)
+- k=10, n=54: D_B(n)=79; extremal partitions: 18163, e.g. (9, 8, 8, 7, 6, 5, 4, 3, 2, 1, 1)
+
 3. Verification: instructions, dependencies, timings
 
 Python 3 standard library. Scripts (re-run by the orchestrator, see runs/p3_c3/verifica/):
