@@ -4,6 +4,12 @@ Gara di ricerca matematica assistita da AI, durata 7 ore, 4 problemi × 6 celle 
 Contano prove e certificati verificabili. I risultati parziali valgono se descritti correttamente.
 Ammessi: web, letteratura, AI, codice.
 
+## Clean code (richiesta esplicita del team)
+- Funzioni piccole, semplici, spiegabili; mai oltre ~30 righe.
+- Commenti e docstring in italiano che dicono COSA fa il codice e PERCHÉ.
+- Niente file o requirements nuovi per dipendenze già installate altrove (usare `.venv`).
+- Codice e output leggibili: nomi parlanti, niente one-liner criptici.
+
 ## Vincoli assoluti
 - NON accedere all'account della gara, NON inviare submission, NON pubblicare materiale. Tutto resta locale.
 - Non dichiarare mai "risolto" sulla base di una bozza plausibile o di un esperimento favorevole.

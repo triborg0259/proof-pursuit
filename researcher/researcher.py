@@ -1,22 +1,27 @@
 #!/usr/bin/env python3
 """
-researcher.py — Researcher / autoresearch agent (Persona 1) di Proof Pursuit.
+researcher.py — agente Researcher (Persona 1 del brief multi-agente di Proof Pursuit).
 
-Legge il contesto condiviso in una cartella di lavoro, produce UN tentativo strutturato (attempt JSON),
-lo salva in attempts/attempt_NNN.json e rileva la stagnazione. NON giudica, NON aggiorna highest_verified_cell.
+Cosa fa: legge lo stato condiviso di una cartella di lavoro, costruisce un prompt, chiede al modello UN tentativo
+strutturato (JSON conforme a shared/schemas/attempt.schema.json), lo salva e rileva la stagnazione.
+Cosa NON fa: non giudica il tentativo (Referee), non inventa strategie nuove (Creative), non aggiorna
+highest_verified_cell (Orchestrator). L'unico campo di state.json che tocca è stagnation_count.
 
-Uso:
-  python researcher/researcher.py run    --workdir runs/problem_1 [--backend cli|api|mock] [--model M] [--effort E]
-  python researcher/researcher.py record --workdir runs/problem_1 --report referee_report.json
-        (l'Orchestrator lo chiama per archiviare il verdetto accanto al tentativo: attempts/referee_NNN.json)
-  python researcher/researcher.py history --workdir runs/problem_1
+Comandi:
+  run     --workdir DIR [--backend cli|api|mock] [--model M] [--effort E] [--shell] [--dry-run] [--strict]
+  record  --workdir DIR --report FILE     archivia il verdetto del Referee accanto al tentativo
+  history --workdir DIR                   riepilogo tentativi/verdetti
 
-Backend:
-  cli  — `claude -p` (Claude Code headless, usa l'abbonamento; default se nessuna chiave API)
-  api  — SDK anthropic (richiede ANTHROPIC_API_KEY o profilo `ant auth login`)
-  mock — risposte deterministiche per i test (nessuna chiamata)
+Backend: cli = `claude -p` headless (abbonamento, nessuna chiave); api = SDK anthropic; mock = deterministico per i test.
 """
-import argparse, glob, json, os, re, subprocess, sys, time
+import argparse
+import glob
+import json
+import os
+import re
+import subprocess
+import sys
+import time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -24,143 +29,181 @@ ROOT = HERE.parent
 SCHEMA_PATH = ROOT / "shared" / "schemas" / "attempt.schema.json"
 PROMPT_PATH = HERE / "researcher_prompt.md"
 
+# File di contesto che il Researcher legge se esistono (il brief richiede che funzioni anche senza).
 CONTEXT_FILES = ["problem.md", "state.json", "verified_claims.md", "failed_attempts.md",
                  "creative_ideas.json", "referee_report.json"]
+# Regola del brief: tre tentativi consecutivi, stesso metodo, stesso motivo ⇒ stagnazione.
 STAGNATION_WINDOW = 3
 
+# Strumenti concessi alla CLI quando si attiva --shell: solo Python e lettura/scrittura nel sandbox.
+# Perché: il Researcher deve poter fare calcoli ESATTI, ma non deve toccare rete, pacchetti o il repo.
+SHELL_TOOLS = "Bash,Read,Write,Edit,Glob,Grep"
+SHELL_ALLOWED = ["Bash(python3 *)", "Bash(python3:*)", "Bash(timeout *)", "Bash(ls *)", "Bash(ls)", "Bash(cat *)",
+                 "Bash(wc *)", "Bash(head *)", "Bash(tail *)", "Read", "Write", "Edit", "Glob", "Grep"]
+SHELL_DENIED = ["Bash(curl *)", "Bash(wget *)", "Bash(pip *)", "Bash(rm *)", "Bash(git *)", "Bash(ssh *)",
+                "WebFetch", "WebSearch"]
 
-# ----------------------------------------------------------------------------- I/O helpers
-def read_text(p: Path):
-    return p.read_text() if p.exists() else None
+
+# =============================================================================== lettura/scrittura file
+def read_text(path: Path):
+    """Ritorna il testo del file, oppure None se manca: i file di contesto sono tutti facoltativi."""
+    return path.read_text() if path.exists() else None
 
 
-def read_json(p: Path):
+def read_json(path: Path):
+    """Ritorna il JSON del file, None se manca o è malformato (avvisa ma non blocca: meglio un tentativo
+    con meno contesto che nessun tentativo)."""
+    if not path.exists():
+        return None
     try:
-        return json.loads(p.read_text()) if p.exists() else None
-    except json.JSONDecodeError as e:
-        print(f"[researcher] WARN {p.name} non è JSON valido ({e}); ignorato", file=sys.stderr)
+        return json.loads(path.read_text())
+    except json.JSONDecodeError as err:
+        print(f"[researcher] WARN {path.name} non è JSON valido ({err}); ignorato", file=sys.stderr)
         return None
 
 
+def write_json(path: Path, data):
+    """Scrive JSON leggibile (indentato, accenti non escapati) così i collaboratori possono leggerlo su GitHub."""
+    path.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n")
+
+
 def default_state(problem_id: str):
+    """Stato minimo conforme a state.schema.json, usato quando state.json non esiste ancora."""
     return {"problem_id": problem_id, "highest_verified_cell": 0, "current_target": "cell_1",
             "current_blocker": "", "verified_claims": [], "failed_attempts": [], "stagnation_count": 0,
             "cell_status": {}}
 
 
-def load_context(workdir: Path):
-    ctx = {name: (read_json(workdir / name) if name.endswith(".json") else read_text(workdir / name))
-           for name in CONTEXT_FILES}
-    if ctx["state.json"] is None:
-        ctx["state.json"] = default_state(workdir.name)
-    ctx["history"] = load_history(workdir)
-    return ctx
-
-
+# =============================================================================== contesto e storia
 def load_history(workdir: Path):
-    """Coppie (attempt, referee_report) in ordine cronologico, dai file attempts/attempt_NNN.json e referee_NNN.json."""
-    hist = []
-    for ap in sorted(glob.glob(str(workdir / "attempts" / "attempt_*.json"))):
-        n = Path(ap).stem.split("_")[1]
-        att = read_json(Path(ap))
-        rep = read_json(workdir / "attempts" / f"referee_{n}.json")
-        hist.append({"n": int(n), "attempt": att, "report": rep})
-    return hist
+    """Ricostruisce la storia strutturata: per ogni attempts/attempt_NNN.json cerca il referee_NNN.json gemello.
+    Serve sia per il prompt (cosa è già stato provato) sia per la rilevazione della stagnazione."""
+    history = []
+    for attempt_path in sorted(glob.glob(str(workdir / "attempts" / "attempt_*.json"))):
+        number = int(Path(attempt_path).stem.split("_")[1])
+        report = read_json(workdir / "attempts" / f"referee_{number:03d}.json")
+        history.append({"n": number, "attempt": read_json(Path(attempt_path)), "report": report})
+    return history
+
+
+def load_context(workdir: Path):
+    """Carica tutti i file di contesto in un dizionario; i .json come oggetti, i .md come testo."""
+    context = {}
+    for name in CONTEXT_FILES:
+        path = workdir / name
+        context[name] = read_json(path) if name.endswith(".json") else read_text(path)
+    if context["state.json"] is None:
+        context["state.json"] = default_state(workdir.name)
+    context["history"] = load_history(workdir)
+    return context
 
 
 def next_attempt_number(workdir: Path):
-    nums = [int(Path(p).stem.split("_")[1]) for p in glob.glob(str(workdir / "attempts" / "attempt_*.json"))]
-    return max(nums, default=0) + 1
+    """Numero progressivo del prossimo tentativo (1 se la cartella è vuota)."""
+    numbers = [int(Path(p).stem.split("_")[1]) for p in glob.glob(str(workdir / "attempts" / "attempt_*.json"))]
+    return max(numbers, default=0) + 1
 
 
 def target_cell_from_state(state):
-    m = re.search(r"(\d+)", str(state.get("current_target", "")))
-    return int(m.group(1)) if m else state.get("highest_verified_cell", 0) + 1
+    """Estrae il numero di cella da current_target (es. 'cell_3' → 3); in mancanza, la cella dopo l'ultima verificata."""
+    match = re.search(r"(\d+)", str(state.get("current_target", "")))
+    return int(match.group(1)) if match else state.get("highest_verified_cell", 0) + 1
 
 
-# ----------------------------------------------------------------------------- stagnation
-def _norm(s):
-    return set(re.findall(r"[a-z0-9]+", (s or "").lower())) - {"the", "a", "an", "of", "to", "is", "in", "and", "not", "that"}
+# =============================================================================== stagnazione
+def _words(text):
+    """Insieme di parole significative di un testo, per confrontare due motivi di rigetto."""
+    stop = {"the", "a", "an", "of", "to", "is", "in", "and", "not", "that"}
+    return set(re.findall(r"[a-z0-9]+", (text or "").lower())) - stop
 
 
-def similar(a, b, thr=0.5):
-    A, B = _norm(a), _norm(b)
-    return bool(A and B) and len(A & B) / len(A | B) >= thr
+def similar(text_a, text_b, threshold=0.5):
+    """Vero se due testi condividono almeno metà delle parole (indice di Jaccard).
+    Perché: il brief chiede 'stesso motivo di fallimento' e i Referee riformulano; un confronto esatto non basterebbe."""
+    words_a, words_b = _words(text_a), _words(text_b)
+    if not words_a or not words_b:
+        return False
+    return len(words_a & words_b) / len(words_a | words_b) >= threshold
 
 
 def detect_stagnation(history, window=STAGNATION_WINDOW):
-    """Regola del brief: 3 tentativi consecutivi, stesso metodo, stesso motivo di fallimento, nessun claim accettato."""
+    """Applica la regola del brief agli ultimi `window` tentativi giudicati:
+    tutti REJECT, nessun claim accettato, stessa approach_family, motivi di rigetto simili.
+    Ritorna (stagna?, spiegazione)."""
     recent = [h for h in history if h["attempt"] and h["report"]][-window:]
     if len(recent) < window:
         return False, ""
-    if any(h["report"].get("verdict") != "REJECT" for h in recent):
-        return False, ""
-    if any(h["report"].get("accepted_claims") for h in recent):
-        return False, ""
-    fams = {h["attempt"].get("approach_family") for h in recent}
-    errs = [h["report"].get("fatal_error") or "" for h in recent]
-    same_reason = all(similar(errs[0], e) for e in errs[1:])
-    if len(fams) == 1 and same_reason:
-        return True, f"{window} REJECT consecutivi con approach_family={fams.pop()} e motivo simile: {errs[-1][:120]}"
+    all_rejected = all(h["report"].get("verdict") == "REJECT" for h in recent)
+    nothing_accepted = not any(h["report"].get("accepted_claims") for h in recent)
+    families = {h["attempt"].get("approach_family") for h in recent}
+    errors = [h["report"].get("fatal_error") or "" for h in recent]
+    same_reason = all(similar(errors[0], e) for e in errors[1:])
+    if all_rejected and nothing_accepted and len(families) == 1 and same_reason:
+        return True, f"{window} REJECT consecutivi con approach_family={families.pop()} e motivo simile: {errors[-1][:120]}"
     return False, ""
 
 
-# ----------------------------------------------------------------------------- prompt
-def build_user_prompt(ctx, stagnating, reason):
-    state = ctx["state.json"]
-    parts = []
-    parts.append("# PROBLEM\n" + (ctx["problem.md"] or "(problem.md mancante: usa solo state.json)"))
-    parts.append("# SHARED STATE (state.json)\n```json\n" + json.dumps(state, indent=1, ensure_ascii=False) + "\n```")
-    parts.append("# VERIFIED CLAIMS (usable as hypotheses)\n" +
-                 (ctx["verified_claims.md"] or "\n".join(f"- {c}" for c in state.get("verified_claims", [])) or "(none)"))
-    parts.append("# FAILED ATTEMPTS (do not repeat without a stated change)\n" + (ctx["failed_attempts.md"] or "(none recorded)"))
-    hist = [h for h in ctx["history"] if h["attempt"]]
-    if hist:
-        lines = []
-        for h in hist[-6:]:
-            a, r = h["attempt"], h["report"] or {}
-            lines.append(f"- attempt_{h['n']:03d}: family={a.get('approach_family')} | subgoal={a.get('subgoal')} | "
-                         f"verdict={r.get('verdict', 'PENDING')} | fatal_error={r.get('fatal_error')}")
-        parts.append("# RECENT ATTEMPT HISTORY (structured)\n" + "\n".join(lines))
-    if ctx["referee_report.json"]:
-        parts.append("# LAST REFEREE REPORT\n```json\n" + json.dumps(ctx["referee_report.json"], indent=1, ensure_ascii=False) + "\n```")
-    if ctx["creative_ideas.json"]:
-        parts.append("# CREATIVE IDEAS (the system asked for new directions; prefer these)\n```json\n" +
-                     json.dumps(ctx["creative_ideas.json"], indent=1, ensure_ascii=False) + "\n```")
+# =============================================================================== costruzione del prompt
+def _json_block(title, data):
+    """Sezione Markdown con un blocco JSON: il modello legge meglio lo stato se è delimitato e indentato."""
+    return f"# {title}\n```json\n{json.dumps(data, indent=1, ensure_ascii=False)}\n```"
+
+
+def _history_section(history):
+    """Riassunto degli ultimi 6 tentativi in una riga ciascuno: famiglia, sotto-obiettivo, verdetto, errore fatale."""
+    lines = []
+    for h in [h for h in history if h["attempt"]][-6:]:
+        attempt, report = h["attempt"], h["report"] or {}
+        lines.append(f"- attempt_{h['n']:03d}: family={attempt.get('approach_family')} | subgoal={attempt.get('subgoal')} | "
+                     f"verdict={report.get('verdict', 'PENDING')} | fatal_error={report.get('fatal_error')}")
+    return "# RECENT ATTEMPT HISTORY (structured)\n" + "\n".join(lines) if lines else ""
+
+
+def _sandbox_section(shell_dir):
+    """Istruzioni per l'uso della shell recintata: calcoli esatti, script salvati e dichiarati, tempo limitato."""
+    return ("# SANDBOX SHELL AVAILABLE\nYou may run `python3` (no network, no pip, no other commands) in the current "
+            "directory to explore and to run EXACT computations (integers, fractions, exhaustive enumeration). "
+            "Save every script you rely on as a file here and copy it into `code_used` with `rigor` set honestly; "
+            "state the finite set the computation covers and its wall-clock time. Floating point is exploration only. "
+            f"Keep total runtime under 10 minutes. Sandbox: {shell_dir}")
+
+
+def build_user_prompt(context, stagnating, reason, shell_dir=None):
+    """Assembla il prompt utente dalle sezioni disponibili. L'ordine va dal più stabile (problema) al più
+    volatile (task), così la parte iniziale resta uguale fra iterazioni e si presta alla cache."""
+    state = context["state.json"]
+    verified = context["verified_claims.md"] or "\n".join(f"- {c}" for c in state.get("verified_claims", [])) or "(none)"
+    sections = [
+        "# PROBLEM\n" + (context["problem.md"] or "(problem.md mancante: usa solo state.json)"),
+        _json_block("SHARED STATE (state.json)", state),
+        "# VERIFIED CLAIMS (usable as hypotheses)\n" + verified,
+        "# FAILED ATTEMPTS (do not repeat without a stated change)\n" + (context["failed_attempts.md"] or "(none recorded)"),
+        _history_section(context["history"]),
+    ]
+    if context["referee_report.json"]:
+        sections.append(_json_block("LAST REFEREE REPORT", context["referee_report.json"]))
+    if context["creative_ideas.json"]:
+        sections.append(_json_block("CREATIVE IDEAS (the system asked for new directions; prefer these)", context["creative_ideas.json"]))
     if stagnating:
-        parts.append(f"# STAGNATION DETECTED\n{reason}\nYou MUST change approach_family. If no creative ideas are listed, "
-                     "pick a different family yourself and explain why it escapes the repeated fatal error.")
-    if ctx.get("shell_dir"):
-        parts.append("# SANDBOX SHELL AVAILABLE\nYou may run `python3` (no network, no pip, no other commands) in the current "
-                     "directory to explore and to run EXACT computations (integers, fractions, exhaustive enumeration). "
-                     "Save every script you rely on as a file here and copy it into `code_used` with `rigor` set honestly; "
-                     "state the finite set the computation covers and its wall-clock time. Floating point is exploration only. "
-                     f"Keep total runtime under 10 minutes. Sandbox: {ctx['shell_dir']}")
-    parts.append(f"# TASK\nTarget: {state.get('current_target')} (cell {target_cell_from_state(state)}). "
-                 f"Blocker: {state.get('current_blocker') or '(none stated: choose the first natural subgoal of the cell)'}.\n"
-                 "Produce ONE attempt as JSON per the schema.")
-    return "\n\n".join(parts)
+        sections.append(f"# STAGNATION DETECTED\n{reason}\nYou MUST change approach_family. If no creative ideas are listed, "
+                        "pick a different family yourself and explain why it escapes the repeated fatal error.")
+    if shell_dir:
+        sections.append(_sandbox_section(shell_dir))
+    blocker = state.get("current_blocker") or "(none stated: choose the first natural subgoal of the cell)"
+    sections.append(f"# TASK\nTarget: {state.get('current_target')} (cell {target_cell_from_state(state)}). "
+                    f"Blocker: {blocker}.\nProduce ONE attempt as JSON per the schema.")
+    return "\n\n".join(s for s in sections if s)
 
 
-# ----------------------------------------------------------------------------- backends
-SHELL_TOOLS = "Bash,Read,Write,Edit,Glob,Grep"
-SHELL_ALLOWED = ["Bash(python3 *)", "Bash(python3:*)", "Bash(timeout *)", "Bash(ls *)", "Bash(ls)", "Bash(cat *)",
-                 "Bash(wc *)", "Bash(head *)", "Bash(tail *)", "Read", "Write", "Edit", "Glob", "Grep"]
-SHELL_DENIED = ["Bash(curl *)", "Bash(wget *)", "Bash(pip *)", "Bash(rm *)", "Bash(git *)", "Bash(ssh *)", "WebFetch", "WebSearch"]
-
-
-def call_cli(system_prompt, user_prompt, schema, model=None, effort=None, timeout=3600, shell=None,
-             max_turns=60, max_budget_usd=8.0):
-    """shell=None: nessuno strumento. shell=<dir>: Bash limitato a python3 dentro <dir> (sandbox), file R/W solo lì.
-    NOTA: con shell attiva la CLI gira con --permission-mode dontAsk (le chiamate non in allowlist vengono negate,
-    non chieste). Lanciare solo da un terminale umano, mai da un altro agente."""
+# =============================================================================== backend: CLI
+def _cli_command(system_prompt, user_prompt, schema, model, effort, shell, max_turns, max_budget_usd):
+    """Costruisce la riga di comando di `claude -p`. Con shell attiva concede solo gli strumenti in allowlist e
+    usa --permission-mode dontAsk: in headless nessuno può rispondere ai prompt, quindi il resto viene negato."""
     cli_schema = {k: v for k, v in schema.items() if k not in ("$schema", "title")}  # il validatore CLI rifiuta $schema 2020-12
     cmd = ["claude", "-p", "--no-session-persistence", "--output-format", "json",
            "--json-schema", json.dumps(cli_schema), "--system-prompt", system_prompt,
            "--max-budget-usd", str(max_budget_usd)]
-    cwd = None
     if shell:
-        cwd = str(shell)
         cmd += ["--tools", SHELL_TOOLS, "--allowedTools", *SHELL_ALLOWED, "--disallowedTools", *SHELL_DENIED,
                 "--permission-mode", "dontAsk", "--max-turns", str(max_turns)]
     else:
@@ -169,180 +212,229 @@ def call_cli(system_prompt, user_prompt, schema, model=None, effort=None, timeou
         cmd += ["--model", model]
     if effort:
         cmd += ["--effort", effort]
-    cmd.append(user_prompt)
-    t0 = time.time()
-    res = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, stdin=subprocess.DEVNULL, cwd=cwd)
-    if res.returncode != 0:
-        raise RuntimeError(f"claude CLI exit {res.returncode}: {res.stderr[:500]}")
-    out = json.loads(res.stdout)
-    if out.get("is_error"):
-        raise RuntimeError(f"claude CLI error: {out.get('result')}")
-    data = out.get("structured_output") or json.loads(out["result"])
-    meta = {"backend": "cli", "model": list((out.get("modelUsage") or {}).keys()), "cost_usd": out.get("total_cost_usd"),
-            "seconds": round(time.time() - t0, 1), "session_id": out.get("session_id"), "num_turns": out.get("num_turns"),
-            "shell": bool(shell), "permission_denials": len(out.get("permission_denials") or [])}
-    return data, meta
+    return cmd + [user_prompt]
 
 
+def _cli_meta(output, started, shell):
+    """Metadati del run (modello, costo, tempo, turni, permessi negati) salvati nel tentativo per la tracciabilità."""
+    return {"backend": "cli", "model": list((output.get("modelUsage") or {}).keys()), "cost_usd": output.get("total_cost_usd"),
+            "seconds": round(time.time() - started, 1), "session_id": output.get("session_id"),
+            "num_turns": output.get("num_turns"), "shell": bool(shell),
+            "permission_denials": len(output.get("permission_denials") or [])}
+
+
+def call_cli(system_prompt, user_prompt, schema, model=None, effort=None, shell=None,
+             max_turns=60, max_budget_usd=8.0, timeout=3600):
+    """Chiama Claude Code headless e ritorna (attempt, meta). L'output è strutturato dallo schema (--json-schema).
+    NOTA: con shell attiva va lanciato da un terminale umano; un agente che lancia un altro agente con permessi
+    pre-autorizzati viene bloccato dal classificatore di sicurezza."""
+    cmd = _cli_command(system_prompt, user_prompt, schema, model, effort, shell, max_turns, max_budget_usd)
+    started = time.time()
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
+                            stdin=subprocess.DEVNULL, cwd=str(shell) if shell else None)
+    if result.returncode != 0:
+        raise RuntimeError(f"claude CLI exit {result.returncode}: {result.stderr[:500]}")
+    output = json.loads(result.stdout)
+    if output.get("is_error"):
+        raise RuntimeError(f"claude CLI error: {output.get('result')}")
+    attempt = output.get("structured_output") or json.loads(output["result"])
+    return attempt, _cli_meta(output, started, shell)
+
+
+# =============================================================================== backend: SDK
 def call_api(system_prompt, user_prompt, schema, model=None, effort=None, **_):
-    import anthropic  # pip install anthropic
+    """Chiama l'API con l'SDK anthropic (richiede credenziali). Streaming perché l'output può essere lungo;
+    fallbacks "default" perché un rifiuto dei classificatori non deve fermare il loop. NON testato: manca la chiave."""
+    import anthropic  # importato qui: dipendenza necessaria solo a questo backend
     client = anthropic.Anthropic()
-    model = model or "claude-opus-5"
-    t0 = time.time()
+    output_config = {"format": {"type": "json_schema", "schema": schema}}
+    if effort:
+        output_config["effort"] = effort
+    started = time.time()
     with client.messages.stream(
-        model=model, max_tokens=64000, system=system_prompt,
-        messages=[{"role": "user", "content": user_prompt}],
-        output_config={"format": {"type": "json_schema", "schema": schema}, **({"effort": effort} if effort else {})},
-        extra_headers={"anthropic-beta": "server-side-fallback-2026-07-01"},
-        extra_body={"fallbacks": "default"},
+        model=model or "claude-opus-5", max_tokens=64000, system=system_prompt,
+        messages=[{"role": "user", "content": user_prompt}], output_config=output_config,
+        extra_headers={"anthropic-beta": "server-side-fallback-2026-07-01"}, extra_body={"fallbacks": "default"},
     ) as stream:
-        resp = stream.get_final_message()
-    if resp.stop_reason == "refusal":
-        raise RuntimeError(f"refusal: {getattr(resp, 'stop_details', None)}")
-    text = next(b.text for b in resp.content if b.type == "text")
-    meta = {"backend": "api", "model": [resp.model], "seconds": round(time.time() - t0, 1),
-            "usage": {"in": resp.usage.input_tokens, "out": resp.usage.output_tokens}}
+        response = stream.get_final_message()
+    if response.stop_reason == "refusal":
+        raise RuntimeError(f"refusal: {getattr(response, 'stop_details', None)}")
+    text = next(block.text for block in response.content if block.type == "text")
+    meta = {"backend": "api", "model": [response.model], "seconds": round(time.time() - started, 1),
+            "usage": {"in": response.usage.input_tokens, "out": response.usage.output_tokens}}
     return json.loads(text), meta
 
 
-def call_mock(system_prompt, user_prompt, schema, model=None, effort=None, **_):
-    """Backend deterministico per i test: sceglie una famiglia diversa da quelle già fallite; legge CREATIVE IDEAS."""
+# =============================================================================== backend: mock
+def _mock_family(user_prompt):
+    """Sceglie la famiglia di approccio come farebbe un Researcher sensato: segue le idee creative se presenti,
+    altrimenti dopo un REJECT evita le famiglie già usate. Serve a testare il loop senza chiamare modelli."""
     families = ["direct_proof", "induction", "contradiction", "algebraic_reformulation", "extremal"]
     used = re.findall(r"family=(\w+)", user_prompt)
-    idea = re.search(r'"approach_family":\s*"(\w+)"', user_prompt.split("# CREATIVE IDEAS")[-1]) if "# CREATIVE IDEAS" in user_prompt else None
-    if idea:
-        fam = idea.group(1)
-    elif "# STAGNATION DETECTED" in user_prompt or "# LAST REFEREE REPORT" in user_prompt and '"REJECT"' in user_prompt:
-        fam = next((f for f in families if f not in used), "other")
-    else:
-        fam = "direct_proof"
+    if "# CREATIVE IDEAS" in user_prompt:
+        idea = re.search(r'"approach_family":\s*"(\w+)"', user_prompt.split("# CREATIVE IDEAS")[-1])
+        if idea:
+            return idea.group(1)
+    rejected = "# STAGNATION DETECTED" in user_prompt or ("# LAST REFEREE REPORT" in user_prompt and '"REJECT"' in user_prompt)
+    if rejected:
+        return next((f for f in families if f not in used), "other")
+    return "direct_proof"
+
+
+def call_mock(system_prompt, user_prompt, schema, model=None, effort=None, **_):
+    """Backend deterministico per i test: nessuna chiamata, risposta sempre conforme allo schema."""
+    family = _mock_family(user_prompt)
     cell = int(re.search(r"cell (\d+)", user_prompt).group(1))
-    return {"target_cell": cell, "subgoal": "mock subgoal", "approach": f"mock {fam}", "approach_family": fam,
-            "reason_for_choice": "mock: avoid families already rejected" if used else "mock: first natural approach",
-            "proof_attempt": "(x-1)^2 >= 0 hence x^2 - 2x + 1 >= 0, i.e. x^2 + 1 >= 2x.", "claims_used": [],
-            "sources_used": [], "code_used": [], "claimed_progress": "mock", "claimed_status": "CELL_SOLVED_CANDIDATE",
-            "self_reported_gaps": [], "request_creative": False}, {"backend": "mock"}
+    attempt = {"target_cell": cell, "subgoal": "mock subgoal", "approach": f"mock {family}", "approach_family": family,
+               "reason_for_choice": "mock: avoid families already rejected" if "family=" in user_prompt else "mock: first natural approach",
+               "proof_attempt": "(x-1)^2 >= 0 hence x^2 - 2x + 1 >= 0, i.e. x^2 + 1 >= 2x.", "claims_used": [],
+               "sources_used": [], "code_used": [], "claimed_progress": "mock", "claimed_status": "CELL_SOLVED_CANDIDATE",
+               "self_reported_gaps": [], "request_creative": False}
+    return attempt, {"backend": "mock"}
 
 
 BACKENDS = {"cli": call_cli, "api": call_api, "mock": call_mock}
 
 
-# ----------------------------------------------------------------------------- validation (senza dipendenze)
+# =============================================================================== validazione (senza dipendenze)
+_TYPE_CHECKS = {"array": list, "string": str, "integer": int, "boolean": bool}
+
+
 def validate_attempt(data, schema):
-    errs = []
-    for k in schema["required"]:
-        if k not in data:
-            errs.append(f"campo mancante: {k}")
-    for k in data:
-        if k not in schema["properties"]:
-            errs.append(f"campo non ammesso: {k}")
-    props = schema["properties"]
-    for k, v in data.items():
-        spec = props.get(k)
-        if not spec:
-            continue
-        if "enum" in spec and v not in spec["enum"]:
-            errs.append(f"{k}: valore '{v}' non in enum")
-        t = spec.get("type")
-        if t == "array" and not isinstance(v, list):
-            errs.append(f"{k}: atteso array")
-        if t == "string" and not isinstance(v, str):
-            errs.append(f"{k}: atteso string")
-        if t == "integer" and not isinstance(v, int):
-            errs.append(f"{k}: atteso integer")
-        if t == "boolean" and not isinstance(v, bool):
-            errs.append(f"{k}: atteso boolean")
-    return errs
+    """Controllo leggero dello schema (campi obbligatori, campi extra, tipi, enum). Perché non jsonschema:
+    evita una dipendenza per un controllo che sta in dieci righe; il Referee farà comunque il controllo vero."""
+    errors = [f"campo mancante: {k}" for k in schema["required"] if k not in data]
+    errors += [f"campo non ammesso: {k}" for k in data if k not in schema["properties"]]
+    for key, value in data.items():
+        spec = schema["properties"].get(key, {})
+        if "enum" in spec and value not in spec["enum"]:
+            errors.append(f"{key}: valore '{value}' non in enum")
+        expected = _TYPE_CHECKS.get(spec.get("type"))
+        if expected and not isinstance(value, expected):
+            errors.append(f"{key}: atteso {spec['type']}")
+    return errors
 
 
-# ----------------------------------------------------------------------------- commands
-def cmd_run(a):
-    workdir = Path(a.workdir)
+# =============================================================================== comando run
+def bump_stagnation(workdir: Path, state, reason):
+    """Incrementa stagnation_count in state.json (unico campo che il Researcher può toccare) e lo segnala."""
+    state["stagnation_count"] = int(state.get("stagnation_count", 0)) + 1
+    write_json(workdir / "state.json", state)
+    print(f"[researcher] STAGNAZIONE: {reason} -> stagnation_count={state['stagnation_count']}", file=sys.stderr)
+
+
+def save_attempt(workdir: Path, state, data, meta, stagnating, schema_errors):
+    """Salva il tentativo numerato in attempts/ e una copia come attempt.json (l'input del Referee)."""
+    attempt_id = f"attempt_{next_attempt_number(workdir):03d}"
+    record = {"attempt_id": attempt_id, "problem_id": state.get("problem_id"), "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
+              "meta": meta, "stagnation_detected": stagnating, "schema_errors": schema_errors, **data}
+    write_json(workdir / "attempts" / f"{attempt_id}.json", record)
+    write_json(workdir / "attempt.json", record)
+    return attempt_id, workdir / "attempts" / f"{attempt_id}.json"
+
+
+def cmd_run(args):
+    """Un'iterazione del loop: contesto → stagnazione? → prompt → modello → validazione → salvataggio."""
+    workdir = Path(args.workdir)
     (workdir / "attempts").mkdir(parents=True, exist_ok=True)
-    ctx = load_context(workdir)
-    state = ctx["state.json"]
-    schema = json.loads(SCHEMA_PATH.read_text())
-    system_prompt = PROMPT_PATH.read_text()
+    context = load_context(workdir)
+    state = context["state.json"]
 
-    stagnating, reason = detect_stagnation(ctx["history"])
+    stagnating, reason = detect_stagnation(context["history"])
     if stagnating:
-        state["stagnation_count"] = int(state.get("stagnation_count", 0)) + 1
-        (workdir / "state.json").write_text(json.dumps(state, indent=1, ensure_ascii=False) + "\n")
-        print(f"[researcher] STAGNAZIONE: {reason} -> stagnation_count={state['stagnation_count']}", file=sys.stderr)
+        bump_stagnation(workdir, state, reason)
 
     shell_dir = None
-    if a.shell:
-        shell_dir = workdir / "sandbox"
+    if args.shell:
+        shell_dir = (workdir / "sandbox").resolve()
         shell_dir.mkdir(exist_ok=True)
-        ctx["shell_dir"] = str(shell_dir.resolve())
-    user_prompt = build_user_prompt(ctx, stagnating, reason)
-    if a.dry_run:
+    user_prompt = build_user_prompt(context, stagnating, reason, shell_dir)
+    if args.dry_run:
         print(user_prompt)
         return 0
 
-    backend = a.backend or ("api" if os.environ.get("ANTHROPIC_API_KEY") else "cli")
-    data, meta = BACKENDS[backend](system_prompt, user_prompt, schema, model=a.model, effort=a.effort,
-                                   shell=shell_dir, max_turns=a.max_turns, max_budget_usd=a.max_budget_usd)
+    # Senza chiave API il default è la CLI (abbonamento); il mock si sceglie solo esplicitamente.
+    backend = args.backend or ("api" if os.environ.get("ANTHROPIC_API_KEY") else "cli")
+    schema = json.loads(SCHEMA_PATH.read_text())
+    data, meta = BACKENDS[backend](PROMPT_PATH.read_text(), user_prompt, schema, model=args.model, effort=args.effort,
+                                   shell=shell_dir, max_turns=args.max_turns, max_budget_usd=args.max_budget_usd)
     data.setdefault("request_creative", False)
     if stagnating:
-        data["request_creative"] = True
-    errs = validate_attempt(data, schema)
-    if errs:
-        print("[researcher] output non conforme allo schema: " + "; ".join(errs), file=sys.stderr)
-        if a.strict:
+        data["request_creative"] = True  # la richiesta al Creative parte anche se il modello non l'ha impostata
+    schema_errors = validate_attempt(data, schema)
+    if schema_errors:
+        print("[researcher] output non conforme allo schema: " + "; ".join(schema_errors), file=sys.stderr)
+        if args.strict:
             return 2
 
-    n = next_attempt_number(workdir)
-    attempt_id = f"attempt_{n:03d}"
-    record = {"attempt_id": attempt_id, "problem_id": state.get("problem_id"), "ts": time.strftime("%Y-%m-%dT%H:%M:%S"),
-              "meta": meta, "stagnation_detected": stagnating, "schema_errors": errs, **data}
-    out = workdir / "attempts" / f"{attempt_id}.json"
-    out.write_text(json.dumps(record, indent=1, ensure_ascii=False) + "\n")
-    (workdir / "attempt.json").write_text(json.dumps(record, indent=1, ensure_ascii=False) + "\n")  # "ultimo tentativo" per il Referee
-    print(json.dumps({"attempt_id": attempt_id, "target_cell": data.get("target_cell"), "approach_family": data.get("approach_family"),
-                      "claimed_status": data.get("claimed_status"), "request_creative": data["request_creative"],
-                      "file": str(out), "meta": meta}, ensure_ascii=False))
+    attempt_id, path = save_attempt(workdir, state, data, meta, stagnating, schema_errors)
+    print(json.dumps({"attempt_id": attempt_id, "target_cell": data.get("target_cell"),
+                      "approach_family": data.get("approach_family"), "claimed_status": data.get("claimed_status"),
+                      "request_creative": data["request_creative"], "file": str(path), "meta": meta}, ensure_ascii=False))
     return 0
 
 
-def cmd_record(a):
-    workdir = Path(a.workdir)
-    rep = read_json(Path(a.report))
-    if rep is None:
-        print("report non leggibile", file=sys.stderr); return 2
-    n = int(re.search(r"(\d+)", rep.get("attempt_id") or f"{next_attempt_number(workdir) - 1}").group(1))
-    (workdir / "attempts" / f"referee_{n:03d}.json").write_text(json.dumps(rep, indent=1, ensure_ascii=False) + "\n")
-    (workdir / "referee_report.json").write_text(json.dumps(rep, indent=1, ensure_ascii=False) + "\n")
-    # failed_attempts.md: appendice leggibile (il Researcher la rilegge)
-    if rep.get("verdict") in ("REJECT", "COUNTEREXAMPLE_FOUND"):
-        att = read_json(workdir / "attempts" / f"attempt_{n:03d}.json") or {}
-        with open(workdir / "failed_attempts.md", "a") as f:
-            f.write(f"- attempt_{n:03d} [{att.get('approach_family')}] {att.get('subgoal')}: "
-                    f"{rep.get('verdict')} — {rep.get('fatal_error')}\n")
-    print(f"registrato referee_{n:03d}.json ({rep.get('verdict')})")
+# =============================================================================== comandi record e history
+def append_failed_attempt(workdir: Path, number, report):
+    """Aggiunge una riga leggibile a failed_attempts.md, così il prossimo prompt mostra cosa è già fallito e perché."""
+    attempt = read_json(workdir / "attempts" / f"attempt_{number:03d}.json") or {}
+    with open(workdir / "failed_attempts.md", "a") as f:
+        f.write(f"- attempt_{number:03d} [{attempt.get('approach_family')}] {attempt.get('subgoal')}: "
+                f"{report.get('verdict')} — {report.get('fatal_error')}\n")
+
+
+def cmd_record(args):
+    """Archivia il verdetto del Referee come referee_NNN.json (gemello del tentativo) e come referee_report.json."""
+    workdir = Path(args.workdir)
+    report = read_json(Path(args.report))
+    if report is None:
+        print("report non leggibile", file=sys.stderr)
+        return 2
+    match = re.search(r"(\d+)", report.get("attempt_id") or "")
+    number = int(match.group(1)) if match else next_attempt_number(workdir) - 1  # senza id: l'ultimo tentativo
+    write_json(workdir / "attempts" / f"referee_{number:03d}.json", report)
+    write_json(workdir / "referee_report.json", report)
+    if report.get("verdict") in ("REJECT", "COUNTEREXAMPLE_FOUND"):
+        append_failed_attempt(workdir, number, report)
+    print(f"registrato referee_{number:03d}.json ({report.get('verdict')})")
     return 0
 
 
-def cmd_history(a):
-    for h in load_history(Path(a.workdir)):
-        att, rep = h["attempt"] or {}, h["report"] or {}
-        print(f"attempt_{h['n']:03d}  {att.get('approach_family'):<26} {att.get('claimed_status'):<26} "
-              f"-> {rep.get('verdict', 'PENDING'):<16} {(rep.get('fatal_error') or '')[:70]}")
+def cmd_history(args):
+    """Stampa una riga per tentativo: famiglia, stato dichiarato, verdetto, inizio dell'errore fatale."""
+    for h in load_history(Path(args.workdir)):
+        attempt, report = h["attempt"] or {}, h["report"] or {}
+        print(f"attempt_{h['n']:03d}  {attempt.get('approach_family'):<26} {attempt.get('claimed_status'):<26} "
+              f"-> {report.get('verdict', 'PENDING'):<16} {(report.get('fatal_error') or '')[:70]}")
     return 0
+
+
+# =============================================================================== CLI
+def build_parser():
+    """Definisce i tre sottocomandi; tenuto separato da main per leggibilità."""
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    sub = parser.add_subparsers(dest="cmd", required=True)
+    run = sub.add_parser("run")
+    run.add_argument("--workdir", required=True)
+    run.add_argument("--backend", choices=list(BACKENDS))
+    run.add_argument("--model")
+    run.add_argument("--effort", choices=["low", "medium", "high", "xhigh", "max"])
+    run.add_argument("--shell", action="store_true", help="Bash(python3) in <workdir>/sandbox (solo backend cli)")
+    run.add_argument("--max-turns", type=int, default=60)
+    run.add_argument("--max-budget-usd", type=float, default=8.0)
+    run.add_argument("--dry-run", action="store_true", help="stampa solo il prompt costruito")
+    run.add_argument("--strict", action="store_true", help="esci con errore se l'output viola lo schema")
+    record = sub.add_parser("record")
+    record.add_argument("--workdir", required=True)
+    record.add_argument("--report", required=True)
+    history = sub.add_parser("history")
+    history.add_argument("--workdir", required=True)
+    return parser
 
 
 def main():
-    ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    sub = ap.add_subparsers(dest="cmd", required=True)
-    r = sub.add_parser("run"); r.add_argument("--workdir", required=True)
-    r.add_argument("--backend", choices=list(BACKENDS)); r.add_argument("--model"); r.add_argument("--effort")
-    r.add_argument("--dry-run", action="store_true", help="stampa solo il prompt"); r.add_argument("--strict", action="store_true")
-    r.add_argument("--shell", action="store_true", help="abilita Bash(python3) in <workdir>/sandbox (solo backend cli)")
-    r.add_argument("--max-turns", type=int, default=60); r.add_argument("--max-budget-usd", type=float, default=8.0)
-    rc = sub.add_parser("record"); rc.add_argument("--workdir", required=True); rc.add_argument("--report", required=True)
-    h = sub.add_parser("history"); h.add_argument("--workdir", required=True)
-    a = ap.parse_args()
-    return {"run": cmd_run, "record": cmd_record, "history": cmd_history}[a.cmd](a)
+    args = build_parser().parse_args()
+    return {"run": cmd_run, "record": cmd_record, "history": cmd_history}[args.cmd](args)
 
 
 if __name__ == "__main__":
