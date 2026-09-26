@@ -1,0 +1,69 @@
+% Problema 2, parte 3: campi da incollare nella piattaforma (uno per sezione)
+
+% ===== CAMPO: 1. Risultato e ambito =====
+\(Q_6\): valore candidato \(204\) (\(=|E|+12\))
+
+Etichettatura (ordine crescente di etichetta, posizione \(i\) =
+coordinata \(i\)):
+
+\texttt{000000,111100,110011,001111,101010,011010,100110,010110,101001,011001,100101,010101,100000,010000,001000,111000,000100,110100,101100,011100,000010,110010,001110,111110,000001,110001,001101,111101,100011,010011,001011,111011,000111,110111,101111,011111,110000,101000,011000,100100,010100,001100,100010,010010,001010,111010,000110,110110,101110,011110,100001,010001,001001,111001,000101,110101,101101,011101,000011,101011,011011,100111,010111,111111}
+
+
+% ===== CAMPO: 2. Dimostrazione =====
+\textbf{Costruzione ``a stelle''.} Sia \(R\) un insieme di vertici di
+peso pari a due a due a distanza di Hamming \(\ge4\) (un codice a
+distanza 4 fra le parole di peso pari; qui il lexicode). Non-picchi
+\(=R\cup\{\text{peso dispari}\}\), picchi \(=\) vertici pari fuori da
+\(R\). Etichette: prima \(R\) e i dispari non adiacenti a \(R\) (valli),
+poi i dispari adiacenti a una radice (ciascuno ha esattamente una radice
+vicina, perché due radici distano \(\ge4\)), infine i picchi. Ogni
+non-picco ha \(p=1\) (valle, oppure una sola radice come unico vicino
+minore); ogni picco ha tutti i \(d\) vicini minori con \(p=1\), quindi
+\(p=d\). Totale \(=(d+1)2^{d-1}-(d-1)|R|\): per \(d=3,4,5\) dà
+\(14,34,88\), cioè esattamente i minimi dimostrati nelle parti 1--2; per
+\(d=6,7,8\) dà \(204,464,1040\) con \(|R|=4,8,16\) (codici ottimi:
+\(A(5,3)=4\), \(A(6,3)=8\), \(A(7,3)=16\), Hamming).
+
+\textbf{Ottimalità dentro la famiglia (dimostrata).} Per
+un'etichettatura di questo tipo (picchi indipendenti, complemento
+foresta, \(p=1\) su tutti i non-picchi) il totale è \(|E|+c\) con \(c\)
+= numero di componenti della foresta, e \(c=(d-1)|P|-2^{d-1}(d-2)\) con
+\(P\) l'insieme dei picchi. Ridurre \(c\) richiede un insieme
+indipendente \(P\) più piccolo con complemento aciclico. Un insieme
+indipendente di \(Q_d\) di taglia \(2^{d-1}-s\) con \(s\) piccolo
+contiene al più un vertice della classe minoritaria (se \(B\) sono i
+vertici dispari di \(P\), \(|N(B)|\ge 2d-2\) per \(|B|\ge2\) e la taglia
+non torna); se \(P\) è tutto pari, il complemento è aciclico solo se i
+\(2^{d-1}-|P|\) vertici pari fuori da \(P\) sono a due a due a distanza
+\(\ge4\) (due pari a distanza 2 hanno due vicini dispari comuni: un
+4-ciclo), cioè formano un codice pari a distanza 4, di taglia al più
+\(A(d-1,3)\); se \(P\) contiene un dispari \(o\), il complemento
+contiene i \(d\) vicini pari di \(o\) e i vertici
+\(o\oplus e_i\oplus e_j\), che formano 6-cicli. Quindi nella famiglia il
+minimo di \(c\) è \(2^{d-1}-(d-1)A(d-1,3)\): \(12,16,16\) per
+\(d=6,7,8\). \textbf{Ciò che manca:} escludere etichettature fuori dalla
+famiglia (eccesso \(X>0\)), come fatto per \(d=5\) nella parte 2 con
+l'analisi dei casi.
+
+
+% ===== CAMPO: 3. Verifica: istruzioni, dipendenze, tempi =====
+\begin{verbatim}
+cd problema-2/esperimenti && python3 costruzione_stelle.py 6   # ricostruisce e conta (< 1 s ciascuno)
+\end{verbatim}
+
+Conteggio con \texttt{conta\_cammini.py} (interi esatti). Ricottura di
+controllo (\texttt{ricottura\_controllo.py}): vedi
+\texttt{ricottura\_q*.log}.
+
+
+% ===== CAMPO: 4. Fonti e contributo =====
+Costruzione e argomento interamente nostri; codici a distanza 4 standard
+(lexicode/Hamming). Nessuna citazione usata.
+
+
+% ===== CAMPO: 5. Limiti e parti irrisolte =====
+Bound inferiore generale non dimostrato: il valore è un candidato
+motivato (coincide con i minimi noti per \(d\le5\) e, per \(d=9\), con
+\(|R|=20\) la stessa formula dà \(2400\), il bound superiore noto agli
+organizzatori).
+

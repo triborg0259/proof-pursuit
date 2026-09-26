@@ -1,0 +1,3115 @@
+                 Combinatorics of Bulgarian Solitaire
+                                         Nhung Pham
+                         University of Minnesota - Twin Cities
+                                         Senior Thesis
+
+                                             Abstract
+          The Bulgarian Solitaire rule induces a finite dynamical system on the set of integer
+      partitions of n. Brandt [3] characterized and counted all cycles in its recurrent set for
+      any given n, with orbits parametetrized by necklaces of black and white beads. How-
+      ever, the transient behavior within each orbit has been almost completely unknown.
+      The only known case is when n = k2 is a triangular number, in which case there is only
+      one orbit. Eriksson and Jonsson [6] gave an analysis for convergence of the structure
+      as k grows, and to what extent the limit applied to the finite case.
+          In this thesis, we generalize the convergent structure for any n and provide first
+      results about the size of any orbits, corresponding to various different types of neck-
+      laces, including those whose beads alternate BW BW BW · · · = (BW )k , and also
+      BW W BW W · · · = (BW W )k and BBW BBW · · · = (BBW )k . For necklaces of the
+      form (BW )k the orbit size is the Chebyshev polynomial Tk (x) evaluated at x = 2.
+      Furthermore, we derive a generating function counting the transients in these orbits
+      according to their distance from the periodic cycle. A similar analysis shows that the
+      orbits corresponding to the necklace (BW W )k and (BBW )k have sizes 5k and 7 · 5k−1 .
+      respectively.
+          We will also give some properties for the partitions in each orbit and conjecture
+      some general formulas for the sizes of Bulgarian Solitaire orbits.
+
+
+Contents
+     Acknowledgement                                                                               3
+
+
+I    Background and results                                                                        4
+1 Preliminaries                                                                                    4
+  1.1 Integer partitions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .         4
+  1.2 Young diagrams . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .           4
+
+2 Introduction to Bulgarian Solitaire                                                              4
+  2.1 History . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .        4
+  2.2 Notation and terminology . . . . . . . . . . . . . . . . . . . . . . . . . . . .             5
+  2.3 Previously known results . . . . . . . . . . . . . . . . . . . . . . . . . . . . .           8
+
+3 Data, new results and conjectures                                                               10
+  3.1 Orbit sizes and distance generating function . . . . . . . . . . . . . . . . . .            10
+  3.2 Convergence of level sizes in OP k as k grows . . . . . . . . . . . . . . . . . .           12
+  3.3 Characterizing partitions within an orbit . . . . . . . . . . . . . . . . . . . .           13
+
+
+II    Proofs                                                                                      15
+4 Analysis of O(BW )k                                                                             15
+  4.1 On the reverse BS game graph for O(BW )k . . . . . . . . . . . . . . . . . . .              15
+  4.2 Limiting level sizes of O(BW )k as k grows . . . . . . . . . . . . . . . . . . . .          16
+  4.3 Proof of Theorem 3.2.1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .          17
+  4.4 Proof of Theorem 3.1.1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .          19
+  4.5 More properties of partitions in O(BW )k and proof of Proposition 3.3.1 . . . .             24
+
+                                                 1
+5 Analysis of OP k for P = BW W and BBW                                                    25
+  5.1 On the reverse BS game graph for (BW W )k . . . . . . . . . . . . . . . . . .        25
+  5.2 The limit for O(BW W )k by level sizes and proof of Theorem 3.2.2 . . . . . . .      27
+  5.3 Proof of Theorem 3.1.2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   29
+      5.3.1 Notation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .   29
+      5.3.2 Three types of trees . . . . . . . . . . . . . . . . . . . . . . . . . . .     29
+      5.3.3 Recurrent Relationship between the tree types . . . . . . . . . . . . .        31
+      5.3.4 The computation . . . . . . . . . . . . . . . . . . . . . . . . . . . . .      38
+  5.4 More properties of partitions in O(BW W )k and proof of Proposition 3.3.2 . . .      40
+
+
+III    A few final remarks                                                                 41
+6 Which recurrent partitions are roots of nontrivial trees?                                41
+
+7 Relation between finite orbit recurrence and limit generating function                   41
+
+
+
+
+                                              2
+Acknowledgement
+I wish to express my gratitude to my advisor Professor Victor Reiner for the excellent
+guidance, support and encouragement during my study to write this honors thesis. Professor
+Reiner has always provided me insightful advice, introduced me to new techniques and more
+importantly, been willing to take time to discover the Bulgarian Solitaire structure with me
+through a lot of drawings. I have learned a lot from him about research throughout the
+thesis process, including writing my ideas and proofs out. I really appreciate my advisor for
+the time he has taken to transform a mess of words, formulas and diagrams into a thesis.
+It is my honor to work with Professor Reiner. My thesis time has been a lot of fun and
+meaningful thanks to him.
+
+
+
+
+                                             3
+Part I
+Background and results
+1     Preliminaries
+1.1    Integer partitions
+A partition of a positive integer n is a way to write it as a sum of integers. In partition theory,
+order of the parts does not matter, e.g. 1 + 2 + 4, 1 + 4 + 2 and 2 + 4 + 1 are the same partition
+of 7. We write p(n) to be the number of partitions of n and denote the set of partitions on
+n by P(n). Integer partitions have interested mathematicians since the 18th century with
+applications in computer science, statistical mechanics, algebra and other branches of math.
+A lot of interesting classes of integer partitions and their properties have been discovered.
+Moreover, although the number of partitions of a given number n was found as a limit of a
+series (the Hardy-Ramanujan-Rademacher expansion [2]) or as coefficients of the generating
+functions                            ∞             ∞
+                                    X              Y 1
+                                         p(n)xn =             n
+                                                                ,
+                                    n=0           n=1
+                                                       1 −  x
+mathematicians are still interested in finding a simpler, explicit formula for it. One result is
+a recurrence formula [2] involving the pentagonal numbers gk = k(3k − 1)/2:
+                                         X
+                                p(n) =      (−1)k−1 p(n − gk ).
+                                           k
+
+Recently, Bruinier and Ono proved a formula for p(n) as a finite sum of algebraic numbers
+lying in the usual discriminant −24n + 1 ring class field [4]. In this thesis, we work with a
+dynamical system on P(n) and hope that our structure might give interesting properties of
+integer partitions.
+
+1.2    Young diagrams
+The Young diagram is a visualization of an integer partition. For example, the partition
+10 = 5 + 3 + 2 is drawn as
+
+
+
+
+with the rows being the parts in non-strict descending order. The k−staircase partition of
+n = k+1
+      2
+           is denoted by ∆k = (k, k − 1, . . . , 1, 0). For example of ∆5 is
+
+
+
+
+2     Introduction to Bulgarian Solitaire
+2.1    History
+The game of Bulgarian Solitaire was introduced by Martin Gardner in 1983. The original
+game starts with 45 cards divided into a number of piles. Now keep repeating the Bulgarian
+Solitaire moves: in each turn, take one card from each pile and form a new pile. The game
+ends when the sizes of the piles are not changed by performing the moves. Surprisingly, it
+turns out that regardless of initial state of the game, it must end in a finite number of moves
+at the state with one pile of one card, one pile of two cards, . . . , and one pile of nine cards.
+Then Gardner stated the problem for any triangular number n = 1 + 2 + . . . + m = m+1
+                                                                                                
+                                                                                              2
+                                                                                                 .
+But how about other arbitrary n?
+
+                                                4
+                                                                     β
+
+
+
+
+              Figure 1: Bulgarian Solitaire on Young diagram β((5, 2, 2)) = (4, 3, 1, 1)
+
+
+   Now let n be the number of cards we start the game with and represent a configuration
+of piles of cards by a partition of n, with the piles being the parts. Thus we have made
+the Bulgarian Solitaire game into a dynamical system on P(n) with the operation: in each
+step, take one from each part, form a new part and put the parts in weakly decreasing order.
+In addition, the game can be described in terms of Young diagrams: in each turn, remove
+the longest column and reinsert it as a new row into the diagram. An example is shown in
+Figure 1.
+
+2.2      Notation and terminology
+We write a partition as λ = (λ1 , . . . , λn ) where λ1 ≥ λ2 ≥ . . . ≥ λn > 0. We use l(λ) as the
+length of the partition λ, e.g. in this case l(λ) = n. The symbol |λ| = λ1 + λ2 + . . . + λn is
+the number of which λ is an integer partition.
+   Let β be the Bulgarian Solitaire operation on P(n), described in subsection 2.1. For
+example, β((5, 3, 2)) = (4, 3, 2, 1). The game graph of Bulgarian Solitaire system is a directed
+graph whose nodes are partitions of n with directed edges connecting λ → β(λ).
+
+
+
+                                                       (3, 2, 1)
+
+                                                        (4, 2)
+
+                                      (3, 1, 1, 1)                    (5, 1)
+
+                                           (2, 2, 2) (2, 1, 1, 1, 1)            (6)
+
+                                            (3, 3)                       (1, 1, 1, 1, 1, 1)
+
+                                           (4, 1, 1)
+
+                                      (2, 2, 1, 1)
+
+                              Figure 2: Bulgarian Solitaire game graph for n = 6.
+
+
+
+                                                          (3, 2, 2, 1)                (4, 2, 1, 1)
+
+                (3, 3, 1, 1)                               (3, 3, 2)                   (4, 3, 1)
+
+                 (4, 2, 2)                               (4, 4)                        (5, 2, 1)
+
+                     (5, 3)                            (5, 1, 1, 1)        (3, 2, 1, 1, 1)     (6, 2)
+
+   (4, 1, 1, 1, 1)             (6, 1, 1)             (2, 2, 2, 1, 1)             (3, 1, 1, 1, 1, 1) (7, 1)
+
+      (2, 2, 2, 2)       (2, 2, 1, 1, 1, 1)                                             (2, 1, 1, 1, 1, 1, 1) (8)
+
+                                                                                                     (1, 1, 1, 1, 1, 1, 1, 1)
+
+                              Figure 3: Bulgarian Solitaire game graph for n = 8.
+
+
+                                                                 5
+Definition 2.2.1. Let α = (α1 , . . . , αn ) be a finite sequence of letters {B, W }. Define the
+cyclic rotation ω by
+                                      ω(αj ) = α(j+1) mod n
+A necklace N of black and white beads is an equivalence class of sequences of letters {B, W }
+under cyclic rotation ω. We call N a primitive necklace if it cannot be written as a concate-
+nation N = P k = P P · · · P of copies of another necklace P . We will reserve P for primitive
+necklaces.
+Example 2.2.2. The sequences BW W W = W BW W = W W BW = W W W B all represent
+the same necklace P , which is primitive. The same is true for the sequences BBW W =
+W BBW = W W BB = BW W B representing a different primitive necklace P 0 . However the
+sequences BW BW = W BW B represent a non-primitive necklace N = (BW )2 = (W B)2 .
+The three necklaces W , BW = W B and BW W = W BW = W W B are all primitive.
+    For a necklace N , we will denote by b(N ) the number of black beads and by w(N ) the
+number of white beads in any sequence representing N . The number of beads in necklace
+N is denoted |N | = b(N ) + w(N ).
+    Let BS be the set of orbits of Bulgarian Solitaire systems and N be the set of necklaces
+with at least one white bead. We denote ψ(λ) to be the Bulgarian Solitaire orbit that
+contains λ, that is, λ, µ lie in the same BS orbit ψ(λ) = ψ(µ) if there exists integers a, b ≥ 0
+for which β a (λ) = β b (µ). By [3] we have a bijection
+
+                                           O : N −→ BS                                             (1)
+
+that maps a necklace to the orbit of Bulgarian Solitaire system which has the unique recurrent
+cycle represented by the necklace. Specifically, for each necklace N = N1 N2 . . . Nl , the map
+is defined as ON = O(N ) = ψ((∆l−1 , 0)+σ), where σ = (σ1 , . . . , σl ) and for each j = 1, . . . , l,
+σj = 0 if Nj = W , otherwise σj = 1. Figure 4 and Figure 5 are examples to illustrate the
+map O. For convenience, we use ON for the BS game graph restricted to the orbit ON . The
+map O satisfies that for any P k ∈ N , where P is a primitive necklace, |P | is equal to the
+size of the recurrent subset in OP k . That recurrent subset exists because for a given number
+n, the set P(n) is finite. The following is a rephrasing of Brandt’s result [3], along with an
+enumeration corollary from Drensky [5] using Polyá’s enumeration theorem, elaborated by
+Akin and Davis [1]:
+Theorem 2.2.3. Uniquely express n = m2 + r for some 0 < r ≤ m − 1 and let λ ∈ P(n).
+                                              
+
+Then the orbits of the Bulgarian Solitaire system on P(n) biject with necklaces N with
+b(N ) = r black beads and w(N ) = m − r white beads. The partitions λ within the recurrent
+cycle of orbit ON consist of the triangular partition along with an extra square in each row
+indexed by a black bead from a necklace in N .
+    Therefore the number of the components of the game graph associated with the partitions
+of n is equal to the number of necklaces consisting of r black beads and m − r white beads
+having this formula                                       
+                                      1 X             m/d
+                                                ϕ(d)        ,
+                                     m                 r/d
+                                         d|gcd(r,m)
+
+where ϕ(d) is the Euler ϕ function, i.e., the number of positive integers ≤ d and relatively
+prime to d.
+   Let CP k denote the unique cycle of partitions contained in the recurrent subset inside the
+BS orbit indexed by the necklace P k , with P primitive. One can easily prove the proposition
+below by using the bijection O described above:
+Proposition 2.2.4. For any P k ∈ N with P primitive and |P | = p, the orbit OP k has
+partitions of size                        
+                                          pk
+                                    n=         + kb(P ).
+                                           2
+Conversely, given n = k2 + b, where 0 ≤ b ≤ k − 1, then BS orbits on P(n) correspond to
+                         
+
+necklaces N of length k with b black beads, and thus
+                                              G
+                                     P(n) =        ON .                             (2)
+                                                       |N |=k
+                                                      b(N )=b
+
+
+                                                      6
+                                         
+
+                             ψ
+                                         
+                                          
+
+
+                                                                                    
+                                              !                    !
+                              ψ                   =ψ                   =ψ 
+                                                                          
+                                                                                     
+                                                                                     
+
+
+                                                                                  
+                                              !
+                              ψ                   =ψ 
+                                                     
+                                                                   = 
+                                                                    ψ
+                                                                                     
+                                                                                     
+
+
+   Figure 4: The map O for primitive necklaces of length 3, which are W W W, BW W, BBW .
+
+                                                                             
+                                                          
+                                                                             
+                                                           =                
+                                   ψ                       ψ
+                                                                             
+                                                                             
+                                                                             
+
+
+  Figure 5: The map O for non-primitive necklaces of length 4. The recurrent set in O(BW )2
+                              has only 2 elements, shown above.
+
+Remark 2.2.5. The Bulgarian Solitaire system on partitions of a triangular number n = k2
+                                                                                                 
+
+has a unique orbit, corresponding to the necklace W k . On the other hand, we will occasionally
+wish to think of it as also corresponding to the all-black necklace B k−1 , which was deliberately
+excluded from the domain of the map map O, to make it a bijection.
+
+   For any primitive necklace P ∈ N and any λ ∈ OP k , we denote by DP k (λ) the minimum
+number of moves to reach the recurrent cycle starting from λ, that is, define DP k : OP k → N
+by
+                           DP k (λ) = min{d ∈ N : β d (λ) ∈ CP k }
+    Roughly speaking, the reversed Bulgarian Solitaire is done by reversing all arrows in the
+directed game graph. For Young diagrams, the reversed rule is: in each turn, take out a row
+no shorter than the number of rows minus 1 and insert it again as the leftmost column. For
+a partition λ, the operation is: in each turn, take a part λj ≥ l(λ) − 1, then distribute it
+                                         j
+into other parts, one for each. We use −  → to describe the move that takes out the row j. For
+                  1                            2
+example (4, 2, 2) −
+                  → (3, 3, 1, 1) and (4, 2, 2) −
+                                               → (5, 3). Figure 6 illustrates the reverse rule.
+
+
+
+
+                                              1
+
+
+
+                                              2
+
+
+
+
+                           Figure 6: Reverse BS on a Young diagram
+
+   We denote the reversed operation by Rj (λ), where λ is the partition to perform the rule
+on the part λj . We also use 0 as a result of an invalid move, that is, the removed row is too
+
+
+                                                  7
+short to be the leftmost - or the longest - column. Obviously, Rj (λ) is valid (or legal) if and
+only if λj ≥ l(λ) − 1.
+
+Example 2.2.6. For example,
+
+                                     R1 ((4, 3, 2, 1)) = (4, 3, 2, 1),
+                                     R2 ((4, 3, 2, 1)) = (5, 3, 2),
+                                     R4 ((4, 3, 2, 1)) = 0.
+
+   A (reverse BS) playing sequence is a sequence of parts that are played legally. For
+example, with (BW )2 and n = 8, the playing sequence [211] starting from (4, 2, 2) is
+
+                                                           h4i
+                                                                     2
+                                     h4i                    1
+                                             2   h5i   1         1   2
+                                     h2i                    1
+                                                 h3i                 2
+                                     h2i                    1
+                                                                     2
+                                                            1
+
+                                           Figure 7: Reverse BS
+
+where the parts λj which are playable are enclosed in angle brackets as hλj i. Extend the
+notation R for playing sequences σ = [σ1 , . . . , σm ], that is, define
+
+                                Rσ (λ) := Rσm (· · · (Rσ2 (Rσ1 (λ)) · · · )
+                                               op
+E.g. R[211] ((4, 2, 2)) = (2, 2, 2, 2). Now ON    is used for the directed graph ON with reversed
+arrows - that is, the directed edges go β → Rj (λ) and such an edge is labelled Rj . In other
+          op
+words, ON    is the directed graph of the orbit ON under the reversed BS operation R.
+    We also need the difference reversed    game graph for an orbit of partitions. If the partitions
+                                         k
+λ in the orbit have size |λ| = n = 2 + r with 0 ≤ r ≤ k − 1, then the difference game graph
+is obtained from the game graph by subtracting the staircase ∆k−1 out of each partitions in
+the orbit. For example, the part of the difference game graph for the playing sequence in
+Figure 7 is
+
+                                                           h1i
+                                                                     −1
+                                     h1i         h2i       −1
+                                            2          1         1   0
+                                     h0i         h1i        0
+                                                                     1
+                                     h1i         −1         1
+                                                                     2
+                                                            1
+
+                                       Figure 8: Difference BS
+
+
+2.3     Previously known results
+The game graph when n is a triangle number, which turned out to be a tree, has been
+studied by Igusa [9], Etienne [7], Griggs and Ho [8] and  Eriksson and Jonsson [6]. Recall
+that the Bulgarian solitaire system on P(n) for n = k+12
+                                                           has only one orbit OW k+1 = ψ(∆k ),
+                                                 2
+converging to a unique fixed point in at most k − k moves. Eriksson and Jonsson prove [6]
+                                                              −1        −1
+that, in the limit as k grows, the sequence of level sizes (DW  k (1), DW k (2), . . .) converges to
+
+the subsequence of evenly-indexed Fibonacci numbers (F2d )∞  d=0 , with the generating function
+
+                                                   (1 − x)2
+                                        HW (x) =              .                                         (3)
+                                                1 − 3x + x2
+Eriksson and Jonsson also showed that for n = k+1         , the sizes of levels 0, 1, . . . , b k2 c in the
+                                                         
+                                                       2
+reversed Bulgarian solitaire game tree coincide with those of an object that they called the
+quasi-infinite game tree, but the next level,b k2 c + 1, has fewer elements, 1 less for odd k and
+1 + k2 less for even k.
+    Figure 9 display some initial difference BS game graphs up to some levels and Figure 10
+is the quasi-infinite game tree. When we remove the left branch of the quasi-infinite game
+tree, which turns out to be an entire copy of the tree (corresponding to the loop in the finite
+
+                                                       8
+graphs), we can see a containment relationship between the quasi-infinite tree and the finite
+graphs up to some levels.
+
+                                                                                                                    1
+
+
+
+
+                                                                                                                h0i
+                                                  1
+                                                                                                                h0i
+                                                                                                                 0
+                          1
+                                              h0i                                                               20
+     1
+                                              h0i                                                               h1i
+                      h0i                     2
+                                                0                                                               h0i
+    h0i               h0i                                                                                        0
+                                              h1i
+                      2
+                                                                                                           1
+                                                                                                                −1
+                                              h0i                                                                             3
+                      h1i                                                                                       2
+                                              −1                                                     h0i
+                      −1                      1
+                                                              2                                                  h2i              h2i
+                                                                                                      0
+                      1                       h0i                                                                h0i              h1i
+                                                                   h2i                               −1
+                      −1                      −1                                                                 −1               −2
+                                                                   −1                                 0
+                      0                        0                                                               1 −1 2             −1
+                                                                   −1                                 1                           1
+                                                                                                                                        2
+                      1                        1                              2
+                                              1
+                                                                   1                             1       h0i            h3i h1i             h3i
+                                                                                                     h0i −1
+                                          h−1i                     −1             h3i                                   −1 −2               −2
+                                                                                                     −1 −1
+                                            0                      −1             −2                                    −1 −1               −1
+                                                                                                      0
+                                            1                       ..
+                                                                     .            −1                      0             −1 ...               0
+                                                                                                      1   ..
+                                              ...                                 ...                      .            ...                 ...
+                                                                                                     ...
+                                                                              k+1
+                                                                                          with k = 1, 2, 3, 4 up to level b k+1
+                                                                                      
+Figure 9: Difference reversed BS game graph for n =                            2                                             2 c+1.
+
+
+
+
+                                        h0i
+                                        h0i
+                                    1                 2
+
+
+
+                              h0i                     h1i
+                              h0i                     h0i
+                                                      h0i
+                                          1           2                  3
+
+                              ...
+                                                      h2i                         h2i
+                                        h0i
+                                                      h0i                         h1i
+                                         0
+                                                      h0i                         h0i
+                                                  1       2    3                  h0i
+                                        h0i 0 h3i h3i
+                                                                          1       2        3     4
+
+                                        h0i 0 h0i h1i                    h1i h3i
+                                                                                 h3i h3i
+                                              h0i h0i                            h2i h2i
+                                                  h0i                     0 h0i
+                                                                                 h0i h1i
+                                        ...                               0 h0i
+                                                      ...                        h0i h0i
+                                                                                     h0i
+                                                              ...        ... ... ...
+                                                                                               ...
+                Figure 10: The quasi-infinite game tree for triangle numbers.
+
+                  i
+                 → in the quasi-infinite tree [6, §3] are described below:
+   The rules for −
+
+  1. Delete the bracketed ith number.
+
+  2. Increase all numbers above it by 1 and make them bracketed.
+
+  3. Bracket the new ith number (if there is one) if it differs at most 1 from the old one.
+
+  4. If a zero was played, add zeros at the end so that there are two, and make them
+     bracketed.
+
+                                                                  9
+                                                                                   op
+Note that the triangular number n = m+1
+                                             
+                                           2
+                                               corresponds to necklaces W m . Let OW  ∞ denote
+
+the quasi-infinite tree for triangular numbers above without the left branch. Then Eriksson
+and Jonsson [6] showed
+                                        op            op
+                                       OW ∞ = lim OW m .
+                                               m→∞
+
+We wish to generalize this idea for a quasi-infinite forest to find the limit of the level sizes
+for arbitrary n. For each primitive necklace P , we have a finite number of elements in the
+recurrent set CP k for any k, so we can build trees in the quasi-infinite forest FP rooting at
+each of those elements. The modified rules will be discussed in Part II.
+
+
+3      Data, new results and conjectures
+Here we briefly present the main results and conjectures of this thesis, along with some of
+the data that suggested them.
+
+3.1     Orbit sizes and distance generating function
+Since Bulgarian solitaire orbits on P(n) are parametrized by necklaces N , it is natural to
+ask for their sizes. When n is a triangular number, there is only one component of size p(n).
+However, other orbits’ sizes have remained unknown. Here is some data on the orbit sizes
+corresponding to some small necklaces N . Recall from Proposition 2.2.4 that if N = P k for
+some primitive necklaces P , the size of the partition n is given by
+                                           
+                                            pk
+                                      n=        + kb(P ),
+                                             2
+
+where b(P ) is the number of black beads in P .
+
+      N    |ON |              N       |ON |            N         |ON |           N         |ON |
+      W      1               BW         2             BW W         5            BBW          7
+      W2     3              (BW )2      7            (BW W )2      25          (BBW )2      35
+      W3    11              (BW )3     26            (BW W )3     125          (BBW )3      175
+      W4    42              (BW )4     97            (BW W )4     625          (BBW )4      875
+
+         N         |ON |                 N           |ON |                   N         |ON |
+       BW W W       15                 BBW W           15                  BBBW         30
+      (BW W W )2    225               (BBW W )2       150                 (BBBW )2      450
+      (BW W W )3   3375               (BBW W )3       1500                (BBBW )3     6750
+      (BW W W )4   50625              (BBW W )4      15000                (BBBW )4    101250
+
+        N           |ON |                N            |ON |                   N          |ON |
+     BBW W W         45               BBBW W            67                 W BW BW        32
+    (BBW W W )2     1215             (BBBW W )2        1809               (W BW BW )2     544
+    (BBW W W )3     32805            (BBBW W )3       48843               (W BW BW )3    9248
+
+          N         |ON |                N             |ON |                 N           |ON |
+       BW BW B        34              BW W W W          56                 BBBBW          135
+      (BW BW B)2     578             (BW W W W )2      2464               (BBBBW )2      5940
+      (BW BW B)3    9826
+
+    The data in the table for (BW )k necklaces suggested our first main result, Theorem 3.1.1
+below, involving the sequence of Chebyshev polynomials of the first kind {Tk (x)}∞    k=0 , with
+initial conditions T0 (x) = 1, T1 (x) = x and recurrence relation Tk (x) = 2xTk−1 (x) − Tk−2 (x)
+for k ≥ 2. In particular, we will need their specialization at x = 2, satisfying:
+
+                            T0 (2) = 1
+                            T1 (2) = 2                                                             (4)
+                            Tk (2) = 4Tk−1 (2) − Tk−2 (2)    for k ≥ 2.
+
+
+                                                10
+Theorem 3.1.1. For each k = 1, 2, 3, . . ., one has
+                                         O(BW )k = Tk (2).
+Moreover, if we define the generating functions for distance to the recurrent cycle C(BW )k
+                                       X                       ∞
+                                                               X
+                                                  DN (λ)              −1
+                           DN (x) :=          x            =         D(BW )k
+                                                                             (d) xd
+                                       λ∈ON                    d=0
+
+then this sequence of generating functions satisfies the following generalization of the recur-
+rence (4):
+
+  D(BW )0 (x) := 1 by convention,
+  D(BW )1 (x) = 2,                                                                                     (5)
+  D(BW )k (x) = x(3x + 1)D(BW )k−1 (x) − x3 D(BW )k−2 (x) + (x − 1)2 (3x + 2)             for k ≥ 2.
+   The data in the tables for the necklaces (BW W )k and (BBW )k , suggested our next main
+result.
+Theorem 3.1.2. For each k = 1, 2, 3, . . ., one has
+                                       O(BW W )k = 5k ,
+                                        O(BBW )k = 7 · 5k−1 .
+   The data in the last two tables suggest the following conjecture.
+Conjecture 3.1.3. For each k = 2, 3, 4, . . ., one has
+                                       |OP k | = (cP )k−1 |OP |
+where                      
+                           
+                           15 for both P = BW W W, BBBW
+                           
+                           10 for      P = BBW W
+                           
+                           
+                           
+                       cP = 17 for both P = W BW BW, BW BW B                          .
+                           
+                            27 for both P = BBW W W, W W BBB
+                           
+                           
+                           
+                           
+                           
+                           44 for both P = BW W W W, W BBBB
+
+   All of the preceding results and data then suggest a general conjecture.
+Conjecture 3.1.4. For any primitive necklace P with |P | ≥ 3, there is an integer cP such
+that for k ≥ 2,
+                                |OP k | = (cP )k−1 |OP |
+for some constant cP that depends only on P . Moreover, if P and P 0 are obtained from each
+other by swapping black beads to white beads and vice versa, then cP = cP 0 .
+Remark 3.1.5. If one could prove Conjecture 3.1.4 and provide explicit formulas for the
+constants cP and |OP | appearing there, it would lead to an interesting formula for the
+partition function p(n) = |P(n)|, as a sum of |ON | over necklaces N , corresponding to the
+BS orbit decomposition of P(n) in (2).
+Remark 3.1.6. In contrast to Conjecture 3.1.4, for the two cases P = W and P = BW , one
+doesn’t have exact geometric growth with some ratio cP . But they still grow approximately
+geometrically. Specifically:
+                                           
+   • For P = W , one has |OW k | = p k(k−1)
+                                        2
+                                              with p(n) = |P(n)|. The Hardy-Ramanujan
+     asymptotic says                                  r !
+                                          1              2n
+                                 p(n) ∼ √ exp π               ,
+                                        4n 3              3
+        yielding this asymptotic:
+                                                  r          !        k
+                                   1                k(k − 1)         π
+                  |OW k | ∼            √ exp π                ∼ exp √       ,
+                            2k(k − 1) 3                  3            3
+                                          
+                                        π
+        whose geometric ratio is exp √       ≈ 6.1337...
+                                         3
+
+                                                     11
+   • For P = BW , Theorem 3.1.1 says that O(BW )k = Tk (2), satisfying the recurrence
+     Tk+1 (2) = 4Tk (2) − Tk−1 (2), which leads to an explicit formula and asymptotic
+                                            1     √          √         √
+                    O(BW )k = Tk (2) =         (2 − 3)k + (2 + 3)k ∼ (2 + 3)k ,
+                                            2
+                                      √
+       whose geometric ratio is 2 +       3 ≈ 3.732...
+
+Together with Theorem 3.1.2 and Conjecture 3.1.3, we expect that for primitive necklaces
+of length greater than 1, the geometric ratio is increasing as the length increases.
+
+Remark 3.1.7. More computations of larger primitive necklaces are needed to confirm
+Conjecture 3.1.4, however, in this thesis, with current access to Sage, we are not able to
+generate data for more necklaces P k for either P of length greater than 6 or P of length 5 or
+6 and k > 3. That is because P(n) grows exponentially as in Remark 3.1.6. Specifically, for
+necklace (BW W W W )4 , we need to work with the set of partitions of n = 194, which has
+approximately 2.45 × 1012 elements.
+
+3.2     Convergence of level sizes in OP k as k grows
+Jonsson raises the question in his thesis [10, I.§2.4] as to how one might generalize their
+convergence result and the generating function (3) for BS orbits on P(n) when n is not a
+triangular number. Here we examine such convergence results, as k grows, in the orbits OP k
+for each primitive necklace P .
+    For the necklaces of the form N = (BW )k , here are some data on the level sizes in the
+orbit ON :
+
+ d\N     BW    (BW )2     (BW )3    (BW )4      (BW )5   (BW )6    (BW )7    (BW )8    (BW )9    (BW )10
+   0      2      2          2         2           2         2        2         2          2         2
+   1      0      1          1         1           1         1        1         1          1         1
+   2      0      2          3         3           3         3        3         3          3         3
+   3      0      2          6         7           7         7        7         7          7         7
+   4      0      0          8         14          15       15        15        15        15        15
+   5      0      0          6         24          32       33        33        33        33        33
+   6      0      0          0         28          60       70        71        71        71        71
+   7      0      0          0         18          92      142       154       155        155       155
+   8      0      0          0         0           96      248       320       334        335       335
+   9      0      0          0         0           54      344       614       712        728       729
+  10      0      0          0         0           0       324       996       1432      1560      1578
+          −1
+Table 1: DN  (d) Distribution by level sizes for necklaces N = (BW )k of alternating black-white
+beads.
+
+                                                                         −1
+The data in Table 1 suggested that, as k grows, the sequence (|D(BW         )k
+                                                                               (d)|)∞
+                                                                                    d=0 converges to
+a sequence that starts (2, 1, 3, 7, 15, 33, 71, 155, 335, . . .). Our next main result proves this,
+and identifies the limit of the level size sequence as having a rational generating function.
+
+Theorem 3.2.1. There is a power series HBW (x) in Z[[x]] such that
+
+                                      lim D(BW )k = HBW (x)
+                                      k→∞
+
+Moreover, HBW (x) is a rational function, given by
+
+                     (x − 1)2 (3x + 2)
+          HBW (x) =
+                     x3 − 3x2 − x + 1
+                   = 2 + x + 3x2 + 7x3 + 15x4 + 33x5 + 71x6 + 155x7 + 335x8 + . . .
+
+     We also prove an analogous result for the primitive necklaces P = BBW, BW W with
+|P | = 3.
+
+
+
+
+                                                  12
+Theorem 3.2.2. For P = BW W, BBW , as k → ∞, the generating functions by level sizes
+DP k converge to the rational function
+
+                                       x3 − 3x2 − 4x − 3
+HBW W (x) = HBBW (x) = (1 − x)
+                                          2x3 + x2 − 1
+                              = 3 + x + 2x2 + 3x3 + 5x4 + 7x5 + 11x6 + 17x7 + 25x8 + 39x9 + 59x10 + . . .
+                                                                                             (6)
+
+Remark 3.2.3. Although we do not include the proof here, we have also proven that for
+all primitive necklaces P having |P | ≤ 4, the BS orbits O(P k ) have sequences of level sizes
+which converge as k grows. The cases where |P | = 1, 2, 3 were taken care of by Eriksson
+and Linusson’s result (3), and our Theorems 3.2.1, 3.2.2, respectively. For |P | = 4, with a
+similar technique discussed in Part II, the generating functions for the limiting level sizes
+are as follows:
+
+
+                                            x5 + 8x4 − 3x3 − 8x2 − 6x − 4
+                        HBW W W (x) = (1 − x)                             ,                           (7)
+                                                  6x4 + 4x3 + x2 − 1
+                                            2x5 + 8x4 − 5x3 − 10x2 − 7x − 4
+                        HBBBW (x) = (1 − x)                                 ,                         (8)
+                                                   6x4 + 4x3 + x2 − 1
+                                             x3 + x2 + x + 1
+                        HBBW W (x) = (1 − x) 4                 .                                      (9)
+                                            3x + 2x3 + x2 − 1
+Note that although the primitive necklaces P = BW W, BBW have identical generating
+functions HP (x), P = BBBW, BW W W do not, but their generating functions at least
+share the same denominator.
+
+   These results suggested the following theorem, which we have recently proven, but whose
+proof we omit in this thesis:
+
+Theorem 3.2.4. For primitive necklaces P with |P | ≥ 3, there is a power series HP in
+Z[[x]] such that the sequence of generating functions (DP k )∞
+                                                             k=0 converges to HP . Moreover,
+HP is a rational function having denominator polynomial of degree at most |P |.
+
+Conjecture 3.2.5. In the statement of Theorem 3.2.4, the denominator of HP (x) is of
+degree exactly |P |.
+
+3.3       Characterizing partitions within an orbit
+It seems difficult to characterize exactly which partitions λ lie in the BS orbit ON for a fixed
+necklace N . One approach is to consider the distribution by their length l(λ), that is, their
+number of parts. For example, here is the data for the orbits corresponding to the necklaces
+N = (BW )k :
+
+   N        1   2   3     4   5   6   7    8    9    10   11   12   13   14   15   16   17    18    19      20
+  BW        1   1
+ (BW )2         1   2     2   1   1
+ (BW )3             1     3   5   5    3   3    3    3
+ (BW )4                   1   4   9   13   12   8    9    10   11   11    9
+ (BW )5                       1   5   14   26   33   29   22   25   28   34   38   41   39    27
+ (BW )6                           1    6   20   45   72   83   72   60   68   79   95   109   130   144   151
+
+                        Table 2: Distribution of l(λ) for partitions λ in O(BW )k .
+
+
+   Here are some properties that we observed and proved for the orbits O(BW )k .
+
+Proposition 3.3.1. The partitions in the orbit O(BW )k satisfy these conditions:
+
+  1. The largest part size is 4k − 2. Thus partitions in O(BW )k have at most 4k − 2 parts.
+
+  2. The longest playing sequence is of length 2k. The number of longest playing sequences
+     is 2 · 3k−2 .
+
+  3. The number of partitions within the orbit having 4k − 2 parts is 3k−2 .
+
+                                                     13
+   We continued this analysis for the necklaces N = (BW W )k and proved these properties:
+
+Proposition 3.3.2. The partitions in the orbit O(BW W )k satisfy these conditions:
+
+  1. The largest part size is 9k − 5. Thus partitions in O(BW W )k have at most 9k − 5 parts.
+
+  2. The number of partitions within the orbit having 9k − 5 parts is 2k−2 .
+
+   The previous results and data suggest the following conjectures.
+
+Conjecture 3.3.3. Let P be a primitive necklace with |P | ≥ 2. Then there exists an integer
+γP , depending only on P , such that partitions λ in the orbit OP k have
+
+                                      l(λ) ≤ |P |2 · k + γP .
+
+Conjecture 3.3.4. Let P be a primitive necklace with |P | ≥ 2. Then partitions λ in the
+orbit OP k have
+                                      l(λ) ≥ k.
+Moreover, if P has consecutive black beads (that is, P = B s W t for some s, t), there is exactly
+one such λ having l(λ) = k. Specifically, if |P | = p, λ is of the form
+
+                                            (2p − 1)k           +x
+                                          (2p − 1)k − p         +x
+                                 λ=             ..
+                                                 .
+                                      (2p − 1)k − (k − 1)p +x
+
+where
+                                     kp(p − 3)
+                                x=             − p + k + b(P ).
+                                         2
+
+
+
+
+                                                14
+Part II
+Proofs
+We will use some notations and rules discussed below in the proofs.
+For!a partition λ, we will use λ + m to denote the partition (λ1 + m, . . . , λn + m). Moreover,
+ λ
+      means a partition with the top entries from partition λ followed by partition µ - in this
+ µ
+case, the last part of λ is no less than the first part of µ. To denote a prefix of a partition,
+we use λ[: j] = (λ1 . . . , λj ).
+If a partition λ has some playable parts of the same size, we will use the smallest index in
+the playing sequence. For example, the playing sequence in Figure 7 is [211] even though
+we can play [3] at the first move.
+First of all, it is easy to see this property for partitions in ON for general necklace N :
+
+Claim 1. Let λ be a partition in ON . If a part λj is playable, then its immediate following
+part λj+1 is playable in the next state if and only if their difference is at most 2.
+
+Proof. Since playing other parts than λj and λj+1 does not affect the gap between them, we
+only consider the moment when performing Rj . The result is a partition λ0 with λj parts.
+Thus, a part is playable from that moment if and only if its size is at least λj − 1. Because
+Rj adds one to every other vertex, we obtain the claim.
+
+
+4     Analysis of O(BW )k
+4.1     On the reverse BS game graph for O(BW )k
+Proposition 2.2.4 implies that n = |λ| = 2k 2 for any partitions λ in the orbit O(BW )k .
+                                                 op
+Figure 11 shows both the reversed game graphs O(BW  )k
+                                                       and their difference labelings for
+k = 1, 2.
+
+                                                    h3i 1/2                          h0i 1/2
+                                                            h4i                              h1i
+                                                    h3i                              h1i
+                                                            h2i                              h0i
+                                                     1                                0
+                                                            h2i                              h1i
+                                                     1 1 2                            1 1
+                                                                                              2
+                1/2                   1/2                   h5i
+                                                                                                h2i
+          h1i                   h0i         h1i             h3i
+                      h2i   ∼                                   1   2            ∼              h1i
+          h1i                   h1i          0
+                                                                                                −1
+                 1                     1                h4i         h6i                     1         2
+
+                                                        14          12
+                                                                                        h1i           h3i
+                                                       1                     1
+                                                                                        −1            −1
+                                                           24           22
+                                                                                        ...            0
+                                                                        14              1                 1
+                                                                                        −1            −1
+                                                                                        ...           ...
+
+                                          op
+     Figure 11: The reversed game graphs O(BW )k
+                                                 and their difference labelings for k = 1, 2.
+
+
+The recurrent 2-cycle C(BW )k consists of two partitions (2k − 1, 2k − 1, 2k − 3, 2k − 3, . . . , 1, 1)
+and (2k, 2k−2, 2k−2, . . . , 2, 2) whose difference labels are ((01)k )T and ((10)k )T , respectively.
+Here the symbol (α)k means a vector of k α’s stacking on each other. These two elements
+will be used as the roots of the trees in the quasi-infinite forest we analyze shortly. But first,
+we prove an important property for the elements in those (BW )k orbits:
+                                                  op
+Proposition 4.1.1. Given a playing sequence σ in O(BW )k
+                                                         . Then σj+1 ≤ σj + 1 for any
+1 ≤ j ≤ |σ| − 1.
+
+Proof. Due to the bijection described in Section 2, any partition λ in C(BW )k has pairs of
+consecutive parts of the same size. Moreover, if λj = λj+1 then λj+2k = λj+2k+1 = λj − 2k,
+whichever exist. The difference between the consecutive part sizes are preserved unless one
+
+                                                  15
+of them is played. If Rk (λ) = ψ, then ψk−1 − ψk ≥ 2, since λk−1 − λk+1 ≥ 2. Equality holds
+if λk = λk+1 .
+    If Rσj (λ) = Rk (λ) = ψ, only vertices up to ψk+2 can be playable. But that ψk+2 is playable
+means λk+1 , λk+2 , λk+3 have not been played before Rσj , so ψk+2 = ψk+1 . Therefore, we have
+the proposition.
+
+4.2    Limiting level sizes of O(BW )k as k grows
+We consider the difference game graph as described in Figure 8 but we take only the parts
+above the first negative part (or else take all the partition). We define the BW quasi-infinite
+forest FBW of reverse Bulgarian Solitaire according to the rules below. Here forest is used
+instead of tree in Section 2.3 because we build two trees, one of them rooted at each the
+two elements in the recurrent cycle.
+
+                        G1                               G2
+                                                         h1i
+                           h0i
+                                                         h0i
+                           h1i
+                                                         h1i
+                      1/2                            1                2/3
+
+
+                           h1i                                         h2i
+                                               h0i
+                           h0i                                         h1i
+                                               h1i
+                           h1i                                         h0i
+                                                                       h1i
+                                               ...           1         2           3/4
+                     ...         ...
+                                                         h1i           h3i               h3i
+                                                          0            h0i               h2i
+                                                          1            h1i               h1i
+                                                         1
+                                                                                         h0i
+                                                                  1          2/3
+                                                                                         h1i
+                                                         h0i 0               h4i    1    2     3    4/5
+
+                                                         h1i 1               h1i   h2i h4i h4i h4i
+                                                                             h0i    1 h1i h3i h3i
+                                                                             h1i    0 0 h0i h2i
+                                                         ...                        1 1 h1i h1i
+                                                                                                     h0i
+                                                                             ...   . . . . . . . . . h1i
+
+                                                                                                    ...
+                                       Figure 12: Quasi-infinite BW graph
+
+           i
+Rules for −
+          → in the BW quasi-infinite forest:
+  1. Delete the bracketed entry in the ith row. If the ith bracket is h0i followed immediately
+     by a h1i, playing either vertex i or vertex i + 1 results the same, so we label the play
+         i/i+1
+      by −−−→.
+
+  2. Increase all entries in rows above it by 1 each, and bracket them.
+
+  3. Bracket the new ith entry (if there is one) if it differs at most 1 from the old one. If
+                                                 0
+      there are two consecutive entries            and 0 is bracketed, so is 1.
+                                                 1
+
+                     h0i                                       h0i
+  4. If the h1i or       at the lowest position is played, add     at the end.
+                     h1i                                       h1i
+
+Let g(x) be the generating function for the level sizes of the BW quasi-infinite forest. There
+                                                                                                           h0i
+are two trees rooted at the two elements in C(BW )k : G1 starts with γ1 =                                      and the other
+                                                                                                           h1i
+                    h1i
+G2 starts with γ2 = h0i. Let g1 (x) and g2 (x) denote the generating functions by level sizes of
+                    h1i
+                                                                               h0i
+the two trees, G1 and G2 respectively, so g(x) = g1 (x) + g2 (x). Starting from , we play R1
+                                                                               h1i
+
+                                                             16
+(the only playable part) and get back to the root of G2 . Thus the level generating functions
+of the two trees satisfy
+                                    g1 (x) = 1 + xg2 (x).                                (10)
+                                      h0i
+   As a reminder, if we have              in a partition λ, adding a staircase makes their values the
+                                      h1i
+same. Thus playing either of them results in the same element. To represent this move in a
+playing sequence, we will use the vertex with h0i on it. Moreover, we use the notation Rσ for
+playing sequences in the quasi-infinite game graph similarly to the normal BS game graph.
+            h4i
+              h1i
+                   h1i
+e.g. R[222] h0i = .
+                        h0i
+              h1i
+                        h1i
+   Similarly to Jonsson and Erikson’s paper [6, Proposition 3.1, p. 4], we have the following
+proposition:
+                                                                                      h1i
+Proposition 4.2.1. The BW quasi-infinite reversed BS graph rooted at h0i has the following
+                                                                                      h1i
+properties:
+                                                                   h0i
+   i. Once R1 is played, only R1 can be played (until                  or a leaf is reached).
+                                                                   h1i
+
+                                                                       h0i
+  ii. For r ≥ 2, the playing sequence [234 . . . r1r ] leads to            .
+                                                                       h1i
+Proof.    i. When we play R1 , if the second part differs from the first part by at least 2,
+      nothing is bracketed in the next state, thus we reach the leaf. Otherwise, according to
+                                                   h0i                                  0
+      the rule 3, either we reach the root             if the second and third parts are or the only
+                                                   h1i                                  1
+      bracketed part in the next state is the first part.
+  ii. It is easy to see that
+                                                                     hri
+                                                                 hr − 1i
+                                                         h1i          ..
+                                              R[23...r] h0i =        .
+                                                         h1i        h1i
+                                                                    h0i
+                                                                    h1i
+                                                                                                h0i
+      and thus playing [1r ] consecutively deletes the first r rows and reaches                    . From
+                                                                                                h1i
+      property i, we see that this is the only way to get back to the roots.
+
+
+
+4.3    Proof of Theorem 3.2.1
+We begin by using Proposition 4.2.1 to construct the growth function, or the generating
+function of g2 by its level sizes. Table 3 shows various playing sequences and their contri-
+butions to the generating function g2 (x), explained below. We use [≥ t] to denote the set of
+playing sequence with entries no less than t, including the empty sequence.
+
+                    Sequence         Contribution Sequence Contribution
+                       [1 . . .]         xg1         [2[≥ 2]]   xg2
+                      [212 . . .]         3
+                                         x g1       [2[≥ 2]1]   x2 g2
+                     [2313 . . .]         5
+                                         x g1      [23[≥ 3]1 ]2
+                                                                x4 g2
+                    [23414 . . .]        x7 g 1   [234[≥ 4]13 ] x6 g2
+                                    Table 3: Growth function for tree g2 .
+
+   By Proposition 4.2.1.ii., the sequences [23 . . . r1r ] lead to the root of G1 , so each of
+them contribute the whole G1treeat level 2r − 1, that is, x2r−1 g1 (x). This is also true for
+                                        h1i
+                                                 h0i
+playing sequence [1], since R1 h0i =              .
+                                                 h1i
+                                        h1i
+
+                                                        17
+                                   h2i
+                                   h1i h2i
+    Next, if we play R2 , we reach     = . Thus if we leave the top part untouched, which
+                                   h0i  γ2
+                                   h1i
+means we only play parts of indices greater or equal than 2, then we have a subtree that is
+isomorphic to G2 . The isomorphism is defined by excluding the top part. Thus sequences
+[2[≥ 2]] contribute xg2 . Similarly with [23 . . . r[≥ r]1r−1 ], each contributes x2r−2 g2 , since
+
+                                                          hri
+                                                        hr − 1i       hri
+                                                           ..       hr − 1i
+                                                            .
+                                    R[23...r] (γ2 ) =             =    .. .
+                                                         h1i            .
+                                                         h0i          γ2
+                                                         h1i
+
+                                                           h1i
+    If we play [23 . . . r[≥ r]], the top r − 1 rows above h0i are always playable due to rule 2.
+                                                           h1i
+Thus the playing sequences [23 . . . r[≥ r]1s ] with any s ≤ r − 1 are legal. For each r ≥ 2, we
+only count for [23 . . . r[≥ r]1r ], since if s < r, [23 . . . r[≥ r]1s ] are counted as [23 . . . s[≥ s]1s ].
+Hence, the type [23 . . . r[≥ r]1r−1 ] contributes x2r−2 g2 .
+   Therefore, we obtain
+
+g2 (x) = 1 + (x + x3 + . . .)g1 (x) + (x + x2 + x4 + . . .)g2 (x)
+       = 1 + (x + x3 + . . .) + (x + 2x2 + 2x4 + . . .)g2 (x)     (substituting for g1 (x) using (10))
+                                         2x2
+                     
+                 x
+       = 1+             +   xg 2 (x) +        g2 (x)
+               1 − x2                  1 − x2
+
+Bring all occurrences of g2 (x) to the left side gives
+
+                                x3 − 3x2 − x + 1          −x2 + x + 1
+                                                 g2 (x) =
+                                     1 − x2                 1 − x2
+and therefore
+                                           −x2 + x + 1
+                                       g2 (x) =           .
+                                         x3 − 3x2 − x + 1
+    From this one concludes, again using (10), that
+
+                 g(x) = g1 (x) + g2 (x) = (1 + xg2 (x)) + g2 (x) = 1 + (1 + x)g2 (x)
+                          −3x2 + x + 2         (1 − x)(3x + 2)
+                      = 3        2
+                                            = 3                  .
+                        x − 3x − x + 1        x − 3x2 − x + 1
+                                                                             op
+    However, we desire the generating function for the level sizes of O(BW       )k
+                                                                                    in the limit as
+k → ∞. As constructed, our quasi-infinite forest has an entire copy of itself after playing
+R1 , giving rise to the left branch [1 . . .], which we wish to disregard. Letting HBW (x) denote
+the height generating function for the rest of the quasi-infinite forest, that is, the two roots
+and the elements in the branch [2 . . .], one then has
+
+                                        g(x) = xg(x) + HBW (x)
+
+and therefore
+                                                     (1 − x)2 (3x + 2)
+                            HBW (x) = (1 − x)g(x) =                    .
+                                                    x3 − 3x2 − x + 1
+Thus to complete the proof of Theorem 3.2.1, it only remains to show that the level sizes
+    op
+of O(BW )k
+           actually converge to the coefficients given by HBW (x). This is a consequence of a
+somewhat more precise theorem.
+                                                                 op
+Theorem 4.3.1. The finite reverse Bulgarian solitaire graphO(BW      )k
+                                                                        coincides at least up to
+level k with the BW quasi-infinite forest after removing its left branch [1 . . .].
+
+
+
+
+                                                        18
+                                                                                                     h0i
+Proof. For each k, to get to level k in the quasi-infinite forest, we add at most k blocks              .
+                                                                                                     h1i
+                                                      1
+Thus if we start with the root of k blocks of           as below
+                                                      0
+
+                                                     h1i
+                                                     h0i
+                                                     h1i
+                                                      0
+                                                      ..
+                                                       .
+                                                      1
+                                                      0
+
+we don’t need to add new parts until using up those k blocks. Moreover, the rule of bracketing
+stays the same in the finite tree due to the observation at the beginning of the section. This
+implies the coincidence of the quasi-infinite forest with the finite graph.
+
+4.4    Proof of Theorem 3.1.1
+Let us recall the statement of the theorem.
+
+Theorem 3.1.1. Let {Tk (x)}∞
+                           0 be Chebyshev polynomials of the first kind. For each k =
+1, 2, 3, . . ., one has
+                                 O(BW )k = Tk (2).
+Moreover, the generating functions for distance to the recurrent cycle C(BW )k
+
+                                         X                       ∞
+                                                                 X
+                                                    DN (λ)              −1
+                        D(BW )k (x) :=          x            =         D(BW )k
+                                                                               (d) xd
+                                         λ∈ON                    d=0
+
+
+satisfy the following generalization of the {Tk (2)}∞
+                                                    k=0 recurrence (4):
+
+   D(BW )0 (x) := 1 by convention,
+   D(BW )1 (x) = 2,
+   D(BW )k (x) = x(3x + 1)D(BW )k−1 (x) − x3 D(BW )k−2 (x) + (x − 1)2 (3x + 2)          for k ≥ 2.
+
+Note that the assertion on the orbit sizes O(BW )k follows once we have recurrence for for
+D(BW )k (x), since this gives the orbit sizes at x = 1, and its initial conditions coincide with
+those for Tk (2).
+    Figures 13, 14, 15 illustrate the recursive structural relationship that we will prove,
+                                                        op
+relating the graphs of O(BW )k . We will use Gk = O(BW     )k
+                                                              for short. In each Gk , a node is
+labelled by the playing sequence leading to it. Also, the coloring used to group the nodes in
+Gk follow these rules:
+
+ (a) Black nodes come from an embedding of Gk−1 into Gk , by one of these two rules:
+
+      (a1) Increment each entry in the playing sequences of Gk−1 by 1 and prepend a 1 to
+           the beginning.
+      (a2) Replace the first 1 in each playing sequence of Gk−1 by 122 .
+
+ (b) Red nodes are another copy of Gk−1 in Gk directly related to the black nodes from rule
+     (a1) by append 1 to the playing sequences representing them.
+
+ (c) Blue nodes are from an embedding of Gk−2 into Gk by either:
+
+      (c1) Replace the initial 1 from each of the playing sequences in Gk−2 by 1212 , or
+      (c2) Increment each value of the playing sequence of Gk−2 by 2, replace the first entry
+           of each playing sequence by [123] and append 12 at the end.
+
+ (d) Green nodes (if there are any) are from an embedding of Gk−3 into Gk by replacing the
+     first 1 by 1214 .
+
+
+                                                     19
+ (e) Hollow diamonds (♦) are actually not vertices of Gk . They are vacated after modifying
+     their playing sequences as follows: replace the initial 122 with 123, and erase a 2 in
+     the fourth position, then append a final 1. One then moves this modified node to the
+     position of the solid diamond node ().
+
+  (f) This rule only applies to Gk where k ≥ 4. The playing sequences in this group are of
+      the form [1233 [≥ 3]12 ]. They are in bijection with the playing sequences of the form
+      [1213 . . .] in Gk−1 by replacing the initial 1213 with 1233 , incrementing each of the other
+      entry by 2 and appending 12 at the end.
+
+
+                                                                   ∅        [1]
+
+
+                                                                  G1 : ∅, [1]
+                                                              op
+                                             Figure 13: G1 = OBW . |G1 | = 2.
+
+
+                                                                       
+               [11]          [1]                                         G1 : [1], [12]                      rule (a1)
+                                                    2G1
+                                                                       
+                                                                       
+                                                                       
+                                                                       G : [11], [121]
+                             [12]                                         1                                 rule (b)
+               [121]               [122 ]                               G1 : [122 ], [122 1]               rule (a2)
+                                                    G1
+                                                                       
+                                                                       
+                                                                         G0 : [1212 ]
+                                                                       
+              [1212 ]              [122 1]                                                                  rule (c1)
+                         op
+Figure 14: G2 =OBW           BW . The playing sequences are split into four groups that give |G2 | =
+3|G1 | + |G0 | = 4|G1 | − |G0 |.
+
+
+                                   [11]           [1]
+
+                                                  [12]
+                                                                                            [123]
+                          [121]                   [122 ]
+                                                                            [1231]
+                         [1212 ]                        [122 2]                             [1232]                      [1232 ]
+                                        [122 1]                                                            [1232 1]
+                        [1212 1]     [122 21]            [122 22 ] [12312 ]                    [12322 ]                    [1232 2]
+                                                                                  [12321]
+                         [1214 ] [122 212 ]              [122 22 1][12313 ]                    [12322 1]                   [1232 1]
+                                                                                                           [1232 12 ]
+                                               G2
+           
+           
+            G2 :    [1], [12], [123], [1232], [12322 ], [1232 ], [1232 2]                                              rule (a1)
+           
+             G2 :     everything above and ends with 1                                                                   rule (b)
+           
+           
+           
+           
+           
+             G2 :    [122 ], [122 1], [122 2], [122 22 ],                                                               rule (a2)
+           
+           
+           
+           
+                     [122 22 1], [122 21], [12 2 21 2 ]
+           
+           
+           
+           
+            G1 :    [1212 ], [1212 1]                                                                                  rule (c1)
+             G1 :    [12312 ], [123312 ]
+           
+           
+           
+                                                                                                                       rule (c2)
+           
+             G0 :    [1214 ]                                                                                            rule (d)
+           
+           
+           
+           
+           
+             Extra : [12312 1 ]                                                                                         rule (e)
+           
+
+                      op
+Figure 15: G3 = OBW       BW BW . The hollow diamond was modified and moved as in rule (e) to
+the position of the solid diamond. The playing sequence groups give |G3 | = 3|G2 | + 2|G1 | + |G0 | =
+4|G2 | − |G1 |.
+
+Proof. First of all, note that starting from ([01]k )T , the playing sequences ∅ and [11] are the
+same. Let
+                  Gk (x) = (D(BW )k (x) − 2)x + 1 + x = 1 − x + xD(BW )k (x).                (11)
+so that
+                                    Gk (x) − 1 + x       Gk (x) − 1 − x
+                          D(BW )k (x) =            =2+                                    (12)
+                                           x                    x
+We stretch out the cycle of the orbits, which means the element with the difference notation
+((01)k )T is of level 0 and the one with the difference notation ((10)k )T is of level 1. This
+
+                                                                       20
+                                                                  h2k + 4i                 h2k + 3i                h2k + 4i
+                                                                   2k + 2                  h2k + 3i                h2k + 2i
+                                                                   2k + 2                   2k + 1                 h2k + 2i
+                                                                      ..         1             ..         1            ..            ...
+                                                                       .                        .                       .
+                                                                      4                          5                   6
+                                                                      4                          5                   6
+                                                                     14                          24                  34
+                                                     1            h2k + 6i
+             h2k + 3i                     h2k + 5i
+                        h2k + 4i                                  h2k + 2i
+             h2k + 3i                     h2k + 3i
+                        h2k + 2i                                  h2k + 2i
+              2k + 1                      h2k + 1i
+                 ..   1 h2k + 2i   2                     2           2k
+      Gk+2 =      .         ..            h2k + 1i                    ..             ...
+                             .               ...                       .
+                3
+                           2                  3                       4
+                1
+                           2                  3                       4
+                1                                        3
+                                                                     12
+                                                                  h2k + 6i           h2k + 5i             h2k + 4i            h2k + 3i
+                                                                  h2k + 4i            2k + 3              h2k + 2i            h2k + 3i
+                                                                  h2k + 2i            2k + 1               2k + 2              2k + 1
+                                                                    h2ki     1           ..           1       ..       1          ..
+                                                                                          .                    .                   .
+                                                                      ..
+                                                                       .                   5                  6                 7
+                                                                      4                    5                  6                 7
+                                                                      4                    16                 24                34
+                                                                          ≥2
+
+                                                                                           ...
+
+                                        Figure 16: Diagram for Gk+2
+
+
+    modification turns the graph Gk into a tree with root τk corresponding to the element at
+    level 0. More specifically, l(τk ) = 2k and
+
+                                                      h2k − 1i
+                                                      h2k − 1i
+                                                       2k − 3
+                                                 τk =     ..  .
+                                                           .
+                                                                  1
+                                                                  1
+
+       Consider Gk+2 , starting with 2k + 4 parts in the Figure 16. From the diagram, we see
+    that any new parts (the bold entries) which are added at the bottom are not playable at any
+    time due to Claim 1. Thus we can also investigate the quasi-infinite forest, where we have
+                                       h0i
+    k + 2 times to add the block           when performing the rule 3 (Subsection 4.2). We split the
+                                       h1i
+    set of valid playing sequences in Gk+2 into the following groups:
+
+Group 1: [1], [12], [123[≥ 2]]: rule (a1)
+          We easily see that by playing R1 , we get to a partition which, if we ignore the first
+          part and decrease each of the other parts by 1, turns out to be τk−1 . Specifically:
+
+                                                                      h2k + 4i
+                                                 R1 (τk+2 ) =                  .
+                                                                      τk+1 + 1
+
+          Since new added parts do not have any impact, for each playing sequence σ in this
+          group, if we erase σ1 = 1 and decrease other indices by 1, we get a valid playing
+          sequence in Gk+1 . That is because we have played only the lower part τk+1 + 1 of
+          R1 (τk+2 ) if we keep playing parts of order at least 2. This map is clearly a bijection,
+          and also induces a graph isomorphism between the elements that the playing sequences
+          represent. Hence this group contribute xGk+1 (x) to Gk+2 (x).
+
+Group 2: [11], [121], [123[≥ 2]1]: rule (b)
+          Here [11] = ∅. These playing sequences are the results of playing R1 at the end of the
+          playing sequences in group 1, and are valid due to rule 2 in the quasi-infinite forest
+          section. Each of them is exactly one level lower than the element in group 1 from
+          which R1 is played. However, level 0 (originally corresponding to ∅) is now at level 2
+          (corresponding to [11] in this group). Thus this group contributes x2 Gk+1 (x) − x2 + 1
+          to Gk+2 (x).
+
+                                                             21
+Group 3: [1212 ], [1212 1], [1212 12 . . .]: rule (c1)
+           It is easy to see from Figure 16 that
+                                                                   τ +4
+                                                      R[1212 ] = n
+                                                                     β
+
+           where β has no playable parts. Thus this group contributes x4 Gk (x).
+
+Group 4: [1214 ], [1214 11], [1214 12 . . .]: rule (d)
+           Similarly to group 3, the playing sequence [1214 ] leads to τk−1 +6 and some non-playable
+           parts below, thus this group contributes x6 Gk−1 (x).
+           A similar phenomenon happens for playing sequences starting with [1212j ] for j ≤ k+1,
+           and each contributes x2j+2 Gk−j+1 (x).
+           Therefore, this branch of playing sequences [1212 . . .] contributes
+                                          k+1
+                                          X                        k
+                                                                   X
+                                                x2j+2 Gk−j+1 =            x2j+4 Gk−j .
+                                          j=1                       j=0
+
+
+Group 5: [122 . . .] and [123[≥ 4]13 . . .]: rule (a2) together with rule (e)
+           As we can see in the diagram above, the top part of R[122 ] (τk+2 ) is 4 more than the
+           second entry, so if we play R1 any time after, any parts below are not playable anymore
+           (Claim 1). On the other hand, this branch still performs like τk+1 by mapping
+
+                                                                        h2k + 2i
+                                                                          h2ki
+                                                         λ1 − 4           h2ki
+                          λ = R[122 ] (τk+2 ) 7−→                     =     ..   = R1 (τk+1 )      (13)
+                                                  λ[2 : (2k + 1)] − 2        .
+                                                                                  2
+                                                                                  2
+
+           except for the missing playing sequences of the form [(122 )2[≥ 3]12 ρ], where [12[≥ 3]12 ρ]
+           is a valid playing sequence in Gk+1 . We replace them by [(123)[≥ 4]13 ρ]. Specifically,
+           the map is as below
+
+              – First, replace the initial (122 ) by (123).
+              – Second, erase the fourth 2, increase the entries by 1 until 12 is reached.
+              – Third, add one more play 1, so 12 becomes 13 . The rest of the playing sequence
+                is kept.
+
+           The missing [(122 )2[≥ 3]12 . . .] are bijectively the playing sequences [12[≥ 3]12 . . .] in
+           Gk+1 if we map R[122 ] (τk+2 ) as in (13) and apply rule (a2). They represent the partitions
+           in bijection with the ones that are represented by the sequences [(123)[≥ 4]13 . . .]. That
+           can be seen from the diagram, where
+                                                                  h2k + 6i
+                                                 R[123] (τk+2 ) = h2k + 4i                         (14)
+                                                                 R1 (τk ) + 2
+
+           That is, if we ignore the top two parts and play Rσ where indices of σ are at least 4,
+           we play only on R1 (τk+1 ). Since
+
+                                                                    h2k + 3i
+                                                 R[12] (τk+1 ) =                                   (15)
+                                                                   R1 (τk ) + 2
+
+           From (15) and (14), we get the correspondence. In addition, the corresponding pairs
+           of playing sequences represent partitions of the same level.
+           Hence, this group contributes x2 (Gk+1 (x) − 1 + x2 ), because we start with the level 1
+           (as (13) shows) so the level 0 of Gk+1 is now at level 2 instead.
+
+
+
+                                                          22
+Group 6: [12312 ], [123312 ], [1234[≥ 3]12 ]: rule (a2)
+          Those have [12 ] at the end, and are valid by Proposition 4.2.1. From the diagram,
+          we have
+                                                                    h2k + 6i
+                                             R[123] (τk+2 ) = h2k + 4i ,
+                                                                   R1 (τn ) + 2
+          and
+                                                                    h2k + 7i
+                                              R[1232 ] (τk+2 ) = h2k + 5i.
+                                                                      τk + 2
+          Since R[123] (τk+2 ) corresponds to the level 1 of Gk , for which the next move is [2]. We
+          introduce a bijection between playing sequences of Gk and those of group 6:
+
+             – First, replace the initial 1 by 123.
+             – Second, increase each of the following indices by 2.
+             – Third, append 12 to the end.
+
+          More specifically, the playing sequences [1], [11], [12[≥ 1]] of Gk are mapped to [12312 ], [123312 ], [1234[≥
+          3]12 ].
+          Hence group 6 of playing sequences represent a part that is almost the same as Gk ,
+          except that the level 0 (∅ in Gk ) is moved to level 2 ([11] is mapped to [123312 ]). This
+          group’s contribution is x4 (Gk (x) − 1 + x2 ).
+
+Group 7: [1233 [≥ 3]12 ]: rule (f)
+          They represent a part that is isomorphic to the part that is reached from playing [1213 ]
+          in Gk+1 and at the same level, since
+
+                                                        h2k + 8i
+                                                        h2k + 6i
+                                                        h2k + 2i     h2k + 8i
+                                                          h2ki       h2k + 6i
+                                     R[1233 ] (τk+2 ) =     ..   =                .
+                                                             .     R1 (τk−1 ) + 4
+                                                            6            12
+                                                            6
+                                                           12
+
+          This part is similar to group 3 and 4, except that in each portion that is isomorphic to
+          Gj , the level 0 (sequence ∅) is moved to level 2 (sequence [11]). In that way, we don’t
+          count [1212k+1 ] leading to G0 . Hence, this group 7 contributes
+                                            n−2
+                                                                      !
+                                            X
+                                       x6       x2j (Gn−1−j − 1 + x2 ) .
+                                              j=0
+
+
+        Below is a summary of those groups of playing sequences in Gk+2 :
+
+                                Gk+1 : [1], [12], [123[≥ 2]]
+                                Gk+1 : [11], [121], [123[≥ 2])1]
+                                Gk+1 : [122 . . .], [12 2 2[≥ 3]12 . . .]
+                                                    |        {z        }
+                                                        Missing part (*)
+
+                                  Gk : [121 ], [121 1], [1212 12 . . .]
+                                              2        2
+
+                                  Gk : [12312 ], [123312 ], [1234[≥ 3]12 ]
+                                                                                                  (16)
+                                Gk−1 : [1214 ], [1214 1], [1214 12 . . .]
+                                 ...
+                                  G1 = [1212n ], [1212n 1]
+                                  G0 = [1212(n+1) ]
+                               Extra : ([123 [≥ 4 ]1 3 . . .], ([1233 [≥ 3]12 ]
+                                       |       {z          }
+                                          Replacing for part (*)
+
+
+                                                           23
+   Together we have the recurrence below:
+
+
+        Gk+2 =xGk+1 + (x2 Gk+1 − x2 + 1) + x2 (Gk+1 − 1 + x2 ) + x4 (Gk − 1 + x2 )+
+                 k                      k−2
+                                                                  !
+                X                       X
+              +     x2j+4 Gk−j (x) + x6     x2j (Gk−1−j − 1 + x2 )
+                    j=0                          j=0
+
+              =1 − 2x + x + (x + 2x )Gk+1 + x4 Gk +
+                          2    6             2
+
+                    k                            k−2
+                                                                                 !
+                    X                            X
+                +         x2j+4 Gk−j (x) + x6          x2j (Gk−1−j − 1 + x2 )
+                    j=0                          j=0
+
+
+   This last formula implies:
+                                                           k−1
+                                                           X
+                                                       2
+                     Gk+2 (x) − xGk+1 (x) = 2x                   x2j Gk−j (x) + 1 − 2x2 + 2x4+2k
+                                                           j=0
+                                                   k−1
+                                                   X
+   together with     Gk+1 (x) − xGk (x) = 2x2               x2j−2 Gk−j (x) + 1 − 2x2 + 2x2+2k
+                                                   j=1
+
+         we get      Gk+2 (x) − (x + x )Gk+1 (x) + x3 Gk (x) = 2x2 Gk+1 (x) + 1 − 3x2 + 2x4
+                                         2
+
+       Therefore     Gk+2 (x) = (3x2 + x)Gk+1 (x) − x3 Gk (x) + 1 − 3x2 + 2x4 .
+
+   Making the substitution from (11) for Gk (x) in terms of D(BW )k (x) yields the recurrence
+in Theorem 3.1.1.
+
+4.5    More properties of partitions in O(BW )k and proof of Proposi-
+       tion 3.3.1
+Proposition 4.5.1 contained three assertions, which we prove as three propositions (and a
+corollary) below.
+
+Proposition 4.5.1. The largest part size of a partition in O(BW )k is 4k − 2.
+
+Proof. Starting with the root of Gk which has largest part 2k − 1, if we play any parts not
+1, the top entry gets 1 added into it. Since any new parts created by performing reverse BS
+are not playable at any time, as observed in the diagram Figure 16 above, the number of
+operations Rj we can play are at most the number of parts in τk . One of the longest playing
+sequences is then [122k−2 1]. Thus, the largest part we can get is right before we play the last
+R1 , which is
+                                  2k − 1 + 2k − 1 = 4k − 2.
+
+Corollary 4.5.2. Partitions in O(BW )k have at most 4k − 2 parts.
+
+Proof. Easily deduced by performing one reverse BS operation on elements with the largest
+part size.
+
+Proposition 4.5.3. The longest playing sequence in O(BW )k is of length 2k. The number of
+longest playing sequences is 2 · 3k−2 for k ≥ 2.
+
+Proof. By the same argument as in Proposition 4.5.1, the number of operations Rj we
+can play is at most the number of parts in τk , which is 2k. The maximum is achieved by
+playing [122k−1 1].
+We prove the second statement by induction. The base case k = 2 is obvious and is shown
+in Figure 14.
+From the groups of playing sequences of Gk as in 16, those longest playing sequences include
+
+   • twice the number of longest playing sequences in Gk−1 given by group 2 and group 5,
+
+   • the sum of all numbers of longest playing sequences from G0 to Gk−2 given by groups
+     3 and 4,
+
+   • the sum of all numbers of longest playing sequences from G1 to Gk−2 given by group 7.
+
+                                                   24
+However, the portion involving G1 in the sequences [12 . . . 12s ], s ≥ 1 has no [2] branch coming
+out of it, so we don’t count it in the longest sequences. Hence, the total number of longest
+playing sequences is
+                                                   k−2
+                                                   X                                        k−2
+                                                                                            X
+                             2(2 · 3k−3 ) + (            2 · 3j−2 + 1 − 1) + (                        2 · 3j−2 + 1)
+                                                   j=2                                      j=2
+                                    k−3            k−3
+                         =4 · 3            + 2(3         − 1) + 2
+                         =2 · 3k−2
+
+
+Proposition 4.5.4. The number of partitions in O(BW )k with 4k − 2 parts is 3k−2 for k ≥ 2.
+Proof. This number is equal to the number of partitions with largest part 4k − 2. We prove
+the asserted formula by induction. First, the base case k = 2 is shown in Figure 14.
+   Since we only have 2k plays, the largest part size 4k − 2 is obtained if and only if we
+play only Rj with j ≥ 2 after the compulsory initial R1 . Thus, from the recurrence structure
+(16), we see that those partitions only come from either the sequences leading to partitions
+with 4(k − 1) − 2 parts in Gk−1 obtained by playing [122 . . .] (group 5), or the longest playing
+sequences in Gk−1 obtained by playing group 1 - that is [1], [12], [123[≥ 2]]. Hence the total
+number of partitions of length 4k − 2 is
+                                                    3k−3 + 2 · 3k−3 = 3k−2 .
+
+
+    This concludes the proof of all parts of Proposition 3.3.1.
+
+
+5     Analysis of OP k for P = BW W and BBW
+5.1       On the reverse BS game graph for (BW W )k
+                                                          2
+Proposition 2.2.4 implies that n = |λ| = 3k       + k = 9k 2−k for any partitions λ in the orbit
+                                                
+                                              2
+                                                                                         op
+O(BW W )k . Similarly to the last section, we show some initial observations about O(BW     W )k
+and their difference labelings in Figure 17.
+
+                                                                                                               h0i
+                                                                    h5i                                         0
+                                                                     4                                          1
+                                                                                                                0            h1i
+                                                                     4                                                 1
+                                                                                                                0            h0i
+                                                                     2         1    h6i
+                                                                                                                1             0
+                                                                     1              h4i
+                                                                                                           1                  1
+                                                             1       1               3                         h0i
+                                                                    h5i                                                       0
+                                                                                     3                         h1i
+                                                                    h5i                                               1/2     0
+                                                                           1/2       1                          0
+      h2i                 h0i                                        3                                                       2
+                                                                                    2                           0
+       1                   0                                         2                                                       h2i
+            1                   1                                                   h7i                         1
+       1                   1         h1i                             2                                                       h0i
+                h3i                                                                 h4i                         0
+      1
+                    ∼    1           h0i                                                               ∼                     h1i
+                h1i                                                                 h4i
+                          h0i         0                                                                                       0
+      h2i 1/2                 1/2                                                    2
+                     2
+                          h1i        2                                         1                                             −1
+      h2i                                                                                   2/3
+                h4i        0      h2i                                                                                  1
+                                                                                                                                    2/3
+                                                                          5               h8i
+                     1
+                                  −1
+                                                                          5               h5i                         0            h3i
+                14                        1
+                                                                          3               h3i                         1            h1i
+                                     −1                                   14               1                          0            h0i
+                                     ...                                            1             3                  −1            −1
+                                                                                            2
+                                                                                                                      0            ...
+                                                                               6          h9i     h9i                ...     1            3
+                                                                                                                                     2
+                                                                               4          h4i     h6i
+                                                                               2           2      h2i                   1          h4i h4i
+                                                                               15          1                            0          h0i h2i
+                                                                                          ...     ...                  −1          −1 h−1i
+                                                                                                                       ...         −1 . . .
+
+                                                                                                                                   ...    ...
+                                     op
+Figure 17: The reversed game graphs O(BW W )k
+                                              and their difference labellings for k = 1, 2 up to
+level 3.
+
+
+                                                                 25
+The recurrent 3-cycle C(BW W )k consists of three partitions (3k, 3k − 2, 3k − 3, . . . , 3, 1), (3k −
+1, 3k − 1, 3k − 3, . . . , 2, 2) and (3k − 1, 3k − 2, 3k − 2, . . . , 2, 1, 1) whose difference labelings are
+((100)k )T , ((010)k )T and ((001)k )T , respectively. We will use these elements as roots of the
+trees in the BWW quasi-infinite forest. First, we prove an important property for (BW W )k
+orbits:
+Proposition 5.1.1. Given a playing sequence σ from some recurrent partition λ ∈ C(BW W )k
+              op
+in an orbit O(BW  W )k
+                       , then σj+1 ≤ σj + 1 for any element of σ. Moreover, there exists an
+index t such that
+                                σ1 ≤ σ2 ≤ . . . ≤ σt > σt+1 > . . . .                  (17)
+Proof. The only element in C(BW W )k that is a root of a tree outside of the cycle is
+
+                                                    h3ki
+                                                  h3k − 2i
+                                                   3k − 3
+                                               λ=     ..
+                                                       .
+                                                          3
+                                                          3
+                                                          1
+
+We will prove the Proposition 5.1.1 for playing sequences starting with λ, since any playing
+sequence starting from an arbitrary element in the orbit is contained in a playing sequence
+starting at λ. Let σ[: j] = (σ1 , . . . , σj ) be the indices of σ up to index j. We will prove both
+the assertions by induction on j, that is, σ[: j] has the properties in the proposition for any
+j.
+    • Base case: j = 1. If σ1 = 1, then R1 (λ) gets back to the cycle, so σ2 = 1. If σ1 = 2,
+      then
+                                                         h3k + 1i
+                                                         h3k − 2i
+                                                         h3k − 2i
+                                                          3k − 4
+                                                R2 (λ) =     ..
+                                                              .
+                                                              4
+                                                              4
+                                                              2
+       so σ2 ≤ 3 = σ1 + 1.
+
+    • Inductive step: Assume σ[: j] has the form as in (17) and σh+1 ≤ σh for any h < j. If
+      σj = max σ[: j] = m, that means any parts below σj have not been played so far. Let
+      ψ = Rσ[:(j−1)] (λ). Note that ψs for any s ≥ m are parts of λ. Hence, there are 3 cases
+           ψm
+          ψm+1
+      for      , which are
+          ψm+2
+          ψm+3
+
+                            t+1                         t                          t
+                            t−1                         t                         t−1
+                            t−2                        t−2                        t−1
+                            t−2                        t−3                        t−3
+
+      for some t.
+      Hence, σj+1 ≤ m + 1 due to Claim 1, that is, the next playable part must differ from
+      ψm by at most 2.
+      Moreover in this case, σ[: (j + 1)] trivially has the form in (17). Another point is
+      that σj+1 = m + 1 happens only in the second case above. In that case, if we let
+      ω = Rσ[:(j+1)] (λ) then ωm − ωm+1 = 3.
+      Now if σj is not the maximum in σ[: j] then there is s < j such that σ1 ≤ . . . ≤
+      σs > . . . > σj and σs > σj . The above argument shows that whenever we strictly
+      increase σh , there is a gap of 3 between the parts of indices σh − 1 and σh , which
+      cannot be decreased by playing a part of index larger or equal than σh . Thus Rσ[:s] has
+
+                                                     26
+      a difference of at least 3 between consecutive parts up to σs . Recalling Claim 1 and
+      let ψ = Rσ[:(h−1)] for some h > s, we see that any Rσh (ψ)i with i ≥ σh are not playable
+      any time in the future because ψσh −1 − ψσh ≥ 3. Thus σj+1 < σj .
+      The proposition is proved.
+
+
+
+5.2    The limit for O(BW W )k by level sizes and proof of Theorem 3.2.2
+Similarly to the BW case, we consider the BWW quasi-infinite forest as in Figure18.
+
+                    G3               G2                    G1
+                                                           h1i
+                    h0i              h0i                   h0i
+                     0               h1i                    0
+                     1             1/2                      1
+                                                       1         2
+                    1                h1i
+                                     h0i             h0i         h2i
+                    h0i
+                                      0               0          h0i
+                    h1i
+                                      1               1          h1i
+                                                             1           2/3
+
+
+                    ...              ...             ...   0             h3i
+                                                           1             h1i
+                                                                         h0i
+                                                                          0
+                                                                          1
+                                                                     1   2     3
+
+                                                                     1   h4i
+                                                                               h4i
+                                                                     0   h0i
+                                                                               h2i
+                                                                     0    0
+                                                                               h0i
+                                                                     1    1
+                                                                               h1i
+
+                                                                         ...
+                                                                               ...
+                          Figure 18: BWW quasi-infinite game graph.
+
+          i
+Rule for −
+         → in the BWW quasi-infinite forest:
+
+  1. Delete ith bracket. If the ith bracket is h0i followed immediately by a h1i, playing either
+                                                                                     i/i+1
+      vertex i or vertex i + 1 has the same result, so we label the play by −−−→.
+
+  2. Increase all entries in rows above it by 1 each, and bracket them.
+
+  3. Bracket the new ith number (if there is one) if it differs at most 1 from the old one. If
+                                           0
+      there are two consecutive entries      and 0 is bracketed, so is 1.
+                                           1
+
+        h0i
+  4. If     are the lowest parts that are bracketed, and if part h0i among those two is played,
+        h1i
+               h0i
+      append 0 at the end.
+                1
+
+   The forest FBW W consists of three trees G1 , G2 and G3 rooted at the three elements in
+C(BW W )k :
+                                    h1i
+                                                        h0i
+                                    h0i     h0i
+                                γ1 = , γ2 =     and γ3 = 0 ,
+                                     0      h1i
+                                                         1
+                                     1
+respectively. Let gi be the generating function by level sizes of Gi for i = 1, 2, 3 and let
+g = g1 + g2 + g3 be the generating function for the BWW quasi-infinite forest by level sizes.
+
+
+                                                27
+Proposition 5.2.1. In the tree G1 of the BWW quasi-infinite forest, for any playing sequence
+that starts with 2, the top part is always playable. Moreover, the playing sequences [2[≥ 2]1]
+lead to the leaves.
+Proof. By rule 2, the top part is always bracketed unless it is played. However, the first move
+          h2i
+R2 (γ1 ) = h0i separates the top part from the second part by 2, and the difference between
+          h1i
+them is not decreasing due to rule 2 unless we play R1 . Now if we play R1 , the second and
+any lower parts cannot be bracketed due to rule 3, thus we reach a leaf.
+    Similarly to the BW case, when we play R1 from any roots, we get an entire copy of the
+tree rooted from the next node. In addition, in G1 , the playing sequences [2[≥ 2]] form a
+subtree that is isomorphic to G2 by neglecting the top part. By the Proposition 5.2.1,
+playing R1 after those playing sequences is always valid and leads to the leaves. Hence we
+have the table of contribution of the playing sequences in the tree G1 as below:
+                                    Sequence Contribution
+                                       [1 . . .] xg3
+                                      [2[≥ 2]]   xg2
+                                     [2[≥ 2]1]   x2 g2
+                               Table 4: Growth function for tree G1 .
+
+   Therefore, we get
+                                g3 (x) = 1 + xg2 (x)
+                                g2 (x) = 1 + xg1 (x)
+                                g1 (x) = 1 + xg3 (x) + (x + x2 )g2 (x)
+   Putting them all together gives
+                      g1 (x) = 1 + (x + x2 )(1 + xg1 (x)) + x(1 + x + x2 g1 (x))
+                             = 1 + 2x + 2x2 + (2x3 + x2 )g1 (x)
+Thus one has
+                                                   2x2 + 2x + 1
+                                      g1 (x) = −                .
+                                                   2x3 + x2 − 1
+   Therefore,
+                                                        x3 − 3x2 − 4x − 3
+                     g(x) = 2 + x + (1 + x + x2 )g1 (x) =                  .
+                                                           2x3 + x2 − 1
+                                                                       op
+    Now, we desire the generating function for the level sizes of O(BW     W )k
+                                                                                in the limit as
+k → ∞. Let the generating function for heights of the elements of the BWW quasi-infinite
+forest to be HBW W . As constructed, our quasi-infinite forest has an entire copy of itself after
+playing R1 from each root. Moreover, HBW W is the generating function by level sizes for
+the remaining part after disregarding that copy, including the whole trees G2 , G3 from level
+1 and the left branch of G1 . Hence
+
+                                     g(x) = xg(x) + HBW W (x)
+   That leads to
+
+                                (1 − x)(x3 − 3x2 − 4x − 3)
+  HBW W (x) = (1 − x)g(x) =
+                                       2x3 + x2 − 1
+                = 3 + x + 2x2 + 3x3 + 5x4 + 7x5 + 11x6 + 17x7 + 25x8 + 39x9 + 59x10 + . . . .
+   In this case, we also have the same result as in Theorem 4.3.1, that is the infinite forest
+coincides with the finite game graph for (BW W )k at least up to level k. Thus we conclude
+HBW W (x) as the limit of the generating functions of (BW W )k game graphs by level sizes.
+                                      op
+   Next, the limit by level sizes of O(BBW )k
+                                              can be computed easily by the same technique.
+The set of playing sequences in the BBW quasi-infinite forest turns out to be exactly the
+same as in the BWW case. That is because the Proposition 5.2.1 holds true for the BBW
+quasi-infinite forest. Figure 19 shows the analogous BBW quasi-infinite forest. Therefore,
+                                                 op
+the limit HBBW (x) for generating functions of O(BBW  )k
+                                                         by level sizes is the same as HBW W (x)
+shown above, completing the proof of Theorem 3.2.2.
+
+                                                   28
+                                            G2                   G1
+                         G3                                      h1i
+                         h1i                h0i                  h1i
+                          0                 h1i                   0
+                          1               1/2                     1
+                                                             1         2
+                         1                  h1i
+                                            h1i            h1i         h2i
+                         h0i
+                                             0              0          h0i
+                         h1i
+                                             1              1          h1i
+                                                                   1           2/3
+
+
+                         ...                ...            ...   0             h3i
+                                                                 1             h1i
+                                                                               h1i
+                                                                                0
+                                                                                1
+                                                                           1   2     3
+
+                                                                           1   h4i
+                                                                                     h4i
+                                                                           1   h1i
+                                                                                     h2i
+                                                                           0    0
+                                                                                     h0i
+                                                                           1    1
+                                                                                     h1i
+
+                                                                               ...
+                                                                                     ...
+                                   Figure 19: BBW quasi-infinite forest.
+
+
+   5.3      Proof of Theorem 3.1.2
+   5.3.1     Notation
+   Throughout this section, we will use the same symbol for the tree and its size. The top
+   parts +n means that there are n playable parts at the top but by playing them, we disable
+   any parts below them (including itself) from being playable, according to the second rule in
+   Section 5.2. Those extra parts will occur during the recurrences and can be neglected so
+   that we can recognize the isomorphism between a part of a tree and another tree. We don’t
+   count playing those top extras in the cardinality of the trees. As before, the playable parts
+   will be put in brackets h.i.
+   For a sequence σ, we use σ[j :] = (σj , σj+1 , . . .).
+
+   5.3.2     Three types of trees
+   Those three types of trees will occur in the orbit O(BW W )k . Recall the staircase is of the
+   form ∆k = (k, k − 1, . . . , 1, 0). When describing the trees, we will use the disrupted staircase
+   partition, defined as
+
+            ∆m
+             j+k = (m + 3(j + k), m + 3(j + k) − 1, . . . , m + 3k + 1, m + 3k − 1, . . . , m)
+
+   which is the staircase starting with m, having 3(j + k) entries and there is a separation of
+   1 in between. More specifically, using the notation λ + m = (λ1 + m, . . . , λn + m) for a
+   partition λ of length n and allowing the last part λn being 0, we can define the disrupted
+   staircase as
+                                                  ∆3j−1 + (3k + 1) + m
+                                      ∆m
+                                       j+k =
+                                                      ∆3k−1 + m
+   That is, the lowest part of the higher partition is 2 more than the highest part of the
+   lower partition. This disrupted staircase will be used as a base to add the ”blocks” on. In
+   particular, ∆3j−1 = ∆0j+0 .
+                                                                                  
+                          0                                         0
+Type 1: Tkj has j blocks 1 followed by a separation and k blocks 0. If k = 0, the base is
+                          0                                         1
+           ∆0j+0 , and T0j is exactly one of the elements in the recurrent set of O(BW
+                                                                                   op
+                                                                                       W )j
+                                                                                            . Otherwise
+
+
+                                                      29
+          the base is ∆1j+k and has one extra playable part on top. We also denote the root of
+          Tkj by τkj . For example:
+
+                                                                                          +1
+                                                                                    h3(j + k) + 1i
+                                   +1           +1
+                                                                                    h3(j + k) + 1i
+                   h8i            h10i          h9i
+                                                               h3j − 1i                    ..
+                   h8i            h10i           8                                          .
+                    6              8             8             h3j − 1i                3k + 4
+                    5              7             6              3j − 3                 3k + 4
+              τ03 = ;       τ12 =     ;    τ30 = ;       τ0j =     ..  ;    τkj =
+                    5              7             5                  .                  3k + 2
+                    3              5             5                  2                    3k
+                    2              3             3                  2                     ..
+                                                                                           .
+                    2              2             2
+                                                                                          3
+                                   2             2
+                                                                                          2
+                                                                                          2
+                                                              
+                                                                0
+Type 2:   Ajk has two extra playable parts on top, j blocks 1 followed by a separation and k
+                                                                0
+                  
+                   0
+          blocks 0. If k = 0, the base is ∆3j+0 . Otherwise the base is ∆2j+k . The root here is
+                   1
+          denoted αkj . For example:
+
+                                                                                          +2
+                                                                                    h3(j + k) + 2i
+                     +2            +2             +2
+                                                                   +2               h3(j + k) + 2i
+                    h11i          h11i           h10i
+                                                                h3j + 2i                   ..
+                    h11i          h11i            9                                         .
+                      9             9             9             h3j + 2i                3k + 5
+                      8             8             7                3j                   3k + 5
+              α03 =     ;   α12 =     ;    α30 =     ;    α0j =     ..  ;   αkj =
+                      8             8             6                  .                  3k + 3
+                      6             6             6                 5                   3k + 1
+                      5             4             4                 5                      ..
+                                                                                            .
+                      5             3             3                 3                      4
+                      3             3             3
+                                                                                           3
+                                                                                           3
+
+          The purpose of this tree type is to disable any added parts (at the bottom) from being
+          playable in the future.
+                                                             
+                                                                0
+Type 3:   Bkj has two extra playable parts on top, j blocks 1 followed by a separation and k
+                                                                0
+                  
+                   0
+          blocks 0 and one extra playable part at the bottom. If k = 0, the base is (∆4j+0 , 2).
+                   1
+          Otherwise the base is (∆3j+k , 2). The root for Bkj is denoted βkj . For example:
+
+                                                                                          +2
+                                                                                    h3(j + k) + 3i
+                    +2            +2             +2
+                                                                  +2                h3(j + k) + 3i
+                   h12i          h12i           h11i
+                                                               h3j + 3i                    ..
+                   h12i          h12i            10                                         .
+                    10            10             10            h3j + 3i                 3k + 6
+                     9            9              8              3j + 1                  3k + 6
+              β03 = 9 ;     β12 = 9 ;      β30 = 7 ;       j
+                                                          β0 =     ..  ;    βkj =       3k + 4
+                                                                    .
+                     7            7              7                  6                   3k + 2
+                     6            5              5                  6                      ..
+                                                                                            .
+                     6            4              4                  4                     5
+                     4            4              4                  2                     4
+                     2            2              2
+                                                                                          4
+                                                                                          2
+
+                                                  30
+5.3.3     Recurrent Relationship between the tree types
+
+Some examples are given in the figures below. The rules for coloring are:
+
+  • Blue nodes are new nodes that appear in the current tree.
+  • Black nodes are from an embedding of another tree, specified in the figures, into
+    the current tree.
+  • Red nodes are directly obtained from the blue nodes by playing R1 on them.
+  • Green nodes are the effects of the extra playable part at the bottom of Bkj .
+
+                                                                                      1                                                                                        1
+   Figure 20: Tree A00
+                                                                                  1                   2                                                                        1
+
+
+                                                                              1                   1           2                                                A10         1               2
+
+
+                                                                              1                   1           2       A01                                              1                           1
+
+
+                                                                  A01         1                   1           2
+
+                      1
+                                                                                                                                                   Figure 25: Tree B10
+                                                                              1                       1
+
+                  1       2
+                              A00
+             1                1
+                                                                  Figure 23: Tree A11
+                                                                                                                                                                   1
+          A00
+                                                                                                                                                                   1
+
+   Figure 21:             Tree A10                                                1
+                                                                                                                                                                   1           2
+
+                                                                              1               2
+                                                                                                                                                                   1       1               2           A01
+                                                                          1                   1           2
+                                                                                                                                                       A01         1           1               2
+
+                                                                          1                   1           2       3
+                                                                                                                                                                   1                   1
+
+                                                                      1               2       1           2 1             2
+                  1
+
+
+                                                                  1                       1       1               1
+                                                                                                                                               Figure 26: Tree T20 = A02
+                  1
+                      A00
+                  1
+                      A00                                                 A10                         2 · A10
+
+   Figure 22: Tree A01                                            Figure 24: Tree A20
+
+
+              1                                                                                                                        1
+
+
+              1               2                                                                                                   1                2
+
+
+              1                   1               2                                                                           1                    1           2
+
+
+              1                           1           2                                                                       1                        1       2
+
+                                                                  B10
+              1                           1           2   3                                                                   1                        1       2       3
+
+
+              1           2               1           2   1   2                                                           1            2               1       2       1           2           3
+
+        T20
+              1       1               2       1               1                                                       1           1        2           1       2           1               1           2
+
+
+              1           1               2                                                                           1                1       2           1                                           1
+
+
+              1                   1                                                                                   1                1       2
+                                                                                                                                                               2(B10 + 31 )
+                                                                                                                      1                        1
+                  Figure 27: Tree T11
+
+                                                                                                                              T20 + 31
+
+                                                                                                                                      Figure 28: Tree B11
+
+
+Here are the intertwined recurrence relations between the three types of trees defined
+in the previous subsection. The proofs are also given.
+
+                                                                                      31
+(a) For the trees Ajk :
+                                
+                                
+                                1                               if j = k = 0
+                                
+                           Ajk = 1 + 3A0k−1                      if j = 0, k > 0            (18)
+                                
+                                
+                                 3 + 3Aj−1
+                                
+                                        k                        if j > 0, k > 0
+
+    From the recurrences above, we get
+                     3j+k+1 − 3
+                  Ajk =         + 3j
+                          2
+                     3k+1 − 1                 3j+1 − 3
+               A0k =              ,     Aj0 =          + 3j
+                        2                        2
+    Proof. We examine the trees in three cases:
+                                                             +2
+      • If j = k = 0, we have no blocks, so A00 =               = 1.
+                                                              ∅
+      • If j = 0, k > 0, we start with 3k + 2 parts and play
+
+                                                                     +2
+                                                   +2
+                                                                   h3k + 1i
+                     +2         +2              h3k + 2i
+                                                                      3k
+                   h3k + 1i   h3k + 1i            h3ki
+                                                                      3k
+                      3k      h3k + 1i           3k − 1                ..
+                      3k    1 3k − 1       1     3k − 1      1          .
+             A0k =     ..         ..                ..                  7          ...
+                        .          .                 .
+                                                                        6
+                      4            5                     6
+                                                                        6
+                      3            4                     5
+                                                                        2
+                      3            4                     5
+                                                                        1
+                                                         1
+                                                     2                  1
+                                                      +3
+                                                     h3ki
+                                                     h3ki
+                                                    3k − 2
+                                                       ..         ...
+                                                        .
+                                                         7
+                                                         6
+                                                         6
+                                                         2
+
+                                         Figure 29
+
+         The bold parts are never playable according to rule 3 in Section 5.2 because
+         the first bold part differs from its immediate part above by 4, so we   can
+                                                                                   
+                                                                                            0
+         neglect them. By playing R[13 ] , we get a partition with k − 1 blocks of 0.
+                                                                                            1
+         Let R := {Rσ (αk0 ) : σ = [13 . . .]}. Specifically,
+                                                         0
+                                                        αk−1 +3
+                                                           2
+                                               R[13 ] =         .
+                                                           1
+                                                           1
+
+         We define the map ϕ : R −→ A0k−1 to be
+                                         ϕ(Rσ (αk0 )) = Rσ[4:] (αk−1
+                                                                 0
+                                                                     )
+         where Rσ (αk0 ) ∈ R. We easily see that ϕ is a graph isomorphism with the op-
+         eration R because: (1) the bijection is recognized by corresponding a playing
+         sequence σ 0 in A0k−1 with σ = [13 σ 0 ] in R, and (2) ϕ(R[13 ] ) = αk−1
+                                                                              0
+                                                                                  .
+         Similarly, playing [12 ] and [12 2[≥ 2]] we have a part that is isomorphic to
+         A0k−1 (by neglecting the top part), since
+                                   h3k + 2i                                       0 )+2
+                                    0                                        R1 (αk−1
+                          R[12 ] = αk−1 +2           and         R[12 2] =              .
+                                                                                   2
+                                      1
+
+                                               32
+    Each of them, except the root, has an extra playable top part, which means
+    playing sequences [12 2[≥ 2]1] give another A0k−1 . Thus we have:
+
+                       A0k = 3 + A0k−1 + 2(A0k−1 − 1) = 1 + 3A0k−1 .
+
+    That leads to
+                                                             3k+1
+                                                    
+                0  1        0     1              k   0 1
+              Ak +     = 3 Ak−1 +     = . . . = 3 A0 +     =      .
+                   2              2                    2      2
+
+    Hence
+                                       3k+1 − 1
+                                         A0k =  .
+                                           2
+  • When j > 0, we start with 3(j + k) + 2 parts and play
+
+                                                                         +2
+                                                    +2
+                                                                   h3(j + k) + 2i
+             +2               +2              h3(j + k) + 2i
+                                                                   h3(j + k) + 2i
+       h3(j + k) + 2i   h3(j + k) + 3i         3(j + k) + 1
+                                                     ..               3(j + k)
+       h3(j + k) + 2i   h3(j + k) + 1i                                    ..
+                                                      .
+          3(j +  k)   1        ..      1                       1           .
+ Ajk =                          .                   6                               ...
+              ..                                                         7
+               .               5                    5
+                                                                         6
+             4                   4                  5
+                                                                         6
+             3                   4                  2
+                                                                         3
+             3                   1                  1
+                                                                         2
+                             2                      1
+                                                                         2
+                              +3
+                        h3(j + k) + 1i
+                        h3(j + k) + 1i
+                         3(j + k) − 1
+                               ..             ...
+                                .
+                                 6
+                                 4
+                                 4
+                                 2
+
+                                     Figure 30
+
+    The bold parts are never playable, so we can neglect them, and we proceed
+    as in the previous case. By playing [13 ] we get the root of Aj−1
+                                                                   k . Similarly,
+    the playing sequences [12[≥ 2]] form a subtree that is isomorphic to Aj−1
+                                                                          k   (by
+    neglecting one top entry). Each of them has an extra playable at the top.
+    Thus we have:
+                        A0k = 3 + A0k−1 + 2A0k−1 = 3 + 3A0k−1 .
+    That leads to
+                                               3j+k+1 − 3
+                                      Ajk =               + 3j .
+                                                   2
+
+
+We also prove a lemma for the trees Ajk that will be useful in the analysis of the
+trees Bkj .
+Definition 5.3.1. An ending branch is obtained by playing sequence [1α1 2α2 . . . k αk (k−
+1) . . . 1] where [k] is played as many times as possible.
+Example 5.3.2. Figure 21, 22, 23, 24 show that
+  • A10 has 2 ending branches: [13 and [121].
+  • A01 has 1 ending branch [13 ].
+  • A11 has 2 ending branches: [16 ] and [124 1].
+  • A20 has 4 ending branches: [16 ], [14 21], [124 1] and [122 321].
+  • T11 has 4 ending branches: [19 ], [15 23 1], [125 1] and [123 321].
+  • B11 has 4 ending branches: [110 ], [15 24 1], [126 1] and [123 32 21].
+
+
+                                         33
+    Lemma 5.3.3. The tree Ajk has 2j+k−1 equal-length ending branches of length
+    3(j + k) + 2. Moreover, each ending branch lead to a partition with the largest
+    number of parts in Ajk .
+
+    Proof. From the argument for the recurrence (18) of Ajk , we see that Ajk has twice
+    as many ending branches as Aj−1  k   if j > 0, and twice as many ending branches as
+    Ajk−1 if j = 0. Since A01 has only one ending branch, the first part of the lemma
+    follows. Moreover, if j > 0, although it requires one fewer play to get to the
+    second subtree that is isomorphic to Aj−1  k   than it does to reach the first subtree
+                                3
+    ([12] in comparison to [1 ]), we can always play exactly one more R1 for each
+    ending branches in the second subtree. Thus, the two branches have the same
+    height. A similar argument applies for j = 0.
+    In the tree Ajk , the added new parts are not playable at any time, so each ending
+    branch actually plays all and only the 3(j + k) + 2 original parts. This gives the
+    length 3(j + k) + 2 for each of them.
+    To see the last statement regarding the largest number of parts in partitions in
+    Ajk , we refer to the recurrence (18) again, with the trivial base case of A10 and A01 .
+    If j > 0, the first branch of Ajk resulted from playing [13 . . .] leads to the leaves of
+    Akj−1 , while the second branch resulted from playing [12[≥ 2]] leads to the leaves
+    of Aj−1
+          k   and one extra play of [1] at each leaf. While [13 ] adds 3 new parts at the
+    end, [12] only adds 1 new part, as we see from the Figure 30 above. However,
+    playing [2] add 1 to the top part, so it is 3(j + k) + 4) and is 2 more than the
+    original top (3(j + k) + 2). This part will only be played at the very end of the
+    ending branch and make up the shortage of 2 parts in comparison with the other
+    branch. Playing [13 ] does not change the value of top part. Hence, the ending
+    branches of the form [12 . . . 1] lead to partitions of the same number of parts as
+    the leaves of Aj−1
+                     k . A similar argument applies to j = 0.
+
+(b) For the trees Tkj :
+                          0
+                           A                                       if j = 0
+                          k
+                         
+                         
+                    Tkj = 3 + Tk+1
+                                j−1
+                                    + 2Bkj−1                      if j > 0, k > 0       (19)
+                         
+                         
+                           9 + 2T1j−2 + 4B0j−2
+                         
+                                                                    if k = 0
+
+    From the recurrences above, we get
+                                   3k+1 − 1
+                          Tk0 =
+                                      2
+                                                                   j−2
+                                                                   X
+                          T0j = 9 + 6(j − 2) + 2Tj−1
+                                                 0
+                                                     +4                   Btj−2−t
+                                                                    t=0
+                                                       j−2
+                                                       X
+                               = 6j + 3j − 4 + 4             Btj−2−t .
+                                                       t=0
+
+    Proof. • When j = 0, any added parts (bold in the figure) at the bottom will
+        never be playable:
+
+                                                           +1
+                          +1              +1            h3k + 2i
+                        h3k + 2i        h3k + 1i          h3ki
+                           3k           h3k + 1i         3k − 1
+                           3k       1    3k − 1    1     3k − 1
+                  Tk0 =     ..              ..              ..            ...
+                             .               .               .
+                           3                4                 5
+                           2                3                 4
+                           2                3                 4
+                                                              1
+
+                                        Figure 31
+
+         So Tk0 is exactly the tree A0k .
+
+                                            34
+• When j > 0, k > 0, we start with 3(j + k) + 1 parts:
+
+              +1
+        h3(j + k) + 1i                                  +1
+        h3(j + k) + 1i                                                       +1
+                                                  h3(j + k) + 1i
+         3(j + k) − 1            +1                                    h3(j + k) + 1i
+                                                     3(j + k)
+               ..          h3(j + k) + 2i                              h3(j + k) + 1i
+                .                                    3(j + k)                 ..
+                             h3(j + k)i                  ..
+           3k + 4                                                              .
+                         1        ..      1               .        1
+Tkj =      3k + 4                  .                                         6          ...
+                                                        5
+           3k + 2                    4                                       5
+                                                        4
+             3k                      3                                       5
+                                                        4
+              ..                     3                                       3
+               .                                        2
+                                     1                                       2
+              3                                         1
+                                                                             2
+              2                  2                      1
+              2                    +2
+                               h3(j + k)i
+                               h3(j + k)i
+                              3(j + k) − 2
+                                    ..            ...
+                                     .
+                                     5
+                                     4
+                                     4
+                                     2
+
+                                 Figure 32: Caption
+
+  The italicized parts are playable in the future because the first italicized part
+                   neighborlyimmediately above by only 2. By playing [13 ], we
+  differs from its 
+                          0
+  add one block 0 + ∆02+0  at the bottom, and also use all of the top block
+                          1
+   h0i
+                                                  j−1
+   h1i, so we reach a part that is isomorphic to Tk+1 . By playing [12], we use
+    0
+                    h0i
+  up the top block h1i and the playing sequences [12[≥ 2]] form a part that is
+                     0
+  isomorphic to Bkj−1 (by neglecting one top part). Each of them has one extra
+  playable part at the top. Hence
+
+                                         Tkj = 3 + Tk+1
+                                                    j−1
+                                                        + 2Bkj−1 .
+
+• When j > 0, k = 0, we start with 3j + 2 parts:
+
+
+
+
+                                             35
+                                       h3j + 2i
+                 h3j + 2i   h3j + 3i
+                                        3j + 1
+                 h3j + 2i   h3j + 1i
+                                        3j + 1
+                    3j         3j
+                                        3j − 1
+                  3j − 1       3j          ..
+                          1          1      .
+         T0j+1 = 3j − 1      3j − 2
+                  3j − 3        ..         4
+                                 .
+                     ..                    4
+                      .         3
+                                          2
+                     2          3
+                                          1
+                     2          1
+                              2           1
+                                          +1         +1         +1
+                               +1
+                                       h3j + 2i   h3j + 1i   h3j + 1i
+                            h3j + 1i
+                                         h3ji        3j      h3j + 1i
+                            h3j + 1i
+                                        3j − 1       3j       3j − 1
+                             3j − 1 2       ..  2     ..   2     ..
+                                 ..          .         .          .             ...
+                                  .
+                                           5         4          5
+                                4
+                                           5         2          3
+                                4
+                                          3          1          2
+                                2
+                                          1          1          2
+                                          3
+                                           +2
+                                           3j
+                                           3j
+                                         3j − 2
+                                            ..           ...
+                                             .
+                                              6
+                                              6
+                                              4
+                                              2
+
+                                      Figure 33
+
+
+    Playing [13 ] gets we backtothe root. Playing [124 ] gets to the tree T1j−1 because
+                                  0
+    we used up 2 top blocks 1, plus one extra playable top part. Playing [123] gets
+                                  0
+    to the tree B0j−1 and two extra playables at top. If we play the second to top part,
+    we can only play [1] next (by definition of extra top playables) and terminate, so
+    each node in this part (which is in the tree B0j−1 ), we count as 4. Hence:
+
+                                   T0j+1 = 9 + 2T1j−1 + 4B0j−1 .
+
+
+
+(c) For the trees Bkj :
+                  (
+                   1 + Ak0                                                    if j = 0
+          Bkj =            j−1
+                                                                                         (20)
+                     3 + (Tk+1 + 3j+k−1 ) + 2(Bkj−1 + 3j+k−1 )              if j > 0
+
+    From the recurrences above, we get
+                   k+1
+                  3      −1
+              j              + 3k                                             if j = 0
+            Bk =        2
+                    3j + 3j+k + Tj+k
+                                  0
+                                     + 2 j−1   j−1−t
+                                        P
+                                          t=0 Bk+t                           if j > 0
+                  
+
+    so for j > 0 :
+                                                                    j−1
+                                                                    X
+                         2Bkj = 6j + 2 · 3j+k + 3j+k+1 − 1 + 4             j−1−t
+                                                                          Bk+t
+                                                                    t=0
+                                                   j−1
+                                                   X      j−1−t
+                             = 6j + 5 · 3j+k + 4         Bk+t   .
+                                                   t=0
+
+
+                                          36
+Proof.     • When j = 0, we start with 3k + 3 parts:
+
+                                   +2
+                                                         +2
+                                 h3k + 2i
+                                                       h3k + 1i
+                                    3k
+                                                       h3k + 1i
+                                    3k
+                                     ..          1      3k − 1
+                           Bk0 =      .                    ..   = Ak0
+                                                            .
+                                         5
+                                                           5
+                                         4
+                                                           5
+                                         4
+                                                           3
+                                         2
+
+                                             Figure 34
+
+    From the diagram, we have
+
+                                                     Bk0 = 1 + Ak0 .
+
+ • When j > 0, we start with 3(j + k) + 3 parts:
+
+               +2
+         h3(j + k) + 3i
+         h3(j + k) + 3i                            +2               +2
+          3(j + k) + 1            +2         h3(j + k) + 3i   h3(j + k) + 3i
+                ..          h3(j + k) + 4i    3(j + k) + 2    h3(j + k) + 3i
+                 .          h3(j + k) + 2i    3(j + k) + 2           ..
+            3k + 6                                                    .
+                             3(j + k) + 1           .
+                                                    ..
+            3k + 6        1                1                1        8
+ Bkj =                             ..                                          ...
+            3k + 4                  .               6                7
+            3k + 2                   5                         6        7
+               ..                    5                         4        5
+                .                    3                         2        3
+               5                     1                         1        2
+               4                 2                             1        2
+               4                  +3
+               2            h3(j + k) + 2i
+                            h3(j + k) + 2i
+                               3(j + k)
+                                   ..
+                                    .                ...
+                                     7
+                                     6
+                                     6
+                                     4
+                                     2
+
+                                Figure 35: Caption
+
+                                                                               j−1
+    Playing [13 ] we get to a subtree that is nearly isomorphic to the tree Tk+1
+    except that there are two additional plays at the end of each ending branch
+    of the part above the bold part, caused by the bold parts. Specifically, from
+    Figure 35 above, we see that
+                                                    τkj−1 + 5 αkj−1 + 4
+                                                        5         5
+                                              j
+                                     R[13 ] (βk ) =     3    =    3                  (21)
+                                                        2         2
+                                                        2         2
+
+    Let x denotes the bold last part of βkj from the beginning. Let R := {Rσ (βkj ) :
+                                                               j−1
+    σ = [13 ], x is not played}. We define a map ϕ : R −→ Tk+1      by
+                               1             !
+                              λ 1       λ   −  2
+                                                           if λ1 6= ∅
+                                    
+                                    
+                  ϕ (λ) = ϕ  x  =        λ2                          .
+                              λ 2   
+                                      λ2           otherwise
+                                    
+
+    Since the difference between two consecutive parts is preserved unless one of
+    them is played, we have that the last part of λ1 is exactly 4 greater than the
+
+                                                37
+                                                                                           j−1
+            first part of λ2 unless it is played. Together with ϕ(R[13 ] (βkj )) = τk+1        , ϕ is a
+            graph isomorphism.
+            Now we consider the set S = Bkj − R, which contains partitions resulting
+            from playing the bold part. The bold part can only be played after one of the
+            two parts immediately above it is played, i.e. before the ending branches of
+            the subtree formed by playing the parts above the bold part decrease. That
+            subtree is easily recognized as Aj−1     k      from (21).
+            In particular, if the ending branch is obtained by playing [1α1 2α2 . . . sαs (s −
+            1) . . . 1] then we can play the bold part at either vertex s (if the immediate part
+            above it was played in the previous turn) or vertex s+1 (if the part two above
+            it was played). The corresponding playing sequences are [1α1 2α2 . . . sαs +1 (s −
+            1) . . . 1] and [1α1 2α2 . . . sαs (s+1)s . . . 1]. Similar pattern happens when playing
+            [12]. We get to the tree Bkj−1 plus one extra playable at top, except there are
+            two additional ”maximal” plays at each ending branch of Aj−1             k .
+                                              α1 α2       αs
+            If the ending branch is [1 2 . . . s (s − 1) . . . 1] and we have one extra play
+            Rs before the sequence declines, then there are 2s−1 elements added to the
+            tree. This is because there are 2s−1 strictly decreasing sequences σ that can be
+            made from s − 1, s − 2, . . . , 1, with which [1α1 2α2 . . . sαs +1 σ] is a legal playing
+            sequence in Bkj . From the argument for the recurrence (18) of Ajk , we see
+            that the total number of extra elements for Ajk is 3 times the number of extra
+            elements for Akj−1 if j > 0, and 3 times the number of extra elements for Ajk−1
+            if j = 0. Since A01 has only one ending branch (by playing [13 ]) - thus 3 = 31
+            extra elements by playing [14 ] or [12 2] and [12 21], we conclude that the total
+            number of extra elements for Ajk is 3j+k .
+            So the total number of additional elements after Aj−1             k   in the tree Bkj−1 is
+            3j+k−1 . Therefore, we obtain the recurrence
+             Bkj = 3 + (Tk+1
+                         j−1
+                             + 3j+k−1 ) + 2(Bkj−1 + 3j+k−1 ) = 3 + Tk+1
+                                                                    j−1
+                                                                        + 2Bkj−1 + 3j+k .
+
+
+
+5.3.4   The computation
+
+We want to compute Bkn first:
+
+                                  n−1
+                                  X
+                                         n−1−t
+2Bkn = 6n + 5 · 3n+k − 1 + 4            Bk+t
+                                  t=0
+                                  n−2                                          n−2−t
+                                                                                                  !
+                                  X                                             X
+                                                                                        n−2−t−s
+    = 6n + 5 · 3n+k − 1 + 2              6(n − 1 − t) + 5 · 3n+k−1 − 1 + 4             Bk+t+s             0
+                                                                                                      + 4Bk+n−1
+                                  t=0                                            s=0
+                                  n−2                                          n−2
+                                                                                              !
+                                  X                                            X
+                                                                                      n−2−s
+    = 6n + 5 · 3n+k − 1 + 2              6(n − 1 − t) + 5 · 3n+k−1 − 1 + 4           Bk+s             0
+                                                                                                  + 4Bk+n−1
+                    t=0                                  s=t   
+                    n         n+k
+                                            n+k−1
+                                                               n−1
+    = 6n + 6 · 2 ·     + 5·3       −1 + 5·3         −1 ·2·              +
+                    2                                              1
+                                          n−3
+              0           n−1     0
+                                              X
+                                                             n−2−t
+       + 4 Bk+n−1 + 2 ·        Bk+n−2 + 4 · 2     (t + 1) · Bk+t
+                            1                 t=0
+    = ...
+        n−1            n−1                        n−1     
+        X       n     t
+                         X     n−1 t      n+k−t
+                                                     X     n−1 t    0
+    =6·              2 +           2 · 5·3      −1 +4           2 · Bk+n−1−t
+        t=0
+              t + 1      t=0
+                                t                     t=0
+                                                             t
+
+We will show for any 0 ≤ m ≤ n − 1 that
+           m             m                              m      
+  n
+          X      n     t
+                          X    n−1 t        n+k−t
+                                                         X     n−1 t      0
+2Bk = 6 ·             2 +            2 · 5·3      −1 +4              2 · Bk+n−1−t +
+          t=0
+               t + 1      t=0
+                                t                          t=0
+                                                                 t
+                                                          n−2−m
+                                                            X t + m
+                                                   m+1                      n−1−m−t
+                                                +2     ·2               · Bk+t      .
+                                                            t=0
+                                                                   m
+                                                                             (22)
+
+                                                 38
+Base case: The first and the fourth equation showed the base cases for m = 1.
+Induction: Assume that (22) is true for m, we want to show it for m + 1:
+
+
+    n−2−m
+     X          
+             t+m       n−1−m−t
+2                  · Bk+t
+    t=0
+              m
+                  n−2−m                                                     n−2−m
+                                                                                           !
+                    X t + m                                                X
+                                                                                   n−2−m−s
+                =                  6(n − 1 − m − t) + 5 · 3n+k−1−m − 1 + 4        Bk+s
+                     t=0
+                            m                                                 s=t
+                     n−2
+                     X t                                    n−2
+                                                              X t   
+                =6           (n − 1 − t) + (5 · 3n+k−1−m − 1)          +
+                     t=m
+                          m                                   t=m
+                                                                    m
+                                 n−2             n−3−m    t        !
+                          0
+                                 X      t           X X         s + m        n−2−m−t
+                  + 4 · Bn+k−2−m            +2·2                         · Bk+t
+                                 t=m
+                                       m             t=0  s=0
+                                                                  m
+
+We use some familiar identities:
+
+
+                                           n−2              
+                                           X    t          n−1
+                                                       =
+                                             t=m
+                                                  m       m+1
+                                n−2                         
+                                X     t                     n
+                                           (n − 1 − t) =
+                                t=m
+                                      m                   m+2
+                                         t                    
+                                        X      s+m        t+m+1
+                                                       =
+                                        s=0
+                                                 m          m+1
+
+to get
+
+
+         n−2−m
+          X                                                              
+                      t+m     n−1−m−t       n             n+k−1−m        n−1
+     2                     · Bk+t     =6          + (5 · 3        − 1)         +
+          t=0
+                       m                  m+2                            m+1
+                                                               
+                                                0          n−1
+                                         + 4 · Bn+k−2−m           +
+                                                           m+1
+                                                n−2−(m+1)          
+                                                   X        t+m+1         n−1−(m+1)−t
+                                         +2·2                          · Bk+t         .
+                                                   t=0
+                                                             m+1
+
+Hence
+
+
+                m+1
+                X              m+1
+                                 X n − 1                       m+1
+                                                                 X n − 1
+                         n
+2Bkn = 6 ·                    t            t      n+k−t
+                                                                            2t · Bk+n−1−t
+                                                                                  0
+                                                            
+                             2 +          2 · 5·3       −1 +4                             +
+                t=0
+                        t+1      t=0
+                                      t                           t=0
+                                                                       t
+                                                      n−2−(m+1)         
+                                               m+2
+                                                         X        t+m+1        n−1−(m+1)−t
+                                             +2    ·2                      · Bk+t          .
+                                                         t=0
+                                                                    m+1
+
+We have proved (22). Let m = n − 1 we have
+
+
+                n−1          n−1                        n−1    
+                X     n        X    n−1 t                   X    n−1 t 0
+2Bkn = 6 ·                  t                  n+k−t
+                                                        
+                           2 +          2 · 5·3      − 1 +4           2 · Bk+n−1−t
+                t=0
+                     t+1       t=0
+                                     t                      t=0
+                                                                  t
+
+
+
+
+                                              39
+      That gives
+                    n                       n−1                   n−1    
+                   X     n                    X    n − 1 t n−1−t X n − 1 t
+         2Bkn = 3 ·            t           k
+                             2 − 3 + 15 · 3 ·              2 ·3     −           2+
+                   t=0
+                       t+1                    t=0
+                                                     t                t=0
+                                                                            t
+                       n−1                                      !
+                       X    n−1 t
+                   +2             2 · (3k+n−t − 1 + 2 · 3k+n−1−t )
+                       t=0
+                              t
+              = 3 · 3n − 3 + 5 · 3k+1 · 5n−1 − 3n−1 + 2 · 3k+1 · 5n−1 − 2 · 3n−1 + 4 · 3k · 5n−1
+              = 2 · 3n + 3k · 5n+1 − 3.
+
+      Plugging in the recurrence formula for T0n , we get:
+
+                                        n−2
+                                        X
+            T0n = 6n + 3n − 4 + 2              2 · 3n−2−t + 3t · 5n−1−t − 3
+                                                                           
+                                        t=0
+                                                                          n−1
+                                                                          X
+                          n                   n−1
+                = 6n + 3 − 4 + 2 · (3               − 1) − 6(n − 1) + 2         3t · 5n−1−t − 2 · 3n−1
+                                                                          t=0
+                      n   n         n
+                =3 +5 −3
+                = 5n .
+
+      The tree T0n is the one we want with n blocks WBW or BWW.
+
+5.4    More properties of partitions in O(BW W )k and proof of Propo-
+       sition 3.3.2
+Proposition 5.4.1. The largest part size of a partition in O(BW W )k is 9k − 5.
+Proof. Start with the root of τ0k , and let λ = R1 (τ0k ) so λ0 = 3k. By playing [2], we play
+                              h0i
+the last part in the first h1i block and create a separation of 3 between the top part and
+                              0
+the rest, as in the proof of Proposition 5.1.1. Now if we play any parts notof 
+                                                                                index 1,
+                                                                                                  0
+                                                               3
+the top part gets 1 added to it. Moreover, playing [2 ] creates a playable block 0 at the
+                                                                                                  1
+                                                                                                          
+                                                                                                          0
+bottom as shown in Figure 33. However, after playing all the original k blocks of 1
+                                                                                                          0
+                                                        
+                                                         0
+and reaching the first added playable block 0, no new parts are added during the two
+                                                         1
+plays of the last 0 in the former block and the first 0 in the latter block. Thus new parts
+added after this moment are not playable at any time, because the first added part differs
+from the part immediately above it by at least 3. Hence, the longest playing sequence must
+be [123s 1], which takes care of k − 1 original blocks and k − 1 added blocks while playing R2
+consecutively. That means we can play at most 3 · 2(k − 1) consecutive moves R2 . Therefore,
+the largest part we can get is
+                                    3k + 1 + 3 · 2(k − 1) = 9k − 5.
+Corollary 5.4.2. Partitions in O(BW W )k have at most 9k − 5 parts.
+Proof. Easily deduced by performing one reverse BS operation on elements with the largest
+part size.
+Proposition 5.4.3. The number of partitions with 9k − 5 parts in O(BW W )k is 2k−2 .
+Proof. This is the same as the number of partitions with largest part 9k − 5. Those result
+from the playing sequences [121+3(k−1) ] that lead to the tree Tk−1
+                                                                0
+                                                                    , having 2k−2 equal-length
+ending branches. Each one of the ending branches contributes one partition with largest
+part 9k − 5, as proven in Lemma 5.3.3.
+
+                                                       40
+Part III
+A few final remarks
+6       Which recurrent partitions are roots of nontrivial
+        trees?
+Looking at the BS game graph for n that is not a triangular number, e.g. n = 8 in Figure 3,
+one sees that there are partitions in the recurrent sets of the orbits that are not roots of any
+trees outside of the cycle. In other words, those elements do not have more than one image
+under R - the reversed Bulgarian Solitaire operation. This proposition below will count and
+characterize such partitions1 :
+
+Proposition 6.0.1. Let N be a necklace with |N | = m beads of which r are black. Then
+                                                                      op
+in the recurrent set CN for the reverse Bulgarian Solitaire orbit ON    , there will be exactly
+2 m−2
+   r−1
+         recurrent elements with no images outside of the cycle C N .
+
+Proof. First, recall that for a partition λ in the reverse BS system, λj is playable if and only
+if λj ≥ l(λ) − 1. In particular, if λj is playable, then so are all of λ1 , λ2 , . . . , λj . The recurrent
+partitions λ in CN therefore must all have λ1 playable, and have no images outside of the
+cycle CN if and only if λ2 is not playable.
+    Elements in cycles in the BS system of P(n) with size n = m(m−1)         2
+                                                                                     + r are of the form
+λ = ∆m−1 + σ = ((m − 1) + σm−1 , . . . , 1 + σ1 , σ0 ) where σ is a binary sequence with sum r.
+Now λ has exactly one image R1 (λ) if and only if one of the two cases below happen:
+
+    (i) If σ0 = 0, then l(λ) = m−1, so λ1 = m−1+σm−1 ≥ m−2 and λ2 = m−2+σm−2 ≤ m−3
+        , that is
+                          σm−1 ≥ −1 and σm−2 ≤ −1 which cannot happen .
+
+ (ii) If σ0 = 1 then l(λ) = m, so λ1 = m−1+σm−1 ≥ m−1 and λ2 = m−2+σm−2 ≤ m−2,
+      that is
+                                     σm−1 ≥ 0 and σm−2 ≤ 0.
+
+Hence, the only possibility for elements in a cycle that have exactly one image R is when
+
+                         σ = (σm−1 , 0, σm−3 , σm−4 , . . . , σ2 , σ1 , 1).
+
+The number of such σ’s is m−2
+                              
+                          r−1
+                                , since we can freely choose σm−1 , σm−3 , . . . , σ1 in {0, 1}.
+
+
+7       Relation between finite orbit recurrence and limit
+        generating function
+Note that Theorem 3.1.1 gives a suggestive alternate proof of the form of the limiting level
+size generating function HBW (x) in Theorem 3.2.1, as follows. Since Theorem 3.1.1 asserts
+that for k ≥ 2 one has
+
+            D(BW )k (x) = x(3x + 1)D(BW )k−1 (x) − x3 D(BW )k−2 (x) + (x − 1)2 (3x + 2)
+
+and since HBW (x) = limk→∞ D(BW )k (x), one must have
+
+                 HBW (x) = (3x2 + x)HBW (x) − x3 HBW (x) + (x − 1)2 (3x + 2).
+
+Solving thi for HBW (x) gives Theorem 3.2.1.
+    We similarly expect a recurrence for the level size generating functions of O((BW W )k )
+of the form
+                          D(BW W )k (x) = p(x)D(BW W )k−1 (x) + q(x)
+for some polynomials p(x), q(x) satisfying
+    1
+    This proposition is irrelevant for our earlier results, but crucial to the proof of Theorem 3.2.4, omitted
+in this thesis.
+
+
+                                                     41
+   • p(1) = 5, q(1) = 0 to agree with O(BW W )k = 5k from Theorem 3.1.2, and
+
+   • HBW W (x) = limk→∞ D(BW W )k (x) = 1−p(x)
+                                         q(x)
+
+
+   However, the rational function expression given in (6)
+
+                                                   x3 − 3x2 − 4x − 3
+                           HBW W (x) = (1 − x)
+                                                      2x3 + x2 − 1
+has denominator which when evaluated at x = 1 gives 2 rather than ±4 as we would have
+expected from 1 − p(x). This suggests that q(x) and 1 − p(x) share a common factor whose
+evaluation at x = 1 is ±2.
+
+
+References
+ [1] E. Akin and M. Davis. Bulgarian solitaire. The American Mathematical Monthly,
+     92(4):237–250, 1985.
+
+ [2] G. E. Andrews. The theory of partitions. Number 2 in Encyclopedia of Mathematics
+     and its Applications. Cambridge university press, 1998.
+
+ [3] J. Brandt. Cycles of partitions. Proceedings of the American Mathematical Society,
+     pages 483–486, 1982.
+
+ [4] J. H. Bruinier and K. Ono. Algebraic formulas for the coefficients of half-integral weight
+     harmonic weak maass forms. Advances in Mathematics, 246:198–219, 2013.
+
+ [5] V. Drensky. The bulgarian solitaire and the mathematics around it. arXiv preprint
+     arXiv:1503.00885, 2015.
+
+ [6] H. Eriksson and M. Jonsson. Level sizes of the bulgarian solitaire game tree. The
+     Fibonacci quarterly, 55(3):243–251, 2017.
+
+ [7] G. Etienne. Tableaux de young et solitaire bulgare. Journal of Combinatorial Theory,
+     Series A, 58(2):181–197, 1991.
+
+ [8] J. R. Griggs and C.-C. Ho. The cycling of partitions and compositions under repeated
+     shifts. Advances in Applied Mathematics, 21(2):205–227, 1998.
+
+ [9] K. Igusa. Solution of the bulgarian solitaire conjecture.         Mathematics magazine,
+     58(5):259–271, 1985.
+
+[10] M. Jonsson. Processes on Integer Partitions and Their Limit Shapes. PhD thesis,
+     Mälardalen University, 2017.
+
+
+
+
+                                              42
+

@@ -31,9 +31,9 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 |---|---|---|---|
 | 1 | $U(Q_3)$, $U(Q_4)$ + etichettature (1 pt, checked) | revisionato | $U(Q_3)=14$, $U(Q_4)=34$: prove a mano rilette passo per passo + verifiche esatte indipendenti; bozza in submission/parte-1.md |
 | 2 | $U(Q_5)$ (2 pt, checked) | revisionato | $U(Q_5)=88$: riduzione a (★) riletta a mano lemma per lemma + 3 enumerazioni concordi (una indipendente per metodo); etichettatura verificata; Referee automatico READY_FOR_HUMAN (giudice A PASS in 3 run, giudice B PASS con sole note INFO, codice rieseguito dall'orchestratore); bozza in submission/parte-2.md |
-| 3 | $U(Q_6)$ (3 pt, checked) | in analisi | |
-| 4 | $U(Q_7)$, $U(Q_8)$ (5 pt, checked) | in analisi | |
-| 5 | Migliorare $2368\le U(Q_9)\le2400$ (8 pt) | in analisi | via realistica: etichettatura $\le2399$ |
+| 3 | $U(Q_6)$ (3 pt, checked) | parziale | valore candidato 204 = |E|+12 per costruzione a stelle (ottima nella famiglia X=0, prova in submission/parte-3.md); bound inferiore generale non dimostrato; loop p2_c3 in corso |
+| 4 | $U(Q_7)$, $U(Q_8)$ (5 pt, checked) | parziale | valori candidati 464 = |E|+16 e 1040 = |E|+16 (Hamming) per costruzione a stelle; bound inferiore non dimostrato; submission/parte-4.md |
+| 5 | Migliorare $2368\le U(Q_9)\le2400$ (8 pt) | in analisi | la costruzione a stelle con un codice (8,20,3) dà esattamente 2400: il bound noto è questa famiglia; per scendere serve una foresta non a stelle |
 | 6 | $U(Q_9)$ esatto con prove (13 pt, open) | in analisi | |
 
 ## Problema 3 — Bulgarian solitaire
