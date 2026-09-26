@@ -1,0 +1,5 @@
+{"attempt_id": "attempt_001", "target_cell": 1, "subgoal": "Bound S via the second moment of the correlations",
+ "approach": "Second-moment bound on pairwise correlations.", "approach_family": "algebraic_reformulation",
+ "reason_for_choice": "natural first bound", "proof_attempt": "(sketch, elided for fixture)",
+ "claims_used": [], "sources_used": [], "code_used": [], "claimed_progress": "second-moment bound",
+ "claimed_status": "LEMMA_CANDIDATE", "self_reported_gaps": [], "request_creative": false}
