@@ -11,7 +11,7 @@ from db_table import distanze_dal_ciclo, shift, partizioni
 
 
 def d_B_diretto(lam):
-    """d_B(lam) seguendo l'orbita finche' non si ripete (Floyd non serve: memoria esplicita)."""
+    """d_B(lam) seguendo l'orbita finche' non si ripete (memoria esplicita)."""
     visti, orbita, cur = {}, [], lam
     while cur not in visti:
         visti[cur] = len(orbita)

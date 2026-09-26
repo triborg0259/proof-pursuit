@@ -20,7 +20,7 @@ def descrivi(lam, k):
 
 
 if __name__ == "__main__":
-    k = int(sys.argv[1])
+    k = int(sys.argv[1]) if len(sys.argv) > 1 else 6
     lam = tuple([k - 1, k - 2] + list(range(k - 2, 0, -1)) + [1])
     for j in range(k * k - 2 * k + 2):
         piene, dk, oltre = descrivi(lam, k)
