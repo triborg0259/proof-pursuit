@@ -57,7 +57,7 @@ a laptop, and it is rigorous: exact or interval arithmetic, or an
 argument that bounds the numerical error. Say clearly which cells you
 consider solved and which are partial.
 
-\subsection{Cella 1 (1 punti) — stato: in corso}
+\subsection{Cella 1 (1 punti) — stato: revisionato}
 \subparagraph{Parte 1 --- Lines in the
 plane}\label{parte-1-lines-in-the-plane}
 
@@ -72,18 +72,189 @@ S(\ell_1, \ldots, \ell_N) \;\le\; \frac{\pi}{2} \cdot \left\lfloor \frac{N^2}{4}
 
 \textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Let l\_1..l\_N be lines through the origin in R\textasciicircum{}2. Prove S(l\_1..l\_N) = sum\_\{i\textless{}j\} theta(l\_i,l\_j) \textless{}= (pi/2) * floor(N\textasciicircum{}2/4).}
 
-\textbf{Evidenza registrata in STATUS.md.} E1: max numerico = target per N≤10; prova via argomento di Crofton abbozzata (note.md, E), da scrivere e revisionare; definizione di \$S\$ confermata dal preambolo
+\textbf{Evidenza registrata in STATUS.md.} prova completa (semigiro casuale, argomento E) scritta a mano; Referee READY\_FOR\_HUMAN (A PASS, B PASS); approvata; submission/parte-1.md
 
 \subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
+\paragraph{Problema 1 --- Parte 1 --- bozza di
+consegna}\label{problema-1-parte-1-bozza-di-consegna}
+
+\textbf{Stato dichiarato: RISOLTA (approvata).} Prova completa scritta
+dal team; Referee automatico READY\_FOR\_HUMAN (giudice A matematica
+PASS, giudice B evidenze PASS); approvazione umana registrata in
+\texttt{runs/p1\_c1/approval.json}.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+Somma degli angoli fra rette nel piano: l'enunciato della parte è
+dimostrato integralmente, nella generalità richiesta (vedi la prova per
+le ipotesi esatte). Nessun calcolo al computer è necessario.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+\paragraph{\texorpdfstring{Cell 1: the sum of the angles between \(N\)
+lines in the
+plane}{Cell 1: the sum of the angles between N lines in the plane}}\label{cell-1-the-sum-of-the-angles-between-n-lines-in-the-plane}
+
+\textbf{Target.} For lines \(\ell_1,\dots,\ell_N\) through the origin of
+\(\mathbb R^2\) (repetitions allowed),
+\(S=\sum_{i<j}\theta(\ell_i,\ell_j)\le \frac{\pi}{2}\left\lfloor \frac{N^2}{4}\right\rfloor\),
+where \(\theta(\ell,\ell')=\arccos|\langle x,x'\rangle|\) for unit
+vectors \(x,x'\) spanning \(\ell,\ell'\).
+
+\subparagraph{1. Directions and angles}\label{directions-and-angles}
+
+Every line \(\ell\) through the origin of \(\mathbb R^2\) is spanned by
+exactly one unit vector of the form \((\cos t,\sin t)\) with
+\(t\in[0,\pi)\) (the two unit vectors of \(\ell\) are
+\(\pm(\cos t,\sin t)\), and exactly one of the two angles \(t,t+\pi\)
+lies in \([0,\pi)\)). Call \(t=\tau(\ell)\) the \emph{direction} of
+\(\ell\). For two lines with directions \(t,t'\in[0,\pi)\) we have
+\(\langle(\cos t,\sin t),(\cos t',\sin t')\rangle=\cos(t-t')\), hence
+\(\theta(\ell,\ell')=\arccos|\cos(t-t')|\). Put \(u=|t-t'|\in[0,\pi)\).
+If \(u\le\pi/2\) then \(\cos u\ge 0\), so \(|\cos u|=\cos u\) and
+\(\arccos(\cos u)=u\) because \(u\in[0,\pi]\). If \(u>\pi/2\) then
+\(\cos u<0\), so \(|\cos u|=-\cos u=\cos(\pi-u)\) with
+\(\pi-u\in(0,\pi/2)\), and \(\arccos(\cos(\pi-u))=\pi-u\). In both cases
+\[\theta(\ell,\ell')=\min(u,\pi-u),\qquad u=|\tau(\ell)-\tau(\ell')|.\tag{1}\]
+Coincident lines have \(u=0\) and angle \(0\), as they should. Note also
+that \(\min(u,\pi-u)\) is unchanged if \(u\) is replaced by \(\pi-u\),
+so (1) also holds with \(u=(\tau(\ell')-\tau(\ell))\bmod\pi\) (the
+representative in \([0,\pi)\)): indeed this quantity equals \(|t-t'|\)
+or \(\pi-|t-t'|\).
+
+\subparagraph{2. A random half-turn of
+directions}\label{a-random-half-turn-of-directions}
+
+For \(x\in\mathbb R\) write \(x\bmod\pi\) for the unique representative
+of \(x+\pi\mathbb Z\) in \([0,\pi)\). For \(\psi\in[0,\pi)\) define
+\[A_\psi=\{t\in[0,\pi):\ (t-\psi)\bmod\pi\in[0,\pi/2)\}.\] Let \(\psi\)
+be a random variable with the uniform distribution on \([0,\pi)\),
+i.e.~\(\Pr[\psi\in B]=|B|/\pi\) for every Borel set
+\(B\subseteq[0,\pi)\), where \(|B|\) is Lebesgue measure.
+
+\textbf{Lemma 1.} For fixed \(t,t'\in[0,\pi)\) let \(u=(t'-t)\bmod\pi\)
+and \(\varphi=\min(u,\pi-u)\). Then
+\[\Pr\big[\text{exactly one of } t,t' \text{ lies in } A_\psi\big]=\frac{2\varphi}{\pi}.\]
+
+\emph{Proof.} Step 1 (reduction to \(t=0\)). Put
+\(\psi'=(\psi-t)\bmod\pi\). The map \(x\mapsto(x-t)\bmod\pi\) is a
+bijection of \([0,\pi)\) onto itself which is a translation on each of
+the two pieces \([0,t)\) and \([t,\pi)\), hence it preserves Lebesgue
+measure; therefore \(\psi'\) is again uniform on \([0,\pi)\). Moreover
+\((t-\psi)\bmod\pi=(-(\psi-t))\bmod\pi=(-\psi')\bmod\pi=(0-\psi')\bmod\pi\)
+and \((t'-\psi)\bmod\pi=((t'-t)-(\psi-t))\bmod\pi=(u-\psi')\bmod\pi\).
+Hence \(t\in A_\psi\iff 0\in A_{\psi'}\) and
+\(t'\in A_\psi\iff u\in A_{\psi'}\). So it suffices to prove the claim
+for the pair \((0,u)\) with \(u\in[0,\pi)\) and a uniform \(\psi\) (we
+rename \(\psi'\) as \(\psi\)).
+
+Step 2 (the two sets). For \(s\in[0,\pi)\) let
+\(J_s=\{\psi\in[0,\pi): s\in A_\psi\}=\{\psi: (s-\psi)\bmod\pi<\pi/2\}\).
+Since \(s-\psi\in(-\pi,\pi)\): if \(\psi\le s\) then
+\((s-\psi)\bmod\pi=s-\psi\) and the condition reads \(\psi>s-\pi/2\); if
+\(\psi>s\) then \((s-\psi)\bmod\pi=s-\psi+\pi\) and the condition reads
+\(\psi>s+\pi/2\). Therefore
+\[J_s=\big(\max(0,s-\tfrac{\pi}{2}),\,s\big]\ \cup\ \big(s+\tfrac{\pi}{2},\,\pi\big)\cap[0,\pi),\]
+where the second interval is empty when \(s+\pi/2\ge\pi\). In particular
+\(|J_s|=\pi/2\) for every \(s\): if \(s<\pi/2\) the two pieces have
+lengths \(s\) and \(\pi/2-s\); if \(s\ge\pi/2\) the first piece has
+length \(\pi/2\) and the second is empty. For \(s=0\) the first piece is
+\(\{0\}\) (measure \(0\)) and \(J_0=\{0\}\cup(\pi/2,\pi)\).
+
+Step 3 (the symmetric difference). The event ``exactly one of \(0,u\)
+lies in \(A_\psi\)'' is \(\{\psi\in J_0\triangle J_u\}\), and
+\(|J_0\triangle J_u|=|J_0|+|J_u|-2|J_0\cap J_u|=\pi-2|J_0\cap J_u|\).
+\emph{Case \(u\le\pi/2\).} Then \(J_u=(0,u]\cup(u+\pi/2,\pi)\) (the
+second piece is empty if \(u=\pi/2\)). Up to the null set \(\{0\}\),
+\(J_0=(\pi/2,\pi)\); since \(u\le\pi/2\),
+\((0,u]\cap(\pi/2,\pi)=\emptyset\), so \(J_0\cap J_u=(u+\pi/2,\pi)\) up
+to a null set, of measure \(\pi/2-u\). Hence
+\(|J_0\triangle J_u|=\pi-2(\pi/2-u)=2u=2\varphi\). \emph{Case
+\(u>\pi/2\).} Then \(u+\pi/2>\pi\), so \(J_u=(u-\pi/2,u]\) with
+\(0<u-\pi/2<\pi/2\). Thus
+\(J_0\cap J_u=(\pi/2,\pi)\cap(u-\pi/2,u]=(\pi/2,u]\) up to a null set,
+of measure \(u-\pi/2\). Hence
+\(|J_0\triangle J_u|=\pi-2(u-\pi/2)=2(\pi-u)=2\varphi\). In both cases
+the probability is \(|J_0\triangle J_u|/\pi=2\varphi/\pi\). \(\square\)
+
+\subparagraph{\texorpdfstring{3. Counting the pairs separated by
+\(A_\psi\)}{3. Counting the pairs separated by A\_\textbackslash psi}}\label{counting-the-pairs-separated-by-a_psi}
+
+Let \(t_i=\tau(\ell_i)\) and, for \(\psi\in[0,\pi)\),
+\(k_\psi=\#\{i: t_i\in A_\psi\}\in\{0,1,\dots,N\}\). A pair \(\{i,j\}\)
+has exactly one member with direction in \(A_\psi\) if and only if one
+index is among the \(k_\psi\) ``inside'' indices and the other among the
+\(N-k_\psi\) ``outside'' indices; hence the number of such pairs is
+exactly \(k_\psi(N-k_\psi)\). Writing \(X_{ij}(\psi)\) for the indicator
+of the event of Lemma 1 for the pair \((t_i,t_j)\), we have
+\(k_\psi(N-k_\psi)=\sum_{i<j}X_{ij}(\psi)\) for every \(\psi\) (each
+\(X_{ij}\) is the indicator of a finite union of intervals, so
+everything is measurable), and by linearity of expectation, Lemma 1 and
+(1),
+\[\mathbb E\big[k_\psi(N-k_\psi)\big]=\sum_{i<j}\Pr[X_{ij}=1]=\sum_{i<j}\frac{2}{\pi}\theta(\ell_i,\ell_j)=\frac{2}{\pi}S.\tag{2}\]
+
+\subparagraph{4. Conclusion}\label{conclusion}
+
+For every integer \(k\) we have \(N^2-4k(N-k)=(N-2k)^2\ge0\), so
+\(k(N-k)\le N^2/4\); as \(k(N-k)\) is an integer,
+\(k(N-k)\le\lfloor N^2/4\rfloor\). Applying this to \(k=k_\psi\) for
+every \(\psi\) and taking expectations, (2) gives
+\[S=\frac{\pi}{2}\,\mathbb E\big[k_\psi(N-k_\psi)\big]\le\frac{\pi}{2}\left\lfloor\frac{N^2}{4}\right\rfloor.\qquad\blacksquare\]
+
+\emph{Remark (not needed for the cell).} The bound is attained: put
+\(\lceil N/2\rceil\) lines along the \(x\)-axis and
+\(\lfloor N/2\rfloor\) along the \(y\)-axis; the only nonzero angles are
+the \(\lceil N/2\rceil\lfloor N/2\rfloor=\lfloor N^2/4\rfloor\) cross
+pairs, each equal to \(\pi/2\).
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Prova a mano, nessuna dipendenza. Verifica meccanica non necessaria; il
+Referee automatico (due giudici indipendenti,
+\texttt{runs/p1\_c1/attempts/packet\_001.json}) non ha trovato passaggi
+non giustificati.
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+\begin{itemize}
+\tightlist
+\item
+  arXiv:1801.07837 Bilyk, Matzke, On the Fejes Toth problem about the
+  sum of angles between lines (context only: the planar case is the only
+  settled case; the proof below is self-contained and does not use the
+  paper)
+\item
+  Posizione rispetto allo stato dell'arte: Bilyk-Matzke {[}1801.07837{]}
+  state that d=1 (the plane) is the only settled case and give several
+  proofs, one of which is a Stolarsky-type identity; our argument is of
+  the same nature but written independently and in full, so nothing is
+  cited as a black box. Lim-McCann {[}2007.08698{]} concern a
+  one-parameter deformation and are not used.
+\item
+  Contributo: la prova qui scritta è del team, per esteso.
+\end{itemize}
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Nessuna: la parte è dimostrata. Gap dichiarati: nessuno.
 
 \subsubsection{Decisioni degli agenti}
 \paragraph{Run \texttt{p1\_c1}}
+\begin{description}
+\item[Iterazione 1 — attempt\_001]
+\textbf{Researcher}: famiglia \texttt{direct\_proof}, sotto-obiettivo: Prove the planar bound by a random-half-turn (Crofton/Stolarsky-type) double counting: S = (pi/2) E[k(N-k)].. Stato dichiarato: \texttt{CELL\_SOLVED\_CANDIDATE}.
+\emph{Perché questa scelta}: The planar case admits an elementary integral-geometric proof: the angle between two lines is proportional to the probability that a random half-turn of directions separates them, and a separator splits N lines into k and N-k, so the sum is (pi/2) E[k(N-k)] \textless{}= (pi/2) floor(N\textasciicircum{}2/4). Chosen because it is short, exact, and needs no case analysis on the configuration.
+\emph{Rispetto allo stato dell'arte}: Bilyk-Matzke [1801.07837] state that d=1 (the plane) is the only settled case and give several proofs, one of which is a Stolarsky-type identity; our argument is of the same nature but written independently and in full, so nothing is cited as a black box. Lim-McCann [2007.08698] concern a one-parameter deformation and are not used.
+\textbf{Referee}: verdetto \texttt{UNKNOWN\_STATUS} (review\_status \texttt{READY\_FOR\_HUMAN}).
+\emph{Prossimo passo richiesto}: Human reviews the exact target, proof and evidence, then approves explicit claims
+\end{description}
 
 \subsubsection{Codice su cui poggia il tentativo}
 Nessun codice nei tentativi.
 
-\subsection{Cella 2 (2 punti) — stato: in corso}
+\subsection{Cella 2 (2 punti) — stato: revisionato}
 \subparagraph{Parte 2 --- An orthogonality
 lemma}\label{parte-2-an-orthogonality-lemma}
 
@@ -99,13 +270,166 @@ be orthogonal only to its immediate neighbours in the list. Let
 
 \textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Let m \textgreater{}= 2 and x\_1..x\_m unit vectors in R\textasciicircum{}\{m-1\} with \textless{}x\_i,x\_j\textgreater{} = 0 whenever |i-j| \textgreater{}= 2. Prove sum\_\{i=1\}\textasciicircum{}\{m-1\} theta(x\_i,x\_\{i+1\}) \textless{}= (m-2) pi/2, where theta(x,y) = arccos|\textless{}x,y\textgreater{}|.}
 
-\textbf{Evidenza registrata in STATUS.md.} prova per induzione abbozzata (note.md, F); casi m=2,3 verificati a mano
+\textbf{Evidenza registrata in STATUS.md.} prova completa per induzione con proiezione (argomento F); Referee READY\_FOR\_HUMAN (A PASS, B PASS); approvata; submission/parte-2.md
 
 \subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
+\paragraph{Problema 1 --- Parte 2 --- bozza di
+consegna}\label{problema-1-parte-2-bozza-di-consegna}
+
+\textbf{Stato dichiarato: RISOLTA (approvata).} Prova completa scritta
+dal team; Referee automatico READY\_FOR\_HUMAN (giudice A matematica
+PASS, giudice B evidenze PASS); approvazione umana registrata in
+\texttt{runs/p1\_c2/approval.json}.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+Lemma di ortogonalità per una catena di versori: l'enunciato della parte
+è dimostrato integralmente, nella generalità richiesta (vedi la prova
+per le ipotesi esatte). Nessun calcolo al computer è necessario.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+\paragraph{Cell 2: the orthogonality lemma for a chain of unit
+vectors}\label{cell-2-the-orthogonality-lemma-for-a-chain-of-unit-vectors}
+
+\textbf{Target.} Let \(m\ge2\) and let \(x_1,\dots,x_m\) be unit vectors
+in \(\mathbb R^{m-1}\) with \(\langle x_i,x_j\rangle=0\) whenever
+\(|i-j|\ge2\). Then
+\(\sum_{i=1}^{m-1}\theta(x_i,x_{i+1})\le(m-2)\frac{\pi}{2}\), where
+\(\theta(x,y)=\arccos|\langle x,y\rangle|\in[0,\pi/2]\).
+
+Write \(\theta_i=\theta(x_i,x_{i+1})\) for \(1\le i\le m-1\). We say
+that a list of unit vectors \(y_1,\dots,y_r\) in a Euclidean space \(V\)
+is a \emph{chain} if \(\langle y_i,y_j\rangle=0\) whenever
+\(|i-j|\ge2\). The statement to prove is: (P\(_m\)) every chain of \(m\)
+unit vectors in a Euclidean space of dimension \(m-1\) satisfies
+\(\sum_{i=1}^{m-1}\theta(y_i,y_{i+1})\le(m-2)\pi/2\). (Stating it for an
+arbitrary Euclidean space of dimension \(m-1\) instead of
+\(\mathbb R^{m-1}\) is harmless: choosing an orthonormal basis gives a
+linear isometry onto \(\mathbb R^{m-1}\), which preserves inner
+products, hence the chain condition and all the angles.)
+
+\subparagraph{Two elementary facts}\label{two-elementary-facts}
+
+\textbf{Fact A.} For \(\beta,\psi\in[0,\pi/2]\):
+\(\arccos(\cos\beta\cos\psi)\le\beta+\psi\). \emph{Proof.}
+\(\cos(\beta+\psi)=\cos\beta\cos\psi-\sin\beta\sin\psi\le\cos\beta\cos\psi\)
+because \(\sin\beta,\sin\psi\ge0\). Both \(\cos(\beta+\psi)\) and
+\(\cos\beta\cos\psi\) lie in \([-1,1]\) and \(\arccos\) is decreasing on
+\([-1,1]\), so
+\(\arccos(\cos\beta\cos\psi)\le\arccos(\cos(\beta+\psi))=\beta+\psi\),
+the last equality because \(\beta+\psi\in[0,\pi]\). \(\square\)
+
+\textbf{Fact B.} If \(V\) is a Euclidean space of dimension \(n\ge1\)
+and \(v_1,\dots,v_{n-1}\in V\) (possibly fewer vectors, possibly none),
+there is a unit vector \(y\in V\) orthogonal to all of them.
+\emph{Proof.} The orthogonal complement of
+\(\mathrm{span}(v_1,\dots,v_{n-1})\) in \(V\) has dimension
+\(\ge n-(n-1)=1\), so it contains a nonzero vector; normalise it.
+\(\square\)
+
+\subparagraph{\texorpdfstring{Induction on
+\(m\)}{Induction on m}}\label{induction-on-m}
+
+\textbf{Base \(m=2\).} \(x_1,x_2\) are unit vectors in a
+\(1\)-dimensional space, so \(x_2=\pm x_1\),
+\(|\langle x_1,x_2\rangle|=1\) and
+\(\theta_1=\arccos 1=0\le0=(m-2)\pi/2\).
+
+\textbf{Step.} Let \(m\ge3\) and assume (P\(_{m-1}\)). Let
+\(x_1,\dots,x_m\) be a chain of unit vectors in a Euclidean space \(W\)
+of dimension \(m-1\). Put
+\(U=x_m^{\perp}=\{v\in W:\langle v,x_m\rangle=0\}\), a subspace of
+dimension \(m-2\). For \(j\le m-2\) we have \(|j-m|\ge2\), hence
+\(\langle x_j,x_m\rangle=0\): so \(x_1,\dots,x_{m-2}\in U\). Let
+\(c=\langle x_{m-1},x_m\rangle\in[-1,1]\) and \(w=x_{m-1}-c\,x_m\). Then
+\(\langle w,x_m\rangle=c-c=0\), so \(w\in U\), and
+\(\|w\|^2=1-2c^2+c^2=1-c^2\).
+
+\emph{Case 1: \(|c|<1\).} Then \(w\neq0\); let \(y=w/\|w\|\), a unit
+vector of \(U\). For \(j\le m-3\) we have \(|j-(m-1)|\ge2\) and
+\(|j-m|\ge2\), so
+\(\langle y,x_j\rangle=(\langle x_{m-1},x_j\rangle-c\langle x_m,x_j\rangle)/\|w\|=0\).
+Consequently \(x_1,\dots,x_{m-2},y\) is a chain of \(m-1\) unit vectors
+in \(U\) (pairs among \(x_1,\dots,x_{m-2}\) inherit the chain condition
+from the original chain; the pairs \((x_j,y)\) with \(j\le m-3\),
+i.e.~\(|j-(m-1)|\ge2\) in the new indexing, were just checked). Since
+\(\dim U=m-2\), (P\(_{m-1}\)) gives
+\[\sum_{i=1}^{m-3}\theta_i+\psi\le(m-3)\frac{\pi}{2},\qquad\text{where }\psi=\theta(x_{m-2},y)\in[0,\pi/2].\tag{3}\]
+(For \(m=3\) the sum is empty and (3) says \(\psi\le0\),
+i.e.~\(\psi=0\), which is indeed what (P\(_2\)) gives for the chain
+\(x_1,y\) in the \(1\)-dimensional space \(U\).) Now
+\(x_{m-1}=w+c\,x_m=\|w\|\,y+c\,x_m\). Let
+\(\varphi=\theta_{m-1}=\theta(x_{m-1},x_m)=\arccos|c|\), so
+\(|c|=\cos\varphi\), \(\|w\|=\sqrt{1-c^2}=\sin\varphi\) and
+\(\varphi\in(0,\pi/2]\). Using \(\langle x_{m-2},x_m\rangle=0\),
+\[\langle x_{m-2},x_{m-1}\rangle=\|w\|\langle x_{m-2},y\rangle+c\langle x_{m-2},x_m\rangle=\sin\varphi\,\langle x_{m-2},y\rangle,\]
+so
+\(|\langle x_{m-2},x_{m-1}\rangle|=\sin\varphi\cos\psi=\cos\beta\cos\psi\)
+with \(\beta=\pi/2-\varphi\in[0,\pi/2)\). By Fact A,
+\[\theta_{m-2}=\arccos(\cos\beta\cos\psi)\le\beta+\psi=\frac{\pi}{2}-\varphi+\psi,\qquad\text{i.e.}\qquad \theta_{m-2}+\theta_{m-1}\le\frac{\pi}{2}+\psi.\]
+Adding this to (3):
+\(\sum_{i=1}^{m-1}\theta_i\le(m-3)\frac{\pi}{2}-\psi+\frac{\pi}{2}+\psi=(m-2)\frac{\pi}{2}\).
+
+\emph{Case 2: \(|c|=1\), i.e.~\(x_{m-1}=\pm x_m\).} Then
+\(\theta_{m-1}=\arccos1=0\), and
+\(\langle x_{m-2},x_{m-1}\rangle=\pm\langle x_{m-2},x_m\rangle=0\), so
+\(\theta_{m-2}=\arccos0=\pi/2\). By Fact B applied to \(V=U\) (dimension
+\(m-2\ge1\)) and the \(m-3\) vectors \(x_1,\dots,x_{m-3}\), there is a
+unit vector \(y\in U\) with \(\langle y,x_j\rangle=0\) for all
+\(j\le m-3\). Then \(x_1,\dots,x_{m-2},y\) is a chain of \(m-1\) unit
+vectors in \(U\) (same verification as in Case 1), and (P\(_{m-1}\))
+gives
+\(\sum_{i=1}^{m-3}\theta_i+\theta(x_{m-2},y)\le(m-3)\frac{\pi}{2}\),
+hence \(\sum_{i=1}^{m-3}\theta_i\le(m-3)\frac{\pi}{2}\) because
+\(\theta(x_{m-2},y)\ge0\). Therefore
+\[\sum_{i=1}^{m-1}\theta_i=\sum_{i=1}^{m-3}\theta_i+\frac{\pi}{2}+0\le(m-2)\frac{\pi}{2}.\]
+
+In both cases (P\(_m\)) holds, which completes the induction.
+\(\blacksquare\)
+
+\emph{Remark (not needed).} For \(m=3\) the argument shows
+\(\theta_1+\theta_2=\pi/2\) always; for general \(m\) equality is
+attained e.g.~by \(x_i=e_i\) (\(i\le m-1\)), \(x_m=e_{m-1}\), where all
+consecutive angles are \(\pi/2\) except the last, which is \(0\).
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Prova a mano, nessuna dipendenza. Verifica meccanica non necessaria; il
+Referee automatico (due giudici indipendenti,
+\texttt{runs/p1\_c2/attempts/packet\_001.json}) non ha trovato passaggi
+non giustificati.
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+\begin{itemize}
+\tightlist
+\item
+  Nessuna fonte usata: prova autocontenuta.
+\item
+  Posizione rispetto allo stato dell'arte: No literature found for this
+  lemma specifically (arXiv search: angles between lines / Fejes Toth);
+  it is an elementary statement and is proved here from scratch.
+\item
+  Contributo: la prova qui scritta è del team, per esteso.
+\end{itemize}
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Nessuna: la parte è dimostrata. Gap dichiarati: nessuno.
 
 \subsubsection{Decisioni degli agenti}
 \paragraph{Run \texttt{p1\_c2}}
+\begin{description}
+\item[Iterazione 1 — attempt\_001]
+\textbf{Researcher}: famiglia \texttt{direct\_proof}, sotto-obiettivo: Prove the chain lemma by induction on m, projecting the penultimate vector onto the orthogonal complement of the last one and using the spherical triangle inequality arccos(cos b cos p) \textless{}= b + p.. Stato dichiarato: \texttt{CELL\_SOLVED\_CANDIDATE}.
+\emph{Perché questa scelta}: Induction on m is natural because removing the last vector and projecting the penultimate one onto x\_m\textasciicircum{}perp produces a chain one shorter in a space one dimension lower; the loss of angle in this projection is controlled exactly by the right-angle spherical triangle inequality. The degenerate case x\_\{m-1\} = +-x\_m is handled separately by choosing an auxiliary orthogonal unit vector.
+\emph{Rispetto allo stato dell'arte}: No literature found for this lemma specifically (arXiv search: angles between lines / Fejes Toth); it is an elementary statement and is proved here from scratch.
+\textbf{Referee}: verdetto \texttt{UNKNOWN\_STATUS} (review\_status \texttt{READY\_FOR\_HUMAN}).
+\emph{Prossimo passo richiesto}: Human reviews the exact target, proof and evidence, then approves explicit claims
+\end{description}
 
 \subsubsection{Codice su cui poggia il tentativo}
 Nessun codice nei tentativi.
@@ -1853,7 +2177,7 @@ if __name__ == "__main__":
 \end{lstlisting}
 \noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_7.py (python3, clean copy of the researcher sandbox): exit 0 in 60.5s; stdout: "seed 0: 88\textbackslash{}nseed 1: 88\textbackslash{}nseed 2: 88\textbackslash{}nseed 3: 88\textbackslash{}nseed 4: 88\textbackslash{}nseed 5: 88\textbackslash{}nseed 6: 88\textbackslash{}nseed 7: 88\textbackslash{}nmigliore: 88 valli: ['01001', '11100', '11010', '11111', '10011']\textbackslash{}nordine: 01001,11100,01000,11010,11111,01101,10100,10110,00110,00100,00111,01110,11001,01011,00001,11110,00010,10101,10011,10000,1100}
 
-\subsection{Cella 3 (3 punti) — stato: in analisi}
+\subsection{Cella 3 (3 punti) — stato: parziale}
 \subparagraph{\texorpdfstring{Parte 3 (C3) ---
 \(U(Q_6)\)}{Parte 3 (C3) --- U(Q\_6)}}\label{parte-3-c3-uq_6}
 
@@ -1863,10 +2187,86 @@ if __name__ == "__main__":
 
 \textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine U(Q\_6) exactly (64 vertices, 192 edges) and exhibit an optimal labelling in the required format. Checked on the value: it must be the true minimum, so a lower-bound proof (hand or certified computation \textless{} 10 min) is needed.}
 
-\textbf{Evidenza registrata in STATUS.md.} —
+\textbf{Evidenza registrata in STATUS.md.} valore candidato 204 =
 
 \subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
+\paragraph{Problema 2 --- Parte 3 --- bozza di consegna (valore per
+costruzione)}\label{problema-2-parte-3-bozza-di-consegna-valore-per-costruzione}
+
+\textbf{Stato dichiarato: PARZIALE.} Bound superiore per costruzione
+esplicita, contato esattamente; il bound inferiore (minimalità) NON è
+dimostrato. La cella è valutata sul valore: se il valore è il minimo
+vero, conta; lo dichiariamo come candidato, non come teorema.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+\(Q_6\): valore candidato \(204\) (\(=|E|+12\))
+
+Etichettatura (ordine crescente di etichetta, posizione \(i\) =
+coordinata \(i\)):
+
+\texttt{000000,111100,110011,001111,101010,011010,100110,010110,101001,011001,100101,010101,100000,010000,001000,111000,000100,110100,101100,011100,000010,110010,001110,111110,000001,110001,001101,111101,100011,010011,001011,111011,000111,110111,101111,011111,110000,101000,011000,100100,010100,001100,100010,010010,001010,111010,000110,110110,101110,011110,100001,010001,001001,111001,000101,110101,101101,011101,000011,101011,011011,100111,010111,111111}
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+\textbf{Costruzione ``a stelle''.} Sia \(R\) un insieme di vertici di
+peso pari a due a due a distanza di Hamming \(\ge4\) (un codice a
+distanza 4 fra le parole di peso pari; qui il lexicode). Non-picchi
+\(=R\cup\{\text{peso dispari}\}\), picchi \(=\) vertici pari fuori da
+\(R\). Etichette: prima \(R\) e i dispari non adiacenti a \(R\) (valli),
+poi i dispari adiacenti a una radice (ciascuno ha esattamente una radice
+vicina, perché due radici distano \(\ge4\)), infine i picchi. Ogni
+non-picco ha \(p=1\) (valle, oppure una sola radice come unico vicino
+minore); ogni picco ha tutti i \(d\) vicini minori con \(p=1\), quindi
+\(p=d\). Totale \(=(d+1)2^{d-1}-(d-1)|R|\): per \(d=3,4,5\) dà
+\(14,34,88\), cioè esattamente i minimi dimostrati nelle parti 1--2; per
+\(d=6,7,8\) dà \(204,464,1040\) con \(|R|=4,8,16\) (codici ottimi:
+\(A(5,3)=4\), \(A(6,3)=8\), \(A(7,3)=16\), Hamming).
+
+\textbf{Ottimalità dentro la famiglia (dimostrata).} Per
+un'etichettatura di questo tipo (picchi indipendenti, complemento
+foresta, \(p=1\) su tutti i non-picchi) il totale è \(|E|+c\) con \(c\)
+= numero di componenti della foresta, e \(c=(d-1)|P|-2^{d-1}(d-2)\) con
+\(P\) l'insieme dei picchi. Ridurre \(c\) richiede un insieme
+indipendente \(P\) più piccolo con complemento aciclico. Un insieme
+indipendente di \(Q_d\) di taglia \(2^{d-1}-s\) con \(s\) piccolo
+contiene al più un vertice della classe minoritaria (se \(B\) sono i
+vertici dispari di \(P\), \(|N(B)|\ge 2d-2\) per \(|B|\ge2\) e la taglia
+non torna); se \(P\) è tutto pari, il complemento è aciclico solo se i
+\(2^{d-1}-|P|\) vertici pari fuori da \(P\) sono a due a due a distanza
+\(\ge4\) (due pari a distanza 2 hanno due vicini dispari comuni: un
+4-ciclo), cioè formano un codice pari a distanza 4, di taglia al più
+\(A(d-1,3)\); se \(P\) contiene un dispari \(o\), il complemento
+contiene i \(d\) vicini pari di \(o\) e i vertici
+\(o\oplus e_i\oplus e_j\), che formano 6-cicli. Quindi nella famiglia il
+minimo di \(c\) è \(2^{d-1}-(d-1)A(d-1,3)\): \(12,16,16\) per
+\(d=6,7,8\). \textbf{Ciò che manca:} escludere etichettature fuori dalla
+famiglia (eccesso \(X>0\)), come fatto per \(d=5\) nella parte 2 con
+l'analisi dei casi.
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+\begin{verbatim}
+cd problema-2/esperimenti && python3 costruzione_stelle.py 6   # ricostruisce e conta (< 1 s ciascuno)
+\end{verbatim}
+
+Conteggio con \texttt{conta\_cammini.py} (interi esatti). Ricottura di
+controllo (\texttt{ricottura\_controllo.py}): vedi
+\texttt{ricottura\_q*.log}.
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+Costruzione e argomento interamente nostri; codici a distanza 4 standard
+(lexicode/Hamming). Nessuna citazione usata.
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Bound inferiore generale non dimostrato: il valore è un candidato
+motivato (coincide con i minimi noti per \(d\le5\) e, per \(d=9\), con
+\(|R|=20\) la stessa formula dà \(2400\), il bound superiore noto agli
+organizzatori).
 
 \subsubsection{Decisioni degli agenti}
 \paragraph{Run \texttt{p2\_c3}}
@@ -1874,7 +2274,7 @@ Nessuna bozza di consegna ancora scritta.
 \subsubsection{Codice su cui poggia il tentativo}
 Nessun codice nei tentativi.
 
-\subsection{Cella 4 (5 punti) — stato: in analisi}
+\subsection{Cella 4 (5 punti) — stato: parziale}
 \subparagraph{\texorpdfstring{Parte 4 (C4) --- \(U(Q_7)\) and
 \(U(Q_8)\)}{Parte 4 (C4) --- U(Q\_7) and U(Q\_8)}}\label{parte-4-c4-uq_7-and-uq_8}
 
@@ -1886,10 +2286,93 @@ and \(U(Q_8)\).
 
 \textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine U(Q\_7) and U(Q\_8) exactly, each with an explicit optimal labelling in the required format. Checked on the values: lower-bound proofs needed.}
 
-\textbf{Evidenza registrata in STATUS.md.} —
+\textbf{Evidenza registrata in STATUS.md.} valori candidati 464 =
 
 \subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
+\paragraph{Problema 2 --- Parte 4 --- bozza di consegna (valore per
+costruzione)}\label{problema-2-parte-4-bozza-di-consegna-valore-per-costruzione}
+
+\textbf{Stato dichiarato: PARZIALE.} Bound superiore per costruzione
+esplicita, contato esattamente; il bound inferiore (minimalità) NON è
+dimostrato. La cella è valutata sul valore: se il valore è il minimo
+vero, conta; lo dichiariamo come candidato, non come teorema.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+\(Q_7\): valore candidato \(464\) (\(=|E|+16\))
+
+Etichettatura (ordine crescente di etichetta, posizione \(i\) =
+coordinata \(i\)):
+
+\texttt{0000000,1111000,1100110,0011110,1010101,0101101,0110011,1001011,0110100,1001100,1010010,0101010,1100001,0011001,0000111,1111111,1000000,0100000,0010000,1110000,0001000,1101000,1011000,0111000,0000100,1100100,1010100,0101100,0011100,1111100,0000010,1100010,0110010,1001010,0011010,1111010,1000110,0100110,0010110,1110110,0001110,1101110,1011110,0111110,0000001,1010001,0110001,1001001,0101001,1111001,1000101,0100101,0010101,1110101,0001101,1101101,1011101,0111101,1000011,0100011,0010011,1110011,0001011,1101011,1011011,0111011,1100111,1010111,0110111,1001111,0101111,0011111,1100000,1010000,0110000,1001000,0101000,0011000,1000100,0100100,0010100,1110100,0001100,1101100,1011100,0111100,1000010,0100010,0010010,1110010,0001010,1101010,1011010,0111010,0000110,1010110,0110110,1001110,0101110,1111110,1000001,0100001,0010001,1110001,0001001,1101001,1011001,0111001,0000101,1100101,0110101,1001101,0011101,1111101,0000011,1100011,1010011,0101011,0011011,1111011,1000111,0100111,0010111,1110111,0001111,1101111,1011111,0111111}
+
+\(Q_8\): valore candidato \(1040\) (\(=|E|+16\))
+
+Etichettatura (ordine crescente di etichetta, posizione \(i\) =
+coordinata \(i\)):
+
+\texttt{00000000,11110000,11001100,00111100,10101010,01011010,01100110,10010110,01101001,10011001,10100101,01010101,11000011,00110011,00001111,11111111,10000000,01000000,00100000,11100000,00010000,11010000,10110000,01110000,00001000,11001000,10101000,01101000,10011000,01011000,00111000,11111000,00000100,11000100,10100100,01100100,10010100,01010100,00110100,11110100,10001100,01001100,00101100,11101100,00011100,11011100,10111100,01111100,00000010,11000010,10100010,01100010,10010010,01010010,00110010,11110010,10001010,01001010,00101010,11101010,00011010,11011010,10111010,01111010,10000110,01000110,00100110,11100110,00010110,11010110,10110110,01110110,00001110,11001110,10101110,01101110,10011110,01011110,00111110,11111110,00000001,11000001,10100001,01100001,10010001,01010001,00110001,11110001,10001001,01001001,00101001,11101001,00011001,11011001,10111001,01111001,10000101,01000101,00100101,11100101,00010101,11010101,10110101,01110101,00001101,11001101,10101101,01101101,10011101,01011101,00111101,11111101,10000011,01000011,00100011,11100011,00010011,11010011,10110011,01110011,00001011,11001011,10101011,01101011,10011011,01011011,00111011,11111011,00000111,11000111,10100111,01100111,10010111,01010111,00110111,11110111,10001111,01001111,00101111,11101111,00011111,11011111,10111111,01111111,11000000,10100000,01100000,10010000,01010000,00110000,10001000,01001000,00101000,11101000,00011000,11011000,10111000,01111000,10000100,01000100,00100100,11100100,00010100,11010100,10110100,01110100,00001100,10101100,01101100,10011100,01011100,11111100,10000010,01000010,00100010,11100010,00010010,11010010,10110010,01110010,00001010,11001010,01101010,10011010,00111010,11111010,00000110,11000110,10100110,01010110,00110110,11110110,10001110,01001110,00101110,11101110,00011110,11011110,10111110,01111110,10000001,01000001,00100001,11100001,00010001,11010001,10110001,01110001,00001001,11001001,10101001,01011001,00111001,11111001,00000101,11000101,01100101,10010101,00110101,11110101,10001101,01001101,00101101,11101101,00011101,11011101,10111101,01111101,00000011,10100011,01100011,10010011,01010011,11110011,10001011,01001011,00101011,11101011,00011011,11011011,10111011,01111011,10000111,01000111,00100111,11100111,00010111,11010111,10110111,01110111,11001111,10101111,01101111,10011111,01011111,00111111}
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+\textbf{Costruzione ``a stelle''.} Sia \(R\) un insieme di vertici di
+peso pari a due a due a distanza di Hamming \(\ge4\) (un codice a
+distanza 4 fra le parole di peso pari; qui il lexicode). Non-picchi
+\(=R\cup\{\text{peso dispari}\}\), picchi \(=\) vertici pari fuori da
+\(R\). Etichette: prima \(R\) e i dispari non adiacenti a \(R\) (valli),
+poi i dispari adiacenti a una radice (ciascuno ha esattamente una radice
+vicina, perché due radici distano \(\ge4\)), infine i picchi. Ogni
+non-picco ha \(p=1\) (valle, oppure una sola radice come unico vicino
+minore); ogni picco ha tutti i \(d\) vicini minori con \(p=1\), quindi
+\(p=d\). Totale \(=(d+1)2^{d-1}-(d-1)|R|\): per \(d=3,4,5\) dà
+\(14,34,88\), cioè esattamente i minimi dimostrati nelle parti 1--2; per
+\(d=6,7,8\) dà \(204,464,1040\) con \(|R|=4,8,16\) (codici ottimi:
+\(A(5,3)=4\), \(A(6,3)=8\), \(A(7,3)=16\), Hamming).
+
+\textbf{Ottimalità dentro la famiglia (dimostrata).} Per
+un'etichettatura di questo tipo (picchi indipendenti, complemento
+foresta, \(p=1\) su tutti i non-picchi) il totale è \(|E|+c\) con \(c\)
+= numero di componenti della foresta, e \(c=(d-1)|P|-2^{d-1}(d-2)\) con
+\(P\) l'insieme dei picchi. Ridurre \(c\) richiede un insieme
+indipendente \(P\) più piccolo con complemento aciclico. Un insieme
+indipendente di \(Q_d\) di taglia \(2^{d-1}-s\) con \(s\) piccolo
+contiene al più un vertice della classe minoritaria (se \(B\) sono i
+vertici dispari di \(P\), \(|N(B)|\ge 2d-2\) per \(|B|\ge2\) e la taglia
+non torna); se \(P\) è tutto pari, il complemento è aciclico solo se i
+\(2^{d-1}-|P|\) vertici pari fuori da \(P\) sono a due a due a distanza
+\(\ge4\) (due pari a distanza 2 hanno due vicini dispari comuni: un
+4-ciclo), cioè formano un codice pari a distanza 4, di taglia al più
+\(A(d-1,3)\); se \(P\) contiene un dispari \(o\), il complemento
+contiene i \(d\) vicini pari di \(o\) e i vertici
+\(o\oplus e_i\oplus e_j\), che formano 6-cicli. Quindi nella famiglia il
+minimo di \(c\) è \(2^{d-1}-(d-1)A(d-1,3)\): \(12,16,16\) per
+\(d=6,7,8\). \textbf{Ciò che manca:} escludere etichettature fuori dalla
+famiglia (eccesso \(X>0\)), come fatto per \(d=5\) nella parte 2 con
+l'analisi dei casi.
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+\begin{verbatim}
+cd problema-2/esperimenti && python3 costruzione_stelle.py 7 8   # ricostruisce e conta (< 1 s ciascuno)
+\end{verbatim}
+
+Conteggio con \texttt{conta\_cammini.py} (interi esatti). Ricottura di
+controllo (\texttt{ricottura\_controllo.py}): vedi
+\texttt{ricottura\_q*.log}.
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+Costruzione e argomento interamente nostri; codici a distanza 4 standard
+(lexicode/Hamming). Nessuna citazione usata.
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Bound inferiore generale non dimostrato: il valore è un candidato
+motivato (coincide con i minimi noti per \(d\le5\) e, per \(d=9\), con
+\(|R|=20\) la stessa formula dà \(2400\), il bound superiore noto agli
+organizzatori).
 
 \subsubsection{Decisioni degli agenti}
 \paragraph{Run \texttt{p2\_c4}}
@@ -1912,7 +2395,7 @@ to the organisers are \[
 
 \textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Improve one of the known bounds 2368 \textless{}= U(Q\_9) \textless{}= 2400: either prove U(Q\_9) \textgreater{}= 2369, or exhibit a labelling of Q\_9 with at most 2399 uphill paths (its paths are counted mechanically).}
 
-\textbf{Evidenza registrata in STATUS.md.} via realistica: etichettatura \$\textbackslash{}le2399\$
+\textbf{Evidenza registrata in STATUS.md.} la costruzione a stelle con un codice (8,20,3) dà esattamente 2400: il bound noto è questa famiglia; per scendere serve una foresta non a stelle
 
 \subsubsection{Consegna (prova)}
 Nessuna bozza di consegna ancora scritta.
@@ -2981,7 +3464,7 @@ not count as a solution; a proof written out in full does, whatever its
 source. If you rely on a published argument, you are responsible for it:
 check it yourself, and report it if it does not hold up.
 
-\subsection{Cella 1 (1 punti) — stato: in analisi}
+\subsection{Cella 1 (1 punti) — stato: revisionato}
 \subparagraph{Parte 1 (C1) --- Three
 classes}\label{parte-1-c1-three-classes}
 
@@ -2993,18 +3476,116 @@ have \(\gcd(m_i, m_j) \ge 3\) for some \(i < j\).
 
 \textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Prove: any three pairwise disjoint congruence classes a\_i (mod m\_i) have gcd(m\_i,m\_j) \textgreater{}= 3 for some i \textless{} j.}
 
-\textbf{Evidenza registrata in STATUS.md.} prova a mano abbozzata (parità)
+\textbf{Evidenza registrata in STATUS.md.} prova completa (parità); Referee READY\_FOR\_HUMAN (A PASS, B PASS); approvata; submission/parte-1.md
 
 \subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
+\paragraph{Problema 4 --- Parte 1 --- bozza di
+consegna}\label{problema-4-parte-1-bozza-di-consegna}
+
+\textbf{Stato dichiarato: RISOLTA (approvata).} Prova completa scritta
+dal team; Referee automatico READY\_FOR\_HUMAN (giudice A matematica
+PASS, giudice B evidenze PASS); approvazione umana registrata in
+\texttt{runs/p4\_c1/approval.json}.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+Tre classi disgiunte: l'enunciato della parte è dimostrato
+integralmente, nella generalità richiesta (vedi la prova per le ipotesi
+esatte). Nessun calcolo al computer è necessario.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+\paragraph{\texorpdfstring{Cell 1: three pairwise disjoint classes have
+a pair of moduli with
+\(\gcd\ge3\)}{Cell 1: three pairwise disjoint classes have a pair of moduli with \textbackslash gcd\textbackslash ge3}}\label{cell-1-three-pairwise-disjoint-classes-have-a-pair-of-moduli-with-gcdge3}
+
+\textbf{Target.} If \(a_1\ (\mathrm{mod}\ m_1)\),
+\(a_2\ (\mathrm{mod}\ m_2)\), \(a_3\ (\mathrm{mod}\ m_3)\) are pairwise
+disjoint congruence classes (\(m_i\ge1\)), then \(\gcd(m_i,m_j)\ge3\)
+for some \(i<j\).
+
+\subparagraph{\texorpdfstring{Lemma 0 (the direction of \((*)\) that we
+use)}{Lemma 0 (the direction of (*) that we use)}}\label{lemma-0-the-direction-of-that-we-use}
+
+Let \(g=\gcd(m,m')\). If \(g\mid a-a'\) then the classes
+\(a\ (\mathrm{mod}\ m)\) and \(a'\ (\mathrm{mod}\ m')\) have a common
+element. Equivalently: if the two classes are disjoint then
+\(g\nmid a-a'\). \emph{Proof.} Write \(m=g\mu\), \(m'=g\mu'\) with
+\(\gcd(\mu,\mu')=1\), and \(a-a'=g\delta\) with \(\delta\in\mathbb Z\).
+An element of the first class has the form \(a+mt=a+g\mu t\),
+\(t\in\mathbb Z\); it lies in the second class iff
+\(m'\mid a+g\mu t-a'\), i.e.~\(g\mu'\mid g(\delta+\mu t)\),
+i.e.~\(\mu'\mid\delta+\mu t\). Since \(\gcd(\mu,\mu')=1\), \(\mu\) is
+invertible modulo \(\mu'\), so \(t\equiv-\delta\mu^{-1}\pmod{\mu'}\)
+solves it. \(\square\) (This is the statement \((*)\) quoted in the
+problem; we include the short proof so that the argument is
+self-contained.)
+
+\subparagraph{Proof of the cell}\label{proof-of-the-cell}
+
+Let the three classes be pairwise disjoint and suppose, for a
+contradiction, that \(\gcd(m_i,m_j)\le2\) for all three pairs. 1.
+\emph{Every pairwise gcd equals \(2\).} If \(\gcd(m_i,m_j)=1\) then
+\(1\mid a_i-a_j\), so by Lemma 0 the classes \(i\) and \(j\) meet,
+contradicting disjointness. Hence \(\gcd(m_i,m_j)=2\) for all \(i<j\).
+2. \emph{The residues are pairwise of different parity.} For \(i<j\),
+disjointness and Lemma 0 give \(\gcd(m_i,m_j)=2\nmid a_i-a_j\),
+i.e.~\(a_i\not\equiv a_j\pmod 2\). 3. \emph{Contradiction.}
+\(a_1,a_2,a_3\) would be three integers with pairwise different residues
+modulo \(2\); but there are only two residues modulo \(2\), so two of
+them coincide (pigeonhole).
+
+Hence the assumption fails: some pair satisfies \(\gcd(m_i,m_j)\ge3\).
+\(\blacksquare\)
+
+\emph{Remark.} Step 1 is the first ``trivial bound'' of the problem
+statement; it is re-derived here only because the argument needs the
+exact value \(2\) of every gcd, not merely \(\ge2\).
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Prova a mano, nessuna dipendenza. Verifica meccanica non necessaria; il
+Referee automatico (due giudici indipendenti,
+\texttt{runs/p4\_c1/attempts/packet\_001.json}) non ha trovato passaggi
+non giustificati.
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+\begin{itemize}
+\tightlist
+\item
+  arXiv:2607.24655 Fornal, Sun, On the problem of large gcd for disjoint
+  residue classes (context only: asymptotic result, not used)
+\item
+  Posizione rispetto allo stato dell'arte: Fornal-Sun {[}2607.24655{]}
+  prove an asymptotic lower bound for the largest gcd; the small cases
+  k=3,4 are elementary and are not treated there. Our proof is
+  independent.
+\item
+  Contributo: la prova qui scritta è del team, per esteso.
+\end{itemize}
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Nessuna: la parte è dimostrata. Gap dichiarati: nessuno.
 
 \subsubsection{Decisioni degli agenti}
 \paragraph{Run \texttt{p4\_c1}}
+\begin{description}
+\item[Iterazione 1 — attempt\_001]
+\textbf{Researcher}: famiglia \texttt{direct\_proof}, sotto-obiettivo: Prove the case k=3 by parity: all gcds would be 2, forcing pairwise distinct parities of three residues.. Stato dichiarato: \texttt{CELL\_SOLVED\_CANDIDATE}.
+\emph{Perché questa scelta}: For three classes the only escape from the conclusion is that every gcd equals 2; the disjointness criterion (*) then forces three pairwise different parities, which is impossible. The criterion (*) is re-proved in one paragraph so that the argument is self-contained.
+\emph{Rispetto allo stato dell'arte}: Fornal-Sun [2607.24655] prove an asymptotic lower bound for the largest gcd; the small cases k=3,4 are elementary and are not treated there. Our proof is independent.
+\textbf{Referee}: verdetto \texttt{UNKNOWN\_STATUS} (review\_status \texttt{READY\_FOR\_HUMAN}).
+\emph{Prossimo passo richiesto}: Human reviews the exact target, proof and evidence, then approves explicit claims
+\end{description}
 
 \subsubsection{Codice su cui poggia il tentativo}
 Nessun codice nei tentativi.
 
-\subsection{Cella 2 (2 punti) — stato: in analisi}
+\subsection{Cella 2 (2 punti) — stato: revisionato}
 \subparagraph{Parte 2 (C2) --- Four
 classes}\label{parte-2-c2-four-classes}
 
@@ -3014,13 +3595,128 @@ The same question for four classes. Prove the statement for \(k = 4\).
 
 \textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Prove the statement for k = 4: any four pairwise disjoint classes have a pair with gcd(m\_i,m\_j) \textgreater{}= 4.}
 
-\textbf{Evidenza registrata in STATUS.md.} schema "clique per primo" abbozzato
+\textbf{Evidenza registrata in STATUS.md.} prova completa (clique per primo, casi su \$
 
 \subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
+\paragraph{Problema 4 --- Parte 2 --- bozza di
+consegna}\label{problema-4-parte-2-bozza-di-consegna}
+
+\textbf{Stato dichiarato: RISOLTA (approvata).} Prova completa scritta
+dal team; Referee automatico READY\_FOR\_HUMAN (giudice A matematica
+PASS, giudice B evidenze PASS); approvazione umana registrata in
+\texttt{runs/p4\_c2/approval.json}.
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+Quattro classi disgiunte: l'enunciato della parte è dimostrato
+integralmente, nella generalità richiesta (vedi la prova per le ipotesi
+esatte). Nessun calcolo al computer è necessario.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+\paragraph{\texorpdfstring{Cell 2: four pairwise disjoint classes have a
+pair of moduli with
+\(\gcd\ge4\)}{Cell 2: four pairwise disjoint classes have a pair of moduli with \textbackslash gcd\textbackslash ge4}}\label{cell-2-four-pairwise-disjoint-classes-have-a-pair-of-moduli-with-gcdge4}
+
+\textbf{Target.} If \(a_i\ (\mathrm{mod}\ m_i)\), \(i=1,2,3,4\), are
+pairwise disjoint congruence classes (\(m_i\ge1\)), then
+\(\gcd(m_i,m_j)\ge4\) for some \(i<j\).
+
+\subparagraph{Lemma 0}\label{lemma-0}
+
+Let \(g=\gcd(m,m')\). If \(g\mid a-a'\) then the classes
+\(a\ (\mathrm{mod}\ m)\) and \(a'\ (\mathrm{mod}\ m')\) meet;
+equivalently, disjoint classes satisfy \(g\nmid a-a'\). \emph{Proof.}
+Write \(m=g\mu\), \(m'=g\mu'\) with \(\gcd(\mu,\mu')=1\) and
+\(a-a'=g\delta\). The element \(a+g\mu t\) of the first class lies in
+the second iff \(g\mu'\mid g(\delta+\mu t)\) iff
+\(\mu'\mid\delta+\mu t\), which has the solution
+\(t\equiv-\delta\mu^{-1}\pmod{\mu'}\) since \(\mu\) is invertible modulo
+\(\mu'\). \(\square\)
+
+\subparagraph{Proof of the cell}\label{proof-of-the-cell}
+
+Write \(g_{ij}=\gcd(m_i,m_j)\) for \(i\ne j\). Suppose, for a
+contradiction, that \(g_{ij}\le3\) for all pairs. By Lemma 0,
+\(g_{ij}=1\) is impossible for disjoint classes (\(1\mid a_i-a_j\)),
+hence \[g_{ij}\in\{2,3\}\quad\text{for all } i\ne j.\tag{1}\] Two
+consequences of (1) and Lemma 0, for \(i\ne j\): - (E) if \(2\mid m_i\)
+and \(2\mid m_j\), then \(2\mid g_{ij}\), so by (1) \(g_{ij}=2\), and
+disjointness gives \(2\nmid a_i-a_j\), i.e.~\(a_i\not\equiv a_j\pmod2\);
+- (T) if \(3\mid m_i\) and \(3\mid m_j\), then \(3\mid g_{ij}\), so
+\(g_{ij}=3\), and disjointness gives \(a_i\not\equiv a_j\pmod3\).
+
+Let \(E=\{i: 2\mid m_i\}\) and \(T=\{i:3\mid m_i\}\). \emph{Claim 1:
+\(|E|\le2\) and \(|T|\le3\).} By (E) the residues \(a_i\bmod2\),
+\(i\in E\), are pairwise distinct, and there are only \(2\) residues; by
+(T) the residues \(a_i\bmod3\), \(i\in T\), are pairwise distinct, and
+there are only \(3\) residues. \emph{Claim 2: \(E\cup T=\{1,2,3,4\}\).}
+Given \(i\), pick any \(j\ne i\); by (1) \(g_{ij}\in\{2,3\}\) and
+\(g_{ij}\mid m_i\), so \(2\mid m_i\) or \(3\mid m_i\). \emph{Claim 3:
+\(|T|\ge2\).} By Claims 1--2, \(|T|\ge4-|E|\ge2\).
+
+We now rule out the remaining sizes of \(T\). - \emph{\(|T|=4\).} Then
+all four residues \(a_i\bmod 3\) are pairwise distinct by (T),
+impossible with three residues. - \emph{\(|T|=3\).} Say \(T=\{1,2,3\}\)
+after relabelling, so \(3\nmid m_4\). For \(j\in T\):
+\(g_{4j}\in\{2,3\}\) and \(3\nmid g_{4j}\) (because \(g_{4j}\mid m_4\)),
+hence \(g_{4j}=2\), so \(2\mid m_j\). Thus \(2\mid m_1,m_2,m_3\); also
+\(2\mid m_4\) by Claim 2 (as \(3\nmid m_4\)). So \(|E|=4\),
+contradicting Claim 1. - \emph{\(|T|=2\).} By Claim 2 the two indices
+outside \(T\) lie in \(E\), so \(|E|\ge2\), hence \(|E|=2\) by Claim 1
+and \(E\) is exactly the complement of \(T\); in particular
+\(E\cap T=\emptyset\). Take \(i\in E\) and \(j\in T\). Then
+\(g_{ij}\in\{2,3\}\) by (1). But \(j\notin E\) means \(2\nmid m_j\), so
+\(2\nmid g_{ij}\) and \(g_{ij}\ne2\); and \(i\notin T\) means
+\(3\nmid m_i\), so \(3\nmid g_{ij}\) and \(g_{ij}\ne3\). Contradiction.
+
+Since \(|T|\ge2\) is forced by Claim 3, all cases lead to a
+contradiction. Hence some pair satisfies \(g_{ij}\ge4\).
+\(\blacksquare\)
+
+\emph{Remark (not needed).} The case \(|T|=3\) shows more generally the
+mechanism used: an index whose modulus misses a prime \(p\) forces all
+its gcds to avoid \(p\).
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Prova a mano, nessuna dipendenza. Verifica meccanica non necessaria; il
+Referee automatico (due giudici indipendenti,
+\texttt{runs/p4\_c2/attempts/packet\_001.json}) non ha trovato passaggi
+non giustificati.
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+\begin{itemize}
+\tightlist
+\item
+  arXiv:2607.24655 Fornal, Sun, On the problem of large gcd for disjoint
+  residue classes (context only: asymptotic result, not used)
+\item
+  Posizione rispetto allo stato dell'arte: Fornal-Sun {[}2607.24655{]}
+  use a gcd-coloured complete graph in the asymptotic regime; the same
+  graph viewpoint underlies our finite argument, but the proof here is
+  elementary and self-contained.
+\item
+  Contributo: la prova qui scritta è del team, per esteso.
+\end{itemize}
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+Nessuna: la parte è dimostrata. Gap dichiarati: nessuno.
 
 \subsubsection{Decisioni degli agenti}
 \paragraph{Run \texttt{p4\_c2}}
+\begin{description}
+\item[Iterazione 1 — attempt\_001]
+\textbf{Researcher}: famiglia \texttt{direct\_proof}, sotto-obiettivo: Prove the case k=4 by the 'prime cliques' argument: indices whose moduli share a prime p form a set on which residues mod p are pairwise distinct, so |E|\textless{}=2 for p=2 and |T|\textless{}=3 for p=3; a case analysis on |T| closes.. Stato dichiarato: \texttt{CELL\_SOLVED\_CANDIDATE}.
+\emph{Perché questa scelta}: With all gcds in \{2,3\}, each modulus is divisible by 2 or 3, and the indices divisible by a common prime p must carry pairwise distinct residues mod p; counting these residues bounds the sizes of the two 'prime cliques' and the remaining case analysis on their sizes is short and exhaustive.
+\emph{Rispetto allo stato dell'arte}: Fornal-Sun [2607.24655] use a gcd-coloured complete graph in the asymptotic regime; the same graph viewpoint underlies our finite argument, but the proof here is elementary and self-contained.
+\textbf{Referee}: verdetto \texttt{UNKNOWN\_STATUS} (review\_status \texttt{READY\_FOR\_HUMAN}).
+\emph{Prossimo passo richiesto}: Human reviews the exact target, proof and evidence, then approves explicit claims
+\end{description}
 
 \subsubsection{Codice su cui poggia il tentativo}
 Nessun codice nei tentativi.
