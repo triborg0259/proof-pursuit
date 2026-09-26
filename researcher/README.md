@@ -57,6 +57,22 @@ La cartella di lavoro del modello è sempre `runs/X/sandbox/`. Limiti: `--max-tu
 **Va lanciato da un terminale umano** (in Claude Code: prefisso `!`): un agente che lancia un altro agente con
 permessi pre-autorizzati viene bloccato dal classificatore di sicurezza di Claude Code, anche in `--dry-run`.
 
+## Ponte con il Referee (`bridge_referee.py`)
+Il Referee del team (pacchetto `referee/`, di gabundos) legge un `ReviewInput` e produce un `ReviewPacket`;
+il ponte traduce nei due sensi e archivia il verdetto come `researcher.py record`:
+```
+.venv/bin/python researcher/bridge_referee.py review --workdir runs/X            # Referee via CLI claude (abbonamento)
+.venv/bin/python researcher/bridge_referee.py review --workdir runs/X --offline  # solo controlli esatti, nessun modello
+.venv/bin/python researcher/bridge_referee.py to-review --workdir runs/X         # scrive solo review_input.json
+.venv/bin/python researcher/bridge_referee.py from-packet --workdir runs/X --packet packet.json
+```
+Mappatura: `final_verdict`→`verdict`, `first_fatal_error.detail`→`fatal_error`, `next_required_step`→`next_blocker`;
+`review_status` è conservato: **READY_FOR_HUMAN non è ACCEPT**, l'approvazione resta umana (`python -m referees approve`).
+L'enunciato protetto della cella è `cell_statement` in state.json (se manca, `current_blocker`).
+Il backend CLI (`CliBackend`) implementa il loro protocollo `JSONBackend` con `claude -p --json-schema`; il loro
+`ClaudeBackend` (SDK, chiave API) usa `tool_choice` forzato, che su Claude Fable 5.1 restituisce 400: usare Opus.
+Test: `.venv/bin/python tests/test_bridge_referee.py` (offline).
+
 ## Limiti noti
 - La similarità dei `fatal_error` è lessicale: un Referee che riformula lo stesso errore con parole diverse può
   ritardare la rilevazione della stagnazione (il Researcher può comunque impostare `request_creative` da solo).
