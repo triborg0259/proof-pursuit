@@ -32,7 +32,9 @@ sys.path.insert(0, str(HERE))
 
 from researcher import read_json, read_text, write_json, next_attempt_number, target_cell_from_state  # noqa: E402
 
-# Regole della competizione passate al Referee quando state.json non ne specifica di proprie.
+# Regole della competizione: file condiviso e sostituibile. NON e' il regolamento ufficiale.
+REGOLE_FILE = ROOT / "shared" / "competition_rules.example.json"
+# Ultima spiaggia se anche il file manca, per non bloccare una revisione.
 REGOLE_DEFAULT = {
     "allow_literature_as_proof": False,
     "allow_computation": True,
@@ -60,9 +62,43 @@ def _claim_verificati(state):
 
 
 def _dipendenze(attempt, verificati):
-    """Id dei claim verificati che il tentativo dichiara di usare (confronto esatto sul testo)."""
-    usati = set(attempt.get("claims_used", []))
-    return [c["id"] for c in verificati if c["statement"] in usati]
+    """Traduce `claims_used` in id di claim; ritorna (id delle dipendenze, claim extra da registrare).
+
+    Un claim usato che coincide con uno verificato punta a quello. Uno che NON coincide non è
+    verificato: diventa un claim del candidato (`dep_k`) invece di sparire in silenzio, così il
+    Referee ne valuta la provenienza e può segnalarlo come UNVERIFIED.
+    """
+    per_testo = {c["statement"]: c["id"] for c in verificati}
+    dipendenze, extra = [], []
+    for k, testo in enumerate(attempt.get("claims_used", []), start=1):
+        if testo in per_testo:
+            dipendenze.append(per_testo[testo])
+        else:
+            extra.append({"id": f"dep_{k}", "statement": testo, "depends_on": []})
+            dipendenze.append(f"dep_{k}")
+    return dipendenze, extra
+
+
+def _enunciato_cella(state, testo_problema, numero):
+    """Enunciato esatto del bersaglio protetto, nell'ordine: `cell_statement` in state.json,
+    riga `Cell N:` di problem.md, `current_blocker`.
+
+    Senza nessuno dei tre ci si ferma invece di usare un segnaposto: il Referee protegge questo
+    testo, e farlo giudicare su un bersaglio inventato produrrebbe un verdetto senza significato.
+    """
+    dal_problema = re.search(rf"^Cell\s+{numero}\s*:\s*(.+?)(?=\n\s*\n|\n#|\Z)", testo_problema or "",
+                             re.MULTILINE | re.DOTALL)
+    for fonte in (state.get("cell_statement"),
+                  " ".join(dal_problema.group(1).split()) if dal_problema else None,
+                  state.get("current_blocker")):
+        if fonte and fonte.strip():
+            return fonte.strip()
+    raise ValueError(f"Enunciato della cella {numero} assente: aggiungi cell_statement a state.json")
+
+
+def _regole(state):
+    """Regole passate al Referee: quelle di state.json se presenti, altrimenti il file condiviso."""
+    return state.get("rules") or read_json(REGOLE_FILE) or REGOLE_DEFAULT
 
 
 def _artefatti(attempt):
@@ -81,26 +117,27 @@ def _fonti(attempt):
 
 
 def costruisci_review_input(workdir: Path, attempt):
-    """Assembla il ReviewInput del Referee dal nostro contesto. L'enunciato della cella è `cell_statement`
-    in state.json se presente, altrimenti il blocker corrente: il Referee protegge quel testo esatto."""
+    """Assembla il ReviewInput del Referee dal nostro contesto (attempt.json + state.json + problem.md)."""
     state = read_json(workdir / "state.json") or {}
-    enunciato = state.get("cell_statement") or state.get("current_blocker") or "(cell statement missing)"
-    verificati = _claim_verificati(state)
+    testo_problema = read_text(workdir / "problem.md")
     numero_cella = target_cell_from_state(state)
+    enunciato = _enunciato_cella(state, testo_problema, numero_cella)
+    verificati = _claim_verificati(state)
+    dipendenze, extra = _dipendenze(attempt, verificati)
     return {
         "problem_id": state.get("problem_id", workdir.name),
-        "original_problem": read_text(workdir / "problem.md") or "(problem.md missing)",
+        "original_problem": testo_problema or enunciato,
         "cell": {"id": f"cell_{numero_cella}", "number": numero_cella, "target_claim_id": "main", "statement": enunciato},
         "state": {"highest_verified_cell": int(state.get("highest_verified_cell", 0)), "claims": verificati},
         "candidate": {
             "attempt_id": attempt["attempt_id"],
             "proof": attempt["proof_attempt"],
             "method_tag": attempt.get("approach_family", "other"),
-            "claims": [{"id": "main", "statement": enunciato, "depends_on": _dipendenze(attempt, verificati)}],
+            "claims": [{"id": "main", "statement": enunciato, "depends_on": dipendenze}] + extra,
             "sources": _fonti(attempt),
             "artifacts": _artefatti(attempt),
         },
-        "rules": state.get("rules") or REGOLE_DEFAULT,
+        "rules": _regole(state),
     }
 
 

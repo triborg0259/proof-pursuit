@@ -53,9 +53,11 @@ SHELL_MODES = {
 
 
 # =============================================================================== lettura/scrittura file
+# UTF-8 sempre esplicito: senza, Python usa l'encoding di sistema (cp1252 su Windows) e i caratteri
+# non-ASCII di enunciati, note e regole vengono letti corrotti o rifiutati in scrittura.
 def read_text(path: Path):
     """Ritorna il testo del file, oppure None se manca: i file di contesto sono tutti facoltativi."""
-    return path.read_text() if path.exists() else None
+    return path.read_text(encoding="utf-8") if path.exists() else None
 
 
 def read_json(path: Path):
@@ -64,7 +66,7 @@ def read_json(path: Path):
     if not path.exists():
         return None
     try:
-        return json.loads(path.read_text())
+        return json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as err:
         print(f"[researcher] WARN {path.name} non è JSON valido ({err}); ignorato", file=sys.stderr)
         return None
@@ -72,7 +74,7 @@ def read_json(path: Path):
 
 def write_json(path: Path, data):
     """Scrive JSON leggibile (indentato, accenti non escapati) così i collaboratori possono leggerlo su GitHub."""
-    path.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n")
+    path.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
 def default_state(problem_id: str):
@@ -394,7 +396,7 @@ def cmd_run(args):
 def append_failed_attempt(workdir: Path, number, report):
     """Aggiunge una riga leggibile a failed_attempts.md, così il prossimo prompt mostra cosa è già fallito e perché."""
     attempt = read_json(workdir / "attempts" / f"attempt_{number:03d}.json") or {}
-    with open(workdir / "failed_attempts.md", "a") as f:
+    with open(workdir / "failed_attempts.md", "a", encoding="utf-8") as f:
         f.write(f"- attempt_{number:03d} [{attempt.get('approach_family')}] {attempt.get('subgoal')}: "
                 f"{report.get('verdict')} — {report.get('fatal_error')}\n")
 

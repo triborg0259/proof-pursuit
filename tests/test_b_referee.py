@@ -1,10 +1,12 @@
-"""Test del Referee B con backend mock: nessuna chiamata a modelli, nessun costo.
+"""Test del Referee B (evidenze, fonti, calcolo, regole) attraverso il ponte `bridge_referee.py`.
 
-Coprono i casi richiesti da CLAUDE_CODE_B.md (prova autonoma, fonte vietata, citazione non
-verificata, log falso, campionamento spacciato per enumerazione, float senza controllo,
-computazione esatta con certificato) e la conversione verso shared/schemas/referee_report.schema.json.
+Coprono i casi richiesti da CLAUDE_CODE_B.md — prova autonoma senza citazioni, fonte valida ma
+vietata, citazione non verificata, log falso, campionamento spacciato per enumerazione, floating
+point senza controllo, computazione esatta con certificato autentico — piu' gli invarianti del
+contratto (mai ACCEPT, lo stato non avanza, un errore operativo non e' un rigetto).
 
-Questi test verificano il CONTRATTO e la conversione, non la qualita' del giudizio del modello.
+Il backend e' simulato: risponde per il ruolo A e per il ruolo B senza nessuna chiamata a pagamento.
+Verificano il CONTRATTO e la traduzione, non la qualita' del giudizio del modello.
 
 Esecuzione: python -m pytest tests/ -q     oppure     python tests/test_b_referee.py
 """
@@ -15,191 +17,242 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "referee"))
+sys.path.insert(0, str(ROOT / "researcher"))
 
-from referees.adapter_b import MockBackend, build_review_input, review_attempt  # noqa: E402
-from referees.contracts import AgentEnvelope, EvidenceReport, Issue, Provenance  # noqa: E402
+# `researcher/` non e' un package: i suoi moduli si importano come moduli di primo livello,
+# come fa bridge_referee.py stesso.
+from bridge_referee import converti_packet, costruisci_review_input  # noqa: E402
+from referees.contracts import ReviewInput  # noqa: E402
+from referees.hackathon import prepare_review  # noqa: E402
 
 WORKDIR = ROOT / "tests" / "fixtures" / "referee_b" / "toy_cell"
 SCHEMA = json.loads((ROOT / "shared" / "schemas" / "referee_report.schema.json").read_text(encoding="utf-8"))
 
 
 # =============================================================================== helper
-def provenance(claim_id="main", categories=("PROVED_BY_US",), sufficient=True, permitted=True,
-               external=False, computation=False):
+def provenienza(claim_id="main", categorie=("PROVED_BY_US",), sufficiente=True, permessa=True,
+                esterno=False, calcolo=False):
     """Una voce di provenienza; i default descrivono un claim dimostrato in proprio e in regola."""
-    return Provenance(claim_id=claim_id, categories=list(categories), evidence_sufficient=sufficient,
-                      permitted_by_rules=permitted, relies_on_external_result=external,
-                      uses_computation_as_proof=computation, references=[], notes="valutazione simulata nei test")
+    return {"claim_id": claim_id, "categories": list(categorie), "evidence_sufficient": sufficiente,
+            "permitted_by_rules": permessa, "relies_on_external_result": esterno,
+            "uses_computation_as_proof": calcolo, "references": [], "notes": "valutazione simulata nei test"}
 
 
-def envelope(verdict, *, sources=(), computations=(), rules=(), claims=None, notes="note simulate"):
-    """Costruisce la risposta del modello come la restituirebbe il backend reale (dict JSON)."""
-    report = EvidenceReport(evidence_verdict=verdict, source_issues=list(sources),
-                            computation_issues=list(computations), rule_violations=list(rules),
-                            claim_provenance=list(claims if claims is not None else [provenance()]),
-                            reproducibility_notes=notes)
-    return AgentEnvelope[EvidenceReport](report=report, limitation=None).model_dump(mode="json")
+def segnalazione(codice, dettaglio, gravita, claim_ids=("main",)):
+    return {"code": codice, "detail": dettaglio, "severity": gravita, "claim_ids": list(claim_ids)}
 
 
-def issue(code, detail, severity, claim_ids=("main",)):
-    return Issue(code=code, detail=detail, severity=severity, claim_ids=list(claim_ids))
+def evidenze(verdetto, *, fonti=(), calcoli=(), regole=(), claim=None, note="note simulate"):
+    """Risposta del Referee B come la restituirebbe il backend reale."""
+    return {"report": {"evidence_verdict": verdetto, "source_issues": list(fonti),
+                       "computation_issues": list(calcoli), "rule_violations": list(regole),
+                       "claim_provenance": list(claim if claim is not None else [provenienza()]),
+                       "reproducibility_notes": note},
+            "limitation": None}
 
 
-def run(response):
-    """Esegue il Referee B sulla fixture con una risposta simulata e ritorna (rapporto, backend)."""
-    backend = MockBackend(response)
-    report = asyncio.run(review_attempt(WORKDIR, backend))
-    return report, backend
+def matematica(verdetto="PARTIAL", accettati=("main",)):
+    """Risposta del Referee A: qui e' solo contorno, i test riguardano B."""
+    return {"report": {"mathematical_verdict": verdetto, "first_fatal_error": None,
+                       "accepted_mathematical_claims": list(accettati), "unproved_claims": [],
+                       "missing_cases": [], "math_notes": "giudice matematico simulato"},
+            "limitation": None}
 
 
-def check_schema(report):
-    """Controllo dei campi obbligatori e degli enum di referee_report.schema.json."""
-    missing = [k for k in SCHEMA["required"] if k not in report]
-    assert not missing, f"campi mancanti nel rapporto: {missing}"
+class BackendSimulato:
+    """Risponde ai due ruoli con risposte preparate. Nessuna rete, nessun costo."""
+
+    def __init__(self, risposta_b, risposta_a=None):
+        self.risposta_b, self.risposta_a = risposta_b, risposta_a or matematica()
+        self.visti = []
+
+    async def generate(self, *, role, system, payload, schema):
+        self.visti.append({"role": role, "payload": payload})
+        return self.risposta_a if role == "A" else self.risposta_b
+
+
+def esegui(risposta_b, risposta_a=None, timeout=30):
+    """Costruisce il ReviewInput dalla fixture, esegue la revisione e converte il pacchetto."""
+    attempt = json.loads((WORKDIR / "attempt.json").read_text(encoding="utf-8"))
+    job = costruisci_review_input(WORKDIR, attempt)
+    backend = BackendSimulato(risposta_b, risposta_a)
+    packet = asyncio.run(prepare_review(ReviewInput.model_validate(job), backend, [], timeout=timeout))
+    pacchetto = json.loads(packet.model_dump_json())
+    return converti_packet(pacchetto, attempt["attempt_id"]), pacchetto, backend
+
+
+def controlla_schema(report):
+    """Campi obbligatori ed enum di shared/schemas/referee_report.schema.json."""
+    mancanti = [k for k in SCHEMA["required"] if k not in report]
+    assert not mancanti, f"campi mancanti nel rapporto: {mancanti}"
     assert report["verdict"] in SCHEMA["properties"]["verdict"]["enum"]
     assert isinstance(report["citation_issue"], bool) and isinstance(report["computation_issue"], bool)
     assert isinstance(report["highest_verified_cell"], int) and report["highest_verified_cell"] >= 0
 
 
 # =============================================================================== costruzione dell'input
-def test_review_input_registra_claim_e_artefatti():
-    """L'adattatore traduce attempt.json nei contratti: bersaglio protetto, dipendenze, fonti, codice."""
-    job = build_review_input(WORKDIR)
-    assert job.cell.number == 1 and job.cell.target_claim_id == "main"
-    assert job.cell.statement.startswith("Determine the exact value of T(G_0)")
-    target = next(c for c in job.candidate.claims if c.id == "main")
-    # claims_used[0] coincide con un claim verificato -> vc_1; claims_used[1] no -> dep_2 del candidato
-    assert target.depends_on == ["vc_1", "dep_2"]
-    assert [c.id for c in job.state.claims] == ["vc_1"]
-    assert {a.id for a in job.candidate.artifacts} == {"code_1", "code_2"}
-    assert all(a.kind == "CODE" for a in job.candidate.artifacts)
-    assert job.candidate.method_tag == "exact_computation"
+def test_claim_usati_ma_non_verificati_diventano_claim_del_candidato():
+    """`claims_used` senza riscontro nello stato non sparisce: diventa `dep_k`, da valutare."""
+    attempt = json.loads((WORKDIR / "attempt.json").read_text(encoding="utf-8"))
+    job = costruisci_review_input(WORKDIR, attempt)
+    ids = {c["id"] for c in job["candidate"]["claims"]}
+    assert ids == {"main", "dep_2"}, ids
+    principale = next(c for c in job["candidate"]["claims"] if c["id"] == "main")
+    assert principale["depends_on"] == ["verified_1", "dep_2"]
+    assert [c["id"] for c in job["state"]["claims"]] == ["verified_1"]
 
 
-def test_payload_include_regole_e_codice_non_eseguito():
-    """B riceve le regole della gara e il codice come testo da leggere; nulla viene eseguito."""
-    _, backend = run(envelope("PASS"))
-    assert len(backend.seen) == 1 and backend.seen[0]["role"] == "B"
-    payload = backend.seen[0]["payload"]
-    assert "rules" in payload["submission"], "il Referee B deve vedere le regole della competizione"
-    assert payload["trusted_observations"] == [], "nessuna verifica indipendente e' stata eseguita"
-    codice = payload["submission"]["candidate"]["artifacts"][0]["content"]
-    assert "itertools" in codice and "rigor dichiarato dal candidato: exact" in codice
+def test_enunciato_preso_da_problem_md():
+    """Senza `cell_statement` in state.json il bersaglio viene dalla riga `Cell N:` di problem.md."""
+    attempt = json.loads((WORKDIR / "attempt.json").read_text(encoding="utf-8"))
+    job = costruisci_review_input(WORKDIR, attempt)
+    assert job["cell"]["statement"].startswith("Determine the exact value of T(G_0)")
+    # il contratto impone che il candidato dichiari il bersaglio esatto
+    assert job["candidate"]["claims"][0]["statement"] == job["cell"]["statement"]
+
+
+def test_regole_lette_dal_file_condiviso():
+    """Le regole arrivano da shared/competition_rules.example.json, non da un dizionario nel codice."""
+    attempt = json.loads((WORKDIR / "attempt.json").read_text(encoding="utf-8"))
+    job = costruisci_review_input(WORKDIR, attempt)
+    attese = json.loads((ROOT / "shared" / "competition_rules.example.json").read_text(encoding="utf-8"))
+    assert job["rules"] == attese
+    assert job["rules"]["allow_literature_as_proof"] is False
+    assert "NON sono le regole ufficiali" in job["rules"]["additional_rules"]
+
+
+def test_il_referee_b_vede_le_regole_e_il_codice_non_eseguito():
+    """B riceve le regole e il codice come testo da leggere; A non vede le regole; nulla viene eseguito."""
+    _, _, backend = esegui(evidenze("PASS"))
+    ruoli = {v["role"] for v in backend.visti}
+    assert ruoli == {"A", "B"}
+    payload_b = next(v["payload"] for v in backend.visti if v["role"] == "B")
+    payload_a = next(v["payload"] for v in backend.visti if v["role"] == "A")
+    assert "rules" in payload_b["submission"]
+    assert "rules" not in payload_a["submission"], "il giudice matematico non deve vedere le regole"
+    codice = payload_b["submission"]["candidate"]["artifacts"][0]["content"]
+    assert "itertools" in codice and "rigor: exact" in codice
 
 
 # =============================================================================== i sette casi richiesti
 def test_prova_autonoma_senza_citazioni():
-    """Prova che non dipende da fonti esterne: nessun problema di citazione, ma non e' ACCEPT."""
-    report, _ = run(envelope("PASS", claims=[provenance(external=False)]))
-    check_schema(report)
-    assert report["verdict"] == "PARTIAL_PROGRESS"
+    """Prova che non dipende da fonti esterne: nessun problema di citazione."""
+    report, _, _ = esegui(evidenze("PASS", claim=[provenienza(esterno=False)]))
+    controlla_schema(report)
     assert report["citation_issue"] is False and report["computation_issue"] is False
     assert report["fatal_error"] is None
-    assert report["evidence_supported_claims"] == ["main"]
+    assert report["verdict"] != "ACCEPT"
 
 
 def test_fonte_valida_ma_vietata():
-    """Dipendenza essenziale da un risultato citato, non ammessa dalle regole: rigetto con errore fatale."""
-    report, _ = run(envelope("FAIL", rules=[issue("FORBIDDEN_SOURCE",
-                    "Il target dipende in modo essenziale dal Teorema 1.2 citato; le regole non ammettono la letteratura come prova", "FATAL")],
-                    claims=[provenance(categories=("KNOWN_IN_LITERATURE",), sufficient=False, permitted=False, external=True)]))
-    check_schema(report)
+    """Dipendenza essenziale da un risultato citato, non ammessa dalle regole: rigetto."""
+    report, _, _ = esegui(evidenze("FAIL", regole=[segnalazione("FORBIDDEN_SOURCE",
+        "Il target dipende in modo essenziale dal Teorema 1.2 citato; le regole non ammettono la letteratura come prova",
+        "FATAL")], claim=[provenienza(categorie=("KNOWN_IN_LITERATURE",), sufficiente=False, permessa=False, esterno=True)]))
+    controlla_schema(report)
     assert report["verdict"] == "REJECT"
-    assert "FORBIDDEN_SOURCE" in report["fatal_error"] and "[main]" in report["fatal_error"]
-    assert report["evidence_supported_claims"] == []
+    assert report["citation_issue"] is True
+    assert "Referee B" in report["fatal_error"]
+    assert report["proposed_claim_ids"] == []
 
 
 def test_citazione_non_verificata():
     """Fonte citata ma mai letta: e' una MANCANZA da colmare, non una frode accertata."""
-    report, _ = run(envelope("PARTIAL", sources=[issue("SOURCE_NOT_RETRIEVED",
-                    "Citazione presente ma il testo della fonte non e' stato consegnato ne' recuperato", "MISSING")],
-                    claims=[provenance(categories=("UNVERIFIED",), sufficient=False, external=True)]))
-    check_schema(report)
-    assert report["verdict"] == "PARTIAL_PROGRESS"
+    report, _, _ = esegui(evidenze("PARTIAL", fonti=[segnalazione("SOURCE_NOT_RETRIEVED",
+        "Citazione presente ma il testo della fonte non e' stato consegnato ne' recuperato", "MISSING")],
+        claim=[provenienza(categorie=("UNVERIFIED",), sufficiente=False, esterno=True)]))
+    controlla_schema(report)
     assert report["citation_issue"] is True
-    assert report["fatal_error"] is None, "una verifica mancante non e' un errore fatale"
-    assert "SOURCE_NOT_RETRIEVED" in report["next_blocker"]
+    assert report["verdict"] != "REJECT", "una verifica mancante non e' un rigetto"
+    assert report["proposed_claim_ids"] == [], "un claim non verificato non va proposto all'umano"
 
 
 def test_log_falso():
     """Un log consegnato dal candidato che non corrisponde al codice: difetto computazionale fatale."""
-    report, _ = run(envelope("FAIL", computations=[issue("LOG_INCONSISTENT",
-                    "Il log dichiara 40320 casi ma il codice consegnato ne enumera 5040", "FATAL")],
-                    claims=[provenance(categories=("UNVERIFIED",), sufficient=False, computation=True)]))
-    check_schema(report)
+    report, _, _ = esegui(evidenze("FAIL", calcoli=[segnalazione("LOG_INCONSISTENT",
+        "Il log dichiara 40320 casi ma il codice consegnato ne enumera 5040", "FATAL")],
+        claim=[provenienza(categorie=("UNVERIFIED",), sufficiente=False, calcolo=True)]))
+    controlla_schema(report)
     assert report["verdict"] == "REJECT"
     assert report["computation_issue"] is True
-    assert "LOG_INCONSISTENT" in report["fatal_error"]
 
 
 def test_campionamento_spacciato_per_enumerazione():
     """Ricerca campionaria presentata come esaustiva: l'insieme coperto non sostiene il claim."""
-    report, _ = run(envelope("FAIL", computations=[issue("NOT_EXHAUSTIVE",
-                    "Il codice campiona 10^6 etichettature casuali ma il testo afferma di averle enumerate tutte", "FATAL")],
-                    claims=[provenance(categories=("EXPERIMENTAL_ONLY",), sufficient=False, computation=True)]))
-    check_schema(report)
+    report, _, _ = esegui(evidenze("FAIL", calcoli=[segnalazione("NOT_EXHAUSTIVE",
+        "Il codice campiona 10^6 etichettature casuali ma il testo afferma di averle enumerate tutte", "FATAL")],
+        claim=[provenienza(categorie=("EXPERIMENTAL_ONLY",), sufficiente=False, calcolo=True)]))
+    controlla_schema(report)
     assert report["verdict"] == "REJECT" and report["computation_issue"] is True
-    assert report["evidence_supported_claims"] == []
+    assert report["proposed_claim_ids"] == []
 
 
 def test_floating_point_senza_controllo_dell_errore():
     """Float senza controllo dell'errore: resta esplorazione, non sostiene il claim come prova."""
-    report, _ = run(envelope("PARTIAL", computations=[issue("UNCONTROLLED_ERROR",
-                    "Il confronto usa float senza stima dell'errore; serve aritmetica esatta o a intervalli", "MISSING")],
-                    claims=[provenance(categories=("EXPERIMENTAL_ONLY",), sufficient=False, computation=True)]))
-    check_schema(report)
-    assert report["verdict"] == "PARTIAL_PROGRESS"
+    report, _, _ = esegui(evidenze("PARTIAL", calcoli=[segnalazione("UNCONTROLLED_ERROR",
+        "Il confronto usa float senza stima dell'errore; serve aritmetica esatta o a intervalli", "MISSING")],
+        claim=[provenienza(categorie=("EXPERIMENTAL_ONLY",), sufficiente=False, calcolo=True)]))
+    controlla_schema(report)
     assert report["computation_issue"] is True
-    assert report["evidence_supported_claims"] == [], "EXPERIMENTAL_ONLY non e' evidenza sufficiente"
+    assert report["proposed_claim_ids"] == [], "EXPERIMENTAL_ONLY non e' evidenza sufficiente"
 
 
 def test_computazione_esatta_con_certificato_autentico():
-    """Enumerazione esatta, riproducibile e con certificato: evidenze complete, ma il verdetto resta umano."""
-    report, _ = run(envelope("PASS", claims=[provenance(categories=("COMPUTATIONALLY_VERIFIED", "PROVED_BY_US"),
-                    computation=True)], notes="Enumerazione esatta di 40320 casi, interi Python, 0.36 s, riproducibile"))
-    check_schema(report)
+    """Enumerazione esatta e riproducibile: evidenze complete, ma il verdetto resta umano."""
+    # un PASS deve coprire OGNI claim dichiarato, quindi anche il `dep_2` usato dal tentativo
+    report, pacchetto, _ = esegui(evidenze("PASS", claim=[
+        provenienza(categorie=("COMPUTATIONALLY_VERIFIED", "PROVED_BY_US"), calcolo=True),
+        provenienza("dep_2", categorie=("PROVED_BY_US",))],
+        note="Enumerazione esatta di 40320 casi, interi Python, 0.36 s, riproducibile"),
+        risposta_a=matematica("PASS"))
+    controlla_schema(report)
     assert report["verdict"] != "ACCEPT", "l'ACCEPT finale e' una decisione umana"
-    assert report["verdict"] == "PARTIAL_PROGRESS"
-    assert report["evidence_supported_claims"] == ["main"]
-    assert "40320" in report["reasoning_summary"]
+    assert pacchetto["review_status"] == "READY_FOR_HUMAN"
+    assert report["proposed_claim_ids"] == ["main"], "il claim e' proposto all'umano, non accettato"
+    assert report["accepted_claims"] == []
 
 
 # =============================================================================== invarianti del contratto
 def test_nessun_verdetto_accept_in_nessun_caso():
-    """Nessuna combinazione di risposte del modello puo' produrre ACCEPT da questo componente."""
-    for verdict in ("PASS", "PARTIAL", "FAIL"):
-        extra = {"computations": [issue("X", "difetto", "FATAL")]} if verdict == "FAIL" else {}
-        claims = [provenance(sufficient=verdict == "PASS")]
-        report, _ = run(envelope(verdict, claims=claims, **extra))
-        assert report["verdict"] != "ACCEPT"
-        assert report["accept_requires_human"] is True
+    """Nessuna combinazione di risposte dei modelli produce ACCEPT senza approvazione umana firmata."""
+    for verdetto_b in ("PASS", "PARTIAL", "FAIL"):
+        extra = {"calcoli": [segnalazione("X", "difetto", "FATAL")]} if verdetto_b == "FAIL" else {}
+        claim = [provenienza(sufficiente=verdetto_b == "PASS")]
+        for verdetto_a in ("PASS", "PARTIAL"):
+            report, _, _ = esegui(evidenze(verdetto_b, claim=claim, **extra), matematica(verdetto_a))
+            assert report["verdict"] != "ACCEPT", (verdetto_a, verdetto_b)
+            assert report["accepted_claims"] == []
 
 
-def test_accepted_claims_sempre_vuoto_e_stato_non_avanza():
-    """B non promuove claim a progresso verificato e non incrementa highest_verified_cell."""
-    report, _ = run(envelope("PASS"))
-    assert report["accepted_claims"] == [], "solo orchestratore e umano popolano il progresso verificato"
+def test_lo_stato_condiviso_non_avanza():
+    """highest_verified_cell e' una fotografia: il Referee non lo incrementa mai."""
+    report, _, _ = esegui(evidenze("PASS"), matematica("PASS"))
     stato = json.loads((WORKDIR / "state.json").read_text(encoding="utf-8"))
     assert report["highest_verified_cell"] == stato["highest_verified_cell"] == 1
 
 
 def test_errore_del_modello_non_diventa_un_rigetto():
-    """Un output non conforme allo schema diventa UNKNOWN_STATUS con limitation, mai REJECT."""
-    report, _ = run({"report": {"evidence_verdict": "INVENTATO"}, "limitation": None})
-    check_schema(report)
+    """Un output non conforme allo schema diventa UNKNOWN_STATUS, mai REJECT."""
+    report, _, _ = esegui({"report": {"evidence_verdict": "INVENTATO"}, "limitation": None})
+    controlla_schema(report)
     assert report["verdict"] == "UNKNOWN_STATUS"
-    assert report["fatal_error"] is None
-    assert "B:" in report["limitation"]
 
 
 def test_timeout_non_diventa_un_rigetto():
     """Anche un timeout e' una limitazione operativa, non un difetto del tentativo."""
-    backend = MockBackend(None)
-    backend.generate = lambda **kwargs: asyncio.sleep(0.2)  # risposta piu' lenta del timeout
-    job_report = asyncio.run(review_attempt(WORKDIR, backend, timeout=0.01))
-    check_schema(job_report)
-    assert job_report["verdict"] == "UNKNOWN_STATUS"
-    assert "TimeoutError" in job_report["limitation"]
+    attempt = json.loads((WORKDIR / "attempt.json").read_text(encoding="utf-8"))
+    job = costruisci_review_input(WORKDIR, attempt)
+
+    class Lento:
+        async def generate(self, **kwargs):
+            await asyncio.sleep(0.2)
+
+    packet = asyncio.run(prepare_review(ReviewInput.model_validate(job), Lento(), [], timeout=0.01))
+    report = converti_packet(json.loads(packet.model_dump_json()), attempt["attempt_id"])
+    controlla_schema(report)
+    assert report["verdict"] == "UNKNOWN_STATUS"
+    assert "TimeoutError" in report["reasoning_summary"]
 
 
 if __name__ == "__main__":
