@@ -1,1 +1,2 @@
 [loop] $ /Users/thomastumini/proof-pursuit/.venv/bin/python /Users/thomastumini/proof-pursuit/researcher/researcher.py run --workdir runs/p4_c4 --backend cli --strict --shell full --effort medium
+[loop] $ /Users/thomastumini/proof-pursuit/.venv/bin/python /Users/thomastumini/proof-pursuit/researcher/bridge_referee.py review --workdir runs/p4_c4 --run-code

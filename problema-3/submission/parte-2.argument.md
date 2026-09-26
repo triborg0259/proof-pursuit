@@ -1,85 +1,196 @@
-Problem 3 — Part 2 — submission (PARTIAL)
+Problem 3 — Part 2 — submission
 
-Declared status: PARTIAL. Lower bound proved in full with an explicit extremal partition; the upper bound is NOT proved
-here (verified exhaustively for small k only, and known in the literature: Igusa 1985, Etienne 1991, whose proofs we could
-not access in time). The automatic Referee rejected the attempt as a solution of the whole cell precisely for this reason
-(verdict REJECT: "Theorem B (upper bound D_B(T_k) ≤ k^2−k for all k) is not proved; the submission itself marks it 'NOT PROVED HERE' and only cites Igusa/Etienne (statement not reproduced, sources not read) plus an exhaustive check for sm…"), and accepted the lower-bound part as a lemma candidate.
+Declared status: SOLVED (approved). Complete proof; automatic Referee READY_FOR_HUMAN (judge A, mathematics: PASS;
+judge B, evidence: PASS; code re-run by the orchestrator); human approval recorded in runs/p3_c2/approval.json.
 
 1. Result and scope
 
-Complete proof that D_B(T_k) ≥ k^2 − k for all k ≥ 1 with the explicit extremal γ_k = (k−1,k−1,k−2,…,2,1,1) (Theorem A), resting on a new exact cell-motion lemma for B (Lemma 1) that is reusable for the other cells; exhaustive exact verification that D_B(T_k) = k^2 − k for k ≤ 9. The general upper bound D_B(T_k) ≤ k^2 − k is not proved.
+Complete proof that D_B(T_k) = k²−k for every k ≥ 1: (Part I) cell rule for B, W-potential, convergence to δ_k and uniqueness of the cyclic partition of T_k (so d_B = hitting time of δ_k); (Part II) lower bound with the explicit family γ_k = (k−1,k−1,k−2,…,2,1,1), d_B(γ_k) = k²−k; (Part III) upper bound d_B(λ) ≤ k²−k for all λ ⊢ T_k via the pile-count sequence (Lemmas 3–10 and Theorem B), reproducing in full and with all inductions written out the argument of Griggs–Ho, Thm 3.7. This addresses exactly the referee's fatal error (Theorem B previously only cited). Exhaustive exact checks: D_B(T_k)=k²−k for k ≤ 9; all lemma statements verified on all partitions of n ≤ 24 and Lemma 6/Theorem B on k = 3..7.
 
 2. Proof
 
+Cell 2: $D_B(T_k)=k^2-k$ for every $k\ge 1$
+
+Throughout, $n=T_k=k(k+1)/2$, $\delta_k=(k,k-1,\dots,1)$, and for a partition $\lambda$ we write $\ell(\lambda)$ for its number of parts. The result is
+
+Theorem. For every $k\ge1$, $D_B(T_k)=k^2-k$. The maximum is attained by $\gamma_k=(k-1,k-1,k-2,\dots,2,1,1)$ for $k\ge2$ (and by $\gamma_1=(1)$).
+
+The proof has three parts: (I) the cell rule for $B$, convergence to $\delta_k$ and uniqueness of the cyclic partition (so that $d_B(\lambda)=\min\{m: B^m(\lambda)=\delta_k\}$); (II) the lower bound via $\gamma_k$; (III) the upper bound via the sequence of pile counts. Part III follows the method of Griggs–Ho (Adv. Appl. Math. 21 (1998), Thm. 3.7), which we read in full and rewrite here completely, with the inductions that the paper only sketches written out.
+
+Part I. Cells, diagonals, convergence
+
 Conventions
 
-Draw a partition $\lambda=(\lambda_1\ge\dots\ge\lambda_s)$ as a diagram whose column $i$ ($1\le i\le s$) consists of the cells $(i,h)$, $1\le h\le \lambda_i$ ($h$ = height). The diagonal of a cell is $d(i,h)=i+h-1$. Diagonal $d$ contains the $d$ slots $(p,\,d+1-p)$, $p=1,\dots,d$; a set of cells is the diagram of a partition iff the column heights are weakly decreasing. $\delta_k$ is the diagram whose diagonals $1,\dots,k$ are full and all others empty. Throughout $n=T_k$.
+Draw $\lambda=(\lambda_1\ge\dots\ge\lambda_s)$ as the set of cells $(i,h)$ with $1\le i\le s$, $1\le h\le\lambda_i$ (column $i$ = pile $i$, $h$ = height). The diagonal of $(i,h)$ is $d(i,h)=i+h-1$; diagonal $d$ consists of the $d$ slots $(p,d+1-p)$, $p=1,\dots,d$ (we call $p$ the slot number). A set of cells is the diagram of a partition iff its column heights are weakly decreasing and each column is an initial segment of heights. $\delta_k$ is the diagram in which diagonals $1,\dots,k$ are full (all slots occupied) and all others are empty.
 
-Lemma 1 (exact cell rule for $B$)
+Lemma 1 (cell rule)
 
-Let $\lambda$ have $s$ columns. Then $B(\lambda)$ is the diagram obtained from $\lambda$ by moving every cell as follows:
+Let $\lambda$ have $s$ parts and define, on the cells of $\lambda$,
+1. $\varphi(i,1)=(1,i)$ for $1\le i\le s$;
+2. $\varphi(i,h)=(i+1,h-1)$ if $2\le h\le s+1$;
+3. $\varphi(i,h)=(i,h-1)$ if $h\ge s+2$.
 
-1. $(i,1)\mapsto(1,i)$ for $1\le i\le s$;
-2. $(i,h)\mapsto(i+1,h-1)$ if $2\le h\le s+1$;
-3. $(i,h)\mapsto(i,h-1)$ if $h\ge s+2$.
+Then $\varphi$ is injective and its image is exactly the diagram of $B(\lambda)$. Cells of type 1–2 stay on their diagonal, their slot number changing by the cyclic shift $\rho_d:p\mapsto p+1$ ($p<d$), $d\mapsto 1$; cells of type 3 move from diagonal $d$ to diagonal $d-1$, keeping their column.
 
-In particular cells of type 1–2 stay on their diagonal (slot $p\mapsto p+1$, and slot $d\mapsto 1$: a cyclic rotation of the diagonal), while cells of type 3 move from diagonal $d$ to diagonal $d-1$ (same column).
+Proof. Let $q=\#\{i:\lambda_i\ge s+2\}$; since $\lambda$ is sorted these are $i=1,\dots,q$. The parts of $B(\lambda)$ are $s$ together with $\lambda_i-1$ for $\lambda_i\ge 2$; since $\lambda_i-1\ge s+1>s$ exactly for $i\le q$, the sorted $B(\lambda)$ has column heights
+$$\lambda_1-1,\dots,\lambda_q-1,\ s,\ \lambda_{q+1}-1,\ \lambda_{q+2}-1,\dots$$
+(columns of height $0$ discarded). Now list the image of $\varphi$ column by column. Column 1 receives heights $1,\dots,s$ from rule 1 and, if $q\ge1$, heights $s+1,\dots,\lambda_1-1$ from rule 3 with $i=1$: total height $\lambda_1-1$ if $q\ge1$, $s$ if $q=0$. For $2\le c\le q$, column $c$ receives heights $1,\dots,\min(\lambda_{c-1},s+1)-1=1,\dots,s$ from rule 2 with $i=c-1$ (as $\lambda_{c-1}\ge s+2$) and heights $s+1,\dots,\lambda_c-1$ from rule 3 with $i=c$: total $\lambda_c-1$. If $q\ge1$, column $q+1$ receives heights $1,\dots,s$ from rule 2 with $i=q$ and nothing from rule 3: height $s$. For $c\ge q+2$, column $c$ receives heights $1,\dots,\lambda_{c-1}-1$ from rule 2 with $i=c-1$ (as $\lambda_{c-1}\le s+1$) and nothing else. In every column the received heights are contiguous from $1$ and the contributions of the three rules are disjoint, so $\varphi$ is injective and its image is precisely the diagram of $B(\lambda)$ listed above. The statements about diagonals and slots are read off from the formulas: $d(1,i)=i=d(i,1)$ and slot $i=d\mapsto 1$; $d(i+1,h-1)=d(i,h)$ and slot $i\mapsto i+1$; $d(i,h-1)=d(i,h)-1$. $\square$
 
-Proof. By definition the columns of $B(\lambda)$ are the multiset $\{s\}\cup\{\lambda_i-1:\lambda_i\ge 2\}$. Consider first the "unsorted" diagram $U$: column 1 of height $s$, column $i+1$ of height $\lambda_i-1$ ($1\le i\le s$). Rules 1 and 2 applied to all cells with $h\le s+1$ produce exactly the cells of $U$ of height $\le s+1$ (the new column, and the old columns shifted right and lowered), and rule 2 without the restriction $h\le s+1$ would produce all of $U$. Let $q=\#\{i:\lambda_i-1\ge s+1\}=\#\{i:\lambda_i\ge s+2\}$; because $\lambda$ is sorted, these are $i=1,\dots,q$, so in $U$ exactly the columns $2,\dots,q+1$ have height $>s+1$ (column 1 has height $s$, columns $i+1$ with $i>q$ have height $\le s$). Now compare $U$ with the diagram $V$ obtained from $U$ by moving every cell of height $\ge s+1$ in columns $2,\dots,q+1$ one column to the left. Column heights of $V$: column 1 has the $s$ cells of the new column plus the cells of heights $s+1,\dots,\lambda_1-1$ received from column 2, hence height $\lambda_1-1$; column $i$ for $2\le i\le q$ keeps heights $1,\dots,s$ (from old column $i-1$, whose height $\lambda_{i-1}-1\ge s+1$), loses heights $s+1,\dots,\lambda_{i-1}-1$ and receives heights $s+1,\dots,\lambda_i-1$ from column $i+1$, hence height $\lambda_i-1$; column $q+1$ keeps heights $1,\dots,s$ and loses the rest, hence height $s$; columns $i+1>q+1$ are unchanged with height $\lambda_i-1\le s$. So the columns of $V$ are $\lambda_1-1\ge\dots\ge\lambda_q-1\ge s\ge \lambda_{q+1}-1\ge\dots$, i.e. $V$ is the sorted diagram of $B(\lambda)$ (columns of height 0 at the end are discarded). Finally, the cells moved in passing from $U$ to $V$ are exactly the images under rule 2 of the cells $(i,h)$ of $\lambda$ with $h-1\ge s+1$, i.e. $h\ge s+2$; composing "$(i,h)\mapsto(i+1,h-1)$ then one column left" gives rule 3. $\square$
+Consequences. (a) Rotation. If $\lambda_1\le s+1$ (no cell of type 3), then for every $d$ the set of occupied slots of diagonal $d$ in $B(\lambda)$ is the image under $\rho_d$ of the set of occupied slots of diagonal $d$ in $\lambda$; the same holds for the set of empty slots ("holes").
+(b) Potential. Let $W(\lambda)=\sum_{\text{cells}}d(i,h)\ (\ge 0)$. Then $W(B(\lambda))=W(\lambda)-\#\{(i,h)\in\lambda:h\ge s+2\}$; in particular $W(B(\lambda))\le W(\lambda)$, with equality iff $\lambda_1\le s+1$.
 
-Lemma 2 (convergence to $\delta_k$; used only for context, not for the bound)
+Lemma 2 (convergence and uniqueness)
 
-Let $W(\lambda)=\sum_{\text{cells}} d(i,h)$. By Lemma 1, $W(B(\lambda))=W(\lambda)-\#\{(i,h)\in\lambda: h\ge s+2\}\le W(\lambda)$. Since diagonal $d$ has only $d$ slots, among all sets of $T_k$ cells with at most $d$ cells on diagonal $d$ the minimum of $W$ is attained only by $\delta_k$ (fill diagonals $1,\dots,k$); hence $W(\lambda)\ge W(\delta_k)$ with equality iff $\lambda=\delta_k$. (Combined with the fact that a partition $\ne\delta_k$ of $T_k$ cannot be periodic with all steps of cost 0 — which is C1 material and not needed below — this gives convergence; we do not use it.)
+Let $|\lambda|=T_k$. Then $B^m(\lambda)=\delta_k$ for some $m\ge0$; $B(\delta_k)=\delta_k$; and $\delta_k$ is the only cyclic partition of $T_k$. Consequently $d_B(\lambda)=\min\{m\ge0:B^m(\lambda)=\delta_k\}$.
 
-Theorem A (lower bound). For every $k\ge1$, $D_B(T_k)\ge k^2-k$, attained by
+Proof. $B(\delta_k)$ has parts $k-1,\dots,1$ and the new part $k$, so $B(\delta_k)=\delta_k$.
 
-$$\gamma_k=(k-1,\,k-1,\,k-2,\,k-3,\dots,2,\,1,\,1)\quad(k\ge2),\qquad \gamma_1=(1).$$
-($\gamma_k$ is $\delta_k$ with the part $k$ replaced by the two parts $k-1$ and $1$; $|\gamma_k|=T_k$.)
+Claim: if $\mu\vdash T_k$ and $\mu\ne\delta_k$, there is a diagonal $w$ with an empty slot such that diagonal $w+1$ contains a cell. Let $D$ be the largest occupied diagonal. If diagonals $1,\dots,D-1$ are all full, then $T_{D-1}<|\mu|\le T_D$, so $D=k$ and diagonal $k$ is full ($|\mu|=T_k=T_{k-1}+k$), i.e. $\mu=\delta_k$. Otherwise let $w\le D-1$ be the largest diagonal with an empty slot; diagonal $w+1\le D$ is full (if $w+1<D$) or equals $D$ (nonempty); either way it contains a cell.
 
-Proof. For $k=1$ the only partition is $\delta_1$ and $D_B(1)=0=k^2-k$. Let $k\ge2$. For $p_H\in\{1,\dots,k\}$ and $p_X\in\{1,\dots,k+1\}$ let $S(p_H,p_X)$ be the set of cells of $\delta_k$ with the cell $(p_H,\,k+1-p_H)$ removed (a hole in slot $p_H$ of diagonal $k$) and the cell $(p_X,\,k+2-p_X)$ added (an extra cell in slot $p_X$ of diagonal $k+1$). Its column heights are $k+1-p$ for $p\notin\{p_H,p_X\}$, $k-p_H$ for $p=p_H$, $k+2-p_X$ for $p=p_X$ (and column $k+1$ exists iff $p_X=k+1$). It is a partition diagram iff $p_X\ne p_H$ and $p_X\ne p_H+1$ (if $p_X=p_H$ the cell $(p_H,k+2-p_H)$ would sit above a missing cell; if $p_X=p_H+1$ column $p_X$ would be taller than column $p_H$; otherwise the heights are weakly decreasing because column $p_X$ has the same height as column $p_X-1$ and column $p_H$ has the same height as column $p_H+1$). Note $\gamma_k=S(1,k+1)$: columns $k-1,k-1,k-2,\dots,2,1,1$.
+Now take any $\lambda\vdash T_k$. By (b), $W(B^m(\lambda))$ is a non-increasing sequence of non-negative integers, so only finitely many steps have $W$ strictly decreasing; let $m_0$ be such that no step from time $m_0$ on decreases $W$, i.e. by (b) every $B^m(\lambda)$, $m\ge m_0$, satisfies $\lambda^{(m)}_1\le s_m+1$ ($s_m$ = number of parts). Suppose $\mu=B^{m_0}(\lambda)\ne\delta_k$ and take $w$ as in the claim: a hole at slot $p_0$ of diagonal $w$ and a cell at slot $p_1$ of diagonal $w+1$. By (a), applied at each step $m\ge m_0$, at time $m_0+u$ diagonal $w$ has a hole at the slot $\equiv p_0+u\pmod w$ and diagonal $w+1$ has a cell at the slot $\equiv p_1+u\pmod{w+1}$ (representatives in $\{1,\dots,w\}$, $\{1,\dots,w+1\}$). Since $\gcd(w,w+1)=1$, by the Chinese remainder theorem there is $u\ge0$ with $p_0+u\equiv w\pmod w$ and $p_1+u\equiv1\pmod{w+1}$. At time $m=m_0+u$: slot $w$ of diagonal $w$ is the position $(w,1)$, and it is empty, so column $w$ is empty and $s_m\le w-1$; slot $1$ of diagonal $w+1$ is the position $(1,w+1)$, and it is a cell, so $\lambda^{(m)}_1\ge w+1\ge s_m+2$. This contradicts $\lambda^{(m)}_1\le s_m+1$. Hence $B^{m_0}(\lambda)=\delta_k$, and $B^m(\lambda)=\delta_k$ for all $m\ge m_0$.
 
-Number of columns of $S(p_H,p_X)$: $s=k+1$ if $p_X=k+1$; $s=k-1$ if $p_H=k$ (then $p_X\le k$); $s=k$ otherwise. Heights: every column has height $\le k$ except column $p_X$, of height $k+2-p_X\le k+1$, with equality iff $p_X=1$. Hence a cell of height $\ge s+2$ exists only when $s=k-1$ and $p_X=1$, i.e. only in $S(k,1)$, and then it is the single cell $(1,k+1)$.
+If $\mu$ is cyclic, $B^P(\mu)=\mu$ with $P\ge1$, choose $m$ with $B^m(\mu)=\delta_k$; then $\mu=B^{P\lceil m/P\rceil}(\mu)=\delta_k$ because $P\lceil m/P\rceil\ge m$ and $\delta_k$ is fixed. So $\delta_k$ is the unique cyclic partition, and by definition $d_B(\lambda)=\min\{m:B^m(\lambda)=\delta_k\}$. $\square$
 
-Case $S(k,1)$. By Lemma 1 with $s=k-1$: the bottom row $(i,1)$, $i\le k-1$, becomes column 1 with heights $1,\dots,k-1$; the cells $(i,h)$ with $2\le h\le k$ (all remaining cells of $\delta_k$ minus the hole, since the hole is $(k,1)$ and column $k$ is empty) go to $(i+1,h-1)$, giving columns $2,\dots,k$ of heights $k-1,\dots,1$; the cell $(1,k+1)$ drops to $(1,k)$, completing column 1 to height $k$. So $B(S(k,1))=\delta_k$.
+Part II. Lower bound: $d_B(\gamma_k)=k^2-k$
 
-Other cases. No cell has height $\ge s+2$, so by Lemma 1 every cell rotates one slot along its diagonal; the same is true of the empty slot (hole) on diagonal $k$, because the cells of diagonal $k$ permute cyclically among its slots. Hence $B(S(p_H,p_X))=S(p_H',p_X')$ with $p_H'\equiv p_H+1\pmod k$, $p_X'\equiv p_X+1\pmod{k+1}$ (representatives in $\{1..k\}$, $\{1..k+1\}$). (Lemma 1 guarantees the result is a partition diagram, so the validity condition is automatically preserved.)
+Theorem A. For every $k\ge1$, $D_B(T_k)\ge k^2-k$, attained by $\gamma_k=(k-1,k-1,k-2,\dots,2,1,1)$ ($k\ge2$), $\gamma_1=(1)$.
 
-Therefore, starting from $\gamma_k=S(1,k+1)$, as long as no step has hit $S(k,1)$ we have $B^t(\gamma_k)=S(p_H(t),p_X(t))$ with $p_H(t)\equiv 1+t\pmod k$, $p_X(t)\equiv k+1+t\equiv t\pmod{k+1}$. None of these equals $\delta_k$ (they have a hole). The first $t\ge0$ with $S(p_H(t),p_X(t))=S(k,1)$ satisfies $t\equiv k-1\pmod k$ and $t\equiv1\pmod{k+1}$. Writing $t=k-1+ak$: $k-1+ak\equiv -2-a\equiv 1\pmod{k+1}$, so $a\equiv-3\equiv k-2\pmod{k+1}$, and the least $a\ge0$ is $a=k-2$ (valid since $k\ge2$). Thus $t_0=k-1+(k-2)k=k^2-k-1$, $B^{t}(\gamma_k)\ne\delta_k$ for $0\le t\le k^2-k-1$, and $B^{k^2-k}(\gamma_k)=B(S(k,1))=\delta_k$. Since $\delta_k$ is a fixed point and (by Lemma 2, or by C1) it is the only cyclic partition of $T_k$, $d_B(\gamma_k)=k^2-k$. $\square$
+Proof. For $k=1$, $D_B(1)=0=k^2-k$. Let $k\ge2$. For $p_H\in\{1,\dots,k\}$ and $p_X\in\{1,\dots,k+1\}$ let $S(p_H,p_X)$ be the set of cells of $\delta_k$ with the cell $(p_H,k+1-p_H)$ removed (a hole in slot $p_H$ of diagonal $k$) and the cell $(p_X,k+2-p_X)$ added (an extra cell in slot $p_X$ of diagonal $k+1$). Its column heights are $k+1-p$ for $p\notin\{p_H,p_X\}$, $k-p_H$ for $p=p_H$, $k+2-p_X$ for $p=p_X$ (column $k+1$ exists iff $p_X=k+1$). It is a partition diagram iff $p_X\ne p_H$ and $p_X\ne p_H+1$: if $p_X=p_H$ the added cell sits above a missing one; if $p_X=p_H+1$ column $p_X$ would be taller than column $p_H$; otherwise heights are weakly decreasing, since column $p_X$ has the height of column $p_X-1$ and column $p_H$ has the height of column $p_H+1$. Note $\gamma_k=S(1,k+1)$ (columns $k-1,k-1,k-2,\dots,2,1,1$), and every $S(p_H,p_X)$ has $|S|=T_k$ and $S\ne\delta_k$.
 
-(Consistency check with the statement's example and data: $\gamma_3=(2,2,1,1)$, $d_B=6$; the exhaustive computation below gives $D_B(T_k)=k^2-k$ and confirms $\gamma_k$ among the extremals for $k\le9$.)
+Number of columns of $S(p_H,p_X)$: $s=k+1$ if $p_X=k+1$; $s=k-1$ if $p_H=k$ (then $p_X\le k$, because $p_X\ne p_H+1=k+1$); $s=k$ otherwise. All columns have height $\le k$ except column $p_X$ of height $k+2-p_X\le k+1$, with equality iff $p_X=1$. Hence a cell of height $\ge s+2$ exists only when $s=k-1$ and $p_X=1$, i.e. only in $S(k,1)$, where it is the single cell $(1,k+1)$.
 
-Theorem B (upper bound) — NOT PROVED HERE
+Case $S(k,1)$. Here $s=k-1$ and $S(k,1)=(k+1,k-1,k-2,\dots,2)$; by Lemma 1: rule 1 sends the bottom row to column 1 with heights $1,\dots,k-1$; rule 2 sends every other cell $(i,h)$, $2\le h\le k$, to $(i+1,h-1)$, giving columns $2,\dots,k$ of heights $k-1,\dots,1$; rule 3 sends $(1,k+1)$ to $(1,k)$, completing column 1 to height $k$. So $B(S(k,1))=\delta_k$.
 
-Claim: $d_B(\lambda)\le k^2-k$ for every partition $\lambda$ of $T_k$. This is the theorem of Igusa (1985) / Etienne (1991) (CITED, proof not reproduced). What is established:
+Other cases. No cell of type 3, so by Consequence (a) every diagonal rotates by $\rho_d$, holes included: $B(S(p_H,p_X))=S(p_H',p_X')$ with $p_H'\equiv p_H+1\pmod k$, $p_X'\equiv p_X+1\pmod{k+1}$ (Lemma 1 guarantees the result is a partition diagram).
 
-* Exhaustive verification for $k\le9$ (exact integer arithmetic, all $p(T_k)$ partitions, 0.5 s total): $D_B(T_k)=k^2-k$ for $k=1,\dots,9$. This proves the cell's statement only for $k\le 9$.
-* Structural facts from Lemma 1 available for the next attempt: (i) $W$ strictly decreases exactly at steps where some pile has size $\ge s+2$, and $\gamma_k$ has $W(\gamma_k)-W(\delta_k)=1$, so the difficulty is bounding runs of "free" steps, not the number of costly steps; (ii) empirically (exhaustive, $k\le8$) the number of piles lies in $\{k-1,k,k+1\}$ for all $t\ge T_{k-1}-(k-2)$, which suggests the strategy: bound the time until the configuration becomes "near-staircase", then analyse the near-staircase dynamics as in Theorem A.
+Starting from $\gamma_k=S(1,k+1)$, as long as the orbit has not visited $S(k,1)$ we have $B^t(\gamma_k)=S(p_H(t),p_X(t))$ with $p_H(t)\equiv1+t\pmod k$, $p_X(t)\equiv t\pmod{k+1}$, none of which is $\delta_k$. The first $t\ge0$ with $(p_H(t),p_X(t))=(k,1)$ satisfies $t\equiv k-1\pmod k$, $t\equiv1\pmod{k+1}$; writing $t=k-1+ak$, $k-1+ak\equiv-2-a\equiv1\pmod{k+1}$, so $a\equiv k-2\pmod{k+1}$ and the least $a\ge0$ is $a=k-2$. Thus $t_0=k-1+(k-2)k=k^2-k-1$, $B^t(\gamma_k)\ne\delta_k$ for $0\le t\le k^2-k-1$, and $B^{k^2-k}(\gamma_k)=B(S(k,1))=\delta_k$. By Lemma 2, $d_B(\gamma_k)=k^2-k$. $\square$
 
-Conclusion of this attempt
+Part III. Upper bound: $d_B(\lambda)\le k^2-k$ for every $\lambda\vdash T_k$
 
-$D_B(T_k)\ge k^2-k$ for all $k\ge1$ (Theorem A, complete), with explicit extremal $\gamma_k$; $D_B(T_k)=k^2-k$ for $k\le9$ by exhaustive computation; the general inequality $D_B(T_k)\le k^2-k$ remains to be proved.
+The pile-count sequence and the bookkeeping lemma
+
+Fix a partition $\lambda=(\lambda_1,\dots,\lambda_s)\vdash n$ (any $n\ge1$ in this subsection). For $i\ge1$ put
+$$c_i:=\ell\big(B^{i-1}(\lambda)\big)\ \ (\ge1).$$
+The step $B^{i-1}(\lambda)\to B^{i}(\lambda)$ creates a new part of size $c_i$; call it the pile $P_i$.
+
+Lemma 3 (bookkeeping). For every $m\ge0$ the parts of $B^m(\lambda)$ are exactly
+$$\{\lambda_j-m:\ \lambda_j>m\}\ \cup\ \{c_i-(m-i):\ 1\le i\le m,\ c_i>m-i\}$$
+(as a multiset). Consequently
+$$c_{m+1}=\#\{j:\lambda_j\ge m+1\}+\#\{i\in[1,m]:\ c_i\ge m+1-i\}.\qquad(3.1)$$
+
+Proof. Induction on $m$. For $m=0$ the parts are the $\lambda_j$. If the statement holds for $m$, then $B^{m+1}(\lambda)$ consists of each listed part decreased by $1$, dropping those that become $0$—giving $\lambda_j-(m+1)$ for $\lambda_j>m+1$ and $c_i-(m+1-i)$ for $i\le m$, $c_i>m+1-i$—together with one new part equal to $\ell(B^m(\lambda))=c_{m+1}=c_{m+1}-((m+1)-(m+1))$, which is the term $i=m+1$ (present since $c_{m+1}\ge1>0$). Formula (3.1) counts the parts. $\square$
+
+We encode (3.1) with the indicators ("$P_j$ is alive at time $i-1$", "$\lambda_j$ is alive at time $i-1$"):
+$$e_{i,j}:=[\,c_j\ge i-j\,]\ (1\le j<i),\qquad f_{i,j}:=[\,\lambda_j\ge i\,],\qquad\text{so}\qquad c_i=\sum_{j}f_{i,j}+\sum_{j=1}^{i-1}e_{i,j}.\qquad(3.2)$$
+Two facts are used constantly: $e_{i,i-1}=1$ (as $c_{i-1}\ge1$), and, for fixed $j$, $e_{i,j}=1$ exactly for $j+1\le i\le j+c_j$ (a column of $c_j$ ones followed by zeros); likewise $f_{i,j}=1$ exactly for $i\le\lambda_j$.
+
+Lemma 4 (deaths). For $i\ge1$ let $\delta_i:=c_i+1-c_{i+1}$. Then $\delta_i$ is the number of parts equal to $1$ in $B^{i-1}(\lambda)$; hence $c_{i+1}\le c_i+1$. Moreover
+$$\delta_i=\sum_j (f_{i,j}-f_{i+1,j})+\sum_{j=1}^{i-1}(e_{i,j}-e_{i+1,j}),$$
+where every summand is $0$ or $1$. In particular: if $\delta_i=0$ then $e_{i+1,j}=e_{i,j}$ for all $j<i$; if $\delta_i=1$ and $j_0<i$ satisfies $e_{i,j_0}=1$, $e_{i+1,j_0}=0$, then $e_{i+1,j}=e_{i,j}$ for all $j<i$, $j\ne j_0$.
+
+Proof. $B^{i}(\lambda)$ has one new part and one part for each part $\ge2$ of $B^{i-1}(\lambda)$, so $c_{i+1}=1+c_i-\#\{\text{parts }=1\}$. By Lemma 3 the parts equal to $1$ of $B^{i-1}(\lambda)$ are $\lambda_j-(i-1)=1$, i.e. $\lambda_j=i$, i.e. $f_{i,j}-f_{i+1,j}=1$, and $c_j-(i-1-j)=1$, i.e. $c_j=i-j$, i.e. $e_{i,j}-e_{i+1,j}=1$; all other summands are $0$ by the monotonicity of the columns. The two particular statements follow since the summands are non-negative. $\square$
+
+Definition. For integers $x$ and $p<q$ with $q\ge p+2$ we say that the sequence has an $x$-pattern on $[p,q]$ if
+$$(c_p,c_{p+1},\dots,c_{q-1},c_q)=(x-1,x,\dots,x,x+1).$$
+Since $c_p\ge1$, an $x$-pattern forces $x\ge2$; and $\delta_p=0$, $\delta_{q-1}=0$, $\delta_i=1$ for $p<i<q-1$.
+
+Lemma 5 (sandwich). If $i<j$ and $c_i<x<c_j$, then there is an $x$-pattern on some $[p,q]$ with $i\le p<q\le j$.
+
+Proof. Let $p$ be the largest index in $[i,j)$ with $c_p\le x-1$ (it exists since $c_i\le x-1$). Then $c_{p+1}\ge x$: by maximality if $p+1<j$, and because $c_j>x$ if $p+1=j$. By Lemma 4, $c_{p+1}\le c_p+1\le x$, so $c_p=x-1$, $c_{p+1}=x$. Every $m\in(p,j]$ has $c_m\ge x$ (maximality for $m<j$, hypothesis for $m=j$). Let $q$ be the least index $>p$ with $c_q\ne x$; $q\le j$ since $c_j\ne x$, and $q\ge p+2$. Then $c_q\ge x+1$ and $c_q\le c_{q-1}+1=x+1$. $\square$
+
+The end of the orbit when $n=T_k$
+
+Lemma 6. Let $n=T_k$, $k\ge1$, $\lambda\vdash n$, $t=d_B(\lambda)$ (finite by Lemma 2).
+1. $c_i=k$ for all $i\ge t+1$, and if $t\ge1$ then $c_t=k-1$.
+2. If $t\ge k+1$, then at least one of the following holds:
+   * (i) there is a $k$-pattern on some $[p,q]$ with $t-k\le p<q\le t-1$;
+   * (ii) there is a $(k-1)$-pattern on some $[p,q]$ with $t-k+1\le p<q\le t+1$.
+
+Proof. (1) $B^m(\lambda)=\delta_k$ for $m\ge t$, so $c_{m+1}=k$. Let $t\ge1$ and $\mu=B^{t-1}(\lambda)$, so $\mu\ne\delta_k$, $B(\mu)=\delta_k$, $\ell(\mu)=c_t$. The new part $c_t$ of $B(\mu)$ is a part of $\delta_k$, so $c_t\le k$. If $c_t=k$, the remaining parts $\mu_j-1$ ($\mu_j\ge2$) form $\{k-1,\dots,1\}$, so $\mu$ has the parts $k,k-1,\dots,2$ and, having $c_t=k$ parts in total, exactly one part $1$: $\mu=\delta_k$, a contradiction. Also $c_t\ge c_{t+1}-1=k-1$ by Lemma 4. Hence $c_t=k-1$.
+
+(2) Let $t\ge k+1$, so $t-k\ge1$. Row $t$ of (3.2) has $c_t=k-1$ ones. The $k$ columns $P_{t-k},\dots,P_{t-1}$ cannot all have $e_{t,j}=1$; since $e_{t,t-1}=1$, there is $i\in[t-k,t-2]$ with $e_{t,i}=0$; take the largest such $i$. Then $e_{t,j}=1$ for $j\in[i+1,t-1]$. As $\delta_t=c_t+1-c_{t+1}=0$, Lemma 4 gives $e_{t+1,i+1}=1$, i.e. $c_{i+1}\ge t-i$. From $e_{t,i}=0$, $c_i\le t-i-1$, and by Lemma 4 $c_i\ge c_{i+1}-1\ge t-i-1$. Hence
+$$c_i=t-i-1,\qquad c_{i+1}=t-i.\qquad(6.1)$$
+
+Case A: $i\ge t-k+1$. Then $c_i\le k-2<k-1<k=c_{t+1}$ and $i<t+1$; Lemma 5 with $x=k-1$ gives a $(k-1)$-pattern on $[p,q]$ with $t-k+1\le i\le p<q\le t+1$: (ii) holds.
+
+Case B: $i=t-k$. Then $c_{t-k}=k-1$ and $c_{t-k+1}=k$ by (6.1). If some $j\in[t-k+2,t-1]$ has $c_j\le k-2$, Lemma 5 ($x=k-1$, indices $j<t+1$) gives a $(k-1)$-pattern on $[p,q]$ with $t-k+2\le p<q\le t+1$: (ii) holds. If some $j\in[t-k+2,t-1]$ has $c_j\ge k+1$, Lemma 5 ($x=k$, indices $t-k<j$) gives a $k$-pattern on $[p,q]$ with $t-k\le p<q\le j\le t-1$: (i) holds. Otherwise $c_j\in\{k-1,k\}$ for all $j\in[t-k+2,t-1]$, and we derive a contradiction by counting cards. Row $t$ has its $k-1$ ones at the columns $P_{t-k+1},\dots,P_{t-1}$, hence all other entries of row $t$ vanish: $f_{t,j}=0$ for all $j$ and $e_{t,j}=0$ for $j\le t-k$. By Lemma 3 the parts of $B^{t-1}(\lambda)$ are therefore exactly $c_j-(t-1-j)$ for $j=t-k+1,\dots,t-1$. For $j=t-k+1$ this part is $k-(k-2)=2$; for $j=t-k+m$ with $2\le m\le k-1$ it is $c_j-(k-1-m)\le k-(k-1-m)=m+1$. So
+$$T_k=|B^{t-1}(\lambda)|\le 2+\sum_{m=2}^{k-1}(m+1)=2+\sum_{u=3}^{k}u=2+(T_k-3)=T_k-1,$$
+a contradiction. (For $k=2$ the sum is empty and the bound reads $2=T_2-1$; for $k=1$ case (2) cannot occur since $c_t=k-1=0$ is impossible.) $\square$
+
+Lemma 7. Let $\lambda\vdash n$, $k\ge3$, and suppose $(c_p,c_{p+1},\dots,c_{p+k})=(k-2,k-1,\dots,k-1,k)$ for some $p\ge1$ (a $(k-1)$-pattern on $[p,p+k]$). Then $p+k\le n+1$.
+
+Proof. For $j\in[p+1,p+k-1]$: $e_{p+k,j}=[k-1\ge p+k-j]=1$. Also $e_{p+k,p}=[k-2\ge k]=0$. Row $p+k$ has $c_{p+k}=k$ ones, so besides these $k-1$ there is exactly one more one, either some $f_{p+k,j}=1$, whence $p+k\le\lambda_j\le n$ and we are done, or some $e_{p+k,j}=1$ with $j\le p-1$. Suppose in the latter case $j\ge2$. Then $e_{p+k,j-1}=0$ (the extra one is unique and $j-1\notin\{p\}\cup[p+1,p+k-1]$). Since $\delta_{p+k-1}=c_{p+k-1}+1-c_{p+k}=0$, Lemma 4 gives $e_{p+k-1,j-1}=0$. Since $k\ge3$, $c_{p+k-2}=k-1$ and $\delta_{p+k-2}=1$; the column $P_p$ dies there ($e_{p+k-2,p}=[k-2\ge k-2]=1$, $e_{p+k-1,p}=[k-2\ge k-1]=0$), so Lemma 4 with $j_0=p\ne j-1$ gives $e_{p+k-2,j-1}=e_{p+k-1,j-1}=0$, i.e. $c_{j-1}<p+k-2-(j-1)$, i.e. $c_{j-1}\le p+k-j-2$. But $e_{p+k,j}=1$ means $c_j\ge p+k-j\ge c_{j-1}+2$, contradicting Lemma 4. Hence $j=1$, so $c_1\ge p+k-1$; as $c_1=\ell(\lambda)\le n$, $p+k\le n+1$. $\square$
+
+Lemma 8. If there is an $x$-pattern on $[p,p+2]$, then $p\le x$.
+
+Proof. Suppose $p\ge x+1$, so $c_p=x-1\le p-2$. Row $p$ has at most $x-1\le p-2$ ones among the $p-1$ columns $P_1,\dots,P_{p-1}$, so some $e_{p,i}=0$ with $i\le p-1$, and $i\le p-2$ because $e_{p,p-1}=1$; take $i$ largest, so $e_{p,i+1}=1$. Since $\delta_p=\delta_{p+1}=0$, Lemma 4 gives $e_{p+2,i+1}=e_{p+1,i+1}=e_{p,i+1}=1$, i.e. $c_{i+1}\ge p-i+1$; but $e_{p,i}=0$ gives $c_i\le p-i-1$, so $c_{i+1}\ge c_i+2$, contradicting Lemma 4. $\square$
+
+Lemma 9. Suppose there is an $x$-pattern on $[p,q]$ with $q\ge p+3$ and $p\ge x+1$. Then there are $x',p',q'$ with an $x'$-pattern on $[p',q']$ and
+$$x'\le x,\qquad p'\ge p-x,\qquad 2\le q'-p'\le q-p-1.$$
+
+Proof. Since $p\ge x+1$, the $x$ columns $P_{p-x},\dots,P_{p-1}$ exist. Row $p$ has $c_p=x-1$ ones, so some $e_{p,p'}=0$ with $p'\in[p-x,p-1]$, and $p'\le p-2$ because $e_{p,p-1}=1$ (note $x\ge2$). Take $p'$ largest; then $e_{p,j}=1$ for $j\in[p'+1,p-1]$. As $\delta_p=0$, Lemma 4 gives $e_{p+1,j}=1$ for $j\in[p'+1,p-1]$, and $e_{p+1,p}=1$ anyway; so
+$$e_{p+1,j}=1\quad\text{for all }j\in[p'+1,p].\qquad(9.1)$$
+From $e_{p+1,p'+1}=1$: $c_{p'+1}\ge p-p'$; from $e_{p,p'}=0$: $c_{p'}\le p-p'-1$; from Lemma 4: $c_{p'}\ge c_{p'+1}-1$. Hence
+$$c_{p'}=p-p'-1,\qquad c_{p'+1}=p-p'.\qquad(9.2)$$
+Put $y:=p-p'$ ($2\le y\le x$) and $M:=q-p-1\ge2$.
+
+Claim. For $1\le m\le M$: if $c_{p'+u}=y$ for all $1\le u\le m-1$, then $e_{p+m,j}=1$ for all $j\in[p'+m,p+m-1]$, and consequently $c_{p'+m}\ge y$.
+
+Induction on $m$. For $m=1$ this is (9.1). Let $2\le m\le M$ and assume $c_{p'+u}=y$ for $u\le m-1$. By the induction hypothesis (whose hypothesis holds a fortiori), $e_{p+m-1,j}=1$ for $j\in[p'+m-1,p+m-2]$. Since $p+m\le q-1$ and $p+m-1\ge p+1$, both $c_{p+m-1}$ and $c_{p+m}$ equal $x$, so $\delta_{p+m-1}=1$: exactly one pile alive at time $p+m-2$ dies. The column $P_{p'+m-1}$ has $c_{p'+m-1}=y$, so it has ones exactly in rows $p'+m,\dots,p'+m-1+y=p+m-1$; thus $e_{p+m-1,p'+m-1}=1$, $e_{p+m,p'+m-1}=0$, and this is the unique death. By Lemma 4 every other one of row $p+m-1$ persists: $e_{p+m,j}=1$ for $j\in[p'+m,p+m-2]$; and $e_{p+m,p+m-1}=1$. Finally $e_{p+m,p'+m}=1$ means $c_{p'+m}\ge p+m-(p'+m)=y$. This proves the claim.
+
+Let $U:=\{m\in[1,M]:c_{p'+m}\ne y\}$. $U$ is nonempty: otherwise the claim applies with $m=M$ and gives $e_{q-1,p'+M}=1$ (indeed $p+M-1=q-2\ge p'+M$); since $c_q=x+1=c_{q-1}+1$, $\delta_{q-1}=0$ and Lemma 4 gives $e_{q,p'+M}=1$, i.e. $c_{p'+M}\ge q-p'-M=y+1\ne y$, a contradiction. Let $m^=\min U$; by (9.2), $m^\ge2$. The claim applies to $m^$ and gives $c_{p'+m^}\ge y$, hence $c_{p'+m^}\ge y+1$, while Lemma 4 gives $c_{p'+m^}\le c_{p'+m^*-1}+1=y+1$. Therefore
+$$(c_{p'},c_{p'+1},\dots,c_{p'+m^-1},c_{p'+m^})=(y-1,y,\dots,y,y+1),$$
+a $y$-pattern on $[p',p'+m^]$ with $x'=y\le x$, $p'\ge p-x$, and $2\le m^\le M=q-p-1$. $\square$
+
+Lemma 10 (iteration). If there is an $x$-pattern on $[p,q]$, then $p\le x\,(q-p-1)$.
+
+Proof. Put $(x_0,p_0,q_0)=(x,p,q)$. As long as $q_j-p_j\ge3$ and $p_j\ge x_j+1$, Lemma 9 yields an $x_{j+1}$-pattern on $[p_{j+1},q_{j+1}]$ with $x_{j+1}\le x_j\le x$, $p_{j+1}\ge p_j-x_j\ge p_j-x$ and $2\le q_{j+1}-p_{j+1}\le q_j-p_j-1$. The lengths $q_j-p_j$ are integers $\ge2$ that strictly decrease, so the procedure stops after $J\le (q-p)-2$ applications, at a pattern $(x_J,p_J,q_J)$ for which either $p_J\le x_J\le x$, or $q_J-p_J=2$ and then $p_J\le x_J\le x$ by Lemma 8. Hence $p=p_0\le p_J+Jx\le x+(q-p-2)x=x(q-p-1)$. $\square$
+
+Theorem B (upper bound)
+
+Theorem B. Let $n=T_k$. For every $\lambda\vdash n$, $d_B(\lambda)\le k^2-k$.
+
+Proof. For $k=1$ the only partition is $\delta_1$ and $d_B=0$. For $k=2$, $n=3$: $d_B((2,1))=0$, $d_B((3))=1$ ($B(3)=(2,1)$), $d_B((1,1,1))=2$ ($(1,1,1)\to(3)\to(2,1)$); all $\le2=k^2-k$. Let $k\ge3$, $\lambda\vdash T_k$, $t=d_B(\lambda)$. If $t\le k$ then $t\le k\le k^2-k$. Assume $t\ge k+1$; by Lemma 6(2), (i) or (ii) holds.
+
+Case 1: (ii) holds with $q-p=k$. From $t-k+1\le p$ and $q\le t+1$ we get $p=t-k+1$, $q=t+1$, and the $(k-1)$-pattern on $[p,p+k]$ reads $(c_p,\dots,c_{p+k})=(k-2,k-1,\dots,k-1,k)$. Lemma 7 gives $p+k\le n+1$, so
+$$t=p+k-1\le n=\tfrac{k(k+1)}2\le k^2-k,$$
+the last inequality because $k+1\le 2(k-1)$ for $k\ge3$.
+
+Case 2: otherwise. Then there is an $x$-pattern on $[p,q]$ with $x\in\{k,k-1\}$ and $q-p\le k-1$: in (i), $q-p\le (t-1)-(t-k)=k-1$; in (ii) with $q-p\ne k$, $q-p\le (t+1)-(t-k+1)-1=k-1$. By Lemma 10, $p\le x(q-p-1)\le k(k-2)=k^2-2k$. In (i), $t\le p+k\le k^2-k$. In (ii), $t\le p+k-1\le k^2-k-1$. $\square$
+
+Conclusion
+
+By Theorem A, $D_B(T_k)\ge k^2-k$ with the explicit extremal $\gamma_k$; by Theorem B, $D_B(T_k)\le k^2-k$. Hence $D_B(T_k)=k^2-k$ for every $k\ge1$. $\blacksquare$
+
+Computational sanity checks (exact integer arithmetic; not part of the proof)
+
+* calcola_DB_triangolari.py: exhaustive computation of $d_B$ over all partitions of $T_k$, $k\le 9$: $D_B(T_k)=k^2-k$ and $\gamma_k$ is extremal (0.5 s).
+* verifica_lemmi_sequenza.py: exhaustive check of Lemmas 4, 7, 8, 9, 10 exactly as stated above (every $x$-pattern with $p<60$, $q-p<40$ in the first 400 terms) for all partitions of every $n\le24$, and of Lemma 6 and Theorem B for $k=3,\dots,7$ (8.6 s). This guards against transcription errors in the statements; the proofs above are self-contained.
 
 3. Verification: instructions, dependencies, timings
 
-Python 3 standard library. Scripts (re-run by the orchestrator, see runs/p3_c2/verifica/):
-- code_1 (python, rigor exact): Exhaustive exact computation of D_B(T_k) and of all extremal partitions for k ≤ 9 (all partitions of T_k, orbit followed to δ_k). Finite set covered: every partition of T_k for k=1..9 (up to 89134 partitions). Wall-clock 0.48 s. Confirms D_B(T_k)=k^2−k for k≤9; does not prove the general upper bound.
-- code_2 (python, rigor exact): Exploration only: along every orbit for k ≤ 8, records the last time the pile count leaves {k−1,k,k+1} and the first time diagonals 1..k−1 are full; used to guide the (unfinished) upper-bound strategy. Exact integers, all partitions of T_k for k=3..8, ~1 min.
+Python 3 standard library only. Scripts (also saved in runs/p3_c2/sandbox/ and re-run in runs/p3_c2/verifica/):
+- code_1 (python, rigor exact): Exhaustive exact check of OUR restatements of the lemmas of Part III (Lemma 4, x-patterns, Lemmas 7, 8, 9, 10 and the consequence p ≤ x(q−p−1)) over all partitions of every n ≤ 24 (patterns with p<60, q−p<40 in the first 400 terms of the sequence), and of Lemma 6 and Theorem B for k = 3..7 (all partitions of T_k). Guard against transcription errors; not part of the proof. Wall-clock 8.6 s. Requires calcola_DB_triangolari.py in the same directory (shift, partizioni).
+- code_2 (python, rigor exact): Exhaustive exact computation of d_B over all partitions of T_k for k ≤ 9 (run: python calcola_DB_triangolari.py 9): D_B(T_k) = k²−k for k = 1..9, with γ_k among the extremals. Sanity check only; 0.5 s.
+
+Trusted re-runs by the orchestrator (exit code, wall clock, output):
+- orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 14.3s; stdout: 'lemmi generali ok per tutte le partizioni di n <= 24\nLemma 3.3 e teorema ok per k = 3..7\ntempo 14.2 s'; stderr: ''
+- orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 0 in 0.1s; stdout: '1, 1)\n    (4, 4, 3, 3, 3, 3, 3, 3, 2)\n    (4, 4, 4, 3, 2, 2, 2, 2, 2, 1, 1, 1)\n    (4, 4, 4, 3, 2, 2, 2, 2, 2, 2, 1)\nk=8 n=36 #partizioni=17977 D_B=56 k^2-k=56 #estremali=1267\n    (5, 4, 4, 3
 
 4. Sources and contribution
 
-- B. Hopkins, 30 Years of Bulgarian Solitaire, College Math. J. 43 (2012) 135–140 (read in full; p.137 statement that Igusa proved γ_k=(k−1,k−1,k−2,…,2,1,1) is at maximal distance k(k−1)) — CITED for context only
-- K. Igusa, Solution of the Bulgarian solitaire conjecture, Math. Mag. 58 (1985) 259–271 — NOT read (paywalled); statement cited via Hopkins/Drensky
-- G. Etienne, Tableaux de Young et solitaire bulgare, J. Combin. Theory Ser. A 58 (1991) 181–197 — NOT read
-- J. R. Griggs, C.-C. Ho, The cycling of partitions and compositions under repeated shifts, Adv. Appl. Math. 21 (1998) 205–227 — NOT read
-- arXiv:1503.00885 (Drensky) and arXiv:2607.17194 (Meštrović) — read; both only cite Igusa/Etienne for the k(k−1) bound and name Toom's extremal τ=γ_k
-- M. Jonsson, Processes on Integer Partitions and Their Limit Shapes, PhD thesis, Mälardalen Univ. 2017 (DiVA diva2:1082060) — read the relevant pages; cites Etienne for the game-tree height k^2−k
-- Position with respect to the literature: The listed arXiv abstracts (math/0401385, 1703.07102: random variants; 1101.1546: Toom's convergence proof; 2208.14496: orbit growth; 1503.00885 and 2607.17194: surveys) do not prove the bound. I fetched and read (pdftotext) Drensky 1503.00885, Meštrović 2607.17194, Hopkins "30 years of Bulgarian solitaire" (College Math. J. 43 (2012) 135–140), Hopkins–Jones (EJC 13 (2006) R80), N. Pham's honors thesis and M. Jonsson's PhD thesis (DiVA 1082060). All state, CITED: Knuth conjectured and Igusa (Math. Mag. 58 (1985) 259–271) and Etienne (JCTA 58 (1991) 181–197) proved that for n=T_k the maximal number of moves is k(k−1), attained by γ_k=(k−1,k−1,k−2,…,2,1,1) (Hopkins 2012, p. 137: "Igusa [15] shows that the partition γ_k … is at distance k(k−1) from τ_k and that this distance is maximal"). None of the read sources reproduces the proof. My approach follows the classical "cards on diagonals" idea mentioned by Hopkins (p. 137) but makes it exact (Lemma 1) and uses it to prove the lower bound in full; the upper bound argument of Igusa/Etienne is not reproduced.
+- J. R. Griggs, C.-C. Ho, The cycling of partitions and compositions under repeated shifts, Adv. in Appl. Math. 21 (1998) 205–227 — READ in full (Sections 1–3) from https://people.math.sc.edu/griggs/cycling.pdf (saved as runs/p3_c2/sandbox/griggs_ho_cycling.pdf and .txt). Used: the method of Theorem 3.7 (pile-count sequence seq_B(λ), Prop. 3.2(1),(3), Lemmas 3.3–3.6); every statement is re-proved above, nothing is cited as a black box.
+- B. Hopkins, 30 years of Bulgarian solitaire, College Math. J. 43 (2012) 135–140 — read (sandbox/hopkins.txt); used only for the statement that Igusa/Etienne proved the value and for the extremal γ_k; no proof taken from it.
+- K. Igusa, Solution of the Bulgarian solitaire conjecture, Math. Mag. 58 (1985) 259–271 and G. Etienne, JCTA 58 (1991) 181–197 — NOT read (paywalled); mentioned for attribution only.
+- Position with respect to the literature: The listed arXiv abstracts (math/0401385, 1503.00885, 2607.17194, 1101.1546, 1703.07102, 2208.14496) only cite the value D_B(T_k)=k²−k (Igusa 1985, Etienne 1991) without proofs usable here; the downloaded texts of Drensky, Meštrović, Hopkins, Hopkins–Jones, Pham, Jonsson in the sandbox contain only citations. The upper bound is proved in J. R. Griggs & C.-C. Ho, "The cycling of partitions and compositions under repeated shifts", Adv. Appl. Math. 21 (1998) 205–227, Theorem 3.7 (with Prop. 3.2, Lemmas 3.3–3.6), which I READ (people.math.sc.edu/griggs/cycling.pdf, saved as sandbox/griggs_ho_cycling.pdf). My Part III follows their method (pile-count sequence, "x−1, x, …, x, x+1" pattern) and departs from the text only by (a) making the bookkeeping lemma and the death-count Lemma 4 explicit, (b) writing the inductive claim in Lemma 9 and the descent count in Lemma 10 in full, (c) proving convergence/uniqueness (their Thm 2.1/Cor 2.2, Brandt) via the cell rule, W and CRT instead of citing it. Per the rules, the result is reproduced in full, not cited.
+- Contribution: the proof above is written out in full by the team's Researcher and checked by two independent judges and by a human.
 
 5. Limits and unresolved parts
 
-- Upper bound D_B(T_k) ≤ k^2 − k for all k: not proved (only verified exhaustively for k ≤ 9 and cited from Igusa 1985 / Etienne 1991, whose proofs I could not access). This is the next blocker.
-- Theorem A uses that δ_k is the only cyclic partition of T_k to conclude d_B(γ_k) = k^2−k rather than merely B^{k^2−k}(γ_k)=δ_k; this is the C1 statement, sketched via the potential W in Lemma 2 but not written out in full here (the strict-decrease/non-periodicity step is omitted).
-- Lemma 1's proof treats ties (columns of equal height) implicitly: the sorted diagram is determined by the multiset of column heights, so ties do not affect the cell set, but the reader may want this stated explicitly.
+Gaps declared by the author (all accepted by the judges):
+- Lemma 9's inductive Claim and Lemma 10's descent are my own write-up of steps that Griggs–Ho only sketch ('Continue this process…', 'at most k²−2k−1 terms'); they were checked exhaustively for n ≤ 24 but the referee should verify the induction hypothesis bookkeeping (in particular that δ_{p+m−1}=1 for 2 ≤ m ≤ M uses p+m ≤ q−1 and p+m−1 ≥ p+1).
+- In Lemma 6(2) Case B the counting contradiction is my version of Griggs–Ho's 'n−1 ones in the rectangle' argument; it relies on Lemma 3 identifying the parts of B^{t−1}(λ) exactly from row t of the indicator array.
+- Theorem A is carried over from attempt_001 (Lemma 1 is re-proved here with the same statement); the referee did not object to it but it has not been formally accepted as a verified claim.
 
 6. How this result was obtained (multi-agent trace)
 
@@ -88,10 +199,19 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Why this approach: First iteration, no blocker stated. The cell asks for the exact value with both bounds; the literature (read: Hopkins 2012 survey) fixes the answer k^2-k and Igusa's extremal γ_k, but no accessible source contains a written proof (Igusa 1985, Etienne 1991, Griggs–Ho 1998 are paywalled; the surveys and theses I read only cite them). I therefore built the proof from scratch. The lower bound and an exact structural lemma are complete; the general upper bound is not, and I say so.
   - Position w.r.t. the literature: The listed arXiv abstracts (math/0401385, 1703.07102: random variants; 1101.1546: Toom's convergence proof; 2208.14496: orbit growth; 1503.00885 and 2607.17194: surveys) do not prove the bound. I fetched and read (pdftotext) Drensky 1503.00885, Meštrović 2607.17194, Hopkins "30 years of Bulgarian solitaire" (College Math. J. 43 (2012) 135–140), Hopkins–Jones (EJC 13 (2006) R80), N. Pham's honors thesis and M. Jonsson's PhD thesis (DiVA 1082060). All state, CITED: Knuth conjectured and Igusa (Math. Mag. 58 (1985) 259–271) and Etienne (JCTA 58 (1991) 181–197) proved that for n=T_k the maximal number of moves is k(k−1), attained by γ_k=(k−1,k−1,k−2,…,2,1,1) (Hopkins 2012, p. 137: "Igusa [15] shows that the partition γ_k … is at distance k(k−1) from τ_k and that this distance is maximal"). None of the read sources reproduces the proof. My approach follows the classical "cards on diagonals" idea mentioned by Hopkins (p. 137) but makes it exact (Lemma 1) and uses it to prove the lower bound in full; the upper bound argument of Igusa/Etienne is not reproduced.
   - Referee: REJECT / NEEDS_WORK; fatal error: Theorem B (upper bound D_B(T_k) ≤ k^2−k for all k) is not proved; the submission itself marks it 'NOT PROVED HERE' and only cites Igusa/Etienne (statement not reproduced, sources not read) plus an exhaustive check for small k. The cell demands both bounds with proof, so the declared target 'main' (exact value k^2−k for every k) is not established. Finite exhaustive verification (k ≤ 8 in the orchestrator's re-run of code_1; k ≤ 9 claimed) does not prove the universal upper bound. What would close it: a proof that every partition of T_k reaches δ_k within k^2−k shifts (e.g. via the potential W of Lemma 2 plus a bound on the length of runs of cost‑0 steps).; next: Address the stated blocking obligation without silently changing the target
+- attempt_002 — Researcher: family direct_proof, subgoal: Prove the missing upper bound D_B(T_k) ≤ k²−k for every k (the blocker of attempt_001) with a complete, self-contained argument, and assemble it with the lower bound into a full proof that D_B(T_k) = k²−k.; declared CELL_SOLVED_CANDIDATE.
+  - Why this approach: The referee rejected attempt_001 solely because Theorem B (upper bound) was cited, not proved. This attempt fixes exactly that error: I located the primary source (Griggs–Ho 1998, PDF on the author's homepage, read Sections 2–3 in full), reconstructed its Theorem 3.7 argument step by step in my own notation, and wrote out the parts the paper only sketches ("continue this process…" induction in Lemma 3.5, the unstated count "at most k²−2k−1 terms", the counting contradiction in Lemma 3.3, and the preimage argument for c_t = k−1). Convergence/uniqueness of the cyclic partition (needed to identify d_B with the hitting time of δ_k) is proved from scratch since no claim is verified yet. The lower bound of attempt_001 (not objected to) is included again so that the cell is complete.
+  - Position w.r.t. the literature: The listed arXiv abstracts (math/0401385, 1503.00885, 2607.17194, 1101.1546, 1703.07102, 2208.14496) only cite the value D_B(T_k)=k²−k (Igusa 1985, Etienne 1991) without proofs usable here; the downloaded texts of Drensky, Meštrović, Hopkins, Hopkins–Jones, Pham, Jonsson in the sandbox contain only citations. The upper bound is proved in J. R. Griggs & C.-C. Ho, "The cycling of partitions and compositions under repeated shifts", Adv. Appl. Math. 21 (1998) 205–227, Theorem 3.7 (with Prop. 3.2, Lemmas 3.3–3.6), which I READ (people.math.sc.edu/griggs/cycling.pdf, saved as sandbox/griggs_ho_cycling.pdf). My Part III follows their method (pile-count sequence, "x−1, x, …, x, x+1" pattern) and departs from the text only by (a) making the bookkeeping lemma and the death-count Lemma 4 explicit, (b) writing the inductive claim in Lemma 9 and the descent count in Lemma 10 in full, (c) proving convergence/uniqueness (their Thm 2.1/Cor 2.2, Brandt) via the cell rule, W and CRT instead of citing it. Per the rules, the result is reproduced in full, not cited.
+  - Referee: UNKNOWN_STATUS / READY_FOR_HUMAN; next: Human reviews the exact target, proof and evidence, then approves explicit claims
+- Human approval: Thomas Tumini (human) at 2026-09-26T15:43:29 (READY_FOR_HUMAN → ACCEPT).
 
 6b. Tokens used by the agents
 
-- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+- Researcher attempt_002: input 1,528,552 · output (incl. reasoning) 100,120
+- Referee judge B: input 42,611 · output (incl. reasoning) 2,078
+- Referee judge B: input 44,179 · output (incl. reasoning) 1,799
+- Referee judge A: input 42,482 · output (incl. reasoning) 12,678
+- Total: input 1,657,824 · output 116,675 tokens
 
 7. arXiv literature consulted
 

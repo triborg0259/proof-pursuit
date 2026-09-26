@@ -294,9 +294,291 @@ solo abstract letto. Come parte 3.</p>
 <p>Tutto tranne la riduzione.</p>
 <h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
 <h4 id="run-p4_c4">Run <code>p4_c4</code></h4>
+<dl>
+<dt>Iterazione 1 — attempt_001</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>exact_computation</code>,
+sotto-obiettivo: Prove the statement for every k ≤ 12 (and k = 13) by a
+certified finite search: reduction lemma (moduli = lcm of gcds, no
+minimality needed) + Huhn–Megyesi density criterion with all admissible
+M + residue stage; report exactly what is left undecided for k = 9..16..
+Stato dichiarato: <code>CELL_SOLVED_CANDIDATE</code>. <em>Perché questa
+scelta</em>: First natural subgoal of the cell (no blocker). Cell 3’s
+approved method (clique search on classes mod 420) does not scale to
+L_12 = 27720 (112 320 classes). The modulus-level density criterion is
+far stronger: with all admissible M it kills everything at k ≤ 12 in 15
+s and leaves one tuple at k = 13, which the residue stage decides. No
+minimality of k is assumed for k ≤ 13. <em>Rispetto allo stato
+dell’arte</em>: Fornal–Sun arXiv:2607.24655 (read in full via the PDF):
+asymptotic bound max gcd ≫ k·exp(−(2+o(1))√(log k/log log k)); their
+Lemma 4.1 is asymptotic and gives nothing at fixed small k; they cite
+O’Bryant for k ≤ 20. O’Bryant, arXiv:math/0604347v2 (read in full):
+proves the statement for k ≤ 20 and that a minimal counterexample has k
+∉ {24,30}, using a modulus-only method: Lemma 5 (= our Lemma B, stated
+with the Huhn–Megyesi reference), Lemma 6 (items 1–8, several requiring
+minimality of k and of Σm_i) and a week-long Mathematica search ’Grow’
+for k ≤ 19 applying Lemma 5 only with M = lcm of the gcds of each
+subset. Our method ADAPTS his: (i) Lemma A gives his items 1 and 3
+without any minimality assumption; (ii) Lemma B is applied with ALL
+divisors M of L_k that are multiples of the gcd-lcm (strictly stronger
+pruning; his whole k ≤ 19 search is replaced by seconds); (iii) we add a
+residue stage, which is needed: at k = 13 the modulus-only rules
+(R1)–(R3) leave one tuple, and so do the rules with his items 4–5 added
+(tested: 669 090 nodes, same single survivor). Tested agreement with
+O’Bryant: k ≤ 12 both give ’no counterexample’; at k = 13 we could not
+reproduce a modulus-only refutation of
+(10,10,10,10,10,12,12,12,12,24,36,40,45) from his paper (we did not run
+his code), but our stage B decides it, so nothing we claim depends on
+him. Abstracts 2603.26043, 1511.04293 (disjoint covering systems) and
+2608.15873 (group form, tuple (6,6,6,10,15)) are not relevant to this
+cell. <strong>Referee</strong>: verdetto
+<code>(nessun verdetto)</code>.</p>
+</dd>
+</dl>
 <h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
 tentativo</h3>
-<p>Nessun codice nei tentativi.</p>
+<pre
+data-caption="attempt\_001 code\_1 [python, rigore exact] — Stage A (certificate): enumerate non-decreasing k-tuples of divisors of L\_k with pairwise  — verdetto del Referee: (nessun verdetto)"><code>&quot;&quot;&quot;
+Ricerca certificata per il problema 4, parte 4 (k &lt;= 12; rapporto per k = 9..16).
+
+COSA: per ogni k enumera i multinsiemi non decrescenti di k moduli m_i | L_k = lcm(1..k-1),
+m_i &gt;= 2, con gcd(m_i, m_j) in [2, soglia] (soglia = k-1 per la ricerca, k per la
+non-vacuita&#39;), e li pota con regole DIMOSTRATE (vedi prova):
+  (R1) gcd a coppie in [2, soglia]            -- definizione di controesempio;
+  (R2) criterio di Huhn-Megyesi: per ogni M | L_k multiplo di lcm dei gcd della
+       famiglia parziale, somma_i M/gcd(m_i, M) &lt;= M   -- prova nel testo;
+  (R3, solo alle foglie) famiglia ridotta: ogni potenza di primo che divide un m_i
+       divide anche un altro m_j                        -- Lemma A;
+  (R4, solo alle foglie) criterio (R2) su OGNI sottoinsieme di dimensione &gt;= 2.
+PERCHE&#39;: il Lemma A riduce ogni controesempio a una famiglia con questi moduli; se
+nessun multinsieme sopravvive, il caso k e&#39; chiuso. I sopravvissuti vanno poi
+decisi sui residui (stadio B, file decidi_residui.py).
+Aritmetica: solo interi esatti.
+&quot;&quot;&quot;
+import sys
+import time
+from itertools import combinations
+from math import gcd, lcm
+
+
+def divisori(n):
+    &quot;&quot;&quot;Divisori di n in ordine crescente.&quot;&quot;&quot;
+    return [d for d in range(1, n + 1) if n % d == 0]
+
+
+def potenze_di_primo(n):
+    &quot;&quot;&quot;Potenze di primo massime che dividono n, es. 12 -&gt; [4, 3].&quot;&quot;&quot;
+    out, p = [], 2
+    while n &gt; 1:
+        if n % p == 0:
+            q = 1
+            while n % p == 0:
+                n //= p
+                q *= p
+            out.append(q)
+        p += 1
+    return out
+
+
+def famiglia_ridotta(moduli):
+    &quot;&quot;&quot;(R3): ogni potenza di primo di ciascun m_i divide un altro m_j.&quot;&quot;&quot;
+    for i, m in enumerate(moduli):
+        for q in potenze_di_primo(m):
+            if not any(mj % q == 0 for j, mj in enumerate(moduli) if j != i):
+                return False
+    return True
+
+
+def criterio_hm(sotto, moltiplicatori):
+    &quot;&quot;&quot;(R2) su un sottoinsieme: True se passa per ogni M multiplo dell&#39;lcm dei gcd.&quot;&quot;&quot;
+    g = lcm(*(gcd(a, b) for a, b in combinations(sotto, 2)))
+    for M in moltiplicatori:
+        if M % g == 0 and sum(M // gcd(m, M) for m in sotto) &gt; M:
+            return False
+    return True
+
+
+def tutti_i_sottoinsiemi_passano(moduli, moltiplicatori):
+    &quot;&quot;&quot;(R4): criterio HM su ogni sottoinsieme di dimensione &gt;= 2.&quot;&quot;&quot;
+    for r in range(2, len(moduli) + 1):
+        for sotto in combinations(moduli, r):
+            if not criterio_hm(sotto, moltiplicatori):
+                return False
+    return True
+
+
+class Ricerca:
+    &quot;&quot;&quot;Enumerazione con potatura incrementale (R1)+(R2); (R3)+(R4) alle foglie.&quot;&quot;&quot;
+
+    def __init__(self, k, soglia):
+        self.k, self.soglia = k, soglia
+        self.L = lcm(*range(1, soglia + 1))
+        self.M_list = divisori(self.L)
+        self.candidati = [d for d in self.M_list if d &gt;= 2]
+        # peso[m][M] = M / gcd(m, M): contributo di m alla somma per il modulo M
+        self.peso = {m: [M // gcd(m, M) for M in self.M_list] for m in self.candidati}
+        self.nodi, self.foglie, self.sopravvissuti = 0, 0, []
+
+    def hm_incrementale(self, somme, g):
+        &quot;&quot;&quot;(R2) sulla famiglia parziale: somma_M &lt;= M per ogni M multiplo di g.&quot;&quot;&quot;
+        return all(s &lt;= M for s, M in zip(somme, self.M_list) if M % g == 0)
+
+    def estendi(self, parziale, somme, g):
+        &quot;&quot;&quot;Nodo della ricerca: parziale non decrescente, somme HM correnti, g = lcm dei gcd.&quot;&quot;&quot;
+        self.nodi += 1
+        if len(parziale) == self.k:
+            self.foglia(parziale)
+            return
+        for m in self.candidati:
+            if parziale and m &lt; parziale[-1]:
+                continue
+            gs = [gcd(m, q) for q in parziale]
+            if any(not (2 &lt;= x &lt;= self.soglia) for x in gs):
+                continue
+            g2 = lcm(g, *gs) if gs else g
+            somme2 = [s + w for s, w in zip(somme, self.peso[m])]
+            if self.hm_incrementale(somme2, g2):
+                self.estendi(parziale + [m], somme2, g2)
+
+    def foglia(self, moduli):
+        &quot;&quot;&quot;Foglia: applica (R3) e (R4) e registra i sopravvissuti.&quot;&quot;&quot;
+        self.foglie += 1
+        if famiglia_ridotta(moduli) and tutti_i_sottoinsiemi_passano(moduli, self.M_list):
+            self.sopravvissuti.append(tuple(moduli))
+
+    def esegui(self):
+        t0 = time.time()
+        self.estendi([], [0] * len(self.M_list), 1)
+        dt = time.time() - t0
+        print(f&quot;k={self.k} soglia={self.soglia} L={self.L} candidati={len(self.candidati)} &quot;
+              f&quot;nodi={self.nodi} foglie={self.foglie} sopravvissuti={len(self.sopravvissuti)} &quot;
+              f&quot;tempo={dt:.2f}s&quot;, flush=True)
+        for s in self.sopravvissuti:
+            print(&quot;   sopravvissuto:&quot;, s, flush=True)
+        return self.sopravvissuti
+
+
+if __name__ == &quot;__main__&quot;:
+    modo = sys.argv[1] if len(sys.argv) &gt; 1 else &quot;ricerca&quot;
+    ks = [int(x) for x in sys.argv[2:]] or list(range(3, 17))
+    for k in ks:
+        Ricerca(k, k - 1 if modo == &quot;ricerca&quot; else k).esegui()
+</code></pre>
+<pre
+data-caption="attempt\_001 code\_2 [python, rigore exact] — Stage B: for each stage-A survivor, exhaustive backtracking on residues (a\_1 = 0 by Lemma  — verdetto del Referee: (nessun verdetto)"><code>&quot;&quot;&quot;
+Stadio B per il problema 4, parte 4: decisione sui residui di un multinsieme di moduli.
+
+COSA: dati moduli (m_1..m_k), cerca residui a_i (a_1 = 0 per traslazione) con
+gcd(m_i, m_j) non divisore di a_i - a_j per ogni coppia (criterio (*)):
+backtracking esatto sugli indici, dominio Z/m_i, controllo su tutte le coppie precedenti.
+PERCHE&#39;: i moduli sopravvissuti allo stadio A (ricerca_moduli_hm.py) vanno decisi uno per
+uno; un testimone trovato viene riverificato direttamente con (*).
+Esito per ciascun multinsieme: FATTIBILE (testimone), INFATTIBILE (esaurito), o
+NON_DECISO (limite di nodi raggiunto: risultato onesto, non una prova).
+&quot;&quot;&quot;
+import sys
+import time
+from math import gcd
+
+from ricerca_moduli_hm import Ricerca
+
+
+def verifica_diretta(famiglia):
+    &quot;&quot;&quot;Controlla con (*) che le classi (a, m) siano a due a due disgiunte.&quot;&quot;&quot;
+    for i in range(len(famiglia)):
+        for j in range(i + 1, len(famiglia)):
+            (a, m), (b, n) = famiglia[i], famiglia[j]
+            if (a - b) % gcd(m, n) == 0:
+                return False
+    return True
+
+
+def cerca_residui(moduli, limite_nodi):
+    &quot;&quot;&quot;Backtracking: restituisce (esito, testimone, nodi).&quot;&quot;&quot;
+    k = len(moduli)
+    g = [[gcd(moduli[i], moduli[j]) for j in range(k)] for i in range(k)]
+    residui, stato = [], {&quot;nodi&quot;: 0}
+
+    def estendi():
+        stato[&quot;nodi&quot;] += 1
+        if stato[&quot;nodi&quot;] &gt; limite_nodi:
+            return &quot;NON_DECISO&quot;
+        i = len(residui)
+        if i == k:
+            return &quot;FATTIBILE&quot;
+        for a in ([0] if i == 0 else range(moduli[i])):
+            if all((a - residui[j]) % g[i][j] != 0 for j in range(i)):
+                residui.append(a)
+                esito = estendi()
+                if esito != &quot;INFATTIBILE&quot;:
+                    return esito
+                residui.pop()
+        return &quot;INFATTIBILE&quot;
+
+    esito = estendi()
+    testimone = tuple(zip(residui, moduli)) if esito == &quot;FATTIBILE&quot; else None
+    return esito, testimone, stato[&quot;nodi&quot;]
+
+
+def decidi_tutti(k, soglia, limite_nodi):
+    &quot;&quot;&quot;Stadio A poi stadio B su ogni sopravvissuto; stampa un verdetto per ciascuno.&quot;&quot;&quot;
+    sopravvissuti = Ricerca(k, soglia).esegui()
+    for moduli in sopravvissuti:
+        t0 = time.time()
+        esito, testimone, nodi = cerca_residui(moduli, limite_nodi)
+        if testimone is not None:
+            assert verifica_diretta(testimone), &quot;testimone non valido&quot;
+        print(f&quot;   {esito} moduli={moduli} nodi_B={nodi} tempo_B={time.time()-t0:.2f}s &quot;
+              f&quot;testimone={testimone}&quot;, flush=True)
+
+
+if __name__ == &quot;__main__&quot;:
+    modo = sys.argv[1]
+    limite = int(sys.argv[2])
+    for k in map(int, sys.argv[3:]):
+        decidi_tutti(k, k - 1 if modo == &quot;ricerca&quot; else k, limite)
+</code></pre>
+<pre
+data-caption="attempt\_001 code\_3 [python, rigore exact] — Decision of the unique k=13 stage-A survivor (10,10,10,10,10,12,12,12,12,24,36,40,45): exh — verdetto del Referee: (nessun verdetto)"><code>&quot;&quot;&quot;
+Trova le parti minime (sotto-multinsiemi) di un multinsieme di moduli che sono gia&#39;
+infattibili sui residui.
+COSA: per ogni sottoinsieme di indici, in ordine di dimensione crescente, esegue lo
+stadio B (decidi_residui.cerca_residui); riporta i sottoinsiemi infattibili minimali
+(nessun sottoinsieme proprio infattibile).
+PERCHE&#39;: i regolamenti chiedono &quot;la parte piu&#39; piccola che gia&#39; forza la decisione&quot;.
+&quot;&quot;&quot;
+import sys
+import time
+from itertools import combinations
+
+from decidi_residui import cerca_residui
+
+
+def parti_minime_infattibili(moduli, limite_nodi):
+    &quot;&quot;&quot;Sottoinsiemi infattibili minimali, in ordine di dimensione.&quot;&quot;&quot;
+    k = len(moduli)
+    minimi = []
+    for r in range(2, k + 1):
+        for idx in combinations(range(k), r):
+            if any(set(m).issubset(idx) for m in minimi):
+                continue
+            esito, _, _ = cerca_residui([moduli[i] for i in idx], limite_nodi)
+            if esito == &quot;NON_DECISO&quot;:
+                print(&quot;   NON_DECISO su&quot;, idx)
+            if esito == &quot;INFATTIBILE&quot;:
+                minimi.append(idx)
+    return minimi
+
+
+if __name__ == &quot;__main__&quot;:
+    moduli = tuple(int(x) for x in sys.argv[1:])
+    t0 = time.time()
+    esito, testimone, nodi = cerca_residui(list(moduli), 10**8)
+    print(f&quot;moduli={moduli} esito={esito} nodi_B={nodi} tempo={time.time()-t0:.2f}s testimone={testimone}&quot;)
+    for idx in parti_minime_infattibili(moduli, 10**7):
+        print(&quot;   parte minima infattibile: indici&quot;, idx, &quot;moduli&quot;, tuple(moduli[i] for i in idx))
+    print(f&quot;tempo totale {time.time()-t0:.2f}s&quot;)
+</code></pre>
 <h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
 <div class="thebibliography">
 <p><span>99</span> Yu Hashimoto. <em>Finiteness of Disjoint Covering

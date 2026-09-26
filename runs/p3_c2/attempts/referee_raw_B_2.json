@@ -1,0 +1,50 @@
+{
+ "report": {
+  "evidence_verdict": "PASS",
+  "source_issues": [
+   {
+    "code": "SOURCE_NOT_INDEPENDENTLY_RETRIEVED",
+    "detail": "src_1 (Griggs–Ho, Adv. Appl. Math. 21 (1998) 205–227) is declared READ from a URL and saved to the researcher sandbox, but no excerpt was submitted and no retrieval tool is available to me, so I cannot independently confirm the reading or the attribution of the method to Thm. 3.7 / Prop. 3.2 / Lemmas 3.3–3.6. Bibliographic data for src_1–src_3 are consistent with my knowledge (Igusa, Math. Mag. 58 (1985) 259–271; Etienne, JCTA 58 (1991) 181–197; Hopkins, CMJ 43 (2012) 135–140), so there is no indication of fabrication. Not blocking and not load-bearing: the proof is self-contained, re-states and re-proves every step (Lemmas 1–10, Theorems A, B) and cites nothing as a black box; sources are used for attribution only, which the hand-in rules explicitly permit ('a proof written out in full does, whatever its source'). src_3 is honestly marked NOT read. Optional (non-required) follow-up for attribution accuracy: orchestrator may confirm existence/content of runs/p3_c2/sandbox/griggs_ho_cycling.pdf/.txt.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "COMPUTATION_NOT_LOAD_BEARING",
+    "detail": "Both scripts are explicitly labelled sanity checks and are not part of the proof. Exact integer arithmetic; exhaustive over the declared finite sets (all partitions of n ≤ 24 for the lemma checks; all partitions of T_k for k = 3..7 for Lemma 6 / Theorem B; all partitions of T_k for k ≤ 8 in the trusted run of code_2). Trusted re-run: code_1 exit 0 in 14.3 s (candidate claimed 8.6 s — immaterial, far below the 10-minute limit); code_2 exit 0 in 0.1 s, trusted stdout tail shows k=8, n=36, D_B=56 = k²−k, consistent with the theorem. The candidate's claim of k ≤ 9 is not in the trusted output (default argument is 8); harmless because the computation is illustrative only and the proof does not depend on it.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US",
+     "KNOWN_IN_LITERATURE",
+     "COMPUTATIONALLY_VERIFIED"
+    ],
+    "evidence_sufficient": true,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": false,
+    "references": [
+     "src_1",
+     "src_2",
+     "src_3",
+     "code_1",
+     "code_2"
+    ],
+    "notes": "Exact formula D_B(T_k)=k²−k with the extremal partition γ_k=(k−1,k−1,k−2,…,2,1,1) given explicitly as a function of k; both bounds are argued in full in Parts I–III without invoking any cited statement as a black box, so the rule 'citing a published result does not count' is not triggered. The value is known in the literature (Igusa 1985, Etienne 1991; method of Griggs–Ho 1998) and this is disclosed with attribution, which the rules allow. Exhaustive exact computations for small k agree (trusted re-run up to k=8, lemma checks n ≤ 24, k = 3..7). Mathematical correctness of the written argument is Referee A's domain; from the evidence/rules side nothing essential is missing or forbidden."
+   }
+  ],
+  "reproducibility_notes": "Orchestrator re-ran both scripts from a clean copy of the sandbox: code_1 (imports shift/partizioni from code_2, so both files must be in the same directory) exit 0 in 14.3 s, all assertions pass for n ≤ 24 and k = 3..7; code_2 exit 0 in 0.1 s, D_B(T_k)=k²−k observed up to k=8 (k=9 claimed by the candidate but the trusted run used the default argument 8). Both use exact integer arithmetic, are exhaustive over their declared finite sets, and are far below the 10-minute laptop limit. Neither computation is needed for the proof; the written argument is self-contained."
+ },
+ "limitation": null
+}

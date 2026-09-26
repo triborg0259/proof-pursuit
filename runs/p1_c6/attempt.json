@@ -1,0 +1,103 @@
+{
+ "attempt_id": "attempt_001",
+ "problem_id": "p1_c6",
+ "ts": "2026-09-26T15:37:49",
+ "meta": {
+  "backend": "cli",
+  "model": [
+   "claude-fable-5-1"
+  ],
+  "cost_usd": 2.78557425,
+  "seconds": 391.2,
+  "session_id": "c25877ce-0600-4c08-ad8d-0632c26e1e52",
+  "num_turns": 11,
+  "shell": "full",
+  "permission_denials": 0,
+  "usage": {
+   "input_tokens": 290,
+   "cache_creation_input_tokens": 65968,
+   "cache_read_input_tokens": 572657,
+   "output_tokens": 26403,
+   "output_tokens_details": {
+    "thinking_tokens": 12673
+   },
+   "server_tool_use": {
+    "web_search_requests": 0,
+    "web_fetch_requests": 0
+   },
+   "service_tier": "standard",
+   "cache_creation": {
+    "ephemeral_1h_input_tokens": 65968,
+    "ephemeral_5m_input_tokens": 0
+   },
+   "inference_geo": "not_available",
+   "iterations": [
+    {
+     "input_tokens": 32,
+     "output_tokens": 10027,
+     "cache_read_input_tokens": 76856,
+     "cache_creation_input_tokens": 1453,
+     "cache_creation": {
+      "ephemeral_5m_input_tokens": 0,
+      "ephemeral_1h_input_tokens": 1453
+     },
+     "type": "message"
+    }
+   ],
+   "speed": "standard"
+  },
+  "model_usage": {
+   "claude-fable-5-1": {
+    "inputTokens": 290,
+    "outputTokens": 26403,
+    "cacheReadInputTokens": 572657,
+    "cacheCreationInputTokens": 65968,
+    "webSearchRequests": 0,
+    "costUSD": 2.78557425,
+    "contextWindow": 1000000,
+    "maxOutputTokens": 64000,
+    "thinkingTokens": 12673,
+    "canonicalModel": "claude-fable-5-1",
+    "provider": "firstParty",
+    "costBasis": "list"
+   }
+  }
+ },
+ "stagnation_detected": false,
+ "schema_errors": [],
+ "target_cell": 6,
+ "subgoal": "Establish rigorous, reusable reduction lemmas between instances FT(N,d) of the conjecture (add a line, remove a line, drop one dimension), settle the (trivial) infinite family N ≤ d not covered by cells 1–5, and record a float-only counterexample search in R^3..R^6.",
+ "approach": "Write the conjecture as FT(N,d): every N lines in R^d have S ≤ B(N,d) := (C(N,2) − M(N,d))·π/2. Prove exact identities for M, then three averaging/embedding implications: (L2) FT(N,d) ⟹ FT(N+1,d) when N ≡ −1 (mod d); (L3) FT(N+1,d) ⟹ FT(N,d) when d | N; (L4) FT(N+q,d) ⟹ FT(N,d−1) with q = ⌊N/(d−1)⌋. Plus the trivial family N ≤ d (M = 0). Corollary: cell 4's (5,3) implies the (6,3) bound S ≤ 6π. Numerical hill-climbing (float, exploration only) finds no counterexample for the 13 pairs (d,N) tested.",
+ "approach_family": "reduction",
+ "reason_for_choice": "No blocker and no verified claims exist for this cell; cell 6 is an open problem and asks for infinite families beyond cells 1–5. A frontal attack (e.g. N = 2d) is out of reach in one iteration, and the frame-potential/Gram approach is known (Bilyk–Matzke) to be non-sharp. The best first step is to build the exact 'transfer' machinery: which instances of the conjecture imply which others. These lemmas are cheap, fully rigorous, reusable by later iterations (any future family proved for N ≡ −1 mod d extends to N+1; any family in R^d transfers down a dimension), and they immediately give a new finite case ((6,3) from cell 4). I also record honestly the trivial family N ≤ d, and a float-only search giving no counterexample, since the cell says 'prove or disprove'.",
+ "literature_position": "[1801.07837] Bilyk–Matzke (read in full by the team earlier, see problema-1/fonti/README.md): the only settled case is the plane; they give a general non-sharp energy bound π/2 − 69/(50(d+1)) via the frame potential and, for the continuous (measure) version, a dimension-reduction Prop. 3.1 (conjecture in S^d ⟹ conjecture in S^{d−1}). Lemma 4 below is the finite-N analogue of that reduction, proved from scratch by embedding and adding q copies of a new orthogonal axis; the exact identity M(N+q,d) = M(N,d−1) + C(q,2) is what makes it sharp for finite N. Lemmas 2–3 (averaging over deleting/duplicating a line) do not appear in the abstracts and are our own. [2007.08698] Lim–McCann (abstract only): deformation to α-powers, optimality for α = ∞; not used. [1204.3850] is irrelevant (polygon mapping). Nothing in the literature I have settles any new infinite family; my approach departs from the energy method (known non-sharp) and instead builds exact transfer lemmas.",
+ "proof_attempt": "# Cell 6 — transfer lemmas, the trivial family, and a counterexample search\n\n## 0. Notation\nLines are lines through the origin of $\\mathbb R^d$, spanned by unit vectors; $\\theta(\\ell,\\ell')=\\arccos|\\langle x,x'\\rangle|\\in[0,\\pi/2]$; $S=\\sum_{i<j}\\theta(\\ell_i,\\ell_j)$. For integers $N\\ge1$, $d\\ge1$ write $N=qd+s$ with $q=\\lfloor N/d\\rfloor$, $0\\le s<d$, and\n$$M(N,d)=s\\binom{q+1}{2}+(d-s)\\binom{q}{2},\\qquad B(N,d)=\\Big(\\binom N2-M(N,d)\\Big)\\frac{\\pi}{2}.$$\n**Definition.** $\\mathrm{FT}(N,d)$ is the statement: *every $N$ lines in $\\mathbb R^d$ satisfy $S\\le B(N,d)$.* Cell 6 asks whether $\\mathrm{FT}(N,d)$ holds for all $N,d$.\n\nThroughout, $\\binom{0}{2}=\\binom{1}{2}=0$.\n\n## 1. Exact identities for $M$\n**Lemma 0.** Let $N=qd+s$, $0\\le s<d$.\n(a) $2M(N,d)=q\\,(N+s-d)$.\n(b) $M(N+1,d)=M(N,d)+q$.\n(c) If $d\\ge2$ and $N=q'(d-1)+s'$ with $0\\le s'<d-1$ (so $q'=\\lfloor N/(d-1)\\rfloor$), then $M(N+q',d)=M(N,d-1)+\\binom{q'}{2}$.\n\n*Proof.* (a) $M=s\\frac{q(q+1)}2+(d-s)\\frac{q(q-1)}2=\\frac q2\\big[s(q+1)+(d-s)(q-1)\\big]=\\frac q2\\big[dq+2s-d\\big]=\\frac q2(N+s-d)$, using $dq+s=N$.\n\n(b) If $s\\le d-2$, then $N+1=qd+(s+1)$ with $0\\le s+1<d$ is the canonical representation, and $M(N+1,d)-M(N,d)=\\binom{q+1}2-\\binom q2=q$. If $s=d-1$, then $N+1=(q+1)d+0$, so $M(N+1,d)=d\\binom{q+1}2$, while $M(N,d)=(d-1)\\binom{q+1}2+\\binom q2$; the difference is again $\\binom{q+1}2-\\binom q2=q$.\n\n(c) $N+q'=q'(d-1)+s'+q'=q'd+s'$ with $0\\le s'<d-1<d$, so this is the canonical representation of $N+q'$ modulo $d$, and\n$M(N+q',d)=s'\\binom{q'+1}2+(d-s')\\binom{q'}2=\\Big[s'\\binom{q'+1}2+(d-1-s')\\binom{q'}2\\Big]+\\binom{q'}2=M(N,d-1)+\\binom{q'}2.$ $\\square$\n\n(These identities were also checked by exact integer arithmetic for all $1\\le d\\le40$, $1\\le N\\le400$ — file `verifica_identita_M.py`; the proof above does not depend on that check.)\n\n## 2. The trivial infinite family $N\\le d$ (and $d=1$)\n**Lemma 1.** $\\mathrm{FT}(N,d)$ holds whenever $N\\le d$, and whenever $d=1$.\n\n*Proof.* If $N\\le d$ then $q=0$, $s=N$, so $M(N,d)=N\\binom12+(d-N)\\binom02=0$ and $B(N,d)=\\binom N2\\frac\\pi2$. Since every $\\theta\\le\\pi/2$, $S\\le\\binom N2\\frac\\pi2$. If $d=1$, all lines equal $\\mathbb R^1$, so $S=0$; here $N=N\\cdot1+0$, $M(N,1)=\\binom N2$, $B(N,1)=0$, and $S\\le0$ holds. $\\square$\n\n*Honest remark.* This family is not covered by cells 1–5 (cell 3 starts at $N=d+1$) but it is trivial; I list it only for completeness, not as substantive progress.\n\n## 3. Adding a line when $N\\equiv-1\\pmod d$\n**Lemma 2.** Let $d\\ge1$, $N\\ge2$, $N=qd+s$ with $s=d-1$ (i.e. $N\\equiv-1\\pmod d$). If $\\mathrm{FT}(N,d)$ holds, then $\\mathrm{FT}(N+1,d)$ holds.\n\n*Proof.* Let $\\ell_1,\\dots,\\ell_{N+1}$ be lines in $\\mathbb R^d$ and $S$ their angle sum. For $k=1,\\dots,N+1$ let $S_k$ be the angle sum of the $N$ lines obtained by deleting $\\ell_k$. A pair $\\{i,j\\}$ contributes $\\theta(\\ell_i,\\ell_j)$ to $S_k$ exactly for the $N+1-2=N-1$ indices $k\\notin\\{i,j\\}$, hence\n$$\\sum_{k=1}^{N+1}S_k=(N-1)\\,S.$$\nBy $\\mathrm{FT}(N,d)$, $S_k\\le B(N,d)$ for each $k$, so $(N-1)S\\le(N+1)B(N,d)$, i.e. $S\\le\\frac{N+1}{N-1}B(N,d)$ (here $N-1\\ge1$). It remains to show $\\frac{N+1}{N-1}B(N,d)\\le B(N+1,d)$, i.e.\n$$(N+1)\\Big(\\binom N2-M(N,d)\\Big)\\le(N-1)\\Big(\\binom{N+1}2-M(N+1,d)\\Big).\\tag{1}$$\nSince $(N+1)\\binom N2=\\frac{(N+1)N(N-1)}2=(N-1)\\binom{N+1}2$, and $M(N+1,d)=M(N,d)+q$ by Lemma 0(b), (1) is equivalent to $-(N+1)M(N,d)\\le-(N-1)M(N,d)-(N-1)q$, i.e. to $(N-1)q\\le2M(N,d)$. By Lemma 0(a), $2M(N,d)=q(N+s-d)=q(N-1)$ because $s=d-1$. So (1) holds with equality, and $S\\le B(N+1,d)$. $\\square$\n\n*Remark.* If $s\\ne d-1$ and $q\\ge1$, the inequality $(N-1)q\\le q(N+s-d)$ fails, so this averaging argument gives exactly the residue class $s=d-1$ and nothing else (exact check in `verifica_identita_M.py`, item (d)).\n\n## 4. Removing a line when $d\\mid N$\n**Lemma 3.** Let $d\\ge1$, $N=qd$ with $q\\ge1$. If $\\mathrm{FT}(N+1,d)$ holds, then $\\mathrm{FT}(N,d)$ holds.\n\n*Proof.* If $N=1$ then $S=0\\le B(1,d)$. Let $N\\ge2$ and let $\\ell_1,\\dots,\\ell_N$ be lines in $\\mathbb R^d$ with angle sum $S$. For each $k$ put $A_k=\\sum_{j\\ne k}\\theta(\\ell_k,\\ell_j)$. Each unordered pair $\\{i,j\\}$ appears in exactly $A_i$ and $A_j$, so $\\sum_kA_k=2S$ and some index $k$ satisfies $A_k\\ge2S/N$. Consider the $N+1$ lines $\\ell_1,\\dots,\\ell_N,\\ell_{N+1}$ with $\\ell_{N+1}=\\ell_k$ (a repeated line, allowed by the problem). Its angle sum is $S'=S+\\sum_{j\\le N}\\theta(\\ell_{N+1},\\ell_j)=S+A_k+\\theta(\\ell_k,\\ell_k)=S+A_k\\ge S\\,(1+\\tfrac2N)=\\tfrac{N+2}{N}S$, since $\\theta(\\ell_k,\\ell_k)=\\arccos1=0$. By $\\mathrm{FT}(N+1,d)$, $S'\\le B(N+1,d)$, hence $S\\le\\frac{N}{N+2}B(N+1,d)$. It remains to show $\\frac N{N+2}B(N+1,d)\\le B(N,d)$, i.e.\n$$N\\Big(\\binom{N+1}2-M(N+1,d)\\Big)\\le(N+2)\\Big(\\binom N2-M(N,d)\\Big).\\tag{2}$$\nCompute $N\\binom{N+1}2-(N+2)\\binom N2=\\frac{N}{2}\\big[(N^2+N)-(N^2+N-2)\\big]=N$. With Lemma 0(b), (2) is equivalent to $N\\le N\\,(M(N,d)+q)-(N+2)M(N,d)=Nq-2M(N,d)$, and by Lemma 0(a) with $s=0$: $Nq-2M(N,d)=Nq-q(N-d)=qd=N$. So (2) holds with equality and $S\\le B(N,d)$. $\\square$\n\n*Remark.* For $s\\ne0$ one gets $Nq-2M=q(d-s)<qd+s=N$, so the argument works exactly when $d\\mid N$ (exact check, item (e)).\n\n## 5. Dropping one dimension\n**Lemma 4.** Let $d\\ge2$, $N\\ge1$, $q'=\\lfloor N/(d-1)\\rfloor$. If $\\mathrm{FT}(N+q',d)$ holds, then $\\mathrm{FT}(N,d-1)$ holds.\n\n*Proof.* Let $\\ell_1,\\dots,\\ell_N$ be lines in $\\mathbb R^{d-1}$ spanned by unit vectors $x_1,\\dots,x_N$, with angle sum $S$. Embed $\\iota:\\mathbb R^{d-1}\\to\\mathbb R^d$, $\\iota(x)=(x,0)$; this is a linear isometry, so $\\langle\\iota x_i,\\iota x_j\\rangle=\\langle x_i,x_j\\rangle$ and all angles $\\theta$ are preserved. Let $e_d=(0,\\dots,0,1)$ and consider the $N+q'$ lines in $\\mathbb R^d$ spanned by $\\iota x_1,\\dots,\\iota x_N$ and $q'$ copies of $e_d$. Their angle sum is\n$$S'=S+\\sum_{i=1}^{N}q'\\,\\theta(\\iota x_i,e_d)+\\binom{q'}2\\theta(e_d,e_d)=S+q'N\\frac\\pi2+0,$$\nbecause $\\langle\\iota x_i,e_d\\rangle=0$ gives $\\theta=\\arccos0=\\pi/2$ and $\\theta(e_d,e_d)=0$. By $\\mathrm{FT}(N+q',d)$,\n$$S\\le\\Big(\\binom{N+q'}2-M(N+q',d)-q'N\\Big)\\frac\\pi2.$$\nNow $\\binom{N+q'}2-q'N=\\frac{(N+q')(N+q'-1)}2-q'N=\\frac{N^2-N+q'^2-q'}2=\\binom N2+\\binom{q'}2$, and $M(N+q',d)=M(N,d-1)+\\binom{q'}2$ by Lemma 0(c). Therefore $S\\le\\big(\\binom N2-M(N,d-1)\\big)\\frac\\pi2=B(N,d-1)$. $\\square$\n\n## 6. Consequences\n**Corollary 5 (conditional).** If cell 4's statement for five lines in $\\mathbb R^3$ holds ($\\mathrm{FT}(5,3)$, i.e. $S\\le4\\pi$), then every six lines in $\\mathbb R^3$ satisfy $S\\le6\\pi$, i.e. $\\mathrm{FT}(6,3)$.\n*Proof.* $N=5=1\\cdot3+2$, so $s=2=d-1$ and $N\\ge2$; Lemma 2 gives $\\mathrm{FT}(6,3)$. Here $B(6,3)=(15-3)\\frac\\pi2=6\\pi$ since $6=2\\cdot3+0$ and $M(6,3)=3\\binom22=3$. $\\square$\n(This recovers, conditionally on cell 4, the range $N\\le6$ in $\\mathbb R^3$ attributed by Bilyk–Matzke to Fejes Tóth 1959; cell 4 itself is not proved here.)\n\n**Corollary 6.** In the plane, Lemma 2 with $d=2$ says $\\mathrm{FT}(N,2)\\Rightarrow\\mathrm{FT}(N+1,2)$ for odd $N\\ge3$, and Lemma 3 says $\\mathrm{FT}(N+1,2)\\Rightarrow\\mathrm{FT}(N,2)$ for even $N$. (Consistent with cell 1, which is already proved by the team; not needed.)\n\n**What the lemmas do not give.** Starting from the families of cells 3–5 ($N=d+1$, $N=d+2$), Lemma 2 applies only when $d+2\\equiv-1\\pmod d$, i.e. $d\\mid3$, and Lemma 4 maps $(d+2,d)$ to $(d+1,d-1)$, the same family. So no new *infinite* family follows from cells 1–5 plus these lemmas; they are transfer tools for future attempts (e.g. any proof of $\\mathrm{FT}(2d-1,d)$ would yield $\\mathrm{FT}(2d,d)$ by Lemma 2, and $\\mathrm{FT}(2d,d)$ for all $d$ would yield $\\mathrm{FT}(2d-2,d-1)$ by Lemma 4).\n\n## 7. Counterexample search (float, exploration only — proves nothing)\nUsing the team's hill-climbing harness (`tools/autoloop.py` on `problema-1/esperimenti/lines_Rd.py`; Gaussian perturbations plus structured moves: copy a vector, orthogonalise against a random subset, random jump; 3 seeds × 8 restarts × 5 s per pair), the best $S$ found versus $B(N,d)$ for $(d,N)\\in\\{(3,6),(3,7),(3,8),(3,9),(4,7),(4,8),(4,9),(4,10),(5,8),(5,9),(5,11),(6,10),(6,13)\\}$ (each $\\approx5$ s wall, $\\approx2.3$–$3.2\\cdot10^5$ iterations):\n- in 12 of 13 cases the best value agrees with $B(N,d)$ to within $2\\cdot10^{-7}$; the sign of the residual is negative ($\\approx-10^{-7}$) in these cases, which is the expected floating-point artefact of `arccos` at arguments clipped to $1-\\varepsilon$ ($\\arccos(1-\\varepsilon)\\approx\\sqrt{2\\varepsilon}$), **not** evidence of a violation; \n- for $(3,6)$ the search did not converge (best $18.8287<6\\pi=18.8496$).\nNo configuration exceeding the conjectured bound was found. This is float arithmetic on a finite random sample: it supports \"prove\" over \"disprove\" heuristically and settles nothing.\n\n## 8. Summary of status\n- Proved (rigorously, self-contained): Lemma 0 (identities), Lemma 1 (trivial family $N\\le d$ and $d=1$), Lemmas 2–4 (transfer implications), Corollaries 5–6.\n- Not proved: any non-trivial infinite family; cell 6 remains open. Nothing here is claimed as a solution of the cell.",
+ "claims_used": [],
+ "sources_used": [
+  "arXiv:1801.07837 (Bilyk–Matzke) — context only: Prop. 3.1 (dimension reduction for the continuous energy) motivates Lemma 4; the 'only settled case is d=1' statement; nothing cited as a proof step",
+  "problema-1/fonti/README.md (team reading notes on Bilyk–Matzke; attribution of N≤6 in R^3 to Fejes Tóth 1959, unread original)"
+ ],
+ "code_used": [
+  {
+   "language": "python",
+   "purpose": "Exact integer check of the identities of Lemma 0 and of the equality/inequality conditions in Lemmas 2–3, for 1≤d≤40, 1≤N≤400 (0.1 s). Saved as runs/p1_c6/sandbox/verifica_identita_M.py. The proofs do not depend on it.",
+   "code": "\"\"\"\nVerifica ESATTA (interi Python) delle identita' aritmetiche usate nei lemmi di riduzione\nper la congettura di Fejes Toth (problema 1, parte 6).\n  M(N,d) = s*C(q+1,2) + (d-s)*C(q,2),  N = q*d + s, 0 <= s < d.\nCosa controlla e perche':\n  (a) 2*M(N,d) = q*(N+s-d)                      -> usata nei lemmi 2 e 3\n  (b) M(N+1,d) = M(N,d) + q                     -> usata nei lemmi 2 e 3\n  (c) M(N+q',d) = M(N,d-1) + C(q',2), q'=N//(d-1) -> usata nel lemma 4\n  (d) disuguaglianza del lemma 2 vale sse s = d-1 oppure q = 0 (N>=2)\n  (e) disuguaglianza del lemma 3 vale sse s = 0    (N>=1)\nCopertura: 1 <= d <= 40, 1 <= N <= 400. Aritmetica esatta: nessun float.\n\"\"\"\nfrom math import comb\n\n\ndef M(N, d):\n    \"\"\"Numero di coppie coincidenti nella configurazione equidistribuita.\"\"\"\n    q, s = divmod(N, d)\n    return s * comb(q + 1, 2) + (d - s) * comb(q, 2)\n\n\ndef B2(N, d):\n    \"\"\"Bound congetturato in unita' di pi/2: C(N,2) - M(N,d).\"\"\"\n    return comb(N, 2) - M(N, d)\n\n\ndef controlla(d_max=40, N_max=400):\n    for d in range(1, d_max + 1):\n        for N in range(1, N_max + 1):\n            q, s = divmod(N, d)\n            assert 2 * M(N, d) == q * (N + s - d), (N, d)\n            assert M(N + 1, d) == M(N, d) + q, (N, d)\n            if d >= 2:\n                qq = N // (d - 1)\n                assert M(N + qq, d) == M(N, d - 1) + comb(qq, 2), (N, d)\n            if N >= 2:\n                lemma2 = (N + 1) * B2(N, d) <= (N - 1) * B2(N + 1, d)\n                assert lemma2 == (s == d - 1 or q == 0), (N, d)\n            lemma3 = N * B2(N + 1, d) <= (N + 2) * B2(N, d)\n            assert lemma3 == (s == 0), (N, d)\n    print(f\"OK: identita' (a)-(e) verificate per d<=%d, N<=%d\" % (d_max, N_max))\n\n\nif __name__ == \"__main__\":\n    controlla()\n",
+   "rigor": "exact"
+  },
+  {
+   "language": "bash",
+   "purpose": "Float-only hill-climbing search for configurations exceeding the conjectured bound in R^3..R^6 (13 pairs (d,N), 3 seeds x 8 restarts x 5 s each, ~70 s total), using the team's existing harness tools/autoloop.py with objective problema-1/esperimenti/lines_Rd.py; ledger saved in runs/p1_c6/sandbox/esplora_Rd.jsonl. Proves nothing.",
+   "code": "cd runs/p1_c6/sandbox\nfor dN in \"3 6\" \"3 7\" \"3 8\" \"3 9\" \"4 7\" \"4 8\" \"4 9\" \"4 10\" \"5 8\" \"5 9\" \"5 11\" \"6 10\" \"6 13\"; do\n  d=${dN%% *}; N=${dN##* }\n  ../../../.venv/bin/python ../../../tools/autoloop.py ../../../problema-1/esperimenti/lines_Rd.py \\\n      --budget 5 --seeds 3 --restarts 8 --ledger esplora_Rd.jsonl --tag \"c6_d${d}_N${N}\" -- $d $N\ndone\n# riassunto: per ogni (d,N) best trovato, target congetturato, gap (float)\n../../../.venv/bin/python - <<'EOF'\nimport json\nfor riga in open(\"esplora_Rd.jsonl\"):\n    r = json.loads(riga)\n    print(f\"d={r['args'][0]} N={r['args'][1]:>2}  best={r['best_score']:.6f}  target={r['target']:.6f}  target-best={r['gap_target_minus_best']:+.2e}\")\nEOF\n# Output osservato: (3,6) best 18.828661 < 18.849556 (non convergente); tutti gli altri 12 casi best = target entro 2e-7\n# (residuo negativo ~1e-7 = artefatto float di arccos vicino a 1, non una violazione).",
+   "rigor": "float_exploration_only"
+  }
+ ],
+ "claimed_progress": "Rigorous, self-contained proofs of: (i) exact identities for M(N,d); (ii) the trivial infinite family N ≤ d (and d = 1), not covered by cells 1–5 but of no depth; (iii) three transfer lemmas: FT(N,d) ⟹ FT(N+1,d) when N ≡ −1 (mod d); FT(N+1,d) ⟹ FT(N,d) when d | N; FT(N+q,d) ⟹ FT(N,d−1) with q = ⌊N/(d−1)⌋ (finite-N analogue of Bilyk–Matzke's continuous dimension reduction); (iv) conditional corollary: cell 4's (5,3) implies S ≤ 6π for six lines in R^3. Float search in R^3..R^6 (13 pairs) found no counterexample. No non-trivial infinite family is settled; cell 6 remains open.",
+ "claimed_status": "LEMMA_CANDIDATE",
+ "self_reported_gaps": [
+  "No non-trivial infinite family is settled; the only 'family' proved outright (N ≤ d, d = 1) is trivial and should not be scored as substantive progress on cell 6.",
+  "Corollary 5 (six lines in R^3) is conditional on cell 4 (five lines in R^3), which is not proved in this attempt and is not among the verified claims.",
+  "Section 7 is floating-point hill climbing on a finite random sample: it is exploration only and proves nothing; the (3,6) run did not even converge to the conjectured value.",
+  "The transfer lemmas, combined with cells 1–5, do not yield any new infinite family (shown in §6); their value is as reusable tools for later attempts."
+ ],
+ "request_creative": false
+}

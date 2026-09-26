@@ -1,0 +1,56 @@
+{
+ "report": {
+  "evidence_verdict": "PASS",
+  "source_issues": [
+   {
+    "code": "SRC_CONTEXT_ONLY_NOT_RETRIEVED",
+    "detail": "src_1 (arXiv:1801.07837, Bilyk–Matzke) is cited as motivation only (Prop. 3.1 for Lemma 4; 'only settled case is d=1'); no proof step depends on it and no excerpt was submitted, so I could not check the citation itself. src_2 is the team's own reading notes, not a primary source; its attribution of N≤6 in R^3 to Fejes Tóth 1959 is second-hand (original [8] explicitly marked unread) and the candidate correctly makes Corollary 5 conditional on cell 4 rather than on that attribution. No external result is load-bearing.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "CODE2_NOT_REPRODUCED",
+    "detail": "code_2 (float hill-climb over 13 (d,N) pairs) was not re-run by the orchestrator (bash unsupported). It is labelled float_exploration_only and is not used as evidence for any statement; seeds are reported as '3 seeds' without listing the seed values, and the ledger esplora_Rd.jsonl was not submitted. Acceptable as exploration; if the search is ever cited as evidence, submit the ledger, seed values, harness version and re-run it.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "CODE1_REPRODUCED",
+    "detail": "code_1 (exact integer check of Lemma 0(a)-(c) and the equality/inequality conditions of Lemmas 2–3, 1≤d≤40, 1≤N≤400) was re-run by the orchestrator: exit 0, 0.1 s, output 'OK'. Arithmetic is exact (Python ints, math.comb). The written proofs of Lemma 0 are algebraic and self-contained; the check is corroborative only, as the candidate states.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "UNVERIFIED",
+     "PROVED_BY_US"
+    ],
+    "evidence_sufficient": false,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": false,
+    "references": [
+     "src_1 (context only)",
+     "src_2 (team notes, context only)",
+     "code_1 (exact, reproduced by orchestrator)",
+     "code_2 (float exploration, not reproduced, not evidence)"
+    ],
+    "notes": "The cell's target statement (Fejes Tóth bound for all N,d) is NOT established and the candidate says so explicitly (§8). What is proved self-contained, with no citation or computation as a proof step: Lemma 0 (identities for M), Lemma 1 (trivial family N≤d and d=1 — candidate honestly flags it as trivial, not substantive progress), Lemmas 2–4 (transfer implications FT(N,d)⇒FT(N+1,d) for N≡−1 mod d; FT(N+1,d)⇒FT(N,d) for d|N; FT(N+q',d)⇒FT(N,d−1)), Corollary 5 conditional on cell 4. I spot-checked the counting identities in Lemmas 2–4 (Σ_k S_k=(N−1)S; S'=S+A_k; S'=S+q'N·π/2) and the equality reductions to Lemma 0; they are consistent. No non-trivial infinite family is settled, so cell status should be at most PARTIAL_PROGRESS (transfer tools + trivial family), not SOLVED."
+   }
+  ],
+  "reproducibility_notes": "code_1: reproduced by orchestrator (exit 0, 0.1 s). code_2: not reproduced; float only; explicitly non-evidential; ledger and seed values not submitted. Rule compliance: no published result is cited for the statement to be proved; no computation is relied on as proof; the hand-in rule 'say clearly which cells you consider solved and which are partial' is satisfied by §8 (nothing claimed solved). Requests: none blocking. Optional: attach esplora_Rd.jsonl and the seed list if the search is to be reported at all."
+ },
+ "limitation": null
+}

@@ -1,0 +1,19 @@
+seme 11 passo 0: costo 2552 |R|=1 |B|=0
+seme 11 passo 1: costo 2544 |R|=2 |B|=0
+seme 11 passo 2: costo 2536 |R|=3 |B|=0
+seme 11 passo 4: costo 2528 |R|=4 |B|=0
+seme 11 passo 6: costo 2520 |R|=5 |B|=1
+seme 11 passo 16: costo 2512 |R|=6 |B|=9
+seme 11 passo 18: costo 2504 |R|=7 |B|=9
+seme 11 passo 183: costo 2480 |R|=17 |B|=72
+seme 11 passo 82005: costo 2478 |R|=20 |B|=132
+seme 11 passo 129617: costo 2470 |R|=19 |B|=124
+seme 11 passo 129623: costo 2464 |R|=18 |B|=124
+seme 11 passo 1192074: costo 2448 |R|=19 |B|=118
+seme 11 passo 1721515: costo 2440 |R|=20 |B|=117
+seme 11 passo 4277194: costo 2432 |R|=22 |B|=128
+seme 11 passo 4277249: costo 2424 |R|=21 |B|=127
+seme 11 passo 7567956: costo 2416 |R|=20 |B|=117
+seme 11 passo 10418362: costo 2408 |R|=19 |B|=129
+seme 11 passo 11980383: costo 2400 |R|=21 |B|=125
+seme 11: costo migliore 2400

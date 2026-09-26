@@ -1,0 +1,263 @@
+{
+ "job": {
+  "problem_id": "p4_c6",
+  "original_problem": "# Problema 4 — Disjoint congruence classes and large gcd\n\n*(Enunciato formattato in LaTeX, contenuto fedele all'originale; ricevuto il 2026-09-26. Titolo della colonna\nnon riportato nel testo incollato; la domanda di apertura è: \"If congruence classes are pairwise disjoint, must\ntwo of their moduli share a large common factor?\")*\n\n## Preambolo\n\nFor integers $a$ and $m \\ge 1$ write\n$$\na \\pmod m = \\{\\, a + mt : t \\in \\mathbb{Z} \\,\\}\n$$\nfor the congruence class of $a$ modulo $m$. A finite family of classes $a_1 \\pmod{m_1}, \\ldots, a_k \\pmod{m_k}$\nis *pairwise disjoint* if $a_i \\pmod{m_i} \\cap a_j \\pmod{m_j} = \\emptyset$ whenever $i < j$. Nothing is assumed\nabout the moduli beyond $m_i \\ge 1$: they may repeat, and the residues $a_i$ may repeat as well.\n\nBy the Chinese remainder theorem, two classes meet if and only if the congruences $x \\equiv a_i \\pmod{m_i}$ and\n$x \\equiv a_j \\pmod{m_j}$ are compatible, that is\n$$\na_i \\pmod{m_i} \\cap a_j \\pmod{m_j} \\ne \\emptyset \\iff \\gcd(m_i, m_j) \\mid a_i - a_j. \\qquad (*)\n$$\nThe question of this column is how large the moduli of a disjoint family must be forced to overlap in the gcd sense.\n\n**Question.** Let $k \\ge 2$ and let $a_1 \\pmod{m_1}, \\ldots, a_k \\pmod{m_k}$ be pairwise disjoint. Must there be\na pair $i < j$ with\n$$\n\\gcd(m_i, m_j) \\ge k \\,?\n$$\nThis is believed to be true for every $k$. It is sharp: the $k$ classes $1, 2, \\ldots, k \\pmod k$ are pairwise\ndisjoint — their differences have absolute value less than $k$, so $k$ divides none of them — and every pairwise\ngcd equals exactly $k$. So $k$ could not be replaced by $k+1$ in the statement.\n\n**Examples.** The three classes $0 \\pmod 2$, $1 \\pmod 4$, $3 \\pmod 8$ are pairwise disjoint by $(*)$, and their\npairwise gcds are $2, 2, 4$; the largest is $4 \\ge 3$, as the question predicts for $k = 3$. By contrast\n$0 \\pmod 2$ and $0 \\pmod 3$ have coprime moduli and do meet, at $0$.\n\n**Trivial bounds.** Two observations are immediate and you should assume they are already on the table;\npresenting either as progress counts for nothing.\n\n1. If $\\gcd(m_i, m_j) = 1$ then by $(*)$ the two classes meet. Hence in any pairwise disjoint family every\n   pairwise gcd is at least $2$. This answers the question for $k = 2$, and for a family of size $k$ that fails\n   the question it confines every pairwise gcd to the range $2 \\le \\gcd(m_i, m_j) \\le k - 1$.\n2. The class $a \\pmod m$ has density $1/m$, so a pairwise disjoint family satisfies $\\sum_{i=1}^k 1/m_i \\le 1$.\n   In particular some modulus satisfies $m_i \\ge k$.\n\nObservation 2 bounds a single modulus from below; it says nothing about any gcd, and the two together settle no\nsize $k \\ge 3$. Every cell below needs a genuinely new argument.\n\n**What to hand in.** For each cell you attempt, hand in a written proof. You may use a computer to explore.\nA proof may rely on a computation only if you include the code, it runs in under ten minutes on a laptop, and\nthe computation is exhaustive over a finite set that your own argument has reduced the problem to.\n\nA computational cell is accepted only with an *exhaustiveness certificate*, meaning all four of:\n\n1. an exact description of the finite set your search enumerates, together with the proof that nothing outside\n   it can be a counterexample;\n2. every pruning rule you use, stated precisely, each with the proof that it discards only objects that cannot\n   be completed to a counterexample;\n3. the node count of the search at each size you claim, and the wall clock;\n4. a rerun that reproduces those counts;\n5. and, if anything at all survives your pruning at a size you claim, a separate decision for every survivor —\n   not a sample — together with, for each one, the smallest part of it that already forces the decision, and\n   your proof that no smaller part does. A survivor you cannot decide means the size is not certified.\n\nA run that reports \"I searched and found nothing\" without 1–5 is not a certificate and scores nothing. If a\nsearch does not finish at some size, report it as unfinished and do not claim that size; a partial search is a\nlegitimate partial result and should be handed in as one, with the counts it reached.\n\nWhere a cell asks you to determine a boundary, state the exact value you claim. Claim only what you have\ncertified: an unfinished size, or one certified under an assumption you have not verified, must be reported as\nsuch. Say clearly which cells you consider solved and which are partial.\n\nCiting a published result for the statement you are asked to prove does not count as a solution; a proof written\nout in full does, whatever its source. If you rely on a published argument, you are responsible for it: check it\nyourself, and report it if it does not hold up.\n\n## Parte 1 (C1) — Three classes\n\n**Punteggio:** 1 point · **Valutazione:** Judged\n\nThe first size that the two trivial observations above do not settle. Prove the statement for $k = 3$: any three\npairwise disjoint classes have $\\gcd(m_i, m_j) \\ge 3$ for some $i < j$.\n\n## Parte 2 (C2) — Four classes\n\n**Punteggio:** 2 points · **Valutazione:** Judged\n\nThe same question for four classes. Prove the statement for $k = 4$.\n\n## Parte 3 (C3) — Every $k$ up to 8\n\n**Punteggio:** 3 points · **Valutazione:** Judged\n\nA first range of sizes: after C1 and C2, the sizes $k = 5, 6, 7$ and $8$ remain. Prove the statement for every\n$k \\le 8$.\n\n## Parte 4 (C4) — Every $k$ up to 12\n\n**Punteggio:** 5 points · **Valutazione:** Judged\n\nA longer range, and a precise account of your method at the sizes just beyond it. Prove the statement for every\n$k \\le 12$. Then, for each $k$ from $9$ to $16$ in turn, report exactly what your method leaves undecided at that\n$k$: if nothing, say so and prove it; if something, exhibit it in full. If that disagrees with any source you\nconsulted, say which of the two is right and why. An answer that reports agreement with a source it did not test\nwill be marked wrong.\n\n## Parte 5 (C5) — The certified boundary\n\n**Punteggio:** 8 points · **Valutazione:** Judged\n\nThe main certification cell: an initial range of sizes as long as you can make it, plus two isolated sizes\nfurther out. Determine the largest $k$ for which you can certify the statement for all sizes up to and including\n$k$, and certify it. The range you claim must be contiguous, and if your argument at a given size assumes that\nall smaller sizes have already been settled you must say so. Then decide the two isolated sizes $k = 24$ and\n$k = 30$: show that neither is the least size at which the statement can fail.\n\nFor this cell the exhaustiveness certificate of the hand-in rules is not enough on its own. Add:\n\n(i) a demonstration that your method is not vacuous. Construct a case in which an admissible configuration\ngenuinely exists, run your machinery on it unmodified, and show it returns that configuration. A method that\nreports \"nothing survives\" at every size it is pointed at is indistinguishable from a method with a bug, and will\nbe graded as one;\n\n(ii) for every object your pruning leaves undecided, at every $k$ you claim — not a sample — an individual\ndecision, plus the smallest part of that object which already forces the decision, plus a proof that no smaller\npart does;\n\n(iii) the exact list, not merely the count, of what survives at each $k$;\n\n(iv) every pruning rule you use beyond those you have proved, proved. If your search needs a rule you invented\nto finish a size, that rule is part of your claim: state it, prove it, and show the survivor list is unchanged\nwhen you switch it off. A size that only closes with an unproved rule is not certified;\n\n(v) a second implementation, written independently of your first, that differs in method — not the same\nalgorithm twice — and the two survivor lists compared elementwise at every $k$ you claim. Report any difference\nrather than reconciling it silently: a disagreement means one of them is wrong, and finding which is part of the\ncell.\n\n## Parte 6 (C6) — Beyond the boundary\n\n**Punteggio:** 13 points · **Valutazione:** Judged · **Open question**\n\nThree directions beyond the certified range; any one of them counts. Any of the following.\n\n(a) Decide a size $k \\ge 25$.\n\n(b) The asymptotic form. It is known that a pairwise disjoint family of size $k$ always has a pair with\n$$\n\\gcd(m_i, m_j) \\;\\ge\\; k \\cdot \\exp\\!\\left( -(2 + o(1)) \\frac{\\log k}{\\log\\log k} \\right),\n$$\nwhich is $k^{1 - o(1)}$ but not linear in $k$. Prove the statement in full, or prove the weaker bound\n$\\gcd(m_i, m_j) \\ge ck$ for some absolute constant $c > 0$, or improve the exponential factor above.\n\n(c) The group form. Let $G$ be a group, let $G_1, \\ldots, G_k$ be subgroups of finite index $n_i = [G : G_i]$,\nand let $x_1 G_1, \\ldots, x_k G_k$ be pairwise disjoint cosets. Is there a pair $i < j$ with\n$\\gcd(n_i, n_j) \\ge k$? This is known for $k \\le 5$ and open for every $k \\ge 6$; settling $k = 6$ counts as\nprogress.\n\n*(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)*\n\n\n# TARGET CELL 6\nOPEN. Any of: (a) decide a size k >= 25; (b) prove gcd >= ck for an absolute c > 0 or improve the known factor k exp(-(2+o(1)) log k / log log k); (c) the group form (disjoint cosets of finite-index subgroups), settle k = 6.\n",
+  "cell": {
+   "id": "cell_6",
+   "number": 6,
+   "target_claim_id": "main",
+   "statement": "OPEN. Any of: (a) decide a size k >= 25; (b) prove gcd >= ck for an absolute c > 0 or improve the known factor k exp(-(2+o(1)) log k / log log k); (c) the group form (disjoint cosets of finite-index subgroups), settle k = 6."
+  },
+  "state": {
+   "highest_verified_cell": 0,
+   "claims": []
+  },
+  "candidate": {
+   "attempt_id": "attempt_001",
+   "proof": "## Setting and notation\n\nA *family* is a finite list $\\mathcal F=\\{(a_i,m_i)\\}_{i\\in I}$ of congruence classes $a_i \\pmod{m_i}$, $m_i\\ge 1$. It is *pairwise disjoint* if $a_i \\pmod{m_i}\\cap a_j\\pmod{m_j}=\\emptyset$ for all $i\\ne j$. We use only the problem's fact $(*)$: two classes meet iff $\\gcd(m_i,m_j)\\mid a_i-a_j$.\n\nFor an integer $g\\ge 1$ and a prime $P$ define\n$$S(g,P)=\\sup\\Big\\{|\\mathcal F| :\\ \\mathcal F \\text{ pairwise disjoint},\\ \\gcd(m_i,m_j)\\le g\\ \\forall i\\ne j,\\ \\gcd(m_i,q)=1\\ \\forall i,\\ \\forall \\text{ primes } q<P\\Big\\}.$$\n(The gcd condition is vacuous when $|\\mathcal F|=1$, so $S(g,P)\\ge 1$.) Put $F(g):=S(g,2)$ (no coprimality condition). The statement of the problem is: *every pairwise disjoint family of size $k$ has a pair with $\\gcd\\ge k$*; equivalently $F(g)\\le g$ for all $g$. The sharp example $1,\\dots,k \\pmod k$ shows $F(g)\\ge g$. We prove upper bounds for $F$.\n\n## Lemma 1 (two classes)\nIf $|\\mathcal F|\\ge 2$ and $\\mathcal F$ is pairwise disjoint then $\\gcd(m_i,m_j)\\ge 2$ for all $i\\ne j$.\n\n*Proof.* If $\\gcd(m_i,m_j)=1$ then $1\\mid a_i-a_j$, so by $(*)$ the classes meet. $\\square$\n\n## Lemma 2 (base of the recursion)\nIf $P>g$ then $S(g,P)=1$. In particular $S(1,P)=1$ for every prime $P$.\n\n*Proof.* The one-element family $\\{(0,1)\\}$ satisfies the conditions, so $S(g,P)\\ge 1$. Suppose $|\\mathcal F|\\ge 2$ satisfies the conditions and take $i\\ne j$. By Lemma 1, $d=\\gcd(m_i,m_j)\\ge 2$ has a prime factor $q$, with $q\\le d\\le g<P$. But $q\\mid d\\mid m_i$ contradicts $\\gcd(m_i,q)=1$ for the prime $q<P$. Hence every admissible family has size $1$. For $g=1$ there is no prime $\\le 1$, so $P>g$ for all $P$. $\\square$\n\n## Lemma 3 (splitting inside one residue class mod $p$)\nLet $\\mathcal F$ be pairwise disjoint, $p$ a prime, $r\\in\\{0,\\dots,p-1\\}$, and\n$$J_{p,r}=\\{i\\in I:\\ p\\mid m_i,\\ a_i\\equiv r \\pmod p\\}.$$\nFor $i\\in J_{p,r}$ put $n_i=m_i/p\\in\\mathbb Z_{\\ge1}$ and $b_i=(a_i-r)/p\\in\\mathbb Z$. Then:\n1. the family $\\mathcal F'=\\{(b_i,n_i)\\}_{i\\in J_{p,r}}$ is pairwise disjoint;\n2. $\\gcd(n_i,n_j)=\\gcd(m_i,m_j)/p$ for $i\\ne j$ in $J_{p,r}$;\n3. if every $m_i$ is coprime to all primes $q<P$, so is every $n_i$.\n\n*Proof.* Let $\\varphi:\\mathbb Z\\to\\mathbb Z$, $\\varphi(y)=r+py$; $\\varphi$ is injective. For $i\\in J_{p,r}$,\n$$\\varphi\\big(b_i+n_i\\mathbb Z\\big)=r+p b_i+p n_i\\mathbb Z=a_i+m_i\\mathbb Z .$$\nIf $y\\in (b_i+n_i\\mathbb Z)\\cap(b_j+n_j\\mathbb Z)$ then $\\varphi(y)$ lies in both $a_i+m_i\\mathbb Z$ and $a_j+m_j\\mathbb Z$, contradicting disjointness; this proves 1. For 2: $\\gcd(m_i,m_j)=\\gcd(pn_i,pn_j)=p\\gcd(n_i,n_j)$. For 3: $n_i\\mid m_i$, so any prime dividing $n_i$ divides $m_i$. $\\square$\n\n## Lemma 4 (prime-splitting recursion)\nLet $g\\ge 1$ and let $P$ be a prime. Let $p_1<p_2<\\dots<p_s$ be the primes in $[P,g]$ ($s=0$ if $P>g$). Then\n$$S(g,P)\\ \\le\\ R(g,P):=\\max\\Big\\{1,\\ \\sum_{t=1}^{s} p_t\\, S\\big(\\lfloor g/p_t\\rfloor,\\,p_t\\big)\\Big\\}.$$\nConsequently $S(g,P)$ is finite for all $g,P$ (induction on $g$, since $\\lfloor g/p_t\\rfloor<g$).\n\n*Proof.* If $s=0$ this is Lemma 2. Let $s\\ge1$ and let $\\mathcal F$ be admissible for $S(g,P)$ with $|\\mathcal F|\\ge 2$ (if all admissible families have size $\\le1$ the bound is trivial). Define, for $t=1,\\dots,s$,\n$$K_t=\\{i\\in I:\\ p_t\\mid m_i,\\ p_u\\nmid m_i \\text{ for all } u<t\\},\\qquad K_{s+1}=\\{i\\in I: p_t\\nmid m_i \\text{ for all } t\\le s\\}.$$\nThese sets partition $I$ (each $i$ goes to the smallest $t$ with $p_t\\mid m_i$, or to $K_{s+1}$).\n\n*Claim: $K_{s+1}=\\emptyset$.* Let $i\\in K_{s+1}$ and pick $j\\ne i$ (possible since $|\\mathcal F|\\ge2$). By Lemma 1, $\\gcd(m_i,m_j)\\ge2$ has a prime factor $q\\le\\gcd(m_i,m_j)\\le g$, and $q\\mid m_i$. By admissibility $q\\ge P$ (no prime $<P$ divides $m_i$). So $q\\in\\{p_1,\\dots,p_s\\}$ divides $m_i$, contradicting $i\\in K_{s+1}$.\n\n*Bound for $K_t$.* Fix $t\\le s$ and write $p=p_t$. Every $i\\in K_t$ has $p\\mid m_i$, so $K_t=\\bigsqcup_{r=0}^{p-1}(K_t\\cap J_{p,r})$ with $J_{p,r}$ as in Lemma 3. Fix $r$ and consider the sub-family $\\mathcal F'=\\{(b_i,n_i)\\}_{i\\in K_t\\cap J_{p,r}}$ of Lemma 3. By Lemma 3(1) it is pairwise disjoint. By Lemma 3(2), for $i\\ne j$ in it, $\\gcd(n_i,n_j)=\\gcd(m_i,m_j)/p\\le g/p$, and being an integer, $\\gcd(n_i,n_j)\\le\\lfloor g/p\\rfloor$. Every $m_i$ with $i\\in K_t$ is coprime to $p_1,\\dots,p_{t-1}$ (definition of $K_t$) and to all primes $<P$ (admissibility), i.e. to all primes $<p_t$; by Lemma 3(3) the same holds for $n_i$. Hence $\\mathcal F'$ is admissible for $S(\\lfloor g/p_t\\rfloor,p_t)$, and $|K_t\\cap J_{p,r}|\\le S(\\lfloor g/p_t\\rfloor,p_t)$. Summing over the $p_t$ values of $r$: $|K_t|\\le p_t\\,S(\\lfloor g/p_t\\rfloor,p_t)$.\n\nTherefore $|\\mathcal F|=\\sum_{t=1}^{s}|K_t|\\le\\sum_{t=1}^{s}p_t\\,S(\\lfloor g/p_t\\rfloor,p_t)$. Taking the sup over $\\mathcal F$ gives the lemma. Finiteness: by induction on $g$; for $g=1$ Lemma 2 gives $1$; for $g\\ge2$ the right side involves only $S(g',\\cdot)$ with $g'=\\lfloor g/p_t\\rfloor\\le g/2<g$. $\\square$\n\n## Theorem 5 (closed bounds)\nFor every $g\\ge1$ and every prime $P$:\n$$\\text{(A)}\\quad S(g,P)\\le g^{3};\\qquad\\qquad \\text{(B)}\\quad S(g,P)\\le g^{2}\\prod_{\\substack{p \\text{ prime}\\\\ P\\le p\\le g}}\\Big(1+\\frac{2}{p}\\Big).$$\nIn particular $F(g)\\le g^3$ and $F(g)\\le g^2\\prod_{p\\le g}(1+2/p)$.\n\n*Proof of (A).* Induction on $g$. For $g=1$: $S(1,P)=1=1^3$ (Lemma 2). Let $g\\ge2$ and assume (A) for all $g'<g$ and all primes. If no prime lies in $[P,g]$, Lemma 2 gives $S=1\\le g^3$. Otherwise, by Lemma 4 and the induction hypothesis (note $\\lfloor g/p\\rfloor<g$),\n$$S(g,P)\\le\\sum_{P\\le p\\le g}p\\,\\lfloor g/p\\rfloor^{3}\\le\\sum_{P\\le p\\le g}p\\Big(\\frac gp\\Big)^{3}=g^{3}\\sum_{P\\le p\\le g}\\frac1{p^{2}}\\le g^{3}\\sum_{n\\ge2}\\frac1{n^{2}}< g^{3}\\sum_{n\\ge2}\\frac1{n(n-1)}=g^{3},$$\nusing $\\frac1{n^2}<\\frac1{n(n-1)}$ and the telescoping sum $\\sum_{n\\ge2}\\big(\\frac1{n-1}-\\frac1n\\big)=1$. (Also $R(g,P)\\ge 1$ trivially $\\le g^3$.) $\\square$\n\n*Proof of (B).* Write $Q(g,P):=\\prod_{P\\le q\\le g,\\ q\\text{ prime}}(1+2/q)$ (empty product $=1$). Induction on $g$. For $g=1$: $S(1,P)=1=1^2\\cdot 1$. Let $g\\ge2$, assume (B) for all $g'<g$ and all primes. If there is no prime in $[P,g]$, $S(g,P)=1\\le g^2$. Otherwise let $p_1<\\dots<p_s$ be the primes in $[P,g]$ and set\n$$Q_t:=\\prod_{u=t}^{s}\\Big(1+\\frac2{p_u}\\Big)\\quad(1\\le t\\le s),\\qquad Q_{s+1}:=1,$$\nso $Q_1=Q(g,P)$ and $Q_t=(1+2/p_t)Q_{t+1}$. By Lemma 4 and the induction hypothesis,\n$$S(g,P)\\le\\sum_{t=1}^{s}p_t\\,\\lfloor g/p_t\\rfloor^{2}\\,Q\\big(\\lfloor g/p_t\\rfloor,p_t\\big).$$\nNow $\\lfloor g/p_t\\rfloor^2\\le (g/p_t)^2$, and $Q(\\lfloor g/p_t\\rfloor,p_t)\\le Q(g,p_t)=Q_t$ because the first product runs over a subset of the primes of the second and every factor is $\\ge1$. Hence\n$$S(g,P)\\le g^{2}\\sum_{t=1}^{s}\\frac{Q_t}{p_t}.$$\nFor each $t$, since $p_t\\ge2$ we have $1+2/p_t\\le 2$, so\n$$\\frac{Q_t}{p_t}=\\frac{(1+2/p_t)\\,Q_{t+1}}{p_t}\\le\\frac{2}{p_t}Q_{t+1}=Q_t-Q_{t+1}.$$\nSumming, $\\sum_{t=1}^{s}Q_t/p_t\\le Q_1-Q_{s+1}=Q_1-1<Q_1$. Therefore $S(g,P)\\le g^2Q_1=g^2Q(g,P)$. $\\square$\n\n## Corollary 6 (lower bounds for the maximal gcd)\nLet $k\\ge2$ and let $a_1\\pmod{m_1},\\dots,a_k\\pmod{m_k}$ be pairwise disjoint, $g:=\\max_{i<j}\\gcd(m_i,m_j)$. Then:\n\n1. (elementary, unconditional) $g\\ge k^{1/3}$;\n2. (with Mertens' theorem, CITED) $g\\ge c\\,\\sqrt{k}/\\log k$ for an absolute constant $c>0$; explicitly, if one uses the Rosser–Schoenfeld inequality $\\sum_{p\\le x}1/p<\\log\\log x+B+\\frac{1}{2\\log^2 x}$ ($x>1$, $B=0.2614\\ldots$), then $g\\ge\\min\\{\\sqrt k,\\ \\sqrt k/(4\\log k)\\}=\\sqrt k/(4\\log k)$ for $k\\ge 2$ (see gap list: this constant depends on the cited inequality, which I have not re-derived).\n\n*Proof.* The family is admissible for $S(g,2)=F(g)$, so $k\\le F(g)$. (1): $k\\le g^3$ by Theorem 5(A). (2): By Theorem 5(B), $k\\le g^2\\prod_{p\\le g}(1+2/p)\\le g^2\\exp\\big(2\\sum_{p\\le g}1/p\\big)$, using $1+x\\le e^x$. By Mertens' theorem $\\sum_{p\\le g}1/p=\\log\\log g+O(1)$, so $k\\le C\\,g^2(\\log g)^2$ for an absolute $C$ and all $g\\ge2$ (note $g\\ge2$ by Lemma 1). If $g\\ge\\sqrt k$ we are done. Otherwise $g<\\sqrt k$, so $\\log g<\\tfrac12\\log k$ and $k\\le C g^2(\\log k)^2/4$, i.e. $g\\ge (2/\\sqrt C)\\,\\sqrt k/\\log k$. With the Rosser–Schoenfeld form, for $g\\ge2$: $\\exp(2\\sum_{p\\le g}1/p)\\le (\\log g)^2 e^{2B+1/\\log^2 g}\\le (\\log g)^2e^{2B+1/\\log^2 2}<13.53(\\log g)^2$, so $C=13.53$ and $2/\\sqrt{C}>0.544>1/4$. $\\square$\n\n## Remarks (what the method gives and where it loses)\n* $R(2,2)=2$: every pairwise disjoint family with all gcds $\\le2$ has at most $2$ members, i.e. **any three pairwise disjoint classes have a pair with $\\gcd\\ge3$** — the statement of cell 1 falls out of Lemma 4 alone. $R(3,2)=5>3$, so cell 2 does not.\n* The exact values of the recursion $R(g,2)$ (integer arithmetic, script below, $g\\le3000$, 2.3 s) satisfy $R(g,2)\\le g^2$ for all $1\\le g\\le 3000$, with $R(g,2)/g^2\\to$ about $0.50$ (e.g. $R(1000,2)=494228$). So the recursion itself cannot give better than $F(g)\\lesssim g^2/2$: the loss relative to the conjecture $F(g)=g$ (and to the $k^{1-o(1)}$ of arXiv:2607.24655) sits entirely in the union bound $|\\mathcal F|\\le\\sum_t|K_t|$ of Lemma 4, which ignores that the \"$p$-cliques\" $\\{i:p\\mid m_i\\}$ for different primes $p$ must overlap heavily (every pair of vertices shares a prime). Exploiting this overlap is the natural next subgoal; the closed bounds (A),(B) are asymptotically far from $R(g,2)$ (Theorem 5(B) gives $\\approx 4.4\\cdot10^7$ at $g=1000$ vs $R=4.9\\cdot10^5$), so there is also room to sharpen the induction to $F(g)\\le g^2$ without touching Lemma 4.\n* Everything above uses only $(*)$; no result from the literature enters Lemmas 1–4 or Theorem 5. Mertens/Rosser–Schoenfeld enters only Corollary 6(2).",
+   "method_tag": "induction",
+   "claims": [
+    {
+     "id": "main",
+     "statement": "OPEN. Any of: (a) decide a size k >= 25; (b) prove gcd >= ck for an absolute c > 0 or improve the known factor k exp(-(2+o(1)) log k / log log k); (c) the group form (disjoint cosets of finite-index subgroups), settle k = 6.",
+     "depends_on": []
+    }
+   ],
+   "sources": [
+    {
+     "id": "src_1",
+     "reference": "arXiv:2607.24655v1, J. Fornal, Y.-C. Sun, 'On the problem of large gcd for disjoint residue classes' (2026), Theorem 1.1: max gcd(m_i,m_j) >> k exp(-(2+o(1)) sqrt(log k/log log k)) — CITED for context only (fetched; introduction and section structure read, proofs not reproduced)",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_2",
+     "reference": "K. O'Bryant, 'On Z.-W. Sun's disjoint congruence classes conjecture', Combinatorial Number Theory, de Gruyter 2007, 403–412 — CITED at second hand via the introduction of arXiv:2607.24655 (integer conjecture for k <= 20); not read",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_3",
+     "reference": "Z.-W. Sun, 'Finite covers of groups by cosets or subgroups', Internat. J. Math. 17 (2006) 1047–1064 — origin of the conjecture and its group form; cited at second hand via arXiv:2607.24655, not read",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_4",
+     "reference": "Mertens' theorem, sum_{p<=x} 1/p = log log x + O(1); explicit form J. B. Rosser, L. Schoenfeld, Illinois J. Math. 6 (1962), Thm 5 (3.20): sum_{p<=x}1/p < log log x + B + 1/(2 log^2 x), x>1, B = 0.2614972... — CITED from memory, used only in Corollary 6(2)",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    }
+   ],
+   "artifacts": [
+    {
+     "id": "code_1",
+     "kind": "CODE",
+     "content": "# Exact integer evaluation of the recursion R(g,P) of Lemma 4 for all g <= 3000 (P ranging over primes), and exact-rational check that R(g,2) <= g^2 * prod_{p<=g}(1+2/p) and R(g,2) <= g^3 hold for every g <= 3000 (consistency check of Theorem 5 against the recursion; not needed for the proof). Finite set covered: g in [1,3000]. Wall clock: 2.34 s (Python 3, .venv). Command: .venv/bin/python runs/p4_c6/sandbox/ricorsione_gcd.py 3000\n# rigor: exact\n\"\"\"\nCalcolo ESATTO (interi e frazioni) della ricorsione del Lemma R (problema 4, cella 6).\n\nS(g, P) = massima taglia di una famiglia di classi a due a due disgiunte con tutti i\ngcd a coppie <= g e tutti i moduli coprimi con ogni primo < P.\nLemma R:   S(g, P) <= sum_{P <= p <= g, p primo} p * S(floor(g/p), p),   S(g, P) = 1 se P > g.\nQui calcoliamo la funzione R(g, P) definita dalla ricorsione con l'uguaglianza\n(quindi F(g) := S(g, 2) <= R(g, 2)) e la confrontiamo con i limiti chiusi\n   g^2 * prod_{p <= g} (1 + 2/p)     e     g^3.\nTutto in aritmetica esatta: nessun float.\n\"\"\"\nfrom fractions import Fraction\nfrom functools import lru_cache\nimport sys\nimport time\n\n\ndef primi_fino_a(n):\n    \"\"\"Crivello di Eratostene: lista dei primi <= n.\"\"\"\n    segna = bytearray([1]) * (n + 1)\n    segna[0:2] = b\"\\x00\\x00\"\n    for p in range(2, int(n ** 0.5) + 1):\n        if segna[p]:\n            segna[p * p::p] = bytearray(len(segna[p * p::p]))\n    return [p for p in range(2, n + 1) if segna[p]]\n\n\nLIMITE = int(sys.argv[1]) if len(sys.argv) > 1 else 3000\nPRIMI = primi_fino_a(LIMITE)\n\n\n@lru_cache(maxsize=None)\ndef ricorsione(g, indice_primo):\n    \"\"\"R(g, P) con P = PRIMI[indice_primo]; vale 1 se nessun primo >= P e' <= g.\"\"\"\n    totale = 0\n    for i in range(indice_primo, len(PRIMI)):\n        p = PRIMI[i]\n        if p > g:\n            break\n        totale += p * ricorsione(g // p, i)\n    return totale if totale > 0 else 1\n\n\ndef limite_chiuso(g):\n    \"\"\"g^2 * prod_{p <= g} (1 + 2/p), come frazione esatta.\"\"\"\n    prodotto = Fraction(1)\n    for p in PRIMI:\n        if p > g:\n            break\n        prodotto *= Fraction(p + 2, p)\n    return g * g * prodotto\n\n\ninizio = time.time()\nsys.setrecursionlimit(10000)\npeggior_rapporto = Fraction(0)\nfor g in range(1, LIMITE + 1):\n    r = ricorsione(g, 0)\n    chiuso = limite_chiuso(g)\n    assert r <= chiuso, f\"limite chiuso violato a g={g}\"\n    assert r <= g ** 3, f\"limite cubico violato a g={g}\"\n    peggior_rapporto = max(peggior_rapporto, Fraction(r, g * g))\n    if g <= 12 or g in (16, 20, 24, 30, 50, 100, 300, 1000, LIMITE):\n        print(f\"g={g:5d}  R(g)={r:12d}  R/g^2={float(r)/g/g:8.3f}  \"\n              f\"g^2*prod(1+2/p)={float(chiuso):14.1f}\")\nprint(f\"max R(g)/g^2 per g<={LIMITE}: {float(peggior_rapporto):.4f}\")\nprint(f\"tempo: {time.time()-inizio:.2f} s\")\n",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ]
+  },
+  "rules": {
+   "allow_literature_as_proof": false,
+   "allow_computation": true,
+   "require_machine_verification": false,
+   "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For each cell you attempt, hand in a written proof. You may use a computer to explore. A proof may rely on a computation only if you include the code, it runs in under ten minutes on a laptop, and the computation is exhaustive over a finite set that your own argument has reduced the problem to. A computational cell is accepted only with an *exhaustiveness certificate*, meaning all four of: 1. an exact description of the finite set your search enumerates, together with the proof that nothing outside it can be a counterexample; 2. every pruning rule you use, stated precisely, each with the proof that it discards only objects that cannot be completed to a counterexample; 3. the node count of the search at each size you claim, and the wall clock; 4. a rerun that reproduces those counts; 5. and, if anything at all survives your pruning at a size you claim, a separate decision for every survivor — not a sample — together with, for each one, the smallest part of it that already forces the decision, and your proof that no smaller part does. A survivor you cannot decide means the size is not certified. A run that reports \"I searched and found nothing\" without 1–5 is not a certificate and scores nothing. If a search does not finish at some size, report it as unfinished and do not claim that size; a partial search is a legitimate partial result and should be handed in as one, with the counts it reached. Where a cell asks you to determine a boundary, state the exact value you claim. Claim only what you have certified: an unfinished size, or one certified under an assumption you have not verified, must be reported as such. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source. If you rely on a published argument, you are responsible for it: check it yourself, and report it if it does not hold up. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+  }
+ },
+ "submission_digest": "2ac0ce58bcd1315d3a8c268a76145156d8e4fc7cc6c101162cf0c418ba4ae51e",
+ "math": {
+  "report": {
+   "mathematical_verdict": "FAIL",
+   "first_fatal_error": {
+    "code": "TARGET_MISMATCH",
+    "detail": "The strongest result actually proved is Corollary 6: max gcd(m_i,m_j) >= k^{1/3} unconditionally, and >= c*sqrt(k)/log k conditional on Mertens/Rosser–Schoenfeld. The cell-6 target requires one of: (a) deciding a size k >= 25; (b) gcd >= ck for an absolute c > 0, or an improvement of the known factor k*exp(-(2+o(1)) log k/log log k) (i.e. something better than k^{1-o(1)}); (c) the group form at k = 6. A bound of order k^{1/2-o(1)} is strictly weaker than the already-known k^{1-o(1)} and does not touch (a) or (c). The submission's own remarks concede that the recursion of Lemma 4 cannot give better than F(g) ≲ g^2/2, i.e. gcd ≳ sqrt(2k), so no route to the target is present. The declared claim 'main' is therefore not established, and no other reusable claim was declared.",
+    "severity": "FATAL",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   "accepted_mathematical_claims": [],
+   "unproved_claims": [
+    "main"
+   ],
+   "missing_cases": [],
+   "math_notes": "Checked line by line; the internal mathematics is correct. Lemma 1 (gcd >= 2) is immediate from (*). Lemma 2: if no prime lies in [P,g] any two members would need a common prime factor q <= g < P dividing m_i, contradicting coprimality — correct. Lemma 3: the affine injection y -> r+py carries b_i + n_i Z onto a_i + m_i Z (r + p b_i = a_i), so disjointness is inherited, gcd scales by exactly p, and divisors of n_i divide m_i — correct. Lemma 4: the partition K_1..K_{s+1} by smallest prime factor in [P,g] is well defined; K_{s+1} = ∅ because any i with a partner j shares a prime q in [P,g] (q >= P by admissibility, q <= gcd <= g); each K_t ∩ J_{p_t,r} maps to an admissible family for S(floor(g/p_t), p_t) (gcd <= g/p_t and integer, coprimality to primes < p_t from the definition of K_t plus admissibility); the union bound over t and r gives R(g,P). Finiteness by induction on g is fine since floor(g/p_t) < g. Theorem 5(A): sum over primes of 1/p^2 < sum_{n>=2} 1/(n(n-1)) = 1 — correct. Theorem 5(B): Q(floor(g/p_t),p_t) <= Q_t since factors >= 1; (1+2/p)/p <= 2/p for p >= 2 gives Q_t/p_t <= Q_t - Q_{t+1}; telescoping to Q_1 - 1 < Q_1 — correct. Corollary 6(1) g >= k^{1/3} follows. Corollary 6(2) is correct conditional on the cited Rosser–Schoenfeld bound (stated with hypotheses x > 1, B = 0.2614...); the constant 13.53 checks (2B + 1/log^2 2 ≈ 2.604, e^{2.604} ≈ 13.52), and the case split g >= sqrt(k) vs g < sqrt(k) is valid for k >= 2 since 4 log k > 1. Side remark verified: R(2,2) = 2·S(1,2) = 2, so Lemma 4 alone does prove the k = 3 statement (cell 1), but that is not a declared claim in this submission. The trusted rerun of code_1 only evaluates the recursion R(g,2) for g <= 3000 and is a consistency check, not part of any proof; it proves nothing universal. If the researcher wants credit for the established partial results, they should declare separate claims, e.g. 'Lemma 4 recursion S(g,P) <= R(g,P)', 'F(g) <= g^3 for all g', and 'max gcd >= c sqrt(k)/log k (conditional on Rosser–Schoenfeld)'; as written these would be acceptable, but none of them meets the cell-6 target."
+  },
+  "limitation": null
+ },
+ "evidence": {
+  "report": {
+   "evidence_verdict": "PARTIAL",
+   "source_issues": [
+    {
+     "code": "SRC_UNRETRIEVABLE_ARXIV",
+     "detail": "src_1 (arXiv:2607.24655, Fornal–Sun 2026) cannot be checked by me (no browsing; beyond my knowledge). No excerpt was submitted although the candidate says it was 'fetched'. Also the candidate's reference line writes the known factor as exp(-(2+o(1)) sqrt(log k/log log k)) while the problem statement writes exp(-(2+o(1)) log k/log log k) (no sqrt). One of the two is a transcription error; the candidate must resolve this against the actual paper. Used for context only, so not blocking.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_SECOND_HAND_DECLARED",
+     "detail": "src_2 (O'Bryant 2007) and src_3 (Z.-W. Sun, Internat. J. Math. 17 (2006) 1047–1064) are honestly declared as cited second-hand and not read; both bibliographic entries are consistent with my knowledge (no sign of fabrication). They carry no weight in the proof.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_FROM_MEMORY_RS",
+     "detail": "src_4: Rosser–Schoenfeld (1962) Thm 5 eq. (3.20), sum_{p<=x}1/p < log log x + B + 1/(2 log^2 x) for x>1, B=0.26149…, matches my recollection of the paper. Cited from memory and declared as such; it only affects the explicit constant in Corollary 6(2), and the candidate flags this dependency. Request: retrieve and quote the inequality to close the gap.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "COMP_REPRODUCED_NOT_PROOF",
+     "detail": "code_1 was re-run by the orchestrator (exit 0, 2.8 s, exact integer/Fraction arithmetic). Output consistent with the prose: R(1000,2)=494228, R(3000,2)=4471142, closed bounds never violated for g<=3000. 'max R(g)/g^2 = 1.0000' is attained at g=1 (R=1) and is consistent with 'R(g,2)<=g^2'. Spot check: R(2,2)=2·R(1,2)=2, R(3,2)=2·1+3·1=5 as stated. The computation is explicitly a consistency check and is NOT used as proof; Theorem 5 is proved by induction independently of it.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [
+    {
+     "code": "SCOPE_TARGET_NOT_REACHED",
+     "detail": "The registered claim 'main' (cell 6: decide k>=25, or prove gcd>=ck / improve the known k^{1-o(1)} factor, or settle group form k=6) is not established. The candidate's actual results are g >= k^{1/3} (unconditional) and g >= c·sqrt(k)/log k (with Mertens), which are strictly weaker than the bound the problem itself states as known (k^{1-o(1)}). No literature is used as a substitute for proof and no rule of the column is violated, but under the hand-in rule 'claim only what you have certified' this must be handed in as partial/no progress on cell 6, not as a solution; the candidate's text does not overclaim, but the claim registry does.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "UNVERIFIED"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": true,
+     "relies_on_external_result": true,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1",
+      "src_4"
+     ],
+     "notes": "Target claim (any of (a),(b),(c)) is not established. What is delivered is a self-contained elementary argument (Lemmas 1–4, Theorem 5, Cor. 6(1)) for g >= k^{1/3}, plus Cor. 6(2) g >= c sqrt(k)/log k relying on Mertens/Rosser–Schoenfeld (cited from memory, declared). These are weaker than the known bound quoted in the problem, so they do not constitute progress on (b). Sources src_1–src_3 are context only; src_1 unverifiable here and its exponent form disagrees with the problem statement."
+    }
+   ],
+   "reproducibility_notes": "code_1: exact arithmetic (int/Fraction), no floats in the checks, no randomness; orchestrator rerun reproduced the printed values (2.74 s vs claimed 2.34 s, both far under 10 min). Command recorded. The computation covers g in [1,3000] only and is illustrative. Requests: (1) submitted excerpt/verbatim statement of arXiv:2607.24655 Theorem 1.1 to resolve the sqrt discrepancy; (2) verbatim quote of Rosser–Schoenfeld (3.20) if Corollary 6(2)'s explicit constant is to be kept."
+  },
+  "limitation": null
+ },
+ "checks": [],
+ "check_errors": [],
+ "report": {
+  "final_verdict": "REJECT",
+  "highest_verified_cell": 0,
+  "math_review": {
+   "verdict": "FAIL",
+   "first_fatal_error": {
+    "code": "TARGET_MISMATCH",
+    "detail": "The strongest result actually proved is Corollary 6: max gcd(m_i,m_j) >= k^{1/3} unconditionally, and >= c*sqrt(k)/log k conditional on Mertens/Rosser–Schoenfeld. The cell-6 target requires one of: (a) deciding a size k >= 25; (b) gcd >= ck for an absolute c > 0, or an improvement of the known factor k*exp(-(2+o(1)) log k/log log k) (i.e. something better than k^{1-o(1)}); (c) the group form at k = 6. A bound of order k^{1/2-o(1)} is strictly weaker than the already-known k^{1-o(1)} and does not touch (a) or (c). The submission's own remarks concede that the recursion of Lemma 4 cannot give better than F(g) ≲ g^2/2, i.e. gcd ≳ sqrt(2k), so no route to the target is present. The declared claim 'main' is therefore not established, and no other reusable claim was declared.",
+    "severity": "FATAL",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   "accepted_claims": [],
+   "unproved_claims": [
+    "main"
+   ],
+   "missing_cases": []
+  },
+  "evidence_review": {
+   "verdict": "PARTIAL",
+   "source_issues": [
+    {
+     "code": "SRC_UNRETRIEVABLE_ARXIV",
+     "detail": "src_1 (arXiv:2607.24655, Fornal–Sun 2026) cannot be checked by me (no browsing; beyond my knowledge). No excerpt was submitted although the candidate says it was 'fetched'. Also the candidate's reference line writes the known factor as exp(-(2+o(1)) sqrt(log k/log log k)) while the problem statement writes exp(-(2+o(1)) log k/log log k) (no sqrt). One of the two is a transcription error; the candidate must resolve this against the actual paper. Used for context only, so not blocking.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_SECOND_HAND_DECLARED",
+     "detail": "src_2 (O'Bryant 2007) and src_3 (Z.-W. Sun, Internat. J. Math. 17 (2006) 1047–1064) are honestly declared as cited second-hand and not read; both bibliographic entries are consistent with my knowledge (no sign of fabrication). They carry no weight in the proof.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_FROM_MEMORY_RS",
+     "detail": "src_4: Rosser–Schoenfeld (1962) Thm 5 eq. (3.20), sum_{p<=x}1/p < log log x + B + 1/(2 log^2 x) for x>1, B=0.26149…, matches my recollection of the paper. Cited from memory and declared as such; it only affects the explicit constant in Corollary 6(2), and the candidate flags this dependency. Request: retrieve and quote the inequality to close the gap.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "COMP_REPRODUCED_NOT_PROOF",
+     "detail": "code_1 was re-run by the orchestrator (exit 0, 2.8 s, exact integer/Fraction arithmetic). Output consistent with the prose: R(1000,2)=494228, R(3000,2)=4471142, closed bounds never violated for g<=3000. 'max R(g)/g^2 = 1.0000' is attained at g=1 (R=1) and is consistent with 'R(g,2)<=g^2'. Spot check: R(2,2)=2·R(1,2)=2, R(3,2)=2·1+3·1=5 as stated. The computation is explicitly a consistency check and is NOT used as proof; Theorem 5 is proved by induction independently of it.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [
+    {
+     "code": "SCOPE_TARGET_NOT_REACHED",
+     "detail": "The registered claim 'main' (cell 6: decide k>=25, or prove gcd>=ck / improve the known k^{1-o(1)} factor, or settle group form k=6) is not established. The candidate's actual results are g >= k^{1/3} (unconditional) and g >= c·sqrt(k)/log k (with Mertens), which are strictly weaker than the bound the problem itself states as known (k^{1-o(1)}). No literature is used as a substitute for proof and no rule of the column is violated, but under the hand-in rule 'claim only what you have certified' this must be handed in as partial/no progress on cell 6, not as a solution; the candidate's text does not overclaim, but the claim registry does.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "UNVERIFIED"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": true,
+     "relies_on_external_result": true,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1",
+      "src_4"
+     ],
+     "notes": "Target claim (any of (a),(b),(c)) is not established. What is delivered is a self-contained elementary argument (Lemmas 1–4, Theorem 5, Cor. 6(1)) for g >= k^{1/3}, plus Cor. 6(2) g >= c sqrt(k)/log k relying on Mertens/Rosser–Schoenfeld (cited from memory, declared). These are weaker than the known bound quoted in the problem, so they do not constitute progress on (b). Sources src_1–src_3 are context only; src_1 unverifiable here and its exponent form disagrees with the problem statement."
+    }
+   ]
+  },
+  "accepted_progress": [],
+  "blocking_issue": "Referee A: The strongest result actually proved is Corollary 6: max gcd(m_i,m_j) >= k^{1/3} unconditionally, and >= c*sqrt(k)/log k conditional on Mertens/Rosser–Schoenfeld. The cell-6 target requires one of: (a) deciding a size k >= 25; (b) gcd >= ck for an absolute c > 0, or an improvement of the known factor k*exp(-(2+o(1)) log k/log log k) (i.e. something better than k^{1-o(1)}); (c) the group form at k = 6. A bound of order k^{1/2-o(1)} is strictly weaker than the already-known k^{1-o(1)} and does not touch (a) or (c). The submission's own remarks concede that the recursion of Lemma 4 cannot give better than F(g) ≲ g^2/2, i.e. gcd ≳ sqrt(2k), so no route to the target is present. The declared claim 'main' is therefore not established, and no other reusable claim was declared.",
+  "next_required_step": "Address the stated blocking obligation without silently changing the target",
+  "stagnation_signal": false
+ },
+ "review_status": "NEEDS_WORK",
+ "proposed_claim_ids": []
+}

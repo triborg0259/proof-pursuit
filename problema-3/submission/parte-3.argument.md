@@ -45,11 +45,15 @@ Everything except the plan.
 6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
-- No agent run on this cell; the text was written by the team from its notes.
+- attempt_001 — Researcher: family direct_proof, subgoal: Prove the general upper bound D_B(n) ≤ k^2−2k−1 for every non-triangular n of rank k ≥ 4, and prove D_B(T_k−1) = k^2−2k−1 exactly (lower bound via an explicit partition λ*_k), as a single self-contained argument (Brandt's characterisation of cyclic partitions re-proved inside).; declared LEMMA_CANDIDATE.
+  - Why this approach: No blocker and no verified claims: the natural first subgoal is the whole quantitative content of the cell (general bound + exact value at T_k−1). The literature (Griggs–Ho 1998) contains a proof sketch of exactly this bound; the rules allow a proof 'written out in full, whatever its source', so I fetched the preprint, reconstructed every lemma in a cleaner language, filled the gaps (their proof of Brandt's theorem is a sketch; their Lemma 3.5 statement contains an unused/incorrect constraint q' ≤ p+1 which I dropped; their Lemma 3.3 uses Theorem 2.1 in a way I replaced by an explicit recognition lemma), and verified numerically that the value is k^2−2k−1 (an off-by-one bug in my first table, which suggested k^2−2k−2, was found and fixed by comparing with Griggs–Ho's Figure 1). The characterisation of all extremal partitions of T_k−1 is deliberately left for a later iteration.
+  - Position w.r.t. the literature: The arXiv abstracts listed (math/0401385, 1503.00885, 2607.17194, 1101.1546, 1703.07102, 2208.14496) do not treat D_B(n) for non-triangular n; 2607.17194 and 1503.00885 are surveys citing Brandt (1982) for the cyclic partitions, 1101.1546 concerns Toom's convergence proof. The relevant source is not on arXiv: J. R. Griggs, C.-C. Ho, 'The cycling of partitions and compositions under repeated shifts', Adv. Appl. Math. 21 (1998) 205–227 (doi:10.1006/aama.1998.0597); I downloaded and read the authors' preprint (people.math.sc.edu/griggs/cycling.pdf, dated Mar. 2, 1998). Its Theorem 4.4 states: '(1) D_B(n) ≤ k^2−2k−1 for k ≥ 4 [n = 1+…+(k−1)+r, 1 ≤ r < k]; (2) equality holds when k ≥ 4 and r = k−1', with the extremal partition λ_1=k−1, λ_2=k−2, λ_i=k−i+1 (3≤i≤k), λ_{k+1}=1 and the remark 'imitating the proof of Theorem 3.1, we can show d_B(λ)=k^2−2k−1' (no details). My attempt FOLLOWS Griggs–Ho's strategy but reproduces every proof in full (as required: citing does not count), in a 'pile lifetime' formalism equivalent to their diagram_B; it ADAPTS their Lemma 3.5 (dropping the constraint q' ≤ p+1, which their own proof does not establish and which is not needed) and their Theorem 2.1 proof (their CRT sketch is written out with the potential Φ), and SUPPLIES the omitted lower-bound orbit computation for λ*_k. Griggs–Ho give, for triangular n, only necessary conditions on extremal partitions (their Thm 3.8, converse false for k=8) and nothing for T_k−1, consistent with my leaving that sub-question open.
+  - Referee: UNKNOWN_STATUS / INCOMPLETE; next: Provide the missing review or independently checked evidence
 
 6b. Tokens used by the agents
 
-- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+- Referee judge B: input 43,265 · output (incl. reasoning) 3,993
+- Total: input 43,265 · output 3,993 tokens
 
 7. arXiv literature consulted
 

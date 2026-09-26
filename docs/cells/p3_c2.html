@@ -191,9 +191,9 @@ rapporto</a></li>
 id="toc-problem-3-bulgarian-solitaire">Problem 3 — Bulgarian
 solitaire</a>
 <ul>
-<li><a href="#cella-2-2-punti-stato-parziale"
-id="toc-cella-2-2-punti-stato-parziale">Cella 2 (2 punti) — stato:
-parziale</a>
+<li><a href="#cella-2-2-punti-stato-revisionato"
+id="toc-cella-2-2-punti-stato-revisionato">Cella 2 (2 punti) — stato:
+revisionato</a>
 <ul>
 <li><a href="#consegna-prova" id="toc-consegna-prova">Consegna
 (prova)</a></li>
@@ -220,8 +220,8 @@ e CONGETTURA restano distinti. L’architettura del sistema è descritta
 nel README del repository.</p>
 <h1 id="problem-3-bulgarian-solitaire">Problem 3 — Bulgarian
 solitaire</h1>
-<h2 id="cella-2-2-punti-stato-parziale">Cella 2 (2 punti) — stato:
-parziale</h2>
+<h2 id="cella-2-2-punti-stato-revisionato">Cella 2 (2 punti) — stato:
+revisionato</h2>
 <h5 id="parte-2-c2-d_b-at-triangular-n">Parte 2 (C2) — <span
 class="math inline">\(D_B\)</span> at triangular <span
 class="math inline">\(n\)</span></h5>
@@ -233,386 +233,954 @@ class="math inline">\(D_B(T_k)\)</span> for every <span
 class="math inline">\(k\)</span>, with proof of both bounds.</p>
 <p><strong>Enunciato protetto dato agli agenti (state.json).</strong>
 <code>Determine D_B(T_k) for every k, with proof of both bounds (exact value as a formula in k).</code></p>
-<p><strong>Evidenza registrata in STATUS.md.</strong> loop p3_c2: bound
-inferiore dimostrato con estremale esplicita (lemma di moto delle
-celle), verifica esaustiva k≤9; bound superiore NON dimostrato (Referee
-REJECT sul tutto, lemma accettato); consegna parziale in inglese</p>
+<p><strong>Evidenza registrata in STATUS.md.</strong> loop p3_c2
+attempt_002: Referee READY_FOR_HUMAN (A PASS, B PASS); approvata da
+Thomas Tumini (human); submission/parte-2.en.md</p>
 <h3 id="consegna-prova">Consegna (prova)</h3>
-<h4 id="problem-3-part-2-submission-partial">Problem 3 — Part 2 —
-submission (PARTIAL)</h4>
-<p><strong>Declared status: PARTIAL.</strong> Lower bound proved in full
-with an explicit extremal partition; the upper bound is NOT proved here
-(verified exhaustively for small k only, and known in the literature:
-Igusa 1985, Etienne 1991, whose proofs we could not access in time). The
-automatic Referee rejected the attempt as a solution of the whole cell
-precisely for this reason (verdict REJECT: “Theorem B (upper bound
-D_B(T_k) ≤ k^2−k for all k) is not proved; the submission itself marks
-it ‘NOT PROVED HERE’ and only cites Igusa/Etienne (statement not
-reproduced, sources not read) plus an exhaustive check for sm…”), and
-accepted the lower-bound part as a lemma candidate.</p>
+<h4 id="problem-3-part-2-submission">Problem 3 — Part 2 —
+submission</h4>
+<p><strong>Declared status: SOLVED (approved).</strong> Complete proof;
+automatic Referee READY_FOR_HUMAN (judge A, mathematics: PASS; judge B,
+evidence: PASS; code re-run by the orchestrator); human approval
+recorded in <code>runs/p3_c2/approval.json</code>.</p>
 <h5 id="result-and-scope">1. Result and scope</h5>
-<p>Complete proof that D_B(T_k) ≥ k^2 − k for all k ≥ 1 with the
-explicit extremal γ_k = (k−1,k−1,k−2,…,2,1,1) (Theorem A), resting on a
-new exact cell-motion lemma for B (Lemma 1) that is reusable for the
-other cells; exhaustive exact verification that D_B(T_k) = k^2 − k for k
-≤ 9. The general upper bound D_B(T_k) ≤ k^2 − k is not proved.</p>
+<p>Complete proof that D_B(T_k) = k²−k for every k ≥ 1: (Part I) cell
+rule for B, W-potential, convergence to δ_k and uniqueness of the cyclic
+partition of T_k (so d_B = hitting time of δ_k); (Part II) lower bound
+with the explicit family γ_k = (k−1,k−1,k−2,…,2,1,1), d_B(γ_k) = k²−k;
+(Part III) upper bound d_B(λ) ≤ k²−k for all λ ⊢ T_k via the pile-count
+sequence (Lemmas 3–10 and Theorem B), reproducing in full and with all
+inductions written out the argument of Griggs–Ho, Thm 3.7. This
+addresses exactly the referee’s fatal error (Theorem B previously only
+cited). Exhaustive exact checks: D_B(T_k)=k²−k for k ≤ 9; all lemma
+statements verified on all partitions of n ≤ 24 and Lemma 6/Theorem B on
+k = 3..7.</p>
 <h5 id="proof">2. Proof</h5>
-<h5 id="conventions">Conventions</h5>
-<p>Draw a partition <span
+<h4 id="cell-2-d_bt_kk2-k-for-every-kge-1">Cell 2: <span
+class="math inline">\(D_B(T_k)=k^2-k\)</span> for every <span
+class="math inline">\(k\ge 1\)</span></h4>
+<p>Throughout, <span class="math inline">\(n=T_k=k(k+1)/2\)</span>,
+<span class="math inline">\(\delta_k=(k,k-1,\dots,1)\)</span>, and for a
+partition <span class="math inline">\(\lambda\)</span> we write <span
+class="math inline">\(\ell(\lambda)\)</span> for its number of parts.
+The result is</p>
+<p><strong>Theorem.</strong> For every <span
+class="math inline">\(k\ge1\)</span>, <span
+class="math inline">\(D_B(T_k)=k^2-k\)</span>. The maximum is attained
+by <span
+class="math inline">\(\gamma_k=(k-1,k-1,k-2,\dots,2,1,1)\)</span> for
+<span class="math inline">\(k\ge2\)</span> (and by <span
+class="math inline">\(\gamma_1=(1)\)</span>).</p>
+<p>The proof has three parts: (I) the cell rule for <span
+class="math inline">\(B\)</span>, convergence to <span
+class="math inline">\(\delta_k\)</span> and uniqueness of the cyclic
+partition (so that <span class="math inline">\(d_B(\lambda)=\min\{m:
+B^m(\lambda)=\delta_k\}\)</span>); (II) the lower bound via <span
+class="math inline">\(\gamma_k\)</span>; (III) the upper bound via the
+sequence of pile counts. Part III follows the method of Griggs–Ho (Adv.
+Appl. Math. 21 (1998), Thm. 3.7), which we read in full and rewrite here
+completely, with the inductions that the paper only sketches written
+out.</p>
+<div class="center">
+<hr />
+</div>
+<h5 id="part-i.-cells-diagonals-convergence">Part I. Cells, diagonals,
+convergence</h5>
+<p>Conventions</p>
+<p>Draw <span
 class="math inline">\(\lambda=(\lambda_1\ge\dots\ge\lambda_s)\)</span>
-as a diagram whose <strong>column</strong> <span
-class="math inline">\(i\)</span> (<span class="math inline">\(1\le i\le
-s\)</span>) consists of the cells <span
-class="math inline">\((i,h)\)</span>, <span class="math inline">\(1\le
-h\le \lambda_i\)</span> (<span class="math inline">\(h\)</span> =
-height). The <em>diagonal</em> of a cell is <span
-class="math inline">\(d(i,h)=i+h-1\)</span>. Diagonal <span
-class="math inline">\(d\)</span> contains the <span
-class="math inline">\(d\)</span> <em>slots</em> <span
-class="math inline">\((p,\,d+1-p)\)</span>, <span
-class="math inline">\(p=1,\dots,d\)</span>; a set of cells is the
-diagram of a partition iff the column heights are weakly decreasing.
-<span class="math inline">\(\delta_k\)</span> is the diagram whose
-diagonals <span class="math inline">\(1,\dots,k\)</span> are full and
-all others empty. Throughout <span
-class="math inline">\(n=T_k\)</span>.</p>
-<h5 id="lemma-1-exact-cell-rule-for-b">Lemma 1 (exact cell rule for
-<span class="math inline">\(B\)</span>)</h5>
+as the set of <strong>cells</strong> <span
+class="math inline">\((i,h)\)</span> with <span
+class="math inline">\(1\le i\le s\)</span>, <span
+class="math inline">\(1\le h\le\lambda_i\)</span> (column <span
+class="math inline">\(i\)</span> = pile <span
+class="math inline">\(i\)</span>, <span class="math inline">\(h\)</span>
+= height). The <strong>diagonal</strong> of <span
+class="math inline">\((i,h)\)</span> is <span
+class="math inline">\(d(i,h)=i+h-1\)</span>; diagonal <span
+class="math inline">\(d\)</span> consists of the <span
+class="math inline">\(d\)</span> <strong>slots</strong> <span
+class="math inline">\((p,d+1-p)\)</span>, <span
+class="math inline">\(p=1,\dots,d\)</span> (we call <span
+class="math inline">\(p\)</span> the slot number). A set of cells is the
+diagram of a partition iff its column heights are weakly decreasing and
+each column is an initial segment of heights. <span
+class="math inline">\(\delta_k\)</span> is the diagram in which
+diagonals <span class="math inline">\(1,\dots,k\)</span> are full (all
+slots occupied) and all others are empty.</p>
+<p>Lemma 1 (cell rule)</p>
 <p>Let <span class="math inline">\(\lambda\)</span> have <span
-class="math inline">\(s\)</span> columns. Then <span
-class="math inline">\(B(\lambda)\)</span> is the diagram obtained from
-<span class="math inline">\(\lambda\)</span> by moving every cell as
-follows:</p>
-<ol>
-<li><p><span class="math inline">\((i,1)\mapsto(1,i)\)</span> for <span
-class="math inline">\(1\le i\le s\)</span>;</p></li>
-<li><p><span class="math inline">\((i,h)\mapsto(i+1,h-1)\)</span> if
-<span class="math inline">\(2\le h\le s+1\)</span>;</p></li>
-<li><p><span class="math inline">\((i,h)\mapsto(i,h-1)\)</span> if <span
-class="math inline">\(h\ge s+2\)</span>.</p></li>
-</ol>
-<p>In particular cells of type 1–2 stay on their diagonal (slot <span
-class="math inline">\(p\mapsto p+1\)</span>, and slot <span
-class="math inline">\(d\mapsto 1\)</span>: a cyclic rotation of the
-diagonal), while cells of type 3 move from diagonal <span
-class="math inline">\(d\)</span> to diagonal <span
-class="math inline">\(d-1\)</span> (same column).</p>
-<p><em>Proof.</em> By definition the columns of <span
-class="math inline">\(B(\lambda)\)</span> are the multiset <span
-class="math inline">\(\{s\}\cup\{\lambda_i-1:\lambda_i\ge 2\}\)</span>.
-Consider first the “unsorted” diagram <span
-class="math inline">\(U\)</span>: column 1 of height <span
-class="math inline">\(s\)</span>, column <span
-class="math inline">\(i+1\)</span> of height <span
-class="math inline">\(\lambda_i-1\)</span> (<span
-class="math inline">\(1\le i\le s\)</span>). Rules 1 and 2 applied to
-all cells with <span class="math inline">\(h\le s+1\)</span> produce
-exactly the cells of <span class="math inline">\(U\)</span> of height
-<span class="math inline">\(\le s+1\)</span> (the new column, and the
-old columns shifted right and lowered), and rule 2 without the
-restriction <span class="math inline">\(h\le s+1\)</span> would produce
-all of <span class="math inline">\(U\)</span>. Let <span
-class="math inline">\(q=\#\{i:\lambda_i-1\ge s+1\}=\#\{i:\lambda_i\ge
-s+2\}\)</span>; because <span class="math inline">\(\lambda\)</span> is
-sorted, these are <span class="math inline">\(i=1,\dots,q\)</span>, so
-in <span class="math inline">\(U\)</span> exactly the columns <span
-class="math inline">\(2,\dots,q+1\)</span> have height <span
-class="math inline">\(&gt;s+1\)</span> (column 1 has height <span
-class="math inline">\(s\)</span>, columns <span
-class="math inline">\(i+1\)</span> with <span
-class="math inline">\(i&gt;q\)</span> have height <span
-class="math inline">\(\le s\)</span>). Now compare <span
-class="math inline">\(U\)</span> with the diagram <span
-class="math inline">\(V\)</span> obtained from <span
-class="math inline">\(U\)</span> by moving every cell of height <span
-class="math inline">\(\ge s+1\)</span> in columns <span
-class="math inline">\(2,\dots,q+1\)</span> one column to the left.
-Column heights of <span class="math inline">\(V\)</span>: column 1 has
-the <span class="math inline">\(s\)</span> cells of the new column plus
-the cells of heights <span
-class="math inline">\(s+1,\dots,\lambda_1-1\)</span> received from
-column 2, hence height <span class="math inline">\(\lambda_1-1\)</span>;
-column <span class="math inline">\(i\)</span> for <span
-class="math inline">\(2\le i\le q\)</span> keeps heights <span
-class="math inline">\(1,\dots,s\)</span> (from old column <span
-class="math inline">\(i-1\)</span>, whose height <span
-class="math inline">\(\lambda_{i-1}-1\ge s+1\)</span>), loses heights
-<span class="math inline">\(s+1,\dots,\lambda_{i-1}-1\)</span> and
-receives heights <span
-class="math inline">\(s+1,\dots,\lambda_i-1\)</span> from column <span
-class="math inline">\(i+1\)</span>, hence height <span
-class="math inline">\(\lambda_i-1\)</span>; column <span
-class="math inline">\(q+1\)</span> keeps heights <span
-class="math inline">\(1,\dots,s\)</span> and loses the rest, hence
-height <span class="math inline">\(s\)</span>; columns <span
-class="math inline">\(i+1&gt;q+1\)</span> are unchanged with height
-<span class="math inline">\(\lambda_i-1\le s\)</span>. So the columns of
-<span class="math inline">\(V\)</span> are <span
-class="math inline">\(\lambda_1-1\ge\dots\ge\lambda_q-1\ge s\ge
-\lambda_{q+1}-1\ge\dots\)</span>, i.e. <span
-class="math inline">\(V\)</span> is the sorted diagram of <span
-class="math inline">\(B(\lambda)\)</span> (columns of height 0 at the
-end are discarded). Finally, the cells moved in passing from <span
-class="math inline">\(U\)</span> to <span
-class="math inline">\(V\)</span> are exactly the images under rule 2 of
-the cells <span class="math inline">\((i,h)\)</span> of <span
-class="math inline">\(\lambda\)</span> with <span
-class="math inline">\(h-1\ge s+1\)</span>, i.e. <span
-class="math inline">\(h\ge s+2\)</span>; composing “<span
-class="math inline">\((i,h)\mapsto(i+1,h-1)\)</span> then one column
-left” gives rule 3. <span class="math inline">\(\square\)</span></p>
-<h5
-id="lemma-2-convergence-to-delta_k-used-only-for-context-not-for-the-bound">Lemma
-2 (convergence to <span class="math inline">\(\delta_k\)</span>; used
-only for context, not for the bound)</h5>
-<p>Let <span class="math inline">\(W(\lambda)=\sum_{\text{cells}}
-d(i,h)\)</span>. By Lemma 1, <span
-class="math inline">\(W(B(\lambda))=W(\lambda)-\#\{(i,h)\in\lambda: h\ge
-s+2\}\le W(\lambda)\)</span>. Since diagonal <span
-class="math inline">\(d\)</span> has only <span
-class="math inline">\(d\)</span> slots, among all sets of <span
-class="math inline">\(T_k\)</span> cells with at most <span
-class="math inline">\(d\)</span> cells on diagonal <span
-class="math inline">\(d\)</span> the minimum of <span
-class="math inline">\(W\)</span> is attained only by <span
-class="math inline">\(\delta_k\)</span> (fill diagonals <span
-class="math inline">\(1,\dots,k\)</span>); hence <span
-class="math inline">\(W(\lambda)\ge W(\delta_k)\)</span> with equality
-iff <span class="math inline">\(\lambda=\delta_k\)</span>. (Combined
-with the fact that a partition <span
-class="math inline">\(\ne\delta_k\)</span> of <span
-class="math inline">\(T_k\)</span> cannot be periodic with all steps of
-cost 0 — which is C1 material and not needed below — this gives
-convergence; we do not use it.)</p>
-<h5
-id="theorem-a-lower-bound.-for-every-kge1-d_bt_kge-k2-k-attained-by">Theorem
-A (lower bound). For every <span class="math inline">\(k\ge1\)</span>,
-<span class="math inline">\(D_B(T_k)\ge k^2-k\)</span>, attained by</h5>
-<p><span
-class="math display">\[\gamma_k=(k-1,\,k-1,\,k-2,\,k-3,\dots,2,\,1,\,1)\quad(k\ge2),\qquad
-\gamma_1=(1).\]</span> (<span class="math inline">\(\gamma_k\)</span> is
-<span class="math inline">\(\delta_k\)</span> with the part <span
-class="math inline">\(k\)</span> replaced by the two parts <span
-class="math inline">\(k-1\)</span> and <span
-class="math inline">\(1\)</span>; <span
-class="math inline">\(|\gamma_k|=T_k\)</span>.)</p>
-<p><em>Proof.</em> For <span class="math inline">\(k=1\)</span> the only
-partition is <span class="math inline">\(\delta_1\)</span> and <span
+class="math inline">\(s\)</span> parts and define, on the cells of <span
+class="math inline">\(\lambda\)</span>, 1. <span
+class="math inline">\(\varphi(i,1)=(1,i)\)</span> for <span
+class="math inline">\(1\le i\le s\)</span>; 2. <span
+class="math inline">\(\varphi(i,h)=(i+1,h-1)\)</span> if <span
+class="math inline">\(2\le h\le s+1\)</span>; 3. <span
+class="math inline">\(\varphi(i,h)=(i,h-1)\)</span> if <span
+class="math inline">\(h\ge s+2\)</span>.</p>
+<p>Then <span class="math inline">\(\varphi\)</span> is injective and
+its image is exactly the diagram of <span
+class="math inline">\(B(\lambda)\)</span>. Cells of type 1–2 stay on
+their diagonal, their slot number changing by the cyclic shift <span
+class="math inline">\(\rho_d:p\mapsto p+1\)</span> (<span
+class="math inline">\(p&lt;d\)</span>), <span
+class="math inline">\(d\mapsto 1\)</span>; cells of type 3 move from
+diagonal <span class="math inline">\(d\)</span> to diagonal <span
+class="math inline">\(d-1\)</span>, keeping their column.</p>
+<p><em>Proof.</em> Let <span class="math inline">\(q=\#\{i:\lambda_i\ge
+s+2\}\)</span>; since <span class="math inline">\(\lambda\)</span> is
+sorted these are <span class="math inline">\(i=1,\dots,q\)</span>. The
+parts of <span class="math inline">\(B(\lambda)\)</span> are <span
+class="math inline">\(s\)</span> together with <span
+class="math inline">\(\lambda_i-1\)</span> for <span
+class="math inline">\(\lambda_i\ge 2\)</span>; since <span
+class="math inline">\(\lambda_i-1\ge s+1&gt;s\)</span> exactly for <span
+class="math inline">\(i\le q\)</span>, the sorted <span
+class="math inline">\(B(\lambda)\)</span> has column heights <span
+class="math display">\[\lambda_1-1,\dots,\lambda_q-1,\ s,\
+\lambda_{q+1}-1,\ \lambda_{q+2}-1,\dots\]</span> (columns of height
+<span class="math inline">\(0\)</span> discarded). Now list the image of
+<span class="math inline">\(\varphi\)</span> column by column. Column 1
+receives heights <span class="math inline">\(1,\dots,s\)</span> from
+rule 1 and, if <span class="math inline">\(q\ge1\)</span>, heights <span
+class="math inline">\(s+1,\dots,\lambda_1-1\)</span> from rule 3 with
+<span class="math inline">\(i=1\)</span>: total height <span
+class="math inline">\(\lambda_1-1\)</span> if <span
+class="math inline">\(q\ge1\)</span>, <span
+class="math inline">\(s\)</span> if <span
+class="math inline">\(q=0\)</span>. For <span class="math inline">\(2\le
+c\le q\)</span>, column <span class="math inline">\(c\)</span> receives
+heights <span
+class="math inline">\(1,\dots,\min(\lambda_{c-1},s+1)-1=1,\dots,s\)</span>
+from rule 2 with <span class="math inline">\(i=c-1\)</span> (as <span
+class="math inline">\(\lambda_{c-1}\ge s+2\)</span>) and heights <span
+class="math inline">\(s+1,\dots,\lambda_c-1\)</span> from rule 3 with
+<span class="math inline">\(i=c\)</span>: total <span
+class="math inline">\(\lambda_c-1\)</span>. If <span
+class="math inline">\(q\ge1\)</span>, column <span
+class="math inline">\(q+1\)</span> receives heights <span
+class="math inline">\(1,\dots,s\)</span> from rule 2 with <span
+class="math inline">\(i=q\)</span> and nothing from rule 3: height <span
+class="math inline">\(s\)</span>. For <span class="math inline">\(c\ge
+q+2\)</span>, column <span class="math inline">\(c\)</span> receives
+heights <span class="math inline">\(1,\dots,\lambda_{c-1}-1\)</span>
+from rule 2 with <span class="math inline">\(i=c-1\)</span> (as <span
+class="math inline">\(\lambda_{c-1}\le s+1\)</span>) and nothing else.
+In every column the received heights are contiguous from <span
+class="math inline">\(1\)</span> and the contributions of the three
+rules are disjoint, so <span class="math inline">\(\varphi\)</span> is
+injective and its image is precisely the diagram of <span
+class="math inline">\(B(\lambda)\)</span> listed above. The statements
+about diagonals and slots are read off from the formulas: <span
+class="math inline">\(d(1,i)=i=d(i,1)\)</span> and slot <span
+class="math inline">\(i=d\mapsto 1\)</span>; <span
+class="math inline">\(d(i+1,h-1)=d(i,h)\)</span> and slot <span
+class="math inline">\(i\mapsto i+1\)</span>; <span
+class="math inline">\(d(i,h-1)=d(i,h)-1\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Consequences.</strong> (a) <em>Rotation.</em> If <span
+class="math inline">\(\lambda_1\le s+1\)</span> (no cell of type 3),
+then for every <span class="math inline">\(d\)</span> the set of
+occupied slots of diagonal <span class="math inline">\(d\)</span> in
+<span class="math inline">\(B(\lambda)\)</span> is the image under <span
+class="math inline">\(\rho_d\)</span> of the set of occupied slots of
+diagonal <span class="math inline">\(d\)</span> in <span
+class="math inline">\(\lambda\)</span>; the same holds for the set of
+empty slots (“holes”). (b) <em>Potential.</em> Let <span
+class="math inline">\(W(\lambda)=\sum_{\text{cells}}d(i,h)\ (\ge
+0)\)</span>. Then <span
+class="math inline">\(W(B(\lambda))=W(\lambda)-\#\{(i,h)\in\lambda:h\ge
+s+2\}\)</span>; in particular <span
+class="math inline">\(W(B(\lambda))\le W(\lambda)\)</span>, with
+equality iff <span class="math inline">\(\lambda_1\le s+1\)</span>.</p>
+<p>Lemma 2 (convergence and uniqueness)</p>
+<p>Let <span class="math inline">\(|\lambda|=T_k\)</span>. Then <span
+class="math inline">\(B^m(\lambda)=\delta_k\)</span> for some <span
+class="math inline">\(m\ge0\)</span>; <span
+class="math inline">\(B(\delta_k)=\delta_k\)</span>; and <span
+class="math inline">\(\delta_k\)</span> is the only cyclic partition of
+<span class="math inline">\(T_k\)</span>. Consequently <span
+class="math inline">\(d_B(\lambda)=\min\{m\ge0:B^m(\lambda)=\delta_k\}\)</span>.</p>
+<p><em>Proof.</em> <span class="math inline">\(B(\delta_k)\)</span> has
+parts <span class="math inline">\(k-1,\dots,1\)</span> and the new part
+<span class="math inline">\(k\)</span>, so <span
+class="math inline">\(B(\delta_k)=\delta_k\)</span>.</p>
+<p><em>Claim: if <span class="math inline">\(\mu\vdash T_k\)</span> and
+<span class="math inline">\(\mu\ne\delta_k\)</span>, there is a diagonal
+<span class="math inline">\(w\)</span> with an empty slot such that
+diagonal <span class="math inline">\(w+1\)</span> contains a cell.</em>
+Let <span class="math inline">\(D\)</span> be the largest occupied
+diagonal. If diagonals <span class="math inline">\(1,\dots,D-1\)</span>
+are all full, then <span class="math inline">\(T_{D-1}&lt;|\mu|\le
+T_D\)</span>, so <span class="math inline">\(D=k\)</span> and diagonal
+<span class="math inline">\(k\)</span> is full (<span
+class="math inline">\(|\mu|=T_k=T_{k-1}+k\)</span>), i.e. <span
+class="math inline">\(\mu=\delta_k\)</span>. Otherwise let <span
+class="math inline">\(w\le D-1\)</span> be the largest diagonal with an
+empty slot; diagonal <span class="math inline">\(w+1\le D\)</span> is
+full (if <span class="math inline">\(w+1&lt;D\)</span>) or equals <span
+class="math inline">\(D\)</span> (nonempty); either way it contains a
+cell.</p>
+<p>Now take any <span class="math inline">\(\lambda\vdash T_k\)</span>.
+By (b), <span class="math inline">\(W(B^m(\lambda))\)</span> is a
+non-increasing sequence of non-negative integers, so only finitely many
+steps have <span class="math inline">\(W\)</span> strictly decreasing;
+let <span class="math inline">\(m_0\)</span> be such that no step from
+time <span class="math inline">\(m_0\)</span> on decreases <span
+class="math inline">\(W\)</span>, i.e. by (b) every <span
+class="math inline">\(B^m(\lambda)\)</span>, <span
+class="math inline">\(m\ge m_0\)</span>, satisfies <span
+class="math inline">\(\lambda^{(m)}_1\le s_m+1\)</span> (<span
+class="math inline">\(s_m\)</span> = number of parts). Suppose <span
+class="math inline">\(\mu=B^{m_0}(\lambda)\ne\delta_k\)</span> and take
+<span class="math inline">\(w\)</span> as in the claim: a hole at slot
+<span class="math inline">\(p_0\)</span> of diagonal <span
+class="math inline">\(w\)</span> and a cell at slot <span
+class="math inline">\(p_1\)</span> of diagonal <span
+class="math inline">\(w+1\)</span>. By (a), applied at each step <span
+class="math inline">\(m\ge m_0\)</span>, at time <span
+class="math inline">\(m_0+u\)</span> diagonal <span
+class="math inline">\(w\)</span> has a hole at the slot <span
+class="math inline">\(\equiv p_0+u\pmod w\)</span> and diagonal <span
+class="math inline">\(w+1\)</span> has a cell at the slot <span
+class="math inline">\(\equiv p_1+u\pmod{w+1}\)</span> (representatives
+in <span class="math inline">\(\{1,\dots,w\}\)</span>, <span
+class="math inline">\(\{1,\dots,w+1\}\)</span>). Since <span
+class="math inline">\(\gcd(w,w+1)=1\)</span>, by the Chinese remainder
+theorem there is <span class="math inline">\(u\ge0\)</span> with <span
+class="math inline">\(p_0+u\equiv w\pmod w\)</span> and <span
+class="math inline">\(p_1+u\equiv1\pmod{w+1}\)</span>. At time <span
+class="math inline">\(m=m_0+u\)</span>: slot <span
+class="math inline">\(w\)</span> of diagonal <span
+class="math inline">\(w\)</span> is the position <span
+class="math inline">\((w,1)\)</span>, and it is empty, so column <span
+class="math inline">\(w\)</span> is empty and <span
+class="math inline">\(s_m\le w-1\)</span>; slot <span
+class="math inline">\(1\)</span> of diagonal <span
+class="math inline">\(w+1\)</span> is the position <span
+class="math inline">\((1,w+1)\)</span>, and it is a cell, so <span
+class="math inline">\(\lambda^{(m)}_1\ge w+1\ge s_m+2\)</span>. This
+contradicts <span class="math inline">\(\lambda^{(m)}_1\le
+s_m+1\)</span>. Hence <span
+class="math inline">\(B^{m_0}(\lambda)=\delta_k\)</span>, and <span
+class="math inline">\(B^m(\lambda)=\delta_k\)</span> for all <span
+class="math inline">\(m\ge m_0\)</span>.</p>
+<p>If <span class="math inline">\(\mu\)</span> is cyclic, <span
+class="math inline">\(B^P(\mu)=\mu\)</span> with <span
+class="math inline">\(P\ge1\)</span>, choose <span
+class="math inline">\(m\)</span> with <span
+class="math inline">\(B^m(\mu)=\delta_k\)</span>; then <span
+class="math inline">\(\mu=B^{P\lceil m/P\rceil}(\mu)=\delta_k\)</span>
+because <span class="math inline">\(P\lceil m/P\rceil\ge m\)</span> and
+<span class="math inline">\(\delta_k\)</span> is fixed. So <span
+class="math inline">\(\delta_k\)</span> is the unique cyclic partition,
+and by definition <span
+class="math inline">\(d_B(\lambda)=\min\{m:B^m(\lambda)=\delta_k\}\)</span>.
+<span class="math inline">\(\square\)</span></p>
+<div class="center">
+<hr />
+</div>
+<h5 id="part-ii.-lower-bound-d_bgamma_kk2-k">Part II. Lower bound: <span
+class="math inline">\(d_B(\gamma_k)=k^2-k\)</span></h5>
+<p><strong>Theorem A.</strong> For every <span
+class="math inline">\(k\ge1\)</span>, <span
+class="math inline">\(D_B(T_k)\ge k^2-k\)</span>, attained by <span
+class="math inline">\(\gamma_k=(k-1,k-1,k-2,\dots,2,1,1)\)</span> (<span
+class="math inline">\(k\ge2\)</span>), <span
+class="math inline">\(\gamma_1=(1)\)</span>.</p>
+<p><em>Proof.</em> For <span class="math inline">\(k=1\)</span>, <span
 class="math inline">\(D_B(1)=0=k^2-k\)</span>. Let <span
 class="math inline">\(k\ge2\)</span>. For <span
 class="math inline">\(p_H\in\{1,\dots,k\}\)</span> and <span
 class="math inline">\(p_X\in\{1,\dots,k+1\}\)</span> let <span
 class="math inline">\(S(p_H,p_X)\)</span> be the set of cells of <span
 class="math inline">\(\delta_k\)</span> with the cell <span
-class="math inline">\((p_H,\,k+1-p_H)\)</span> removed (a <em>hole</em>
-in slot <span class="math inline">\(p_H\)</span> of diagonal <span
+class="math inline">\((p_H,k+1-p_H)\)</span> removed (a hole in slot
+<span class="math inline">\(p_H\)</span> of diagonal <span
 class="math inline">\(k\)</span>) and the cell <span
-class="math inline">\((p_X,\,k+2-p_X)\)</span> added (an <em>extra
-cell</em> in slot <span class="math inline">\(p_X\)</span> of diagonal
-<span class="math inline">\(k+1\)</span>). Its column heights are <span
+class="math inline">\((p_X,k+2-p_X)\)</span> added (an extra cell in
+slot <span class="math inline">\(p_X\)</span> of diagonal <span
+class="math inline">\(k+1\)</span>). Its column heights are <span
 class="math inline">\(k+1-p\)</span> for <span
 class="math inline">\(p\notin\{p_H,p_X\}\)</span>, <span
 class="math inline">\(k-p_H\)</span> for <span
 class="math inline">\(p=p_H\)</span>, <span
 class="math inline">\(k+2-p_X\)</span> for <span
-class="math inline">\(p=p_X\)</span> (and column <span
+class="math inline">\(p=p_X\)</span> (column <span
 class="math inline">\(k+1\)</span> exists iff <span
 class="math inline">\(p_X=k+1\)</span>). It is a partition diagram iff
 <span class="math inline">\(p_X\ne p_H\)</span> and <span
-class="math inline">\(p_X\ne p_H+1\)</span> (if <span
-class="math inline">\(p_X=p_H\)</span> the cell <span
-class="math inline">\((p_H,k+2-p_H)\)</span> would sit above a missing
-cell; if <span class="math inline">\(p_X=p_H+1\)</span> column <span
-class="math inline">\(p_X\)</span> would be taller than column <span
-class="math inline">\(p_H\)</span>; otherwise the heights are weakly
-decreasing because column <span class="math inline">\(p_X\)</span> has
-the same height as column <span class="math inline">\(p_X-1\)</span> and
-column <span class="math inline">\(p_H\)</span> has the same height as
-column <span class="math inline">\(p_H+1\)</span>). Note <span
-class="math inline">\(\gamma_k=S(1,k+1)\)</span>: columns <span
-class="math inline">\(k-1,k-1,k-2,\dots,2,1,1\)</span>.</p>
+class="math inline">\(p_X\ne p_H+1\)</span>: if <span
+class="math inline">\(p_X=p_H\)</span> the added cell sits above a
+missing one; if <span class="math inline">\(p_X=p_H+1\)</span> column
+<span class="math inline">\(p_X\)</span> would be taller than column
+<span class="math inline">\(p_H\)</span>; otherwise heights are weakly
+decreasing, since column <span class="math inline">\(p_X\)</span> has
+the height of column <span class="math inline">\(p_X-1\)</span> and
+column <span class="math inline">\(p_H\)</span> has the height of column
+<span class="math inline">\(p_H+1\)</span>. Note <span
+class="math inline">\(\gamma_k=S(1,k+1)\)</span> (columns <span
+class="math inline">\(k-1,k-1,k-2,\dots,2,1,1\)</span>), and every <span
+class="math inline">\(S(p_H,p_X)\)</span> has <span
+class="math inline">\(|S|=T_k\)</span> and <span
+class="math inline">\(S\ne\delta_k\)</span>.</p>
 <p>Number of columns of <span class="math inline">\(S(p_H,p_X)\)</span>:
 <span class="math inline">\(s=k+1\)</span> if <span
 class="math inline">\(p_X=k+1\)</span>; <span
 class="math inline">\(s=k-1\)</span> if <span
 class="math inline">\(p_H=k\)</span> (then <span
-class="math inline">\(p_X\le k\)</span>); <span
-class="math inline">\(s=k\)</span> otherwise. Heights: every column has
-height <span class="math inline">\(\le k\)</span> except column <span
-class="math inline">\(p_X\)</span>, of height <span
+class="math inline">\(p_X\le k\)</span>, because <span
+class="math inline">\(p_X\ne p_H+1=k+1\)</span>); <span
+class="math inline">\(s=k\)</span> otherwise. All columns have height
+<span class="math inline">\(\le k\)</span> except column <span
+class="math inline">\(p_X\)</span> of height <span
 class="math inline">\(k+2-p_X\le k+1\)</span>, with equality iff <span
 class="math inline">\(p_X=1\)</span>. Hence a cell of height <span
 class="math inline">\(\ge s+2\)</span> exists only when <span
 class="math inline">\(s=k-1\)</span> and <span
 class="math inline">\(p_X=1\)</span>, i.e. only in <span
-class="math inline">\(S(k,1)\)</span>, and then it is the single cell
-<span class="math inline">\((1,k+1)\)</span>.</p>
-<p><em>Case <span class="math inline">\(S(k,1)\)</span>.</em> By Lemma 1
-with <span class="math inline">\(s=k-1\)</span>: the bottom row <span
-class="math inline">\((i,1)\)</span>, <span class="math inline">\(i\le
-k-1\)</span>, becomes column 1 with heights <span
-class="math inline">\(1,\dots,k-1\)</span>; the cells <span
-class="math inline">\((i,h)\)</span> with <span
-class="math inline">\(2\le h\le k\)</span> (all remaining cells of <span
-class="math inline">\(\delta_k\)</span> minus the hole, since the hole
-is <span class="math inline">\((k,1)\)</span> and column <span
-class="math inline">\(k\)</span> is empty) go to <span
+class="math inline">\(S(k,1)\)</span>, where it is the single cell <span
+class="math inline">\((1,k+1)\)</span>.</p>
+<p><em>Case <span class="math inline">\(S(k,1)\)</span>.</em> Here <span
+class="math inline">\(s=k-1\)</span> and <span
+class="math inline">\(S(k,1)=(k+1,k-1,k-2,\dots,2)\)</span>; by Lemma 1:
+rule 1 sends the bottom row to column 1 with heights <span
+class="math inline">\(1,\dots,k-1\)</span>; rule 2 sends every other
+cell <span class="math inline">\((i,h)\)</span>, <span
+class="math inline">\(2\le h\le k\)</span>, to <span
 class="math inline">\((i+1,h-1)\)</span>, giving columns <span
 class="math inline">\(2,\dots,k\)</span> of heights <span
-class="math inline">\(k-1,\dots,1\)</span>; the cell <span
-class="math inline">\((1,k+1)\)</span> drops to <span
+class="math inline">\(k-1,\dots,1\)</span>; rule 3 sends <span
+class="math inline">\((1,k+1)\)</span> to <span
 class="math inline">\((1,k)\)</span>, completing column 1 to height
 <span class="math inline">\(k\)</span>. So <span
 class="math inline">\(B(S(k,1))=\delta_k\)</span>.</p>
-<p><em>Other cases.</em> No cell has height <span
-class="math inline">\(\ge s+2\)</span>, so by Lemma 1 every cell rotates
-one slot along its diagonal; the same is true of the empty slot (hole)
-on diagonal <span class="math inline">\(k\)</span>, because the cells of
-diagonal <span class="math inline">\(k\)</span> permute cyclically among
-its slots. Hence <span
+<p><em>Other cases.</em> No cell of type 3, so by Consequence (a) every
+diagonal rotates by <span class="math inline">\(\rho_d\)</span>, holes
+included: <span
 class="math inline">\(B(S(p_H,p_X))=S(p_H&#39;,p_X&#39;)\)</span> with
 <span class="math inline">\(p_H&#39;\equiv p_H+1\pmod k\)</span>, <span
-class="math inline">\(p_X&#39;\equiv p_X+1\pmod{k+1}\)</span>
-(representatives in <span class="math inline">\(\{1..k\}\)</span>, <span
-class="math inline">\(\{1..k+1\}\)</span>). (Lemma 1 guarantees the
-result is a partition diagram, so the validity condition is
-automatically preserved.)</p>
-<p>Therefore, starting from <span
-class="math inline">\(\gamma_k=S(1,k+1)\)</span>, as long as no step has
-hit <span class="math inline">\(S(k,1)\)</span> we have <span
+class="math inline">\(p_X&#39;\equiv p_X+1\pmod{k+1}\)</span> (Lemma 1
+guarantees the result is a partition diagram).</p>
+<p>Starting from <span class="math inline">\(\gamma_k=S(1,k+1)\)</span>,
+as long as the orbit has not visited <span
+class="math inline">\(S(k,1)\)</span> we have <span
 class="math inline">\(B^t(\gamma_k)=S(p_H(t),p_X(t))\)</span> with <span
-class="math inline">\(p_H(t)\equiv 1+t\pmod k\)</span>, <span
-class="math inline">\(p_X(t)\equiv k+1+t\equiv t\pmod{k+1}\)</span>.
-None of these equals <span class="math inline">\(\delta_k\)</span> (they
-have a hole). The first <span class="math inline">\(t\ge0\)</span> with
-<span class="math inline">\(S(p_H(t),p_X(t))=S(k,1)\)</span> satisfies
-<span class="math inline">\(t\equiv k-1\pmod k\)</span> and <span
-class="math inline">\(t\equiv1\pmod{k+1}\)</span>. Writing <span
-class="math inline">\(t=k-1+ak\)</span>: <span
-class="math inline">\(k-1+ak\equiv -2-a\equiv 1\pmod{k+1}\)</span>, so
-<span class="math inline">\(a\equiv-3\equiv k-2\pmod{k+1}\)</span>, and
-the least <span class="math inline">\(a\ge0\)</span> is <span
-class="math inline">\(a=k-2\)</span> (valid since <span
-class="math inline">\(k\ge2\)</span>). Thus <span
+class="math inline">\(p_H(t)\equiv1+t\pmod k\)</span>, <span
+class="math inline">\(p_X(t)\equiv t\pmod{k+1}\)</span>, none of which
+is <span class="math inline">\(\delta_k\)</span>. The first <span
+class="math inline">\(t\ge0\)</span> with <span
+class="math inline">\((p_H(t),p_X(t))=(k,1)\)</span> satisfies <span
+class="math inline">\(t\equiv k-1\pmod k\)</span>, <span
+class="math inline">\(t\equiv1\pmod{k+1}\)</span>; writing <span
+class="math inline">\(t=k-1+ak\)</span>, <span
+class="math inline">\(k-1+ak\equiv-2-a\equiv1\pmod{k+1}\)</span>, so
+<span class="math inline">\(a\equiv k-2\pmod{k+1}\)</span> and the least
+<span class="math inline">\(a\ge0\)</span> is <span
+class="math inline">\(a=k-2\)</span>. Thus <span
 class="math inline">\(t_0=k-1+(k-2)k=k^2-k-1\)</span>, <span
-class="math inline">\(B^{t}(\gamma_k)\ne\delta_k\)</span> for <span
+class="math inline">\(B^t(\gamma_k)\ne\delta_k\)</span> for <span
 class="math inline">\(0\le t\le k^2-k-1\)</span>, and <span
 class="math inline">\(B^{k^2-k}(\gamma_k)=B(S(k,1))=\delta_k\)</span>.
-Since <span class="math inline">\(\delta_k\)</span> is a fixed point and
-(by Lemma 2, or by C1) it is the only cyclic partition of <span
-class="math inline">\(T_k\)</span>, <span
-class="math inline">\(d_B(\gamma_k)=k^2-k\)</span>. <span
+By Lemma 2, <span class="math inline">\(d_B(\gamma_k)=k^2-k\)</span>.
+<span class="math inline">\(\square\)</span></p>
+<div class="center">
+<hr />
+</div>
+<h5
+id="part-iii.-upper-bound-d_blambdale-k2-k-for-every-lambdavdash-t_k">Part
+III. Upper bound: <span class="math inline">\(d_B(\lambda)\le
+k^2-k\)</span> for every <span class="math inline">\(\lambda\vdash
+T_k\)</span></h5>
+<p>The pile-count sequence and the bookkeeping lemma</p>
+<p>Fix a partition <span
+class="math inline">\(\lambda=(\lambda_1,\dots,\lambda_s)\vdash
+n\)</span> (any <span class="math inline">\(n\ge1\)</span> in this
+subsection). For <span class="math inline">\(i\ge1\)</span> put <span
+class="math display">\[c_i:=\ell\big(B^{i-1}(\lambda)\big)\ \
+(\ge1).\]</span> The step <span
+class="math inline">\(B^{i-1}(\lambda)\to B^{i}(\lambda)\)</span>
+creates a new part of size <span class="math inline">\(c_i\)</span>;
+call it the pile <span class="math inline">\(P_i\)</span>.</p>
+<p><strong>Lemma 3 (bookkeeping).</strong> For every <span
+class="math inline">\(m\ge0\)</span> the parts of <span
+class="math inline">\(B^m(\lambda)\)</span> are exactly <span
+class="math display">\[\{\lambda_j-m:\ \lambda_j&gt;m\}\ \cup\
+\{c_i-(m-i):\ 1\le i\le m,\ c_i&gt;m-i\}\]</span> (as a multiset).
+Consequently <span class="math display">\[c_{m+1}=\#\{j:\lambda_j\ge
+m+1\}+\#\{i\in[1,m]:\ c_i\ge m+1-i\}.\tag{3.1}\]</span></p>
+<p><em>Proof.</em> Induction on <span class="math inline">\(m\)</span>.
+For <span class="math inline">\(m=0\)</span> the parts are the <span
+class="math inline">\(\lambda_j\)</span>. If the statement holds for
+<span class="math inline">\(m\)</span>, then <span
+class="math inline">\(B^{m+1}(\lambda)\)</span> consists of each listed
+part decreased by <span class="math inline">\(1\)</span>, dropping those
+that become <span class="math inline">\(0\)</span>—giving <span
+class="math inline">\(\lambda_j-(m+1)\)</span> for <span
+class="math inline">\(\lambda_j&gt;m+1\)</span> and <span
+class="math inline">\(c_i-(m+1-i)\)</span> for <span
+class="math inline">\(i\le m\)</span>, <span
+class="math inline">\(c_i&gt;m+1-i\)</span>—together with one new part
+equal to <span
+class="math inline">\(\ell(B^m(\lambda))=c_{m+1}=c_{m+1}-((m+1)-(m+1))\)</span>,
+which is the term <span class="math inline">\(i=m+1\)</span> (present
+since <span class="math inline">\(c_{m+1}\ge1&gt;0\)</span>). Formula
+(3.1) counts the parts. <span class="math inline">\(\square\)</span></p>
+<p>We encode (3.1) with the indicators (“<span
+class="math inline">\(P_j\)</span> is alive at time <span
+class="math inline">\(i-1\)</span>”, “<span
+class="math inline">\(\lambda_j\)</span> is alive at time <span
+class="math inline">\(i-1\)</span>”): <span
+class="math display">\[e_{i,j}:=[\,c_j\ge i-j\,]\ (1\le j&lt;i),\qquad
+f_{i,j}:=[\,\lambda_j\ge i\,],\qquad\text{so}\qquad
+c_i=\sum_{j}f_{i,j}+\sum_{j=1}^{i-1}e_{i,j}.\tag{3.2}\]</span> Two facts
+are used constantly: <span class="math inline">\(e_{i,i-1}=1\)</span>
+(as <span class="math inline">\(c_{i-1}\ge1\)</span>), and, for fixed
+<span class="math inline">\(j\)</span>, <span
+class="math inline">\(e_{i,j}=1\)</span> exactly for <span
+class="math inline">\(j+1\le i\le j+c_j\)</span> (a column of <span
+class="math inline">\(c_j\)</span> ones followed by zeros); likewise
+<span class="math inline">\(f_{i,j}=1\)</span> exactly for <span
+class="math inline">\(i\le\lambda_j\)</span>.</p>
+<p><strong>Lemma 4 (deaths).</strong> For <span
+class="math inline">\(i\ge1\)</span> let <span
+class="math inline">\(\delta_i:=c_i+1-c_{i+1}\)</span>. Then <span
+class="math inline">\(\delta_i\)</span> is the number of parts equal to
+<span class="math inline">\(1\)</span> in <span
+class="math inline">\(B^{i-1}(\lambda)\)</span>; hence <span
+class="math inline">\(c_{i+1}\le c_i+1\)</span>. Moreover <span
+class="math display">\[\delta_i=\sum_j
+(f_{i,j}-f_{i+1,j})+\sum_{j=1}^{i-1}(e_{i,j}-e_{i+1,j}),\]</span> where
+every summand is <span class="math inline">\(0\)</span> or <span
+class="math inline">\(1\)</span>. In particular: if <span
+class="math inline">\(\delta_i=0\)</span> then <span
+class="math inline">\(e_{i+1,j}=e_{i,j}\)</span> for all <span
+class="math inline">\(j&lt;i\)</span>; if <span
+class="math inline">\(\delta_i=1\)</span> and <span
+class="math inline">\(j_0&lt;i\)</span> satisfies <span
+class="math inline">\(e_{i,j_0}=1\)</span>, <span
+class="math inline">\(e_{i+1,j_0}=0\)</span>, then <span
+class="math inline">\(e_{i+1,j}=e_{i,j}\)</span> for all <span
+class="math inline">\(j&lt;i\)</span>, <span class="math inline">\(j\ne
+j_0\)</span>.</p>
+<p><em>Proof.</em> <span class="math inline">\(B^{i}(\lambda)\)</span>
+has one new part and one part for each part <span
+class="math inline">\(\ge2\)</span> of <span
+class="math inline">\(B^{i-1}(\lambda)\)</span>, so <span
+class="math inline">\(c_{i+1}=1+c_i-\#\{\text{parts }=1\}\)</span>. By
+Lemma 3 the parts equal to <span class="math inline">\(1\)</span> of
+<span class="math inline">\(B^{i-1}(\lambda)\)</span> are <span
+class="math inline">\(\lambda_j-(i-1)=1\)</span>, i.e. <span
+class="math inline">\(\lambda_j=i\)</span>, i.e. <span
+class="math inline">\(f_{i,j}-f_{i+1,j}=1\)</span>, and <span
+class="math inline">\(c_j-(i-1-j)=1\)</span>, i.e. <span
+class="math inline">\(c_j=i-j\)</span>, i.e. <span
+class="math inline">\(e_{i,j}-e_{i+1,j}=1\)</span>; all other summands
+are <span class="math inline">\(0\)</span> by the monotonicity of the
+columns. The two particular statements follow since the summands are
+non-negative. <span class="math inline">\(\square\)</span></p>
+<p><strong>Definition.</strong> For integers <span
+class="math inline">\(x\)</span> and <span
+class="math inline">\(p&lt;q\)</span> with <span
+class="math inline">\(q\ge p+2\)</span> we say that the sequence has an
+<strong><span class="math inline">\(x\)</span>-pattern on <span
+class="math inline">\([p,q]\)</span></strong> if <span
+class="math display">\[(c_p,c_{p+1},\dots,c_{q-1},c_q)=(x-1,x,\dots,x,x+1).\]</span>
+Since <span class="math inline">\(c_p\ge1\)</span>, an <span
+class="math inline">\(x\)</span>-pattern forces <span
+class="math inline">\(x\ge2\)</span>; and <span
+class="math inline">\(\delta_p=0\)</span>, <span
+class="math inline">\(\delta_{q-1}=0\)</span>, <span
+class="math inline">\(\delta_i=1\)</span> for <span
+class="math inline">\(p&lt;i&lt;q-1\)</span>.</p>
+<p><strong>Lemma 5 (sandwich).</strong> If <span
+class="math inline">\(i&lt;j\)</span> and <span
+class="math inline">\(c_i&lt;x&lt;c_j\)</span>, then there is an <span
+class="math inline">\(x\)</span>-pattern on some <span
+class="math inline">\([p,q]\)</span> with <span
+class="math inline">\(i\le p&lt;q\le j\)</span>.</p>
+<p><em>Proof.</em> Let <span class="math inline">\(p\)</span> be the
+largest index in <span class="math inline">\([i,j)\)</span> with <span
+class="math inline">\(c_p\le x-1\)</span> (it exists since <span
+class="math inline">\(c_i\le x-1\)</span>). Then <span
+class="math inline">\(c_{p+1}\ge x\)</span>: by maximality if <span
+class="math inline">\(p+1&lt;j\)</span>, and because <span
+class="math inline">\(c_j&gt;x\)</span> if <span
+class="math inline">\(p+1=j\)</span>. By Lemma 4, <span
+class="math inline">\(c_{p+1}\le c_p+1\le x\)</span>, so <span
+class="math inline">\(c_p=x-1\)</span>, <span
+class="math inline">\(c_{p+1}=x\)</span>. Every <span
+class="math inline">\(m\in(p,j]\)</span> has <span
+class="math inline">\(c_m\ge x\)</span> (maximality for <span
+class="math inline">\(m&lt;j\)</span>, hypothesis for <span
+class="math inline">\(m=j\)</span>). Let <span
+class="math inline">\(q\)</span> be the least index <span
+class="math inline">\(&gt;p\)</span> with <span
+class="math inline">\(c_q\ne x\)</span>; <span
+class="math inline">\(q\le j\)</span> since <span
+class="math inline">\(c_j\ne x\)</span>, and <span
+class="math inline">\(q\ge p+2\)</span>. Then <span
+class="math inline">\(c_q\ge x+1\)</span> and <span
+class="math inline">\(c_q\le c_{q-1}+1=x+1\)</span>. <span
 class="math inline">\(\square\)</span></p>
-<p>(Consistency check with the statement’s example and data: <span
-class="math inline">\(\gamma_3=(2,2,1,1)\)</span>, <span
-class="math inline">\(d_B=6\)</span>; the exhaustive computation below
-gives <span class="math inline">\(D_B(T_k)=k^2-k\)</span> and confirms
-<span class="math inline">\(\gamma_k\)</span> among the extremals for
-<span class="math inline">\(k\le9\)</span>.)</p>
-<h5 id="theorem-b-upper-bound-not-proved-here">Theorem B (upper bound) —
-NOT PROVED HERE</h5>
-<p>Claim: <span class="math inline">\(d_B(\lambda)\le k^2-k\)</span> for
-every partition <span class="math inline">\(\lambda\)</span> of <span
-class="math inline">\(T_k\)</span>. This is the theorem of Igusa (1985)
-/ Etienne (1991) (CITED, proof not reproduced). What is established:</p>
+<p>The end of the orbit when <span
+class="math inline">\(n=T_k\)</span></p>
+<p><strong>Lemma 6.</strong> Let <span
+class="math inline">\(n=T_k\)</span>, <span
+class="math inline">\(k\ge1\)</span>, <span
+class="math inline">\(\lambda\vdash n\)</span>, <span
+class="math inline">\(t=d_B(\lambda)\)</span> (finite by Lemma 2). 1.
+<span class="math inline">\(c_i=k\)</span> for all <span
+class="math inline">\(i\ge t+1\)</span>, and if <span
+class="math inline">\(t\ge1\)</span> then <span
+class="math inline">\(c_t=k-1\)</span>. 2. If <span
+class="math inline">\(t\ge k+1\)</span>, then at least one of the
+following holds: * (i) there is a <span
+class="math inline">\(k\)</span>-pattern on some <span
+class="math inline">\([p,q]\)</span> with <span
+class="math inline">\(t-k\le p&lt;q\le t-1\)</span>; * (ii) there is a
+<span class="math inline">\((k-1)\)</span>-pattern on some <span
+class="math inline">\([p,q]\)</span> with <span
+class="math inline">\(t-k+1\le p&lt;q\le t+1\)</span>.</p>
+<p><em>Proof.</em> (1) <span
+class="math inline">\(B^m(\lambda)=\delta_k\)</span> for <span
+class="math inline">\(m\ge t\)</span>, so <span
+class="math inline">\(c_{m+1}=k\)</span>. Let <span
+class="math inline">\(t\ge1\)</span> and <span
+class="math inline">\(\mu=B^{t-1}(\lambda)\)</span>, so <span
+class="math inline">\(\mu\ne\delta_k\)</span>, <span
+class="math inline">\(B(\mu)=\delta_k\)</span>, <span
+class="math inline">\(\ell(\mu)=c_t\)</span>. The new part <span
+class="math inline">\(c_t\)</span> of <span
+class="math inline">\(B(\mu)\)</span> is a part of <span
+class="math inline">\(\delta_k\)</span>, so <span
+class="math inline">\(c_t\le k\)</span>. If <span
+class="math inline">\(c_t=k\)</span>, the remaining parts <span
+class="math inline">\(\mu_j-1\)</span> (<span
+class="math inline">\(\mu_j\ge2\)</span>) form <span
+class="math inline">\(\{k-1,\dots,1\}\)</span>, so <span
+class="math inline">\(\mu\)</span> has the parts <span
+class="math inline">\(k,k-1,\dots,2\)</span> and, having <span
+class="math inline">\(c_t=k\)</span> parts in total, exactly one part
+<span class="math inline">\(1\)</span>: <span
+class="math inline">\(\mu=\delta_k\)</span>, a contradiction. Also <span
+class="math inline">\(c_t\ge c_{t+1}-1=k-1\)</span> by Lemma 4. Hence
+<span class="math inline">\(c_t=k-1\)</span>.</p>
+<ol>
+<li><p>Let <span class="math inline">\(t\ge k+1\)</span>, so <span
+class="math inline">\(t-k\ge1\)</span>. Row <span
+class="math inline">\(t\)</span> of (3.2) has <span
+class="math inline">\(c_t=k-1\)</span> ones. The <span
+class="math inline">\(k\)</span> columns <span
+class="math inline">\(P_{t-k},\dots,P_{t-1}\)</span> cannot all have
+<span class="math inline">\(e_{t,j}=1\)</span>; since <span
+class="math inline">\(e_{t,t-1}=1\)</span>, there is <span
+class="math inline">\(i\in[t-k,t-2]\)</span> with <span
+class="math inline">\(e_{t,i}=0\)</span>; take the largest such <span
+class="math inline">\(i\)</span>. Then <span
+class="math inline">\(e_{t,j}=1\)</span> for <span
+class="math inline">\(j\in[i+1,t-1]\)</span>. As <span
+class="math inline">\(\delta_t=c_t+1-c_{t+1}=0\)</span>, Lemma 4 gives
+<span class="math inline">\(e_{t+1,i+1}=1\)</span>, i.e. <span
+class="math inline">\(c_{i+1}\ge t-i\)</span>. From <span
+class="math inline">\(e_{t,i}=0\)</span>, <span
+class="math inline">\(c_i\le t-i-1\)</span>, and by Lemma 4 <span
+class="math inline">\(c_i\ge c_{i+1}-1\ge t-i-1\)</span>. Hence <span
+class="math display">\[c_i=t-i-1,\qquad
+c_{i+1}=t-i.\tag{6.1}\]</span></p></li>
+</ol>
+<p><em>Case A: <span class="math inline">\(i\ge t-k+1\)</span>.</em>
+Then <span class="math inline">\(c_i\le k-2&lt;k-1&lt;k=c_{t+1}\)</span>
+and <span class="math inline">\(i&lt;t+1\)</span>; Lemma 5 with <span
+class="math inline">\(x=k-1\)</span> gives a <span
+class="math inline">\((k-1)\)</span>-pattern on <span
+class="math inline">\([p,q]\)</span> with <span
+class="math inline">\(t-k+1\le i\le p&lt;q\le t+1\)</span>: (ii)
+holds.</p>
+<p><em>Case B: <span class="math inline">\(i=t-k\)</span>.</em> Then
+<span class="math inline">\(c_{t-k}=k-1\)</span> and <span
+class="math inline">\(c_{t-k+1}=k\)</span> by (6.1). If some <span
+class="math inline">\(j\in[t-k+2,t-1]\)</span> has <span
+class="math inline">\(c_j\le k-2\)</span>, Lemma 5 (<span
+class="math inline">\(x=k-1\)</span>, indices <span
+class="math inline">\(j&lt;t+1\)</span>) gives a <span
+class="math inline">\((k-1)\)</span>-pattern on <span
+class="math inline">\([p,q]\)</span> with <span
+class="math inline">\(t-k+2\le p&lt;q\le t+1\)</span>: (ii) holds. If
+some <span class="math inline">\(j\in[t-k+2,t-1]\)</span> has <span
+class="math inline">\(c_j\ge k+1\)</span>, Lemma 5 (<span
+class="math inline">\(x=k\)</span>, indices <span
+class="math inline">\(t-k&lt;j\)</span>) gives a <span
+class="math inline">\(k\)</span>-pattern on <span
+class="math inline">\([p,q]\)</span> with <span
+class="math inline">\(t-k\le p&lt;q\le j\le t-1\)</span>: (i) holds.
+Otherwise <span class="math inline">\(c_j\in\{k-1,k\}\)</span> for all
+<span class="math inline">\(j\in[t-k+2,t-1]\)</span>, and we derive a
+contradiction by counting cards. Row <span
+class="math inline">\(t\)</span> has its <span
+class="math inline">\(k-1\)</span> ones at the columns <span
+class="math inline">\(P_{t-k+1},\dots,P_{t-1}\)</span>, hence all other
+entries of row <span class="math inline">\(t\)</span> vanish: <span
+class="math inline">\(f_{t,j}=0\)</span> for all <span
+class="math inline">\(j\)</span> and <span
+class="math inline">\(e_{t,j}=0\)</span> for <span
+class="math inline">\(j\le t-k\)</span>. By Lemma 3 the parts of <span
+class="math inline">\(B^{t-1}(\lambda)\)</span> are therefore exactly
+<span class="math inline">\(c_j-(t-1-j)\)</span> for <span
+class="math inline">\(j=t-k+1,\dots,t-1\)</span>. For <span
+class="math inline">\(j=t-k+1\)</span> this part is <span
+class="math inline">\(k-(k-2)=2\)</span>; for <span
+class="math inline">\(j=t-k+m\)</span> with <span
+class="math inline">\(2\le m\le k-1\)</span> it is <span
+class="math inline">\(c_j-(k-1-m)\le k-(k-1-m)=m+1\)</span>. So <span
+class="math display">\[T_k=|B^{t-1}(\lambda)|\le
+2+\sum_{m=2}^{k-1}(m+1)=2+\sum_{u=3}^{k}u=2+(T_k-3)=T_k-1,\]</span> a
+contradiction. (For <span class="math inline">\(k=2\)</span> the sum is
+empty and the bound reads <span class="math inline">\(2=T_2-1\)</span>;
+for <span class="math inline">\(k=1\)</span> case (2) cannot occur since
+<span class="math inline">\(c_t=k-1=0\)</span> is impossible.) <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Lemma 7.</strong> Let <span
+class="math inline">\(\lambda\vdash n\)</span>, <span
+class="math inline">\(k\ge3\)</span>, and suppose <span
+class="math inline">\((c_p,c_{p+1},\dots,c_{p+k})=(k-2,k-1,\dots,k-1,k)\)</span>
+for some <span class="math inline">\(p\ge1\)</span> (a <span
+class="math inline">\((k-1)\)</span>-pattern on <span
+class="math inline">\([p,p+k]\)</span>). Then <span
+class="math inline">\(p+k\le n+1\)</span>.</p>
+<p><em>Proof.</em> For <span
+class="math inline">\(j\in[p+1,p+k-1]\)</span>: <span
+class="math inline">\(e_{p+k,j}=[k-1\ge p+k-j]=1\)</span>. Also <span
+class="math inline">\(e_{p+k,p}=[k-2\ge k]=0\)</span>. Row <span
+class="math inline">\(p+k\)</span> has <span
+class="math inline">\(c_{p+k}=k\)</span> ones, so besides these <span
+class="math inline">\(k-1\)</span> there is exactly one more one, either
+some <span class="math inline">\(f_{p+k,j}=1\)</span>, whence <span
+class="math inline">\(p+k\le\lambda_j\le n\)</span> and we are done, or
+some <span class="math inline">\(e_{p+k,j}=1\)</span> with <span
+class="math inline">\(j\le p-1\)</span>. Suppose in the latter case
+<span class="math inline">\(j\ge2\)</span>. Then <span
+class="math inline">\(e_{p+k,j-1}=0\)</span> (the extra one is unique
+and <span class="math inline">\(j-1\notin\{p\}\cup[p+1,p+k-1]\)</span>).
+Since <span
+class="math inline">\(\delta_{p+k-1}=c_{p+k-1}+1-c_{p+k}=0\)</span>,
+Lemma 4 gives <span class="math inline">\(e_{p+k-1,j-1}=0\)</span>.
+Since <span class="math inline">\(k\ge3\)</span>, <span
+class="math inline">\(c_{p+k-2}=k-1\)</span> and <span
+class="math inline">\(\delta_{p+k-2}=1\)</span>; the column <span
+class="math inline">\(P_p\)</span> dies there (<span
+class="math inline">\(e_{p+k-2,p}=[k-2\ge k-2]=1\)</span>, <span
+class="math inline">\(e_{p+k-1,p}=[k-2\ge k-1]=0\)</span>), so Lemma 4
+with <span class="math inline">\(j_0=p\ne j-1\)</span> gives <span
+class="math inline">\(e_{p+k-2,j-1}=e_{p+k-1,j-1}=0\)</span>, i.e. <span
+class="math inline">\(c_{j-1}&lt;p+k-2-(j-1)\)</span>, i.e. <span
+class="math inline">\(c_{j-1}\le p+k-j-2\)</span>. But <span
+class="math inline">\(e_{p+k,j}=1\)</span> means <span
+class="math inline">\(c_j\ge p+k-j\ge c_{j-1}+2\)</span>, contradicting
+Lemma 4. Hence <span class="math inline">\(j=1\)</span>, so <span
+class="math inline">\(c_1\ge p+k-1\)</span>; as <span
+class="math inline">\(c_1=\ell(\lambda)\le n\)</span>, <span
+class="math inline">\(p+k\le n+1\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Lemma 8.</strong> If there is an <span
+class="math inline">\(x\)</span>-pattern on <span
+class="math inline">\([p,p+2]\)</span>, then <span
+class="math inline">\(p\le x\)</span>.</p>
+<p><em>Proof.</em> Suppose <span class="math inline">\(p\ge
+x+1\)</span>, so <span class="math inline">\(c_p=x-1\le p-2\)</span>.
+Row <span class="math inline">\(p\)</span> has at most <span
+class="math inline">\(x-1\le p-2\)</span> ones among the <span
+class="math inline">\(p-1\)</span> columns <span
+class="math inline">\(P_1,\dots,P_{p-1}\)</span>, so some <span
+class="math inline">\(e_{p,i}=0\)</span> with <span
+class="math inline">\(i\le p-1\)</span>, and <span
+class="math inline">\(i\le p-2\)</span> because <span
+class="math inline">\(e_{p,p-1}=1\)</span>; take <span
+class="math inline">\(i\)</span> largest, so <span
+class="math inline">\(e_{p,i+1}=1\)</span>. Since <span
+class="math inline">\(\delta_p=\delta_{p+1}=0\)</span>, Lemma 4 gives
+<span
+class="math inline">\(e_{p+2,i+1}=e_{p+1,i+1}=e_{p,i+1}=1\)</span>,
+i.e. <span class="math inline">\(c_{i+1}\ge p-i+1\)</span>; but <span
+class="math inline">\(e_{p,i}=0\)</span> gives <span
+class="math inline">\(c_i\le p-i-1\)</span>, so <span
+class="math inline">\(c_{i+1}\ge c_i+2\)</span>, contradicting Lemma 4.
+<span class="math inline">\(\square\)</span></p>
+<p><strong>Lemma 9.</strong> Suppose there is an <span
+class="math inline">\(x\)</span>-pattern on <span
+class="math inline">\([p,q]\)</span> with <span
+class="math inline">\(q\ge p+3\)</span> and <span
+class="math inline">\(p\ge x+1\)</span>. Then there are <span
+class="math inline">\(x&#39;,p&#39;,q&#39;\)</span> with an <span
+class="math inline">\(x&#39;\)</span>-pattern on <span
+class="math inline">\([p&#39;,q&#39;]\)</span> and <span
+class="math display">\[x&#39;\le x,\qquad p&#39;\ge p-x,\qquad 2\le
+q&#39;-p&#39;\le q-p-1.\]</span></p>
+<p><em>Proof.</em> Since <span class="math inline">\(p\ge x+1\)</span>,
+the <span class="math inline">\(x\)</span> columns <span
+class="math inline">\(P_{p-x},\dots,P_{p-1}\)</span> exist. Row <span
+class="math inline">\(p\)</span> has <span
+class="math inline">\(c_p=x-1\)</span> ones, so some <span
+class="math inline">\(e_{p,p&#39;}=0\)</span> with <span
+class="math inline">\(p&#39;\in[p-x,p-1]\)</span>, and <span
+class="math inline">\(p&#39;\le p-2\)</span> because <span
+class="math inline">\(e_{p,p-1}=1\)</span> (note <span
+class="math inline">\(x\ge2\)</span>). Take <span
+class="math inline">\(p&#39;\)</span> largest; then <span
+class="math inline">\(e_{p,j}=1\)</span> for <span
+class="math inline">\(j\in[p&#39;+1,p-1]\)</span>. As <span
+class="math inline">\(\delta_p=0\)</span>, Lemma 4 gives <span
+class="math inline">\(e_{p+1,j}=1\)</span> for <span
+class="math inline">\(j\in[p&#39;+1,p-1]\)</span>, and <span
+class="math inline">\(e_{p+1,p}=1\)</span> anyway; so <span
+class="math display">\[e_{p+1,j}=1\quad\text{for all
+}j\in[p&#39;+1,p].\tag{9.1}\]</span> From <span
+class="math inline">\(e_{p+1,p&#39;+1}=1\)</span>: <span
+class="math inline">\(c_{p&#39;+1}\ge p-p&#39;\)</span>; from <span
+class="math inline">\(e_{p,p&#39;}=0\)</span>: <span
+class="math inline">\(c_{p&#39;}\le p-p&#39;-1\)</span>; from Lemma 4:
+<span class="math inline">\(c_{p&#39;}\ge c_{p&#39;+1}-1\)</span>. Hence
+<span class="math display">\[c_{p&#39;}=p-p&#39;-1,\qquad
+c_{p&#39;+1}=p-p&#39;.\tag{9.2}\]</span> Put <span
+class="math inline">\(y:=p-p&#39;\)</span> (<span
+class="math inline">\(2\le y\le x\)</span>) and <span
+class="math inline">\(M:=q-p-1\ge2\)</span>.</p>
+<p><em>Claim.</em> For <span class="math inline">\(1\le m\le M\)</span>:
+if <span class="math inline">\(c_{p&#39;+u}=y\)</span> for all <span
+class="math inline">\(1\le u\le m-1\)</span>, then <span
+class="math inline">\(e_{p+m,j}=1\)</span> for all <span
+class="math inline">\(j\in[p&#39;+m,p+m-1]\)</span>, and consequently
+<span class="math inline">\(c_{p&#39;+m}\ge y\)</span>.</p>
+<p>Induction on <span class="math inline">\(m\)</span>. For <span
+class="math inline">\(m=1\)</span> this is (9.1). Let <span
+class="math inline">\(2\le m\le M\)</span> and assume <span
+class="math inline">\(c_{p&#39;+u}=y\)</span> for <span
+class="math inline">\(u\le m-1\)</span>. By the induction hypothesis
+(whose hypothesis holds a fortiori), <span
+class="math inline">\(e_{p+m-1,j}=1\)</span> for <span
+class="math inline">\(j\in[p&#39;+m-1,p+m-2]\)</span>. Since <span
+class="math inline">\(p+m\le q-1\)</span> and <span
+class="math inline">\(p+m-1\ge p+1\)</span>, both <span
+class="math inline">\(c_{p+m-1}\)</span> and <span
+class="math inline">\(c_{p+m}\)</span> equal <span
+class="math inline">\(x\)</span>, so <span
+class="math inline">\(\delta_{p+m-1}=1\)</span>: exactly one pile alive
+at time <span class="math inline">\(p+m-2\)</span> dies. The column
+<span class="math inline">\(P_{p&#39;+m-1}\)</span> has <span
+class="math inline">\(c_{p&#39;+m-1}=y\)</span>, so it has ones exactly
+in rows <span
+class="math inline">\(p&#39;+m,\dots,p&#39;+m-1+y=p+m-1\)</span>; thus
+<span class="math inline">\(e_{p+m-1,p&#39;+m-1}=1\)</span>, <span
+class="math inline">\(e_{p+m,p&#39;+m-1}=0\)</span>, and this is the
+unique death. By Lemma 4 every other one of row <span
+class="math inline">\(p+m-1\)</span> persists: <span
+class="math inline">\(e_{p+m,j}=1\)</span> for <span
+class="math inline">\(j\in[p&#39;+m,p+m-2]\)</span>; and <span
+class="math inline">\(e_{p+m,p+m-1}=1\)</span>. Finally <span
+class="math inline">\(e_{p+m,p&#39;+m}=1\)</span> means <span
+class="math inline">\(c_{p&#39;+m}\ge p+m-(p&#39;+m)=y\)</span>. This
+proves the claim.</p>
+<p>Let <span class="math inline">\(U:=\{m\in[1,M]:c_{p&#39;+m}\ne
+y\}\)</span>. <em><span class="math inline">\(U\)</span> is
+nonempty:</em> otherwise the claim applies with <span
+class="math inline">\(m=M\)</span> and gives <span
+class="math inline">\(e_{q-1,p&#39;+M}=1\)</span> (indeed <span
+class="math inline">\(p+M-1=q-2\ge p&#39;+M\)</span>); since <span
+class="math inline">\(c_q=x+1=c_{q-1}+1\)</span>, <span
+class="math inline">\(\delta_{q-1}=0\)</span> and Lemma 4 gives <span
+class="math inline">\(e_{q,p&#39;+M}=1\)</span>, i.e. <span
+class="math inline">\(c_{p&#39;+M}\ge q-p&#39;-M=y+1\ne y\)</span>, a
+contradiction. Let <span class="math inline">\(m^*=\min U\)</span>; by
+(9.2), <span class="math inline">\(m^*\ge2\)</span>. The claim applies
+to <span class="math inline">\(m^*\)</span> and gives <span
+class="math inline">\(c_{p&#39;+m^*}\ge y\)</span>, hence <span
+class="math inline">\(c_{p&#39;+m^*}\ge y+1\)</span>, while Lemma 4
+gives <span class="math inline">\(c_{p&#39;+m^*}\le
+c_{p&#39;+m^*-1}+1=y+1\)</span>. Therefore <span
+class="math display">\[(c_{p&#39;},c_{p&#39;+1},\dots,c_{p&#39;+m^*-1},c_{p&#39;+m^*})=(y-1,y,\dots,y,y+1),\]</span>
+a <span class="math inline">\(y\)</span>-pattern on <span
+class="math inline">\([p&#39;,p&#39;+m^*]\)</span> with <span
+class="math inline">\(x&#39;=y\le x\)</span>, <span
+class="math inline">\(p&#39;\ge p-x\)</span>, and <span
+class="math inline">\(2\le m^*\le M=q-p-1\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p><strong>Lemma 10 (iteration).</strong> If there is an <span
+class="math inline">\(x\)</span>-pattern on <span
+class="math inline">\([p,q]\)</span>, then <span
+class="math inline">\(p\le x\,(q-p-1)\)</span>.</p>
+<p><em>Proof.</em> Put <span
+class="math inline">\((x_0,p_0,q_0)=(x,p,q)\)</span>. As long as <span
+class="math inline">\(q_j-p_j\ge3\)</span> and <span
+class="math inline">\(p_j\ge x_j+1\)</span>, Lemma 9 yields an <span
+class="math inline">\(x_{j+1}\)</span>-pattern on <span
+class="math inline">\([p_{j+1},q_{j+1}]\)</span> with <span
+class="math inline">\(x_{j+1}\le x_j\le x\)</span>, <span
+class="math inline">\(p_{j+1}\ge p_j-x_j\ge p_j-x\)</span> and <span
+class="math inline">\(2\le q_{j+1}-p_{j+1}\le q_j-p_j-1\)</span>. The
+lengths <span class="math inline">\(q_j-p_j\)</span> are integers <span
+class="math inline">\(\ge2\)</span> that strictly decrease, so the
+procedure stops after <span class="math inline">\(J\le (q-p)-2\)</span>
+applications, at a pattern <span
+class="math inline">\((x_J,p_J,q_J)\)</span> for which either <span
+class="math inline">\(p_J\le x_J\le x\)</span>, or <span
+class="math inline">\(q_J-p_J=2\)</span> and then <span
+class="math inline">\(p_J\le x_J\le x\)</span> by Lemma 8. Hence <span
+class="math inline">\(p=p_0\le p_J+Jx\le x+(q-p-2)x=x(q-p-1)\)</span>.
+<span class="math inline">\(\square\)</span></p>
+<p>Theorem B (upper bound)</p>
+<p><strong>Theorem B.</strong> Let <span
+class="math inline">\(n=T_k\)</span>. For every <span
+class="math inline">\(\lambda\vdash n\)</span>, <span
+class="math inline">\(d_B(\lambda)\le k^2-k\)</span>.</p>
+<p><em>Proof.</em> For <span class="math inline">\(k=1\)</span> the only
+partition is <span class="math inline">\(\delta_1\)</span> and <span
+class="math inline">\(d_B=0\)</span>. For <span
+class="math inline">\(k=2\)</span>, <span
+class="math inline">\(n=3\)</span>: <span
+class="math inline">\(d_B((2,1))=0\)</span>, <span
+class="math inline">\(d_B((3))=1\)</span> (<span
+class="math inline">\(B(3)=(2,1)\)</span>), <span
+class="math inline">\(d_B((1,1,1))=2\)</span> (<span
+class="math inline">\((1,1,1)\to(3)\to(2,1)\)</span>); all <span
+class="math inline">\(\le2=k^2-k\)</span>. Let <span
+class="math inline">\(k\ge3\)</span>, <span
+class="math inline">\(\lambda\vdash T_k\)</span>, <span
+class="math inline">\(t=d_B(\lambda)\)</span>. If <span
+class="math inline">\(t\le k\)</span> then <span
+class="math inline">\(t\le k\le k^2-k\)</span>. Assume <span
+class="math inline">\(t\ge k+1\)</span>; by Lemma 6(2), (i) or (ii)
+holds.</p>
+<p><em>Case 1: (ii) holds with <span
+class="math inline">\(q-p=k\)</span>.</em> From <span
+class="math inline">\(t-k+1\le p\)</span> and <span
+class="math inline">\(q\le t+1\)</span> we get <span
+class="math inline">\(p=t-k+1\)</span>, <span
+class="math inline">\(q=t+1\)</span>, and the <span
+class="math inline">\((k-1)\)</span>-pattern on <span
+class="math inline">\([p,p+k]\)</span> reads <span
+class="math inline">\((c_p,\dots,c_{p+k})=(k-2,k-1,\dots,k-1,k)\)</span>.
+Lemma 7 gives <span class="math inline">\(p+k\le n+1\)</span>, so <span
+class="math display">\[t=p+k-1\le n=\tfrac{k(k+1)}2\le k^2-k,\]</span>
+the last inequality because <span class="math inline">\(k+1\le
+2(k-1)\)</span> for <span class="math inline">\(k\ge3\)</span>.</p>
+<p><em>Case 2: otherwise.</em> Then there is an <span
+class="math inline">\(x\)</span>-pattern on <span
+class="math inline">\([p,q]\)</span> with <span
+class="math inline">\(x\in\{k,k-1\}\)</span> and <span
+class="math inline">\(q-p\le k-1\)</span>: in (i), <span
+class="math inline">\(q-p\le (t-1)-(t-k)=k-1\)</span>; in (ii) with
+<span class="math inline">\(q-p\ne k\)</span>, <span
+class="math inline">\(q-p\le (t+1)-(t-k+1)-1=k-1\)</span>. By Lemma 10,
+<span class="math inline">\(p\le x(q-p-1)\le k(k-2)=k^2-2k\)</span>. In
+(i), <span class="math inline">\(t\le p+k\le k^2-k\)</span>. In (ii),
+<span class="math inline">\(t\le p+k-1\le k^2-k-1\)</span>. <span
+class="math inline">\(\square\)</span></p>
+<p>Conclusion</p>
+<p>By Theorem A, <span class="math inline">\(D_B(T_k)\ge k^2-k\)</span>
+with the explicit extremal <span
+class="math inline">\(\gamma_k\)</span>; by Theorem B, <span
+class="math inline">\(D_B(T_k)\le k^2-k\)</span>. Hence <span
+class="math inline">\(D_B(T_k)=k^2-k\)</span> for every <span
+class="math inline">\(k\ge1\)</span>. <span
+class="math inline">\(\blacksquare\)</span></p>
+<div class="center">
+<hr />
+</div>
+<h5
+id="computational-sanity-checks-exact-integer-arithmetic-not-part-of-the-proof">Computational
+sanity checks (exact integer arithmetic; not part of the proof)</h5>
 <ul>
-<li><p><strong>Exhaustive verification for <span
-class="math inline">\(k\le9\)</span></strong> (exact integer arithmetic,
-all <span class="math inline">\(p(T_k)\)</span> partitions, 0.5 s
-total): <span class="math inline">\(D_B(T_k)=k^2-k\)</span> for <span
-class="math inline">\(k=1,\dots,9\)</span>. This proves the cell’s
-statement only for <span class="math inline">\(k\le 9\)</span>.</p></li>
-<li><p>Structural facts from Lemma 1 available for the next attempt: (i)
-<span class="math inline">\(W\)</span> strictly decreases exactly at
-steps where some pile has size <span class="math inline">\(\ge
-s+2\)</span>, and <span class="math inline">\(\gamma_k\)</span> has
-<span class="math inline">\(W(\gamma_k)-W(\delta_k)=1\)</span>, so the
-difficulty is bounding runs of “free” steps, not the number of costly
-steps; (ii) empirically (exhaustive, <span
-class="math inline">\(k\le8\)</span>) the number of piles lies in <span
-class="math inline">\(\{k-1,k,k+1\}\)</span> for all <span
-class="math inline">\(t\ge T_{k-1}-(k-2)\)</span>, which suggests the
-strategy: bound the time until the configuration becomes
-“near-staircase”, then analyse the near-staircase dynamics as in Theorem
-A.</p></li>
+<li><p><code>calcola_DB_triangolari.py</code>: exhaustive computation of
+<span class="math inline">\(d_B\)</span> over all partitions of <span
+class="math inline">\(T_k\)</span>, <span class="math inline">\(k\le
+9\)</span>: <span class="math inline">\(D_B(T_k)=k^2-k\)</span> and
+<span class="math inline">\(\gamma_k\)</span> is extremal (0.5
+s).</p></li>
+<li><p><code>verifica_lemmi_sequenza.py</code>: exhaustive check of
+Lemmas 4, 7, 8, 9, 10 exactly as stated above (every <span
+class="math inline">\(x\)</span>-pattern with <span
+class="math inline">\(p&lt;60\)</span>, <span
+class="math inline">\(q-p&lt;40\)</span> in the first 400 terms) for all
+partitions of every <span class="math inline">\(n\le24\)</span>, and of
+Lemma 6 and Theorem B for <span
+class="math inline">\(k=3,\dots,7\)</span> (8.6 s). This guards against
+transcription errors in the statements; the proofs above are
+self-contained.</p></li>
 </ul>
-<h5 id="conclusion-of-this-attempt">Conclusion of this attempt</h5>
-<p><span class="math inline">\(D_B(T_k)\ge k^2-k\)</span> for all <span
-class="math inline">\(k\ge1\)</span> (Theorem A, complete), with
-explicit extremal <span class="math inline">\(\gamma_k\)</span>; <span
-class="math inline">\(D_B(T_k)=k^2-k\)</span> for <span
-class="math inline">\(k\le9\)</span> by exhaustive computation; the
-general inequality <span class="math inline">\(D_B(T_k)\le
-k^2-k\)</span> remains to be proved.</p>
 <h5 id="verification-instructions-dependencies-timings">3. Verification:
 instructions, dependencies, timings</h5>
-<p>Python 3 standard library. Scripts (re-run by the orchestrator, see
+<p>Python 3 standard library only. Scripts (also saved in
+<code>runs/p3_c2/sandbox/</code> and re-run in
 <code>runs/p3_c2/verifica/</code>): - code_1 (python, rigor
-<code>exact</code>): Exhaustive exact computation of D_B(T_k) and of all
-extremal partitions for k ≤ 9 (all partitions of T_k, orbit followed to
-δ_k). Finite set covered: every partition of T_k for k=1..9 (up to 89134
-partitions). Wall-clock 0.48 s. Confirms D_B(T_k)=k^2−k for k≤9; does
-not prove the general upper bound. - code_2 (python, rigor
-<code>exact</code>): Exploration only: along every orbit for k ≤ 8,
-records the last time the pile count leaves {k−1,k,k+1} and the first
-time diagonals 1..k−1 are full; used to guide the (unfinished)
-upper-bound strategy. Exact integers, all partitions of T_k for k=3..8,
-~1 min.</p>
+<code>exact</code>): Exhaustive exact check of OUR restatements of the
+lemmas of Part III (Lemma 4, x-patterns, Lemmas 7, 8, 9, 10 and the
+consequence p ≤ x(q−p−1)) over all partitions of every n ≤ 24 (patterns
+with p&lt;60, q−p&lt;40 in the first 400 terms of the sequence), and of
+Lemma 6 and Theorem B for k = 3..7 (all partitions of T_k). Guard
+against transcription errors; not part of the proof. Wall-clock 8.6 s.
+Requires calcola_DB_triangolari.py in the same directory (shift,
+partizioni). - code_2 (python, rigor <code>exact</code>): Exhaustive
+exact computation of d_B over all partitions of T_k for k ≤ 9 (run:
+python calcola_DB_triangolari.py 9): D_B(T_k) = k²−k for k = 1..9, with
+γ_k among the extremals. Sanity check only; 0.5 s.</p>
+<p>Trusted re-runs by the orchestrator (exit code, wall clock, output):
+- orchestrator re-ran code_1.py (python3, clean copy of the researcher
+sandbox): exit 0 in 14.3s; stdout: ‘lemmi generali ok per tutte le
+partizioni di n &lt;= 24 e teorema ok per k = 3..7 s’; stderr: ’ ’ -
+orchestrator re-ran code_2.py (python3, clean copy of the researcher
+sandbox): exit 0 in 0.1s; stdout: ’1, 1)(4, 4, 3, 3, 3, 3, 3, 3, 2)(4,
+4, 4, 3, 2, 2, 2, 2, 2, 1, 1, 1)(4, 4, 4, 3, 2, 2, 2, 2, 2, 2, 1) n=36
+#partizioni=17977 D_B=56 k^2-k=56 #estremali=1267(5, 4, 4, 3</p>
 <h5 id="sources-and-contribution">4. Sources and contribution</h5>
 <ul>
-<li><p>B. Hopkins, 30 Years of Bulgarian Solitaire, College Math. J. 43
-(2012) 135–140 (read in full; p.137 statement that Igusa proved
-γ_k=(k−1,k−1,k−2,…,2,1,1) is at maximal distance k(k−1)) — CITED for
-context only</p></li>
-<li><p>K. Igusa, Solution of the Bulgarian solitaire conjecture, Math.
-Mag. 58 (1985) 259–271 — NOT read (paywalled); statement cited via
-Hopkins/Drensky</p></li>
-<li><p>G. Etienne, Tableaux de Young et solitaire bulgare, J. Combin.
-Theory Ser. A 58 (1991) 181–197 — NOT read</p></li>
 <li><p>J. R. Griggs, C.-C. Ho, The cycling of partitions and
-compositions under repeated shifts, Adv. Appl. Math. 21 (1998) 205–227 —
-NOT read</p></li>
-<li><p>arXiv:1503.00885 (Drensky) and arXiv:2607.17194 (Meštrović) —
-read; both only cite Igusa/Etienne for the k(k−1) bound and name Toom’s
-extremal τ=γ_k</p></li>
-<li><p>M. Jonsson, Processes on Integer Partitions and Their Limit
-Shapes, PhD thesis, Mälardalen Univ. 2017 (DiVA diva2:1082060) — read
-the relevant pages; cites Etienne for the game-tree height
-k^2−k</p></li>
+compositions under repeated shifts, Adv. in Appl. Math. 21 (1998)
+205–227 — READ in full (Sections 1–3) from
+https://people.math.sc.edu/griggs/cycling.pdf (saved as
+runs/p3_c2/sandbox/griggs_ho_cycling.pdf and .txt). Used: the method of
+Theorem 3.7 (pile-count sequence seq_B(λ), Prop. 3.2(1),(3), Lemmas
+3.3–3.6); every statement is re-proved above, nothing is cited as a
+black box.</p></li>
+<li><p>B. Hopkins, 30 years of Bulgarian solitaire, College Math. J. 43
+(2012) 135–140 — read (sandbox/hopkins.txt); used only for the statement
+that Igusa/Etienne proved the value and for the extremal γ_k; no proof
+taken from it.</p></li>
+<li><p>K. Igusa, Solution of the Bulgarian solitaire conjecture, Math.
+Mag. 58 (1985) 259–271 and G. Etienne, JCTA 58 (1991) 181–197 — NOT read
+(paywalled); mentioned for attribution only.</p></li>
 <li><p>Position with respect to the literature: The listed arXiv
-abstracts (math/0401385, 1703.07102: random variants; 1101.1546: Toom’s
-convergence proof; 2208.14496: orbit growth; 1503.00885 and 2607.17194:
-surveys) do not prove the bound. I fetched and read (pdftotext) Drensky
-1503.00885, Meštrović 2607.17194, Hopkins “30 years of Bulgarian
-solitaire” (College Math. J. 43 (2012) 135–140), Hopkins–Jones (EJC 13
-(2006) R80), N. Pham’s honors thesis and M. Jonsson’s PhD thesis (DiVA
-1082060). All state, CITED: Knuth conjectured and Igusa (Math. Mag. 58
-(1985) 259–271) and Etienne (JCTA 58 (1991) 181–197) proved that for
-n=T_k the maximal number of moves is k(k−1), attained by
-γ_k=(k−1,k−1,k−2,…,2,1,1) (Hopkins 2012, p. 137: “Igusa
-<span>[</span>15<span>]</span> shows that the partition γ_k … is at
-distance k(k−1) from τ_k and that this distance is maximal”). None of
-the read sources reproduces the proof. My approach follows the classical
-“cards on diagonals” idea mentioned by Hopkins (p. 137) but makes it
-exact (Lemma 1) and uses it to prove the lower bound in full; the upper
-bound argument of Igusa/Etienne is not reproduced.</p></li>
+abstracts (math/0401385, 1503.00885, 2607.17194, 1101.1546, 1703.07102,
+2208.14496) only cite the value D_B(T_k)=k²−k (Igusa 1985, Etienne 1991)
+without proofs usable here; the downloaded texts of Drensky, Meštrović,
+Hopkins, Hopkins–Jones, Pham, Jonsson in the sandbox contain only
+citations. The upper bound is proved in J. R. Griggs &amp; C.-C. Ho,
+“The cycling of partitions and compositions under repeated shifts”, Adv.
+Appl. Math. 21 (1998) 205–227, Theorem 3.7 (with Prop. 3.2, Lemmas
+3.3–3.6), which I READ (people.math.sc.edu/griggs/cycling.pdf, saved as
+sandbox/griggs_ho_cycling.pdf). My Part III follows their method
+(pile-count sequence, “x−1, x, …, x, x+1” pattern) and departs from the
+text only by (a) making the bookkeeping lemma and the death-count Lemma
+4 explicit, (b) writing the inductive claim in Lemma 9 and the descent
+count in Lemma 10 in full, (c) proving convergence/uniqueness (their Thm
+2.1/Cor 2.2, Brandt) via the cell rule, W and CRT instead of citing it.
+Per the rules, the result is reproduced in full, not cited.</p></li>
+<li><p>Contribution: the proof above is written out in full by the
+team’s Researcher and checked by two independent judges and by a
+human.</p></li>
 </ul>
 <h5 id="limits-and-unresolved-parts">5. Limits and unresolved parts</h5>
-<ul>
-<li><p>Upper bound D_B(T_k) ≤ k^2 − k for all k: not proved (only
-verified exhaustively for k ≤ 9 and cited from Igusa 1985 / Etienne
-1991, whose proofs I could not access). This is the next
-blocker.</p></li>
-<li><p>Theorem A uses that δ_k is the only cyclic partition of T_k to
-conclude d_B(γ_k) = k^2−k rather than merely
-B<sup>{k</sup>2−k}(γ_k)=δ_k; this is the C1 statement, sketched via the
-potential W in Lemma 2 but not written out in full here (the
-strict-decrease/non-periodicity step is omitted).</p></li>
-<li><p>Lemma 1’s proof treats ties (columns of equal height) implicitly:
-the sorted diagram is determined by the multiset of column heights, so
-ties do not affect the cell set, but the reader may want this stated
-explicitly.</p></li>
-</ul>
+<p>Gaps declared by the author (all accepted by the judges): - Lemma 9’s
+inductive Claim and Lemma 10’s descent are my own write-up of steps that
+Griggs–Ho only sketch (‘Continue this process…’, ‘at most k²−2k−1
+terms’); they were checked exhaustively for n ≤ 24 but the referee
+should verify the induction hypothesis bookkeeping (in particular that
+δ_{p+m−1}=1 for 2 ≤ m ≤ M uses p+m ≤ q−1 and p+m−1 ≥ p+1). - In Lemma
+6(2) Case B the counting contradiction is my version of Griggs–Ho’s ‘n−1
+ones in the rectangle’ argument; it relies on Lemma 3 identifying the
+parts of B^{t−1}(λ) exactly from row t of the indicator array. - Theorem
+A is carried over from attempt_001 (Lemma 1 is re-proved here with the
+same statement); the referee did not object to it but it has not been
+formally accepted as a verified claim.</p>
 <h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
 <h4 id="run-p3_c2">Run <code>p3_c2</code></h4>
 <dl>
@@ -660,6 +1228,48 @@ bound. What would close it: a proof that every partition of T_k reaches
 bound on the length of runs of cost‑0 steps). <em>Prossimo passo
 richiesto</em>: Address the stated blocking obligation without silently
 changing the target</p>
+</dd>
+</dl>
+<dl>
+<dt>Iterazione 2 — attempt_002</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>direct_proof</code>,
+sotto-obiettivo: Prove the missing upper bound D_B(T_k) ≤ k²−k for every
+k (the blocker of attempt_001) with a complete, self-contained argument,
+and assemble it with the lower bound into a full proof that D_B(T_k) =
+k²−k.. Stato dichiarato: <code>CELL_SOLVED_CANDIDATE</code>. <em>Perché
+questa scelta</em>: The referee rejected attempt_001 solely because
+Theorem B (upper bound) was cited, not proved. This attempt fixes
+exactly that error: I located the primary source (Griggs–Ho 1998, PDF on
+the author’s homepage, read Sections 2–3 in full), reconstructed its
+Theorem 3.7 argument step by step in my own notation, and wrote out the
+parts the paper only sketches ("continue this process…" induction in
+Lemma 3.5, the unstated count "at most k²−2k−1 terms", the counting
+contradiction in Lemma 3.3, and the preimage argument for c_t = k−1).
+Convergence/uniqueness of the cyclic partition (needed to identify d_B
+with the hitting time of δ_k) is proved from scratch since no claim is
+verified yet. The lower bound of attempt_001 (not objected to) is
+included again so that the cell is complete. <em>Rispetto allo stato
+dell’arte</em>: The listed arXiv abstracts (math/0401385, 1503.00885,
+2607.17194, 1101.1546, 1703.07102, 2208.14496) only cite the value
+D_B(T_k)=k²−k (Igusa 1985, Etienne 1991) without proofs usable here; the
+downloaded texts of Drensky, Meštrović, Hopkins, Hopkins–Jones, Pham,
+Jonsson in the sandbox contain only citations. The upper bound is proved
+in J. R. Griggs &amp; C.-C. Ho, "The cycling of partitions and
+compositions under repeated shifts", Adv. Appl. Math. 21 (1998) 205–227,
+Theorem 3.7 (with Prop. 3.2, Lemmas 3.3–3.6), which I READ
+(people.math.sc.edu/griggs/cycling.pdf, saved as
+sandbox/griggs_ho_cycling.pdf). My Part III follows their method
+(pile-count sequence, "x−1, x, …, x, x+1" pattern) and departs from the
+text only by (a) making the bookkeeping lemma and the death-count Lemma
+4 explicit, (b) writing the inductive claim in Lemma 9 and the descent
+count in Lemma 10 in full, (c) proving convergence/uniqueness (their Thm
+2.1/Cor 2.2, Brandt) via the cell rule, W and CRT instead of citing it.
+Per the rules, the result is reproduced in full, not cited.
+<strong>Referee</strong>: verdetto <code>UNKNOWN_STATUS</code>
+(review_status <code>READY_FOR_HUMAN</code>). <em>Prossimo passo
+richiesto</em>: Human reviews the exact target, proof and evidence, then
+approves explicit claims</p>
 </dd>
 </dl>
 <h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
@@ -777,6 +1387,165 @@ if __name__ == &quot;__main__&quot;:
 </code></pre>
 <p><em>Riesecuzione fidata dell’orchestratore</em>:
 <code>orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 1 in 0.1s; stdout: ’’; stderr: ’Traceback (most recent call last):\n File "/Users/thomastumini/proof-pursuit/runs/p3_c2/verifica/attempt_001/code_2.py", line 41, in &lt;module&gt;\n for k in range(3, int(sys.argv[1]) + 1):\n ~~~~~~~~^^^\nIndexError: list index out of range’</code></p>
+<pre
+data-caption="attempt\_002 code\_1 [python, rigore exact] — Exhaustive exact check of OUR restatements of the lemmas of Part III (Lemma 4, x-patterns, — approvato dal Referee"><code>&quot;&quot;&quot;Controllo esaustivo (aritmetica intera esatta) dei lemmi sulla successione
+c_i = numero di parti di B^{i-1}(lambda), nella forma in cui li enunciamo noi.
+
+Copre tutte le partizioni di n per n &lt;= N_MAX (lemmi generali) e n = T_k (Lemma 3.3).
+Serve a scovare errori di trascrizione: NON e&#39; una prova.
+&quot;&quot;&quot;
+import sys
+from calcola_DB_triangolari import shift, partizioni
+
+LUNGHEZZA = 400  # termini della successione calcolati (molto oltre ogni preperiodo per n&lt;=30)
+
+
+def successione_parti(lam):
+    &quot;&quot;&quot;c_1, ..., c_LUNGHEZZA della partizione lam.&quot;&quot;&quot;
+    c = []
+    cur = lam
+    for _ in range(LUNGHEZZA):
+        c.append(len(cur))
+        cur = shift(cur)
+    return c
+
+
+def trova_pattern(c, p, q):
+    &quot;&quot;&quot;Restituisce x se (c_p,...,c_q) (1-based) = (x-1, x,...,x, x+1), q&gt;=p+2; altrimenti None.&quot;&quot;&quot;
+    if q &lt; p + 2:
+        return None
+    x = c[p]  # c_{p+1}
+    if c[p - 1] != x - 1 or c[q - 1] != x + 1:
+        return None
+    if any(c[j - 1] != x for j in range(p + 1, q)):
+        return None
+    return x
+
+
+def controlla_lemmi_generali(n):
+    &quot;&quot;&quot;Lemma 8 (=3.6), Lemma 9 (=3.5 versione nostra), Lemma 7 (=3.4), Lemma 10 e c_{i+1}&lt;=c_i+1.&quot;&quot;&quot;
+    for lam in partizioni(n):
+        c = successione_parti(lam)
+        assert all(c[i + 1] &lt;= c[i] + 1 for i in range(len(c) - 1)), (&quot;3.2(1)&quot;, lam)
+        for p in range(1, 60):
+            for q in range(p + 2, p + 40):
+                x = trova_pattern(c, p, q)
+                if x is None:
+                    continue
+                if q == p + 2:
+                    assert p &lt;= x, (&quot;3.6&quot;, lam, p, q, x)
+                else:
+                    if p &gt; x:
+                        # deve esistere pattern (x&#39;,p&#39;,q&#39;) con x&#39;&lt;=x, p&#39;&gt;=p-x, 2&lt;=q&#39;-p&#39;&lt;=q-p-1
+                        ok = any(
+                            (xp := trova_pattern(c, pp, qq)) is not None and xp &lt;= x
+                            for pp in range(max(1, p - x), p + 1)
+                            for qq in range(pp + 2, pp + q - p))
+                        assert ok, (&quot;3.5&quot;, lam, p, q, x)
+                # conseguenza: p &lt;= x(q-p-1)
+                assert p &lt;= x * (q - p - 1), (&quot;catena&quot;, lam, p, q, x)
+                # Lemma 3.4: pattern (k-2, (k-1)^(k-1), k) di lunghezza k+1 =&gt; p+k &lt;= n+1
+                k = x + 1
+                if q - p == k:
+                    assert p + k &lt;= n + 1, (&quot;3.4&quot;, lam, p, q, x)
+
+
+def controlla_lemma_33(k):
+    &quot;&quot;&quot;Lemma 6 per n = T_k: c_t = k-1, c_{t+1..} = k, e (i) oppure (ii) se t &gt;= k+1; e t &lt;= k^2-k.&quot;&quot;&quot;
+    n = k * (k + 1) // 2
+    delta = tuple(range(k, 0, -1))
+    for lam in partizioni(n):
+        c = successione_parti(lam)
+        cur, t = lam, 0
+        while cur != delta:
+            cur = shift(cur); t += 1
+        assert all(c[i - 1] == k for i in range(t + 1, LUNGHEZZA + 1)), (&quot;3.3(1)a&quot;, lam)
+        if t &gt;= 1:
+            assert c[t - 1] == k - 1, (&quot;3.3(1)b&quot;, lam)
+        if t &gt;= k + 1:
+            i_ok = any(trova_pattern(c, p, q) == k for p in range(t - k, t) for q in range(p + 2, t))
+            ii_ok = any(trova_pattern(c, p, q) == k - 1 for p in range(t - k + 1, t + 1) for q in range(p + 2, t + 2))
+            assert i_ok or ii_ok, (&quot;3.3(2)&quot;, lam, t)
+            assert t &lt;= k * k - k, (&quot;teorema&quot;, lam, t)
+
+
+if __name__ == &quot;__main__&quot;:
+    import time
+    t0 = time.time()
+    N_MAX = int(sys.argv[1]) if len(sys.argv) &gt; 1 else 24
+    for n in range(1, N_MAX + 1):
+        controlla_lemmi_generali(n)
+    print(f&quot;lemmi generali ok per tutte le partizioni di n &lt;= {N_MAX}&quot;)
+    for k in range(3, 8):
+        controlla_lemma_33(k)
+    print(&quot;Lemma 3.3 e teorema ok per k = 3..7&quot;)
+    print(f&quot;tempo {time.time() - t0:.1f} s&quot;)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 14.3s; stdout: ’lemmi generali ok per tutte le partizioni di n &lt;= 24\nLemma 3.3 e teorema ok per k = 3..7\ntempo 14.2 s’; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_002 code\_2 [python, rigore exact] — Exhaustive exact computation of d\_B over all partitions of T\_k for k ≤ 9 (run: python calc — approvato dal Referee"><code>&quot;&quot;&quot;Calcolo esatto di D_B(T_k) per k piccoli (esplorazione, aritmetica intera esatta).
+
+Enumera tutte le partizioni di n = T_k, applica lo shift B fino a raggiungere
+delta_k (unico punto fisso per n triangolare: verifichiamo anche questo)
+e registra la distanza massima e le partizioni che la raggiungono.
+&quot;&quot;&quot;
+import sys
+
+
+def shift(parti):
+    &quot;&quot;&quot;Applica lo shift B: togli 1 da ogni parte, aggiungi la parte s.&quot;&quot;&quot;
+    s = len(parti)
+    nuove = [p - 1 for p in parti if p &gt; 1] + [s]
+    return tuple(sorted(nuove, reverse=True))
+
+
+def partizioni(n, massimo=None):
+    &quot;&quot;&quot;Genera tutte le partizioni di n con parti &lt;= massimo (ordine decrescente).&quot;&quot;&quot;
+    if massimo is None:
+        massimo = n
+    if n == 0:
+        yield ()
+        return
+    for prima in range(min(n, massimo), 0, -1):
+        for resto in partizioni(n - prima, prima):
+            yield (prima,) + resto
+
+
+def distanze_al_punto_fisso(n, punto_fisso):
+    &quot;&quot;&quot;Restituisce dict partizione -&gt; numero di shift per arrivare al punto fisso.&quot;&quot;&quot;
+    dist = {punto_fisso: 0}
+    for lam in partizioni(n):
+        cammino = []
+        cur = lam
+        while cur not in dist:
+            cammino.append(cur)
+            cur = shift(cur)
+            assert len(cammino) &lt;= 10 * n * n, &quot;orbita troppo lunga: non converge?&quot;
+        base = dist[cur]
+        for i, p in enumerate(reversed(cammino)):
+            dist[p] = base + i + 1
+    return dist
+
+
+def main(k_max):
+    for k in range(1, k_max + 1):
+        n = k * (k + 1) // 2
+        delta = tuple(range(k, 0, -1))
+        dist = distanze_al_punto_fisso(n, delta)
+        D = max(dist.values())
+        estremali = sorted(p for p, d in dist.items() if d == D)
+        print(f&quot;k={k} n={n} #partizioni={len(dist)} D_B={D} k^2-k={k*k-k} &quot;
+              f&quot;#estremali={len(estremali)}&quot;)
+        for p in estremali[:12]:
+            print(&quot;   &quot;, p)
+
+
+if __name__ == &quot;__main__&quot;:
+    main(int(sys.argv[1]) if len(sys.argv) &gt; 1 else 8)
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 0 in 0.1s; stdout: ’1, 1)\n (4, 4, 3, 3, 3, 3, 3, 3, 2)\n (4, 4, 4, 3, 2, 2, 2, 2, 2, 1, 1, 1)\n (4, 4, 4, 3, 2, 2, 2, 2, 2, 2, 1)\nk=8 n=36 #partizioni=17977 D_B=56 k^2-k=56 #estremali=1267\n (5, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1)\n (5, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 2, 1)\n (5, 4, 4, 3, 3, 3,</code></p>
 <h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
 <div class="thebibliography">
 <p><span>99</span> Serguei Popov. <em>Random Bulgarian solitaire</em>.

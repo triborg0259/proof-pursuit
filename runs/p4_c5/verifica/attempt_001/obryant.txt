@@ -1,0 +1,568 @@
+ON Z.-W. SUN’S DISJOINT CONGRUENCE CLASSES CONJECTURE
+
+arXiv:math/0604347v2 [math.NT] 19 Apr 2006
+
+Kevin O’Bryant
+Department of Mathematics, City University of New York,
+College of Staten Island, Staten Island, NY 10314, U. S. A.
+
+kevin@member.ams.org
+
+Received: , Accepted: , Published:
+
+Abstract
+Sun has conjectured that if k congruence classes are disjoint, then necessarily two of the
+moduli have greatest common divisor at least as large as k. We prove this conjecture for
+k ≤ 20.
+
+1. Introduction
+In May of 2003, Prof Sun1 proposed a conjecture on the number theory listserver2 .
+Conjecture 1 (Disjoint Congruence Classes Conjecture). If k ≥ 2 congruence classes
+ai (mod mi ) are disjoint, then there exist i < j with gcd(mi , mj ) ≥ k.
+The set of congruence classes {1 (mod k), 2 (mod k), . . . , k (mod k)} demonstrate that,
+if true, the DCCC is best possible.
+The contrapositive of the k = 2 case is a familiar special case of the Chinese remainder
+theorem: if two congruence classes have relatively prime moduli, then they intersect. Prof
+Graham3 , who first brought this problem to my attention, pointed out that the k = 3 case
+follows easily from the pigeonhole principle, as we now explain.
+Suppose that a1 mod m1 , a2 mod m2 , a3 mod m3 is a counter-example: they are disjoint
+and gcd(mi , mj ) < 3 for all i < j. If gcd(mi , mj ) = 1, then by the Chinese remainder
+theorem ai (mod mi ) and aj (mod mj ) intersect. Thus, gcd(mi , mj ) = 2 for all i < j; in
+particular, all mi are even. By the pigeonhole principle, two of the ai ’s must have the same
+parity, say a1 ≡ a2 (mod 2). Since gcd(m1 , m2 ) = 2, obviously gcd( m21 , m22 ) = 1. If a1 and
+1
+
+Zhi-Wei Sun, Department of Mathematics, Nanjing University, zwsun@nju.edu.cn
+http://listserv.nodak.edu/archives/nmbrthry.html
+3
+Ronald Graham, Department of Computer Science and Engineering, University of California, San Diego,
+graham@ucsd.edu
+2
+
+INTEGERS: ELECTRONIC JOURNAL OF COMBINATORIAL NUMBER THEORY x (200x), #Axx
+
+2
+
+a2 are both even, then by the Chinese remainder theorem we can find x in the intersection
+of
+m1
+a2
+m2
+a1
+(mod
+) and
+(mod
+)
+2
+2
+2
+2
+and consequently 2x is in the intersection of a1 (mod m1 ) and a2 (mod m2 ). If a1 and a2
+are both odd, then we can find x in the intersection of
+a1 − 1
+2
+
+(mod
+
+m1
+)
+2
+
+and
+
+a2 − 1
+2
+
+(mod
+
+m2
+).
+2
+
+But then 2x + 1 is in the intersection of a1 (mod m1 ) and a2 (mod m2 ).
+The following criterion is at the heart of the last paragraph.
+Proposition 2. The congruence classes ai (mod mi ) and aj (mod mj ) are disjoint if and
+only if gcd(mi , mj ) ∤ ai − aj .
+Prof Graham also noted that the k = 4 case was similar but with more considerations,
+and considered it likely that k = 5 was similarly tractable. We now state our main theorem.
+Theorem 3. The DCCC holds for k ≤ 20. Moreover, a counterexample to the DCCC with
+minimal k does not have k ∈ {24, 30}.
+We close the introduction with a stronger conjecture of Prof Sun [3].
+Conjecture 4. Suppose that A1 , . . . , Ak are disjoint left-cosets of H1 , . . . , Hk in the group
+G. Then gcd([G : Hi ], [G : Hj ]) ≥ k for some i < j.
+
+2. A disjointness criterion
+The following criterion is stated in [1] without proof.
+ℓ
+X
+
+1
+> 1, where M is any multiple of LCM{gcd(mi , mj ) : 1 ≤ i <
+gcd(mi , M)
+i=1
+j ≤ ℓ}, then the congruence classes ai mod mi (with 1 ≤ i ≤ k) are not disjoint.
+
+Lemma 5. If
+
+The usefulness of this criterion lies in the fact that it makes no reference to the ai .
+Can there be seven disjoint congruence classes with moduli 20, 15, 12, 6, 6, 6, 6? Lemma 5
+does not exclude it directly, but it does exclude the possibility that there are six disjoint
+congruence classes with moduli 15, 12, 6, 6, 6, 6. It is plausible that if every subset of
+{m1 , . . . , mk } passes the above test, then it is possible to choose a1 , . . . , ak so that a1 mod
+m1 , . . . , ak mod mk are disjoint, and Huhn & Megyesi [1] conjectured this. However, Z.-W.
+Sun [2] notes that the moduli 10, 15, 36, 42, 66 pass the above test (as does every subset of
+the moduli), but these are not the moduli of disjoint congruence classes.
+
+INTEGERS: ELECTRONIC JOURNAL OF COMBINATORIAL NUMBER THEORY x (200x), #Axx
+
+3
+
+Proof. The class ai mod mi intersects each of the M/ gcd(mi , M) classes ai + jmi (mod M)
+(for 0 ≤ j < M/gcd(mi , M)); that is, the class ai mod mi is actually M/ gcd(mi , M) classes
+P
+modulo M. Since by hypothesis ℓi=1 M/ gcd(mi , M) > M, the pigeonhole principle implies
+that two of the modulo-M congruence classes must intersect. In other words, there are
+integers α, β, γ, i, j such that
+ai + αmi = aj + βmj + γM.
+Since gcd(mi , mj ) | M, there are integers δ, ǫ such that δmi + ǫmj = M. Thus
+ai + (α − δγ)mi = aj + (β + ǫγ)mj ,
+and we see that ai mod mi and aj mod mj intersect.
+
+3. Without Loss of Generality
+We suppose that a minimal counterexample exists, and use that to determine a sequence
+m1 , . . . , mk (as described in the lemma below) that has particular properties (in particular,
+we have an explicit upper bound on mi ). While there are infinitely many sets of k congruence
+classes, there are only finitely many such mi sequences, and in fact we show that for k ≤ 20
+there are none. We note that the existence of such an mi sequence would not disprove Sun’s
+Disjoint Congruence Classes Conjecture, but that nonexistence would imply his conjecture.
+Set Lk := LCM{1, 2, . . . , k − 1}.
+8
+9
+10
+11
+12
+13
+14
+15
+k 3 4 5 6 7
+Lk 2 6 12 60 60 420 840 2520 2520 27720 27720 360360 360360
+Lemma 6. Suppose that k ≥ 2 is the least integer such that there are k disjoint congruence
+classes ai (mod mi ) with gcd(mi , mj ) < k for i < j (i.e., a counterexample to the DCCC).
+P
+Further, suppose that ai (mod mi ) (1 ≤ i ≤ k) has minimal i mi . Set
+N := LCM{gcd(mi , mj ) : 1 ≤ i < j ≤ k}.
+
+Then k ≥ 4, and for all i
+1. mi | N, and N | Lk , and N = LCM{m1 , m2 , . . . , mk };
+2. 1 < gcd(mi , mj ) < k for all j 6= i;
+3. If a prime power q divides mi , then there is j 6= i with q | mj .
+4. mi is not a prime power;
+
+INTEGERS: ELECTRONIC JOURNAL OF COMBINATORIAL NUMBER THEORY x (200x), #Axx
+
+4
+
+5. At least three of the m’s are multiples of k − 1;
+6. If only three of the m’s are multiples of k − 1, then two others are multiples of k − 2;
+7. For every {h1 , . . . , hℓ } ⊆ {m1 , . . . , mk }, and every multiple M of
+LCM{gcd(hi , hj ) : 1 ≤ i < j ≤ ℓ},
+ℓ
+X
+
+1
+≤ 1.
+gcd(h
+,
+M)
+i
+i=1
+
+8. If 7 ≤ k ≤ 30, and p ≥ k/2 is a prime that divides some m, then it divides exactly two
+of the m’s.
+Proof. We noted in the introduction the reasons why k 6≤ 3.
+In this paragraph, we prove the three statements in item 1. Suppose that pr is a prime
+power that divides mi but not N. By the definition of N, we see that pr ∤ mj for j 6= i.
+Thus gcd(mi , mj ) = gcd(mi /p, mj ), and by Proposition 2, the classes ai (mod mi /p) and
+aj (mod mj ) are disjoint. Thus, we can replace ai (mod mi ) in our counterexample
+to the
+P
+DCCC with ai (mod mi /p), obtaining a counterexample with smaller
+m. We began with
+P
+minimal
+m, so we conclude that there is no prime power dividing mi but not N. Since
+N is defined to be the least common multiple of a subset of {1, 2, . . . , k − 1}, it is clear that
+N | Lk . Moreover, since N is the least common multiple of divisors of the mi , and the mi
+divide N, it is also now immediate that N = LCM{m1 , . . . , mk }.
+That gcd(mi , mj ) < k is by hypothesis; that gcd(mi , mj ) > 1 follows from the chinese
+remainder theorem. This proves item 2.
+Any prime power that divides some mi also divides N since N = LCM{m1 , . . . , mk }.
+But any prime power that divides N = LCM{gcd(mi , mj ) : i 6= j} must divide two of the
+m’s. This proves item 3.
+Items 4, 5, and 6 are based on the minimality of k. Suppose that m1 = pr , a prime
+power. Since gcd(m1 , mj ) > 1, we know that p | mj for every j. By item 3, there
+
+is m2
+that is also a multiple of pr . Since gcd(m1 , m2 ) < k, we see that p < k, whence k/p ≥ 2.
+By Proposition 2, gcd(mi , mj ) ∤ aj − ai for every 1 ≤ i < j ≤ k. And by the pigeonhole
+principle, there are at least k/p of the a’s that are congruent to one another modulo p,
+say (after renumbering)
+a1 ≡ a2 ≡ · · · ≡ a⌈k/p⌉ (mod p).
+Consequently,
+gcd
+
+
+
+mi mj
+,
+p p
+
+
+
+∤
+
+aj − ai
+p
+
+INTEGERS: ELECTRONIC JOURNAL OF COMBINATORIAL NUMBER THEORY x (200x), #Axx
+
+5
+
+for every 1 ≤ i < j ≤ ⌈k/p⌉. This implies, again by Proposition 2, that
+a⌈k/p⌉ − a1
+m⌈k/p⌉
+m1
+a2 − a1
+m2
+0 (mod
+),
+(mod
+), . . . ,
+(mod
+)
+p
+p
+p
+p
+p
+are also disjoint. Since k is minimal, there must be 1 ≤ i < j ≤ ⌈k/p⌉ with
+  
+
+k
+mi mj
+≥
+,
+,
+gcd
+p p
+p
+whence gcd(mi , mj ) ≥ ⌈k/p⌉p ≥ k, contradicting the existence of a counterexample with k
+classes. This proves item 4.
+Suppose that only m1 and m2 are multiples of k − 1. Then ai (mod mi ) (with 2 ≤ i ≤ k)
+is a collection of k − 1 disjoint congruence classes whose moduli have gcds strictly less than
+k − 1. This contradicts the minimality of k, and proves item 5.
+Suppose that only m1 , m2 , and m3 are multiples of k − 1. Then ai (mod mi ) (with
+3 ≤ i ≤ k) are k − 2 disjoint congruence classes whose moduli have gcds strictly less than k
+(because we started with a counterexample). Moreover, the gcds are strictly less than k − 1
+because none of m4 , . . . , mk are multiples of k − 1. If there are not two of m3 , . . . , mk that
+are multiples of k − 2, then we have even more: a counterexample with k − 2 sequences. By
+the minimality of k, then, two of m3 , . . . , mk must be multiples of k − 2. If there are exactly
+two, then it could be that m3 is one of them. To see that is not the case, we renumber m2
+and m3 to conclude that both m2 and m3 are multiples of k − 2. But then both k − 1 and
+k − 2 divide gcd(m2 , m3 ), so that it must be at least k. This proves item 6, and that k ≥ 5.
+Item 7 is a restatement of Lemma 5 for subsets.
+Now suppose that p and k are as hypothesized in item 8, and suppose that m1 , . . . , mℓ
+are multiples of p, while mℓ+1 , . . . , mk are not multiples of p. Note that ℓ ≥ 2 by item 3, and
+by item 2 necessarily p < k. Suppose that there are r primes less than k; since k ≤ 30 we
+know that r ≤ 10. Assume, by way of contradiction, that ℓ ≥ 3.
+Set
+Pi := {q : q prime, q | mi } \ {p},
+and recall that by Lemma 6 (item 4) the cardinality of Pi is at least 1 for every i ≤ ℓ, and
+at least 2 for i > ℓ. Moreover, since gcd(mi , mj ) < k ≤ 2p the Pi (for 1 ≤ i ≤ ℓ) are disjoint.
+Now define for ℓ < i ≤ k the ℓ-tuple
+
+
+ωi := min {P1 ∩ Pi }, min{P2 ∩ Pi }, . . . , min{Pℓ ∩ Pi }} ,
+which is an element of P1 × · · · × Pℓ . If ωi = ωj (with ℓ < i < j ≤ k), then gcd(mi , mj ) is at
+least the product of the primes in ωi ; since ℓ ≥ 3 this product must be at least 2·3·5 = 30 ≥ k.
+By the pigeonhole principle, this certainly happens if
+k − ℓ > P1 × · · · × Pℓ =
+
+ℓ
+Y
+i=1
+
+|Pi |.
+
+INTEGERS: ELECTRONIC JOURNAL OF COMBINATORIAL NUMBER THEORY x (200x), #Axx
+
+6
+
+P
+Since |Pi | ≥ 1 and ℓi=1 |Pi | ≤ r − 1 (because the Pi are disjoint for i ≤ ℓ, and there are r
+Q
+primes less than k including p), we can easily bound the size of ℓi=1 |Pi | in terms of r and
+ℓ:
+ℓ
+max{
+
+r
+
+Qℓ
+
+i=1 |Pi |}
+
+4
+5
+6
+7
+8
+9
+10
+
+3 4 5
+1 0 0
+2 1 0
+4 2 1
+8 4 2
+12 8 4
+18 16 8
+27 24 16
+
+6
+0
+0
+0
+1
+2
+4
+8
+
+7
+0
+0
+0
+0
+1
+2
+4
+
+8
+0
+0
+0
+0
+0
+1
+2
+
+9
+0
+0
+0
+0
+0
+0
+1
+
+This table shows that for 4 ≤ r ≤ 10, necessarily k − ℓ > |Range(ω)|, and so two m’s have
+gcd at least 30 ≥ k, with the exception of r = 10, k = 30, ℓ = 3.
+In the case of r = 10, k = 30, ℓ = 3, each of the 27 possible values of ω must actually
+occur: |P1 | = |P2 | = |P3 | = 3. Thus two of the four primes 17, 19, 23, 29 are in separate
+Pi ’s (1 ≤ i ≤ 3), and so must both be in three of the ωi ’s (4 ≤ i ≤ 30). But then the two
+corresponding m’s will have gcd at least 17 · 19 > 30.
+
+4. Casework
+4.1. The cases 3 ≤ k ≤ 6
+These cases can be handled in a variety of ways. We handle them here using only 1 < mi | Lk ,
+1 < gcd(mi , mj ) < k, and that mi cannot be a prime power.
+k = 3. The divisors of L3 = 2 are 1 and 2. That mi = 1 is impossible since gcd(mi , mj ) > 1,
+and that mi = 2 is impossible since mi cannot be a prime power.
+k = 4. The divisors of L4 = 6 are 1, 2, 3, and 6. Since mi cannot be a prime power (or 1),
+every mi = 6. But gcd(mi , mj ) < k < 6, so this too is impossible.
+k = 5. The divisors of L5 = 12 are 1, 2, 3, 4, 6, and 12. Since mi cannot be a prime power
+(or 1), every mi is either 6 or 12. But gcd(mi , mj ) < k < 6, so this too is impossible.
+
+INTEGERS: ELECTRONIC JOURNAL OF COMBINATORIAL NUMBER THEORY x (200x), #Axx
+
+7
+
+k = 6. The only allowed divisors of L6 = 60 are 6, 10, 12, 15, 20, 30, and 60. Since gcd(mi , mj ) <
+6, the mi must be distinct. By the pigeonhole principle, two of the m’s must be multiples of
+10, whence gcd(mi , mj ) ≥ 10.
+4.2. The cases 6 ≤ k ≤ 10
+While looking through the cases below, I find it helpful to imagine the complete graph on k
+vertices with vertices labeled with m1 , m2 , . . . , mk , and edges labeled with gcd(mi , mj ).
+With k = 7, the assignments m1 = 20, m2 = 15, m3 = 12, m4 = m5 = m6 = m7 = 6
+satisfy all of the conditions given in Lemma 6 except item 7, and also passes the test of
+Lemma 5. Thus, for k ≥ 7 the arguments are necessarily more involved.
+k = 7. We have N | L7 = 60. Suppose that none of the m’s are multiples of 5, so that we
+can take M := 12, and at most one gcd(mi , M) is 12, with other six gcd(mi , M) being ≤ 6.
+In this case,
+7
+X
+1
+1
+1
+≥
++ 6 > 1.
+gcd(mi , 12)
+12
+6
+i=1
+Now suppose that some m is a multiple of 5, and by item 3, at least two of the m’s are
+multiples of 5. We know that no m is exactly 5 (a prime), so that the two (or more) of
+the m’s that are multiples of 5 are in {10, 15, 20, 30, 60}. Since gcd(mi , mj ) ≤ 6 the only
+possibilities are “10 and 15” or “15 and 20”. Delete the congruence class that gives m being
+either 10 or 20, and the six classes remaining fail to have the condition given in item 7 with
+M = 12:
+X
+1
+1
+1
+1
+≥
++
++4
+> 1.
+gcd(m
+gcd(15,
+12)
+gcd(12,
+12)
+gcd(6,
+12)
+i , 12)
+6 classes
+k = 8. Here, items 5 and 8 are not consistent. For clarity, we reprove here this special case
+of item 8, proved in full above.
+By item 5, we may assume that m1 , m2 , m3 are multiples of 7 and divisors of L8 = 22 ·3·5·7.
+No m is exactly 7, so the remaining possibilities for (m1 , m2 , m3 ) are (2 · 7, 3 · 7, 5 · 7) and
+(4 · 7, 3 · 7, 5 · 7). In particular, there are not four m’s that are multiples of 7. Item 6 now
+implies that there are two m’s, say m4 and m5 , that are multiples of k − 2 = 6, and one
+of those is not a multiple of 5 (or else gcd(m4 , m5 ) = 30). Thus, either gcd(m4 , m3 ) or
+gcd(m5 , m3 ) is 1.
+k = 9. At least three of the m’s are multiples of 8 and divisors of L9 = 23 · 3 · 5 · 7. Since
+mi 6= 8 (a prime power), the three multiples of 8 are 3 · 8, 5 · 8, 7 · 8, and there isn’t a fourth.
+
+INTEGERS: ELECTRONIC JOURNAL OF COMBINATORIAL NUMBER THEORY x (200x), #Axx
+
+8
+
+Since there isn’t a fourth multiple of 8, there must be two other m’s that are multiples of
+k − 2 = 7, one of which is relatively prime to 5, and both are odd since gcd(mi , 7 · 8) ≤ 8.
+Thus there is one that is relatively prime to 5 · 8, a contradiction.
+k = 10. At least three of the m’s are multiples of 9 and divisors of L10 = 23 · 32 · 5 · 7. Since
+mi 6= 9 (a prime power) the three multiples of 9 are (m1 , m2 , m3 ) = (2r · 9, 5 · 9, 7 · 9) (for some
+r ≥ 1), and there isn’t a fourth m that is a multiple of 9. Since there isn’t a fourth multiple
+of 9, there must be two other m’s, say m4 and m5 , that are multiples of 8, one of which is
+relatively prime to 5, and so a multiple of 3 since gcd(mi , m5 ) > 1. Say m4 is the multiple
+of 3 · 8, and m5 is not a multiple of 3 since gcd(m4 , m5 ) < 10. Since gcd(m2 , m5 ) > 1 and
+gcd(m3 , m5 ) > 1, we have m5 = 8 · 5 · 7. Since gcd(m1 , m4 ) < 10 and gcd(m4 , m5 ) = 8, we
+have m4 = 3 · 8. And since m1 6= 9 and gcd(m1 , m4 ) < 10, we find that m1 = 2r · 9 = 2 · 9.
+We have m1 = 2 · 32 , m2 = 5 · 32 , m3 = 7 · 32 , m4 = 23 · 3, m5 = 23 · 5 · 7. Suppose that
+there is another m that is a multiple of 7. Since gcd(m, m1 ) > 1, either 2 | m or 3 | m.
+But then either gcd(m, m5 ) = 14 ≥ k or gcd(m, m3 ) = 21 ≥ k. Likewise, no other m is a
+multiple of 5. Thus the other m’s are divisors of 23 · 32 , but not multiples of 8 or 9 or prime
+powers: the possibilities are 4, 6, 12. No other m can be a multiple of 12 because m4 = 24,
+so m6 , · · · , m10 are at most 6. Deleting m5 , we take M = 23 · 32 and
+1
+1
+1 1
+1
+1
+1
+≥
++ + +
++ + 5 > 1.
+gcd(mi , M)
+18 9 9 24 8
+6
+i6=5
+
+X
+
+4.3. The cases k ∈ {8, 12, 14, 18, 20, 24, 30}
+For k ∈ {8, 12, 14, 18, 20, 24, 30}, the prime k − 1 must divide at least 3 of the m’s by item 5.
+By item 8, however, only 0 or 2 of the m’s can be multiples of a prime as large as k/2.
+4.4. The cases k ≤ 19
+Let G be a (possibly empty) list of positive integers and let potentials be a (possibly empty)
+list of positive integers. Define a function Grow[G,potentials] that will return True if it is
+possible to augment G with elements of potentials to get a set of size k (a global variable)
+such that each pair of elements has gcd strictly between 1 and k, and every subset of it passes
+the test of Lemma 5. Otherwise it will return False. We give in Figure 1 a Mathematica
+program that accomplishes this.
+We can prove that there is no counter-example with k ≤ 19 sequences by executing the
+following Mathematica loop
+Or @@ Table[L = LCM @@ Range[k-1];
+
+INTEGERS: ELECTRONIC JOURNAL OF COMBINATORIAL NUMBER THEORY x (200x), #Axx
+
+9
+
+candidates = Select[Divisors[L],
+(Length[FactorInteger[#]] > 1)&];
+Grow[ {}, candidates ],
+{k, 2, 19}
+]
+
+and observing that the output is False. This required slightly less than a week to run on
+the authors humble desktop PC.
+
+Acknowledgement
+The author wishes to thank Prof Landman4 for reproducibly marvelously organizing the Integers conference. He also wishes to thank Prof Eichhorn5 for several conversations concerning
+the DCCC, including a discussion that lead to Lemma 6 (item 8).
+
+References
+[1] A. P. Huhn and L. Megyesi, On disjoint residue classes, Discrete Math. 41 (1982), 327–330. MR676896
+(84j:10002)
+[2] Z. W. Sun, Solutions to two problems of Huhn and Megyesi, Chinese Ann. Math. Ser. A 13 (1992),
+722–727. (Chinese)
+[3]
+
+4
+
+, Finite covers of groups by cosets of subgroups, Internat. J. Math., to appear.
+
+Bruce M. Landman, Department of Mathematics, State University of West Georgia,
+landman@westga.edu
+5
+Dennis Eichhorn, Department of Math and Computer Science, California State University, East Bay,
+eichhorn@mcs.csueastbay.edu
+
+INTEGERS: ELECTRONIC JOURNAL OF COMBINATORIAL NUMBER THEORY x (200x), #Axx
+
+10
+
+GCDList[G_] := Union[Flatten[Table[GCD[G[[i]], G[[j]]],
+{i, 1, Length[G]-1},
+{j, i+1, Length[G]}
+]]];
+LemmaTest[G_]:= Block[
+{gcdlist = GCDList[G],
+M },
+M = LCM @@ gcdlist;
+( (Last[gcdlist] < k) &&
+(First[gcdlist] > 1) &&
+(Plus @@ (1/ (GCD[M,#]& /@ G) ) <= 1)
+)
+];
+Grow[G_, potentials_] :=
+If[Length[G] == k,
+{passed, counter} = {True, Length[Subsets[G, {3, k}]]};
+While[passed && counter > 0,
+passed = LemmaTest @@ Subsets[G, {3, k}, {counter}];
+counter-];
+passed,
+Or @@ Table[Grow[Append[ G, potentials[[i]] ],
+Select[potentials,
+( (# >= potentials[[i]]) &&
+LemmaTest[Join[G, {potentials[[i]], #}]]
+)&
+]],
+{i, Length[potentials]}
+]];
+
+Figure 1: Mathematica code to look for counter-examples.
+
+

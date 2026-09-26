@@ -1,0 +1,56 @@
+{
+ "attempt_id": "attempt_001",
+ "verdict": "UNKNOWN_STATUS",
+ "review_status": "INCOMPLETE",
+ "highest_verified_cell": 0,
+ "accepted_claims": [],
+ "proposed_claim_ids": [],
+ "fatal_error": null,
+ "citation_issue": true,
+ "computation_issue": true,
+ "next_blocker": "Provide the missing review or independently checked evidence",
+ "reasoning_summary": "review_status=INCOMPLETE; math=UNAVAILABLE; evidence=PARTIAL; A: TimeoutError",
+ "stagnation_signal": false,
+ "usage": [
+  {
+   "role": "B",
+   "cost_usd": 0.78106325,
+   "model": [
+    "claude-fable-5-1"
+   ],
+   "usage": {
+    "input_tokens": 2,
+    "cache_creation_input_tokens": 28890,
+    "cache_read_input_tokens": 14373,
+    "output_tokens": 3993,
+    "output_tokens_details": {
+     "thinking_tokens": 1971
+    },
+    "server_tool_use": {
+     "web_search_requests": 0,
+     "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+     "ephemeral_1h_input_tokens": 28890,
+     "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "not_available",
+    "iterations": [
+     {
+      "input_tokens": 2,
+      "output_tokens": 3993,
+      "cache_read_input_tokens": 14373,
+      "cache_creation_input_tokens": 28890,
+      "cache_creation": {
+       "ephemeral_5m_input_tokens": 0,
+       "ephemeral_1h_input_tokens": 28890
+      },
+      "type": "message"
+     }
+    ],
+    "speed": "standard"
+   }
+  }
+ ]
+}

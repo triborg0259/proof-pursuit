@@ -48,11 +48,18 @@ Everything.
 6. How this result was obtained (multi-agent trace)
 
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
-- No agent run on this cell; the text was written by the team from its notes.
+- attempt_001 — Researcher: family reduction, subgoal: Establish rigorous, reusable reduction lemmas between instances FT(N,d) of the conjecture (add a line, remove a line, drop one dimension), settle the (trivial) infinite family N ≤ d not covered by cells 1–5, and record a float-only counterexample search in R^3..R^6.; declared LEMMA_CANDIDATE.
+  - Why this approach: No blocker and no verified claims exist for this cell; cell 6 is an open problem and asks for infinite families beyond cells 1–5. A frontal attack (e.g. N = 2d) is out of reach in one iteration, and the frame-potential/Gram approach is known (Bilyk–Matzke) to be non-sharp. The best first step is to build the exact 'transfer' machinery: which instances of the conjecture imply which others. These lemmas are cheap, fully rigorous, reusable by later iterations (any future family proved for N ≡ −1 mod d extends to N+1; any family in R^d transfers down a dimension), and they immediately give a new finite case ((6,3) from cell 4). I also record honestly the trivial family N ≤ d, and a float-only search giving no counterexample, since the cell says 'prove or disprove'.
+  - Position w.r.t. the literature: [1801.07837] Bilyk–Matzke (read in full by the team earlier, see problema-1/fonti/README.md): the only settled case is the plane; they give a general non-sharp energy bound π/2 − 69/(50(d+1)) via the frame potential and, for the continuous (measure) version, a dimension-reduction Prop. 3.1 (conjecture in S^d ⟹ conjecture in S^{d−1}). Lemma 4 below is the finite-N analogue of that reduction, proved from scratch by embedding and adding q copies of a new orthogonal axis; the exact identity M(N+q,d) = M(N,d−1) + C(q,2) is what makes it sharp for finite N. Lemmas 2–3 (averaging over deleting/duplicating a line) do not appear in the abstracts and are our own. [2007.08698] Lim–McCann (abstract only): deformation to α-powers, optimality for α = ∞; not used. [1204.3850] is irrelevant (polygon mapping). Nothing in the literature I have settles any new infinite family; my approach departs from the energy method (known non-sharp) and instead builds exact transfer lemmas.
+  - Referee: REJECT / NEEDS_WORK; fatal error: The only declared claim is main (Fejes Tóth's bound for all N, d). The submission explicitly states in §8 that no non-trivial infinite family is proved and that cell 6 remains open; Lemmas 0–4 and Corollaries 5–6 are conditional transfer statements (FT(N,d) ⇒ FT(N+1,d) for s=d−1; FT(N+1,d) ⇒ FT(N,d) for d | N; FT(N+q',d) ⇒ FT(N,d−1)) whose hypotheses are themselves the unproved conjecture. None of them, alone or combined with cells 1–5 (which are moreover not verified in the state: highest_verified_cell = 0), yields FT(N,d) for any family beyond the trivial N ≤ d / d = 1 case. Hence the declared target is not established, and no other declared claim exists to accept. The float search of §7 is exploration only and proves nothing (correctly acknowledged by the author).; next: Address the stated blocking obligation without silently changing the target
 
 6b. Tokens used by the agents
 
-- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+- Researcher attempt_001: input 638,915 · output (incl. reasoning) 26,403
+- Referee judge A: input 33,430 · output (incl. reasoning) 2,241
+- Referee judge B: input 33,467 · output (incl. reasoning) 2,783
+- Referee judge B: input 35,113 · output (incl. reasoning) 1,828
+- Total: input 740,925 · output 33,255 tokens
 
 7. arXiv literature consulted
 

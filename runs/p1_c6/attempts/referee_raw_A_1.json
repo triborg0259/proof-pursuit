@@ -1,0 +1,20 @@
+{
+ "report": {
+  "mathematical_verdict": "FAIL",
+  "first_fatal_error": {
+   "code": "TARGET_MISMATCH",
+   "detail": "The only declared claim is `main` (Fejes Tóth's bound for all N, d). The submission explicitly states in §8 that no non-trivial infinite family is proved and that cell 6 remains open; Lemmas 0–4 and Corollaries 5–6 are conditional transfer statements (FT(N,d) ⇒ FT(N+1,d) for s=d−1; FT(N+1,d) ⇒ FT(N,d) for d | N; FT(N+q',d) ⇒ FT(N,d−1)) whose hypotheses are themselves the unproved conjecture. None of them, alone or combined with cells 1–5 (which are moreover not verified in the state: highest_verified_cell = 0), yields FT(N,d) for any family beyond the trivial N ≤ d / d = 1 case. Hence the declared target is not established, and no other declared claim exists to accept. The float search of §7 is exploration only and proves nothing (correctly acknowledged by the author).",
+   "severity": "FATAL",
+   "claim_ids": [
+    "main"
+   ]
+  },
+  "accepted_mathematical_claims": [],
+  "unproved_claims": [
+   "main"
+  ],
+  "missing_cases": [],
+  "math_notes": "I checked each lemma independently; all are mathematically correct as stated, but none is a declared claim ID, so none can be accepted formally. Details: Lemma 0(a) 2M = q(N+s−d), (b) M(N+1,d) = M(N,d)+q (both residue cases handled), (c) M(N+q',d) = M(N,d−1)+C(q',2) with q' = ⌊N/(d−1)⌋ (canonicity of N+q' = q'd+s' verified since s' < d−1 < d): all correct. Lemma 1 (N ≤ d gives M = 0 and S ≤ C(N,2)π/2 trivially; d = 1 gives S = 0 = B): correct. Lemma 2 (deletion averaging, Σ_k S_k = (N−1)S, inequality (1) reduces to (N−1)q ≤ 2M which is equality when s = d−1): correct. Lemma 3 (duplicate the line with largest row-sum A_k ≥ 2S/N, (2) reduces to N ≤ Nq − 2M = qd = N when s = 0): correct. Lemma 4 (isometric embedding plus q' copies of e_d, C(N+q',2) − q'N = C(N,2)+C(q',2), combined with 0(c)): correct. Corollary 5 (FT(5,3) ⇒ FT(6,3)) follows from Lemma 2 with N=5, d=3, s=2. If the researcher wants credit for these, they should be declared as separate reusable claims (e.g. 'transfer_s_eq_d_minus_1', 'transfer_d_divides_N', 'dimension_drop', 'trivial_family_N_le_d'); as submitted, the only claim is the open conjecture itself, which is not proved. Trusted observation confirms code_1 runs and passes, but the exact identity check for d ≤ 40, N ≤ 400 is redundant with the algebraic proofs and would not by itself prove the identities universally."
+ },
+ "limitation": null
+}

@@ -1,0 +1,20 @@
+seme 14 passo 1: costo 2552 |R|=1 |B|=1
+seme 14 passo 266: costo 2528 |R|=19 |B|=80
+seme 14 passo 278: costo 2520 |R|=18 |B|=87
+seme 14 passo 292: costo 2504 |R|=16 |B|=87
+seme 14 passo 293: costo 2496 |R|=17 |B|=87
+seme 14 passo 309: costo 2480 |R|=17 |B|=89
+seme 14 passo 28892: costo 2478 |R|=20 |B|=113
+seme 14 passo 297300: costo 2472 |R|=18 |B|=131
+seme 14 passo 579530: costo 2470 |R|=20 |B|=128
+seme 14 passo 579536: costo 2462 |R|=19 |B|=126
+seme 14 passo 579539: costo 2454 |R|=18 |B|=127
+seme 14 passo 1430370: costo 2448 |R|=18 |B|=124
+seme 14 passo 2000688: costo 2446 |R|=20 |B|=114
+seme 14 passo 2563585: costo 2440 |R|=19 |B|=127
+seme 14 passo 3350979: costo 2432 |R|=17 |B|=124
+seme 14 passo 3913644: costo 2424 |R|=17 |B|=125
+seme 14 passo 7436904: costo 2416 |R|=19 |B|=121
+seme 14 passo 10397371: costo 2408 |R|=20 |B|=142
+seme 14 passo 13244203: costo 2400 |R|=21 |B|=143
+seme 14: costo migliore 2400

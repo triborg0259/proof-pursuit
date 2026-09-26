@@ -1,19 +1,19 @@
 {
  "report": {
-  "evidence_verdict": "PARTIAL",
+  "evidence_verdict": "PASS",
   "source_issues": [
    {
-    "code": "SRC_NOT_RETRIEVED",
-    "detail": "src_2 (Igusa 1985), src_3 (Etienne 1991), src_4 (Griggs–Ho 1998) are declared NOT read; the upper bound D_B(T_k) ≤ k^2−k is attributed to them only via secondary sources (Hopkins, Drensky, Jonsson). No excerpt submitted for any source; I cannot check exact applicability. This is not a fabrication finding — the references are consistent with the known literature on Bulgarian solitaire — but none of them may be used as proof under the column rules anyway.",
-    "severity": "MISSING",
+    "code": "SOURCE_NOT_INDEPENDENTLY_RETRIEVED",
+    "detail": "src_1 (Griggs–Ho 1998) is declared READ from a URL and saved to sandbox, but no excerpt was submitted and no retrieval tool is available to me; I cannot confirm the reading. Bibliographic data for src_1–src_3 match my knowledge (Adv. Appl. Math. 21 (1998) 205–227; Math. Mag. 58 (1985) 259–271; JCTA 58 (1991) 181–197; CMJ 43 (2012) 135–140), so no sign of fabrication. Not blocking: the proof states and re-proves every step itself and cites nothing as a black box, which is exactly the use the hand-in rules permit ('a proof written out in full does, whatever its source'). src_3 is honestly marked NOT read, attribution only.",
+    "severity": "INFO",
     "claim_ids": [
      "main"
     ]
    },
    {
-    "code": "SRC_UNCHECKABLE",
-    "detail": "src_5 arXiv:2607.17194 (Meštrović) is a 2026 preprint I cannot retrieve here; used for context only, so no impact on the verdict. Request the orchestrator confirm the identifier if it is to be kept in the final write-up.",
-    "severity": "INFO",
+    "code": "REQUEST_SOURCE_CHECK",
+    "detail": "If desired, orchestrator may confirm existence/content of runs/p3_c2/sandbox/griggs_ho_cycling.pdf and .txt to validate the 'READ in full' statement and the attribution of the method to Thm. 3.7 / Lemmas 3.3–3.6. Purely for attribution accuracy; the mathematical claim does not depend on it.",
+    "severity": "MISSING",
     "claim_ids": [
      "main"
     ]
@@ -21,65 +21,38 @@
   ],
   "computation_issues": [
    {
-    "code": "CODE2_RUNTIME_ERROR",
-    "detail": "code_2.py fails with IndexError when run without a CLI argument (trusted observation). It is exploration-only and does not support any claim, but as submitted it is not reproducible; add a default k_max or document the required argument.",
-    "severity": "INFO",
-    "claim_ids": [
-     "main"
-    ]
-   },
-   {
-    "code": "COMPUTATION_SCOPE",
-    "detail": "code_1.py re-ran successfully (trusted observation, exit 0; visible output confirms k=8: D_B=56=k^2−k over 17977 partitions, exact integer arithmetic, memoised orbits). This is an exhaustive check for k ≤ 9 only; it does not and is not claimed to prove the upper bound for general k, so the computation cannot serve as the proof the cell requires.",
+    "code": "COMPUTATION_NOT_LOAD_BEARING",
+    "detail": "Both scripts are explicitly labelled sanity checks, not part of the proof; exact integer arithmetic; exhaustive over all partitions of the stated finite ranges (n ≤ 24; T_k for k ≤ 7 / k ≤ 8–9). Trusted re-run: code_1 exit 0 in 14.3 s (claimed 8.6 s — timing discrepancy immaterial, well under 10 min); code_2 exit 0 in 0.1 s with k=8 giving D_B=56=k²−k, consistent with the theorem. The claimed k=9 run is not in the trusted output (default argument is 8); harmless since the computation is illustrative only.",
     "severity": "INFO",
     "claim_ids": [
      "main"
     ]
    }
   ],
-  "rule_violations": [
-   {
-    "code": "UPPER_BOUND_NOT_PROVED",
-    "detail": "The cell requires proof of both bounds. The candidate's Theorem B (D_B(T_k) ≤ k^2−k for all k) is explicitly NOT proved: it is cited from Igusa/Etienne, and allow_literature_as_proof=false plus the official rule 'Citing a published result for the statement you are asked to prove does not count as a solution' make this dependency inadmissible. The candidate is honest about this (states 'NOT PROVED HERE', 'remains to be proved'), so this is a missing half rather than a mis-stated result; the cell cannot be marked SOLVED.",
-    "severity": "MISSING",
-    "claim_ids": [
-     "main"
-    ]
-   },
-   {
-    "code": "DEPENDENCY_ON_C1",
-    "detail": "Theorem A's last step ('δ_k is the only cyclic partition of T_k', needed to conclude d_B(γ_k)=k^2−k rather than merely B^t(γ_k)≠δ_k) is deferred to C1 / Lemma 2, and the candidate admits Lemma 2 alone does not prove it. highest_verified_cell=0, so this dependency is currently unverified inside the protocol. Either import a verified C1 claim or add the short argument that a partition of T_k with W>W(δ_k) cannot be periodic.",
-    "severity": "MISSING",
-    "claim_ids": [
-     "main"
-    ]
-   }
-  ],
+  "rule_violations": [],
   "claim_provenance": [
    {
     "claim_id": "main",
     "categories": [
      "PROVED_BY_US",
      "KNOWN_IN_LITERATURE",
-     "COMPUTATIONALLY_VERIFIED",
-     "UNVERIFIED"
+     "COMPUTATIONALLY_VERIFIED"
     ],
-    "evidence_sufficient": false,
-    "permitted_by_rules": false,
-    "relies_on_external_result": true,
+    "evidence_sufficient": true,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
     "uses_computation_as_proof": false,
     "references": [
      "src_1",
      "src_2",
      "src_3",
-     "src_5",
-     "src_6",
-     "code_1"
+     "code_1",
+     "code_2"
     ],
-    "notes": "Lower bound D_B(T_k) ≥ k^2−k with explicit extremal γ_k=(k−1,k−1,k−2,…,2,1,1): self-contained argument (Lemma 1 cell rule + rotation of hole/extra cell with periods k and k+1; CRT gives first hit of S(k,1) at t=k^2−k−1), modulo the C1 uniqueness-of-cyclic-partition dependency. Upper bound: known in literature (Igusa 1985, Etienne 1991) but not proved here; verified exhaustively only for k ≤ 9 (code_1 reproduced by orchestrator). The final claim as registered (both bounds for every k) is therefore not established; reliance on the citation for the upper bound would be forbidden by the rules."
+    "notes": "Formula D_B(T_k)=k²−k with explicit extremal γ_k=(k−1,k−1,k−2,…,2,1,1) as a function of k, both bounds argued in full (Parts I–III) without invoking any cited statement as a black box. The value is known in the literature (Igusa 1985, Etienne 1991; method of Griggs–Ho 1998) and this is disclosed with clear attribution, which the rules allow. Exhaustive exact computations for small k agree (trusted re-run up to k=8). Mathematical correctness of the written proof is Referee A's domain; from the evidence side nothing is missing or forbidden."
    }
   ],
-  "reproducibility_notes": "code_1.py: reproduced by the orchestrator (exit 0, ~0.1 s, exact integers, memoised orbits; visible output for k=8 matches the candidate's table). Full k=1..9 output was truncated in the observation; request the untruncated log for the record. code_2.py: not reproducible as submitted (needs argv[1]); exploration only. No floating point anywhere. Runtime well under the 10-minute limit. Sources: only secondary sources (Hopkins, Drensky, Jonsson) claimed read; primary sources unread; no excerpts submitted, so applicability was not checked. Recommended cell state: PARTIAL_PROGRESS (lower bound proved, upper bound open in-protocol)."
+  "reproducibility_notes": "Orchestrator re-ran both scripts from a clean copy: code_1 (requires code_2 in the same directory) exit 0, 14.3 s, all assertions pass for n ≤ 24 and k = 3..7; code_2 exit 0, 0.1 s, D_B(T_k)=k²−k up to k=8 observed (k=9 claimed but run with default argument 8). Both are exhaustive over their declared finite sets, use exact integer arithmetic, and are far below the 10-minute limit. Neither is needed for the proof."
  },
  "limitation": null
 }

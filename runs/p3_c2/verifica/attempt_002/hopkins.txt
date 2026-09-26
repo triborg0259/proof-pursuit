@@ -1,0 +1,394 @@
+30 Years of Bulgarian Solitaire
+Author(s): Brian Hopkins
+Source: The College Mathematics Journal , Vol. 43, No. 2 (March 2012), pp. 135-140
+Published by: Taylor & Francis, Ltd. on behalf of the Mathematical Association of America
+Stable URL: https://www.jstor.org/stable/10.4169/college.math.j.43.2.135
+
+JSTOR is a not-for-profit service that helps scholars, researchers, and students discover, use, and build upon a wide
+range of content in a trusted digital archive. We use information technology and tools to increase productivity and
+facilitate new forms of scholarship. For more information about JSTOR, please contact support@jstor.org.
+
+Your use of the JSTOR archive indicates your acceptance of the Terms & Conditions of Use, available at
+https://about.jstor.org/terms
+
+
+
+
+            Mathematical Association of America and Taylor & Francis, Ltd. are collaborating with JSTOR to
+            digitize, preserve and extend access to The College Mathematics Journal
+
+
+
+
+                                                      This content downloaded from
+                                    132.174.253.113 on Thu, 20 May 2021 00:04:04 UTC
+                                              All use subject to https://about.jstor.org/terms
+MORE MARTIN GARDNER MATHEMATICS
+                                30 Years of Bulgarian Solitaire
+                                Brian Hopkins
+
+                                Brian Hopkins (bhopkins@spc.edu) is an associate
+                                professor at Saint Peter’s College, a Jesuit, liberal arts
+                                college in Jersey City NJ. He received his Ph.D. from the
+                                University of Washington for work in algebraic
+                                combinatorics related to the representation theory of Lie
+                                algebras. Current professional interests include partition
+                                theory, Rado numbers, mathematics motivated by social
+                                science, and teacher professional development. He also
+                                enjoys choral singing and NYC.
+
+
+
+
+“Oh, you’re a mathematician! Let me show you something interesting.”
+   But I’m trying to work on my talk, I thought. As the train sped along, the man sitting
+across from me looked eager. OK, let’s get this over with.
+   “Here are fifteen playing cards. Arrange them into piles; as many piles as you like,
+each with as many cards as you like.”
+   I made five piles with heights 3, 1, 4, 1, 6. The π reference went unnoticed.
+   “Now take one card from each pile to make a new pile.”
+   The operation left me with piles of 3 − 1 = 2 cards, 4 − 1 = 3 cards, 6 − 1 = 5
+cards, two empty piles from 1 − 1 = 0, and a new pile of 5 cards. I realized that the
+order of the piles does not matter, so for consistency I put them in non-increasing order,
+5, 5, 3, 2.
+   “Now do it again and again. I know what will happen!” He looked away.
+   Did he already think through the iterations? How long will this go? I was curious
+now. Here is the sequence of pile sizes:
+  (6, 4, 3, 1, 1)     →        (5, 5, 3, 2)        →       (4, 4, 4, 2, 1)       →    (5, 3, 3, 3, 1)
+                      →       (5, 4, 2, 2, 2)      →      (5, 4, 3, 1, 1, 1)     →     (6, 4, 3, 2)
+Oh no, that’s almost where I started. When will this end? But then, suddenly, it did end:
+               (6, 4, 3, 2)     →      (5, 4, 3, 2, 1)       →      (5, 4, 3, 2, 1) again.
+   “Hmm,” I said.
+   “You ended with one pile of 5 cards, one of 4, one of 3, one of 2, and one of 1,
+didn’t you?” He looked at the cards. “Yes! That’s always what happens. Try again!”
+   I started with a single pile of 15 cards. It took more moves, but I did indeed end
+up with the 5, 4, 3, 2, 1 pattern. Then I started with three piles of 5 cards. It took even
+more moves, but ended at the same fixed point.
+   Three examples is not a proof, but the claim was now reasonable. Why would it
+always go there? How long could it take to reach this fixed point? What happens with
+other numbers of cards?
+   “This is interesting,” I admitted.
+   http://dx.doi.org/10.4169/college.math.j.43.2.135
+   MSC: 01A60, 11P81, 91A46
+
+
+VOL. 43, NO. 2, MARCH 2012 THE COLLEGE MATHEMATICS JOURNAL                                         135
+
+
+
+
+                                      This content downloaded from
+                    132.174.253.113 on Thu, 20 May 2021 00:04:04 UTC
+                              All use subject to https://about.jstor.org/terms
+   This puzzle was popularized by Martin Gardner in 1983 [9], with the unusual name
+Bulgarian solitaire. In this article, we examine the earlier history of the puzzle includ-
+ing its name, summarize subsequent research, and consider a new two-player variation.
+
+
+
+Before Gardner
+Around 1980, Konstantin Oskolkov of the Steklov Mathematical Institute in Moscow
+traveled by train to give a talk in Leningrad (now Saint Petersburg). A man on the
+train told him of the problem, although the details of the dialog above are fictional.
+Oskolkov shared this with his colleagues at the institute; reportedly when one number
+theorist heard about it “his face took a Satanic expression, he ran to his office, closed
+the door and did not come out until he solved the problem.”
+    The puzzle reached Victor Gutenmacher, editor of the journal Kvant. The problem
+appeared there in 1980, in the context of stacks of books. Andrei Toom, a research sci-
+entist at Moscow State University, published a solution in 1981 [19]. The material was
+also included in a 1981 book on mathematics olympiads [20] whose authors include
+Gutenmacher and Toom.
+    Later in 1980, Anatolii Alexeevich Karatsuba traveled from Steklov to the Institute
+of Mathematics of the Bulgarian Academy of Sciences in Sofia. After a lecture on
+approximation theory, he shared Oskolkov’s story and the puzzle. Again, it captured
+the attention of many mathematicians, and Milko Petkov published it in the “compe-
+tition problems” section of a high school mathematics journal in 1980, in the context
+of heaps of balls. No student solved the puzzle, so the solution of Petkov’s institute
+colleague Borislav Bojanov was published in 1981 [4].
+    Gert Almkvist of Lund University was visiting Sofia while Karatsuba was there.
+When Almkvist returned to Sweden, he shared the puzzle with colleagues, including
+Henrik Eriksson of the KTH Royal Institute of Technology, who published a solution
+also in 1981 [7] with the name “Bulgarisk patiens,” in the context of piles of cards.
+    Jørgen Brandt, finishing his masters at Aarhus University, somehow learned of the
+puzzle as well (without the name). “The problem appeared so pure, that I did not think
+much about where it came from,” he explained recently. His thorough solution, in the
+setting of integer partitions, was submitted to Proceedings of the American Mathemat-
+ical Society in 1981 and published in 1982 [5].
+    Meanwhile, Eriksson traveled from Stockholm to California, where he called the
+puzzle Bulgarian solitaire. He recently explained, “The silly name is my invention,
+silly because it is neither Bulgarian nor a solitaire.” Donald Knuth started a fall 1982
+programming and problem-solving seminar with Bulgarian solitaire [12]. Ron Graham
+passed it on to Gardner, who used Bulgarian solitaire as the culminating example of
+“tasks you cannot help finishing no matter how hard you try to block finishing them”
+[9]. The silly name has stuck.
+
+
+
+Gardner and beyond
+A partition of n is a collection of positive integers λ = (λ1 , . . . , λt ) whose sum is n; as
+the order does not matter, we index the parts in non-increasing order, i.e., λ1 ≥ λ2 ≥
+· · · ≥ λt . Bulgarian solitaire can be considered as an operation on partitions, B(λ) =
+(t, λ1 − 1, . . . , λt − 1) where there may be zeros to remove and the parts may need to
+be reordered. This can also be visualized through a graphic representation of partitions.
+The Ferrers diagram of a partition has a column of λ1 dots followed by a column of λ2
+
+136                                            „ THE MATHEMATICAL ASSOCIATION OF AMERICA
+
+
+
+
+                                    This content downloaded from
+                  132.174.253.113 on Thu, 20 May 2021 00:04:04 UTC
+                            All use subject to https://about.jstor.org/terms
+dots, etc. Figure 1 shows the Bulgarian solitaire operation on (6, 4, 3, 1, 1), choosing
+to remove the bottom dot of each column, that is, the bottom row.
+
+                    
+                                                                  
+                                                                 
+                                                 →                   
+                                                                         
+                                                                       
+                    6     4     3     1      1                5     5     3    2
+                  Figure 1. Example of the Bulgarian solitaire operation.
+
+
+   The number of partitions of n grows very quickly as n increases, but it is helpful to
+look at the effect of B on all partitions of n for small n. Figure 2 shows all partitions
+of 6 under the operation.
+
+      2211    - 411        - 33           - 23          - 313           - 42       - 321 
+
+                                                                              6
+
+                                               16       - 6             - 51          214
+      Figure 2. Bulgarian solitaire on all partitions of 6; exponents denote repetition.
+
+
+    Like the 15 card puzzle of the introduction, Bulgarian solitaire on partitions of 6
+leads to a fixed point, the partition τ3 = (3, 2, 1). Both 6 and 15 are triangular numbers,
+i.e., can be written as Tk = 1 + · · · + k = k(k + 1)/2. The effect of Bulgarian solitaire
+can be very different on other values of n.
+
+Exercise. Work out Bulgarian solitaire on the 22 partitions of 8. (For the solution,
+see [13, Figure 4].)
+
+    The three 1981 solutions in European journals [4, 7, 19] use very similar ideas to
+show that, for n = Tk , there is indeed just the single fixed point τk = (k,
+k − 1, . . . , 2, 1). Each author argues that a ball / book / card cannot move to a longer
+diagonal in the configuration, and will eventually move into the shortest diagonal pos-
+sible, filling any gaps and leaving a triangular shape. Brandt [5] and Toom [19] showed
+that for other values of n, the “almost triangular” partitions form cycles. For example,
+the partitions (4, 2, 2) and (3, 3, 1, 1) form a 2-cycle in one connected component of
+the partitions of 8 from the exercise; see Figure 3. From this characterization, Brandt
+used Pólya enumeration theory to determine the number of connected components.
+For instance, the partitions are in a single component exactly when n is within one of a
+triangular number. See also [11], which revisits and generalizes Toom’s solution, and
+[1], which elaborates on Brandt’s work.
+    The partitions of Figure 3 illustrate another relationship. Reading the row lengths
+of (4, 2, 2) rather than the column heights gives (3, 3, 1, 1). Considered another way,
+reflecting the Ferrers diagram for (3, 3, 1, 1) across the diagonal line y = x gives
+(4, 2, 2). These partitions are said to be conjugates.
+    Gardner’s article [9] focuses on the fixed point result for triangular numbers, with
+a discussion of using 45 cards, and the analog of Figure 2 for partitions of 10. He
+
+VOL. 43, NO. 2, MARCH 2012 THE COLLEGE MATHEMATICS JOURNAL                                   137
+
+
+
+
+                                   This content downloaded from
+                 132.174.253.113 on Thu, 20 May 2021 00:04:04 UTC
+                           All use subject to https://about.jstor.org/terms
+                           
+                                                            
+                                           ←→             
+                                                                    
+                           4     2     2                3     3     1     1
+                      Figure 3. A two-cycle among the partitions of 8.
+
+
+mentions two other conjectures, which were both proven within a few years. First, for
+n = Tk , data suggest that the greatest possible distance to the fixed point is linear in
+n, specifically k(k − 1). Igusa [15] shows that the partition γk = (k − 1, k − 1, k − 2,
+k − 3, . . . , 3, 2, 1, 1) is at distance k(k − 1) from τk and that this distance is maxi-
+mal; see also [3] and [8]. Second, look carefully at the sequence of partitions from
+γ3 = (2, 2, 1, 1) to τ3 = (3, 2, 1) in Figure 2: until the fixed point, the sequence con-
+sists of nested conjugate pairs, shown in Figure 4. Bentz [3] proves that this occurs
+along the “main trunk” of the diagram for all n = Tk , which distinguishes γk among
+the partitions at maximal length from the fixed point (for k ≥ 4, there are several par-
+titions at that distance). See also [2].
+
+
+      2211     - 411        - 33           - 23          - 313          - 42   - 321 
+
+
+                 Figure 4. Conjugate pairs on the “main trunk” of Figure 2
+
+
+   Gardner also mentioned “Eden” partitions that have no predecessor under the opera-
+tion, such as γ2 = (2, 2, 1, 1), (2, 1, 1, 1, 1), and (1, 1, 1, 1, 1, 1) in Figure 2. Recently,
+Hopkins and Sellers [14] determined a formula for the number of these partitions for
+general n that resembles a recurrence result of Euler.
+   There remain many open questions about Bulgarian solitaire, several of which are
+surveyed in Hopkins and Jones [13]. Griggs and Ho [10] conjectured maximal lengths
+to a cycle partition for n 6 = Tk . How many partitions are at given length from a cycle
+partition or fixed point? What is the relation between B and conjugation outside the
+“main trunk”? When there are multiple components, is there an easy way to tell if
+two partitions are in the same component? What can be said about component sizes?
+There are many questions about asymptotic and random behavior; some are addressed
+by Popov [18].
+   Bulgarian solitaire continues to arise in the teaching literature, such as Nicholson
+[16] and Dorée [6]. The operation has been rediscovered at least once, see [17]. Several
+variants have been considered in the literature, but there is not space here to discuss
+them.
+
+
+A new game
+Figure 1 shows the effect of changing the bottom row of the Ferrers diagram of
+(6, 4, 3, 1, 1) to a column. Suppose you could change any row to a column. Figure
+5 shows the effect of changing the length 2 row to a column. Under this operation,
+(6, 4, 3, 1, 1) could be followed by one of three partitions: (5, 5, 3, 2) by selecting the
+bottom row, (5, 3, 3, 2, 1, 1) selecting the length 2 or a length 3 row, or (5, 4, 3, 1, 1, 1)
+selecting a length 1 row.
+
+138                                            „ THE MATHEMATICAL ASSOCIATION OF AMERICA
+
+
+
+
+                                    This content downloaded from
+                  132.174.253.113 on Thu, 20 May 2021 00:04:04 UTC
+                            All use subject to https://about.jstor.org/terms
+                  
+                                                            
+                                                           
+                                               →                    
+                                                                         
+                                                                             
+                  6      4     3     1     1                 5     3     3     2   1   1
+    Figure 5. Changing the length 2 row of (6, 4, 3, 1, 1) to a column gives (5, 3, 3, 2, 1, 1).
+
+
+   For a 2-player game, we start with the single-part partition (n). In turn, each player
+chooses a single row to change into a column. The loser is the first player who creates
+a partition that has occurred before in play.
+   The first player can only chose a row of length 1, giving the partition (n − 1, 1). The
+second player then can choose a row of length 1 or 2, making the partition (n − 2, 1, 1)
+or (n − 2, 2), respectively (for sufficiently large n). All possible moves for partitions
+of 6 are shown in Figure 6.
+
+                               - 16           -      6        -     51     
+
+
+                                                                       ?
+                                                    411             42
+
+                                                     BM 
+                                                       B
+                                                   ? B              ??
+                                                   3
+                                                                        
+                                    33           31      B         321
+                                                           B
+                                                            B
+                                                               B
+                                     ?             ?             B ??
+                                    23           214              2211
+
+
+Figure 6. All possible moves in the two-player game on partitions of 6. Double arrows indi-
+cate where selecting either of two different row lengths produces the same partition.
+
+
+    Here are some open questions about this game.
+• As a finite impartial two-player game of perfect information with no draws, either
+  the first or second player has a winning strategy. Which player? What is the strategy?
+  Do the answers depend on n?
+• Notice that there is a Hamiltonian cycle in the directed graph of Figure 6. That is,
+
+  there is a sequence of play where every partition arises before there is repetition. I
+  conjecture that this occurs for all n. If so, is there a nice way to describe the corre-
+  sponding sequence of moves?
+
+
+Conclusion
+A mathematical recreation that reportedly arose from a conversation in a train has
+gone on to inspire several lines of research and student activities. This is due largely to
+
+VOL. 43, NO. 2, MARCH 2012 THE COLLEGE MATHEMATICS JOURNAL                                   139
+
+
+
+
+                                        This content downloaded from
+                      132.174.253.113 on Thu, 20 May 2021 00:04:04 UTC
+                                All use subject to https://about.jstor.org/terms
+Martin Gardner’s attention to it in his mathematics column from Scientific American.
+Bulgarian solitaire is just one example of the impact his work has had on all of us who
+enjoy mathematics.
+
+Acknowledgment. The history of Bulgarian solitaire comes from personal communication
+with Borislav Bojanov, Jørgen Brandt, Vesselin Drensky, Victor Gutenmacher, Pencho Petru-
+shev, Andrei Toom, and especially Henrik Eriksson. Recollections of events thirty years ago
+can be imperfect; hopefully the account provided here approaches what occurred. Aleksandar
+Nikolov kindly provided translations from Bulgarian. Suggestions from two anonymous refer-
+ees improved the article. I would like to thank Eriksson, Suzanne Dorée, and Mizan Khan for
+their interest and help.
+
+Summary. Bulgarian solitaire is a puzzle popularized by Martin Gardner that can be consid-
+ered an operation on integer partitions. We explore its history in Russia, Bulgaria, Sweden, and
+the United States before revisiting Gardner’s treatment and considering subsequent research.
+The article concludes by introducing a related combinatorial game.
+
+
+
+References
+
+ 1. E. Akin and M. Davis, Bulgarian solitaire, Amer. Math. Monthly 92 (1985) 237–250; available at http:
+    //dx.doi.org/10.2307/2323643.
+ 2. T. Bending, Bulgarian Solitaire, Eureka 50 (1990) 12–20.
+ 3. H.-J. Bentz, Proof of the Bulgarian solitaire conjectures, Ars Combin. 23 (1987) 151–170.
+ 4. B. Bojanov, Problem solution 4, Obuchenieto po matematika (Mathematics Education) 24(5) (1981) 59–60.
+ 5. J. Brandt, Cycles of partitions, Proc. Amer. Math. Soc. 85 (1982) 483–486; available at http://dx.doi.
+    org/10.1090/S0002-9939-1982-0656129-5.
+ 6. S. Dorée, Bulgarian Solitaire, Resources for Teaching Discrete Mathematics, B. Hopkins, ed., Mathematical
+    Association of America, Washington DC, 2009, 83–92.
+ 7. H. Eriksson, Bulgarisk patiens, Elementa 64(4) (1981) 186–188.
+ 8. G. Etienne, Tableaux de Young et solitaire bulgare. J. Combin. Theory Ser. A 58 (1991) 181–197; available
+    at http://dx.doi.org/10.1016/0097-3165(91)90059-P.
+ 9. M. Gardner, Mathematical Games: Tasks you cannot help finishing no matter how hard you try
+    to block finishing them, Sci. Amer. 249 (1983) 12–21; available at http://dx.doi.org/10.1038/
+    scientificamerican0883-12. Also available as Bulgarian solitaire & other seemingly endless tasks, The
+    Last Recreations, Springer-Verlag NY, 2007, 27–43.
+10. J. Griggs and C.-C. Ho, The cycling of partitions and compositions under repeated shifts, Adv. in Appl. Math.
+    21 (1998) 205–227; available at http://dx.doi.org/10.1006/aama.1998.0597.
+11. T. Hart, G. Khan, and M. Khan, Revisiting Toom’s proof of Bulgarian solitaire, Ann. Sci. Math. Qu., to
+    appear.
+12. J. Hobby and D. Knuth, A Programming and Problem-Solving Seminar, Stanford University Department of
+    Computer Science report, 1983.
+13. B. Hopkins and M. Jones, Shift-Induced Dynamical Systems on Partitions and Compositions, Electr. J. Comb.
+    13 (2006) R80 19 pp.
+14. B. Hopkins and J. Sellers, Exact Enumeration of Garden of Eden Partitions, Integers 7(2) (2007) A19.
+15. K. Igusa, Solution of the Bulgarian solitaire conjecture, Math. Mag. 58 (1985) 259–271.
+16. A. Nicholson, Bulgarian Solitaire, The Mathematics Teacher 83 (1996) 84–86.
+17. H. D. Phan and É. Thierry, Dynamics of the Picking transformation on integer partitions, Discrete Math.
+    Theor. Comput. Sci. AB(DMCS) (2003) 43–56.
+18. S. Popov, Random Bulgarian Solitaire, Random Struct. Alg. 27 (2005) 310–330; available at http://dx.
+    doi.org/10.1002/rsa.20076.
+19. A. Toom, Problem solution M655, Kvant (Quantum) 1981(7) 28–30.
+20. N. Vasilyev, V. Gutenmacher, J. Rabbot, and A. Toom, Zaochnye matematicheskie olimpiady (Mathematical
+    olympiads by correspondence), Nauka, Moscow, 1981.
+
+
+
+
+140                                                „ THE MATHEMATICAL ASSOCIATION OF AMERICA
+
+
+
+
+                                        This content downloaded from
+                      132.174.253.113 on Thu, 20 May 2021 00:04:04 UTC
+                                All use subject to https://about.jstor.org/terms
+

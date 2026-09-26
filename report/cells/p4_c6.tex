@@ -135,9 +135,88 @@ Tutto; la via (b) via riproduzione della prova è quella indicata.
 
 \subsubsection{Decisioni degli agenti}
 \paragraph{Run \texttt{p4\_c6}}
+\begin{description}
+\item[Iterazione 1 — attempt\_001]
+\textbf{Researcher}: famiglia \texttt{induction}, sotto-obiettivo: Establish, with a complete self-contained proof, a quantitative lower bound on the maximal gcd valid for every k (direction (b)): a "prime-splitting recursion" for the maximal size F(g) of a pairwise disjoint family with all pairwise gcds at most g, and the closed bounds F(g) \textless{}= g\textasciicircum{}3 (fully elementary) and F(g) \textless{}= g\textasciicircum{}2 * prod\_\{p\textless{}=g\}(1+2/p) (hence max gcd \textgreater{}= c*sqrt(k)/log k with Mertens).. Stato dichiarato: \texttt{LEMMA\_CANDIDATE}.
+\emph{Perché questa scelta}: No blocker, no verified claims and no failed attempts are recorded, so this is the first iteration on an OPEN cell. Of the three directions, (a) needs a certified search at k\textgreater{}=25 that presupposes the cell-5 machinery (nothing verified yet), and (c) (group form, k=6) is an open case-analysis problem. Direction (b) admits a genuinely self-contained, checkable first step: a lower bound valid for all k, proved in full rather than cited. The bound obtained is weaker than the literature (k\textasciicircum{}\{1/2-o(1)\} vs k\textasciicircum{}\{1-o(1)\}), and I say so; its value is that every step is verifiable, it already re-proves cell 1 (R(2)=2), and it isolates exactly where the loss occurs (the union bound over primes), which is the natural target for the next iteration.
+\emph{Rispetto allo stato dell'arte}: State of the art for this cell (direction (b)): arXiv:2607.24655 (Fornal–Sun, 27 Jul 2026), Theorem 1.1, which I fetched and read in part (introduction and section structure, not the full proofs): "Let a\_1 (mod m\_1),...,a\_k (mod m\_k) be pairwise disjoint residue classes. Then max gcd(m\_i,m\_j) \textgreater{}\textgreater{} k exp(-(2+o(1)) sqrt(log k / log log k))." — CITED, not reproduced. Note this is *stronger* than the bound quoted in the problem statement (exponent log k/log log k without the square root): the square-root version already "improves the exponential factor" asked for in (b); but by the hand-in rules a citation scores nothing, and the paper is \textasciitilde{}2000 lines (weighted gcd graph, sieve-theoretic partition Prop. 2.1, Möbius inversion and DFT in Prop. 2.2, key Lemma 4.1), which I judged not reproducible and checkable within one iteration. Its introduction also records (CITED, not checked): O'Bryant proved the integer conjecture for k \textless{}= 20 [K. O'Bryant, On Z.-W. Sun's disjoint congruence classes conjecture, Combinatorial Number Theory, de Gruyter 2007, 403–412]; Zhu proved the group form for k=3,4 [Int. J. Mod. Math. 3 (2008)]; Sun proved k=2 and finite p-groups [Internat. J. Math. 17 (2006)]. The problem's statement that the group form is known for k\textless{}=5 is consistent with arXiv:2608.15873 (Menon) / Margolis–Schnabel on G-harmonic tuples, relevant only to direction (c). arXiv:2603.26043 and arXiv:1511.04293 concern disjoint *covering* systems with one repeated modulus and are not relevant here. My approach departs from Fornal–Sun: instead of weighting vertices over all n \textless{}= d and using Fourier analysis, it uses only the affine rescaling y -\textgreater{} r+py inside a residue class mod a prime, an elementary recursion, and a closed-form induction. The price is the exponent (1/2 instead of 1-o(1)); the gain is a complete proof.
+\textbf{Referee}: verdetto \texttt{REJECT} (review\_status \texttt{NEEDS\_WORK}).
+\emph{Errore fatale}: The strongest result actually proved is Corollary 6: max gcd(m\_i,m\_j) \textgreater{}= k\textasciicircum{}\{1/3\} unconditionally, and \textgreater{}= c*sqrt(k)/log k conditional on Mertens/Rosser–Schoenfeld. The cell-6 target requires one of: (a) deciding a size k \textgreater{}= 25; (b) gcd \textgreater{}= ck for an absolute c \textgreater{} 0, or an improvement of the known factor k*exp(-(2+o(1)) log k/log log k) (i.e. something better than k\textasciicircum{}\{1-o(1)\}); (c) the group form at k = 6. A bound of order k\textasciicircum{}\{1/2-o(1)\} is strictly weaker than the already-known k\textasciicircum{}\{1-o(1)\} and does not touch (a) or (c). The submission's own remarks concede that the recursion of Lemma 4 cannot give better than F(g) ≲ g\textasciicircum{}2/2, i.e. gcd ≳ sqrt(2k), so no route to the target is present. The declared claim 'main' is therefore not established, and no other reusable claim was declared.
+\emph{Prossimo passo richiesto}: Address the stated blocking obligation without silently changing the target
+\end{description}
 
 \subsubsection{Codice su cui poggia il tentativo}
-Nessun codice nei tentativi.
+\begin{lstlisting}[caption={attempt\_001 code\_1 [python, rigore exact] — Exact integer evaluation of the recursion R(g,P) of Lemma 4 for all g \textless{}= 3000 (P ranging o — verdetto del Referee: REJECT}]
+"""
+Calcolo ESATTO (interi e frazioni) della ricorsione del Lemma R (problema 4, cella 6).
+
+S(g, P) = massima taglia di una famiglia di classi a due a due disgiunte con tutti i
+gcd a coppie <= g e tutti i moduli coprimi con ogni primo < P.
+Lemma R:   S(g, P) <= sum_{P <= p <= g, p primo} p * S(floor(g/p), p),   S(g, P) = 1 se P > g.
+Qui calcoliamo la funzione R(g, P) definita dalla ricorsione con l'uguaglianza
+(quindi F(g) := S(g, 2) <= R(g, 2)) e la confrontiamo con i limiti chiusi
+   g^2 * prod_{p <= g} (1 + 2/p)     e     g^3.
+Tutto in aritmetica esatta: nessun float.
+"""
+from fractions import Fraction
+from functools import lru_cache
+import sys
+import time
+
+
+def primi_fino_a(n):
+    """Crivello di Eratostene: lista dei primi <= n."""
+    segna = bytearray([1]) * (n + 1)
+    segna[0:2] = b"\x00\x00"
+    for p in range(2, int(n ** 0.5) + 1):
+        if segna[p]:
+            segna[p * p::p] = bytearray(len(segna[p * p::p]))
+    return [p for p in range(2, n + 1) if segna[p]]
+
+
+LIMITE = int(sys.argv[1]) if len(sys.argv) > 1 else 3000
+PRIMI = primi_fino_a(LIMITE)
+
+
+@lru_cache(maxsize=None)
+def ricorsione(g, indice_primo):
+    """R(g, P) con P = PRIMI[indice_primo]; vale 1 se nessun primo >= P e' <= g."""
+    totale = 0
+    for i in range(indice_primo, len(PRIMI)):
+        p = PRIMI[i]
+        if p > g:
+            break
+        totale += p * ricorsione(g // p, i)
+    return totale if totale > 0 else 1
+
+
+def limite_chiuso(g):
+    """g^2 * prod_{p <= g} (1 + 2/p), come frazione esatta."""
+    prodotto = Fraction(1)
+    for p in PRIMI:
+        if p > g:
+            break
+        prodotto *= Fraction(p + 2, p)
+    return g * g * prodotto
+
+
+inizio = time.time()
+sys.setrecursionlimit(10000)
+peggior_rapporto = Fraction(0)
+for g in range(1, LIMITE + 1):
+    r = ricorsione(g, 0)
+    chiuso = limite_chiuso(g)
+    assert r <= chiuso, f"limite chiuso violato a g={g}"
+    assert r <= g ** 3, f"limite cubico violato a g={g}"
+    peggior_rapporto = max(peggior_rapporto, Fraction(r, g * g))
+    if g <= 12 or g in (16, 20, 24, 30, 50, 100, 300, 1000, LIMITE):
+        print(f"g={g:5d}  R(g)={r:12d}  R/g^2={float(r)/g/g:8.3f}  "
+              f"g^2*prod(1+2/p)={float(chiuso):14.1f}")
+print(f"max R(g)/g^2 per g<={LIMITE}: {float(peggior_rapporto):.4f}")
+print(f"tempo: {time.time()-inizio:.2f} s")
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_1.py (python3, clean copy of the researcher sandbox): exit 0 in 2.8s; stdout: '  118  R/g\textasciicircum{}2=   0.461  g\textasciicircum{}2*prod(1+2/p)=        2094.5\textbackslash{}ng=   20  R(g)=         186  R/g\textasciicircum{}2=   0.465  g\textasciicircum{}2*prod(1+2/p)=        4042.8\textbackslash{}ng=   24  R(g)=         276  R/g\textasciicircum{}2=   0.479  g\textasciicircum{}2*prod(1+2/p)=        6327.8\textbackslash{}ng=   30  R(g)=         427  R/g\textasciicircum{}2=   0.474  g\textasciicircum{}2*prod(1+2/p)=       10569.1\textbackslash{}ng=   50  R(g)}
 
 \section{arXiv literature consulted}
 \begin{thebibliography}{99}

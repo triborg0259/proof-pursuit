@@ -1,0 +1,3 @@
+k=13 soglia=12 L=27720 candidati=95 stato=TERMINATA senza_potenze=False tre_multipli=False nodi=1224204 foglie=3889 sopravvissuti=1 tempo=93.78s
+   sopravvissuto: (10, 10, 10, 10, 10, 12, 12, 12, 12, 24, 36, 40, 45)
+k=14 soglia=13 L=360360 candidati=191 stato=NON_TERMINATA senza_potenze=False tre_multipli=False nodi=3599854 foglie=4 sopravvissuti=0 tempo=600.00s

@@ -1,0 +1,243 @@
+{
+ "job": {
+  "problem_id": "p1_c6",
+  "original_problem": "# Problema 1 — Angles between lines\n\n*(Enunciato formattato in LaTeX, contenuto fedele all'originale; ricevuto a parti il 2026-09-26.)*\n\n## Preambolo\n\n**Angles between lines.** How large can the sum of pairwise angles between $N$ lines through the origin be?\nFejes Tóth conjectured in 1959 that orthogonal lines win.\n\nA line here always means a line through the origin of $\\mathbb{R}^d$. The angle between two lines\n$\\ell, \\ell'$ is the acute (non-obtuse) angle $\\theta(\\ell,\\ell') \\in [0,\\pi/2]$ between them.\nIf $\\ell, \\ell'$ are spanned by unit vectors $x, x'$, then\n$$\n\\theta(\\ell,\\ell') = \\arccos\\,\\lvert \\langle x, x' \\rangle \\rvert .\n$$\nFor lines $\\ell_1, \\ldots, \\ell_N$ in $\\mathbb{R}^d$ (repetitions allowed), write\n$$\nS(\\ell_1,\\ldots,\\ell_N) = \\sum_{1 \\le i < j \\le N} \\theta(\\ell_i,\\ell_j).\n$$\nThe question is how large $S$ can be. In 1959 L. Fejes Tóth conjectured that $S$ is maximised by taking\n$d$ mutually orthogonal lines, each used either $\\lfloor N/d \\rfloor$ or $\\lceil N/d \\rceil$ times.\nWhen $N = d + k$ with $0 \\le k \\le d$, that configuration (the $d$ coordinate axes, $k$ of them used twice) has\n$$\nS = \\left( \\binom{N}{2} - k \\right) \\cdot \\frac{\\pi}{2},\n$$\nbecause exactly $k$ pairs of lines coincide and every other pair is orthogonal.\n\nEach cell below asks you to prove this bound, or a special case of it. Unless a cell says otherwise, you need\na complete proof. Citing a published result for the statement you are asked to prove does not count.\n\n**What to hand in.** For each cell you attempt, hand in a written proof. You may use a computer to explore.\nA proof may rely on a computation only if you include the code, it runs in under 10 minutes on a laptop, and\nit is rigorous: exact or interval arithmetic, or an argument that bounds the numerical error. Say clearly\nwhich cells you consider solved and which are partial.\n\n## Parte 1 — Lines in the plane\n\n**Punteggio:** 1 point · **Valutazione:** Judged\n\nWe begin in the plane ($d = 2$), where the conjectured optimum splits the $N$ lines as evenly as\npossible between two perpendicular directions. Let $\\ell_1, \\ldots, \\ell_N$ be lines in $\\mathbb{R}^2$.\nProve that\n$$\nS(\\ell_1, \\ldots, \\ell_N) \\;\\le\\; \\frac{\\pi}{2} \\cdot \\left\\lfloor \\frac{N^2}{4} \\right\\rfloor .\n$$\n\n## Parte 2 — An orthogonality lemma\n\n**Punteggio:** 2 points · **Valutazione:** Judged\n\nA statement about a chain of vectors, in which each vector may fail to be orthogonal only to its immediate\nneighbours in the list. Let $m \\ge 2$ and let $x_1, \\ldots, x_m$ be unit vectors in $\\mathbb{R}^{m-1}$ with\n$\\langle x_i, x_j \\rangle = 0$ whenever $|i - j| \\ge 2$. Prove that\n$$\n\\sum_{i=1}^{m-1} \\theta(x_i, x_{i+1}) \\;\\le\\; (m-2) \\cdot \\frac{\\pi}{2},\n$$\nwhere $\\theta(x,y) = \\arccos\\,\\lvert \\langle x, y \\rangle \\rvert$.\n\n## Parte 3 — $d+1$ lines in $\\mathbb{R}^d$\n\n**Punteggio:** 3 points · **Valutazione:** Judged\n\nThe first case in every dimension: one line more than the dimension, $N = d+1$, where the conjectured optimum\nrepeats exactly one of the $d$ coordinate axes. Let $d \\ge 1$. Prove that any $d+1$ lines in $\\mathbb{R}^d$ satisfy\n$$\nS \\;\\le\\; \\left( \\binom{d+1}{2} - 1 \\right) \\cdot \\frac{\\pi}{2}.\n$$\n\n## Parte 4 — Five lines in $\\mathbb{R}^3$, six in $\\mathbb{R}^4$\n\n**Punteggio:** 5 points · **Valutazione:** Judged\n\nTwo concrete instances of the next case, $N = d+2$: five lines in three dimensions and six lines in four.\nIn each, the conjectured optimum repeats two of the coordinate axes. Prove that any $5$ lines in $\\mathbb{R}^3$\nsatisfy $S \\le 4\\pi$, and that any $6$ lines in $\\mathbb{R}^4$ satisfy $S \\le 13\\pi/2$.\n\n## Parte 5 — $d+2$ lines in $\\mathbb{R}^d$\n\n**Punteggio:** 8 points · **Valutazione:** Judged\n\nThe case $N = d+2$ in every dimension, with the same conjectured optimum: the $d$ coordinate axes, two of them\nrepeated. Prove that for every $d \\ge 2$, any $d+2$ lines in $\\mathbb{R}^d$ satisfy\n$$\nS \\;\\le\\; \\left( \\binom{d+2}{2} - 2 \\right) \\frac{\\pi}{2}.\n$$\n\n## Parte 6 — $N$ lines in $\\mathbb{R}^d$\n\n**Punteggio:** 13 points · **Valutazione:** Judged · **Open question**\n\nFejes Tóth's conjecture from the Setting, for every $N$ and every $d$. For $N$ lines in $\\mathbb{R}^d$, write\n$N = qd + s$ with $0 \\le s < d$, and let\n$$\nM(N,d) = s \\binom{q+1}{2} + (d-s) \\binom{q}{2}.\n$$\nProve or disprove: every $N$ lines in $\\mathbb{R}^d$ satisfy\n$$\nS \\;\\le\\; \\left( \\binom{N}{2} - M(N,d) \\right) \\frac{\\pi}{2}.\n$$\nThis is the value attained by splitting the lines as evenly as possible among $d$ mutually orthogonal\ndirections. Settling any infinite family not already covered above counts as partial progress.\n\n*(Fine del problema 1. Punteggi: 1+2+3+5+8+13 = 32.)*\n\n\n# TARGET CELL 6\nOPEN. For N lines in R^d write N = qd+s, 0 <= s < d, M(N,d) = s C(q+1,2) + (d-s) C(q,2). Prove or disprove: S <= (C(N,2) - M(N,d)) pi/2. Settling any infinite family not covered by cells 1-5 counts as partial progress.\n",
+  "cell": {
+   "id": "cell_6",
+   "number": 6,
+   "target_claim_id": "main",
+   "statement": "OPEN. For N lines in R^d write N = qd+s, 0 <= s < d, M(N,d) = s C(q+1,2) + (d-s) C(q,2). Prove or disprove: S <= (C(N,2) - M(N,d)) pi/2. Settling any infinite family not covered by cells 1-5 counts as partial progress."
+  },
+  "state": {
+   "highest_verified_cell": 0,
+   "claims": []
+  },
+  "candidate": {
+   "attempt_id": "attempt_001",
+   "proof": "# Cell 6 — transfer lemmas, the trivial family, and a counterexample search\n\n## 0. Notation\nLines are lines through the origin of $\\mathbb R^d$, spanned by unit vectors; $\\theta(\\ell,\\ell')=\\arccos|\\langle x,x'\\rangle|\\in[0,\\pi/2]$; $S=\\sum_{i<j}\\theta(\\ell_i,\\ell_j)$. For integers $N\\ge1$, $d\\ge1$ write $N=qd+s$ with $q=\\lfloor N/d\\rfloor$, $0\\le s<d$, and\n$$M(N,d)=s\\binom{q+1}{2}+(d-s)\\binom{q}{2},\\qquad B(N,d)=\\Big(\\binom N2-M(N,d)\\Big)\\frac{\\pi}{2}.$$\n**Definition.** $\\mathrm{FT}(N,d)$ is the statement: *every $N$ lines in $\\mathbb R^d$ satisfy $S\\le B(N,d)$.* Cell 6 asks whether $\\mathrm{FT}(N,d)$ holds for all $N,d$.\n\nThroughout, $\\binom{0}{2}=\\binom{1}{2}=0$.\n\n## 1. Exact identities for $M$\n**Lemma 0.** Let $N=qd+s$, $0\\le s<d$.\n(a) $2M(N,d)=q\\,(N+s-d)$.\n(b) $M(N+1,d)=M(N,d)+q$.\n(c) If $d\\ge2$ and $N=q'(d-1)+s'$ with $0\\le s'<d-1$ (so $q'=\\lfloor N/(d-1)\\rfloor$), then $M(N+q',d)=M(N,d-1)+\\binom{q'}{2}$.\n\n*Proof.* (a) $M=s\\frac{q(q+1)}2+(d-s)\\frac{q(q-1)}2=\\frac q2\\big[s(q+1)+(d-s)(q-1)\\big]=\\frac q2\\big[dq+2s-d\\big]=\\frac q2(N+s-d)$, using $dq+s=N$.\n\n(b) If $s\\le d-2$, then $N+1=qd+(s+1)$ with $0\\le s+1<d$ is the canonical representation, and $M(N+1,d)-M(N,d)=\\binom{q+1}2-\\binom q2=q$. If $s=d-1$, then $N+1=(q+1)d+0$, so $M(N+1,d)=d\\binom{q+1}2$, while $M(N,d)=(d-1)\\binom{q+1}2+\\binom q2$; the difference is again $\\binom{q+1}2-\\binom q2=q$.\n\n(c) $N+q'=q'(d-1)+s'+q'=q'd+s'$ with $0\\le s'<d-1<d$, so this is the canonical representation of $N+q'$ modulo $d$, and\n$M(N+q',d)=s'\\binom{q'+1}2+(d-s')\\binom{q'}2=\\Big[s'\\binom{q'+1}2+(d-1-s')\\binom{q'}2\\Big]+\\binom{q'}2=M(N,d-1)+\\binom{q'}2.$ $\\square$\n\n(These identities were also checked by exact integer arithmetic for all $1\\le d\\le40$, $1\\le N\\le400$ — file `verifica_identita_M.py`; the proof above does not depend on that check.)\n\n## 2. The trivial infinite family $N\\le d$ (and $d=1$)\n**Lemma 1.** $\\mathrm{FT}(N,d)$ holds whenever $N\\le d$, and whenever $d=1$.\n\n*Proof.* If $N\\le d$ then $q=0$, $s=N$, so $M(N,d)=N\\binom12+(d-N)\\binom02=0$ and $B(N,d)=\\binom N2\\frac\\pi2$. Since every $\\theta\\le\\pi/2$, $S\\le\\binom N2\\frac\\pi2$. If $d=1$, all lines equal $\\mathbb R^1$, so $S=0$; here $N=N\\cdot1+0$, $M(N,1)=\\binom N2$, $B(N,1)=0$, and $S\\le0$ holds. $\\square$\n\n*Honest remark.* This family is not covered by cells 1–5 (cell 3 starts at $N=d+1$) but it is trivial; I list it only for completeness, not as substantive progress.\n\n## 3. Adding a line when $N\\equiv-1\\pmod d$\n**Lemma 2.** Let $d\\ge1$, $N\\ge2$, $N=qd+s$ with $s=d-1$ (i.e. $N\\equiv-1\\pmod d$). If $\\mathrm{FT}(N,d)$ holds, then $\\mathrm{FT}(N+1,d)$ holds.\n\n*Proof.* Let $\\ell_1,\\dots,\\ell_{N+1}$ be lines in $\\mathbb R^d$ and $S$ their angle sum. For $k=1,\\dots,N+1$ let $S_k$ be the angle sum of the $N$ lines obtained by deleting $\\ell_k$. A pair $\\{i,j\\}$ contributes $\\theta(\\ell_i,\\ell_j)$ to $S_k$ exactly for the $N+1-2=N-1$ indices $k\\notin\\{i,j\\}$, hence\n$$\\sum_{k=1}^{N+1}S_k=(N-1)\\,S.$$\nBy $\\mathrm{FT}(N,d)$, $S_k\\le B(N,d)$ for each $k$, so $(N-1)S\\le(N+1)B(N,d)$, i.e. $S\\le\\frac{N+1}{N-1}B(N,d)$ (here $N-1\\ge1$). It remains to show $\\frac{N+1}{N-1}B(N,d)\\le B(N+1,d)$, i.e.\n$$(N+1)\\Big(\\binom N2-M(N,d)\\Big)\\le(N-1)\\Big(\\binom{N+1}2-M(N+1,d)\\Big).\\tag{1}$$\nSince $(N+1)\\binom N2=\\frac{(N+1)N(N-1)}2=(N-1)\\binom{N+1}2$, and $M(N+1,d)=M(N,d)+q$ by Lemma 0(b), (1) is equivalent to $-(N+1)M(N,d)\\le-(N-1)M(N,d)-(N-1)q$, i.e. to $(N-1)q\\le2M(N,d)$. By Lemma 0(a), $2M(N,d)=q(N+s-d)=q(N-1)$ because $s=d-1$. So (1) holds with equality, and $S\\le B(N+1,d)$. $\\square$\n\n*Remark.* If $s\\ne d-1$ and $q\\ge1$, the inequality $(N-1)q\\le q(N+s-d)$ fails, so this averaging argument gives exactly the residue class $s=d-1$ and nothing else (exact check in `verifica_identita_M.py`, item (d)).\n\n## 4. Removing a line when $d\\mid N$\n**Lemma 3.** Let $d\\ge1$, $N=qd$ with $q\\ge1$. If $\\mathrm{FT}(N+1,d)$ holds, then $\\mathrm{FT}(N,d)$ holds.\n\n*Proof.* If $N=1$ then $S=0\\le B(1,d)$. Let $N\\ge2$ and let $\\ell_1,\\dots,\\ell_N$ be lines in $\\mathbb R^d$ with angle sum $S$. For each $k$ put $A_k=\\sum_{j\\ne k}\\theta(\\ell_k,\\ell_j)$. Each unordered pair $\\{i,j\\}$ appears in exactly $A_i$ and $A_j$, so $\\sum_kA_k=2S$ and some index $k$ satisfies $A_k\\ge2S/N$. Consider the $N+1$ lines $\\ell_1,\\dots,\\ell_N,\\ell_{N+1}$ with $\\ell_{N+1}=\\ell_k$ (a repeated line, allowed by the problem). Its angle sum is $S'=S+\\sum_{j\\le N}\\theta(\\ell_{N+1},\\ell_j)=S+A_k+\\theta(\\ell_k,\\ell_k)=S+A_k\\ge S\\,(1+\\tfrac2N)=\\tfrac{N+2}{N}S$, since $\\theta(\\ell_k,\\ell_k)=\\arccos1=0$. By $\\mathrm{FT}(N+1,d)$, $S'\\le B(N+1,d)$, hence $S\\le\\frac{N}{N+2}B(N+1,d)$. It remains to show $\\frac N{N+2}B(N+1,d)\\le B(N,d)$, i.e.\n$$N\\Big(\\binom{N+1}2-M(N+1,d)\\Big)\\le(N+2)\\Big(\\binom N2-M(N,d)\\Big).\\tag{2}$$\nCompute $N\\binom{N+1}2-(N+2)\\binom N2=\\frac{N}{2}\\big[(N^2+N)-(N^2+N-2)\\big]=N$. With Lemma 0(b), (2) is equivalent to $N\\le N\\,(M(N,d)+q)-(N+2)M(N,d)=Nq-2M(N,d)$, and by Lemma 0(a) with $s=0$: $Nq-2M(N,d)=Nq-q(N-d)=qd=N$. So (2) holds with equality and $S\\le B(N,d)$. $\\square$\n\n*Remark.* For $s\\ne0$ one gets $Nq-2M=q(d-s)<qd+s=N$, so the argument works exactly when $d\\mid N$ (exact check, item (e)).\n\n## 5. Dropping one dimension\n**Lemma 4.** Let $d\\ge2$, $N\\ge1$, $q'=\\lfloor N/(d-1)\\rfloor$. If $\\mathrm{FT}(N+q',d)$ holds, then $\\mathrm{FT}(N,d-1)$ holds.\n\n*Proof.* Let $\\ell_1,\\dots,\\ell_N$ be lines in $\\mathbb R^{d-1}$ spanned by unit vectors $x_1,\\dots,x_N$, with angle sum $S$. Embed $\\iota:\\mathbb R^{d-1}\\to\\mathbb R^d$, $\\iota(x)=(x,0)$; this is a linear isometry, so $\\langle\\iota x_i,\\iota x_j\\rangle=\\langle x_i,x_j\\rangle$ and all angles $\\theta$ are preserved. Let $e_d=(0,\\dots,0,1)$ and consider the $N+q'$ lines in $\\mathbb R^d$ spanned by $\\iota x_1,\\dots,\\iota x_N$ and $q'$ copies of $e_d$. Their angle sum is\n$$S'=S+\\sum_{i=1}^{N}q'\\,\\theta(\\iota x_i,e_d)+\\binom{q'}2\\theta(e_d,e_d)=S+q'N\\frac\\pi2+0,$$\nbecause $\\langle\\iota x_i,e_d\\rangle=0$ gives $\\theta=\\arccos0=\\pi/2$ and $\\theta(e_d,e_d)=0$. By $\\mathrm{FT}(N+q',d)$,\n$$S\\le\\Big(\\binom{N+q'}2-M(N+q',d)-q'N\\Big)\\frac\\pi2.$$\nNow $\\binom{N+q'}2-q'N=\\frac{(N+q')(N+q'-1)}2-q'N=\\frac{N^2-N+q'^2-q'}2=\\binom N2+\\binom{q'}2$, and $M(N+q',d)=M(N,d-1)+\\binom{q'}2$ by Lemma 0(c). Therefore $S\\le\\big(\\binom N2-M(N,d-1)\\big)\\frac\\pi2=B(N,d-1)$. $\\square$\n\n## 6. Consequences\n**Corollary 5 (conditional).** If cell 4's statement for five lines in $\\mathbb R^3$ holds ($\\mathrm{FT}(5,3)$, i.e. $S\\le4\\pi$), then every six lines in $\\mathbb R^3$ satisfy $S\\le6\\pi$, i.e. $\\mathrm{FT}(6,3)$.\n*Proof.* $N=5=1\\cdot3+2$, so $s=2=d-1$ and $N\\ge2$; Lemma 2 gives $\\mathrm{FT}(6,3)$. Here $B(6,3)=(15-3)\\frac\\pi2=6\\pi$ since $6=2\\cdot3+0$ and $M(6,3)=3\\binom22=3$. $\\square$\n(This recovers, conditionally on cell 4, the range $N\\le6$ in $\\mathbb R^3$ attributed by Bilyk–Matzke to Fejes Tóth 1959; cell 4 itself is not proved here.)\n\n**Corollary 6.** In the plane, Lemma 2 with $d=2$ says $\\mathrm{FT}(N,2)\\Rightarrow\\mathrm{FT}(N+1,2)$ for odd $N\\ge3$, and Lemma 3 says $\\mathrm{FT}(N+1,2)\\Rightarrow\\mathrm{FT}(N,2)$ for even $N$. (Consistent with cell 1, which is already proved by the team; not needed.)\n\n**What the lemmas do not give.** Starting from the families of cells 3–5 ($N=d+1$, $N=d+2$), Lemma 2 applies only when $d+2\\equiv-1\\pmod d$, i.e. $d\\mid3$, and Lemma 4 maps $(d+2,d)$ to $(d+1,d-1)$, the same family. So no new *infinite* family follows from cells 1–5 plus these lemmas; they are transfer tools for future attempts (e.g. any proof of $\\mathrm{FT}(2d-1,d)$ would yield $\\mathrm{FT}(2d,d)$ by Lemma 2, and $\\mathrm{FT}(2d,d)$ for all $d$ would yield $\\mathrm{FT}(2d-2,d-1)$ by Lemma 4).\n\n## 7. Counterexample search (float, exploration only — proves nothing)\nUsing the team's hill-climbing harness (`tools/autoloop.py` on `problema-1/esperimenti/lines_Rd.py`; Gaussian perturbations plus structured moves: copy a vector, orthogonalise against a random subset, random jump; 3 seeds × 8 restarts × 5 s per pair), the best $S$ found versus $B(N,d)$ for $(d,N)\\in\\{(3,6),(3,7),(3,8),(3,9),(4,7),(4,8),(4,9),(4,10),(5,8),(5,9),(5,11),(6,10),(6,13)\\}$ (each $\\approx5$ s wall, $\\approx2.3$–$3.2\\cdot10^5$ iterations):\n- in 12 of 13 cases the best value agrees with $B(N,d)$ to within $2\\cdot10^{-7}$; the sign of the residual is negative ($\\approx-10^{-7}$) in these cases, which is the expected floating-point artefact of `arccos` at arguments clipped to $1-\\varepsilon$ ($\\arccos(1-\\varepsilon)\\approx\\sqrt{2\\varepsilon}$), **not** evidence of a violation; \n- for $(3,6)$ the search did not converge (best $18.8287<6\\pi=18.8496$).\nNo configuration exceeding the conjectured bound was found. This is float arithmetic on a finite random sample: it supports \"prove\" over \"disprove\" heuristically and settles nothing.\n\n## 8. Summary of status\n- Proved (rigorously, self-contained): Lemma 0 (identities), Lemma 1 (trivial family $N\\le d$ and $d=1$), Lemmas 2–4 (transfer implications), Corollaries 5–6.\n- Not proved: any non-trivial infinite family; cell 6 remains open. Nothing here is claimed as a solution of the cell.",
+   "method_tag": "reduction",
+   "claims": [
+    {
+     "id": "main",
+     "statement": "OPEN. For N lines in R^d write N = qd+s, 0 <= s < d, M(N,d) = s C(q+1,2) + (d-s) C(q,2). Prove or disprove: S <= (C(N,2) - M(N,d)) pi/2. Settling any infinite family not covered by cells 1-5 counts as partial progress.",
+     "depends_on": []
+    }
+   ],
+   "sources": [
+    {
+     "id": "src_1",
+     "reference": "arXiv:1801.07837 (Bilyk–Matzke) — context only: Prop. 3.1 (dimension reduction for the continuous energy) motivates Lemma 4; the 'only settled case is d=1' statement; nothing cited as a proof step",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_2",
+     "reference": "problema-1/fonti/README.md (team reading notes on Bilyk–Matzke; attribution of N≤6 in R^3 to Fejes Tóth 1959, unread original)",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": "# Problema 1 — fonti verificate\n\n## [BM18] D. Bilyk, R. W. Matzke, \"On the Fejes Tóth problem about the sum of angles between lines\",\narXiv:1801.07837 (2018); versione pubblicata Proc. AMS 147 (2019). File: `BilykMatzke2018_arXiv1801.07837.pdf`\n(+ estrazione testo `BilykMatzke2018.txt`). **Letto** (introduzione, §3, §4) il 2026-09-26.\n\n**Convenzione:** loro $S^d\\subset\\mathbb{R}^{d+1}$; il nostro $d$ (dimensione ambiente) = loro $d+1$.\nEnergia normalizzata $E(Z)=\\frac{1}{N^2}\\sum_{i,j}\\arccos|z_i\\cdot z_j|$, quindi $S = \\frac{N^2}{2}E(Z)$.\n\n**Cosa dichiarano noto (con loro attribuzioni):**\n- Caso $S^1$ (= nostre rette in $\\mathbb{R}^2$, **parte 1**): dimostrato in [9] Fodor–Vígh–Zarnócz (2016) e [10];\n  in §4 BM18 danno tre prove alternative: espansione in polinomi di Chebyshev (coefficienti $\\tilde F_n\\le0$),\n  serie di Fourier, principio di Stolarsky per quadranti. Quest'ultimo è essenzialmente il nostro approccio E.\n- $S^2$ (= $\\mathbb{R}^3$): Fejes Tóth 1959 ha confermato la congettura per $N\\le6$ ⇒ \"5 rette in $\\mathbb{R}^3$\"\n  (**metà della parte 4**) è un risultato del 1959. Non abbiamo letto l'articolo originale [8]; la prova va\n  comunque prodotta da noi.\n- Bound generali: Thm 1.3, $\\max I(\\mu)\\le\\frac{\\pi}{2}-\\frac{69}{50(d+1)}$ su $S^d$, $d\\ge2$ (via \"frame potential\").\n- Prop. 3.1 (riduzione dimensionale): se la congettura continua vale su $S^d$ vale anche su $S^{d-1}$.\n- Frase chiave: \"the only settled case of the conjecture: d = 1\" (cioè solo il piano). ⇒ **Parti 3, 5, 6 e la\n  metà \"6 rette in $\\mathbb{R}^4$\" della parte 4 NON risultano dimostrate in letteratura a questa data (2018).**\n  Da controllare se lavori 2019–2026 (Bilyk–Glazyrin–Matzke–Park–Vlasiuk; Lim–McCann) abbiano chiuso $N=d+1$.\n\n## [LM20] Y. Lim, R. McCann, \"On Fejes Tóth's conjectured maximizer for the sum of angles between lines\"\n(preprint, math.utoronto.ca/mccann/papers/LimMcCann20a.pdf). **NON ancora letto.** Titolo suggerisce\nrisultati di massimalità locale / caratterizzazione del massimizzatore congetturato.\n\n## [FVZ16] G. Fodor, V. Vígh, T. Zarnócz, \"On the angle sum of lines\", Arch. Math. (2016?) — citato da BM18 come [9].\n**NON letto.** Contiene la prova del caso planare e il bound $E\\le 3\\pi/8$ su $S^2$.\n"
+    }
+   ],
+   "artifacts": [
+    {
+     "id": "code_1",
+     "kind": "CODE",
+     "content": "# Exact integer check of the identities of Lemma 0 and of the equality/inequality conditions in Lemmas 2–3, for 1≤d≤40, 1≤N≤400 (0.1 s). Saved as runs/p1_c6/sandbox/verifica_identita_M.py. The proofs do not depend on it.\n# rigor: exact\n\"\"\"\nVerifica ESATTA (interi Python) delle identita' aritmetiche usate nei lemmi di riduzione\nper la congettura di Fejes Toth (problema 1, parte 6).\n  M(N,d) = s*C(q+1,2) + (d-s)*C(q,2),  N = q*d + s, 0 <= s < d.\nCosa controlla e perche':\n  (a) 2*M(N,d) = q*(N+s-d)                      -> usata nei lemmi 2 e 3\n  (b) M(N+1,d) = M(N,d) + q                     -> usata nei lemmi 2 e 3\n  (c) M(N+q',d) = M(N,d-1) + C(q',2), q'=N//(d-1) -> usata nel lemma 4\n  (d) disuguaglianza del lemma 2 vale sse s = d-1 oppure q = 0 (N>=2)\n  (e) disuguaglianza del lemma 3 vale sse s = 0    (N>=1)\nCopertura: 1 <= d <= 40, 1 <= N <= 400. Aritmetica esatta: nessun float.\n\"\"\"\nfrom math import comb\n\n\ndef M(N, d):\n    \"\"\"Numero di coppie coincidenti nella configurazione equidistribuita.\"\"\"\n    q, s = divmod(N, d)\n    return s * comb(q + 1, 2) + (d - s) * comb(q, 2)\n\n\ndef B2(N, d):\n    \"\"\"Bound congetturato in unita' di pi/2: C(N,2) - M(N,d).\"\"\"\n    return comb(N, 2) - M(N, d)\n\n\ndef controlla(d_max=40, N_max=400):\n    for d in range(1, d_max + 1):\n        for N in range(1, N_max + 1):\n            q, s = divmod(N, d)\n            assert 2 * M(N, d) == q * (N + s - d), (N, d)\n            assert M(N + 1, d) == M(N, d) + q, (N, d)\n            if d >= 2:\n                qq = N // (d - 1)\n                assert M(N + qq, d) == M(N, d - 1) + comb(qq, 2), (N, d)\n            if N >= 2:\n                lemma2 = (N + 1) * B2(N, d) <= (N - 1) * B2(N + 1, d)\n                assert lemma2 == (s == d - 1 or q == 0), (N, d)\n            lemma3 = N * B2(N + 1, d) <= (N + 2) * B2(N, d)\n            assert lemma3 == (s == 0), (N, d)\n    print(f\"OK: identita' (a)-(e) verificate per d<=%d, N<=%d\" % (d_max, N_max))\n\n\nif __name__ == \"__main__\":\n    controlla()\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_2",
+     "kind": "CODE",
+     "content": "# Float-only hill-climbing search for configurations exceeding the conjectured bound in R^3..R^6 (13 pairs (d,N), 3 seeds x 8 restarts x 5 s each, ~70 s total), using the team's existing harness tools/autoloop.py with objective problema-1/esperimenti/lines_Rd.py; ledger saved in runs/p1_c6/sandbox/esplora_Rd.jsonl. Proves nothing.\n# rigor: float_exploration_only\ncd runs/p1_c6/sandbox\nfor dN in \"3 6\" \"3 7\" \"3 8\" \"3 9\" \"4 7\" \"4 8\" \"4 9\" \"4 10\" \"5 8\" \"5 9\" \"5 11\" \"6 10\" \"6 13\"; do\n  d=${dN%% *}; N=${dN##* }\n  ../../../.venv/bin/python ../../../tools/autoloop.py ../../../problema-1/esperimenti/lines_Rd.py \\\n      --budget 5 --seeds 3 --restarts 8 --ledger esplora_Rd.jsonl --tag \"c6_d${d}_N${N}\" -- $d $N\ndone\n# riassunto: per ogni (d,N) best trovato, target congetturato, gap (float)\n../../../.venv/bin/python - <<'EOF'\nimport json\nfor riga in open(\"esplora_Rd.jsonl\"):\n    r = json.loads(riga)\n    print(f\"d={r['args'][0]} N={r['args'][1]:>2}  best={r['best_score']:.6f}  target={r['target']:.6f}  target-best={r['gap_target_minus_best']:+.2e}\")\nEOF\n# Output osservato: (3,6) best 18.828661 < 18.849556 (non convergente); tutti gli altri 12 casi best = target entro 2e-7\n# (residuo negativo ~1e-7 = artefatto float di arccos vicino a 1, non una violazione).",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ]
+  },
+  "rules": {
+   "allow_literature_as_proof": false,
+   "allow_computation": true,
+   "require_machine_verification": false,
+   "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For each cell you attempt, hand in a written proof. You may use a computer to explore. A proof may rely on a computation only if you include the code, it runs in under 10 minutes on a laptop, and it is rigorous: exact or interval arithmetic, or an argument that bounds the numerical error. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+  }
+ },
+ "submission_digest": "094c3579b429d022bf3b3a5169d821b5e5af2b4d2189d592de1bb97755654eb6",
+ "math": {
+  "report": {
+   "mathematical_verdict": "FAIL",
+   "first_fatal_error": {
+    "code": "TARGET_MISMATCH",
+    "detail": "The only declared claim is `main` (Fejes Tóth's bound for all N, d). The submission explicitly states in §8 that no non-trivial infinite family is proved and that cell 6 remains open; Lemmas 0–4 and Corollaries 5–6 are conditional transfer statements (FT(N,d) ⇒ FT(N+1,d) for s=d−1; FT(N+1,d) ⇒ FT(N,d) for d | N; FT(N+q',d) ⇒ FT(N,d−1)) whose hypotheses are themselves the unproved conjecture. None of them, alone or combined with cells 1–5 (which are moreover not verified in the state: highest_verified_cell = 0), yields FT(N,d) for any family beyond the trivial N ≤ d / d = 1 case. Hence the declared target is not established, and no other declared claim exists to accept. The float search of §7 is exploration only and proves nothing (correctly acknowledged by the author).",
+    "severity": "FATAL",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   "accepted_mathematical_claims": [],
+   "unproved_claims": [
+    "main"
+   ],
+   "missing_cases": [],
+   "math_notes": "I checked each lemma independently; all are mathematically correct as stated, but none is a declared claim ID, so none can be accepted formally. Details: Lemma 0(a) 2M = q(N+s−d), (b) M(N+1,d) = M(N,d)+q (both residue cases handled), (c) M(N+q',d) = M(N,d−1)+C(q',2) with q' = ⌊N/(d−1)⌋ (canonicity of N+q' = q'd+s' verified since s' < d−1 < d): all correct. Lemma 1 (N ≤ d gives M = 0 and S ≤ C(N,2)π/2 trivially; d = 1 gives S = 0 = B): correct. Lemma 2 (deletion averaging, Σ_k S_k = (N−1)S, inequality (1) reduces to (N−1)q ≤ 2M which is equality when s = d−1): correct. Lemma 3 (duplicate the line with largest row-sum A_k ≥ 2S/N, (2) reduces to N ≤ Nq − 2M = qd = N when s = 0): correct. Lemma 4 (isometric embedding plus q' copies of e_d, C(N+q',2) − q'N = C(N,2)+C(q',2), combined with 0(c)): correct. Corollary 5 (FT(5,3) ⇒ FT(6,3)) follows from Lemma 2 with N=5, d=3, s=2. If the researcher wants credit for these, they should be declared as separate reusable claims (e.g. 'transfer_s_eq_d_minus_1', 'transfer_d_divides_N', 'dimension_drop', 'trivial_family_N_le_d'); as submitted, the only claim is the open conjecture itself, which is not proved. Trusted observation confirms code_1 runs and passes, but the exact identity check for d ≤ 40, N ≤ 400 is redundant with the algebraic proofs and would not by itself prove the identities universally."
+  },
+  "limitation": null
+ },
+ "evidence": {
+  "report": {
+   "evidence_verdict": "PARTIAL",
+   "source_issues": [
+    {
+     "code": "SRC_CONTEXT_ONLY_NOT_RETRIEVED",
+     "detail": "src_1 (arXiv:1801.07837, Bilyk–Matzke) is cited as motivation only (Prop. 3.1 for Lemma 4; 'only settled case is d=1'); no proof step depends on it and no excerpt was submitted, so the citation itself was not checked here. src_2 is the team's own reading notes, not a primary source; its attribution of N≤6 in R^3 to Fejes Tóth 1959 is second-hand (original [8] marked unread) and the candidate correctly makes Corollary 5 conditional on cell 4 rather than on that attribution. No external result is load-bearing.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_PRIMARY_NOT_RETRIEVED",
+     "detail": "If the attribution to Fejes Tóth 1959 or to Bilyk–Matzke Prop. 3.1 is ever to appear in the hand-in as a factual statement, retrieve and quote the primary text (BM18 §3 and reference [8]). Not blocking for this attempt.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "CODE1_REPRODUCED",
+     "detail": "code_1 (exact integer check of Lemma 0(a)-(c) and the equality/inequality conditions of Lemmas 2–3, 1≤d≤40, 1≤N≤400) was re-run by the orchestrator: exit 0, 0.1 s, output 'OK'. Arithmetic is exact (Python ints, math.comb). The written proofs of Lemma 0 are algebraic and self-contained; the check is corroborative only.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "CODE2_NOT_REPRODUCED",
+     "detail": "code_2 (float hill-climb over 13 (d,N) pairs) was not re-run by the orchestrator (bash unsupported). It is labelled float_exploration_only and is not used as evidence; seed values, harness version and the ledger esplora_Rd.jsonl were not submitted. Acceptable as exploration; if the search is ever reported as evidence, submit ledger, seeds, harness commit and a python entry point the orchestrator can re-run.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "UNVERIFIED",
+      "PROVED_BY_US"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1 (context only)",
+      "src_2 (team notes, context only)",
+      "code_1 (exact, reproduced by orchestrator)",
+      "code_2 (float exploration, not reproduced, not evidence)"
+     ],
+     "notes": "The cell's target statement (Fejes Tóth bound for all N,d) is NOT established and the candidate says so explicitly (§8); evidence for the registered claim 'main' is therefore insufficient, which is why the verdict is PARTIAL rather than PASS. What is proved self-contained, with no citation or computation as a proof step: Lemma 0 (identities for M), Lemma 1 (trivial family N≤d and d=1, honestly flagged as trivial), Lemmas 2–4 (transfer implications FT(N,d)⇒FT(N+1,d) for N≡−1 mod d; FT(N+1,d)⇒FT(N,d) for d|N; FT(N+q',d)⇒FT(N,d−1)), Corollary 5 conditional on cell 4. I spot-checked the counting identities (Σ_k S_k=(N−1)S; S'=S+A_k; S'=S+q'N·π/2) and the reductions to Lemma 0; they are consistent. No non-trivial infinite family is settled, so cell status should be at most PARTIAL_PROGRESS, not SOLVED."
+    }
+   ],
+   "reproducibility_notes": "code_1: reproduced by orchestrator (exit 0, 0.1 s). code_2: not reproduced; float only; explicitly non-evidential; ledger and seed values not submitted. Rule compliance: no published result is cited for the statement to be proved; no computation is relied on as proof; the hand-in rule 'say clearly which cells you consider solved and which are partial' is satisfied by §8 (nothing claimed solved). Verdict PARTIAL: potentially useful, correctly-scoped partial work (transfer lemmas + trivial family) with no fatal evidence issue, but the target claim remains unproved. Requests: (1) if the numerical search is reported, attach esplora_Rd.jsonl, seed list, harness version; (2) if literature attributions appear in the hand-in, quote the primary sources."
+  },
+  "limitation": null
+ },
+ "checks": [],
+ "check_errors": [],
+ "report": {
+  "final_verdict": "REJECT",
+  "highest_verified_cell": 0,
+  "math_review": {
+   "verdict": "FAIL",
+   "first_fatal_error": {
+    "code": "TARGET_MISMATCH",
+    "detail": "The only declared claim is `main` (Fejes Tóth's bound for all N, d). The submission explicitly states in §8 that no non-trivial infinite family is proved and that cell 6 remains open; Lemmas 0–4 and Corollaries 5–6 are conditional transfer statements (FT(N,d) ⇒ FT(N+1,d) for s=d−1; FT(N+1,d) ⇒ FT(N,d) for d | N; FT(N+q',d) ⇒ FT(N,d−1)) whose hypotheses are themselves the unproved conjecture. None of them, alone or combined with cells 1–5 (which are moreover not verified in the state: highest_verified_cell = 0), yields FT(N,d) for any family beyond the trivial N ≤ d / d = 1 case. Hence the declared target is not established, and no other declared claim exists to accept. The float search of §7 is exploration only and proves nothing (correctly acknowledged by the author).",
+    "severity": "FATAL",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   "accepted_claims": [],
+   "unproved_claims": [
+    "main"
+   ],
+   "missing_cases": []
+  },
+  "evidence_review": {
+   "verdict": "PARTIAL",
+   "source_issues": [
+    {
+     "code": "SRC_CONTEXT_ONLY_NOT_RETRIEVED",
+     "detail": "src_1 (arXiv:1801.07837, Bilyk–Matzke) is cited as motivation only (Prop. 3.1 for Lemma 4; 'only settled case is d=1'); no proof step depends on it and no excerpt was submitted, so the citation itself was not checked here. src_2 is the team's own reading notes, not a primary source; its attribution of N≤6 in R^3 to Fejes Tóth 1959 is second-hand (original [8] marked unread) and the candidate correctly makes Corollary 5 conditional on cell 4 rather than on that attribution. No external result is load-bearing.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_PRIMARY_NOT_RETRIEVED",
+     "detail": "If the attribution to Fejes Tóth 1959 or to Bilyk–Matzke Prop. 3.1 is ever to appear in the hand-in as a factual statement, retrieve and quote the primary text (BM18 §3 and reference [8]). Not blocking for this attempt.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "CODE1_REPRODUCED",
+     "detail": "code_1 (exact integer check of Lemma 0(a)-(c) and the equality/inequality conditions of Lemmas 2–3, 1≤d≤40, 1≤N≤400) was re-run by the orchestrator: exit 0, 0.1 s, output 'OK'. Arithmetic is exact (Python ints, math.comb). The written proofs of Lemma 0 are algebraic and self-contained; the check is corroborative only.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "CODE2_NOT_REPRODUCED",
+     "detail": "code_2 (float hill-climb over 13 (d,N) pairs) was not re-run by the orchestrator (bash unsupported). It is labelled float_exploration_only and is not used as evidence; seed values, harness version and the ledger esplora_Rd.jsonl were not submitted. Acceptable as exploration; if the search is ever reported as evidence, submit ledger, seeds, harness commit and a python entry point the orchestrator can re-run.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "UNVERIFIED",
+      "PROVED_BY_US"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1 (context only)",
+      "src_2 (team notes, context only)",
+      "code_1 (exact, reproduced by orchestrator)",
+      "code_2 (float exploration, not reproduced, not evidence)"
+     ],
+     "notes": "The cell's target statement (Fejes Tóth bound for all N,d) is NOT established and the candidate says so explicitly (§8); evidence for the registered claim 'main' is therefore insufficient, which is why the verdict is PARTIAL rather than PASS. What is proved self-contained, with no citation or computation as a proof step: Lemma 0 (identities for M), Lemma 1 (trivial family N≤d and d=1, honestly flagged as trivial), Lemmas 2–4 (transfer implications FT(N,d)⇒FT(N+1,d) for N≡−1 mod d; FT(N+1,d)⇒FT(N,d) for d|N; FT(N+q',d)⇒FT(N,d−1)), Corollary 5 conditional on cell 4. I spot-checked the counting identities (Σ_k S_k=(N−1)S; S'=S+A_k; S'=S+q'N·π/2) and the reductions to Lemma 0; they are consistent. No non-trivial infinite family is settled, so cell status should be at most PARTIAL_PROGRESS, not SOLVED."
+    }
+   ]
+  },
+  "accepted_progress": [],
+  "blocking_issue": "Referee A: The only declared claim is `main` (Fejes Tóth's bound for all N, d). The submission explicitly states in §8 that no non-trivial infinite family is proved and that cell 6 remains open; Lemmas 0–4 and Corollaries 5–6 are conditional transfer statements (FT(N,d) ⇒ FT(N+1,d) for s=d−1; FT(N+1,d) ⇒ FT(N,d) for d | N; FT(N+q',d) ⇒ FT(N,d−1)) whose hypotheses are themselves the unproved conjecture. None of them, alone or combined with cells 1–5 (which are moreover not verified in the state: highest_verified_cell = 0), yields FT(N,d) for any family beyond the trivial N ≤ d / d = 1 case. Hence the declared target is not established, and no other declared claim exists to accept. The float search of §7 is exploration only and proves nothing (correctly acknowledged by the author).",
+  "next_required_step": "Address the stated blocking obligation without silently changing the target",
+  "stagnation_signal": false
+ },
+ "review_status": "NEEDS_WORK",
+ "proposed_claim_ids": []
+}

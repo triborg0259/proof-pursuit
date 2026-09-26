@@ -1,0 +1,2041 @@
+ON THE PROBLEM OF LARGE GCD FOR DISJOINT
+RESIDUE CLASSES
+JAN FORNAL AND YU-CHEN SUN
+Abstract. Consider k pairwise disjoint residue classes ai (mod mi ).
+We prove that
+
+r
+
+
+
+max gcd(mi , mj ) ≫ k exp −(2 + o(1))
+
+arXiv:2607.24655v1 [math.CO] 27 Jul 2026
+
+1≤i<j≤k
+
+log k
+log log k
+
+
+.
+
+The proof uses a complete graph whose edges are colored by the gcds
+of the corresponding moduli, together with a structural lemma, a sievetheoretic partition, Möbius inversion, and the discrete Fourier transform.
+
+1. Introduction
+The greatest common divisor appears in many problems in number theory.
+One example is the study of GCD sums
+X gcd(nr , ns )2α
+r,s≤N
+
+(nr ns )α
+
+.
+
+Aistleitner, Berkes and Seip obtained estimates for these sums and applied
+them to systems of dilated functions and metric number theory [1]. Bondarenko and Seip used large GCD sums in their work on extreme values of
+the Riemann zeta function [3]. GCD graphs also appear in the proof of the
+Duffin–Schaeffer conjecture by Koukoulopoulos and Maynard [10]. In that
+proof, bipartite GCD graphs are used to keep track of pairs of denominators
+with common prime factors.
+Green and Walker proved the following related result [8]. Let A ⊆ [X, 2X]
+and B ⊆ [Y, 2Y ]. Suppose that gcd(a, b) ≥ D for at least δ|A||B| pairs
+(a, b) ∈ A × B. Then, for every ε > 0 and D ≤ min{X, Y },
+XY
+.
+D2
+Thus, if many pairs have gcd at least D, then the product |A||B| is bounded
+in terms of X, Y , D and δ. In this paper we consider a related question for
+pairwise disjoint residue classes. We ask how large gcd(mi , mj ) must be for
+at least one pair of moduli.
+|A||B| ≪ε δ −2−ε
+
+2020 Mathematics Subject Classification. Primary 11B25; Secondary 11A05, 11A07,
+11N35.
+Key words and phrases. Disjoint residue classes, arithmetic progressions, greatest common divisors, sieve methods.
+1
+
+2
+
+JAN FORNAL AND YU-CHEN SUN
+
+For two residue classes, the relation with the gcd follows from the Chinese
+remainder theorem. Namely,
+ai
+
+(mod mi )
+
+and
+
+aj
+
+(mod mj )
+
+intersect if and only if
+ai ≡ aj
+
+(mod gcd(mi , mj )).
+
+In particular, two residue classes with coprime moduli always intersect.
+Therefore, in a pairwise disjoint family, one has gcd(mi , mj ) > 1 for every
+i < j. This observation does not give a lower bound depending on k, since
+different pairs may have different common divisors.
+Sun conjectured the following lower bound [12]:
+max gcd(mi , mj ) ≥ k
+
+(1)
+
+1≤i<j≤k
+
+for every family of pairwise disjoint residue classes a1 (mod m1 ), . . . , ak
+(mod mk ). This bound would be best possible, since the k distinct residue
+classes modulo k are pairwise disjoint.
+Sun also gave a group-theoretic version of this conjecture in his work
+on finite covers of groups [12]. Let a1 G1 , . . . , ak Gk be pairwise disjoint left
+cosets in a group G, where each Gi has finite index. The conjecture states
+that
+
+gcd [G : Gi ], [G : Gj ] ≥ k
+for some i < j. The choice G = Z and Gi = mi Z gives (1). O’Bryant
+proved the integer conjecture for k ≤ 20 [11]. Zhu proved the group-theoretic
+conjecture for k = 3, 4 [13]. Sun proved the cases k = 2 and the case in
+which G is a finite p-group [12].
+In this paper we prove the following estimate.
+Theorem 1.1. Let
+a1
+
+(mod m1 ), . . . , ak
+
+(mod mk )
+
+be pairwise disjoint residue classes. Then
+s
+
+max gcd(mi , mj ) ≫ k exp −(2 + o(1))
+
+1≤i<j≤k
+
+log k
+log log k
+
+!
+
+.
+
+In particular, Theorem 1.1 implies that
+max gcd(mi , mj ) ≥ k 1−o(1) .
+i<j
+
+Thus, we obtain the bound in Sun’s conjecture up to a factor k o(1) .
+We briefly describe the main idea of the proof. Let
+d = max gcd(mi , mj ).
+1≤i<j≤k
+
+We regard the residue classes as the vertices of a complete graph and color
+the edge between two vertices by the gcd of their moduli. For each n ≤ d,
+we introduce a set Kn of vertices whose moduli are divisible by n, but not
+
+ON THE PROBLEM OF LARGE GCD FOR DISJOINT RESIDUE CLASSES
+
+3
+
+by a proper multiple of n which is at most d. A vertex may belong to several
+such sets, so we assign weights in such a way that its total weight over all
+the sets Kn is equal to 1.
+The key combinatorial input is Lemma 4.1. It gives a useful dichotomy
+for the edges between Km and Kn whose colors are different from gcd(m, n).
+Either one endpoint belongs to a small exceptional set, or, after fixing a
+vertex outside the exceptional sets, the assigned weight of that vertex is
+small whenever it is incident to many such edges. Thus the contribution of
+these edges is controlled either by the small size of an exceptional set or by
+the small weight of a fixed endpoint.
+We then partition [d] into a small number of sets Ci . On each Ci , a
+divisor-sum parameter Ti controls the corresponding weighted gcd sum. If
+ki denotes the total weight carried by the sets Kn with n ∈ Ci , Möbius
+inversion and Fourier orthogonality give a quadratic lower bound ki2 . The
+generalized Chinese remainder theorem eliminates the terms whose edge
+color is gcd(m, n), while Lemma 4.1 controls the remaining terms. Together
+they give the matching upper bound
+ki2 ≪ ki dTi log d.
+Consequently, ki ≪ dTi log d. Summing over the parts of the partition and
+using the estimates for their number and for Ti , we obtain
+s
+
+k ≪ d exp (2 + o(1))
+
+!
+
+log d
+.
+log log d
+
+Solving this inequality for d gives Theorem 1.1.
+There is another related problem in which the moduli are assumed to be
+distinct and bounded. Let f (x) be the largest size of a family of pairwise
+disjoint arithmetic progressions with moduli satisfying
+2 ≤ m1 < · · · < mk ≤ x.
+Erdős and Stein conjectured that f (x) = o(x). Erdős and Szemerédi proved
+this conjecture and obtained the first quantitative estimates [7]. Let
+L(x) := exp
+
+
+
+p
+
+log x log log x .
+
+Croot proved that
+√
+
+xL(x)− 2+o(1) ≤ f (x) ≤ xL(x)−1/6+o(1) ,
+and proved the upper bound with exponent 1/2 when the moduli are squarefree [5]. Chen proved the same upper bound without the square-free condition [4]. De la Bretèche, Ford and Vandehey later proved
+√
+
+(2)
+
+xL(x)−1+o(1) ≤ f (x) ≤ xL(x)− 3/2+o(1) ,
+
+and conjectured the formula [6]
+f (x) = xL(x)−1+o(1) .
+
+4
+
+JAN FORNAL AND YU-CHEN SUN
+
+A recent preprint of Ho gives a proof of this conjecture [9]. Bloom’s Erdős
+Problems website now records Problem 202 as solved [2].
+The problem defining f (x) assumes that the moduli are distinct and
+bounded, while Theorem 1.1 has neither assumption. Combining the formula
+for f (x) with Theorem 1.1 gives the following consequence.
+Corollary 1.2. Let Qx ⊆ [1, x] ∩ N be a set of distinct moduli for which
+there exist pairwise disjoint residue classes aq (mod q), q ∈ Qx . Suppose
+that, as x → ∞,
+|Qx | = xL(x)−1+o(1) .
+Then
+max gcd(q, q ′ ) ≥ xL(x)−1+o(1) .
+
+q,q ′ ∈Qx
+q̸=q ′
+
+Moreover, there exist distinct q, q ′ ∈ Qx and positive integers g, u, v such that
+q ′ = gv,
+
+q = gu,
+
+gcd(u, v) = 1,
+
+and
+g ≥ xL(x)−1+o(1) ,
+
+max{u, v} ≤ L(x)1+o(1) .
+
+In particular, this holds for every extremal family with |Qx | = f (x).
+Proof. Let k = |Qx |. By Theorem 1.1,
+s
+′
+
+max gcd(q, q ) ≫ k exp −(2 + o(1))
+
+q,q ′ ∈Qx
+q̸=q ′
+
+log k
+log log k
+
+!
+
+.
+
+Since log k = (1 + o(1)) log x, we have
+s
+
+p
+
+log k
+= o log x log log x .
+log log k
+
+The required bound now follows from k = xL(x)−1+o(1) . Choose distinct
+q, q ′ ∈ Qx satisfying this bound and let g = gcd(q, q ′ ), u = q/g and v = q ′ /g.
+Then gcd(u, v) = 1, while
+x
+max{u, v} ≤ ≤ L(x)1+o(1) .
+g
+□
+Thus every extremal family contains two moduli with a common multiplicative core of size xL(x)−1+o(1) and comparatively small coprime tails.
+The rest of the paper is organized as follows. In Section 2, we introduce
+the colored graph and its weights, state the two main propositions, and
+deduce Theorem 1.1. In Section 3, we prove the sieve-theoretic partition
+proposition. Section 4 is devoted to the key structural lemma for the colored
+graph, and in Section 5 we prove the weighted estimate for ki .
+
+ON THE PROBLEM OF LARGE GCD FOR DISJOINT RESIDUE CLASSES
+
+5
+
+Acknowledgements
+We thank Yuchen Ding and Xiamiao Zhao for helpful comments and
+discussions.
+2. Proof of Theorem 1.1
+We can naturally rephrase the statement of the theorem. Suppose that:
+(3)
+
+max gcd(mi , mj ) = d
+
+1≤i<j≤k
+
+Then Theorem 1.1 follows once we prove
+s
+
+k ≪ d exp (2 + o(1))
+
+!
+
+log d
+.
+log log d
+
+We begin with the graph and weight construction that decodes the structure of a family of residue classes satisfying (3). As usual, we will work on
+colored graph (V, E), where V = {(as , ms ) : s ∈ [k]} and every two vertices
+v1 , v2 ∈ V are adjacent with an edge of color gcd(m(v1 ), m(v2 )). For each
+j ∈ [d], let Lj be the set of vertices v such that j|m(v). For example, it is
+clear that L1 = V . Let us also assign to Kj for every j ∈ [d], the set of
+vertices that is equal to:
+(4)
+
+Lj \
+
+⌊d/j⌋
+[
+
+Lsj
+
+
+
+s=2
+
+Observe that:
+(5)
+
+V =
+
+d
+[
+
+Kj
+
+j=1
+
+Indeed, for each v ∈ V , let w ∈ [d] be the largest number so that v ∈ Lw (for
+sure, v ∈ L1 so there must be such a maximal w). This means that:
+(6)
+
+⌊d/w⌋
+[
+
+v ∈ Lw \
+
+
+
+Lsw = Kw
+
+s=2
+
+One of the instant conclusions from (5) is that
+(7)
+
+k≤
+
+d
+X
+
+|Kj |
+
+j=1
+1
+For each vertex v, let us introduce the weight w(v) = #{j∈[d]:v∈K
+, the
+j}
+simple double counting argument implies that:
+
+(8)
+
+k=
+
+d X
+X
+
+w(v)
+
+j=1 v∈Kj
+
+We will also use the notation: w(v, n) = 1v∈Kn w(v).
+We first record the sieve-theoretic input.
+
+6
+
+JAN FORNAL AND YU-CHEN SUN
+
+Proposition 2.1. For every sufficiently large integer d, there exists a partition:
+(9)
+
+[d] =
+
+G
+
+Ci
+
+i∈I
+
+such that the following two conditions are satisfied:
+(1) The size of the set |I| < exp(o(
+(2) For each i ∈ I, one has that:
+Ti :=
+
+(10)
+
+q
+
+X
+1
+max
+d m∈Ci e|m
+q
+
+is bounded by exp((2 + o(1))
+
+log d
+log log d )).
+
+X
+
+e
+
+n∈Ci
+gcd(n,m)=e
+
+log d
+log log d ).
+
+Proposition 2.2. With the notation above, let [d] =
+and for each i ∈ I, let Ti be as in (10), and define
+ki :=
+
+(11)
+
+X X
+
+F
+
+i∈I Ci be any partition,
+
+w(v, n)
+
+n∈Ci v∈V
+
+Then, for every i ∈ I,
+ki ≪ dTi log d.
+Proof of Theorem 1.1, assuming Propositions 2.1 and 2.2. Let d be as in (3).
+If d >Fk, the theorem is immediate. We may therefore assume d ≤ k. Let
+[d] = i∈I Ci be the partition P
+supplied by Proposition 2.1. For each i ∈ I,
+let ki be as in (11). Since k = i∈I ki , Proposition 2.2 gives
+k ≪ d log d
+
+X
+
+Ti ≤ d log d |I| max Ti .
+i∈I
+
+i∈I
+
+By the two conclusions of Proposition 2.1,
+s
+
+|I| ≤ exp o
+
+log d
+log log d
+
+s
+
+!!
+
+max Ti ≤ exp (2 + o(1))
+
+,
+
+i
+
+!
+
+log d
+.
+log log d
+
+p
+
+Since log d = exp(o( log d/ log log d)), this gives
+s
+
+k ≪ d exp (2 + o(1))
+By the eventual monotonicity of
+
+p
+
+log x/ log log x, the last bound implies
+s
+
+d ≫ k exp −(2 + o(1))
+which is the desired estimate.
+
+!
+
+log d
+.
+log log d
+
+log k
+log log k
+
+!
+
+,
+□
+
+ON THE PROBLEM OF LARGE GCD FOR DISJOINT RESIDUE CLASSES
+
+7
+
+3. A sieve-theoretic partition
+We use a sieve-theoretic idea to construct the partition in Proposition 2.1.
+We separate the very small prime factors of each integer and divide the
+remaining primes into short intervals. We then group the integers according
+to their small-prime parts and the numbers of prime factors, counted with
+multiplicity, in these intervals. This multiscale decomposition produces only
+a small number of classes, while the resulting uniformity within each class
+allows us to control Ti .
+Assume that d is sufficiently large. Let:
+η = (log log d)−1/2 ,
+letting J ≪ (log log d)3/2 , and define
+U0 = ⌊log log log d⌋
+
+and
+
+Uj+1 = (1 + η)Uj
+
+(0 ≤ j ≤ J).
+
+For 0 ≤ j < J, let
+Pj = {p prime : eUj < p ≤ eUj+1 },
+
+(12)
+
+Let Ωj (n) denote the total number of prime factors of n in Pj . For given n,
+define its very small prime part by
+a(n) =
+
+(13)
+
+Y
+
+pvp (n) ,
+
+p≤eU0
+
+For each prime p ≤ eU0 there are at most log d possible choices for vp (n) ,
+therefore a(n) belongs to the set of size (log d)log log d = exp((log log d)2 ). For
+a possible value a and a vector r = (r0 , . . . , rJ−1 ), let
+(14)
+
+i = (a, r) = {n ≤ d : a(n) = a, Ωj (n) = rj for every j}.
+
+Lemma 3.1. The number of nonempty classes in (14) is bound by
+exp((log log d)2 ) exp((log log d)5/2 ) ≪ exp((1 + o(1))(log log d)5/2 ).
+Proof. Obviously rj ∈ [0, log d] and
+the number of solutions for
+
+1≤j≤J rj = Ω(n)−Ω(a) ≪ log d. Hence,
+
+P
+
+X
+
+rj ≤ log d
+
+1≤j≤J
+
+is bound by
+(log d)J = exp((log log d)5/2 )
+□
+For any fixed m ∈ Ci where i = (a, r) ∈ I, define the larger auxiliary
+divisor sum
+X X
+Ti (m) :=
+e.
+e|m n∈Ci
+e|n
+
+8
+
+JAN FORNAL AND YU-CHEN SUN
+
+It is enough to bound Ti (m) uniformly in m ∈ Ci , because the condition
+gcd(n, m) = e in the definition of Ti implies e|n, and hence
+dTi ≤ max Ti (m).
+m∈Ci
+
+Write m = a
+X
+
+QJ
+
+j=1 bj and n = ac = a
+
+X
+
+e=
+
+X
+
+e0
+
+e0 |a
+
+e|m n∈C(a,r)
+e|n
+
+X
+
+QJ
+
+j=1 cj with p | bj cj ⇒ p ∈ Pj
+
+X
+
+e1 · · ·
+
+e1 |b1
+
+eJ
+
+eJ |bJ
+
+× #{c ≤ d/a : Ωj (c) = rj , ej | cj }
+=
+
+X
+
+X
+
+e0
+
+e0 |a
+
+X
+
+e1 · · ·
+
+e1 |b1
+
+J
+Y
+
+× #{q ≤ d/(a
+
+(15)
+
+eJ
+
+eJ |bJ
+
+ej ) : Ωj (c) = rj − Ω(e1 )}.
+
+j=1
+
+So we need some tools from analytic number theory to estimate the
+counting problem.
+Let:
+A(X, t) = #{q ≤ X : p | q ⇒ p ∈
+
+[
+
+Pj , Ωj (q) = tj for every j ∈ J}.
+
+j∈J
+
+Thus q is allowed to use primes only from the active boxes. Define
+Hj =
+
+(16)
+
+X 1
+p∈Pj
+
+p
+
+,
+
+X 1
+
+Qj =
+
+p∈Pj
+
+p2
+
+.
+
+Lemma 3.2. Suppose that, for every j ∈ J, a real number zj is chosen with
+2 ≤ zj ≤
+
+(17)
+
+eUj
+.
+2
+
+Then
+
+
+(18)
+
+AI (X, t) ≤ X
+
+Y −tj
+
+zj
+
+exp
+
+
+X
+
+zj Hj + 2
+
+j∈J
+
+j∈J
+
+Y tj
+
+X
+
+X
+
+zj2 Qj  .
+
+j∈J
+
+Proof. By Rankin’s trick,
+AI (X, t)
+
+zj ≤ X
+
+j∈J
+
+Ωj (q)
+j∈J zj
+
+Q
+p|q⇒p∈
+
+S
+j∈J
+
+q
+
+Pj
+
+By multiplicativity,
+AI (X, t)
+
+Y tj
+
+Y Y 
+
+j∈J
+
+j∈J p∈Pj
+
+zj ≤ X
+
+1−
+
+zj
+p
+
+−1
+
+.
+
+The claim follows by taking log and the Taylor expansion.
+
+□
+
+ON THE PROBLEM OF LARGE GCD FOR DISJOINT RESIDUE CLASSES
+
+9
+
+Proof of Proposition 2.1. Applying Lemma 3.2, with tj = rj − Ω(ej ), gives
+
+
+J
+Y
+
+
+
+
+
+ej  #{c : ej | cj for all j} ≤
+
+j=1
+
+d Y −(rj −Ω(ej ))
+z
+a j j
+
+
+X
+X
+× exp zj Hj + 2
+z 2 Qj  .
+j
+
+j
+
+j
+
+P
+
+Let σ(a) = e0 |a e0 denote the sum-of-divisors function. Summing over all
+small-part divisors e0 | a and all ej | bj , we obtain
+X
+
+e #{n ∈ C : e | n}
+
+e|m
+
+
+
+
+
+(19)
+
+Y X −(rj −Ω(ej ))
+X
+X
+σ(a)
+zj
+.
+zj2 Qj 
+≤d
+exp zj Hj + 2
+a
+j e |b
+j
+j
+j
+
+j
+
+We simplify the last divisor sum. Replace ej by the complementary divisor
+fj = bj /ej . Since Ω(bj ) = rj ,
+X −(rj −Ω(ej ))
+
+zj
+
+=
+
+ej |bj
+
+X −Ω(fj )
+
+zj
+
+fj |bj
+
+=
+
+Y
+
+(1 + zj−1 + · · · + zj−α )
+
+pα ∥bj
+
+≤ (1 − zj−1 )−ωj (b) .
+where:
+(20)
+
+ωj (b) = #{p ∈ Pj : p|b}
+
+The small-prime factor is harmless because the set p ≤ eU0 is fixed:
+Y
+σ(a)
+≤
+(1 − 1/p)−1 ≪ log log log d.
+a
+U0
+p≤e
+
+Finally, for z ≥ 2,
+− log(1 − z −1 ) ≤ z −1 + 2z −2 .
+Taking logarithms in (19) yields the central inequality
+X
+Ti (m)
+ωj (b)
+(21) log
+≤ O(1) +
+zj Hj +
+d
+zj
+j
+
+!
+
++2
+
+j
+
+Choose
+(
+
+(22)
+
+zj = max 2,
+
+s
+
+ωj (b)
+Hj
+
+X
+
+)
+
+.
+
+zj2 Qj + 2
+
+X ωj (b)
+j
+
+zj2
+
+.
+
+10
+
+JAN FORNAL AND YU-CHEN SUN
+Uj
+
+One can easily verify that zj is at most e 2 , as we have insisted before.
+Therefore:
+(23)
+
+X
+j
+
+ωj (b)
+zj Hj +
+zj
+
+!
+
+≤2
+
+Xq
+
+X
+
+j
+
+j
+
+Hj ωj (b) + 4
+
+Hj .
+
+By the Mertens’ second theorem:
+X
+
+X1
+
+Hj ≤
+
+j
+
+p≤d
+
+p
+
+≪ log log d.
+
+Also:
+(24)
+
+2
+
+X ωj (b)
+
+≤2
+
+zj2
+
+j
+
+X
+
+Hj
+
+j
+
+and:
+X
+
+zj2 Qj ≤ 4
+
+X
+
+j
+
+Qj +
+
+j
+
+X ωj (b)Qj
+
+Hj
+
+j
+
+≪1+
+
+log d
+|Pj |Hj
++
+U
+(log d)2
+e j Hj
+j:U ≤2 log log d
+
+≪
+
+X
+
+(25)
+
+X
+
+j
+
+eηUj
+
+j:Uj ≤2 log log d
+
+≪ (log log d)5/2 exp(2(log log d)1/2 )
+due to the fact that j ωj (b) ≤ log d and Qj ≤ e−Uj Hj by the definitions of
+Qj , q
+Hj and ωj (b) (see (16) and (20)). Thus, the remaining task is to estimate
+P
+
+P
+
+Hj ωj (b).
+Let:
+
+j
+
+(26)
+
+p
+
+U∗ = log log d − 4 log log d.
+
+If Uj < U∗ , then
+Hj ≤ |Pj |e−Uj ,
+
+ωj (b) ≤ |Pj |.
+
+Therefore:
+(27)
+
+q
+
+Hj ωj (b) ≤ |Pj |e−Uj /2 .
+
+If p ∈ Pj , then
+log p ≤ Uj+1 = (1 + η)Uj ,
+so
+e−Uj /2 ≤ p−1/(2(1+η)) .
+All primes in the low boxes are at most
+X = exp((1 + η)U∗ ).
+
+ON THE PROBLEM OF LARGE GCD FOR DISJOINT RESIDUE CLASSES
+
+11
+
+Using (27) and then enlarging a prime sum to an integer sum,
+X q
+
+Hj ωj (b) ≤
+
+Uj <U∗
+
+X
+
+p−1/(2(1+η))
+
+p≤X
+
+1
+1− 1
+X 2(1+η)
+log X
+
+
+
+1
+1
+≪
+exp
+− η − 4η 2 log log d
+log log d
+2
+1/2
+(log d) exp(−η log log d − 4η 2 log log d)
+=
+log log d
+1/2
+(log d)
+≤
+log log d
+≪
+
+For the remaining boxes, Cauchy–Schwarz gives
+1/2 
+
+
+
+(28)
+
+X q
+
+X
+
+Hj ωj (b) ≤ 
+
+Uj ≥U∗
+
+Uj ωj (b)
+
+X Hj
+
+
+Uj ≥U∗
+
+Uj ≥U∗
+
+Uj
+
+1/2
+
+
+.
+
+We estimate the two factors separately.
+Every distinct prime counted by ωj (b) is larger than eUj . Hence
+(29)
+
+X
+
+Uj ωj (b) ≤
+
+j
+
+X
+
+log p = log rad(b) ≤ log b ≤ log d.
+
+p|b
+
+If p ∈ Pj , then log p ≤ (1 + η)Uj , and therefore
+1
+1+η
+.
+≤
+Uj
+log p
+By the prime number theorem,
+X Hj
+Uj ≥U∗
+
+(30)
+
+Uj
+
+≤ (1 + η)
+
+p>e
+
+=
+
+1
+p log p
+U∗
+
+X
+
+1 + o(1)
+1 + o(1)
+=
+.
+U∗
+log log d
+
+Combining (29) and (30) in (28), we obtain
+(31)
+
+X q
+
+s
+
+Hj ωj (b) ≤ (1 + o(1))
+
+Uj ≥U∗
+
+log d
+.
+log log d
+
+Combining this with (21), (23), and the estimates above gives, uniformly in
+m ∈ Ci ,
+Ti (m)
+log
+≤ (2 + o(1))
+d
+p
+
+s
+
+log d
+.
+log log d
+
+Thus maxm∈Ci Ti (m) ≤ d exp((2 + o(1)) log d/ log log d), and the desired
+bound for Ti follows from dTi ≤ maxm∈Ci Ti (m).
+□
+
+12
+
+JAN FORNAL AND YU-CHEN SUN
+
+Remark 1. One can split [d] differently, so that we almost reach desired
+bounds. For instance let L = ⌊log d⌋ and for each i ∈ Z+ let:
+(32)
+
+ωi (n) = #{p ∈ P : vp (n) ≥ i}
+
+Then let
+(33)
+I = {(k1 , . . . , kL ) ∈ ZL
++ : there exists n ∈ [d] : for all i ∈ [L], ωi (n) = ki }
+and
+(34)
+
+Ci = {n ∈ [d] : for all i ∈ [L], ωi (n) = ki }
+
+Then one can use Ramanujan-Hardy result on number of partitions to
+estimate the size of |I| and standard bound on partial sum of values of
+divisor function together with elementary enumerative argument to obtain
+that:
+(35)
+
+p
+
+Ti ≪ exp((2 + o(1)) log d log log d)
+
+That’s said, one can obtain very close estimate without relying on almost
+any analytic number theory.
+4. The key structural lemma for the colored graph
+The lemma below gives the dichotomy needed to control the edges between
+Km and Kn whose colors are different from gcd(m, n). Either an endpoint
+lies in one of two small exceptional sets, or a fixed endpoint outside these
+sets has weight inversely proportional, up to a factor of log d, to the number
+of such edges incident to it.
+Lemma 4.1. Fix two integers m, n ∈ [d]. Then there exist two subsets Sm
+and Sn of Km and Kn , respectively, such that the following two sentences
+are true:
+(1) |Sm | ≤ ω(n) + 1 and |Sn | ≤ ω(m) + 1. Here, as usual ω(n) represents
+the number of distinct prime divisors of n.
+(2) For every v ∈ Kn \Sn , denote by r the number of edges from v to
+Km \Sm with color different from gcd(m, n). Then, with the convention that log0 d = +∞:
+(36)
+
+w(v) ≪ min(1,
+
+log d
+)
+r
+
+Proof. If m = n, set Sm = Sn = ∅. For two distinct vertices v, w ∈ Kn , the
+number gcd(m(v), m(w)) is divisible by n. If it were a proper multiple of n,
+then either this proper multiple is at most d, contradicting the definition of
+Kn , or it is larger than d, contradicting (3). Hence every such edge has color
+n = gcd(m, n), so r = 0 for every v ∈ Kn and the claim follows. We may
+therefore assume that m ̸= n.
+
+ON THE PROBLEM OF LARGE GCD FOR DISJOINT RESIDUE CLASSES
+
+13
+
+Let us start by constructing the sets Sm and Sn . The definitions for these
+sets are as follows:
+(37)
+
+Sn = (Kn ∩ Km ) ∪ {v ∈ Kn : ∃
+
+vp (m(v)) > vp (n)}
+p∈P
+vp (m)>vp (n)
+
+and analogously:
+(38)
+
+Sm = (Kn ∩ Km ) ∪ {v ∈ Km : ∃
+
+vp (m(v)) > vp (m)}
+p∈P
+vp (n)>vp (m)
+
+We first check that Kn ∩Km has at most one element. Indeed, if v ∈ Kn ∩Km ,
+then lcm(n, m) | m(v). Since m ̸= n, if lcm(n, m) ≤ d, then this least
+common multiple is a proper multiple of at least one of n or m, contradicting
+the corresponding membership in Kn or Km . Hence lcm(n, m) > d. Two
+distinct vertices in Kn ∩ Km would then have moduli with gcd divisible by
+lcm(n, m) > d, contradicting (3).
+Now take v ∈ Sn \ (Kn ∩ Km ) and choose a prime p = p(v) witnessing its
+membership in Sn , so vp (m(v)) > vp (n). By the restriction on this witness
+in the definition of Sn , we have p | m. We claim that the map v 7→ p(v)
+can be chosen injectively on Sn \ (Kn ∩ Km ). Indeed, if two distinct vertices
+v1 , v2 ∈ Sn \ (Kn ∩ Km ) had the same chosen prime p = p(v1 ) = p(v2 ), then
+min(vp (m(v1 )), vp (m(v2 )) > vp (n), and therefore
+(39)
+
+pn| gcd(m(v1 ), m(v2 ))
+
+If pn ≤ d, then v1 , v2 ∈ Lpn , contradicting the definition of Kn because pn is
+a proper multiple of n. If pn > d, then (3) is contradicted. Thus the chosen
+primes are distinct and all divide m. This gives the desired bound on the size
+of Sn : |Sn | ≤ ω(m) + 1. By symmetry, we have also that |Sm | ≤ ω(n) + 1.
+Now fix v ∈ Kn \ Sn . Let w1 , w2 ∈ Km \ Sm be two distinct vertices, and
+suppose that the edge between v and w1 is colored with e1 gcd(n, m) and
+the edge between v and w2 is colored with e2 gcd(n, m). Then we want to
+check that:
+m
+n
+(1) (ei , gcd(n,m)
+) = (ei , gcd(n,m)
+) = 1 for each i ∈ {1, 2}.
+(2) (e1 , e2 ) = 1.
+n
+To prove the first fact, fix i ∈ {1, 2}. We first show that (ei , gcd(n,m)
+) = 1.
+n
+Suppose, for contradiction, that a prime p divides both ei and gcd(n,m) . Since
+the edge between v and wi has color ei gcd(n, m), we have ei gcd(n, m) =
+gcd(m(v), m(wi )), and hence ei gcd(n, m) | m(wi ). Thus
+
+vp (m(wi )) ≥ vp (ei gcd(n, m)) > vp (gcd(n, m)).
+n
+On the other hand, p | gcd(n,m)
+implies vp (n) > vp (m), so vp (gcd(n, m)) =
+vp (m). Therefore vp (m(wi )) > vp (m) and vp (n) > vp (m), so wi ∈ Sm , which
+n
+gives a contradiction. This proves (ei , gcd(n,m)
+) = 1. Similarly, one can show
+m
+(ei , gcd(n,m) ) = 1.
+
+14
+
+JAN FORNAL AND YU-CHEN SUN
+
+Now we prove the second statement. If there is a prime p that divides e1
+and e2 , then:
+(40)
+
+p gcd(m, n)| gcd(m(w1 ), m(w2 )).
+
+Since we have already proved the first statement, and since p | e1 , the prime
+m
+n
+p is coprime to gcd(m,n)
+and gcd(n,m)
+. Hence vp (m) = vp (n) = vp (gcd(n, m)).
+Combining (40) together with m| gcd(m(w1 ), m(w2 )), one concludes that:
+(41)
+
+pm| gcd(m(w1 ), m(w2 ))
+
+Since pm ≤ d (by (3)), one concludes that w1 ∈ Lpm which is disjoint from
+Km , so we get a contradiction. Finally, we conclude that (e1 , e2 ) = 1.
+Let w1 , w2 , . . . , wr be all vertices in Km \Sm so that the edge between v
+and wi has color different from gcd(n, m). Without loss of generality, let
+gcd(m(v), m(wi )) = ei gcd(n, m) where (ei )ri=1 is an increasing sequence of
+pairwise coprime numbers. Define recursively a sequence 0 = s0 < s1 < · · ·
+as follows. Having chosen sj < r, choose sj+1 to be the largest integer with
+sj < sj+1 ≤ r such that:
+sj+1 −sj
+
+(42)
+
+Y
+
+esj +i ≤
+
+i=1
+
+d
+gcd(n, m)
+
+If sj+1 < r, repeat the same rule starting from sj+1 . Since the sequence is
+strictly increasing and bounded by r, the procedure stops after finitely many
+steps; write the final sequence as
+0 = s0 < s1 < · · · < su = r.
+For each j ∈ [u], let:
+sj −sj−1
+
+(43)
+
+Ej =
+
+Y
+
+esj−1 +i
+
+i=1
+
+Then we get that:
+(44)
+
+v ∈ LEj gcd(n,m)
+
+for each j ∈ [u]. For each such j, choose bj maximal such that bj Ej gcd(n, m) ≤
+d and v ∈ Lbj Ej gcd(n,m) . Then v ∈ Kbj Ej gcd(n,m) . We claim that the u indices
+bj Ej gcd(n, m) are all distinct. Indeed, suppose for some j < k that
+(45)
+
+bj Ej gcd(n, m) = bk Ek gcd(n, m)
+
+d
+d
+with bj ≤ Ej gcd(n,m)
+and bk ≤ Ek gcd(n,m)
+. After cancelling n, the common
+value bj Ej = bk Ek is a common multiple of Ej and Ek . Since the ei
+are pairwise coprime, so are Ej and Ek , and hence Ej Ek | bj Ej . But
+d
+the maximality in the construction of sj gives Ej esj +1 > gcd(n,m)
+, while
+d
+Ek ≥ esj +1 because k > j and the ei are increasing. Thus Ej Ek > gcd(n,m)
+,
+d
+contradicting bj Ej ≤ gcd(n,m)
+. Therefore these u indices are distinct, and
+v belongs to at least u different sets Kℓ . It follows that w(v) ≤ u1 . On the
+
+ON THE PROBLEM OF LARGE GCD FOR DISJOINT RESIDUE CLASSES
+
+15
+
+other hand, every ei is larger than 1, because the corresponding edge color is
+different from gcd(n, m). Hence, for each j ∈ [u],
+2sj −sj−1 ≤ Ej ≤
+
+d
+≤ d,
+gcd(n, m)
+
+and so sj − sj−1 ≪ log d. Therefore
+r=
+
+(46)
+
+u
+X
+
+(sj − sj−1 ) ≪ u log d
+
+j=1
+
+giving us the desired w(v) ≪ logr d . Since w(v) ≤ 1 follows from the definition
+of the weight, we conclude that the statement of the lemma is true.
+□
+5. Fourier positivity and the weighted estimate
+We now prove Proposition 2.2 by estimating a weighted gcd sum in two
+ways. Möbius inversion and Fourier orthogonality give the lower bound,
+while pairwise disjointness and Lemma 4.1 give the upper bound. We begin
+with the positivity lemma underlying the lower bound.
+Lemma 5.1. For each integer s ≥ 1 and each sequence of real numbers
+(xi )s−1
+i=0 , define, for every divisor e of s and r = s/e,
+X
+
+ar,j =
+
+(0 ≤ j < r).
+
+xk
+
+0≤k<s
+k≡j (mod r)
+
+Then:
+X
+
+(47)
+
+µ(e)r
+
+r−1
+X
+
+a2r,j ≥ 0.
+
+j=0
+
+e|s
+
+Proof. Define the discrete Fourier transform by
+b(t) =
+x
+
+s−1
+X
+
+xu e −
+
+2πitu
+s
+
+(0 ≤ t < s).
+
+u=0
+
+Fix e | s and let r = s/e. By the orthogonality of additive characters,
+1k≡j
+
+X 2πiℓ(j−k)
+1 r−1
+e r
+.
+(mod r) =
+r ℓ=0
+
+Thus, for 0 ≤ j < r,
+ar,j =
+
+X 2πiℓj s−1
+X
+X
+2πiℓj
+2πiℓk
+1 r−1
+1 r−1
+b(ℓe)e r .
+x
+e r
+xk e− r =
+r ℓ=0
+r ℓ=0
+k=0
+
+By Parseval’s identity,
+r
+
+r−1
+X
+j=0
+
+a2r,j =
+
+r−1
+X
+ℓ=0
+
+b(ℓe)|2 .
+|x
+
+16
+
+JAN FORNAL AND YU-CHEN SUN
+
+Hence the left-hand side of (47) is equal to
+s/e−1
+
+X
+
+µ(e)
+
+X
+
+b(ℓe)|2 =
+|x
+
+X
+
+b(t)|2
+|x
+
+t=0
+
+ℓ=0
+
+e|s
+
+s−1
+X
+
+µ(e).
+
+e|gcd(s,t)
+
+The inner sum is 1 if gcd(s, t) = 1 and 0 otherwise. Therefore
+X
+
+µ(e)r
+
+r−1
+X
+j=0
+
+e|s
+
+X
+
+a2r,j =
+
+b(t)|2 ≥ 0.
+|x
+
+0≤t<s
+gcd(t,s)=1
+
+□
+Proof of Proposition 2.2. Fix i ∈ I. Let us consider the following expression:
+(48)
+
+X
+
+X
+
+w(v1 , n)w(v2 , m) gcd(n, m)1gcd(n,m)|a(v1 )−a(v2 )
+
+n,m∈Ci v1 ,v2 ∈V
+
+Firstly, we will try to estimate this expression below, using Möbius inversion,
+it is equal to:
+(49)
+
+X
+
+X
+
+µ(e)r
+
+X
+
+w(v1 , n)w(v2 , m)1r|a(v1 )−a(v2 )
+
+n,m∈Ci v1 ,v2 ∈V
+er|n,m
+
+e,r∈[d]:er≤d
+
+This can also be expressed as:
+(50)
+
+X X
+
+µ(e)r
+
+q≤d er=q
+
+r−1
+X
+
+!2
+X X
+
+w(v1 , n)1a(v1 )≡a
+
+(mod r)
+
+a=0 n∈Ci v1 ∈V
+q|n
+
+For each q ≤ d, define
+cu,q =
+
+X X
+
+w(v1 , n)1a(v1 )≡u
+
+(0 ≤ u < q).
+
+(mod q)
+
+n∈Ci v1 ∈V
+q|n
+
+If q = er and 0 ≤ a < r, then the residue classes modulo q lying in the class
+a (mod r) are exactly the arithmetic progression
+a, a + r, . . . , a + (e − 1)r.
+Hence
+X X
+
+w(v1 , n)1a(v1 )≡a
+
+X
+
+(mod r) =
+
+n∈Ci v1 ∈V
+er|n
+
+0≤u<q
+u≡a (mod r)
+
+Thus the contribution of a fixed q in (50) is
+X
+er=q
+
+µ(e)r
+
+r−1
+X
+a=0
+
+!2
+X
+0≤u<q
+u≡a (mod r)
+
+cu,q
+
+.
+
+cu,q .
+
+ON THE PROBLEM OF LARGE GCD FOR DISJOINT RESIDUE CLASSES
+
+17
+
+Applying Lemma 5.1 with s = q and xu = cu,q , this fixed-q contribution is
+nonnegative for every q ≤ d. Thus each q-summand in (50) is nonnegative.
+The contribution of q = 1 is
+!2
+X X
+
+= ki2 .
+
+w(v1 , n)
+
+n∈Ci v1 ∈V
+
+Therefore (50) is bounded below by ki2 . Before using disjointness, separate
+the diagonal terms with v1 = v2 . Their contribution to (48) is at most
+X
+
+X
+
+w(v, n)w(v, m) gcd(n, m) ≤ dTi
+
+n,m∈Ci v∈V
+
+X X
+
+w(v, n) = dTi ki ,
+
+n∈Ci v∈V
+
+where we used w(v, m) ≤ 1 and the definition of Ti . This is acceptable
+for the final O(ki dTi log d) bound. For the remaining off-diagonal terms,
+if gcd(n, m) = gcd(m(v1 ), m(v2 )), then the indicator gives the Chineseremainder compatibility condition, contradicting the pairwise disjointness
+of (ai (mod mi ))ki=1 . Dropping the condition v1 ̸= v2 in the resulting upper
+bound, the off-diagonal contribution is bounded by
+(51)
+
+X
+
+X
+
+w(v1 , n)w(v2 , m) gcd(n, m)1gcd(n,m)̸=gcd(m(v1 ),m(v2 ))
+
+n,m∈Ci v1 ,v2 ∈V
+
+Let us split the sum above according to the structural behaviour of Kn and
+Km . First, we estimate the contribution to the above sum from the terms
+with v1 ∈ Sn and v2 ∈ Km :
+(52)
+
+X
+
+X
+
+w(v1 , n)w(v2 , m) gcd(n, m)1gcd(n,m)̸=gcd(m(v1 ),m(v2 ))
+
+n,m∈Ci v1 ∈Sn
+v2 ∈Km
+
+which is bounded by:
+X
+
+log d
+
+(53)
+
+X
+
+w(v2 , m) gcd(n, m)
+
+n,m∈Ci v2 ∈Km
+
+This expression can be rearranged as:
+(54)
+
+log d
+
+X X
+
+ X
+
+w(v2 , m)
+
+m∈Ci v2 ∈Km
+
+
+
+gcd(n, m)
+
+n∈Ci
+
+By the definition of Ti , for every fixed m ∈ Ci we have
+X
+
+(55)
+
+gcd(n, m) =
+
+n∈Ci
+
+X
+
+X
+
+e ≤ dTi
+
+n∈Ci
+e|m
+gcd(n,m)=e
+
+Recalling the definition of ki in (11),
+X
+
+X
+
+m∈Ci v2 ∈Km
+
+w(v2 , m) ≤
+
+X X
+m∈Ci v2 ∈V
+
+w(v2 , m) = ki ,
+
+18
+
+JAN FORNAL AND YU-CHEN SUN
+
+we get (52) ≪ ki dTi log d. By symmetry, the same bound holds for the terms
+with v2 ∈ Sm , so we can focus now on estimating:
+(56)
+
+X
+
+X
+
+w(v1 , n)w(v2 , m) gcd(n, m)1gcd(n,m)̸=gcd(m(v1 ),m(v2 ))
+
+n,m∈Ci v1 ∈Kn \Sn
+v2 ∈Km \Sm
+
+By the arithmetic-geometric mean inequality, we have:
+w(v1 , n)2 + w(v2 , m)2
+2
+
+w(v1 , n)w(v2 , m) ≤
+
+(57)
+
+therefore, it is enough to deal with:
+(58)
+
+X
+
+X
+
+w(v1 , n)2 gcd(n, m)1gcd(n,m)̸=gcd(m(v1 ),m(v2 ))
+
+n,m∈Ci v1 ∈Kn \Sn
+v2 ∈Km \Sm
+
+Fix n ∈ Ci and perform the following division of Ci :
+G
+
+Ci =
+
+(59)
+
+U (e)
+
+e|n
+
+where U (e) := {m ∈ Ci : gcd(m, n) = e}. For every divisor e of n, consider
+firstly the simpler sum:
+(60)
+
+e
+
+X
+
+X
+
+w(v1 , n)2 1e̸=gcd(m(v1 ),m(v2 ))
+
+m∈U (e) v1 ∈Kn \Sn
+v2 ∈Km \Sm
+
+By the second claim of Lemma 4.1, the number of vertices v2 for which the
+log d
+summand is nonzero is ≪ w(v
+, since the condition in the indicator says
+1 ,n)
+exactly that the edge color is different from gcd(n, m) = e. Therefore, the
+above sum is
+(61)
+
+≪ e log d
+
+X
+
+X
+
+w(v1 , n).
+
+m∈U (e) v1 ∈Kn \Sn
+
+Summing this over all divisors e of n and then using the definition of Ti , for
+this fixed n we obtain
+≪ log d
+
+X
+
+X
+
+
+
+gcd(n, m)
+
+m∈Ci
+
+(62)
+
+w(v1 , n)
+
+v1 ∈Kn \Sn
+
+e|n
+
+= log d
+
+X
+
+e|U (e)|
+
+w(v1 , n)
+
+v1 ∈Kn \Sn
+
+X
+
+≤ dTi log d
+
+X
+
+w(v1 , n).
+
+v1 ∈Kn \Sn
+
+Thus the upper bound for (58) is:
+(63)
+
+≪ Ti d log d
+
+X
+
+X
+
+w(v1 , n) ≤ ki Ti d log d
+
+n∈Ci v1 ∈Kn \Sn
+
+Taking together all these observations, we receive the following:
+(64)
+
+ki2 ≪ ki dTi log d
+
+ON THE PROBLEM OF LARGE GCD FOR DISJOINT RESIDUE CLASSES
+
+19
+
+Hence, for every i ∈ I,
+ki ≪ dTi log d.
+□
+References
+[1] C. Aistleitner, I. Berkes and K. Seip. GCD sums from Poisson integrals and systems
+of dilated functions. J. Eur. Math. Soc. (JEMS) 17 (2015), no. 6, 1517–1546.
+[2] T. F. Bloom. Erdős Problem 202. Erdős Problems, 2026, available at https://www.
+erdosproblems.com/202 (accessed July 14, 2026).
+[3] A. Bondarenko and K. Seip. Large greatest common divisor sums and extreme values
+of the Riemann zeta function. Duke Math. J. 166 (2017), no. 9, 1685–1701.
+[4] Y.-G. Chen. On disjoint arithmetic progressions. Acta Arith. 118 (2005), no. 2,
+143–148.
+[5] E. S. Croot III. On non-intersecting arithmetic progressions. Acta Arith. 110 (2003),
+no. 3, 233–238.
+[6] R. de la Bretèche, K. Ford and J. Vandehey. On non-intersecting arithmetic progressions. Acta Arith. 157 (2013), no. 4, 381–392.
+[7] P. Erdős and E. Szemerédi. On a problem of P. Erdős and S. Stein. Acta Arith. 15
+(1968), no. 1, 85–90.
+[8] B. Green and A. Walker. Extremal problems for GCDs. Combin. Probab. Comput. 30
+(2021), no. 6, 922–929.
+[9] B. S. Ho. Non-intersecting arithmetic progressions via spread cores. Preprint, 2026,
+available at https://boonsuan.github.io/erdos202.pdf.
+[10] D. Koukoulopoulos and J. Maynard. On the Duffin–Schaeffer conjecture. Ann. of
+Math. (2) 192 (2020), no. 1, 251–307.
+[11] K. O’Bryant. On Z.-W. Sun’s disjoint congruence classes conjecture. In Combinatorial
+Number Theory, 403–412, de Gruyter, Berlin, 2007.
+[12] Z.-W. Sun. Finite covers of groups by cosets or subgroups. Internat. J. Math. 17
+(2006), no. 9, 1047–1064.
+[13] W.-J. Zhu. On Sun’s conjecture concerning disjoint cosets. Int. J. Mod. Math. 3 (2008),
+no. 2, 197–206.
+Department of Mathematics, University of Bristol, Beacon House, Queens
+Rd, Bristol BS8 1QU
+Email address: nc24166@bristol.ac.uk
+Department of Mathematics, University of Bristol, Beacon House, Queens
+Rd, Bristol BS8 1QU
+Email address: yuchensun93@163.com
+
+

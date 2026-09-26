@@ -314,9 +314,127 @@ class="math inline">\(\alpha=\infty\)</span>.</p>
 <p>Tutto.</p>
 <h3 id="decisioni-degli-agenti">Decisioni degli agenti</h3>
 <h4 id="run-p1_c6">Run <code>p1_c6</code></h4>
+<dl>
+<dt>Iterazione 1 — attempt_001</dt>
+<dd>
+<p><strong>Researcher</strong>: famiglia <code>reduction</code>,
+sotto-obiettivo: Establish rigorous, reusable reduction lemmas between
+instances FT(N,d) of the conjecture (add a line, remove a line, drop one
+dimension), settle the (trivial) infinite family N ≤ d not covered by
+cells 1–5, and record a float-only counterexample search in R^3..R^6..
+Stato dichiarato: <code>LEMMA_CANDIDATE</code>. <em>Perché questa
+scelta</em>: No blocker and no verified claims exist for this cell; cell
+6 is an open problem and asks for infinite families beyond cells 1–5. A
+frontal attack (e.g. N = 2d) is out of reach in one iteration, and the
+frame-potential/Gram approach is known (Bilyk–Matzke) to be non-sharp.
+The best first step is to build the exact ’transfer’ machinery: which
+instances of the conjecture imply which others. These lemmas are cheap,
+fully rigorous, reusable by later iterations (any future family proved
+for N ≡ −1 mod d extends to N+1; any family in R^d transfers down a
+dimension), and they immediately give a new finite case ((6,3) from cell
+4). I also record honestly the trivial family N ≤ d, and a float-only
+search giving no counterexample, since the cell says ’prove or
+disprove’. <em>Rispetto allo stato dell’arte</em>: [1801.07837]
+Bilyk–Matzke (read in full by the team earlier, see
+problema-1/fonti/README.md): the only settled case is the plane; they
+give a general non-sharp energy bound π/2 − 69/(50(d+1)) via the frame
+potential and, for the continuous (measure) version, a
+dimension-reduction Prop. 3.1 (conjecture in S^d ⟹ conjecture in
+S^{d−1}). Lemma 4 below is the finite-N analogue of that reduction,
+proved from scratch by embedding and adding q copies of a new orthogonal
+axis; the exact identity M(N+q,d) = M(N,d−1) + C(q,2) is what makes it
+sharp for finite N. Lemmas 2–3 (averaging over deleting/duplicating a
+line) do not appear in the abstracts and are our own. [2007.08698]
+Lim–McCann (abstract only): deformation to α-powers, optimality for α =
+∞; not used. [1204.3850] is irrelevant (polygon mapping). Nothing in the
+literature I have settles any new infinite family; my approach departs
+from the energy method (known non-sharp) and instead builds exact
+transfer lemmas. <strong>Referee</strong>: verdetto <code>REJECT</code>
+(review_status <code>NEEDS_WORK</code>). <em>Errore fatale</em>: The
+only declared claim is ‘main‘ (Fejes Tóth’s bound for all N, d). The
+submission explicitly states in §8 that no non-trivial infinite family
+is proved and that cell 6 remains open; Lemmas 0–4 and Corollaries 5–6
+are conditional transfer statements (FT(N,d) ⇒ FT(N+1,d) for s=d−1;
+FT(N+1,d) ⇒ FT(N,d) for d | N; FT(N+q’,d) ⇒ FT(N,d−1)) whose hypotheses
+are themselves the unproved conjecture. None of them, alone or combined
+with cells 1–5 (which are moreover not verified in the state:
+highest_verified_cell = 0), yields FT(N,d) for any family beyond the
+trivial N ≤ d / d = 1 case. Hence the declared target is not
+established, and no other declared claim exists to accept. The float
+search of §7 is exploration only and proves nothing (correctly
+acknowledged by the author). <em>Prossimo passo richiesto</em>: Address
+the stated blocking obligation without silently changing the target</p>
+</dd>
+</dl>
 <h3 id="codice-su-cui-poggia-il-tentativo">Codice su cui poggia il
 tentativo</h3>
-<p>Nessun codice nei tentativi.</p>
+<pre
+data-caption="attempt\_001 code\_1 [python, rigore exact] — Exact integer check of the identities of Lemma 0 and of the equality/inequality conditions — verdetto del Referee: REJECT"><code>&quot;&quot;&quot;
+Verifica ESATTA (interi Python) delle identita&#39; aritmetiche usate nei lemmi di riduzione
+per la congettura di Fejes Toth (problema 1, parte 6).
+  M(N,d) = s*C(q+1,2) + (d-s)*C(q,2),  N = q*d + s, 0 &lt;= s &lt; d.
+Cosa controlla e perche&#39;:
+  (a) 2*M(N,d) = q*(N+s-d)                      -&gt; usata nei lemmi 2 e 3
+  (b) M(N+1,d) = M(N,d) + q                     -&gt; usata nei lemmi 2 e 3
+  (c) M(N+q&#39;,d) = M(N,d-1) + C(q&#39;,2), q&#39;=N//(d-1) -&gt; usata nel lemma 4
+  (d) disuguaglianza del lemma 2 vale sse s = d-1 oppure q = 0 (N&gt;=2)
+  (e) disuguaglianza del lemma 3 vale sse s = 0    (N&gt;=1)
+Copertura: 1 &lt;= d &lt;= 40, 1 &lt;= N &lt;= 400. Aritmetica esatta: nessun float.
+&quot;&quot;&quot;
+from math import comb
+
+
+def M(N, d):
+    &quot;&quot;&quot;Numero di coppie coincidenti nella configurazione equidistribuita.&quot;&quot;&quot;
+    q, s = divmod(N, d)
+    return s * comb(q + 1, 2) + (d - s) * comb(q, 2)
+
+
+def B2(N, d):
+    &quot;&quot;&quot;Bound congetturato in unita&#39; di pi/2: C(N,2) - M(N,d).&quot;&quot;&quot;
+    return comb(N, 2) - M(N, d)
+
+
+def controlla(d_max=40, N_max=400):
+    for d in range(1, d_max + 1):
+        for N in range(1, N_max + 1):
+            q, s = divmod(N, d)
+            assert 2 * M(N, d) == q * (N + s - d), (N, d)
+            assert M(N + 1, d) == M(N, d) + q, (N, d)
+            if d &gt;= 2:
+                qq = N // (d - 1)
+                assert M(N + qq, d) == M(N, d - 1) + comb(qq, 2), (N, d)
+            if N &gt;= 2:
+                lemma2 = (N + 1) * B2(N, d) &lt;= (N - 1) * B2(N + 1, d)
+                assert lemma2 == (s == d - 1 or q == 0), (N, d)
+            lemma3 = N * B2(N + 1, d) &lt;= (N + 2) * B2(N, d)
+            assert lemma3 == (s == 0), (N, d)
+    print(f&quot;OK: identita&#39; (a)-(e) verificate per d&lt;=%d, N&lt;=%d&quot; % (d_max, N_max))
+
+
+if __name__ == &quot;__main__&quot;:
+    controlla()
+</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 0.1s; stdout: "OK: identita’ (a)-(e) verificate per d&lt;=40, N&lt;=400"; stderr: ’’</code></p>
+<pre
+data-caption="attempt\_001 code\_2 [bash, rigore float\_exploration\_only] — Float-only hill-climbing search for configurations exceeding the conjectured bound in R\textasciicircum{}3. — verdetto del Referee: REJECT"><code>cd runs/p1_c6/sandbox
+for dN in &quot;3 6&quot; &quot;3 7&quot; &quot;3 8&quot; &quot;3 9&quot; &quot;4 7&quot; &quot;4 8&quot; &quot;4 9&quot; &quot;4 10&quot; &quot;5 8&quot; &quot;5 9&quot; &quot;5 11&quot; &quot;6 10&quot; &quot;6 13&quot;; do
+  d=${dN%% *}; N=${dN##* }
+  ../../../.venv/bin/python ../../../tools/autoloop.py ../../../problema-1/esperimenti/lines_Rd.py \
+      --budget 5 --seeds 3 --restarts 8 --ledger esplora_Rd.jsonl --tag &quot;c6_d${d}_N${N}&quot; -- $d $N
+done
+# riassunto: per ogni (d,N) best trovato, target congetturato, gap (float)
+../../../.venv/bin/python - &lt;&lt;&#39;EOF&#39;
+import json
+for riga in open(&quot;esplora_Rd.jsonl&quot;):
+    r = json.loads(riga)
+    print(f&quot;d={r[&#39;args&#39;][0]} N={r[&#39;args&#39;][1]:&gt;2}  best={r[&#39;best_score&#39;]:.6f}  target={r[&#39;target&#39;]:.6f}  target-best={r[&#39;gap_target_minus_best&#39;]:+.2e}&quot;)
+EOF
+# Output osservato: (3,6) best 18.828661 &lt; 18.849556 (non convergente); tutti gli altri 12 casi best = target entro 2e-7
+# (residuo negativo ~1e-7 = artefatto float di arccos vicino a 1, non una violazione).</code></pre>
+<p><em>Riesecuzione fidata dell’orchestratore</em>:
+<code>code_2: not re-run (language ’bash’ not supported by the orchestrator)</code></p>
 <h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>
 <div class="thebibliography">
 <p><span>99</span> Dmitriy Bilyk, Ryan W Matzke. <em>On the Fejes Tóth

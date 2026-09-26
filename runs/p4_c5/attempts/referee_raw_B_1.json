@@ -1,0 +1,73 @@
+{
+ "report": {
+  "evidence_verdict": "PARTIAL",
+  "source_issues": [
+   {
+    "code": "SRC_UNRETRIEVED",
+    "detail": "src_1 (O'Bryant, arXiv:math/0604347v2) is cited as 'read in full' with a local pdf/txt, but no excerpt is submitted and I cannot retrieve it here. The candidate's assertion that the paper's Lemma 6 item 8 has a gap at k=30 is therefore unverified by me. This is not essential: the proof states it relies on nothing from the paper, and my reading of the submitted argument confirms no step depends on it. Request: submit the relevant excerpt (Lemma 6 items 4, 5, 8 and the sentence quoted about primes 17, 19, 23, 29) so the reported gap can be checked, since the cell rewards reporting source disagreements only if they are right.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "SRC_OK_INTERNAL",
+    "detail": "src_2 (problem statement) and src_3 (colleague cell-4 draft) are used only for definitions/criterion (*) and for a lemma that is re-proved in full here (Lemma 1). No external hypothesis is imported.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "COMP_REPRODUCED",
+    "detail": "code_1 (prodotto_massimo.py) uses exact integer arithmetic over an explicitly finite set (all l-tuples in {1..|R|}^l, l ≤ |R|). Orchestrator rerun: exit 0, 96.2 s (< 10 min), stdout matches the table in the proof line by line (first stdout line truncated in the log but its visible tail 'x_prodotto=18 -> escluso' matches k=24 l=3). The computation is not load-bearing: the proof's Step 4c reaches the same conclusions by hand via AM–GM with explicit rational bounds, and the brute force is only a sharper confirmation. No floating point.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [
+   {
+    "code": "SCOPE_NOT_COVERED",
+    "detail": "The registered claim 'main' is the full cell-5 statement: (a) determine and state the largest k with a contiguous certified range, with the strengthened certificate (i)–(v); (b) decide k=24 and k=30. The submission addresses only (b). No boundary value is stated ('Where a cell asks you to determine a boundary, state the exact value you claim'), and none of (i) non-vacuity demonstration, (ii)/(iii) survivor decisions and lists, (iv) pruning rules proved/tested off, (v) second independent implementation compared elementwise is provided or even mentioned. The candidate is honest inside the proof text about what is proved, but the hand-in must 'say clearly which cells you consider solved and which are partial'; this attempt should be handed in as a partial result for cell 5 (part (b) only), not as evidence for 'main' as registered.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "CONDITIONAL_HYPOTHESIS_STATED",
+    "detail": "The theorem for k=24 and k=30 assumes S(s) for all 2 ≤ s < k. The cell explicitly allows this if stated, and the candidate states it and localises its use (Lemma 4, Corollary 5, Lemma 6). This matches the cell's wording 'show that neither is the least size at which the statement can fail'. Note that state.highest_verified_cell = 0 and no registered claims establish S(s) for any s; the result is conditional and must be reported as such.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US",
+     "UNVERIFIED"
+    ],
+    "evidence_sufficient": false,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": false,
+    "references": [
+     "src_1",
+     "src_2",
+     "src_3",
+     "code_1"
+    ],
+    "notes": "Sub-part 'k=24 and k=30 are not the least failing size' is supported by a self-contained written argument (Lemmas 0–6, Step 4) conditional on all smaller sizes, as permitted; the accompanying computation is exact, finite, reproduced by the orchestrator in 96 s and not load-bearing. The remaining and larger sub-part of the cell (contiguous certified range with certificate (i)–(v)) has no evidence at all in this attempt, so the registered claim as a whole is not evidenced. The comparison with O'Bryant is unverified pending an excerpt."
+   }
+  ],
+  "reproducibility_notes": "code_1 is fully included, deterministic, exact integer arithmetic, no dependencies beyond the standard library; rerun by the orchestrator reproduced the printed table (96.2 s vs. 75 s claimed, both well under the 10-minute limit). No search, survivor lists, node counts or second implementation exist in this attempt to reproduce. Missing materials requested: (1) the O'Bryant excerpt (Lemma 6 items 4, 5, 8) backing the reported gap; (2) everything for the contiguous-range part of the cell, or an explicit re-registration of this attempt as partial (part (b) only)."
+ },
+ "limitation": null
+}

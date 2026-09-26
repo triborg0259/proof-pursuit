@@ -1,0 +1,22 @@
+{
+ "report": {
+  "mathematical_verdict": "FAIL",
+  "first_fatal_error": {
+   "code": "TARGET_MISMATCH",
+   "detail": "The declared target 'main' is the whole of cell 5: (A) determine and certify the largest contiguous range k ≤ K with the strengthened certificate (i)–(v) [non-vacuity demonstration, individual survivor decisions with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, second independent implementation compared elementwise], and (B) show that neither k=24 nor k=30 is the least failing size. The submission addresses only (B): it proves 'S(s) for all 2≤s<k ⇒ S(k)' for k∈{24,30}. Nothing in the submission determines a contiguous certified range, and no certificate components (i)–(v) are present; the state also carries no previously verified claims (highest_verified_cell=0) that the argument could lean on. The only declared claim is 'main', so no declared claim is established and PARTIAL is unavailable. The argument for (B) contains no invalid inference (see math_notes) and should be re-declared as its own claim.",
+   "severity": "FATAL",
+   "claim_ids": [
+    "main"
+   ]
+  },
+  "accepted_mathematical_claims": [],
+  "unproved_claims": [
+   "main"
+  ],
+  "missing_cases": [
+   "Part (A) of the cell: the largest contiguous k certified for all sizes ≤ k, with certificate items (i)–(v), is entirely absent."
+  ],
+  "math_notes": "Verification of the k=24 / k=30 argument (the part actually written), which I find mathematically correct as a conditional theorem and recommend be declared as a new claim, e.g. 'cond_24_30: for k∈{24,30}, if S(s) holds for all 2≤s<k then S(k) holds'. Checks: Lemma 1 (normalisation m_i' = lcm of gcds, m_i' | L_k, gcds preserved, disjointness preserved via (*)) — correct. Lemma 3 (dividing by a common prime power q with common residue b: valuations give gcd(m_i/q,m_j/q)=g_ij/q, and g_ij/q ∤ (a_i−a_j)/q iff g_ij ∤ a_i−a_j) — correct. Lemma 4: needs q ≤ k−1 (from q | L_k), giving s=⌊(k−1)/q⌋+1 ∈ [2,k−1]; s<k since (k−1)/2+1<k for k≥2 — correct; the largest s invoked is ⌊(k−1)/2⌋+1 (12 for k=24, 15 for k=30), within the stated hypothesis. Corollary 5: ⌈k/p⌉ > ⌊(k−1)/p⌋ — correct. Lemma 6 uses only S(k−1) — correct. Step 4a: v_p(m_i)=1 since p²>k−1; g_ij=p for i≠j in J; P_i nonempty (Cor. 5), pairwise disjoint, ⊂ R — correct. Step 4b: ω well defined; injectivity since ℓ≥3 distinct common primes give g ≥ 30 ≥ k (for k=30, g ≥ 30 > 29) — correct. Step 4c: max product of ℓ positive integers with sum ≤ |R|: k=24 (|R|=8): 18,16,8,4,2,1 vs 21,20,19,18,17,16 — all excluded; k=30 (|R|=9): ℓ=4..9 give 24,16,8,4,2,1 vs 26..21 — excluded; ℓ=3 forces |P_j|=3 each, partition of R, ω bijective — correct (AM–GM equality case is genuinely forced since 27 ≤ ∏ ≤ 27). Step 4d: two triples differing only in the j''-coordinate are hit by distinct i_1,i_2 ∉ J, so rr' | g_{i_1 i_2} ≤ 29; the seven primes 5,…,23 pairwise have product ≥35>29 so all lie in one P_j of size 3 — contradiction, correct. The AM–GM text bounds are loose but valid; the brute-force table (trusted observation) is not needed for the proof. Dependency exposure: the result is conditional on S(s) for all s<k, which the cell permits provided stated (it is stated). The reported gap in O'Bryant's item 8 is not part of the verdict."
+ },
+ "limitation": null
+}

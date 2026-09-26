@@ -97,9 +97,162 @@ Tutto tranne il piano.
 
 \subsubsection{Decisioni degli agenti}
 \paragraph{Run \texttt{p3\_c3}}
+\begin{description}
+\item[Iterazione 1 — attempt\_001]
+\textbf{Researcher}: famiglia \texttt{direct\_proof}, sotto-obiettivo: Prove the general upper bound D\_B(n) ≤ k\textasciicircum{}2−2k−1 for every non-triangular n of rank k ≥ 4, and prove D\_B(T\_k−1) = k\textasciicircum{}2−2k−1 exactly (lower bound via an explicit partition λ*\_k), as a single self-contained argument (Brandt's characterisation of cyclic partitions re-proved inside).. Stato dichiarato: \texttt{LEMMA\_CANDIDATE}.
+\emph{Perché questa scelta}: No blocker and no verified claims: the natural first subgoal is the whole quantitative content of the cell (general bound + exact value at T\_k−1). The literature (Griggs–Ho 1998) contains a proof sketch of exactly this bound; the rules allow a proof 'written out in full, whatever its source', so I fetched the preprint, reconstructed every lemma in a cleaner language, filled the gaps (their proof of Brandt's theorem is a sketch; their Lemma 3.5 statement contains an unused/incorrect constraint q' ≤ p+1 which I dropped; their Lemma 3.3 uses Theorem 2.1 in a way I replaced by an explicit recognition lemma), and verified numerically that the value is k\textasciicircum{}2−2k−1 (an off-by-one bug in my first table, which suggested k\textasciicircum{}2−2k−2, was found and fixed by comparing with Griggs–Ho's Figure 1). The characterisation of all extremal partitions of T\_k−1 is deliberately left for a later iteration.
+\emph{Rispetto allo stato dell'arte}: The arXiv abstracts listed (math/0401385, 1503.00885, 2607.17194, 1101.1546, 1703.07102, 2208.14496) do not treat D\_B(n) for non-triangular n; 2607.17194 and 1503.00885 are surveys citing Brandt (1982) for the cyclic partitions, 1101.1546 concerns Toom's convergence proof. The relevant source is not on arXiv: J. R. Griggs, C.-C. Ho, 'The cycling of partitions and compositions under repeated shifts', Adv. Appl. Math. 21 (1998) 205–227 (doi:10.1006/aama.1998.0597); I downloaded and read the authors' preprint (people.math.sc.edu/griggs/cycling.pdf, dated Mar. 2, 1998). Its Theorem 4.4 states: '(1) D\_B(n) ≤ k\textasciicircum{}2−2k−1 for k ≥ 4 [n = 1+…+(k−1)+r, 1 ≤ r \textless{} k]; (2) equality holds when k ≥ 4 and r = k−1', with the extremal partition λ\_1=k−1, λ\_2=k−2, λ\_i=k−i+1 (3≤i≤k), λ\_\{k+1\}=1 and the remark 'imitating the proof of Theorem 3.1, we can show d\_B(λ)=k\textasciicircum{}2−2k−1' (no details). My attempt FOLLOWS Griggs–Ho's strategy but reproduces every proof in full (as required: citing does not count), in a 'pile lifetime' formalism equivalent to their diagram\_B; it ADAPTS their Lemma 3.5 (dropping the constraint q' ≤ p+1, which their own proof does not establish and which is not needed) and their Theorem 2.1 proof (their CRT sketch is written out with the potential Φ), and SUPPLIES the omitted lower-bound orbit computation for λ*\_k. Griggs–Ho give, for triangular n, only necessary conditions on extremal partitions (their Thm 3.8, converse false for k=8) and nothing for T\_k−1, consistent with my leaving that sub-question open.
+\textbf{Referee}: verdetto \texttt{UNKNOWN\_STATUS} (review\_status \texttt{INCOMPLETE}).
+\emph{Prossimo passo richiesto}: Provide the missing review or independently checked evidence
+\end{description}
 
 \subsubsection{Codice su cui poggia il tentativo}
-Nessun codice nei tentativi.
+\begin{lstlisting}[caption={attempt\_001 code\_1 [python, rigore exact] — Certificato esaustivo per il caso k=4 (n = 7, 8, 9: tutte le 15+22+30 partizioni, d\_B calc — verdetto del Referee: UNKNOWN\_STATUS}]
+"""Certificato per il caso k = 4 della cella 3 e controlli di sanita'.
+
+Cosa fa: (1) calcola esaustivamente D_B(n) per n = 7, 8, 9 (tutte le partizioni, aritmetica
+esatta su tuple) e verifica D_B(n) <= 7 = 4^2 - 2*4 - 1; (2) verifica d_B(lambda*) = k^2-2k-1
+per lambda* = (k-1, k-2, k-2, k-3, ..., 1, 1), k = 4..12 (solo controllo, non usato nella prova);
+(3) confronta D_B(T_k - 1) con k^2-2k-1 per k = 4..9 (solo controllo).
+Perche': la prova generale del bound usa k >= 5 nel caso A; per k = 4 serve l'esaustione.
+"""
+import time
+from db_table import distanze_dal_ciclo, shift, partizioni
+
+
+def d_B_diretto(lam):
+    """d_B(lam) seguendo l'orbita finche' non si ripete (memoria esplicita)."""
+    visti, orbita, cur = {}, [], lam
+    while cur not in visti:
+        visti[cur] = len(orbita)
+        orbita.append(cur)
+        cur = shift(cur)
+    return visti[cur]  # indice della prima partizione ciclica dell'orbita
+
+
+if __name__ == "__main__":
+    t0 = time.time()
+    for n in (7, 8, 9):
+        d = distanze_dal_ciclo(n)
+        num = sum(1 for _ in partizioni(n))
+        assert len(d) == num
+        print(f"n={n}: {num} partizioni, D_B(n)={max(d.values())} <= 7: {max(d.values()) <= 7}")
+    print(f"(1) tempo caso k=4: {time.time()-t0:.2f}s")
+    for k in range(4, 13):
+        lam = tuple([k - 1, k - 2] + list(range(k - 2, 0, -1)) + [1])
+        assert sum(lam) == k * (k + 1) // 2 - 1
+        print(f"k={k}: d_B(lambda*)={d_B_diretto(lam)}  k^2-2k-1={k*k-2*k-1}")
+    for k in range(4, 10):
+        n = k * (k + 1) // 2 - 1
+        D = max(distanze_dal_ciclo(n).values())
+        print(f"k={k} n={n}: D_B={D}  k^2-2k-1={k*k-2*k-1}  uguali: {D == k*k-2*k-1}")
+    print(f"tempo totale: {time.time()-t0:.2f}s")
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_1.py (python3, clean copy of the researcher sandbox): exit 0 in 0.5s; stdout: 'True\textbackslash{}nn=8: 22 partizioni, D\_B(n)=5 \textless{}= 7: True\textbackslash{}nn=9: 30 partizioni, D\_B(n)=7 \textless{}= 7: True\textbackslash{}n(1) tempo caso k=4: 0.00s\textbackslash{}nk=4: d\_B(lambda*)=7  k\textasciicircum{}2-2k-1=7\textbackslash{}nk=5: d\_B(lambda*)=14  k\textasciicircum{}2-2k-1=14\textbackslash{}nk=6: d\_B(lambda*)=23  k\textasciicircum{}2-2k-1=23\textbackslash{}nk=7: d\_B(lambda*)=34  k\textasciicircum{}2-2k-1=34\textbackslash{}nk=8: d\_B(lambda*)=47  k\textasciicircum{}2-2k-1=47\textbackslash{}nk=9: d\_B}
+\begin{lstlisting}[caption={attempt\_001 code\_2 [python, rigore exact] — Modulo di supporto (db\_table.py): enumerazione delle partizioni di n, shift B, calcolo di  — verdetto del Referee: UNKNOWN\_STATUS}]
+"""Calcola D_B(n) esattamente (interi) per n fino a NMAX, con le partizioni estremali.
+
+Perche': serve la tabella dei valori veri di D_B(T_k-1) e delle estremali per congetturare la formula
+richiesta dalla cella 3 e per controllare la prova. Aritmetica esatta su tuple: nessun errore numerico.
+"""
+import sys, time
+
+
+def partizioni(n, massimo=None):
+    """Genera tutte le partizioni di n come tuple debolmente decrescenti."""
+    if massimo is None:
+        massimo = n
+    if n == 0:
+        yield ()
+        return
+    for prima in range(min(n, massimo), 0, -1):
+        for resto in partizioni(n - prima, prima):
+            yield (prima,) + resto
+
+
+def shift(lam):
+    """Applica lo shift B: togli 1 da ogni parte, aggiungi una parte pari al numero di parti."""
+    parti = [p - 1 for p in lam if p > 1] + [len(lam)]
+    return tuple(sorted(parti, reverse=True))
+
+
+def distanze_dal_ciclo(n):
+    """Restituisce dict partizione -> d_B, esplorando il grafo funzionale con colorazione."""
+    d = {}
+    for start in partizioni(n):
+        if start in d:
+            continue
+        cammino, visti = [], {}
+        cur = start
+        while cur not in d and cur not in visti:
+            visti[cur] = len(cammino)
+            cammino.append(cur)
+            cur = shift(cur)
+        if cur in d:
+            base = d[cur]
+        else:
+            # cur e' sul cammino: tutto da visti[cur] in poi e' ciclico
+            for lam in cammino[visti[cur]:]:
+                d[lam] = 0
+            cammino = cammino[:visti[cur]]
+            base = 0  # il primo elemento fuori dal ciclo dista 1
+        for i, lam in enumerate(reversed(cammino)):
+            d[lam] = base + 1 + i
+    return d
+
+
+def rango(n):
+    k = 1
+    while k * (k + 1) // 2 < n:
+        k += 1
+    return k
+
+
+if __name__ == "__main__":
+    nmax = int(sys.argv[1]) if len(sys.argv) > 1 else 45
+    for n in range(1, nmax + 1):
+        t0 = time.time()
+        d = distanze_dal_ciclo(n)
+        D = max(d.values())
+        estremali = sorted([lam for lam, v in d.items() if v == D], reverse=True)
+        k = rango(n)
+        r = n - (k - 1) * k // 2
+        print(f"n={n} k={k} r={r} D_B={D} (k^2-2k-1={k*k-2*k-1}) #estr={len(estremali)} "
+              f"estremali={estremali if len(estremali) <= 6 else estremali[:6]} t={time.time()-t0:.1f}s", flush=True)
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_2.py (python3, clean copy of the researcher sandbox): exit 0 in 2.8s; stdout: ', 1), (8, 7, 6, 6, 5, 4, 2, 2, 2, 1), (8, 7, 6, 6, 5, 4, 2, 2, 1, 1, 1), (8, 7, 6, 6, 5, 3, 3, 3, 1, 1), (8, 7, 6, 6, 5, 3, 3, 2, 2, 1), (8, 7, 6, 6, 5, 3, 3, 2, 1, 1, 1)] t=0.3s\textbackslash{}nn=44 k=9 r=8 D\_B=62 (k\textasciicircum{}2-2k-1=62) \#estr=3911 estremali=[(8, 7, 7, 6, 5, 4, 3, 2, 1, 1), (8, 7, 7, 6, 5, 4, 2, 2, 2, }
+\begin{lstlisting}[caption={attempt\_001 code\_3 [python, rigore exact] — Esplorazione (non usata nella prova): stampa l'orbita di lambda*\_k in forma diagonale (dia — verdetto del Referee: UNKNOWN\_STATUS}]
+"""Stampa l'orbita di lambda* = (k-1, k-2, k-2, k-3, ..., 2, 1, 1) (n = T_k - 1) descrivendo
+ogni partizione come: diagonali 1..k-1 piene? + celle sulla diagonale k (righe) + celle oltre.
+"""
+import sys
+from db_table import shift
+
+
+def celle(lam):
+    return {(i + 1, j + 1) for i, parte in enumerate(lam) for j in range(parte)}
+
+
+def descrivi(lam, k):
+    c = celle(lam)
+    piene = all((i, w + 1 - i) in c for w in range(1, k) for i in range(1, w + 1))
+    diag_k = tuple(int((i, k + 1 - i) in c) for i in range(1, k + 1))
+    oltre = sorted((i, j) for (i, j) in c if i + j - 1 > k)
+    return piene, diag_k, oltre
+
+
+if __name__ == "__main__":
+    k = int(sys.argv[1])
+    lam = tuple([k - 1, k - 2] + list(range(k - 2, 0, -1)) + [1])
+    for j in range(k * k - 2 * k + 2):
+        piene, dk, oltre = descrivi(lam, k)
+        print(f"j={j:3d} s={len(lam):2d} l1={lam[0]:2d} diag<k piene={piene} diag_k={''.join(map(str,dk))} oltre={oltre}  {lam}")
+        lam = shift(lam)
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_3.py (python3, clean copy of the researcher sandbox): exit 1 in 0.1s; stdout: ''; stderr: 'Traceback (most recent call last):\textbackslash{}n  File "/Users/thomastumini/proof-pursuit/runs/p3\_c3/verifica/attempt\_001/code\_3.py", line 21, in \textless{}module\textgreater{}\textbackslash{}n    k = int(sys.argv[1])\textbackslash{}n            \textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textbackslash{}nIndexError: list index out of range'}
 
 \section{arXiv literature consulted}
 \begin{thebibliography}{99}

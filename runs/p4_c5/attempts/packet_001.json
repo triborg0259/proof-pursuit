@@ -1,0 +1,265 @@
+{
+ "job": {
+  "problem_id": "p4_c5",
+  "original_problem": "# Problema 4 — Disjoint congruence classes and large gcd\n\n*(Enunciato formattato in LaTeX, contenuto fedele all'originale; ricevuto il 2026-09-26. Titolo della colonna\nnon riportato nel testo incollato; la domanda di apertura è: \"If congruence classes are pairwise disjoint, must\ntwo of their moduli share a large common factor?\")*\n\n## Preambolo\n\nFor integers $a$ and $m \\ge 1$ write\n$$\na \\pmod m = \\{\\, a + mt : t \\in \\mathbb{Z} \\,\\}\n$$\nfor the congruence class of $a$ modulo $m$. A finite family of classes $a_1 \\pmod{m_1}, \\ldots, a_k \\pmod{m_k}$\nis *pairwise disjoint* if $a_i \\pmod{m_i} \\cap a_j \\pmod{m_j} = \\emptyset$ whenever $i < j$. Nothing is assumed\nabout the moduli beyond $m_i \\ge 1$: they may repeat, and the residues $a_i$ may repeat as well.\n\nBy the Chinese remainder theorem, two classes meet if and only if the congruences $x \\equiv a_i \\pmod{m_i}$ and\n$x \\equiv a_j \\pmod{m_j}$ are compatible, that is\n$$\na_i \\pmod{m_i} \\cap a_j \\pmod{m_j} \\ne \\emptyset \\iff \\gcd(m_i, m_j) \\mid a_i - a_j. \\qquad (*)\n$$\nThe question of this column is how large the moduli of a disjoint family must be forced to overlap in the gcd sense.\n\n**Question.** Let $k \\ge 2$ and let $a_1 \\pmod{m_1}, \\ldots, a_k \\pmod{m_k}$ be pairwise disjoint. Must there be\na pair $i < j$ with\n$$\n\\gcd(m_i, m_j) \\ge k \\,?\n$$\nThis is believed to be true for every $k$. It is sharp: the $k$ classes $1, 2, \\ldots, k \\pmod k$ are pairwise\ndisjoint — their differences have absolute value less than $k$, so $k$ divides none of them — and every pairwise\ngcd equals exactly $k$. So $k$ could not be replaced by $k+1$ in the statement.\n\n**Examples.** The three classes $0 \\pmod 2$, $1 \\pmod 4$, $3 \\pmod 8$ are pairwise disjoint by $(*)$, and their\npairwise gcds are $2, 2, 4$; the largest is $4 \\ge 3$, as the question predicts for $k = 3$. By contrast\n$0 \\pmod 2$ and $0 \\pmod 3$ have coprime moduli and do meet, at $0$.\n\n**Trivial bounds.** Two observations are immediate and you should assume they are already on the table;\npresenting either as progress counts for nothing.\n\n1. If $\\gcd(m_i, m_j) = 1$ then by $(*)$ the two classes meet. Hence in any pairwise disjoint family every\n   pairwise gcd is at least $2$. This answers the question for $k = 2$, and for a family of size $k$ that fails\n   the question it confines every pairwise gcd to the range $2 \\le \\gcd(m_i, m_j) \\le k - 1$.\n2. The class $a \\pmod m$ has density $1/m$, so a pairwise disjoint family satisfies $\\sum_{i=1}^k 1/m_i \\le 1$.\n   In particular some modulus satisfies $m_i \\ge k$.\n\nObservation 2 bounds a single modulus from below; it says nothing about any gcd, and the two together settle no\nsize $k \\ge 3$. Every cell below needs a genuinely new argument.\n\n**What to hand in.** For each cell you attempt, hand in a written proof. You may use a computer to explore.\nA proof may rely on a computation only if you include the code, it runs in under ten minutes on a laptop, and\nthe computation is exhaustive over a finite set that your own argument has reduced the problem to.\n\nA computational cell is accepted only with an *exhaustiveness certificate*, meaning all four of:\n\n1. an exact description of the finite set your search enumerates, together with the proof that nothing outside\n   it can be a counterexample;\n2. every pruning rule you use, stated precisely, each with the proof that it discards only objects that cannot\n   be completed to a counterexample;\n3. the node count of the search at each size you claim, and the wall clock;\n4. a rerun that reproduces those counts;\n5. and, if anything at all survives your pruning at a size you claim, a separate decision for every survivor —\n   not a sample — together with, for each one, the smallest part of it that already forces the decision, and\n   your proof that no smaller part does. A survivor you cannot decide means the size is not certified.\n\nA run that reports \"I searched and found nothing\" without 1–5 is not a certificate and scores nothing. If a\nsearch does not finish at some size, report it as unfinished and do not claim that size; a partial search is a\nlegitimate partial result and should be handed in as one, with the counts it reached.\n\nWhere a cell asks you to determine a boundary, state the exact value you claim. Claim only what you have\ncertified: an unfinished size, or one certified under an assumption you have not verified, must be reported as\nsuch. Say clearly which cells you consider solved and which are partial.\n\nCiting a published result for the statement you are asked to prove does not count as a solution; a proof written\nout in full does, whatever its source. If you rely on a published argument, you are responsible for it: check it\nyourself, and report it if it does not hold up.\n\n## Parte 1 (C1) — Three classes\n\n**Punteggio:** 1 point · **Valutazione:** Judged\n\nThe first size that the two trivial observations above do not settle. Prove the statement for $k = 3$: any three\npairwise disjoint classes have $\\gcd(m_i, m_j) \\ge 3$ for some $i < j$.\n\n## Parte 2 (C2) — Four classes\n\n**Punteggio:** 2 points · **Valutazione:** Judged\n\nThe same question for four classes. Prove the statement for $k = 4$.\n\n## Parte 3 (C3) — Every $k$ up to 8\n\n**Punteggio:** 3 points · **Valutazione:** Judged\n\nA first range of sizes: after C1 and C2, the sizes $k = 5, 6, 7$ and $8$ remain. Prove the statement for every\n$k \\le 8$.\n\n## Parte 4 (C4) — Every $k$ up to 12\n\n**Punteggio:** 5 points · **Valutazione:** Judged\n\nA longer range, and a precise account of your method at the sizes just beyond it. Prove the statement for every\n$k \\le 12$. Then, for each $k$ from $9$ to $16$ in turn, report exactly what your method leaves undecided at that\n$k$: if nothing, say so and prove it; if something, exhibit it in full. If that disagrees with any source you\nconsulted, say which of the two is right and why. An answer that reports agreement with a source it did not test\nwill be marked wrong.\n\n## Parte 5 (C5) — The certified boundary\n\n**Punteggio:** 8 points · **Valutazione:** Judged\n\nThe main certification cell: an initial range of sizes as long as you can make it, plus two isolated sizes\nfurther out. Determine the largest $k$ for which you can certify the statement for all sizes up to and including\n$k$, and certify it. The range you claim must be contiguous, and if your argument at a given size assumes that\nall smaller sizes have already been settled you must say so. Then decide the two isolated sizes $k = 24$ and\n$k = 30$: show that neither is the least size at which the statement can fail.\n\nFor this cell the exhaustiveness certificate of the hand-in rules is not enough on its own. Add:\n\n(i) a demonstration that your method is not vacuous. Construct a case in which an admissible configuration\ngenuinely exists, run your machinery on it unmodified, and show it returns that configuration. A method that\nreports \"nothing survives\" at every size it is pointed at is indistinguishable from a method with a bug, and will\nbe graded as one;\n\n(ii) for every object your pruning leaves undecided, at every $k$ you claim — not a sample — an individual\ndecision, plus the smallest part of that object which already forces the decision, plus a proof that no smaller\npart does;\n\n(iii) the exact list, not merely the count, of what survives at each $k$;\n\n(iv) every pruning rule you use beyond those you have proved, proved. If your search needs a rule you invented\nto finish a size, that rule is part of your claim: state it, prove it, and show the survivor list is unchanged\nwhen you switch it off. A size that only closes with an unproved rule is not certified;\n\n(v) a second implementation, written independently of your first, that differs in method — not the same\nalgorithm twice — and the two survivor lists compared elementwise at every $k$ you claim. Report any difference\nrather than reconciling it silently: a disagreement means one of them is wrong, and finding which is part of the\ncell.\n\n## Parte 6 (C6) — Beyond the boundary\n\n**Punteggio:** 13 points · **Valutazione:** Judged · **Open question**\n\nThree directions beyond the certified range; any one of them counts. Any of the following.\n\n(a) Decide a size $k \\ge 25$.\n\n(b) The asymptotic form. It is known that a pairwise disjoint family of size $k$ always has a pair with\n$$\n\\gcd(m_i, m_j) \\;\\ge\\; k \\cdot \\exp\\!\\left( -(2 + o(1)) \\frac{\\log k}{\\log\\log k} \\right),\n$$\nwhich is $k^{1 - o(1)}$ but not linear in $k$. Prove the statement in full, or prove the weaker bound\n$\\gcd(m_i, m_j) \\ge ck$ for some absolute constant $c > 0$, or improve the exponential factor above.\n\n(c) The group form. Let $G$ be a group, let $G_1, \\ldots, G_k$ be subgroups of finite index $n_i = [G : G_i]$,\nand let $x_1 G_1, \\ldots, x_k G_k$ be pairwise disjoint cosets. Is there a pair $i < j$ with\n$\\gcd(n_i, n_j) \\ge k$? This is known for $k \\le 5$ and open for every $k \\ge 6$; settling $k = 6$ counts as\nprogress.\n\n*(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)*\n\n\n# TARGET CELL 5\nDetermine the largest k for which the statement is certified for all sizes up to k (contiguous range), with the strengthened certificate (i)-(v): non-vacuity demonstration, individual decisions for survivors with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, a second independent implementation compared elementwise. Also decide k = 24 and k = 30: show neither is the least size at which the statement can fail.\n",
+  "cell": {
+   "id": "cell_5",
+   "number": 5,
+   "target_claim_id": "main",
+   "statement": "Determine the largest k for which the statement is certified for all sizes up to k (contiguous range), with the strengthened certificate (i)-(v): non-vacuity demonstration, individual decisions for survivors with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, a second independent implementation compared elementwise. Also decide k = 24 and k = 30: show neither is the least size at which the statement can fail."
+  },
+  "state": {
+   "highest_verified_cell": 0,
+   "claims": []
+  },
+  "candidate": {
+   "attempt_id": "attempt_001",
+   "proof": "## Statement proved\n\n**Notation.** A *class* is $a \\pmod m$ with $m\\ge1$. For a family $a_i \\pmod{m_i}$ ($i\\in I$) write $g_{ij}:=\\gcd(m_i,m_j)$. For $k\\ge2$ let $S(k)$ denote: *every family of $k$ pairwise disjoint classes has a pair $i<j$ with $g_{ij}\\ge k$.* A **counterexample of size $k$** is a pairwise disjoint family of $k$ classes with $g_{ij}\\le k-1$ for all $i<j$; $S(k)$ fails iff a counterexample of size $k$ exists. Put $L_k:=\\operatorname{lcm}(1,2,\\dots,k-1)$. Throughout we use only the definitions and the criterion $(*)$ of the problem statement: two classes $a_i \\pmod{m_i}$, $a_j\\pmod{m_j}$ meet iff $g_{ij}\\mid a_i-a_j$.\n\n**Theorem.** Let $k\\in\\{24,30\\}$ and assume that $S(s)$ holds for every $s$ with $2\\le s<k$. Then $S(k)$ holds.\n\nEquivalently: neither $24$ nor $30$ is the least size at which the statement can fail. (The hypothesis \"all smaller sizes settled\" is used, as the cell explicitly permits provided it is stated; it is used in Lemmas 4, 6 and Corollary 5 only, exactly where indicated.)\n\n## Step 0. Two elementary facts\n\n**Lemma 0.** (a) In a pairwise disjoint family with at least two classes, $g_{ij}\\ge2$ for all $i\\ne j$. (b) A sub-family of a pairwise disjoint family is pairwise disjoint, with the same $g_{ij}$.\n\n*Proof.* (a) If $g_{ij}=1$ then $g_{ij}\\mid a_i-a_j$, so the classes meet by $(*)$. (b) Disjointness is a condition on pairs and $g_{ij}$ depends only on $m_i,m_j$. $\\square$\n\n## Step 1. Normalisation (the moduli may be taken to divide $L_k$)\n\n**Lemma 1.** Let $a_1\\pmod{m_1},\\dots,a_k\\pmod{m_k}$ be a counterexample of size $k\\ge2$. Put $m_i':=\\operatorname{lcm}\\{g_{ij}: j\\ne i\\}$ and $a_i':=a_i \\bmod m_i'$. Then (1) $2\\le m_i'$, $m_i'\\mid m_i$, $m_i'\\mid L_k$; (2) $\\gcd(m_i',m_j')=g_{ij}$ for all $i\\ne j$; (3) the classes $a_i'\\pmod{m_i'}$ form a counterexample of size $k$.\n\n*Proof.* (1) By Lemma 0(a) every $g_{ij}\\ge2$, so $m_i'\\ge2$. Each $g_{ij}$ divides $m_i$, hence so does their lcm. Each $g_{ij}\\le k-1$ divides $L_k$, hence so does their lcm. (2) $g_{ij}$ is one of the numbers whose lcm is $m_i'$ and one of those whose lcm is $m_j'$, so $g_{ij}\\mid\\gcd(m_i',m_j')$; conversely $\\gcd(m_i',m_j')\\mid\\gcd(m_i,m_j)=g_{ij}$ because $m_i'\\mid m_i$ and $m_j'\\mid m_j$. (3) Fix $i<j$. By (2) the new gcd is $g_{ij}\\le k-1$. Since $g_{ij}\\mid m_i'$ and $a_i'\\equiv a_i\\pmod{m_i'}$, we have $a_i'\\equiv a_i\\pmod{g_{ij}}$; likewise for $j$; so $a_i'-a_j'\\equiv a_i-a_j\\pmod{g_{ij}}$. The original classes are disjoint, so by $(*)$ $g_{ij}\\nmid a_i-a_j$, hence $g_{ij}\\nmid a_i'-a_j'$, and by $(*)$ the new classes $i,j$ are disjoint. $\\square$\n\n## Step 2. Dividing out a prime power\n\n**Lemma 3.** Let $a_i\\pmod{m_i}$ ($i\\in I$, $|I|\\ge2$) be pairwise disjoint, let $q=p^e$ ($e\\ge1$) be a prime power with $q\\mid m_i$ for all $i\\in I$, and let $b$ be an integer with $a_i\\equiv b\\pmod q$ for all $i\\in I$. Then the classes\n$$\\frac{a_i-b}{q}\\pmod{\\frac{m_i}{q}},\\qquad i\\in I,$$\nare pairwise disjoint and $\\gcd(m_i/q,\\,m_j/q)=g_{ij}/q$ for all $i\\ne j$ in $I$.\n\n*Proof.* All quantities are integers since $q\\mid m_i$ and $q\\mid a_i-b$. For a prime $r$ write $v_r$ for the $r$-adic valuation. For $i\\ne j$: $v_r(m_i/q)=v_r(m_i)-e[r=p]$ and likewise for $j$; since $v_p(m_i),v_p(m_j)\\ge e$, $\\min(v_r(m_i)-e[r=p],\\,v_r(m_j)-e[r=p])=\\min(v_r(m_i),v_r(m_j))-e[r=p]=v_r(g_{ij})-e[r=p]=v_r(g_{ij}/q)$. Hence $\\gcd(m_i/q,m_j/q)=g_{ij}/q$ (note $q\\mid g_{ij}$ because $v_p(g_{ij})\\ge e$). Now $(g_{ij}/q)\\mid\\big(\\tfrac{a_i-b}{q}-\\tfrac{a_j-b}{q}\\big)=\\tfrac{a_i-a_j}{q}$ holds iff $g_{ij}\\mid a_i-a_j$ (multiply/divide by $q$). Since the original classes $i,j$ are disjoint, $(*)$ gives $g_{ij}\\nmid a_i-a_j$, so $g_{ij}/q\\nmid (a_i-a_j)/q$, and by $(*)$ (applied with the new moduli, whose gcd is $g_{ij}/q$) the new classes $i,j$ are disjoint. $\\square$\n\n**Lemma 4 (residue bound).** Let $k\\ge2$, assume $S(s)$ for all $2\\le s<k$, and let $a_i\\pmod{m_i}$ ($1\\le i\\le k$) be a counterexample of size $k$ with $m_i\\mid L_k$ for all $i$. Let $q=p^e$ be a prime power and $b$ an integer. Then\n$$\\#\\{\\,i:\\ q\\mid m_i\\ \\text{and}\\ a_i\\equiv b\\pmod q\\,\\}\\ \\le\\ \\Big\\lfloor\\frac{k-1}{q}\\Big\\rfloor .$$\n\n*Proof.* Let $I$ be the set in question and suppose $|I|\\ge s:=\\lfloor (k-1)/q\\rfloor+1$. If $I=\\emptyset$ there is nothing to prove, so let $i\\in I$; then $q\\mid m_i\\mid L_k$, which forces $q\\le k-1$ (a prime power divides $\\operatorname{lcm}(1,\\dots,k-1)$ only if it is $\\le k-1$), hence $\\lfloor (k-1)/q\\rfloor\\ge1$ and $s\\ge2$. Also $s\\le (k-1)/q+1\\le (k-1)/2+1<k$ because $k\\ge2$. Choose any $s$ indices $i_1,\\dots,i_s\\in I$. By Lemma 0(b) they are pairwise disjoint, and Lemma 3 (with this $q$ and $b$) yields $s$ pairwise disjoint classes with pairwise gcds $g_{i_ti_u}/q\\le (k-1)/q$; being integers, these gcds are $\\le\\lfloor (k-1)/q\\rfloor=s-1$. This contradicts $S(s)$ ($2\\le s<k$). $\\square$\n\n**Corollary 5 (no prime-power modulus).** Under the hypotheses of Lemma 4, no $m_i$ is a prime power.\n\n*Proof.* Suppose $m_1=p^r$ with $r\\ge1$. For every $j\\ne1$, Lemma 0(a) gives $g_{1j}\\ge2$, and $g_{1j}\\mid p^r$, so $p\\mid m_j$. Thus $p\\mid m_i$ for all $i$. Among the $k$ residues $a_i\\bmod p$ some value $b$ occurs at least $\\lceil k/p\\rceil$ times (pigeonhole). Lemma 4 with $q=p$ gives $\\lceil k/p\\rceil\\le\\lfloor (k-1)/p\\rfloor$. But $\\lceil k/p\\rceil\\ge k/p>(k-1)/p\\ge\\lfloor (k-1)/p\\rfloor$, a contradiction. $\\square$\n\n## Step 3. At least three multiples of $k-1$\n\n**Lemma 6.** Let $k\\ge3$, assume $S(k-1)$, and let $a_i\\pmod{m_i}$ ($1\\le i\\le k$) be a counterexample of size $k$. Then at least three of the $m_i$ are multiples of $k-1$.\n\n*Proof.* Let $J=\\{i:(k-1)\\mid m_i\\}$ and suppose $|J|\\le2$. Delete one index: an element of $J$ if $J\\ne\\emptyset$, otherwise any index. The remaining $k-1$ classes are pairwise disjoint (Lemma 0(b)) and at most one of them has modulus divisible by $k-1$. For two remaining indices $i<j$ we have $g_{ij}\\le k-1$, and $g_{ij}=k-1$ would force $(k-1)\\mid m_i$ and $(k-1)\\mid m_j$, i.e. two remaining multiples of $k-1$, which is impossible; hence $g_{ij}\\le k-2$. So the remaining family is a counterexample of size $k-1\\ge2$, contradicting $S(k-1)$. $\\square$\n\n## Step 4. Proof of the Theorem\n\nLet $k\\in\\{24,30\\}$, so $p:=k-1\\in\\{23,29\\}$ is prime, and assume $S(s)$ for all $2\\le s<k$. Suppose, for contradiction, that a counterexample of size $k$ exists. By Lemma 1 we may assume $m_i\\mid L_k$ for all $i$ (Lemma 1 produces a counterexample of the same size $k$, so all hypotheses of Lemmas 4, 6 and Corollary 5 hold for it). Let\n$$J:=\\{\\,i: p\\mid m_i\\,\\},\\qquad \\ell:=|J|.$$\nBy Lemma 6, $\\ell\\ge3$.\n\n**(4a) Structure of the moduli in $J$.** Since $p^2>k-1$, $p^2\\nmid L_k$, so $v_p(m_i)=1$ for $i\\in J$; write $m_i=p\\,n_i$ with $p\\nmid n_i$. For $i\\ne j$ in $J$: $p\\mid g_{ij}\\le k-1=p$, hence $g_{ij}=p$ and therefore $\\gcd(n_i,n_j)=1$. By Corollary 5, $m_i$ is not a prime power, so $n_i>1$. Let $P_i$ be the set of primes dividing $n_i$ ($i\\in J$). Then: each $P_i$ is nonempty; the $P_i$ ($i\\in J$) are pairwise disjoint; every element of $P_i$ is a prime $<k$ different from $p$ (because $n_i\\mid L_k$ and $p\\nmid n_i$). Let $R$ be the set of primes $<k$ other than $p$:\n$$k=24:\\ R=\\{2,3,5,7,11,13,17,19\\},\\ |R|=8;\\qquad k=30:\\ R=\\{2,3,5,7,11,13,17,19,23\\},\\ |R|=9 .$$\nHence $\\sum_{i\\in J}|P_i|\\le|R|$, and in particular $\\ell\\le|R|$.\n\n**(4b) The map $\\omega$.** Let $i\\notin J$, so $p\\nmid m_i$. For each $j\\in J$, Lemma 0(a) gives $g_{ij}\\ge2$; $g_{ij}\\mid m_i$ so $p\\nmid g_{ij}$; take a prime $r\\mid g_{ij}$: then $r\\ne p$, $r\\mid m_j$, so $r\\mid n_j$, i.e. $r\\in P_j$, and $r\\mid m_i$. Thus $P_j\\cap\\{\\text{primes dividing }m_i\\}\\ne\\emptyset$ for every $j\\in J$, and we may define\n$$\\omega(i):=\\big(\\min(P_j\\cap\\{\\text{primes dividing }m_i\\})\\big)_{j\\in J}\\ \\in\\ \\prod_{j\\in J}P_j .$$\n*Claim: $\\omega$ is injective on $\\{1,\\dots,k\\}\\setminus J$.* If $i\\ne i'$ are outside $J$ with $\\omega(i)=\\omega(i')=(r_j)_{j\\in J}$, then the $r_j$ are $\\ell$ pairwise distinct primes (the $P_j$ are disjoint) each dividing both $m_i$ and $m_{i'}$, so $g_{ii'}\\ge\\prod_{j\\in J}r_j\\ge 2\\cdot3\\cdot5=30\\ge k$ (as $\\ell\\ge3$ and the product of $\\ell$ distinct primes is at least the product of the $\\ell$ smallest primes), contradicting $g_{ii'}\\le k-1$. Hence\n$$k-\\ell\\ \\le\\ \\prod_{j\\in J}|P_j| . \\tag{1}$$\n\n**(4c) Counting.** By AM–GM, $\\prod_{j\\in J}|P_j|\\le\\big(\\tfrac1\\ell\\sum_{j\\in J}|P_j|\\big)^{\\ell}\\le(|R|/\\ell)^{\\ell}$, and the product is an integer.\n\n*Case $k=24$, $|R|=8$.* For $\\ell=3,\\dots,8$ the bound $\\lfloor (8/\\ell)^\\ell\\rfloor$ is $18,16,10,5,2,1$ respectively ($ (8/3)^3=512/27<19$, $2^4=16$, $(8/5)^5=32768/3125<11$, $(4/3)^6=4096/729<6$, $(8/7)^7<3$, $1$), while $k-\\ell=21,20,19,18,17,16$. In every case $k-\\ell>\\prod|P_j|$, contradicting (1). (Exact brute-force confirmation of the maxima: script `prodotto_massimo.py`, output below.) Hence no counterexample of size $24$ exists: $S(24)$ holds.\n\n*Case $k=30$, $|R|=9$.* For $\\ell=4,\\dots,9$ the bound $\\lfloor (9/\\ell)^\\ell\\rfloor$ is $25,18,11,5,2,1$ ($(9/4)^4=6561/256<26$, $(9/5)^5=59049/3125<19$, $(3/2)^6=729/64<12$, $(9/7)^7<6$, $(9/8)^8<3$, $1$), while $k-\\ell=26,25,24,23,22,21$; again $k-\\ell>\\prod|P_j|$, contradicting (1). So $\\ell=3$, $J=\\{j_1,j_2,j_3\\}$, and (1) reads $27\\le|P_{j_1}||P_{j_2}||P_{j_3}|\\le(\\tfrac13\\sum|P_j|)^3\\le 3^3=27$. Equality throughout forces (equality case of AM–GM and $\\sum|P_j|=9=|R|$):\n$$|P_{j_1}|=|P_{j_2}|=|P_{j_3}|=3,\\qquad P_{j_1}\\sqcup P_{j_2}\\sqcup P_{j_3}=R,$$\nand $\\omega$ is an injection from a $27$-element set into a $27$-element set, hence a **bijection** onto $P_{j_1}\\times P_{j_2}\\times P_{j_3}$.\n\n**(4d) Cross products.** *Claim: if $j\\ne j'$ in $J$, $r\\in P_j$, $r'\\in P_{j'}$, then $r r'\\le 29$.* Let $j''$ be the third element of $J$ and pick two distinct primes $r''_1,r''_2\\in P_{j''}$ (possible since $|P_{j''}|=3$). The two triples of $P_{j_1}\\times P_{j_2}\\times P_{j_3}$ having coordinates $r$ at $j$, $r'$ at $j'$ and $r''_1$ resp. $r''_2$ at $j''$ are distinct, so by surjectivity of $\\omega$ there are distinct $i_1,i_2\\notin J$ with $\\omega(i_1),\\omega(i_2)$ equal to them. By definition of $\\omega$, every coordinate of $\\omega(i)$ is a prime dividing $m_i$; so $r$ and $r'$ divide both $m_{i_1}$ and $m_{i_2}$, whence $rr'\\mid g_{i_1i_2}\\le k-1=29$. $\\square$\n\nNow consider the seven primes $5,7,11,13,17,19,23\\in R$. Any two of them have product $\\ge5\\cdot7=35>29$, so by the Claim no two of them lie in different $P_j$'s; i.e. all seven lie in the same $P_j$. But $|P_j|=3$. Contradiction. Hence no counterexample of size $30$ exists: $S(30)$ holds. $\\blacksquare$\n\n## Where the hypothesis \"all smaller sizes settled\" is used\nLemma 4 uses $S(s)$ for $s=\\lfloor (k-1)/q\\rfloor+1\\le (k-1)/2+1$ (in Corollary 5 with $q=p$ the prime of the assumed prime-power modulus); Lemma 6 uses $S(k-1)$. Nothing else about smaller sizes is used, and minimality of $\\sum m_i$ is never used.\n\n## Exact computational check (not needed for the proof, included for the reader)\n`prodotto_massimo.py` enumerates, for $\\ell=3,\\dots,|R|$, all $\\ell$-tuples of positive integers with sum $\\le|R|$ and prints the maximal product next to $k-\\ell$ (exact integer arithmetic; finite set: all tuples in $\\{1,\\dots,|R|\\}^\\ell$, $\\ell\\le|R|$; wall clock 75 s on Apple M4). Output:\n```\nk=24 l=3 k-l=21 max_prodotto=18 -> escluso   k=24 l=4 k-l=20 max=16 -> escluso\nk=24 l=5 k-l=19 max=8 -> escluso             k=24 l=6 k-l=18 max=4 -> escluso\nk=24 l=7 k-l=17 max=2 -> escluso             k=24 l=8 k-l=16 max=1 -> escluso\nk=30 l=3 k-l=27 max=27 -> NON escluso dal solo pigeonhole   (handled by (4d))\nk=30 l=4 k-l=26 max=24 -> escluso            k=30 l=5 k-l=25 max=16 -> escluso\nk=30 l=6 k-l=24 max=8 -> escluso             k=30 l=7 k-l=23 max=4 -> escluso\nk=30 l=8 k-l=22 max=2 -> escluso             k=30 l=9 k-l=21 max=1 -> escluso\n```\nThis agrees with (and is slightly sharper than) the AM–GM bounds used in the text.\n\n## Comparison with the source consulted (read in full)\nK. O'Bryant, arXiv:math/0604347v2, proves the same two facts via his Lemma 6 items 4, 5, 8. Items 4 and 5 correspond to our Corollary 5 and Lemma 6 (re-proved here; our Lemma 3/4 formalises his \"divide the classes with equal residue by $p$\" step). His item 8 corresponds to our (4a)–(4c); for $k=30$, $\\ell=3$ his text concludes \"Thus two of the four primes 17, 19, 23, 29 are in separate $P_i$'s\", which does not follow from $|P_1|=|P_2|=|P_3|=3$ alone (with $p=29$ the primes $17,19,23$ might all lie in one $P_i$). Our step (4d) replaces this sentence by a proved argument, so the result stands, but the published proof as written has a gap at that point. We rely on nothing from the paper.",
+   "method_tag": "contradiction",
+   "claims": [
+    {
+     "id": "main",
+     "statement": "Determine the largest k for which the statement is certified for all sizes up to k (contiguous range), with the strengthened certificate (i)-(v): non-vacuity demonstration, individual decisions for survivors with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, a second independent implementation compared elementwise. Also decide k = 24 and k = 30: show neither is the least size at which the statement can fail.",
+     "depends_on": []
+    }
+   ],
+   "sources": [
+    {
+     "id": "src_1",
+     "reference": "K. O'Bryant, On Z.-W. Sun's disjoint congruence classes conjecture, arXiv:math/0604347v2 (2006) — read in full (pdf downloaded to runs/p4_c5/sandbox/obryant.pdf, text in obryant.txt); Theorem 3 and Lemma 6 items 4, 5, 8 consulted; nothing used as a hypothesis; a gap in the k=30 step of item 8 reported above",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_2",
+     "reference": "Problem statement of Problema 4 (definitions and criterion (*)), problema-4/enunciato.md",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": "# Problema 4 — Disjoint congruence classes and large gcd\n\n*(Enunciato formattato in LaTeX, contenuto fedele all'originale; ricevuto il 2026-09-26. Titolo della colonna\nnon riportato nel testo incollato; la domanda di apertura è: \"If congruence classes are pairwise disjoint, must\ntwo of their moduli share a large common factor?\")*\n\n## Preambolo\n\nFor integers $a$ and $m \\ge 1$ write\n$$\na \\pmod m = \\{\\, a + mt : t \\in \\mathbb{Z} \\,\\}\n$$\nfor the congruence class of $a$ modulo $m$. A finite family of classes $a_1 \\pmod{m_1}, \\ldots, a_k \\pmod{m_k}$\nis *pairwise disjoint* if $a_i \\pmod{m_i} \\cap a_j \\pmod{m_j} = \\emptyset$ whenever $i < j$. Nothing is assumed\nabout the moduli beyond $m_i \\ge 1$: they may repeat, and the residues $a_i$ may repeat as well.\n\nBy the Chinese remainder theorem, two classes meet if and only if the congruences $x \\equiv a_i \\pmod{m_i}$ and\n$x \\equiv a_j \\pmod{m_j}$ are compatible, that is\n$$\na_i \\pmod{m_i} \\cap a_j \\pmod{m_j} \\ne \\emptyset \\iff \\gcd(m_i, m_j) \\mid a_i - a_j. \\qquad (*)\n$$\nThe question of this column is how large the moduli of a disjoint family must be forced to overlap in the gcd sense.\n\n**Question.** Let $k \\ge 2$ and let $a_1 \\pmod{m_1}, \\ldots, a_k \\pmod{m_k}$ be pairwise disjoint. Must there be\na pair $i < j$ with\n$$\n\\gcd(m_i, m_j) \\ge k \\,?\n$$\nThis is believed to be true for every $k$. It is sharp: the $k$ classes $1, 2, \\ldots, k \\pmod k$ are pairwise\ndisjoint — their differences have absolute value less than $k$, so $k$ divides none of them — and every pairwise\ngcd equals exactly $k$. So $k$ could not be replaced by $k+1$ in the statement.\n\n**Examples.** The three classes $0 \\pmod 2$, $1 \\pmod 4$, $3 \\pmod 8$ are pairwise disjoint by $(*)$, and their\npairwise gcds are $2, 2, 4$; the largest is $4 \\ge 3$, as the question predicts for $k = 3$. By contrast\n$0 \\pmod 2$ and $0 \\pmod 3$ have coprime moduli and do meet, at $0$.\n\n**Trivial bounds.** Two observations are immediate and you should assume they are already on the table;\npresenting either as progress counts for nothing.\n\n1. If $\\gcd(m_i, m_j) = 1$ then by $(*)$ the two classes meet. Hence in any pairwise disjoint family every\n   pairwise gcd is at least $2$. This answers the question for $k = 2$, and for a family of size $k$ that fails\n   the question it confines every pairwise gcd to the range $2 \\le \\gcd(m_i, m_j) \\le k - 1$.\n2. The class $a \\pmod m$ has density $1/m$, so a pairwise disjoint family satisfies $\\sum_{i=1}^k 1/m_i \\le 1$.\n   In particular some "
+    },
+    {
+     "id": "src_3",
+     "reference": "runs/p4_c4/sandbox/attempt_cell4.md (colleague loop, cell 4): Lemma A there is the same normalisation as our Lemma 1; re-proved here, not cited as verified",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": "# Problem 4, cell 4 — proof for every k ≤ 12 and report for k = 9..16\n\n## Statement proved\n\n**Theorem.** Let $3\\le k\\le 12$ (and also $k=13$) and let $a_1 \\pmod{m_1},\\dots,a_k\\pmod{m_k}$ be pairwise disjoint congruence classes ($m_i\\ge1$). Then $\\gcd(m_i,m_j)\\ge k$ for some $i<j$.\n\nA *counterexample of size $k$* is a pairwise disjoint family of $k$ classes with $g_{ij}:=\\gcd(m_i,m_j)\\le k-1$ for all $i<j$. We use only the definitions and the criterion $(*)$ of the problem statement: two classes meet iff $\\gcd(m_i,m_j)\\mid a_i-a_j$. Nothing is assumed about smaller sizes (no minimality of $k$ is used anywhere). Put $L_k:=\\operatorname{lcm}(1,2,\\dots,k-1)$.\n\n## Step 1. Three lemmas (all proved here)\n\n**Lemma A (reduction to the gcd-lcm).** Let $a_1\\pmod{m_1},\\dots,a_k\\pmod{m_k}$ be a counterexample of size $k\\ge2$. Put $m_i':=\\operatorname{lcm}\\{g_{ij}: j\\ne i\\}$ and $a_i':=a_i \\bmod m_i'$. Then\n\n1. $2\\le m_i'$, $m_i'\\mid m_i$ and $m_i'\\mid L_k$;\n2. $\\gcd(m_i',m_j')=g_{ij}$ for all $i\\ne j$;\n3. the classes $a_i'\\pmod{m_i'}$ are pairwise disjoint (hence they form a counterexample of size $k$ again);\n4. **(R3)** every prime power $q$ dividing some $m_i'$ divides $m_j'$ for some $j\\ne i$.\n\n*Proof.* If some $g_{ij}=1$ then $g_{ij}\\mid a_i-a_j$ and the classes $i,j$ meet by $(*)$, contradicting disjointness; so every $g_{ij}\\ge2$, hence $m_i'\\ge2$. Each $g_{ij}$ divides $m_i$, so their lcm $m_i'$ divides $m_i$; each $g_{ij}\\le k-1$ divides $L_k$, so $m_i'\\mid L_k$. This is (1).\n(2): $g_{ij}$ divides $m_i'$ and $m_j'$ (it is one of the numbers whose lcm defines each), so $g_{ij}\\mid\\gcd(m_i',m_j')$; conversely $\\gcd(m_i',m_j')\\mid\\gcd(m_i,m_j)=g_{ij}$ because $m_i'\\mid m_i$, $m_j'\\mid m_j$.\n(3): fix $i<j$. By (2) $\\gcd(m_i',m_j')=g_{ij}$; since $g_{ij}\\mid m_i'$ and $a_i'\\equiv a_i\\pmod{m_i'}$ we get $a_i'\\equiv a_i\\pmod{g_{ij}}$, likewise for $j$, so $a_i'-a_j'\\equiv a_i-a_j\\pmod{g_{ij}}$. The original classes are disjoint, so $g_{ij}\\nmid a_i-a_j$ by $(*)$, hence $g_{ij}\\nmid a_i'-a_j'$ and the reduced classes $i,j$ are disjoint by $(*)$.\n(4): if $q=p^e$ divides $m_i'=\\operatorname{lcm}_{j\\ne i} g_{ij}$ then $e\\le v_p(m_i')=\\max_{j\\ne i}v_p(g_{ij})$, so $q\\mid g_{ij}$ for some $j\\ne i$, and $g_{ij}\\mid m_j'$ by (2). $\\square$\n\n**Lemma B (density criterion of Huhn–Megyesi type).** Let $a_i\\pmod{m_i}$, $i\\in I$ ($|I|\\ge2$), be pairwise disjoint and let $M\\ge1$ be a common multiple of all $g_{ij}$, $i<j$ in $I$. Then\n$$\\sum_{i\\in I}\\frac{1}{\\gcd(m_i,M)}\\le 1,\\qquad"
+    }
+   ],
+   "artifacts": [
+    {
+     "id": "code_1",
+     "kind": "CODE",
+     "content": "# Exact brute-force confirmation of the counting table used in Step 4c: for l = 3..|R| the maximal product of l positive integers with sum <= |R| (|R| = 8 for k=24, 9 for k=30), compared with k-l. Finite set: all l-tuples in {1..|R|}^l. Wall clock 75 s (Apple M4, .venv python). File runs/p4_c5/sandbox/prodotto_massimo.py\n# rigor: exact\n\"\"\"Verifica esatta (enumerazione finita) della tabella usata nella prova per k=24 e k=30.\n\nPer ogni l (numero di moduli multipli di p=k-1) calcola il massimo prodotto di l interi\npositivi con somma <= n (n = numero di primi < k diversi da p) e lo confronta con k-l.\nPerche': la mappa omega e' iniettiva, quindi k-l <= prodotto; se k-l > massimo prodotto\nla configurazione e' impossibile. Aritmetica intera esatta.\n\"\"\"\nfrom itertools import product\n\n\ndef prodotto_massimo(numero_fattori, somma_massima):\n    \"\"\"Massimo prodotto di numero_fattori interi >=1 con somma <= somma_massima (forza bruta).\"\"\"\n    migliore = 0\n    for fattori in product(range(1, somma_massima + 1), repeat=numero_fattori):\n        if sum(fattori) <= somma_massima:\n            prodotto = 1\n            for f in fattori:\n                prodotto *= f\n            migliore = max(migliore, prodotto)\n    return migliore\n\n\ndef tabella(k, numero_primi):\n    \"\"\"Stampa, per l = 3..numero_primi, k-l e il massimo prodotto; segnala i casi non esclusi.\"\"\"\n    for l in range(3, numero_primi + 1):\n        massimo = prodotto_massimo(l, numero_primi)\n        esito = \"escluso (k-l > max)\" if k - l > massimo else \"NON escluso dal solo pigeonhole\"\n        print(f\"k={k} l={l} k-l={k-l} max_prodotto={massimo} -> {esito}\")\n\n\ntabella(24, 8)   # primi < 24 diversi da 23: 2,3,5,7,11,13,17,19\ntabella(30, 9)   # primi < 30 diversi da 29: 2,3,5,7,11,13,17,19,23\n",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ]
+  },
+  "rules": {
+   "allow_literature_as_proof": false,
+   "allow_computation": true,
+   "require_machine_verification": false,
+   "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For each cell you attempt, hand in a written proof. You may use a computer to explore. A proof may rely on a computation only if you include the code, it runs in under ten minutes on a laptop, and the computation is exhaustive over a finite set that your own argument has reduced the problem to. A computational cell is accepted only with an *exhaustiveness certificate*, meaning all four of: 1. an exact description of the finite set your search enumerates, together with the proof that nothing outside it can be a counterexample; 2. every pruning rule you use, stated precisely, each with the proof that it discards only objects that cannot be completed to a counterexample; 3. the node count of the search at each size you claim, and the wall clock; 4. a rerun that reproduces those counts; 5. and, if anything at all survives your pruning at a size you claim, a separate decision for every survivor — not a sample — together with, for each one, the smallest part of it that already forces the decision, and your proof that no smaller part does. A survivor you cannot decide means the size is not certified. A run that reports \"I searched and found nothing\" without 1–5 is not a certificate and scores nothing. If a search does not finish at some size, report it as unfinished and do not claim that size; a partial search is a legitimate partial result and should be handed in as one, with the counts it reached. Where a cell asks you to determine a boundary, state the exact value you claim. Claim only what you have certified: an unfinished size, or one certified under an assumption you have not verified, must be reported as such. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source. If you rely on a published argument, you are responsible for it: check it yourself, and report it if it does not hold up. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+  }
+ },
+ "submission_digest": "ab2876d895103b2d0072962f12d56ca1deedb9d82518ffb1ffb1603c96042874",
+ "math": {
+  "report": {
+   "mathematical_verdict": "FAIL",
+   "first_fatal_error": {
+    "code": "TARGET_MISMATCH",
+    "detail": "The declared target 'main' is the whole of cell 5: (A) determine and certify the largest contiguous range k ≤ K with the strengthened certificate (i)–(v) [non-vacuity demonstration, individual survivor decisions with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, second independent implementation compared elementwise], and (B) show that neither k=24 nor k=30 is the least failing size. The submission addresses only (B): it proves 'S(s) for all 2≤s<k ⇒ S(k)' for k∈{24,30}. Nothing in the submission determines a contiguous certified range, and no certificate components (i)–(v) are present; the state also carries no previously verified claims (highest_verified_cell=0) that the argument could lean on. The only declared claim is 'main', so no declared claim is established and PARTIAL is unavailable. The argument for (B) contains no invalid inference (see math_notes) and should be re-declared as its own claim.",
+    "severity": "FATAL",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   "accepted_mathematical_claims": [],
+   "unproved_claims": [
+    "main"
+   ],
+   "missing_cases": [
+    "Part (A) of the cell: the largest contiguous k certified for all sizes ≤ k, with certificate items (i)–(v), is entirely absent."
+   ],
+   "math_notes": "Verification of the k=24 / k=30 argument (the part actually written), which I find mathematically correct as a conditional theorem and recommend be declared as a new claim, e.g. 'cond_24_30: for k∈{24,30}, if S(s) holds for all 2≤s<k then S(k) holds'. Checks: Lemma 1 (normalisation m_i' = lcm of gcds, m_i' | L_k, gcds preserved, disjointness preserved via (*)) — correct. Lemma 3 (dividing by a common prime power q with common residue b: valuations give gcd(m_i/q,m_j/q)=g_ij/q, and g_ij/q ∤ (a_i−a_j)/q iff g_ij ∤ a_i−a_j) — correct. Lemma 4: needs q ≤ k−1 (from q | L_k), giving s=⌊(k−1)/q⌋+1 ∈ [2,k−1]; s<k since (k−1)/2+1<k for k≥2 — correct; the largest s invoked is ⌊(k−1)/2⌋+1 (12 for k=24, 15 for k=30), within the stated hypothesis. Corollary 5: ⌈k/p⌉ > ⌊(k−1)/p⌋ — correct. Lemma 6 uses only S(k−1) — correct. Step 4a: v_p(m_i)=1 since p²>k−1; g_ij=p for i≠j in J; P_i nonempty (Cor. 5), pairwise disjoint, ⊂ R — correct. Step 4b: ω well defined; injectivity since ℓ≥3 distinct common primes give g ≥ 30 ≥ k (for k=30, g ≥ 30 > 29) — correct. Step 4c: max product of ℓ positive integers with sum ≤ |R|: k=24 (|R|=8): 18,16,8,4,2,1 vs 21,20,19,18,17,16 — all excluded; k=30 (|R|=9): ℓ=4..9 give 24,16,8,4,2,1 vs 26..21 — excluded; ℓ=3 forces |P_j|=3 each, partition of R, ω bijective — correct (AM–GM equality case is genuinely forced since 27 ≤ ∏ ≤ 27). Step 4d: two triples differing only in the j''-coordinate are hit by distinct i_1,i_2 ∉ J, so rr' | g_{i_1 i_2} ≤ 29; the seven primes 5,…,23 pairwise have product ≥35>29 so all lie in one P_j of size 3 — contradiction, correct. The AM–GM text bounds are loose but valid; the brute-force table (trusted observation) is not needed for the proof. Dependency exposure: the result is conditional on S(s) for all s<k, which the cell permits provided stated (it is stated). The reported gap in O'Bryant's item 8 is not part of the verdict."
+  },
+  "limitation": null
+ },
+ "evidence": {
+  "report": {
+   "evidence_verdict": "PARTIAL",
+   "source_issues": [
+    {
+     "code": "SRC_UNRETRIEVED",
+     "detail": "src_1 (O'Bryant, arXiv:math/0604347v2) is cited as 'read in full' with a local pdf/txt, but no excerpt is submitted and I cannot retrieve it here. The candidate's assertion that the paper's Lemma 6 item 8 has a gap at k=30 is therefore unverified by me. This is not essential: the proof states it relies on nothing from the paper, and my reading of the submitted argument confirms no step depends on it. Request: submit the relevant excerpt (Lemma 6 items 4, 5, 8 and the sentence quoted about primes 17, 19, 23, 29) so the reported gap can be checked, since the cell rewards reporting source disagreements only if they are right.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_OK_INTERNAL",
+     "detail": "src_2 (problem statement) and src_3 (colleague cell-4 draft) are used only for definitions/criterion (*) and for a lemma that is re-proved in full here (Lemma 1). No external hypothesis is imported.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "COMP_REPRODUCED",
+     "detail": "code_1 (prodotto_massimo.py) uses exact integer arithmetic over an explicitly finite set (all l-tuples in {1..|R|}^l, l ≤ |R|). Orchestrator rerun: exit 0, 96.2 s (< 10 min), stdout matches the table in the proof line by line (first stdout line truncated in the log but its visible tail 'x_prodotto=18 -> escluso' matches k=24 l=3). The computation is not load-bearing: the proof's Step 4c reaches the same conclusions by hand via AM–GM with explicit rational bounds, and the brute force is only a sharper confirmation. No floating point.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [
+    {
+     "code": "SCOPE_NOT_COVERED",
+     "detail": "The registered claim 'main' is the full cell-5 statement: (a) determine and state the largest k with a contiguous certified range, with the strengthened certificate (i)–(v); (b) decide k=24 and k=30. The submission addresses only (b). No boundary value is stated ('Where a cell asks you to determine a boundary, state the exact value you claim'), and none of (i) non-vacuity demonstration, (ii)/(iii) survivor decisions and lists, (iv) pruning rules proved/tested off, (v) second independent implementation compared elementwise is provided or even mentioned. The candidate is honest inside the proof text about what is proved, but the hand-in must 'say clearly which cells you consider solved and which are partial'; this attempt should be handed in as a partial result for cell 5 (part (b) only), not as evidence for 'main' as registered.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "CONDITIONAL_HYPOTHESIS_STATED",
+     "detail": "The theorem for k=24 and k=30 assumes S(s) for all 2 ≤ s < k. The cell explicitly allows this if stated, and the candidate states it and localises its use (Lemma 4, Corollary 5, Lemma 6). This matches the cell's wording 'show that neither is the least size at which the statement can fail'. Note that state.highest_verified_cell = 0 and no registered claims establish S(s) for any s; the result is conditional and must be reported as such.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "UNVERIFIED"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1",
+      "src_2",
+      "src_3",
+      "code_1"
+     ],
+     "notes": "Sub-part 'k=24 and k=30 are not the least failing size' is supported by a self-contained written argument (Lemmas 0–6, Step 4) conditional on all smaller sizes, as permitted; the accompanying computation is exact, finite, reproduced by the orchestrator in 96 s and not load-bearing. The remaining and larger sub-part of the cell (contiguous certified range with certificate (i)–(v)) has no evidence at all in this attempt, so the registered claim as a whole is not evidenced. The comparison with O'Bryant is unverified pending an excerpt."
+    }
+   ],
+   "reproducibility_notes": "code_1 is fully included, deterministic, exact integer arithmetic, no dependencies beyond the standard library; rerun by the orchestrator reproduced the printed table (96.2 s vs. 75 s claimed, both well under the 10-minute limit). No search, survivor lists, node counts or second implementation exist in this attempt to reproduce. Missing materials requested: (1) the O'Bryant excerpt (Lemma 6 items 4, 5, 8) backing the reported gap; (2) everything for the contiguous-range part of the cell, or an explicit re-registration of this attempt as partial (part (b) only)."
+  },
+  "limitation": null
+ },
+ "checks": [],
+ "check_errors": [],
+ "report": {
+  "final_verdict": "REJECT",
+  "highest_verified_cell": 0,
+  "math_review": {
+   "verdict": "FAIL",
+   "first_fatal_error": {
+    "code": "TARGET_MISMATCH",
+    "detail": "The declared target 'main' is the whole of cell 5: (A) determine and certify the largest contiguous range k ≤ K with the strengthened certificate (i)–(v) [non-vacuity demonstration, individual survivor decisions with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, second independent implementation compared elementwise], and (B) show that neither k=24 nor k=30 is the least failing size. The submission addresses only (B): it proves 'S(s) for all 2≤s<k ⇒ S(k)' for k∈{24,30}. Nothing in the submission determines a contiguous certified range, and no certificate components (i)–(v) are present; the state also carries no previously verified claims (highest_verified_cell=0) that the argument could lean on. The only declared claim is 'main', so no declared claim is established and PARTIAL is unavailable. The argument for (B) contains no invalid inference (see math_notes) and should be re-declared as its own claim.",
+    "severity": "FATAL",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   "accepted_claims": [],
+   "unproved_claims": [
+    "main"
+   ],
+   "missing_cases": [
+    "Part (A) of the cell: the largest contiguous k certified for all sizes ≤ k, with certificate items (i)–(v), is entirely absent."
+   ]
+  },
+  "evidence_review": {
+   "verdict": "PARTIAL",
+   "source_issues": [
+    {
+     "code": "SRC_UNRETRIEVED",
+     "detail": "src_1 (O'Bryant, arXiv:math/0604347v2) is cited as 'read in full' with a local pdf/txt, but no excerpt is submitted and I cannot retrieve it here. The candidate's assertion that the paper's Lemma 6 item 8 has a gap at k=30 is therefore unverified by me. This is not essential: the proof states it relies on nothing from the paper, and my reading of the submitted argument confirms no step depends on it. Request: submit the relevant excerpt (Lemma 6 items 4, 5, 8 and the sentence quoted about primes 17, 19, 23, 29) so the reported gap can be checked, since the cell rewards reporting source disagreements only if they are right.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_OK_INTERNAL",
+     "detail": "src_2 (problem statement) and src_3 (colleague cell-4 draft) are used only for definitions/criterion (*) and for a lemma that is re-proved in full here (Lemma 1). No external hypothesis is imported.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "COMP_REPRODUCED",
+     "detail": "code_1 (prodotto_massimo.py) uses exact integer arithmetic over an explicitly finite set (all l-tuples in {1..|R|}^l, l ≤ |R|). Orchestrator rerun: exit 0, 96.2 s (< 10 min), stdout matches the table in the proof line by line (first stdout line truncated in the log but its visible tail 'x_prodotto=18 -> escluso' matches k=24 l=3). The computation is not load-bearing: the proof's Step 4c reaches the same conclusions by hand via AM–GM with explicit rational bounds, and the brute force is only a sharper confirmation. No floating point.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [
+    {
+     "code": "SCOPE_NOT_COVERED",
+     "detail": "The registered claim 'main' is the full cell-5 statement: (a) determine and state the largest k with a contiguous certified range, with the strengthened certificate (i)–(v); (b) decide k=24 and k=30. The submission addresses only (b). No boundary value is stated ('Where a cell asks you to determine a boundary, state the exact value you claim'), and none of (i) non-vacuity demonstration, (ii)/(iii) survivor decisions and lists, (iv) pruning rules proved/tested off, (v) second independent implementation compared elementwise is provided or even mentioned. The candidate is honest inside the proof text about what is proved, but the hand-in must 'say clearly which cells you consider solved and which are partial'; this attempt should be handed in as a partial result for cell 5 (part (b) only), not as evidence for 'main' as registered.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "CONDITIONAL_HYPOTHESIS_STATED",
+     "detail": "The theorem for k=24 and k=30 assumes S(s) for all 2 ≤ s < k. The cell explicitly allows this if stated, and the candidate states it and localises its use (Lemma 4, Corollary 5, Lemma 6). This matches the cell's wording 'show that neither is the least size at which the statement can fail'. Note that state.highest_verified_cell = 0 and no registered claims establish S(s) for any s; the result is conditional and must be reported as such.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "UNVERIFIED"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": true,
+     "relies_on_external_result": false,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1",
+      "src_2",
+      "src_3",
+      "code_1"
+     ],
+     "notes": "Sub-part 'k=24 and k=30 are not the least failing size' is supported by a self-contained written argument (Lemmas 0–6, Step 4) conditional on all smaller sizes, as permitted; the accompanying computation is exact, finite, reproduced by the orchestrator in 96 s and not load-bearing. The remaining and larger sub-part of the cell (contiguous certified range with certificate (i)–(v)) has no evidence at all in this attempt, so the registered claim as a whole is not evidenced. The comparison with O'Bryant is unverified pending an excerpt."
+    }
+   ]
+  },
+  "accepted_progress": [],
+  "blocking_issue": "Referee A: The declared target 'main' is the whole of cell 5: (A) determine and certify the largest contiguous range k ≤ K with the strengthened certificate (i)–(v) [non-vacuity demonstration, individual survivor decisions with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, second independent implementation compared elementwise], and (B) show that neither k=24 nor k=30 is the least failing size. The submission addresses only (B): it proves 'S(s) for all 2≤s<k ⇒ S(k)' for k∈{24,30}. Nothing in the submission determines a contiguous certified range, and no certificate components (i)–(v) are present; the state also carries no previously verified claims (highest_verified_cell=0) that the argument could lean on. The only declared claim is 'main', so no declared claim is established and PARTIAL is unavailable. The argument for (B) contains no invalid inference (see math_notes) and should be re-declared as its own claim.",
+  "next_required_step": "Address the stated blocking obligation without silently changing the target",
+  "stagnation_signal": false
+ },
+ "review_status": "NEEDS_WORK",
+ "proposed_claim_ids": []
+}

@@ -1,0 +1,65 @@
+{
+ "report": {
+  "evidence_verdict": "PARTIAL",
+  "source_issues": [
+   {
+    "code": "SOURCE_NOT_RETRIEVED",
+    "detail": "src_1 (Griggs–Ho 1998, Adv. Appl. Math. 21, 205–227) is declared READ via the authors' preprint URL; src_2 (Brandt 1982, Proc. AMS 85) declared NOT read; src_3 abstracts only. No retrieval tool available here, so none of these was checked by me. The bibliographic data are consistent with real, well-known Bulgarian-solitaire papers and I have no indication of fabrication. This is not blocking: the proof re-derives every borrowed statement (Brandt's characterisation as Thm 1.2, the Griggs–Ho strategy and extremal partition in §2–§3) and does not rely on any citation as evidence. Attribution of the strategy and of λ*_k to Griggs–Ho Thm 4.4(2) is stated explicitly, which is appropriate.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "CODE_3_RUNTIME_FAILURE",
+    "detail": "Trusted re-run of code_3.py exited 1 (IndexError: missing argv k). The artifact is declared exploration only and is not used in the proof; harmless, but the run command in its header should include the argument (e.g. `python code_3.py 5`).",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "K4_EXHAUSTION_OK",
+    "detail": "The k=4 case (n∈{7,8,9}) is handled by exhaustive enumeration of all partitions (15+22+30) with exact tuple arithmetic; the finite set is exactly the one the argument leaves open (Case A of Thm 2.6 needs k≥5). Trusted re-run of code_1 (which imports code_2 as db_table.py): exit 0, 0.5 s, output D_B(8)=5, D_B(9)=7 ≤ 7 (n=7 line truncated in the captured stdout but the assertion path is the same). Cycle-distance routine `distanze_dal_ciclo` inspected by reading: base handling (base=0 for the first non-cyclic element on a freshly found cycle, base=d[cur] otherwise) is correct; d_B(λ*_4)=7 is independently reproduced by `d_B_diretto`. Sanity checks for 5≤k≤12 / 5≤k≤9 are correctly labelled as non-proof. Runtime far below the 10-minute limit.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [
+   {
+    "code": "CLAIM_SCOPE_INCOMPLETE",
+    "detail": "The registered claim `main` (= the cell statement) has three parts: (A) the bound D_B(n) ≤ k²−2k−1 for all k≥4 and all non-triangular n of rank k; (B) the exact value D_B(T_k−1); (C) the determination of which partitions of T_k−1 attain the maximum. The candidate explicitly states (C) is not proved and only reports computed counts (1, 6, 34, 175, 831, 3911 for k=4..9) and examples. So the submitted evidence does not cover the full registered claim; the cell can at most be PARTIAL_PROGRESS, which the candidate itself declares honestly (rule 'say clearly which cells you consider solved and which are partial' is respected). No forbidden dependency: allow_literature_as_proof=false is satisfied since nothing is cited in place of proof; computation use for k=4 satisfies the official rule (code included, <10 min, exhaustive over the finite set reduced to by the argument).",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US",
+     "COMPUTATIONALLY_VERIFIED",
+     "KNOWN_IN_LITERATURE",
+     "UNVERIFIED"
+    ],
+    "evidence_sufficient": false,
+    "permitted_by_rules": true,
+    "relies_on_external_result": false,
+    "uses_computation_as_proof": true,
+    "references": [
+     "src_1",
+     "src_2"
+    ],
+    "notes": "Parts (A) and (B) are written out in full (k≥5 by argument, k=4 by permitted exhaustive computation) with λ*_k given explicitly as a function of k; the result is known in the literature (Griggs–Ho 1998) but the proof does not rely on the citation. Part (C), the set of extremal partitions of T_k−1, is UNVERIFIED: only exact counts for k≤9 are reported, no structural description or proof. Mathematical soundness of §0–§3 is for Referee A; from the evidence side the k=4 computation is reproducible and exhaustive, and the k≥5 sanity checks are correctly separated from the proof."
+   }
+  ],
+  "reproducibility_notes": "code_1 (verifica_k4.py) + code_2 (db_table.py) reproduced by the orchestrator: exit 0 in 0.5 s and 2.8 s respectively, exact integer arithmetic, no randomness, no external dependencies. code_3 needs a command-line argument k (documented in its header only implicitly). Requests: (1) for part (C) of the cell, either a proved characterisation of the extremal partitions of T_k−1 or an explicit downgrade of the claim to parts (A)+(B); (2) optionally, a confirmation that the n=7 line of code_1 output reads 'D_B(n)=4 <= 7: True' (stdout capture was truncated). No source retrieval needed for the verdict since the proof is self-contained.\n[limitation declared by the judge] No browsing or code execution available; sources src_1–src_3 were not retrieved by me (not required, proof is self-contained). Mathematical correctness of the argument itself is left to Referee A."
+ },
+ "limitation": null
+}

@@ -1,0 +1,70 @@
+{
+ "report": {
+  "evidence_verdict": "PARTIAL",
+  "source_issues": [
+   {
+    "code": "SRC_UNRETRIEVABLE_ARXIV",
+    "detail": "src_1 (arXiv:2607.24655, Fornal–Sun 2026) cannot be checked by me (no browsing; beyond my knowledge). No excerpt was submitted although the candidate says it was 'fetched'. Also the candidate's reference line writes the known factor as exp(-(2+o(1)) sqrt(log k/log log k)) while the problem statement writes exp(-(2+o(1)) log k/log log k) (no sqrt). One of the two is a transcription error; the candidate must resolve this against the actual paper. Used for context only, so not blocking.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "SRC_SECOND_HAND_DECLARED",
+    "detail": "src_2 (O'Bryant 2007) and src_3 (Z.-W. Sun, Internat. J. Math. 17 (2006) 1047–1064) are honestly declared as cited second-hand and not read; both bibliographic entries are consistent with my knowledge (no sign of fabrication). They carry no weight in the proof.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "SRC_FROM_MEMORY_RS",
+    "detail": "src_4: Rosser–Schoenfeld (1962) Thm 5 eq. (3.20), sum_{p<=x}1/p < log log x + B + 1/(2 log^2 x) for x>1, B=0.26149…, matches my recollection of the paper. Cited from memory and declared as such; it only affects the explicit constant in Corollary 6(2), and the candidate flags this dependency. Request: retrieve and quote the inequality to close the gap.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "COMP_REPRODUCED_NOT_PROOF",
+    "detail": "code_1 was re-run by the orchestrator (exit 0, 2.8 s, exact integer/Fraction arithmetic). Output consistent with the prose: R(1000,2)=494228, R(3000,2)=4471142, closed bounds never violated for g<=3000. 'max R(g)/g^2 = 1.0000' is attained at g=1 (R=1) and is consistent with 'R(g,2)<=g^2'. Spot check: R(2,2)=2·R(1,2)=2, R(3,2)=2·1+3·1=5 as stated. The computation is explicitly a consistency check and is NOT used as proof; Theorem 5 is proved by induction independently of it.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [
+   {
+    "code": "SCOPE_TARGET_NOT_REACHED",
+    "detail": "The registered claim 'main' (cell 6: decide k>=25, or prove gcd>=ck / improve the known k^{1-o(1)} factor, or settle group form k=6) is not established. The candidate's actual results are g >= k^{1/3} (unconditional) and g >= c·sqrt(k)/log k (with Mertens), which are strictly weaker than the bound the problem itself states as known (k^{1-o(1)}). No literature is used as a substitute for proof and no rule of the column is violated, but under the hand-in rule 'claim only what you have certified' this must be handed in as partial/no progress on cell 6, not as a solution; the candidate's text does not overclaim, but the claim registry does.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "UNVERIFIED"
+    ],
+    "evidence_sufficient": false,
+    "permitted_by_rules": true,
+    "relies_on_external_result": true,
+    "uses_computation_as_proof": false,
+    "references": [
+     "src_1",
+     "src_4"
+    ],
+    "notes": "Target claim (any of (a),(b),(c)) is not established. What is delivered is a self-contained elementary argument (Lemmas 1–4, Theorem 5, Cor. 6(1)) for g >= k^{1/3}, plus Cor. 6(2) g >= c sqrt(k)/log k relying on Mertens/Rosser–Schoenfeld (cited from memory, declared). These are weaker than the known bound quoted in the problem, so they do not constitute progress on (b). Sources src_1–src_3 are context only; src_1 unverifiable here and its exponent form disagrees with the problem statement."
+   }
+  ],
+  "reproducibility_notes": "code_1: exact arithmetic (int/Fraction), no floats in the checks, no randomness; orchestrator rerun reproduced the printed values (2.74 s vs claimed 2.34 s, both far under 10 min). Command recorded. The computation covers g in [1,3000] only and is illustrative. Requests: (1) submitted excerpt/verbatim statement of arXiv:2607.24655 Theorem 1.1 to resolve the sqrt discrepancy; (2) verbatim quote of Rosser–Schoenfeld (3.20) if Corollary 6(2)'s explicit constant is to be kept."
+ },
+ "limitation": null
+}
