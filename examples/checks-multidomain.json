@@ -1,0 +1,6 @@
+[
+  {"kind":"rational_vectors","claim_id":"geometry_example","vectors":[["3/5","4/5",0],[0,0,1]],"require_unit_norm":true,"max_absolute_pairwise_dot":0},
+  {"kind":"hypercube_paths","claim_id":"cube_example","dimension":3,"order":[0,1,2,3,5,6,4,7],"expected_total":14},
+  {"kind":"unrestricted_partitions_allowed_parts","claim_id":"partition_example","allowed_parts":[1,2,3,4,5],"expected_counts":{"0":1,"1":1,"2":2,"3":3,"4":5,"5":7}},
+  {"kind":"residue_classes","claim_id":"residue_example","classes":[{"residue":0,"modulus":2},{"residue":1,"modulus":2}],"require_pairwise_disjoint":true,"expected_modulus_gcds":[[2,2],[2,2]]}
+]
