@@ -2,3 +2,13 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# Materiale di riferimento non nostro: serve solo a leggere le interfacce, non va versionato.
+reference_referee/
+
+# Segreti: mai nel repo.
+.env
+.env.*
+*.key
+*.pem
+secrets.json

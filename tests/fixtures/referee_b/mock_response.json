@@ -1,0 +1,26 @@
+{
+ "report": {
+  "evidence_verdict": "PARTIAL",
+  "source_issues": [
+   {"code": "SOURCE_NOT_RETRIEVED",
+    "detail": "La fonte Bilyk-Matzke e' citata ma il testo non e' stato consegnato: non posso confermarne l'applicabilita'",
+    "severity": "MISSING", "claim_ids": ["main"]}
+  ],
+  "computation_issues": [
+   {"code": "EXECUTION_NOT_OBSERVED",
+    "detail": "Il codice esatto sembra coerente col claim, ma nessuna esecuzione indipendente e' stata osservata da me",
+    "severity": "MISSING", "claim_ids": ["main"]}
+  ],
+  "rule_violations": [],
+  "claim_provenance": [
+   {"claim_id": "main", "categories": ["COMPUTATIONALLY_VERIFIED"], "evidence_sufficient": false,
+    "permitted_by_rules": true, "relies_on_external_result": false, "uses_computation_as_proof": true,
+    "references": [], "notes": "Enumerazione esatta plausibile; manca una riproduzione indipendente"},
+   {"claim_id": "dep_2", "categories": ["UNVERIFIED"], "evidence_sufficient": false,
+    "permitted_by_rules": true, "relies_on_external_result": false, "uses_computation_as_proof": false,
+    "references": [], "notes": "Osservazione ausiliaria non registrata fra i claim verificati"}
+  ],
+  "reproducibility_notes": "Comando di riproduzione assente; il tempo dichiarato non e' stato misurato da me. Richiesta: eseguire l'enumerazione esatta in un processo separato e allegarne l'output."
+ },
+ "limitation": null
+}
