@@ -1,0 +1,6 @@
+{
+ "allow_literature_as_proof": false,
+ "allow_computation": true,
+ "require_machine_verification": false,
+ "additional_rules": "ATTENZIONE: queste NON sono le regole ufficiali della gara; sono i vincoli interni del team, ricavati da CLAUDE.md, usati come default prudente finché il regolamento vero non viene inserito. Il Referee deve segnalare come MISSING ogni punto che dipende dal regolamento reale.\n\n(1) Citare un risultato non sostituisce la dimostrazione: se una cella chiede una prova, la sola letteratura non basta.\n(2) Il calcolo e' ammesso come supporto se la riduzione a un insieme finito e' giustificata matematicamente, l'insieme coperto e' dichiarato, l'aritmetica e' esatta o con errore controllato, e la verifica e' riproducibile in meno di 10 minuti su un portatile.\n(3) L'output in virgola mobile non e' mai una prova; resta esplorazione legittima e non invalida una prova indipendente corretta.\n(4) Il consenso di un altro modello non e' una prova.\n(5) Non inventare citazioni; una fonte non letta non va presentata come letta.\n(6) Nessuna verifica formale (Lean) e' richiesta: require_machine_verification resta false finche' la gara ammette prove scritte revisionate da umani.\n(7) Una ricerca interrotta e' incompleta; l'assenza di controesempi non dimostra nulla oltre il dominio coperto."
+}

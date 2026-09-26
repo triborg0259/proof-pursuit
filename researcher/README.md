@@ -68,10 +68,19 @@ il ponte traduce nei due sensi e archivia il verdetto come `researcher.py record
 ```
 Mappatura: `final_verdict`→`verdict`, `first_fatal_error.detail`→`fatal_error`, `next_required_step`→`next_blocker`;
 `review_status` è conservato: **READY_FOR_HUMAN non è ACCEPT**, l'approvazione resta umana (`python -m referees approve`).
-L'enunciato protetto della cella è `cell_statement` in state.json (se manca, `current_blocker`).
+L'enunciato protetto della cella si cerca in quest'ordine: `cell_statement` in state.json, riga `Cell N:` di
+`problem.md`, `current_blocker`. Se manca ovunque il ponte si ferma con un errore invece di usare un segnaposto:
+il Referee protegge quel testo esatto, e giudicare un bersaglio inventato darebbe un verdetto senza significato.
+Un `claims_used` che non coincide con nessun claim verificato non viene scartato: diventa un claim `dep_k` del
+candidato, così il Referee ne valuta la provenienza e può marcarlo `UNVERIFIED`. Conseguenza voluta: un
+`evidence_verdict` PASS deve coprire anche quei claim, altrimenti non si arriva a READY_FOR_HUMAN.
+Le regole passate al Referee sono `rules` in state.json, altrimenti `shared/competition_rules.example.json`:
+quel file **non è il regolamento ufficiale**, sono i vincoli interni ricavati da `CLAUDE.md`, e va sostituito.
 Il backend CLI (`CliBackend`) implementa il loro protocollo `JSONBackend` con `claude -p --json-schema`; il loro
 `ClaudeBackend` (SDK, chiave API) usa `tool_choice` forzato, che su Claude Fable 5.1 restituisce 400: usare Opus.
-Test: `.venv/bin/python tests/test_bridge_referee.py` (offline).
+Test: `python tests/test_bridge_referee.py` (offline) e `python tests/test_b_referee.py`, che copre i sette casi
+del Referee B (fonte vietata, citazione non verificata, log falso, campionamento, float, computazione esatta)
+con backend simulato: nessuna chiamata a pagamento.
 
 ## Ciclo end-to-end (`loop.py`)
 Researcher → Referee → decisione → (REJECT) Researcher rilegge `fatal_error` → … fino a READY_FOR_HUMAN.

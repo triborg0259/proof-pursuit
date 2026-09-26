@@ -1,0 +1,4 @@
+{"problem_id": "toy_cell", "highest_verified_cell": 1, "current_target": "cell_1",
+ "current_blocker": "Determine T(G_0) with certainty",
+ "verified_claims": ["Lemma A: ogni etichettatura ha almeno |E| + #valli cammini in salita"],
+ "failed_attempts": [], "stagnation_count": 0, "cell_status": {}}

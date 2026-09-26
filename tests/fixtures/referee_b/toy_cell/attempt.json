@@ -1,0 +1,35 @@
+{
+ "attempt_id": "attempt_007",
+ "problem_id": "toy_cell",
+ "target_cell": 1,
+ "subgoal": "Determinare T(G_0) esattamente",
+ "approach": "Enumerazione esaustiva con conteggio esatto, piu' un limite inferiore a mano",
+ "approach_family": "exact_computation",
+ "reason_for_choice": "Lo spazio e' finito e piccolo",
+ "proof_attempt": "## Risultato\nT(G_0) = 14. Limite superiore dall'etichettatura esibita; limite inferiore dal Lemma A.",
+ "claims_used": [
+  "Lemma A: ogni etichettatura ha almeno |E| + #valli cammini in salita",
+  "Osservazione ausiliaria non registrata nello stato condiviso"
+ ],
+ "sources_used": [
+  "Bilyk, Matzke, 'On the Fejes Toth problem', Proc. AMS 147 (2019), Teorema 1.2"
+ ],
+ "code_used": [
+  {
+   "language": "python",
+   "purpose": "Enumerazione esaustiva di tutte le 8! etichettature, aritmetica intera esatta",
+   "rigor": "exact",
+   "code": "from itertools import permutations\nprint(min(conta(p) for p in permutations(range(1, 9))))\n"
+  },
+  {
+   "language": "python",
+   "purpose": "Esplorazione numerica del comportamento asintotico",
+   "rigor": "float_exploration_only",
+   "code": "import math\nprint(sum(math.exp(-k) for k in range(100)))\n"
+  }
+ ],
+ "claimed_progress": "T(G_0) = 14 con etichettatura ottima esplicita",
+ "claimed_status": "CELL_SOLVED_CANDIDATE",
+ "self_reported_gaps": ["La convenzione sulle stringhe 0/1 non e' fissata dall'enunciato"],
+ "request_creative": false
+}
