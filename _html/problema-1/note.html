@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>problema-1/note.md</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">problema-1/note.md</h1>
+</header>
+<h1 id="problema-1-note-di-triage">Problema 1 — note di triage</h1>
+<h2 id="definizioni-estratte-dal-testo-ricevuto">Definizioni (estratte
+dal testo ricevuto)</h2>
+<ul>
+<li><span class="math inline">\(N\)</span> rette <span
+class="math inline">\(\ell_1,\ldots,\ell_N\)</span> in <span
+class="math inline">\(\mathbb{R}^2\)</span> (parte 1; il preambolo
+menziona un <span class="math inline">\(d\)</span> generale, quindi le
+parti successive riguarderanno presumibilmente <span
+class="math inline">\(\mathbb{R}^d\)</span>).</li>
+<li><strong>Definizione ufficiale (preambolo ricevuto):</strong> rette
+per l’origine di <span class="math inline">\(\mathbb{R}^d\)</span>,
+ripetizioni ammesse; <span
+class="math inline">\(\theta(\ell,\ell&#39;)=\arccos|\langle
+x,x&#39;\rangle|\in[0,\pi/2]\)</span> con <span
+class="math inline">\(x,x&#39;\)</span> versori; <span
+class="math inline">\(S=\sum_{i&lt;j}\theta(\ell_i,\ell_j)\)</span>.
+<strong>Coincide con l’ipotesi di lavoro usata in E1 e nell’approccio
+E.</strong></li>
+<li>Congettura di Fejes Tóth (1959): <span
+class="math inline">\(S\)</span> massima con <span
+class="math inline">\(d\)</span> rette ortogonali usate <span
+class="math inline">\(\lfloor N/d\rfloor\)</span> o <span
+class="math inline">\(\lceil N/d\rceil\)</span> volte. Per <span
+class="math inline">\(N=d+k\)</span>, <span class="math inline">\(0\le
+k\le d\)</span>: valore <span
+class="math inline">\(\big(\binom{N}{2}-k\big)\frac{\pi}{2}\)</span>.</li>
+<li>Il problema (nome ufficiale “Angles between lines”) è esplicitamente
+il problema di Fejes Tóth.</li>
+</ul>
+<h2 id="richieste-per-parte">Richieste per parte</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parte</th>
+<th>Richiesta</th>
+<th>Punti</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Dimostrare <span class="math inline">\(S \le \frac{\pi}{2}\lfloor
+N^2/4\rfloor\)</span> per rette in <span
+class="math inline">\(\mathbb{R}^2\)</span></td>
+<td>1</td>
+<td>Judged (prova)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Lemma di ortogonalità: catena <span
+class="math inline">\(x_1..x_m\)</span> di versori in <span
+class="math inline">\(\mathbb{R}^{m-1}\)</span>, <span
+class="math inline">\(x_i\perp x_j\)</span> per <span
+class="math inline">\(|i-j|\ge2\)</span> ⇒ <span
+class="math inline">\(\sum_{i=1}^{m-1}\theta(x_i,x_{i+1})\le(m-2)\frac{\pi}{2}\)</span></td>
+<td>2</td>
+<td>Judged (prova)</td>
+</tr>
+<tr>
+<td>3</td>
+<td><span class="math inline">\(N=d+1\)</span> in <span
+class="math inline">\(\mathbb{R}^d\)</span>, <span
+class="math inline">\(d\ge1\)</span>: <span
+class="math inline">\(S\le(\binom{d+1}{2}-1)\frac{\pi}{2}\)</span></td>
+<td>3</td>
+<td>Judged (prova)</td>
+</tr>
+<tr>
+<td>4</td>
+<td><span class="math inline">\(5\)</span> rette in <span
+class="math inline">\(\mathbb{R}^3\)</span>: <span
+class="math inline">\(S\le4\pi\)</span>; <span
+class="math inline">\(6\)</span> rette in <span
+class="math inline">\(\mathbb{R}^4\)</span>: <span
+class="math inline">\(S\le13\pi/2\)</span></td>
+<td>5</td>
+<td>Judged (prova; calcolo rigoroso ammesso)</td>
+</tr>
+<tr>
+<td>5</td>
+<td><span class="math inline">\(N=d+2\)</span> in <span
+class="math inline">\(\mathbb{R}^d\)</span>, <span
+class="math inline">\(d\ge2\)</span>: <span
+class="math inline">\(S\le(\binom{d+2}{2}-2)\frac{\pi}{2}\)</span></td>
+<td>8</td>
+<td>Judged (prova)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Congettura completa (prove or disprove); famiglie infinite nuove =
+progresso parziale</td>
+<td>13</td>
+<td>Judged · Open</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Requisiti di consegna (preambolo):</strong> prova scritta per
+ogni cella tentata. Computer ammesso per esplorare; una prova può
+dipendere da un calcolo solo se: codice incluso, &lt; 10 minuti su
+portatile, rigoroso (aritmetica esatta o a intervalli, oppure errore
+numerico limitato con argomento). Dichiarare quali celle sono risolte e
+quali parziali. Citare un risultato pubblicato per l’enunciato richiesto
+NON conta.</p>
+<h2 id="ambiguità-dati-mancanti">Ambiguità / dati mancanti</h2>
+<ol type="1">
+<li><del>Definizione di <span class="math inline">\(S\)</span>
+assente</del> → risolta dal preambolo.</li>
+<li><del>Rette coincidenti</del> → ripetizioni esplicitamente ammesse
+(angolo 0). La prova deve gestirle.</li>
+<li>“Conjectured optimum”: in <span class="math inline">\(d=2\)</span>
+la disuguaglianza è da dimostrare; la congettura aperta riguarda <span
+class="math inline">\(d\ge3\)</span>.</li>
+<li>Parte 3 con <span class="math inline">\(d=1\)</span>: due rette in
+<span class="math inline">\(\mathbb{R}^1\)</span> coincidono, <span
+class="math inline">\(S=0=(1-1)\pi/2\)</span>. Banale ma va
+incluso.</li>
+<li>Parte 6: “disprove” ammesso ⇒ una ricerca di controesempi (numerica
+poi esatta) è legittima. Parti 3–5 invece chiedono prove: se la ricerca
+numerica trovasse un controesempio a una di esse, la cella sarebbe mal
+posta; improbabile ma va tenuto a mente.</li>
+<li>Parte 4 ammette esplicitamente calcolo rigoroso (aritmetica esatta/a
+intervalli, &lt; 10 min): unica cella dove un approccio
+computer-assisted (branch-and-bound) è una strada concreta.</li>
+</ol>
+<h2
+id="contesto-letteratura-vedi-fontireadme.md-per-i-dettagli">Contesto —
+letteratura (vedi fonti/README.md per i dettagli)</h2>
+<p><strong>Letto [BM18] Bilyk–Matzke 2018/2019.</strong> Convenzione:
+loro <span class="math inline">\(S^d\)</span> = nostro <span
+class="math inline">\(\mathbb{R}^{d+1}\)</span>. Dichiarano: unico caso
+risolto = piano (Fodor–Vígh–Zarnócz 2016; BM18 danno tre prove
+alternative, una — “Stolarsky per quadranti” — coincide in sostanza col
+nostro approccio E); <span class="math inline">\(\mathbb{R}^3\)</span>
+con <span class="math inline">\(N\le6\)</span> confermato da Fejes Tóth
+1959 (copre “5 rette in <span
+class="math inline">\(\mathbb{R}^3\)</span>” di P4); bound generale
+<span class="math inline">\(\frac{\pi}{2}-\frac{69}{50(d+1)}\)</span>
+(energia continua); Prop. 3.1: congettura in dim. alta ⇒ dim. bassa.
+<strong>Conseguenza:</strong> P3, P5, P6 e “6 in <span
+class="math inline">\(\mathbb{R}^4\)</span>” non risultano noti (al
+2018): il lemma P2 suggerisce che gli autori della gara abbiano in mente
+una via elementare per P3. Da controllare: Lim–McCann (2020, non letto)
+e lavori 2019–2026.</p>
+<h2 id="contesto-precedente-mantenuto-per-storico">Contesto (precedente,
+mantenuto per storico)</h2>
+<p>Confermato dal preambolo: è il problema di L. Fejes Tóth (1959).
+Letteratura candidata da controllare prima di citarla (utile per capire
+quali casi speciali sono noti e con quali tecniche, NON per sostituire
+prove): - L. Fejes Tóth, 1959 (articolo originale, in tedesco,
+probabilmente su Acta Math. Acad. Sci. Hungar.). - D. Bilyk, R. Matzke,
+“On the Fejes Tóth problem about the sum of angles between lines”, Proc.
+AMS (~2019): risultati parziali in <span
+class="math inline">\(d\ge3\)</span> (da verificare: forse il caso <span
+class="math inline">\(N=d+1\)</span>? e un bound generale via energia).
+- Possibili lavori successivi (Bilyk–Glazyrin–Matzke–Park–Vlasiuk?
+Fodor–Vígh–Zarnócz?) — da verificare. <strong>Non citare finché non
+verificati.</strong> Per le celle la citazione comunque non vale come
+prova.</p>
+<h2
+id="approcci-plausibili-per-la-parte-1-sotto-lipotesi-di-lavoro-su-s">Approcci
+plausibili per la parte 1 (sotto l’ipotesi di lavoro su <span
+class="math inline">\(S\)</span>)</h2>
+<ul>
+<li><strong>A. Ordinamento angolare + accoppiamento.</strong>
+Parametrizzare le rette con direzioni <span
+class="math inline">\(\theta_i\in[0,\pi)\)</span>. Per ogni retta <span
+class="math inline">\(\ell_i\)</span> e ogni retta <span
+class="math inline">\(\ell_j\)</span>, l’angolo <span
+class="math inline">\(\angle(\ell_i,\ell_j)\le\pi/2\)</span> e vale
+<span
+class="math inline">\(\angle(\ell_i,\ell_j)+\angle(\ell_i,\ell_j^\perp)=\pi/2\)</span>
+dove <span class="math inline">\(\ell_j^\perp\)</span> è la
+perpendicolare. Idea: mostrare che per ogni coppia di rette <span
+class="math inline">\(\ell_j,\ell_k\)</span> vale, per ogni <span
+class="math inline">\(\ell_i\)</span>, <span
+class="math inline">\(\angle(\ell_i,\ell_j)+\angle(\ell_i,\ell_k)\le
+\pi/2 + \angle(\ell_j,\ell_k)\)</span>?? (da verificare: potrebbe essere
+falso; controllare su esempi).</li>
+<li><strong>B. Argomento alla Turán/bipartizione.</strong> Definire il
+grafo delle coppie con angolo “grande” e mostrare che un vincolo
+geometrico (es. tre rette a due a due con angolo <span
+class="math inline">\(&gt;\pi/3\)</span> è impossibile in <span
+class="math inline">\(\mathbb{R}^2\)</span>… falso in generale, da
+controllare) limita la somma. Più promettente: disuguaglianza per
+triple. Per tre rette in <span
+class="math inline">\(\mathbb{R}^2\)</span> con angoli a due a due <span
+class="math inline">\(a,b,c\in[0,\pi/2]\)</span>: si ha <span
+class="math inline">\(a+b+c\le\pi\)</span> (le tre direzioni in <span
+class="math inline">\([0,\pi)\)</span>; il massimo è <span
+class="math inline">\(\pi\)</span> con angoli <span
+class="math inline">\(\pi/3\)</span>). Sommando su tutte le triple:
+<span class="math inline">\((N-2)\,S\le\pi\binom{N}{3}\)</span> ⇒ <span
+class="math inline">\(S\le \pi N(N-1)/6\)</span>, che è più debole di
+<span class="math inline">\(\frac{\pi}{2}\lfloor N^2/4\rfloor \approx
+\pi N^2/8\)</span>. Serve quindi un’idea più fine (es. induzione
+rimuovendo una coppia di rette perpendicolari o quasi).</li>
+<li><strong>C. Induzione su <span class="math inline">\(N\)</span>
+togliendo due rette.</strong> Se esistono due rette <span
+class="math inline">\(\ell_a,\ell_b\)</span> con angolo <span
+class="math inline">\(\phi\)</span>, per ogni altra <span
+class="math inline">\(\ell_i\)</span>: $(_i,_a)+(_i,_b)/2 + $
+(qualcosa)? Se si scelgono <span
+class="math inline">\(\ell_a,\ell_b\)</span> opportune (es. le due con
+angolo massimo) e si mostra <span
+class="math inline">\(\angle(\ell_i,\ell_a)+\angle(\ell_i,\ell_b)\le\pi/2+\phi&#39;\)</span>
+con termini che si compensano, si ottiene <span
+class="math inline">\(S(N)\le
+S(N-2)+\frac{\pi}{2}(N-2)+\frac{\pi}{2}\)</span>, e <span
+class="math inline">\(\lfloor N^2/4\rfloor=\lfloor
+(N-2)^2/4\rfloor+N-1\)</span> chiude l’induzione. Da verificare con
+cura: questo schema è il candidato principale.</li>
+<li><strong>E. Argomento integrale-geometrico (Crofton) — CANDIDATO
+PRINCIPALE, prova completa abbozzata.</strong> Direzioni <span
+class="math inline">\(\theta_i\in[0,\pi)\)</span>. Per <span
+class="math inline">\(\psi\)</span> uniforme in <span
+class="math inline">\([0,\pi)\)</span> sia <span
+class="math inline">\(A_\psi=\{\theta:
+(\theta-\psi)\bmod\pi\in[0,\pi/2)\}\)</span> (un “semifascio” di
+direzioni). Fatto chiave (da verificare con cura, incluso il caso <span
+class="math inline">\(\theta_i=\theta_j\)</span>): <span
+class="math display">\[\Pr\big[\text{esattamente una fra
+}\theta_i,\theta_j\text{ sta in }A_\psi\big] =
+\frac{2}{\pi}\,\angle(\ell_i,\ell_j).\]</span> Equivalente: con la mappa
+<span class="math inline">\(\theta\mapsto 2\theta\)</span> le rette
+diventano punti sulla circonferenza, l’angolo fra rette diventa metà
+della distanza geodetica, e un diametro casuale separa due punti con
+probabilità (distanza)/<span class="math inline">\(\pi\)</span>. Allora,
+detto <span class="math inline">\(k_\psi=|\{i:\theta_i\in
+A_\psi\}|\)</span>, <span
+class="math display">\[S=\frac{\pi}{2}\,\mathbb{E}\big[k_\psi
+(N-k_\psi)\big]\le
+\frac{\pi}{2}\left\lfloor\frac{N^2}{4}\right\rfloor,\]</span> perché
+<span class="math inline">\(k(N-k)\le\lfloor N^2/4\rfloor\)</span> per
+ogni intero <span class="math inline">\(k\)</span>. Uguaglianza sse per
+quasi ogni <span class="math inline">\(\psi\)</span> il taglio è
+bilanciato (<span class="math inline">\(k_\psi\in\{\lfloor
+N/2\rfloor,\lceil N/2\rceil\}\)</span>): spiega i massimizzatori
+“piatti” visti in E1. Gestisce rette parallele/coincidenti (mai
+separate, angolo 0). Nessuna citazione necessaria: è autocontenuto. Da
+fare: (1) dimostrare il fatto chiave con un calcolo esplicito di misura;
+(2) scrivere la prova completa;
+<ol start="3" type="1">
+<li>revisione critica; (4) bozza di submission.</li>
+</ol></li>
+<li><strong>D. Verifica numerica su piccoli <span
+class="math inline">\(N\)</span></strong> (solo come sanity check, non
+prova): ottimizzazione casuale / griglia su <span
+class="math inline">\(N\le 8\)</span> per confermare che il massimo è
+<span class="math inline">\(\frac{\pi}{2}\lfloor N^2/4\rfloor\)</span>
+sotto l’ipotesi su <span class="math inline">\(S\)</span>.</li>
+</ul>
+<h2 id="parte-2-triage">Parte 2 — triage</h2>
+<p><strong>Affermazione da stabilire.</strong> Se <span
+class="math inline">\(m\ge2\)</span>, <span
+class="math inline">\(x_1,\dots,x_m\)</span> versori in <span
+class="math inline">\(\mathbb{R}^{m-1}\)</span> con <span
+class="math inline">\(x_i\perp x_j\)</span> per <span
+class="math inline">\(|i-j|\ge2\)</span>, allora <span
+class="math inline">\(\sum_{i=1}^{m-1}\theta(x_i,x_{i+1})\le(m-2)\pi/2\)</span>.
+Equivalente: la somma dei “deficit” <span
+class="math inline">\(\sum_i(\pi/2-\theta_i)\ge\pi/2\)</span>.
+Intuizione: se tutti gli angoli consecutivi fossero <span
+class="math inline">\(\pi/2\)</span> i vettori sarebbero <span
+class="math inline">\(m\)</span> versori ortogonali in <span
+class="math inline">\(\mathbb{R}^{m-1}\)</span>, impossibile; il lemma
+quantifica di quanto si deve deviare.</p>
+<p><strong>Casi piccoli.</strong> <span
+class="math inline">\(m=2\)</span>: <span class="math inline">\(x_2=\pm
+x_1\)</span> in <span class="math inline">\(\mathbb{R}^1\)</span>, somma
+<span class="math inline">\(0\le0\)</span>. <span
+class="math inline">\(m=3\)</span>: in <span
+class="math inline">\(\mathbb{R}^2\)</span>, <span
+class="math inline">\(x_3=\pm x_1^\perp\)</span>, quindi <span
+class="math inline">\(\theta_1+\theta_2=\theta_1+(\pi/2-\theta_1)=\pi/2\)</span>:
+<strong>uguaglianza sempre</strong>. Con <span
+class="math inline">\(c_i=\langle
+x_i,x_{i+1}\rangle=\sin\alpha_i\)</span> il determinante di Gram
+(tridiagonale) è <span
+class="math inline">\(D_3=\cos(\alpha_1+\alpha_2)\cos(\alpha_1-\alpha_2)\)</span>,
+coerente.</p>
+<p><strong>Approccio F — induzione su <span
+class="math inline">\(m\)</span> per proiezione (CANDIDATO PRINCIPALE,
+prova completa abbozzata).</strong> Passo <span
+class="math inline">\(m-1\to m\)</span> (<span
+class="math inline">\(m\ge3\)</span>). Sia <span
+class="math inline">\(U=x_m^\perp\cong\mathbb{R}^{m-2}\)</span>. I
+vettori <span class="math inline">\(x_1,\dots,x_{m-2}\)</span> stanno in
+<span class="math inline">\(U\)</span>. - Se <span
+class="math inline">\(x_{m-1}\ne\pm x_m\)</span>: sia <span
+class="math inline">\(y\)</span> il versore di <span
+class="math inline">\(x_{m-1}-\langle x_{m-1},x_m\rangle x_m\in
+U\)</span>. Allora <span class="math inline">\(y\perp x_j\)</span> per
+<span class="math inline">\(j\le m-3\)</span>, quindi <span
+class="math inline">\(x_1,\dots,x_{m-2},y\)</span> è una catena di <span
+class="math inline">\(m-1\)</span> versori in <span
+class="math inline">\(U\cong\mathbb{R}^{m-2}\)</span>: per ipotesi
+induttiva <span class="math inline">\(\sum_{i\le
+m-3}\theta_i+\theta(x_{m-2},y)\le(m-3)\pi/2\)</span>. Scrivendo <span
+class="math inline">\(x_{m-1}=\sin\varphi\, y+\cos\varphi\, x_m\)</span>
+(a meno di segni) con <span
+class="math inline">\(\varphi=\theta(x_{m-1},x_m)\)</span> e usando
+<span class="math inline">\(x_{m-2}\perp x_m\)</span>: <span
+class="math inline">\(|\langle
+x_{m-2},x_{m-1}\rangle|=\sin\varphi\cos\psi\)</span> con <span
+class="math inline">\(\psi=\theta(x_{m-2},y)\)</span>. Posto <span
+class="math inline">\(\beta=\pi/2-\varphi\)</span>: <span
+class="math inline">\(\theta_{m-2}=\arccos(\cos\beta\cos\psi)\le\beta+\psi\)</span>
+(perché <span
+class="math inline">\(\cos(\beta+\psi)\le\cos\beta\cos\psi\)</span> e
+<span class="math inline">\(\beta+\psi\le\pi\)</span>; è la
+disuguaglianza triangolare sferica per il triangolo rettangolo). Quindi
+<span
+class="math inline">\(\theta_{m-2}+\theta_{m-1}\le\psi+\beta+\varphi=\psi+\pi/2\)</span>,
+e sommando: <span
+class="math inline">\(\sum\theta_i\le(m-3)\pi/2+\pi/2=(m-2)\pi/2\)</span>.
+- Se <span class="math inline">\(x_{m-1}=\pm x_m\)</span>: allora <span
+class="math inline">\(\theta_{m-1}=0\)</span> e <span
+class="math inline">\(\theta_{m-2}=\pi/2\)</span> (poiché <span
+class="math inline">\(x_{m-2}\perp x_m\)</span>). Si sceglie un versore
+<span class="math inline">\(y\in U\)</span> ortogonale a <span
+class="math inline">\(x_1,\dots,x_{m-3}\)</span> (esiste: <span
+class="math inline">\(\dim U=m-2&gt;m-3\)</span>), si applica l’ipotesi
+induttiva alla catena <span
+class="math inline">\(x_1,\dots,x_{m-2},y\)</span> e si usa <span
+class="math inline">\(\theta_{m-2}+\theta_{m-1}=\pi/2\le\theta(x_{m-2},y)+\pi/2\)</span>.
+Base <span class="math inline">\(m=2\)</span>: somma <span
+class="math inline">\(0\)</span>. <strong>Da fare:</strong> scrivere la
+prova completa con i segni espliciti, revisione critica, bozza.</p>
+<p><strong>Approccio G (alternativo, di riserva).</strong> Gram
+tridiagonale <span class="math inline">\(G\)</span> con <span
+class="math inline">\(1\)</span> sulla diagonale e <span
+class="math inline">\(c_i\)</span> fuori: <span
+class="math inline">\(\det G=0\)</span> (rango <span
+class="math inline">\(\le m-1\)</span>). Mostrare che <span
+class="math inline">\(\sum\arcsin|c_i|&lt;\pi/2\Rightarrow G\)</span>
+definita positiva tramite i continuanti <span
+class="math inline">\(D_k=D_{k-1}-c_{k-1}^2D_{k-2}\)</span>. Non
+sviluppato; F è più diretto.</p>
+<p><strong>Collegamento probabile con le parti successive.</strong> Il
+lemma quantifica un deficit totale <span
+class="math inline">\(\ge\pi/2\)</span> lungo una catena: plausibilmente
+serve per il caso <span class="math inline">\(N=d+1\)</span> (bound
+<span class="math inline">\((\binom{N}{2}-1)\pi/2\)</span>, cioè deficit
+totale <span class="math inline">\(\ge\pi/2\)</span>).</p>
+<h2 id="parti-36-triage">Parti 3–6 — triage</h2>
+<p><strong>Struttura comune.</strong> Deficit <span
+class="math inline">\(\delta_{ij}=\pi/2-\theta_{ij}=\arcsin|\langle
+x_i,x_j\rangle|\)</span>. Le tesi diventano: - P3: <span
+class="math inline">\(d+1\)</span> versori in <span
+class="math inline">\(\mathbb{R}^d\)</span> ⇒ <span
+class="math inline">\(\sum_{i&lt;j}\delta_{ij}\ge\pi/2\)</span>. - P5:
+<span class="math inline">\(d+2\)</span> versori in <span
+class="math inline">\(\mathbb{R}^d\)</span> ⇒ <span
+class="math inline">\(\sum\delta_{ij}\ge\pi\)</span>. P4 = P5 per <span
+class="math inline">\((d,N)=(3,5),(4,6)\)</span>. - P6: <span
+class="math inline">\(N\)</span> versori in <span
+class="math inline">\(\mathbb{R}^d\)</span> ⇒ <span
+class="math inline">\(\sum\delta_{ij}\ge M(N,d)\,\pi/2\)</span>. Sanity
+check dei valori: P4: <span
+class="math inline">\((10-2)\pi/2=4\pi\)</span> ✓, <span
+class="math inline">\((15-2)\pi/2=13\pi/2\)</span> ✓.</p>
+<p><strong>Parte 3 (3 pt).</strong> Il lemma della parte 2 è chiaramente
+il mattone: dà deficit <span class="math inline">\(\ge\pi/2\)</span> per
+una catena. Ostacolo: <span class="math inline">\(d+1\)</span> versori
+generici non formano una catena. Idee: - (a) Riduzione a catena: da una
+dipendenza lineare minimale <span class="math inline">\(\sum
+a_ix_i=0\)</span> (circuito, <span class="math inline">\(m\le
+d+1\)</span> vettori in posizione generale di dimensione <span
+class="math inline">\(m-1\)</span>) costruire una catena <span
+class="math inline">\(y_1..y_m\)</span> con <span
+class="math inline">\(\theta(y_i,y_{i+1})\)</span> legata alle <span
+class="math inline">\(\theta(x_i,x_j)\)</span> (es. proiezioni
+successive / sottospazi <span
+class="math inline">\(\mathrm{span}(x_1..x_k)\)</span>). Da esplorare. -
+(b) Induzione diretta su <span class="math inline">\(d\)</span> per
+proiezione su <span class="math inline">\(x_{d+1}^\perp\)</span> (come
+in F): la disuguaglianza triangolare sferica dà solo <span
+class="math inline">\(\delta_{ij}\ge\delta(y_i,y_j)-\delta_i-\delta_j\)</span>,
+che sommata perde un fattore <span
+class="math inline">\((d-2)\sum_i\delta_i\)</span>. <strong>Non basta
+così</strong>; serve una scelta migliore del vettore su cui proiettare o
+una stima più fine. - (c) Letteratura: verificare se <span
+class="math inline">\(N=d+1\)</span> è già dimostrato
+(Fodor–Vígh–Zarnócz 2016? Bilyk–Matzke 2019?) e con quale tecnica; la
+prova va comunque riscritta in modo autonomo. - (d) Sanity check
+numerico con il harness: <span class="math inline">\(d=3..6\)</span>,
+<span class="math inline">\(N=d+1\)</span>.</p>
+<p><strong>Parte 4 (5 pt).</strong> Due istanze concrete di <span
+class="math inline">\(d+2\)</span>. Strade: (i) dedurle da un argomento
+generale (P5); (ii) prova computer-assisted: massimizzazione di <span
+class="math inline">\(S\)</span> su <span
+class="math inline">\((S^2)^5\)</span> e <span
+class="math inline">\((S^3)^6\)</span> con branch-and-bound a
+intervalli. Difficoltà: il massimo è in punti “a spigolo” (coppie
+ortogonali/coincidenti) e la funzione non è liscia lì; serve un
+argomento locale attorno agli ottimi + copertura rigorosa del resto.
+Dimensione: <span class="math inline">\(5\cdot2-3=7\)</span> e <span
+class="math inline">\(6\cdot3-6=12\)</span> parametri dopo le simmetrie:
+il caso <span class="math inline">\(\mathbb{R}^4\)</span> è pesante per
+il limite di 10 minuti. Prima esplorare (i).</p>
+<p><strong>Parte 5 (8 pt).</strong> Generalizzazione di P3 con deficit
+<span class="math inline">\(\ge\pi\)</span>. Se P3 si fa con una
+riduzione strutturale, tentare di iterarla (due “circuiti”
+indipendenti?). Da aprire solo dopo P3.</p>
+<p><strong>Parte 6 (13 pt, aperta).</strong> Nessuna prova attesa.
+Contributi parziali realistici: (i) ricerca numerica sistematica di
+controesempi per <span class="math inline">\(N\le 2d\)</span>, <span
+class="math inline">\(d\le 6\)</span> (harness); (ii) una famiglia
+infinita nuova (es. <span class="math inline">\(N=d+3\)</span>? o <span
+class="math inline">\(N=2d\)</span>?) solo se emerge un metodo da P3/P5.
+Punteggio alto ma probabilità bassa: budget limitato.</p>
+<h2 id="esperimenti">Esperimenti</h2>
+<ul>
+<li>E1 (esperimenti/README.md): hill climbing su <span
+class="math inline">\(N=2..10\)</span>, massimo numerico = target entro
+<span class="math inline">\(2\cdot10^{-5}\)</span>, nessun superamento.
+Massimizzatori non unici (insieme piatto).</li>
+</ul>
+<h2 id="stato">Stato</h2>
+<p>Parte 1: approccio E promettente, prova da scrivere e revisionare.
+Parte 2: approccio F, prova abbozzata per induzione, da scrivere e
+revisionare. Parti 3–6: solo triage. Ordine naturale: 1 → 2 → 3 → (5 →
+4) → 6. In attesa delle parti 2–6 e della definizione ufficiale di <span
+class="math inline">\(S\)</span> (se diversa dall’ipotesi, l’approccio E
+va riadattato).</p>
+</body>
+</html>

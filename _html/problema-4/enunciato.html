@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>problema-4/enunciato.md</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">problema-4/enunciato.md</h1>
+</header>
+<h1 id="problema-4-disjoint-congruence-classes-and-large-gcd">Problema 4
+— Disjoint congruence classes and large gcd</h1>
+<p><em>(Enunciato formattato in LaTeX, contenuto fedele all’originale;
+ricevuto il 2026-09-26. Titolo della colonna non riportato nel testo
+incollato; la domanda di apertura è: “If congruence classes are pairwise
+disjoint, must two of their moduli share a large common
+factor?”)</em></p>
+<h2 id="preambolo">Preambolo</h2>
+<p>For integers <span class="math inline">\(a\)</span> and <span
+class="math inline">\(m \ge 1\)</span> write <span
+class="math display">\[
+a \pmod m = \{\, a + mt : t \in \mathbb{Z} \,\}
+\]</span> for the congruence class of <span
+class="math inline">\(a\)</span> modulo <span
+class="math inline">\(m\)</span>. A finite family of classes <span
+class="math inline">\(a_1 \pmod{m_1}, \ldots, a_k \pmod{m_k}\)</span> is
+<em>pairwise disjoint</em> if <span class="math inline">\(a_i \pmod{m_i}
+\cap a_j \pmod{m_j} = \emptyset\)</span> whenever <span
+class="math inline">\(i &lt; j\)</span>. Nothing is assumed about the
+moduli beyond <span class="math inline">\(m_i \ge 1\)</span>: they may
+repeat, and the residues <span class="math inline">\(a_i\)</span> may
+repeat as well.</p>
+<p>By the Chinese remainder theorem, two classes meet if and only if the
+congruences <span class="math inline">\(x \equiv a_i \pmod{m_i}\)</span>
+and <span class="math inline">\(x \equiv a_j \pmod{m_j}\)</span> are
+compatible, that is <span class="math display">\[
+a_i \pmod{m_i} \cap a_j \pmod{m_j} \ne \emptyset \iff \gcd(m_i, m_j)
+\mid a_i - a_j. \qquad (*)
+\]</span> The question of this column is how large the moduli of a
+disjoint family must be forced to overlap in the gcd sense.</p>
+<p><strong>Question.</strong> Let <span class="math inline">\(k \ge
+2\)</span> and let <span class="math inline">\(a_1 \pmod{m_1}, \ldots,
+a_k \pmod{m_k}\)</span> be pairwise disjoint. Must there be a pair <span
+class="math inline">\(i &lt; j\)</span> with <span
+class="math display">\[
+\gcd(m_i, m_j) \ge k \,?
+\]</span> This is believed to be true for every <span
+class="math inline">\(k\)</span>. It is sharp: the <span
+class="math inline">\(k\)</span> classes <span class="math inline">\(1,
+2, \ldots, k \pmod k\)</span> are pairwise disjoint — their differences
+have absolute value less than <span class="math inline">\(k\)</span>, so
+<span class="math inline">\(k\)</span> divides none of them — and every
+pairwise gcd equals exactly <span class="math inline">\(k\)</span>. So
+<span class="math inline">\(k\)</span> could not be replaced by <span
+class="math inline">\(k+1\)</span> in the statement.</p>
+<p><strong>Examples.</strong> The three classes <span
+class="math inline">\(0 \pmod 2\)</span>, <span class="math inline">\(1
+\pmod 4\)</span>, <span class="math inline">\(3 \pmod 8\)</span> are
+pairwise disjoint by <span class="math inline">\((*)\)</span>, and their
+pairwise gcds are <span class="math inline">\(2, 2, 4\)</span>; the
+largest is <span class="math inline">\(4 \ge 3\)</span>, as the question
+predicts for <span class="math inline">\(k = 3\)</span>. By contrast
+<span class="math inline">\(0 \pmod 2\)</span> and <span
+class="math inline">\(0 \pmod 3\)</span> have coprime moduli and do
+meet, at <span class="math inline">\(0\)</span>.</p>
+<p><strong>Trivial bounds.</strong> Two observations are immediate and
+you should assume they are already on the table; presenting either as
+progress counts for nothing.</p>
+<ol type="1">
+<li>If <span class="math inline">\(\gcd(m_i, m_j) = 1\)</span> then by
+<span class="math inline">\((*)\)</span> the two classes meet. Hence in
+any pairwise disjoint family every pairwise gcd is at least <span
+class="math inline">\(2\)</span>. This answers the question for <span
+class="math inline">\(k = 2\)</span>, and for a family of size <span
+class="math inline">\(k\)</span> that fails the question it confines
+every pairwise gcd to the range <span class="math inline">\(2 \le
+\gcd(m_i, m_j) \le k - 1\)</span>.</li>
+<li>The class <span class="math inline">\(a \pmod m\)</span> has density
+<span class="math inline">\(1/m\)</span>, so a pairwise disjoint family
+satisfies <span class="math inline">\(\sum_{i=1}^k 1/m_i \le 1\)</span>.
+In particular some modulus satisfies <span class="math inline">\(m_i \ge
+k\)</span>.</li>
+</ol>
+<p>Observation 2 bounds a single modulus from below; it says nothing
+about any gcd, and the two together settle no size <span
+class="math inline">\(k \ge 3\)</span>. Every cell below needs a
+genuinely new argument.</p>
+<p><strong>What to hand in.</strong> For each cell you attempt, hand in
+a written proof. You may use a computer to explore. A proof may rely on
+a computation only if you include the code, it runs in under ten minutes
+on a laptop, and the computation is exhaustive over a finite set that
+your own argument has reduced the problem to.</p>
+<p>A computational cell is accepted only with an <em>exhaustiveness
+certificate</em>, meaning all four of:</p>
+<ol type="1">
+<li>an exact description of the finite set your search enumerates,
+together with the proof that nothing outside it can be a
+counterexample;</li>
+<li>every pruning rule you use, stated precisely, each with the proof
+that it discards only objects that cannot be completed to a
+counterexample;</li>
+<li>the node count of the search at each size you claim, and the wall
+clock;</li>
+<li>a rerun that reproduces those counts;</li>
+<li>and, if anything at all survives your pruning at a size you claim, a
+separate decision for every survivor — not a sample — together with, for
+each one, the smallest part of it that already forces the decision, and
+your proof that no smaller part does. A survivor you cannot decide means
+the size is not certified.</li>
+</ol>
+<p>A run that reports “I searched and found nothing” without 1–5 is not
+a certificate and scores nothing. If a search does not finish at some
+size, report it as unfinished and do not claim that size; a partial
+search is a legitimate partial result and should be handed in as one,
+with the counts it reached.</p>
+<p>Where a cell asks you to determine a boundary, state the exact value
+you claim. Claim only what you have certified: an unfinished size, or
+one certified under an assumption you have not verified, must be
+reported as such. Say clearly which cells you consider solved and which
+are partial.</p>
+<p>Citing a published result for the statement you are asked to prove
+does not count as a solution; a proof written out in full does, whatever
+its source. If you rely on a published argument, you are responsible for
+it: check it yourself, and report it if it does not hold up.</p>
+<h2 id="parte-1-c1-three-classes">Parte 1 (C1) — Three classes</h2>
+<p><strong>Punteggio:</strong> 1 point · <strong>Valutazione:</strong>
+Judged</p>
+<p>The first size that the two trivial observations above do not settle.
+Prove the statement for <span class="math inline">\(k = 3\)</span>: any
+three pairwise disjoint classes have <span
+class="math inline">\(\gcd(m_i, m_j) \ge 3\)</span> for some <span
+class="math inline">\(i &lt; j\)</span>.</p>
+<h2 id="parte-2-c2-four-classes">Parte 2 (C2) — Four classes</h2>
+<p><strong>Punteggio:</strong> 2 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The same question for four classes. Prove the statement for <span
+class="math inline">\(k = 4\)</span>.</p>
+<h2 id="parte-3-c3-every-k-up-to-8">Parte 3 (C3) — Every <span
+class="math inline">\(k\)</span> up to 8</h2>
+<p><strong>Punteggio:</strong> 3 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>A first range of sizes: after C1 and C2, the sizes <span
+class="math inline">\(k = 5, 6, 7\)</span> and <span
+class="math inline">\(8\)</span> remain. Prove the statement for every
+<span class="math inline">\(k \le 8\)</span>.</p>
+<h2 id="parte-4-c4-every-k-up-to-12">Parte 4 (C4) — Every <span
+class="math inline">\(k\)</span> up to 12</h2>
+<p><strong>Punteggio:</strong> 5 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>A longer range, and a precise account of your method at the sizes
+just beyond it. Prove the statement for every <span
+class="math inline">\(k \le 12\)</span>. Then, for each <span
+class="math inline">\(k\)</span> from <span
+class="math inline">\(9\)</span> to <span
+class="math inline">\(16\)</span> in turn, report exactly what your
+method leaves undecided at that <span class="math inline">\(k\)</span>:
+if nothing, say so and prove it; if something, exhibit it in full. If
+that disagrees with any source you consulted, say which of the two is
+right and why. An answer that reports agreement with a source it did not
+test will be marked wrong.</p>
+<h2 id="parte-5-c5-the-certified-boundary">Parte 5 (C5) — The certified
+boundary</h2>
+<p><strong>Punteggio:</strong> 8 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The main certification cell: an initial range of sizes as long as you
+can make it, plus two isolated sizes further out. Determine the largest
+<span class="math inline">\(k\)</span> for which you can certify the
+statement for all sizes up to and including <span
+class="math inline">\(k\)</span>, and certify it. The range you claim
+must be contiguous, and if your argument at a given size assumes that
+all smaller sizes have already been settled you must say so. Then decide
+the two isolated sizes <span class="math inline">\(k = 24\)</span> and
+<span class="math inline">\(k = 30\)</span>: show that neither is the
+least size at which the statement can fail.</p>
+<p>For this cell the exhaustiveness certificate of the hand-in rules is
+not enough on its own. Add:</p>
+<ol type="i">
+<li><p>a demonstration that your method is not vacuous. Construct a case
+in which an admissible configuration genuinely exists, run your
+machinery on it unmodified, and show it returns that configuration. A
+method that reports “nothing survives” at every size it is pointed at is
+indistinguishable from a method with a bug, and will be graded as
+one;</p></li>
+<li><p>for every object your pruning leaves undecided, at every <span
+class="math inline">\(k\)</span> you claim — not a sample — an
+individual decision, plus the smallest part of that object which already
+forces the decision, plus a proof that no smaller part does;</p></li>
+<li><p>the exact list, not merely the count, of what survives at each
+<span class="math inline">\(k\)</span>;</p></li>
+<li><p>every pruning rule you use beyond those you have proved, proved.
+If your search needs a rule you invented to finish a size, that rule is
+part of your claim: state it, prove it, and show the survivor list is
+unchanged when you switch it off. A size that only closes with an
+unproved rule is not certified;</p></li>
+<li><p>a second implementation, written independently of your first,
+that differs in method — not the same algorithm twice — and the two
+survivor lists compared elementwise at every <span
+class="math inline">\(k\)</span> you claim. Report any difference rather
+than reconciling it silently: a disagreement means one of them is wrong,
+and finding which is part of the cell.</p></li>
+</ol>
+<h2 id="parte-6-c6-beyond-the-boundary">Parte 6 (C6) — Beyond the
+boundary</h2>
+<p><strong>Punteggio:</strong> 13 points · <strong>Valutazione:</strong>
+Judged · <strong>Open question</strong></p>
+<p>Three directions beyond the certified range; any one of them counts.
+Any of the following.</p>
+<ol type="a">
+<li><p>Decide a size <span class="math inline">\(k \ge
+25\)</span>.</p></li>
+<li><p>The asymptotic form. It is known that a pairwise disjoint family
+of size <span class="math inline">\(k\)</span> always has a pair with
+<span class="math display">\[
+\gcd(m_i, m_j) \;\ge\; k \cdot \exp\!\left( -(2 + o(1)) \frac{\log
+k}{\log\log k} \right),
+\]</span> which is <span class="math inline">\(k^{1 - o(1)}\)</span> but
+not linear in <span class="math inline">\(k\)</span>. Prove the
+statement in full, or prove the weaker bound <span
+class="math inline">\(\gcd(m_i, m_j) \ge ck\)</span> for some absolute
+constant <span class="math inline">\(c &gt; 0\)</span>, or improve the
+exponential factor above.</p></li>
+<li><p>The group form. Let <span class="math inline">\(G\)</span> be a
+group, let <span class="math inline">\(G_1, \ldots, G_k\)</span> be
+subgroups of finite index <span class="math inline">\(n_i = [G :
+G_i]\)</span>, and let <span class="math inline">\(x_1 G_1, \ldots, x_k
+G_k\)</span> be pairwise disjoint cosets. Is there a pair <span
+class="math inline">\(i &lt; j\)</span> with <span
+class="math inline">\(\gcd(n_i, n_j) \ge k\)</span>? This is known for
+<span class="math inline">\(k \le 5\)</span> and open for every <span
+class="math inline">\(k \ge 6\)</span>; settling <span
+class="math inline">\(k = 6\)</span> counts as progress.</p></li>
+</ol>
+<p><em>(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
+</body>
+</html>

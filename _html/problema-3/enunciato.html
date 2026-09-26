@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>problema-3/enunciato.md</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">problema-3/enunciato.md</h1>
+</header>
+<h1 id="problema-3-bulgarian-solitaire">Problema 3 — Bulgarian
+solitaire</h1>
+<p><em>(Enunciato formattato in LaTeX, contenuto fedele all’originale;
+ricevuto il 2026-09-26.)</em></p>
+<h2 id="preambolo">Preambolo</h2>
+<p><strong>Bulgarian solitaire.</strong> Repeatedly take one card from
+every pile and form a new pile. How many moves can it take before the
+piles start to cycle?</p>
+<p>A partition of a positive integer <span
+class="math inline">\(n\)</span> is a weakly decreasing sequence <span
+class="math inline">\(\lambda = (\lambda_1, \ldots, \lambda_s)\)</span>
+of positive integers with <span class="math inline">\(\lambda_1 + \cdots
++ \lambda_s = n\)</span>. Think of it as a division of <span
+class="math inline">\(n\)</span> cards into <span
+class="math inline">\(s\)</span> piles.</p>
+<p>The shift <span class="math inline">\(B(\lambda)\)</span> is the
+partition of <span class="math inline">\(n\)</span> obtained as follows:
+remove one card from every pile, discard the piles that become empty,
+and add one new pile consisting of the <span
+class="math inline">\(s\)</span> removed cards. Formally, <span
+class="math inline">\(B(\lambda)\)</span> is the partition whose parts
+are the positive numbers among <span class="math inline">\(\lambda_1 -
+1, \ldots, \lambda_s - 1\)</span> together with one extra part equal to
+<span class="math inline">\(s\)</span>.</p>
+<p>Iterating <span class="math inline">\(B\)</span> from any starting
+partition must eventually repeat, since there are finitely many
+partitions of <span class="math inline">\(n\)</span>. Call <span
+class="math inline">\(\lambda\)</span> <em>cyclic</em> if <span
+class="math inline">\(B^i(\lambda) = \lambda\)</span> for some <span
+class="math inline">\(i \ge 1\)</span>, and let <span
+class="math display">\[
+d_B(\lambda) = \min\{\, i \ge 0 : B^i(\lambda) \text{ is cyclic} \,\},
+\qquad
+D_B(n) = \max\{\, d_B(\lambda) : \lambda \text{ is a partition of } n
+\,\}.
+\]</span> So <span class="math inline">\(D_B(n)\)</span> is the largest
+number of shifts that can be needed before the process starts to
+cycle.</p>
+<p>Write <span class="math inline">\(T_k = k(k+1)/2\)</span> and <span
+class="math inline">\(\delta_k = (k, k-1, \ldots, 2, 1)\)</span>, the
+partition of <span class="math inline">\(T_k\)</span> into distinct
+parts. Every <span class="math inline">\(n \ge 1\)</span> satisfies
+<span class="math inline">\(T_{k-1} &lt; n \le T_k\)</span> for exactly
+one <span class="math inline">\(k\)</span>, which we call the
+<em>rank</em> of <span class="math inline">\(n\)</span>.</p>
+<p>Examples: <span class="math inline">\(B((2,1,1,1,1)) =
+(5,1)\)</span>; <span class="math inline">\(B((5,1)) = (4,2)\)</span>;
+<span class="math inline">\(B((4,2)) = (3,2,1)\)</span>; <span
+class="math inline">\(B((3,2,1)) = (3,2,1)\)</span>. Here <span
+class="math inline">\(d_B((2,1,1,1,1)) = 3\)</span>.</p>
+<p><strong>What to hand in.</strong> For each cell you attempt, hand in
+a written proof. You may use a computer to explore. A proof may rely on
+a computation only if you include the code, it runs in under 10 minutes
+on a laptop, and the computation is exhaustive over a finite set that
+your argument has reduced the problem to. Where a cell asks you to
+determine a quantity, give the exact value as a formula in <span
+class="math inline">\(k\)</span> and prove both bounds; state any
+partitions you use explicitly as functions of <span
+class="math inline">\(k\)</span>. Say clearly which cells you consider
+solved and which are partial.</p>
+<p>Citing a published result for the statement you are asked to prove
+does not count as a solution; a proof written out in full does, whatever
+its source.</p>
+<h2 id="parte-1-c1-cyclic-partitions-and-cycles">Parte 1 (C1) — Cyclic
+partitions and cycles</h2>
+<p><strong>Punteggio:</strong> 1 point · <strong>Valutazione:</strong>
+Judged</p>
+<p>First, the long-run behaviour: which partitions repeat under the
+shift, and how they fall into cycles. Let <span class="math inline">\(n
+= T_k\)</span>. Prove that for every partition <span
+class="math inline">\(\lambda\)</span> of <span
+class="math inline">\(n\)</span> there is an <span
+class="math inline">\(i\)</span> with <span
+class="math inline">\(B^i(\lambda) = \delta_k\)</span>, and that <span
+class="math inline">\(\delta_k\)</span> is the only cyclic partition of
+<span class="math inline">\(n\)</span>. Then let <span
+class="math inline">\(n\)</span> be arbitrary of rank <span
+class="math inline">\(k\)</span>, say <span class="math inline">\(n =
+T_{k-1} + r\)</span> with <span class="math inline">\(1 \le r \le
+k\)</span>: determine all cyclic partitions of <span
+class="math inline">\(n\)</span>, and determine the number of distinct
+cycles of <span class="math inline">\(B\)</span> on the partitions of
+<span class="math inline">\(n\)</span>. Prove both.</p>
+<h2 id="parte-2-c2-d_b-at-triangular-n">Parte 2 (C2) — <span
+class="math inline">\(D_B\)</span> at triangular <span
+class="math inline">\(n\)</span></h2>
+<p><strong>Punteggio:</strong> 2 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>Next, how long the process can take to reach a cycle, starting with
+the triangular numbers. Determine <span
+class="math inline">\(D_B(T_k)\)</span> for every <span
+class="math inline">\(k\)</span>, with proof of both bounds.</p>
+<h2 id="parte-3-c3-a-general-upper-bound">Parte 3 (C3) — A general upper
+bound</h2>
+<p><strong>Punteggio:</strong> 3 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>Now the numbers strictly between two consecutive triangular numbers.
+Prove that for every <span class="math inline">\(k \ge 4\)</span> and
+every non-triangular <span class="math inline">\(n\)</span> with <span
+class="math inline">\(T_{k-1} &lt; n &lt; T_k\)</span>, <span
+class="math display">\[
+D_B(n) \le k^2 - 2k - 1,
+\]</span> and determine <span class="math inline">\(D_B(T_k -
+1)\)</span> exactly. Determine also, for that <span
+class="math inline">\(n\)</span>, which partitions attain the
+maximum.</p>
+<h2 id="parte-4-c4-one-above-a-triangular-number">Parte 4 (C4) — One
+above a triangular number</h2>
+<p><strong>Punteggio:</strong> 5 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The first family just above a triangular number: <span
+class="math inline">\(n = T_{k-1} + 1\)</span>, that is <span
+class="math inline">\(n = 11, 16, 22, 29, \ldots\)</span> for <span
+class="math inline">\(k = 5, 6, 7, 8, \ldots\)</span>. Determine <span
+class="math inline">\(D_B(T_{k-1} + 1)\)</span> for every <span
+class="math inline">\(k \ge 5\)</span>, with proof of both bounds.</p>
+<h2 id="parte-5-c5-two-above-a-triangular-number">Parte 5 (C5) — Two
+above a triangular number</h2>
+<p><strong>Punteggio:</strong> 8 points · <strong>Valutazione:</strong>
+Judged</p>
+<p>The next family: <span class="math inline">\(n = T_{k-1} +
+2\)</span>, that is <span class="math inline">\(n = 3, 5, 8, 12, 17, 23,
+\ldots\)</span> for <span class="math inline">\(k = 2, 3, 4, 5, 6, 7,
+\ldots\)</span>. Determine <span class="math inline">\(D_B(T_{k-1} +
+2)\)</span> for every <span class="math inline">\(k\)</span>, with proof
+of both bounds. State exactly for which <span
+class="math inline">\(k\)</span> your formula holds, and give the
+remaining values separately. Your upper bound must be a single argument
+valid for all <span class="math inline">\(k\)</span> in that range, not
+a separate treatment of each <span class="math inline">\(k\)</span>, and
+you must give the extremal partitions explicitly as a function of <span
+class="math inline">\(k\)</span>.</p>
+<p>Say also where the straightforward extension of the C3 argument
+stops: give the bound it does yield, show it is strictly weaker than the
+truth, and identify precisely what your proof supplies in its place.</p>
+<h2 id="parte-6-c6-d_bn-for-every-n">Parte 6 (C6) — <span
+class="math inline">\(D_B(n)\)</span> for every <span
+class="math inline">\(n\)</span></h2>
+<p><strong>Punteggio:</strong> 13 points · <strong>Valutazione:</strong>
+Judged · <strong>Open question</strong></p>
+<p>Finally, the whole function <span class="math inline">\(n \mapsto
+D_B(n)\)</span>. Determine <span class="math inline">\(D_B(n)\)</span>
+for every <span class="math inline">\(n\)</span>.</p>
+<p><em>(Fine del problema 3. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
+</body>
+</html>

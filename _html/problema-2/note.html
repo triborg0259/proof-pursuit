@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>problema-2/note.md</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">problema-2/note.md</h1>
+</header>
+<h1 id="problema-2-note-di-triage">Problema 2 — note di triage</h1>
+<h2 id="definizioni">Definizioni</h2>
+<ul>
+<li>Etichettatura <span class="math inline">\(f:V\to\{1..n\}\)</span>
+biiettiva. Valle = minimo locale (tutti i vicini con etichetta
+maggiore).</li>
+<li>Cammino in salita = cammino da una valle con etichette strettamente
+crescenti (lunghezza <span class="math inline">\(\ge1\)</span>; la valle
+sola conta).</li>
+<li><span class="math inline">\(U(G)=\min_f \#\{\text{cammini in
+salita}\}\)</span>. <span class="math inline">\(Q_d\)</span>: <span
+class="math inline">\(2^d\)</span> vertici, <span
+class="math inline">\(d2^{d-1}\)</span> spigoli.</li>
+</ul>
+<p><strong>Osservazione strutturale.</strong> Il conteggio dipende solo
+dall’orientazione aciclica indotta da <span
+class="math inline">\(f\)</span> (spigolo orientato dal minore al
+maggiore). Posto <span class="math inline">\(p(v)\)</span> = numero di
+cammini in salita che terminano in <span
+class="math inline">\(v\)</span>: <span
+class="math display">\[p(v)=[v\text{ valle}]+\sum_{u\to v}p(u),\qquad
+\#\text{cammini}=\sum_v p(v).\]</span> Calcolo esatto in <span
+class="math inline">\(O(|E|)\)</span> con interi (nessun problema
+numerico). Perfetto per ricerca locale sulle etichettature.</p>
+<h2 id="richieste-per-parte">Richieste per parte</h2>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parte</th>
+<th>Richiesta</th>
+<th>Punti</th>
+<th>Tipo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td><span class="math inline">\(U(Q_3)\)</span>, <span
+class="math inline">\(U(Q_4)\)</span> + etichettatura esplicita</td>
+<td>1</td>
+<td>Checked instantly</td>
+</tr>
+<tr>
+<td>C2</td>
+<td><span class="math inline">\(U(Q_5)\)</span> + etichettatura</td>
+<td>2</td>
+<td>Checked instantly</td>
+</tr>
+<tr>
+<td>C3</td>
+<td><span class="math inline">\(U(Q_6)\)</span> + etichettatura</td>
+<td>3</td>
+<td>Checked instantly</td>
+</tr>
+<tr>
+<td>C4</td>
+<td><span class="math inline">\(U(Q_7)\)</span>, <span
+class="math inline">\(U(Q_8)\)</span> + etichettature</td>
+<td>5</td>
+<td>Checked instantly</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>Migliorare <span class="math inline">\(2368\le
+U(Q_9)\le2400\)</span>: etichettatura con <span
+class="math inline">\(\le2399\)</span> oppure prova <span
+class="math inline">\(\ge2369\)</span></td>
+<td>8</td>
+<td>Judged</td>
+</tr>
+<tr>
+<td>C6</td>
+<td><span class="math inline">\(U(Q_9)\)</span> esatto con prova di
+entrambi i bound</td>
+<td>13</td>
+<td>Judged · Open</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Formato di consegna:</strong> lista dei <span
+class="math inline">\(2^d\)</span> vertici in ordine crescente di
+etichetta, come stringhe 0/1. Prove computer-assisted ammesse (&lt; 10
+min, codice incluso, spiegazione del perché il calcolo prova il
+bound).</p>
+<h2 id="ambiguità-dati-mancanti">Ambiguità / dati mancanti</h2>
+<ol type="1">
+<li>Convenzione delle stringhe 0/1 (coordinata 1 a sinistra o a
+destra?): irrilevante per il conteggio (simmetria di <span
+class="math inline">\(Q_d\)</span>), ma va dichiarata nella
+consegna.</li>
+<li>“Checked instantly” su C1–C4: il valore viene confrontato con quello
+degli organizzatori. Un valore sbagliato per difetto di ricerca (minimo
+locale) costa la cella: serve o una prova di minimalità o ricerca
+esaustiva.</li>
+<li>C5: “lower bound unpublished” ⇒ gli organizzatori hanno un argomento
+non in letteratura; non possiamo leggerlo.</li>
+</ol>
+<h2 id="fatti-dimostrabili-subito-sanity">Fatti dimostrabili subito
+(sanity)</h2>
+<ul>
+<li><strong>Bound IMO generalizzato:</strong> ogni vertice è fine di
+almeno un cammino in salita (<span
+class="math inline">\(p(v)\ge1\)</span>, seguendo vicini decrescenti si
+arriva a una valle). Quindi <span
+class="math inline">\(p(v)\ge\max(1,\deg^-(v))\)</span> (i <span
+class="math inline">\(\deg^-\)</span> vicini minori hanno ciascuno <span
+class="math inline">\(p\ge1\)</span> e danno cammini distinti).
+Sommando: <span
+class="math inline">\(\#\ge|E|+\#\text{valli}\ge|E|+1\)</span>. Per la
+griglia questo è esatto (<span
+class="math inline">\(2n^2-2n+1=|E|+1\)</span>). Per <span
+class="math inline">\(Q_d\)</span>: <span
+class="math inline">\(U(Q_d)\ge d2^{d-1}+1\)</span>; per <span
+class="math inline">\(Q_9\)</span>: <span
+class="math inline">\(\ge2305\)</span>, ma il bound noto è <span
+class="math inline">\(2368\)</span>: <strong>il cubo NON raggiunge <span
+class="math inline">\(|E|+1\)</span></strong>, l’eccesso è tra 64 e 96.
+Il cuore del problema è capire perché e quantificare l’eccesso.</li>
+<li>Uguaglianza in <span class="math inline">\(p(v)=\deg^-(v)\)</span>
+richiede <span class="math inline">\(p(u)=1\)</span> per ogni vicino
+minore <span class="math inline">\(u\)</span>, cioè <span
+class="math inline">\(\deg^-(u)\le1\)</span>: in un grafo regolare di
+grado <span class="math inline">\(d\)</span> questo è impossibile per
+tutti i vertici “alti”: l’eccesso viene dai vertici con molti vicini
+minori che a loro volta hanno molti vicini minori.</li>
+<li>Piccolo caso: <span class="math inline">\(Q_1\)</span> (uno
+spigolo): 1 valle, cammini: valle sola + spigolo = 2 = <span
+class="math inline">\(|E|+1\)</span>. <span
+class="math inline">\(Q_2\)</span> (4-ciclo): etichette 1,2,4,3 attorno:
+valle 1; cammini: (1),(1,2),(1,3),(1,2,4),(1,3,4) = 5 = <span
+class="math inline">\(|E|+1\)</span>. Per <span
+class="math inline">\(Q_3\)</span> da calcolare.</li>
+</ul>
+<h2 id="approcci">Approcci</h2>
+<ul>
+<li><strong>A. Calcolo esatto per <span
+class="math inline">\(Q_3\)</span></strong>: <span
+class="math inline">\(8!=40320\)</span> etichettature, brute force in
+secondi. Anche via orientazioni acicliche.</li>
+<li><strong>B. <span class="math inline">\(Q_4\)</span> esatto</strong>:
+<span class="math inline">\(16!\)</span> troppo; ma si può fare
+branch-and-bound sulle orientazioni acicliche / etichettature con bound
+inferiore parziale, oppure ricerca esaustiva sulle orientazioni
+acicliche modulo simmetria (gruppo di <span
+class="math inline">\(Q_4\)</span> ha ordine <span
+class="math inline">\(2^4\cdot4!=384\)</span>). Alternativa: SA per il
+valore + prova di minimalità dedicata.</li>
+<li><strong>C. Ricerca locale (harness discreto)</strong> per <span
+class="math inline">\(Q_4..Q_9\)</span>: stato = permutazione; mosse =
+scambio di due etichette, spostamento di un’etichetta, mosse strutturate
+(rispettare la simmetria del cubo, es. etichettare per sottocubi
+ricorsivamente); punteggio = <span
+class="math inline">\(-\#\)</span>cammini (intero esatto). È IL caso
+d’uso del harness (obiettivo discreto). Rischio: minimi locali ⇒ molti
+seed, riavvii, mosse grandi.</li>
+<li><strong>D. Costruzioni ricorsive</strong>: <span
+class="math inline">\(Q_d=Q_{d-1}\square K_2\)</span>; etichettare una
+copia con <span class="math inline">\(1..2^{d-1}\)</span> e l’altra
+sopra? Contare l’eccesso in funzione di <span
+class="math inline">\(d\)</span> e cercare una formula (l’eccesso 64–96
+per <span class="math inline">\(d=9\)</span> suggerisce <span
+class="math inline">\(\sim 2^{d-3}\)</span>). Confrontare con i valori
+esatti di <span class="math inline">\(Q_3,Q_4\)</span>.</li>
+<li><strong>E. Bound inferiori migliori</strong>: raffinare <span
+class="math inline">\(p(v)\ge\max(1,\deg^-(v))\)</span> con un’analisi
+dei vertici a <span class="math inline">\(\deg^-\ge2\)</span> i cui
+predecessori hanno <span class="math inline">\(\deg^-\ge2\)</span>;
+oppure LP/ILP sul DAG; oppure prova computer-assisted per C6 (dubbio:
+<span class="math inline">\(Q_9\)</span> ha 512 vertici, lo spazio è
+enorme; serve un argomento strutturale, non una enumerazione).</li>
+<li><strong>F. Letteratura</strong>: cercare “uphill paths hypercube”,
+generalizzazioni di IMO 2022 P6 (es. arXiv 2023–2026), OEIS per la
+sequenza <span class="math inline">\(U(Q_d)\)</span>.</li>
+</ul>
+<h2 id="priorità">Priorità</h2>
+<p>C1 (esatto, quasi gratis) → C2–C4 con harness discreto + costruzione
+ricorsiva → C5 solo se la costruzione scala a <span
+class="math inline">\(\le2399\)</span> (upper bound è la via più
+realistica; il lower bound <span class="math inline">\(\ge2369\)</span>
+è “unpublished” e difficile).</p>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>problema-4/note.md</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">problema-4/note.md</h1>
+</header>
+<h1 id="problema-4-note-di-triage">Problema 4 — note di triage</h1>
+<h2 id="definizioni">Definizioni</h2>
+<ul>
+<li>Classi <span class="math inline">\(a_i \pmod{m_i}\)</span> a due a
+due disgiunte <span class="math inline">\(\iff \gcd(m_i,m_j)\nmid
+a_i-a_j\)</span> per ogni <span class="math inline">\(i&lt;j\)</span>
+(CRT, dato come <span class="math inline">\((*)\)</span>).</li>
+<li>Tesi<span class="math inline">\((k)\)</span>: ogni famiglia
+disgiunta di <span class="math inline">\(k\)</span> classi ha una coppia
+con <span class="math inline">\(\gcd(m_i,m_j)\ge k\)</span>. Sharp:
+<span class="math inline">\(1..k \pmod k\)</span>.</li>
+<li>Banali (non valgono nulla): ogni gcd <span
+class="math inline">\(\ge2\)</span>; <span class="math inline">\(\sum
+1/m_i\le1\)</span> ⇒ qualche <span class="math inline">\(m_i\ge
+k\)</span>.</li>
+<li>Controesempio a Tesi<span class="math inline">\((k)\)</span> :=
+famiglia disgiunta con tutti i <span
+class="math inline">\(\gcd\in[2,k-1]\)</span>.</li>
+</ul>
+<h2 id="richieste-per-parte">Richieste per parte</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parte</th>
+<th>Richiesta</th>
+<th>Punti</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td>Prova per <span class="math inline">\(k=3\)</span></td>
+<td>1</td>
+</tr>
+<tr>
+<td>C2</td>
+<td>Prova per <span class="math inline">\(k=4\)</span></td>
+<td>2</td>
+</tr>
+<tr>
+<td>C3</td>
+<td>Prova per ogni <span class="math inline">\(k\le8\)</span></td>
+<td>3</td>
+</tr>
+<tr>
+<td>C4</td>
+<td>Prova per ogni <span class="math inline">\(k\le12\)</span>; per
+<span class="math inline">\(k=9..16\)</span> report esatto di cosa il
+metodo lascia indeciso; confronto con fonti
+<strong>testate</strong></td>
+<td>5</td>
+</tr>
+<tr>
+<td>C5</td>
+<td>Massimo <span class="math inline">\(k\)</span> certificato (range
+contiguo) + decidere <span class="math inline">\(k=24\)</span> e <span
+class="math inline">\(k=30\)</span>; certificato rafforzato (i)–(v),
+incluse <strong>due implementazioni indipendenti per
+metodo</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>C6</td>
+<td>(a) decidere un <span class="math inline">\(k\ge25\)</span>; (b)
+asintotica: <span class="math inline">\(\ge ck\)</span> o migliorare il
+fattore; (c) forma gruppale, <span
+class="math inline">\(k=6\)</span></td>
+<td>13</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consegna computazionale (rigidissima):</strong> insieme
+finito + prova che nulla fuori è controesempio; ogni regola di pruning
+dimostrata; conteggio nodi e tempo per ogni <span
+class="math inline">\(k\)</span>; rerun; decisione individuale per ogni
+sopravvissuto con “parte minima che forza la decisione” e prova di
+minimalità. Per C5 anche: test di non-vacuità (il metodo deve ritrovare
+una configurazione ammissibile costruita apposta), lista esatta dei
+sopravvissuti, regole inventate dimostrate e testate spente, seconda
+implementazione con metodo diverso e confronto elemento per
+elemento.</p>
+<h2 id="ambiguità-dati-mancanti">Ambiguità / dati mancanti</h2>
+<ol type="1">
+<li>Titolo della colonna assente nel testo incollato (irrilevante).</li>
+<li>“Decide <span class="math inline">\(k=24\)</span> e <span
+class="math inline">\(k=30\)</span>: show that neither is the least size
+at which the statement can fail”: basta mostrare che se Tesi fallisce a
+<span class="math inline">\(k\)</span> allora fallisce anche a un <span
+class="math inline">\(k&#39;&lt;k\)</span> (riduzione), oppure provare
+Tesi<span class="math inline">\((k)\)</span> direttamente. Suggerisce
+che esista un argomento “se c’è un controesempio di taglia <span
+class="math inline">\(k\)</span> ce n’è uno di taglia minore” per certi
+<span class="math inline">\(k\)</span> (es. <span
+class="math inline">\(k\)</span> non primo? <span
+class="math inline">\(k\)</span> con molti divisori?). Da capire.</li>
+<li>C4: “what your method leaves undecided at <span
+class="math inline">\(k=9..16\)</span>”: si aspetta che il metodo lasci
+sopravvissuti per alcuni <span class="math inline">\(k\)</span> oltre
+12; onestà richiesta.</li>
+<li>C6(b): “It is known that …” — la fonte non è indicata; da
+identificare (probabilmente Z.-W. Sun, oppure lavori su covering
+systems). Non affidarsi senza verifica.</li>
+</ol>
+<h2
+id="riduzione-a-insieme-finito-idea-chiave-da-dimostrare-con-cura-è-il-fondamento-di-c3c5">Riduzione
+a insieme finito (idea chiave, DA DIMOSTRARE con cura — è il fondamento
+di C3–C5)</h2>
+<p>Sia <span class="math inline">\(g_{ij}=\gcd(m_i,m_j)\)</span>. La
+disgiunzione della coppia <span class="math inline">\((i,j)\)</span>
+dipende solo da <span class="math inline">\(g_{ij}\)</span> e da <span
+class="math inline">\(a_i-a_j \bmod g_{ij}\)</span>. Poniamo <span
+class="math inline">\(m_i&#39;=\mathrm{lcm}_{j\ne i}\,g_{ij}\)</span>.
+Allora <span class="math inline">\(m_i&#39;\mid m_i\)</span> e <span
+class="math inline">\(g_{ij}\mid m_i&#39;, m_j&#39;\)</span>, quindi
+<span class="math inline">\(\gcd(m_i&#39;,m_j&#39;)=g_{ij}\)</span>
+esattamente (divide <span class="math inline">\(g_{ij}\)</span> perché
+<span class="math inline">\(m_i&#39;\mid m_i\)</span>; è diviso da <span
+class="math inline">\(g_{ij}\)</span>). Le classi <span
+class="math inline">\(a_i \pmod{m_i&#39;}\)</span> restano disgiunte.
+Quindi <strong>WLOG ogni <span class="math inline">\(m_i\)</span> è lcm
+dei suoi gcd con gli altri</strong>; in un controesempio ogni <span
+class="math inline">\(g_{ij}\le k-1\)</span>, dunque <span
+class="math inline">\(m_i\mid L_k:=\mathrm{lcm}(2,\dots,k-1)\)</span>:
+<strong>insieme finito</strong>. Inoltre <span
+class="math inline">\(\sum1/m_i\le1\)</span> resta necessario.
+Conseguenze: primi <span class="math inline">\(&gt;k-1\)</span>
+irrilevanti; per ogni primo <span class="math inline">\(p\)</span> gli
+esponenti sono limitati da <span
+class="math inline">\(\lfloor\log_p(k-1)\rfloor\)</span>. Spazio: moduli
+= multiinsiemi di <span class="math inline">\(k\)</span> divisori di
+<span class="math inline">\(L_k\)</span> con gcd a coppie in <span
+class="math inline">\([2,k-1]\)</span> e ogni <span
+class="math inline">\(m_i\)</span> = lcm dei suoi gcd; residui: CSP su
+<span class="math inline">\(\prod \mathbb{Z}_{m_i}\)</span> con vincoli
+<span class="math inline">\(a_i\not\equiv a_j \pmod{g_{ij}}\)</span>;
+normalizzazione <span class="math inline">\(a_1=0\)</span> e simmetrie
+(traslazione, permutazioni, automorfismi <span
+class="math inline">\(x\mapsto ux\)</span> con <span
+class="math inline">\(u\)</span> invertibile mod <span
+class="math inline">\(L_k\)</span>). <span
+class="math inline">\(L_{12}=\mathrm{lcm}(2..11)=27720\)</span> (96
+divisori); <span class="math inline">\(L_{24}\)</span> e <span
+class="math inline">\(L_{30}\)</span> molto più grandi ⇒ per 24/30
+servirà la riduzione dell’ambiguità 2, non forza bruta.</p>
+<h2 id="approcci">Approcci</h2>
+<ul>
+<li><strong>C1 (<span class="math inline">\(k=3\)</span>) a
+mano.</strong> Controesempio: gcd tutti <span
+class="math inline">\(=2\)</span> ⇒ tutti i moduli pari, <span
+class="math inline">\(a_i\)</span> a due a due di parità diversa:
+impossibile con 3 classi (pigeonhole su <span
+class="math inline">\(\mathbb{Z}_2\)</span>). Fatto. (Prova di 3
+righe.)</li>
+<li><strong>C2 (<span class="math inline">\(k=4\)</span>) a
+mano.</strong> gcd <span class="math inline">\(\in\{2,3\}\)</span>.
+Grafo dei gcd su 4 vertici colorato con 2 e 3; le coppie con gcd 2
+richiedono parità diverse, quelle con gcd 3 residui mod 3 diversi. Se il
+grafo “gcd=2” ha un triangolo ⇒ contraddizione; altrimenti… pigeonhole
+combinato; inoltre struttura: se <span class="math inline">\(2\mid
+m_i\)</span> e <span class="math inline">\(2\mid m_j\)</span> allora
+<span class="math inline">\(2\mid g_{ij}\)</span>, quindi l’insieme dei
+moduli pari forma una clique in gcd pari; gcd<span
+class="math inline">\(\in\{2,3\}\)</span> ⇒ clique con gcd esattamente 2
+⇒ al massimo 2 moduli pari; analogamente al massimo 2 moduli divisibili
+per 3; ma ogni modulo ha un fattore 2 o 3 (gcd <span
+class="math inline">\(\ge2\)</span> con qualcuno) — 4 moduli, ognuno
+pari o multiplo di 3, al più 2 per tipo, e i due pari devono avere gcd
+<span class="math inline">\(\ge2\)</span> con i due multipli di 3 ⇒ pari
+e multipli di 3 insieme ⇒ contraddizione col conteggio. Da scrivere con
+cura. Questo schema (“clique per primo”) potrebbe scalare: per ogni
+primo <span class="math inline">\(p\)</span>, i moduli divisibili per
+<span class="math inline">\(p^e\)</span> formano una clique con <span
+class="math inline">\(p^e\mid g_{ij}\)</span>.</li>
+<li><strong>C3–C5: ricerca esaustiva certificata</strong> sull’insieme
+finito sopra, con due implementazioni diverse:
+<ol type="1">
+<li>backtracking sui moduli (divisori di <span
+class="math inline">\(L_k\)</span>) + CSP sui residui con propagazione;
+(2) approccio per “struttura dei primi”: costruzione per grafi di gcd +
+SAT/colorazione, o enumerazione delle famiglie di gcd ammissibili <span
+class="math inline">\(\{g_{ij}\}\)</span> e verifica di realizzabilità.
+Il vincolo di 10 minuti e i certificati (conteggi, survivors, minimal
+forcing part) rendono C5 costoso ma è la cella da 8 punti più
+“meccanica” della gara.</li>
+</ol></li>
+<li><strong>C6(b) asintotico</strong>: solo se avanza tempo;
+identificare prima la fonte del bound noto.</li>
+</ul>
+<h2 id="contesto-letteratura-da-verificare-ricordi">Contesto —
+letteratura (DA VERIFICARE; ricordi)</h2>
+<ul>
+<li>La domanda è nota come congettura di Z.-W. Sun sulle classi (coset)
+disgiunte (~2004); Sun ha risultati su <span
+class="math inline">\(\max\gcd\)</span> e sulla forma gruppale per <span
+class="math inline">\(k\)</span> piccoli. Erdős Problems potrebbe averla
+catalogata. Cercare anche “disjoint residue classes gcd of moduli” e
+lavori 2020–2026 (es. su arXiv) con calcoli certificati.</li>
+</ul>
+</body>
+</html>

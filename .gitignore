@@ -1,8 +1,4 @@
 .venv/
 __pycache__/
 *.pyc
-_html/
 .DS_Store
-# fonti scaricate (copyright): vedi problema-*/fonti/README.md per i link
-problema-*/fonti/*.pdf
-problema-*/fonti/*.txt

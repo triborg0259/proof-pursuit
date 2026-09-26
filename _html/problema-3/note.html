@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>problema-3/note.md</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">problema-3/note.md</h1>
+</header>
+<h1 id="problema-3-note-di-triage">Problema 3 — note di triage</h1>
+<h2 id="definizioni">Definizioni</h2>
+<ul>
+<li>Partizione <span class="math inline">\(\lambda\)</span> di <span
+class="math inline">\(n\)</span>; shift <span
+class="math inline">\(B\)</span>: togli 1 da ogni parte, scarta le
+nulle, aggiungi una parte <span class="math inline">\(=s\)</span>
+(numero di parti).</li>
+<li>Cyclic: <span class="math inline">\(B^i(\lambda)=\lambda\)</span>
+per qualche <span class="math inline">\(i\ge1\)</span>. <span
+class="math inline">\(d_B(\lambda)\)</span> = passi per entrare in un
+ciclo; <span class="math inline">\(D_B(n)=\max_\lambda
+d_B\)</span>.</li>
+<li><span class="math inline">\(T_k=k(k+1)/2\)</span>, <span
+class="math inline">\(\delta_k=(k,\dots,1)\)</span>, rango <span
+class="math inline">\(k\)</span> di <span
+class="math inline">\(n\)</span>: <span
+class="math inline">\(T_{k-1}&lt;n\le T_k\)</span>.</li>
+<li>Esempio dato: <span
+class="math inline">\(d_B((2,1,1,1,1))=3\)</span> (verificabile a mano:
+coerente con la definizione).</li>
+</ul>
+<h2 id="richieste-per-parte">Richieste per parte</h2>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr>
+<th>Parte</th>
+<th>Richiesta</th>
+<th>Punti</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>C1</td>
+<td><span class="math inline">\(n=T_k\)</span>: tutti convergono a <span
+class="math inline">\(\delta_k\)</span>, unica ciclica. <span
+class="math inline">\(n=T_{k-1}+r\)</span>: tutte le partizioni cicliche
++ numero di cicli. Prove.</td>
+<td>1</td>
+</tr>
+<tr>
+<td>C2</td>
+<td><span class="math inline">\(D_B(T_k)\)</span> esatto per ogni <span
+class="math inline">\(k\)</span>, entrambi i bound</td>
+<td>2</td>
+</tr>
+<tr>
+<td>C3</td>
+<td><span class="math inline">\(k\ge4\)</span>, <span
+class="math inline">\(n\)</span> non triangolare di rango <span
+class="math inline">\(k\)</span>: <span class="math inline">\(D_B(n)\le
+k^2-2k-1\)</span>; <span class="math inline">\(D_B(T_k-1)\)</span>
+esatto + partizioni estremali</td>
+<td>3</td>
+</tr>
+<tr>
+<td>C4</td>
+<td><span class="math inline">\(D_B(T_{k-1}+1)\)</span> per <span
+class="math inline">\(k\ge5\)</span>, entrambi i bound</td>
+<td>5</td>
+</tr>
+<tr>
+<td>C5</td>
+<td><span class="math inline">\(D_B(T_{k-1}+2)\)</span> per ogni <span
+class="math inline">\(k\)</span>: formula + range di validità + valori
+residui; upper bound con UN argomento uniforme; estremali esplicite in
+<span class="math inline">\(k\)</span>; discussione di dove si ferma
+l’estensione dell’argomento C3</td>
+<td>8</td>
+</tr>
+<tr>
+<td>C6</td>
+<td><span class="math inline">\(D_B(n)\)</span> per ogni <span
+class="math inline">\(n\)</span> (aperto)</td>
+<td>13</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Consegna:</strong> prove scritte. Calcolo ammesso solo se
+esaustivo su un insieme finito a cui l’argomento riduce il problema
+(&lt; 10 min, codice incluso). Valori come formule in <span
+class="math inline">\(k\)</span>; partizioni estremali esplicite in
+<span class="math inline">\(k\)</span>. Citazione non vale; una prova
+scritta per esteso sì, “whatever its source” (⇒ possiamo riprodurre
+prove note per esteso, dichiarando la fonte).</p>
+<h2 id="ambiguità-dati-mancanti">Ambiguità / dati mancanti</h2>
+<ol type="1">
+<li>C1: “number of distinct cycles” — atteso un conteggio in funzione di
+<span class="math inline">\((k,r)\)</span>; chiarire se conta anche i
+cicli di lunghezza 1 (sì, un punto fisso è un ciclo).</li>
+<li>C3: “for that <span class="math inline">\(n\)</span>” = <span
+class="math inline">\(n=T_k-1\)</span>. Partizioni estremali: quelle con
+<span class="math inline">\(d_B=D_B\)</span>.</li>
+<li>C5: “for every <span class="math inline">\(k\)</span>” ma <span
+class="math inline">\(k=2\)</span> dà <span
+class="math inline">\(n=3\)</span>, <span
+class="math inline">\(k=3\)</span> dà <span
+class="math inline">\(n=5\)</span>: casi piccoli con comportamento
+anomalo; il testo chiede di dichiarare il range e i valori residui
+separatamente.</li>
+<li>C6: “Open question” — ma per C6 non è chiaro se esista una
+congettura formulata; da cercare in letteratura.</li>
+</ol>
+<h2
+id="contesto-letteratura-da-verificare-prima-di-citare-ricordi-non-letture">Contesto
+— letteratura (DA VERIFICARE prima di citare; ricordi, non letture)</h2>
+<ul>
+<li>Brandt (1982): per <span class="math inline">\(n=T_k\)</span>
+convergenza a <span class="math inline">\(\delta_k\)</span>; per <span
+class="math inline">\(n\)</span> generico caratterizzazione dei
+cicli.</li>
+<li>Igusa (1985), Etienne (1991): <span
+class="math inline">\(D_B(T_k)=k(k-1)\)</span> (bound <span
+class="math inline">\(k^2-k\)</span> raggiunto).</li>
+<li>Griggs–Ho (1998) “The cycling of partitions and compositions under
+repeated shifts”: bound generale e congetture su <span
+class="math inline">\(D_B(n)\)</span> per <span
+class="math inline">\(n\)</span> non triangolare; potrebbe contenere
+proprio <span class="math inline">\(k^2-2k-1\)</span> e valori per <span
+class="math inline">\(T_k-1\)</span>.</li>
+<li>Drensky (2015?) survey “The Bulgarian solitaire and the mathematics
+around it”.</li>
+<li>Hopkins–Jones, Hopkins–Sellers (cicli, Gardner, “necklaces”). Il
+problema sembra costruito su Griggs–Ho: C3 = loro teorema?, C4/C5 =
+famiglie forse parzialmente aperte, C6 = congettura.</li>
+</ul>
+<h2 id="approcci">Approcci</h2>
+<ul>
+<li><strong>C1.</strong> Struttura nota: rappresentare <span
+class="math inline">\(\lambda\)</span> come diagramma e <span
+class="math inline">\(B\)</span> come “spostamento sulla diagonale”.
+Cicliche di <span class="math inline">\(n=T_{k-1}+r\)</span>: <span
+class="math inline">\(\delta_{k-1}\)</span> più <span
+class="math inline">\(r\)</span> “carte extra” su <span
+class="math inline">\(r\)</span> delle <span
+class="math inline">\(k\)</span> posizioni <span
+class="math inline">\(0..k-1\)</span> (posizione 0 = nuova parte 1).
+<span class="math inline">\(B\)</span> agisce su queste come rotazione
+ciclica dell’indicatore in <span
+class="math inline">\(\mathbb{Z}_k\)</span> ⇒ cicli = collane binarie
+con <span class="math inline">\(k\)</span> perle e <span
+class="math inline">\(r\)</span> nere: <span
+class="math inline">\(\frac1k\sum_{d\mid\gcd(k,r)}\varphi(d)\binom{k/d}{r/d}\)</span>.
+<strong>Da dimostrare per esteso</strong> (che ogni partizione entra in
+questo insieme e che nessun’altra è ciclica): argomento standard con la
+“somma degli scarti dalla scala” che decresce.</li>
+<li><strong>C2.</strong> <span
+class="math inline">\(D_B(T_k)=k^2-k\)</span>: costruzione (es. <span
+class="math inline">\((T_k)\)</span> o <span
+class="math inline">\((k-1,k-1,\dots)\)</span>? da calcolare) + bound
+superiore (argomento di Igusa/Etienne, da riscrivere). Calcolo esatto
+per <span class="math inline">\(k\le 9\)</span> per confermare.</li>
+<li><strong>C3–C5.</strong> Calcolare <span
+class="math inline">\(D_B(n)\)</span> per ogni <span
+class="math inline">\(n\le 60\)</span>–<span
+class="math inline">\(70\)</span> (<span
+class="math inline">\(p(70)\approx4\cdot10^6\)</span>, fattibile in
+Python/C in minuti): tabella esatta, estremali, formule congetturali per
+<span class="math inline">\(T_k-1\)</span>, <span
+class="math inline">\(T_{k-1}+1\)</span>, <span
+class="math inline">\(T_{k-1}+2\)</span>. Poi prove: la struttura
+“potenziale” (distanza dalla scala) dà upper bound; le estremali danno
+lower bound.</li>
+<li><strong>C6.</strong> Tabella completa + congettura; non attesa una
+prova.</li>
+</ul>
+<h2
+id="esperimento-e1-da-fare-per-primo-minuti-d_bn-esatto-per-nle-60">Esperimento
+E1 (da fare per primo, ~minuti): <span
+class="math inline">\(D_B(n)\)</span> esatto per <span
+class="math inline">\(n\le 60\)</span></h2>
+<p>Grafo funzionale sulle partizioni; <span
+class="math inline">\(d_B\)</span> via ricerca dei cicli
+(Floyd/marcatura); registrare per ogni <span
+class="math inline">\(n\)</span>: <span
+class="math inline">\(D_B(n)\)</span>, numero di cicli, partizioni
+estremali. Interi esatti: nessun problema numerico. Verifica
+indipendente: due implementazioni (una su partizioni come tuple, una su
+“diagramma/insieme di carte in posizione”) per C-cell che richiedono
+calcolo esaustivo.</p>
+</body>
+</html>

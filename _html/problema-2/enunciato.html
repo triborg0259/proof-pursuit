@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>problema-2/enunciato.md</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      white-space: pre-wrap;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script defer=""
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">problema-2/enunciato.md</h1>
+</header>
+<h1 id="problema-2-uphill-paths-on-the-hypercube">Problema 2 — Uphill
+paths on the hypercube</h1>
+<p><em>(Enunciato formattato in LaTeX, contenuto fedele all’originale;
+ricevuto il 2026-09-26.)</em></p>
+<h2 id="preambolo">Preambolo</h2>
+<p><strong>Uphill paths on the hypercube.</strong> Label the vertices of
+the hypercube to make as few uphill paths as possible. IMO 2022 settled
+the grid; the cube is still open.</p>
+<p>Let <span class="math inline">\(G\)</span> be a finite simple graph
+on <span class="math inline">\(n\)</span> vertices. A labelling of <span
+class="math inline">\(G\)</span> is a bijection <span
+class="math inline">\(f\)</span> from <span
+class="math inline">\(V(G)\)</span> to <span
+class="math inline">\(\{1,2,\ldots,n\}\)</span>. Fix a labelling.</p>
+<ul>
+<li>A vertex <span class="math inline">\(v\)</span> is a <em>valley</em>
+if every neighbour <span class="math inline">\(w\)</span> of <span
+class="math inline">\(v\)</span> has <span class="math inline">\(f(w)
+&gt; f(v)\)</span>. An isolated vertex counts as a valley.</li>
+<li>An <em>uphill path</em> is a sequence <span
+class="math inline">\((v_1, v_2, \ldots, v_k)\)</span> with <span
+class="math inline">\(k \ge 1\)</span> in which <span
+class="math inline">\(v_1\)</span> is a valley, <span
+class="math inline">\(v_i\)</span> and <span
+class="math inline">\(v_{i+1}\)</span> are adjacent for each <span
+class="math inline">\(i\)</span>, and <span class="math inline">\(f(v_1)
+&lt; f(v_2) &lt; \cdots &lt; f(v_k)\)</span>. A valley on its own (<span
+class="math inline">\(k=1\)</span>) counts as an uphill path.</li>
+</ul>
+<p>Let <span class="math inline">\(U(G)\)</span> be the smallest
+possible number of uphill paths, taken over all labellings of <span
+class="math inline">\(G\)</span>.</p>
+<p>IMO 2022 Problem 6 asks for <span class="math inline">\(U\)</span> of
+the <span class="math inline">\(n \times n\)</span> grid graph. The
+answer is <span class="math inline">\(2n^2 - 2n + 1\)</span>.</p>
+<p>This column asks about the <span
+class="math inline">\(d\)</span>-dimensional hypercube <span
+class="math inline">\(Q_d\)</span>. Its vertex set is <span
+class="math inline">\(\{0,1\}^d\)</span>, and two vertices are adjacent
+when they differ in exactly one coordinate. <span
+class="math inline">\(Q_d\)</span> has <span
+class="math inline">\(2^d\)</span> vertices and <span
+class="math inline">\(d \cdot 2^{d-1}\)</span> edges.</p>
+<p><strong>What to hand in.</strong> For C1 to C4, hand in the values,
+and for each value an explicit labelling that attains it as a list of
+the <span class="math inline">\(2^d\)</span> vertices in increasing
+label order, written as 0/1 strings. These cells are marked correct on
+the values alone, but a value with no labelling behind it will not
+survive the later cells, which build on the construction.</p>
+<p>For C5, hand in either a labelling of <span
+class="math inline">\(Q_9\)</span> in the same format, whose uphill
+paths will be counted mechanically, or a proof of the lower bound.</p>
+<p>For C6, hand in all three of: the value; an explicit labelling that
+attains it, in the same format; a proof that no labelling gives fewer
+uphill paths.</p>
+<p>A lower-bound proof may be computer-assisted. If it is, include the
+code; it must run in under 10 minutes on a laptop, and you must explain
+why the computation proves the bound. Say clearly which cells you
+consider solved and which are partial.</p>
+<h2 id="parte-1-c1-uq_3-and-uq_4">Parte 1 (C1) — <span
+class="math inline">\(U(Q_3)\)</span> and <span
+class="math inline">\(U(Q_4)\)</span></h2>
+<p><strong>Punteggio:</strong> 1 point · <strong>Valutazione:</strong>
+Checked instantly</p>
+<p>The two smallest interesting cubes: <span
+class="math inline">\(Q_3\)</span> has <span
+class="math inline">\(8\)</span> vertices and <span
+class="math inline">\(12\)</span> edges, <span
+class="math inline">\(Q_4\)</span> has <span
+class="math inline">\(16\)</span> vertices and <span
+class="math inline">\(32\)</span> edges. Determine <span
+class="math inline">\(U(Q_3)\)</span> and <span
+class="math inline">\(U(Q_4)\)</span>.</p>
+<h2 id="parte-2-c2-uq_5">Parte 2 (C2) — <span
+class="math inline">\(U(Q_5)\)</span></h2>
+<p><strong>Punteggio:</strong> 2 points · <strong>Valutazione:</strong>
+Checked instantly</p>
+<p><span class="math inline">\(Q_5\)</span> has <span
+class="math inline">\(32\)</span> vertices and <span
+class="math inline">\(80\)</span> edges. Determine <span
+class="math inline">\(U(Q_5)\)</span>.</p>
+<h2 id="parte-3-c3-uq_6">Parte 3 (C3) — <span
+class="math inline">\(U(Q_6)\)</span></h2>
+<p><strong>Punteggio:</strong> 3 points · <strong>Valutazione:</strong>
+Checked instantly</p>
+<p><span class="math inline">\(Q_6\)</span> has <span
+class="math inline">\(64\)</span> vertices and <span
+class="math inline">\(192\)</span> edges. Determine <span
+class="math inline">\(U(Q_6)\)</span>.</p>
+<h2 id="parte-4-c4-uq_7-and-uq_8">Parte 4 (C4) — <span
+class="math inline">\(U(Q_7)\)</span> and <span
+class="math inline">\(U(Q_8)\)</span></h2>
+<p><strong>Punteggio:</strong> 5 points · <strong>Valutazione:</strong>
+Checked instantly</p>
+<p>Two larger cubes: <span class="math inline">\(Q_7\)</span> has <span
+class="math inline">\(128\)</span> vertices and <span
+class="math inline">\(448\)</span> edges, <span
+class="math inline">\(Q_8\)</span> has <span
+class="math inline">\(256\)</span> vertices and <span
+class="math inline">\(1024\)</span> edges. Determine <span
+class="math inline">\(U(Q_7)\)</span> and <span
+class="math inline">\(U(Q_8)\)</span>.</p>
+<h2 id="parte-5-c5-bounds-for-uq_9">Parte 5 (C5) — Bounds for <span
+class="math inline">\(U(Q_9)\)</span></h2>
+<p><strong>Punteggio:</strong> 8 points · <strong>Valutazione:</strong>
+Judged</p>
+<p><span class="math inline">\(Q_9\)</span> has <span
+class="math inline">\(512\)</span> vertices and <span
+class="math inline">\(2304\)</span> edges. The best bounds known to the
+organisers are <span class="math display">\[
+2368 \le U(Q_9) \le 2400;
+\]</span> the lower bound is unpublished. Improve either one: prove that
+<span class="math inline">\(U(Q_9) \ge 2369\)</span>, or exhibit a
+labelling of <span class="math inline">\(Q_9\)</span> with at most <span
+class="math inline">\(2399\)</span> uphill paths.</p>
+<h2 id="parte-6-c6-uq_9">Parte 6 (C6) — <span
+class="math inline">\(U(Q_9)\)</span></h2>
+<p><strong>Punteggio:</strong> 13 points · <strong>Valutazione:</strong>
+Judged · <strong>Open question</strong></p>
+<p>The same cube, settled completely. Determine <span
+class="math inline">\(U(Q_9)\)</span> exactly, with proof of both
+bounds.</p>
+<p><em>(Fine del problema 2. Punteggi: 1+2+3+5+8+13 = 32.)</em></p>
+</body>
+</html>

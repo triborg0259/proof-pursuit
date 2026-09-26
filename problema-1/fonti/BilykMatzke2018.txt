@@ -1,0 +1,791 @@
+ON THE FEJES TÓTH PROBLEM ABOUT THE SUM OF ANGLES
+BETWEEN LINES
+
+arXiv:1801.07837v1 [math.MG] 24 Jan 2018
+
+DMITRIY BILYK AND RYAN W MATZKE
+
+Abstract. In 1959 Fejes Tóth posed a conjecture that the sum of pairwise non-obtuse
+angles between N unit vectors in Sd is maximized by periodically repeated elements of the
+standard orthonormal basis. We obtain new improved upper bounds for this sum, as well as
+for the corresponding energy integral. We also provide several new approaches to the only
+settled case of the conjecture: d = 1.
+
+1. Introduction
+Fejes Tóth has formulated a variety of problems and conjectures about point distributions
+on the sphere. In particular, in 1959 he posed the following question [8]: what is the
+maximal value of the sum of pairwise acute angles defined by N vectors in the sphere Sd ?
+More precisely, determine which N -element point sets Z = {z1 , . . . , zN } ⊂ Sd maximize the
+discrete energy
+(1.1)
+
+E(Z) =
+
+N
+N
+
+1 X
+1 X
+arccos
+|z
+·
+z
+|
+=
+min
+arccos(zi · zj ), π − arccos(zi · zj ) .
+i
+j
+N 2 i,j=1
+N 2 i,j=1
+
+He conjectured that this sum is maximized by the periodically repeated copies of the standard
+orthonormal basis:
+Conjecture 1.1 (Fejes Tóth, 1959 [8]). Let d ≥ 1 and N = m(d + 1) + k with m ∈ N0
+and 0 ≤ k ≤ d. Then the discrete energy (1.1) on the d-dimensional sphere Sd is maximized
+by the point set Z = {z1 , . . . , zN } ⊂ Sd with zp(d+1)+i = ei , where {ei }d+1
+i=1 is the standard
+d+1
+orthonormal basis of R , i.e. Z consists of m + 1 copies of k elements of the orthonormal
+basis of Rd+1 and m copies of the remaining d + 1 − k basis elements. In this case,
+
+π
+k(k − 1)(m + 1)2 + 2km(d + 1 − k)(m + 1) + (d − k)(d + 1 − k)m2 .
+2
+2N
+In particular, if N = m(d + 1), the sum is maximized by m copies of the orthonormal basis:
+E(Z) =
+
+(1.2)
+
+max E(Z) =
+Z⊂Sd
+
+π
+d
+·
+.
+2 d+1
+
+#Z=N
+
+This conjecture has been independently stated in [10] for all d ≥ 1 (Fejes Tóth originally
+formulated it just for S2 ).
+We also formulate a continuous version of the conjecture. Let B(Sd ) denote the set of
+Borel probability measures on the sphere, i.e. µ ≥ 0 and µ(Sd ) = 1, and let F : [−1, 1] → R
+be a (bounded or positive) measurable function. For µ ∈ B(Sd ) we define the energy integral
+1
+
+2
+
+DMITRIY BILYK AND RYAN W MATZKE
+
+of µ with respect to the potential F as
+Z Z
+IF (µ) =
+F (x · y)dµ(x)dµ(y).
+Sd
+
+Sd
+
+In this notation, the discrete energy of a set Z = {z1 , . . . , zN } is
+N
+1 X
+EF (Z) = 2
+F (zi · zj ) = IF
+N i,j=1
+
+N
+
+1 X
+δz
+N k=1 k
+
+!
+.
+
+In our case, F (t) = arccos |t| and we suppress the dependence on F in the subscript, as we
+did in (1.1), i.e.
+Z Z
+I(µ) =
+arccos |x · y| dµ(x)dµ(y)
+Sd
+
+Sd
+
+In accordance to Conjecture 1.1 it is natural to guess that I(µ) should be maximized by the
+measure whose mass is equally distributed between the elements of the orthonormal basis:
+d+1
+1 X
+νON B =
+ei .
+d + 1 i=1
+
+Conjecture 1.2. The energy integral I(µ) is maximized by νON B :
+ π
+d
+(1.3)
+max I(µ) = I νON B = ·
+.
+2 d+1
+µ∈B(Sd )
+Since the maximal value in (1.2) is independent of N , a simple argument based on the
+weak∗ -density of the span of Dirac masses in B(Sd ) shows that the case N = m(d + 1) of
+Conjecture 1.1 implies Conjecture 1.2, and the converse implication is obvious.
+The case d = 1 of Conjecture 1.1 has been settled in [9, 10]. We shall return to this case
+in §4 and shall give several alternative proofs.
+In dimension d = 2, Fejes Tóth confirmed Conjecture 1.1 for N ≤ 6 and established an
+asymptotic upper bound E(Z) ≤ 2π
+for large N . In [9] Fodor, Vı́gh, and Zarnócz proved
+5
+that for any point distribution Z ⊂ S2
+E(Z) ≤
+
+(1.4)
+
+3π
+when N is even,
+8
+
+with a small correction for N odd.
+In the present paper, we prove a new upper bound for I(µ) in all dimensions d ≥ 2, which
+is stronger than (1.4) when restricted to S2 .
+Theorem 1.3. In all dimensions d ≥ 2
+max I(µ) ≤
+
+µ∈B(Sd )
+
+π
+69
+−
+.
+2 50(d + 1)
+
+In particular, for d = 2,
+max2 I(µ) ≤
+
+µ∈B(S )
+
+π
+69
+3π
+−
+= 1.110796... <
+= 1.178097... .
+2 150
+8
+
+ON THE FEJES TÓTH PROBLEM ABOUT THE SUM OF ANGLES BETWEEN LINES
+
+3
+
+We recall that, according to (1.2) and (1.3), the conjectured maximal value in dimension
+d = 2 is π3 = 1.047198... . The proof of Theorem 1.3 is based on bounding the potential
+F (t) = arccos |t| above by a quadratic polynomial and employing the estimates for the
+so-called “frame potential”. It is presented in §2.
+It is worth noting that the energy optimization problem considered here has a distinctly
+different flavor compared to many standard problems of this kind, see e.g. [5]. In the
+vast majority of energy minimization problems, the potential F (t) is maximized at t = 1
+and minimized at t = −1. Such is the case, for example, for the classical Riesz potential
+F (x · y) = kx − yk−s . If one loosely interprets points as “electrons”, and measures as charge
+distributions, this results in the strongest repulsion when the electrons are close to each
+other, and the weakest when they are far away. In this situation one often expects IF (µ)
+to be minimized by σ, the normalized Lebesgue surface measure on Sd – in other words,
+minimizing energy induces uniform distribution.
+In our setting, however, the smallest value of −F (t) is at t = 0, hence the weakest
+repulsion occurs when two electrons are positioned orthogonally to each other (notice that
+we are maximizing, not minimizing the energy). Potentials with such behavior arise in
+various problems, e.g. F (t) = t2 is known as the “frame potential” (see [1] and Lemma
+2.1 below) and F (t) = |t|p as p-frame potential [7]. Possible optimizers for such energies
+naturally include orthonormal bases, other structures which exhibit similar orthogonality
+properties (e.g., frames), or the uniform distribution σ.
+The case of F (t) = arccos(t), rather than F (t) = arccos |t| (i.e. the sum of actual angles,
+rather than the acute line angles), has been studied in [3]: in this situation every symmetric
+measure is a maximizer, with a certain correction in the discrete case for odd N .
+In the present paper, in addition to proving Theorem 1.3, we explore some other issues
+related to this problem. In §3, we observe that the validity of Conjecture 1.2 in some
+dimension d ≥ 2 implies its validity in all lower dimensions, and in §4 we revisit the onedimensional case of Conjectures 1.1 and 1.2 (proved, e.g., in [8], [9]) and provide several
+alternative proofs: two based on orthogonal expansions, and one based on the Stolarsky
+principle in discrepancy theory. We hope that these approaches may shed some light on the
+conjectures in the future.
+
+2. The frame potential and the proof of Theorem 1.3
+Since our approach is based on bounding the potential F (t) = arccos |t| by a quadratic
+function, we first study the behavior of the energy with the potential t2 . We have the
+following lemma.
+Lemma 2.1. For any µ ∈ B(Sd ), we have
+It2 (µ) ≥
+
+(2.1)
+
+1
+.
+d+1
+
+The equality above is achieved precisely for the measures µ whose second moment matrix is
+Z
+d+1
+a multiple of the identity, i.e.
+xi xj dµ(x)
+= c Id+1 .
+Sd
+
+i,j=1
+
+4
+
+DMITRIY BILYK AND RYAN W MATZKE
+
+Proof. We expand the square, throw away off-diagonal terms, and apply the Cauchy–Schwartz
+inequality:
+
+2
+Z Z
+Z
+d+1
+X
+
+It2 (µ) =
+(x · y)2 dµ(x)dµ(y) =
+xi xj dµ(x)
+i,j=1
+
+Sd Sd
+
+≥
+
+d+1
+X
+
+2
+
+
+Z
+
+
+i=1
+
+x2i dµ(x) ≥
+
+Sd
+
+
+
+Sd
+d+1 Z
+X
+
+1 
+d + 1 i=1
+
+2
+x2i dµ(x) =
+
+1
+.
+d+1
+
+Sd
+
+The characterization of minimizers follows immediately from the inequalities above.
+
+
+
+The energy with the potential F (t) = t2 arises naturally in functional analysis and signaI
+processing. In [1], Benedetto and Fickus defined the discrete “frame potential”, which up to
+normalization is equal to Et2 (Z), and proved that for N ≥ d + 1
+Et2 (Z) ≥
+
+(2.2)
+
+1
+d+1
+
+with equality achieved if and only if the set Z = {z1 , . . . , zN } ⊂ Sd forms a so-called tight
+N
+X
+2
+d+1
+|x · zk |2 .
+frame, i.e. for each x ∈ R
+one has an analogue of Parseval’s identity: ckxk =
+k=1
+
+It is easy to see that Lemma 2.1 implies this discrete result (although much more is proved
+in [1], in particular, that every local minimizer is necessarily global). Conversely, since the
+minimum in (2.2) is independent of N , the weak∗ -density of probability measures shows that
+the result of Benedetto and Fickus also implies (2.1). Moreover, inequality (2.1) for arbitrary
+measures µ ∈ B(Sd ) has been stated in [7]. We have included the nice and short proof above
+for the sake of completeness.
+To prove Theorem 1.3, it suffices to demonstrate that the inequality
+arccos |t| ≤
+
+(2.3)
+
+π 69 2
+− t
+2 50
+
+holds for all t ∈ [−1, 1], as then (2.1) would imply that, for all µ ∈ B(Sd ),
+I(µ) ≤
+
+π 69
+π
+69
+− It2 (µ) ≤ −
+.
+2 50
+2 50(d + 1)
+
+A simple calculus exercise shows arccos |t| ≤ π2 − bt2 for all t ∈ [−1, 1] if and only if
+s
+
+√
+√
+2
+2
+π b+ b −1
+b + b − 1
+−
+− arccos 
+≥ 0,
+2
+2
+2b
+and a quick computation shows that for b ≤ 69
+the inequality above indeed holds, finishing
+50
+the proof of Theorem 1.3. In Figure 1 we include the graph, illustrating inequality (2.3). 
+It is easy to see that there is very little room for improvement via this method, and it will
+definitely not yield the Conjecture 1.2.
+
+ON THE FEJES TÓTH PROBLEM ABOUT THE SUM OF ANGLES BETWEEN LINES
+
+5
+
+Figure 1. An illustration to inequality (2.3): the graph of the function
+π 69 2
+t − arccos |t| for 0 ≤ t ≤ 1.
+f (t) = −
+2 50
+3. Dimension reduction argument
+Let F : [−1, 1] → R be a bounded, measurable function that achieves its maximum at 0.
+Let ν ∈ B(Sk ) and λ ∈ B(Sl ), with k + l = d − 1. Construct a measure µ ∈ B(Sd ) as follows:
+e
+(3.1)
+µ = αe
+ν + β λ,
+e are copies of ν and λ, supported on mutually
+where 0 ≤ α, β ≤ 1, α + β = 1, and νe and λ
+d
+orthogonal subspheres of S of dimensions k and l, respectively. It is easy to see that
+(3.2)
+
+IF (µ) = α2 IF (ν) + β 2 IF (λ) + 2αβF (0),
+
+which easily implies that if µ is a maximizer of IF over B(Sd ), then ν and λ maximize IF
+respectively over B(Sk ) and B(Sl ).
+The orthonormal basis measure νON B is precisely of the form (3.1) with ν and λ also
+being orthonormal basis measures in lower dimensions. Therefore, in particular, we have
+just proved that the validity of Conjecture 1.2 on Sd for some dimension d ≥ 2 implies its
+validity on Sk for k < d, i.e. in all lower dimensions.
+Moreover, in our case, for F (t) = arccos |t|, we have F (0) = π2 . Let l = 0 and k = d − 1.
+Then I(λ) = F (1) = 0, and thus (3.2) becomes
+I(µ) = α2 I(ν) + πα(1 − α).
+Optimizing this quadratic polynomial in α we find that for α =
+
+π
+
+2 π − IF (ν)
+
+π2
+.
+4I(µ)
+This discussion leads to the following conclusion.
+I(ν) = π −
+
+Proposition 3.1 (Dimension reduction).
+(1) Denote Md = max{I(µ) : µ ∈ B(Sd )}. Then
+Md−1 ≤ π −
+
+π2
+.
+4Md
+
+πd
+(2) Assume that Conjecture 1.2 holds on Sd , i.e. Md = 2(d+1)
+. Then it also holds on
+d−1
+S , and consequently in all lower dimensions.
+
+6
+
+DMITRIY BILYK AND RYAN W MATZKE
+
+Observe, that part (2) follows both from part (1), and, in a more general setting, from the
+discussion in the beginning of this section. This Proposition implies that, in order to prove
+Conjecture 1.2 in all dimensions d ≥ 2, it is enough to establish its validity for infinitely
+many values of d.
+4. The case of S1 revisited
+We now revisit the case d = 1, in which Conjecture 1.2 (and hence also Conjecture 1.1) has
+been settled. We shall provide several new approaches to this case (two based on orthogonal
+expansions, and one based on connections to discrepancy theory), which we hope may lead
+to future progress in higher dimensions.
+Before we proceed, we observe that on S1
+π
+(4.1)
+I(νON B ) = I(σ) = I(σ4N ) = ,
+4
+4N
+
+1 X
+δ πik/2N is the mea4N k=1 e
+sure with mass equally concentrated at 4N equally spaced points. Hence, to prove Conjecture
+1.2 it suffices to prove that any of these measures is a maximizer.
+dθ
+where σ is the normalized uniform measure dσ = 2π
+, and σ4N =
+
+4.1. Chebyshev polynomial expansion. It is well known (see, e.g., [2, Proposition 2.1])
+that σ is a maximizer of the energy integral IF on S1 if and only if F is a negative definite
+function on S1 (up to the constant term), which is equivalent to the fact that in the orthogonal
+∞
+X
+expansion of F into Chebyshev polynomials, F (t) ∼
+Fen Tn (t), the coefficients of all nonn=0
+
+constant terms are non-positive, i.e.
+Fen ≤ 0 for n ≥ 1.
+Here Tn is the nth Chebyshev polynomial of the first kind, that is
+(4.2)
+
+Tn (t) = cos(n arccos(t)).
+
+A straightforward, but technical computation (which we omit) shows that for F (t) = arccos |t|,
+
+π
+
+if n = 0,
+Z 1
+4,
+1
+1
+2
+−
+−4
+F (t)Tn (t)(1 − t ) 2 dt = πn2 , if n ≡ 2 mod 4,
+(4.3)
+Fen =
+
+π −1
+0,
+otherwise.
+Therefore, σ maximizes IF on S1 , which together with (4.1) implies Conjecture 1.2.
+4.2. Fourier series. Our second orthogonal expansion is a Fourier series. Every point in
+S1 can be defined by its angle, so with a slight abuse of notation we can rewrite our energy
+integral as
+Z Z
+Z Z
+IF (µ) =
+F (cos(θ − φ))dµ(θ)dµ(φ) =
+G(θ − φ)dµ(θ)dµ(φ).
+T
+
+T
+
+T
+
+T
+
+Let G(θ) = F (cos(θ)) be an even function. Then for ν ∈ B(Sd ) defined by dν(θ) = dµ(θ)+dµ(−θ)
+2
+for all θ ∈ T, we have IF (µ) = IF (ν). Thus, for the rest of this section, we may assume
+
+ON THE FEJES TÓTH PROBLEM ABOUT THE SUM OF ANGLES BETWEEN LINES
+
+7
+
+that µ is an even measure. As long as the Fourier series of G, which is a cosine series
+∞
+X
+b
+G(θ) ∼
+G(n)
+cos nθ, converges absolutely, we can use it to compute the energy:
+n=0
+
+IF (µ) =
+=
+
+∞
+X
+n=0
+∞
+X
+
+Z Z
+cos(n(θ − φ)) dµ(θ)dµ(φ)
+
+b
+G(n)
+T
+
+T
+
+Z Z 
+b
+G(n)
+T
+
+n=0
+
+
+cos(nθ) cos(nφ) + sin(nθ) sin(nφ) dµ(θ)dµ(φ).
+
+T
+
+Since µ is an even measure, the sines do not contribute to the integral, and we have
+Z
+2
+∞
+X
+X
+b
+b
+b
+(4.4)
+IF (µ) =
+G(n)
+cos(nθ)dµ(θ) ≤ G(0)
++
+G(n)
+n=0
+
+T
+
+b
+n≥1: G(n)≥0
+
+Z
+cos(nθ)dµ(θ) = 0 for each value of n ≥ 1 for
+The equality above is achieved if and only if
+T
+Z
+b
+b
+cos(nθ)dµ(θ) = 1 for each value of n ≥ 1 such that G(n)
+> 0.
+which G(n)
+< 0 and
+T
+
+Lemma 4.1. Let G be even and have absolutely convergent Fourier (cosine) series and let
+σN be the probability measure generated by point masses at N equally spaced points
+N −1
+
+1 X
+δ2πk/N .
+σN =
+N k=0
+b
+b
+Assume that for all n ≥ 1 we have G(n)
+≥ 0 if n is a multiple of N , and G(n)
+≤ 0 otherwise.
+Then the measure σN maximizes IF over all probability measures on T.
+The proof easily follows from the discussion above and the fact that
+(
+Z
+N −1
+1 X
+2πnk
+1, if n is a multiple of N ,
+cos(nθ)dσN (θ) =
+cos
+=
+N k=0
+N
+0, otherwise.
+T
+b
+Remark: the conditions on G(n)
+in Lemma 4.1 become also necessary, if we assume that σN
+maximizes IF over all signed (not just non-negative) measures of total mass one. This can
+be proved by considering signed measures of the form dµ = dσ − cos nθ dσ.
+Returning to our specific case, G(θ) = F (cos(θ)) = min{|θ|, π − |θ|}, we observe that
+b
+according to definition (4.2) and relation (4.3), we have G(n)
+= Fen = − πn4 2 whenever
+b
+n ≡ 2 mod 4, and G(n)
+= 0 for all other values
+ of n ≥ 1. Therefore, Lemma 4.1 with
+N = 4 applies and σ4 = 41 δ0 + δ π2 + δπ + δ 3π maximizes IF . Symmetry implies that
+2
+
+νON B = 12 δ0 + δ π2 is also a maximizer, i.e. Conjecture 1.2 holds on S1 .
+b
+Notice that alternatively, since G(n)
+≤ 0 for all n ≥ 1, one could deduce from (4.4) that
+b
+IF (µ) ≤ G(0) = IF (σ). Therefore σ is a maximizer of the energy integral IF , and, due to
+(4.1), so is νON B , leading to another proof of Conjecture 1.2 (almost identical to §4.1). We,
+however, wanted to introduce Lemma 4.1 into play.
+
+8
+
+DMITRIY BILYK AND RYAN W MATZKE
+
+4.3. Stolarsky principle. Finally, our last approach is based on an intriguing connection
+between energy optimization and discrepancy. The classical Stolarsky invariance principle
+[11] relates the L2 spherical cap discrepancy to a certain discrete energy (sum of pairwise
+Euclidean distances, i.e. F (x · y) = kx − yk). Some generalizations of this principle were
+obtained in [2, 3]. Moreover, in [3] a version of this principle has been used to characterize
+the extremizers of the energy integral and discrete energy with the potential F (t) = arccos t
+(i.e. F (x · y) represents the angle or the geodesic distance between x and y ∈ Sd ). We
+shall apply this idea to our problem – the main task is to find an appropriate version of L2
+discrepancy.
+√
+For x ∈ S1 , define the antipodal quadrants in the direction of x as Q(x) = {y : |x·y| > 22 },
+i.e. Q(x) is a union of two symmetric quartercircle arcs with midpoints at x and −x. Observe
+that the size of the intersection of two such sets depends linearly on the acute angle between
+their directions:
+ 1 1
+(4.5)
+σ Q(y) ∩ Q(z) = − arccos |y · z|.
+2 π
+2
+We define the L discrepancy of a point set Z = {z1 , ..., zN } ⊂ S1 with respect to these
+antipodal quadrants as the quadratic average of the difference between the empirical measure
+#{Q(x)∩Z}
+and the uniform measure σ Q(x) = 21 .
+N
+2
+
+(4.6)
+
+DL2 2 ,quad (Z) =
+
+N
+
+1 X
+1Q(x) (zi ) − σ Q(x) dσ(x).
+S1 N i=1
+
+Z
+
+More generally, for a measure µ ∈ B(S1 ) we can define its discrepancy as
+Z
+
+2
+2
+(4.7)
+DL2 ,quad (µ) =
+µ Q(x) − σ Q(x) dσ(x),
+S1
+
+P
+1
+
+i.e. DL2 2 ,quad (Z) = DL2 2 ,quad N
+
+
+
+δzi . The following version of the Stolarsky principle holds:
+
+Lemma 4.2 (Stolarsky principle for quadrants). For any measure µ ∈ B(S1 ) we have
+ 1 1
+1
+(4.8)
+DL2 2 ,quad (µ) =
+I(σ) − I(µ) = − I(µ).
+π
+4 π
+In particular, for a discrete point set Z = {z1 , ..., zN } ⊂ S1
+DL2 2 ,quad (Z) =
+
+(4.9)
+
+1 1
+− E(Z).
+4 π
+
+Proof. We use relations (4.7) and (4.5) to obtain
+Z Z Z
+Z Z
+1
+2
+DL2 ,quad (µ) =
+1Q(x) (y) · 1Q(x) (z) dσ(x) dµ(y) dµ(z) −
+1Q(x) (y)dσ(x) dµ(y) +
+4
+S1 S1 S1
+S1 S1
+Z Z
+Z Z
+ 1
+1 1
+=
+σ Q(y) ∩ Q(z) − = −
+arccos |y · z| dµ(y) dµ(z),
+4
+4 π
+S1 S1
+
+which proves (4.8).
+
+S1 S1
+
+
+
+Remark: discrepancy with respect to similar sets, but with arbitrary apertures, (“wedges”)
+on Sd arose in [4] in connection to sphere tessellations and one-bit sensing, which led to a
+
+ON THE FEJES TÓTH PROBLEM ABOUT THE SUM OF ANGLES BETWEEN LINES
+
+9
+
+Stolarsky principle involving energies with the potential F (t) = (arcsin t)2 .
+Our Stolarsky principle (4.8) proves that I(µ) ≤ π4 and σ maximizes this energy, and by
+(4.1) so does νON B proving Conjecture 1.2. In the discrete case, (4.9) shows that E(Z) ≤ π4
+2
+for odd N . It also allows one to characterize the maximizers
+for even N and E(Z) ≤ π4 · NN−1
+2
+of E(Z) and prove Conjecture 1.1: (4.9) implies that maximizing E(Z) is equivalent to minimizing the discrepancy DL2 2 ,quad (Z). It is easy to see from (4.6) that this happens exactly
+when the following holds: for σ-almost every x ∈ Sd the difference between the number of
+c
+points of Z in Q(x) and in its complement Q(x) is zero (when N is even) or ±1 (when
+N is odd). Equivalently, this should hold for any x such that the boundary of Q(x) doesn’t
+intersect Z, which recovers the characterization in [9]. The extremizing configurations in
+Conjecture 1.1 obviously satisfy this condition.
+Unfortunately, none of these approaches immediately extends to higher dimensions: for
+d ≥ 2 the function F (t) = arccos |t| is not negative definite, (4.1) fails, and absence of analogues of (4.5) prevents one from obtaining a Stolarsky principle. However, we hope that
+some of these ideas with additional ingredients may bring progress on the conjectures in the
+future.
+Acknowledgment. This work is supported by the NSF grant DMS 1665007 (Bilyk) and
+the NSF Graduate Research Fellowship 00039202 (Matzke).
+References
+1. J.J. Benedetto, M. Fickus, Finite Normalized Tight Frames. Adv. Comput. Math., 18 (2003), no. 2-4,
+357–385.
+2. D. Bilyk, F. Dai, Geodesic Riesz Energy on the Sphere (2017), arXiv:1612.08442.
+3. D. Bilyk, F. Dai, R. Matzke, Stolarsky Principle and Energy Optimization on the Sphere, Constructive
+Approx. (2018) (published online).
+4. D. Bilyk, M. Lacey, One-bit sensing, discrepancy, and Stolarsky’s principle, Sbornik Math., 2017, 208
+(6), 744–763
+5. S. Borodachov, D. Hardin, E. Saff, Minimal Discrete Energy on Rectifiable Sets, Springer, Monographs
+in Math. (to appear).
+6. F. Dai, Y. Xu, Approximation Theory and Harmonic Analysis on Spheres and Balls, Springer Monographs in Mathematics, Springer, 2013.
+7. M. Ehler, K.A. Okoudjou, Minimization of the probabilistic p-frame potential. J. Stat. Plan. Inference
+142 (3), (2012), 645–659.
+8. L. Fejes Tóth, Über eine Punktverteilung auf der Kuge, Acta Math. Acad. Sci. Hungar 10 (1959), 13–19
+(in German).
+9. F. Fodor, V. Vı́gh, and T. Zarnócz, On the angle sum of line, Arch. Math 106 (2016), 91–100.
+10. F. Petrov (https://mathoverflow.net/users/4312/fedor-petrov), maximum sum of angles between n lines,
+URL (version: 2014-07-09): https://mathoverflow.net/q/173712 .
+11. K. B. Stolarsky. Sums of distances between points on a sphere. II. Proc. Amer. Math. Soc. 41, (1973)
+575–582.
+School of Mathematics, University of Minnesota, Minneapolis, MN 55408, USA.
+E-mail address: dbilyk@math.umn.edu, matzk053@umn.edu
+
+
