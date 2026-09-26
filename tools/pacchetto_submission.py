@@ -113,9 +113,9 @@ def argument(pid, n, k):
     testo = base + "\n\n## 6. How this result was obtained (multi-agent trace)\n" \
         "Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:\n" \
         + "\n".join(decisioni_md(r) for r in runs) + "\n\n## 6b. Tokens used by the agents\n" + "\n".join(token_md(r) for r in runs) + "\n\n## 7. arXiv literature consulted\n" + fonti_md(n, pid) \
-        + "\n\n## 8. Code\n" + ("\n".join(codice_md(r) for r in runs) or "See the certificates listed in section 3.") \
+        + f"\n\n## 8. Code\nThe complete code, with the orchestrator's trusted re-runs, is in the write-up {REPO}report/cells/{pid}_c{k}.tex and in the repository.\n" \
         + f"\n\n---\nFull write-up (LaTeX, all resources): {REPO}report/cells/{pid}_c{k}.tex · Repository: {REPO}\n"
-    (sub / f"parte-{k}.argument.md").write_text(normalizza_math(testo), encoding="utf-8")
+    (sub / f"parte-{k}.argument.md").write_text(pulisci_markdown(normalizza_math(testo)), encoding="utf-8")
     return testo
 
 
