@@ -41,7 +41,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | Parte | Richiesta | Stato | Evidenza |
 |---|---|---|---|
 | 1 | Cicliche e numero di cicli, prove (1 pt) | revisionato | loop p3_c1 attempt_002: Referee READY_FOR_HUMAN (A PASS, B PASS); approvata da Thomas Tumini (human); submission/parte-1.en.md |
-| 2 | $D_B(T_k)$ esatto (2 pt) | parziale |atteso $k^2-k$ (Igusa/Etienne, da verificare); bozza parziale in inglese in submission/ (parziali.py) |
+| 2 | $D_B(T_k)$ esatto (2 pt) | parziale | loop p3_c2: bound inferiore dimostrato con estremale esplicita (lemma di moto delle celle), verifica esaustiva k≤9; bound superiore NON dimostrato (Referee REJECT sul tutto, lemma accettato); consegna parziale in inglese |
 | 3 | Bound $k^2-2k-1$ e $D_B(T_k-1)$ (3 pt) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
 | 4 | $D_B(T_{k-1}+1)$ (5 pt) | parziale | bozza parziale in inglese in submission/ (parziali.py) |
 | 5 | $D_B(T_{k-1}+2)$ (8 pt) | parziale | bozza parziale in inglese in submission/ (parziali.py) |

@@ -1,0 +1,317 @@
+{
+ "job": {
+  "problem_id": "p3_c2",
+  "original_problem": "# Problema 3 — Bulgarian solitaire\n\n*(Enunciato formattato in LaTeX, contenuto fedele all'originale; ricevuto il 2026-09-26.)*\n\n## Preambolo\n\n**Bulgarian solitaire.** Repeatedly take one card from every pile and form a new pile. How many moves can it\ntake before the piles start to cycle?\n\nA partition of a positive integer $n$ is a weakly decreasing sequence $\\lambda = (\\lambda_1, \\ldots, \\lambda_s)$\nof positive integers with $\\lambda_1 + \\cdots + \\lambda_s = n$. Think of it as a division of $n$ cards into\n$s$ piles.\n\nThe shift $B(\\lambda)$ is the partition of $n$ obtained as follows: remove one card from every pile, discard the\npiles that become empty, and add one new pile consisting of the $s$ removed cards. Formally, $B(\\lambda)$ is the\npartition whose parts are the positive numbers among $\\lambda_1 - 1, \\ldots, \\lambda_s - 1$ together with one\nextra part equal to $s$.\n\nIterating $B$ from any starting partition must eventually repeat, since there are finitely many partitions of\n$n$. Call $\\lambda$ *cyclic* if $B^i(\\lambda) = \\lambda$ for some $i \\ge 1$, and let\n$$\nd_B(\\lambda) = \\min\\{\\, i \\ge 0 : B^i(\\lambda) \\text{ is cyclic} \\,\\}, \\qquad\nD_B(n) = \\max\\{\\, d_B(\\lambda) : \\lambda \\text{ is a partition of } n \\,\\}.\n$$\nSo $D_B(n)$ is the largest number of shifts that can be needed before the process starts to cycle.\n\nWrite $T_k = k(k+1)/2$ and $\\delta_k = (k, k-1, \\ldots, 2, 1)$, the partition of $T_k$ into distinct parts.\nEvery $n \\ge 1$ satisfies $T_{k-1} < n \\le T_k$ for exactly one $k$, which we call the *rank* of $n$.\n\nExamples: $B((2,1,1,1,1)) = (5,1)$; $B((5,1)) = (4,2)$; $B((4,2)) = (3,2,1)$; $B((3,2,1)) = (3,2,1)$.\nHere $d_B((2,1,1,1,1)) = 3$.\n\n**What to hand in.** For each cell you attempt, hand in a written proof. You may use a computer to explore.\nA proof may rely on a computation only if you include the code, it runs in under 10 minutes on a laptop, and\nthe computation is exhaustive over a finite set that your argument has reduced the problem to. Where a cell asks\nyou to determine a quantity, give the exact value as a formula in $k$ and prove both bounds; state any partitions\nyou use explicitly as functions of $k$. Say clearly which cells you consider solved and which are partial.\n\nCiting a published result for the statement you are asked to prove does not count as a solution; a proof\nwritten out in full does, whatever its source.\n\n## Parte 1 (C1) — Cyclic partitions and cycles\n\n**Punteggio:** 1 point · **Valutazione:** Judged\n\nFirst, the long-run behaviour: which partitions repeat under the shift, and how they fall into cycles.\nLet $n = T_k$. Prove that for every partition $\\lambda$ of $n$ there is an $i$ with $B^i(\\lambda) = \\delta_k$,\nand that $\\delta_k$ is the only cyclic partition of $n$. Then let $n$ be arbitrary of rank $k$, say\n$n = T_{k-1} + r$ with $1 \\le r \\le k$: determine all cyclic partitions of $n$, and determine the number of\ndistinct cycles of $B$ on the partitions of $n$. Prove both.\n\n## Parte 2 (C2) — $D_B$ at triangular $n$\n\n**Punteggio:** 2 points · **Valutazione:** Judged\n\nNext, how long the process can take to reach a cycle, starting with the triangular numbers.\nDetermine $D_B(T_k)$ for every $k$, with proof of both bounds.\n\n## Parte 3 (C3) — A general upper bound\n\n**Punteggio:** 3 points · **Valutazione:** Judged\n\nNow the numbers strictly between two consecutive triangular numbers. Prove that for every $k \\ge 4$ and every\nnon-triangular $n$ with $T_{k-1} < n < T_k$,\n$$\nD_B(n) \\le k^2 - 2k - 1,\n$$\nand determine $D_B(T_k - 1)$ exactly. Determine also, for that $n$, which partitions attain the maximum.\n\n## Parte 4 (C4) — One above a triangular number\n\n**Punteggio:** 5 points · **Valutazione:** Judged\n\nThe first family just above a triangular number: $n = T_{k-1} + 1$, that is $n = 11, 16, 22, 29, \\ldots$ for\n$k = 5, 6, 7, 8, \\ldots$. Determine $D_B(T_{k-1} + 1)$ for every $k \\ge 5$, with proof of both bounds.\n\n## Parte 5 (C5) — Two above a triangular number\n\n**Punteggio:** 8 points · **Valutazione:** Judged\n\nThe next family: $n = T_{k-1} + 2$, that is $n = 3, 5, 8, 12, 17, 23, \\ldots$ for $k = 2, 3, 4, 5, 6, 7, \\ldots$.\nDetermine $D_B(T_{k-1} + 2)$ for every $k$, with proof of both bounds. State exactly for which $k$ your formula\nholds, and give the remaining values separately. Your upper bound must be a single argument valid for all $k$ in\nthat range, not a separate treatment of each $k$, and you must give the extremal partitions explicitly as a\nfunction of $k$.\n\nSay also where the straightforward extension of the C3 argument stops: give the bound it does yield, show it is\nstrictly weaker than the truth, and identify precisely what your proof supplies in its place.\n\n## Parte 6 (C6) — $D_B(n)$ for every $n$\n\n**Punteggio:** 13 points · **Valutazione:** Judged · **Open question**\n\nFinally, the whole function $n \\mapsto D_B(n)$. Determine $D_B(n)$ for every $n$.\n\n*(Fine del problema 3. Punteggi: 1+2+3+5+8+13 = 32.)*\n\n\n# TARGET CELL 2\nDetermine D_B(T_k) for every k, with proof of both bounds (exact value as a formula in k).\n",
+  "cell": {
+   "id": "cell_2",
+   "number": 2,
+   "target_claim_id": "main",
+   "statement": "Determine D_B(T_k) for every k, with proof of both bounds (exact value as a formula in k)."
+  },
+  "state": {
+   "highest_verified_cell": 0,
+   "claims": []
+  },
+  "candidate": {
+   "attempt_id": "attempt_001",
+   "proof": "## Conventions\n\nDraw a partition $\\lambda=(\\lambda_1\\ge\\dots\\ge\\lambda_s)$ as a diagram whose **column** $i$ ($1\\le i\\le s$) consists of the cells $(i,h)$, $1\\le h\\le \\lambda_i$ ($h$ = height). The *diagonal* of a cell is $d(i,h)=i+h-1$. Diagonal $d$ contains the $d$ *slots* $(p,\\,d+1-p)$, $p=1,\\dots,d$; a set of cells is the diagram of a partition iff the column heights are weakly decreasing. $\\delta_k$ is the diagram whose diagonals $1,\\dots,k$ are full and all others empty. Throughout $n=T_k$.\n\n## Lemma 1 (exact cell rule for $B$)\n\nLet $\\lambda$ have $s$ columns. Then $B(\\lambda)$ is the diagram obtained from $\\lambda$ by moving every cell as follows:\n\n1. $(i,1)\\mapsto(1,i)$ for $1\\le i\\le s$;\n2. $(i,h)\\mapsto(i+1,h-1)$ if $2\\le h\\le s+1$;\n3. $(i,h)\\mapsto(i,h-1)$ if $h\\ge s+2$.\n\nIn particular cells of type 1–2 stay on their diagonal (slot $p\\mapsto p+1$, and slot $d\\mapsto 1$: a cyclic rotation of the diagonal), while cells of type 3 move from diagonal $d$ to diagonal $d-1$ (same column).\n\n*Proof.* By definition the columns of $B(\\lambda)$ are the multiset $\\{s\\}\\cup\\{\\lambda_i-1:\\lambda_i\\ge 2\\}$. Consider first the \"unsorted\" diagram $U$: column 1 of height $s$, column $i+1$ of height $\\lambda_i-1$ ($1\\le i\\le s$). Rules 1 and 2 applied to all cells with $h\\le s+1$ produce exactly the cells of $U$ of height $\\le s+1$ (the new column, and the old columns shifted right and lowered), and rule 2 without the restriction $h\\le s+1$ would produce all of $U$. Let $q=\\#\\{i:\\lambda_i-1\\ge s+1\\}=\\#\\{i:\\lambda_i\\ge s+2\\}$; because $\\lambda$ is sorted, these are $i=1,\\dots,q$, so in $U$ exactly the columns $2,\\dots,q+1$ have height $>s+1$ (column 1 has height $s$, columns $i+1$ with $i>q$ have height $\\le s$). Now compare $U$ with the diagram $V$ obtained from $U$ by moving every cell of height $\\ge s+1$ in columns $2,\\dots,q+1$ one column to the left. Column heights of $V$: column 1 has the $s$ cells of the new column plus the cells of heights $s+1,\\dots,\\lambda_1-1$ received from column 2, hence height $\\lambda_1-1$; column $i$ for $2\\le i\\le q$ keeps heights $1,\\dots,s$ (from old column $i-1$, whose height $\\lambda_{i-1}-1\\ge s+1$), loses heights $s+1,\\dots,\\lambda_{i-1}-1$ and receives heights $s+1,\\dots,\\lambda_i-1$ from column $i+1$, hence height $\\lambda_i-1$; column $q+1$ keeps heights $1,\\dots,s$ and loses the rest, hence height $s$; columns $i+1>q+1$ are unchanged with height $\\lambda_i-1\\le s$. So the columns of $V$ are $\\lambda_1-1\\ge\\dots\\ge\\lambda_q-1\\ge s\\ge \\lambda_{q+1}-1\\ge\\dots$, i.e. $V$ is the sorted diagram of $B(\\lambda)$ (columns of height 0 at the end are discarded). Finally, the cells moved in passing from $U$ to $V$ are exactly the images under rule 2 of the cells $(i,h)$ of $\\lambda$ with $h-1\\ge s+1$, i.e. $h\\ge s+2$; composing \"$(i,h)\\mapsto(i+1,h-1)$ then one column left\" gives rule 3. $\\square$\n\n## Lemma 2 (convergence to $\\delta_k$; used only for context, not for the bound)\n\nLet $W(\\lambda)=\\sum_{\\text{cells}} d(i,h)$. By Lemma 1, $W(B(\\lambda))=W(\\lambda)-\\#\\{(i,h)\\in\\lambda: h\\ge s+2\\}\\le W(\\lambda)$. Since diagonal $d$ has only $d$ slots, among all sets of $T_k$ cells with at most $d$ cells on diagonal $d$ the minimum of $W$ is attained only by $\\delta_k$ (fill diagonals $1,\\dots,k$); hence $W(\\lambda)\\ge W(\\delta_k)$ with equality iff $\\lambda=\\delta_k$. (Combined with the fact that a partition $\\ne\\delta_k$ of $T_k$ cannot be periodic with all steps of cost 0 — which is C1 material and not needed below — this gives convergence; we do not use it.)\n\n## Theorem A (lower bound). For every $k\\ge1$, $D_B(T_k)\\ge k^2-k$, attained by\n$$\\gamma_k=(k-1,\\,k-1,\\,k-2,\\,k-3,\\dots,2,\\,1,\\,1)\\quad(k\\ge2),\\qquad \\gamma_1=(1).$$\n($\\gamma_k$ is $\\delta_k$ with the part $k$ replaced by the two parts $k-1$ and $1$; $|\\gamma_k|=T_k$.)\n\n*Proof.* For $k=1$ the only partition is $\\delta_1$ and $D_B(1)=0=k^2-k$. Let $k\\ge2$. For $p_H\\in\\{1,\\dots,k\\}$ and $p_X\\in\\{1,\\dots,k+1\\}$ let $S(p_H,p_X)$ be the set of cells of $\\delta_k$ with the cell $(p_H,\\,k+1-p_H)$ removed (a *hole* in slot $p_H$ of diagonal $k$) and the cell $(p_X,\\,k+2-p_X)$ added (an *extra cell* in slot $p_X$ of diagonal $k+1$). Its column heights are $k+1-p$ for $p\\notin\\{p_H,p_X\\}$, $k-p_H$ for $p=p_H$, $k+2-p_X$ for $p=p_X$ (and column $k+1$ exists iff $p_X=k+1$). It is a partition diagram iff $p_X\\ne p_H$ and $p_X\\ne p_H+1$ (if $p_X=p_H$ the cell $(p_H,k+2-p_H)$ would sit above a missing cell; if $p_X=p_H+1$ column $p_X$ would be taller than column $p_H$; otherwise the heights are weakly decreasing because column $p_X$ has the same height as column $p_X-1$ and column $p_H$ has the same height as column $p_H+1$). Note $\\gamma_k=S(1,k+1)$: columns $k-1,k-1,k-2,\\dots,2,1,1$.\n\nNumber of columns of $S(p_H,p_X)$: $s=k+1$ if $p_X=k+1$; $s=k-1$ if $p_H=k$ (then $p_X\\le k$); $s=k$ otherwise. Heights: every column has height $\\le k$ except column $p_X$, of height $k+2-p_X\\le k+1$, with equality iff $p_X=1$. Hence a cell of height $\\ge s+2$ exists only when $s=k-1$ and $p_X=1$, i.e. only in $S(k,1)$, and then it is the single cell $(1,k+1)$.\n\n*Case $S(k,1)$.* By Lemma 1 with $s=k-1$: the bottom row $(i,1)$, $i\\le k-1$, becomes column 1 with heights $1,\\dots,k-1$; the cells $(i,h)$ with $2\\le h\\le k$ (all remaining cells of $\\delta_k$ minus the hole, since the hole is $(k,1)$ and column $k$ is empty) go to $(i+1,h-1)$, giving columns $2,\\dots,k$ of heights $k-1,\\dots,1$; the cell $(1,k+1)$ drops to $(1,k)$, completing column 1 to height $k$. So $B(S(k,1))=\\delta_k$.\n\n*Other cases.* No cell has height $\\ge s+2$, so by Lemma 1 every cell rotates one slot along its diagonal; the same is true of the empty slot (hole) on diagonal $k$, because the cells of diagonal $k$ permute cyclically among its slots. Hence $B(S(p_H,p_X))=S(p_H',p_X')$ with $p_H'\\equiv p_H+1\\pmod k$, $p_X'\\equiv p_X+1\\pmod{k+1}$ (representatives in $\\{1..k\\}$, $\\{1..k+1\\}$). (Lemma 1 guarantees the result is a partition diagram, so the validity condition is automatically preserved.)\n\nTherefore, starting from $\\gamma_k=S(1,k+1)$, as long as no step has hit $S(k,1)$ we have $B^t(\\gamma_k)=S(p_H(t),p_X(t))$ with $p_H(t)\\equiv 1+t\\pmod k$, $p_X(t)\\equiv k+1+t\\equiv t\\pmod{k+1}$. None of these equals $\\delta_k$ (they have a hole). The first $t\\ge0$ with $S(p_H(t),p_X(t))=S(k,1)$ satisfies $t\\equiv k-1\\pmod k$ and $t\\equiv1\\pmod{k+1}$. Writing $t=k-1+ak$: $k-1+ak\\equiv -2-a\\equiv 1\\pmod{k+1}$, so $a\\equiv-3\\equiv k-2\\pmod{k+1}$, and the least $a\\ge0$ is $a=k-2$ (valid since $k\\ge2$). Thus $t_0=k-1+(k-2)k=k^2-k-1$, $B^{t}(\\gamma_k)\\ne\\delta_k$ for $0\\le t\\le k^2-k-1$, and $B^{k^2-k}(\\gamma_k)=B(S(k,1))=\\delta_k$. Since $\\delta_k$ is a fixed point and (by Lemma 2, or by C1) it is the only cyclic partition of $T_k$, $d_B(\\gamma_k)=k^2-k$. $\\square$\n\n(Consistency check with the statement's example and data: $\\gamma_3=(2,2,1,1)$, $d_B=6$; the exhaustive computation below gives $D_B(T_k)=k^2-k$ and confirms $\\gamma_k$ among the extremals for $k\\le9$.)\n\n## Theorem B (upper bound) — NOT PROVED HERE\n\nClaim: $d_B(\\lambda)\\le k^2-k$ for every partition $\\lambda$ of $T_k$. This is the theorem of Igusa (1985) / Etienne (1991) (CITED, proof not reproduced). What is established:\n\n* **Exhaustive verification for $k\\le9$** (exact integer arithmetic, all $p(T_k)$ partitions, 0.5 s total): $D_B(T_k)=k^2-k$ for $k=1,\\dots,9$. This proves the cell's statement only for $k\\le 9$.\n* Structural facts from Lemma 1 available for the next attempt: (i) $W$ strictly decreases exactly at steps where some pile has size $\\ge s+2$, and $\\gamma_k$ has $W(\\gamma_k)-W(\\delta_k)=1$, so the difficulty is bounding runs of \"free\" steps, not the number of costly steps; (ii) empirically (exhaustive, $k\\le8$) the number of piles lies in $\\{k-1,k,k+1\\}$ for all $t\\ge T_{k-1}-(k-2)$, which suggests the strategy: bound the time until the configuration becomes \"near-staircase\", then analyse the near-staircase dynamics as in Theorem A.\n\n## Conclusion of this attempt\n\n$D_B(T_k)\\ge k^2-k$ for all $k\\ge1$ (Theorem A, complete), with explicit extremal $\\gamma_k$; $D_B(T_k)=k^2-k$ for $k\\le9$ by exhaustive computation; the general inequality $D_B(T_k)\\le k^2-k$ remains to be proved.",
+   "method_tag": "direct_proof",
+   "claims": [
+    {
+     "id": "main",
+     "statement": "Determine D_B(T_k) for every k, with proof of both bounds (exact value as a formula in k).",
+     "depends_on": []
+    }
+   ],
+   "sources": [
+    {
+     "id": "src_1",
+     "reference": "B. Hopkins, 30 Years of Bulgarian Solitaire, College Math. J. 43 (2012) 135–140 (read in full; p.137 statement that Igusa proved γ_k=(k−1,k−1,k−2,…,2,1,1) is at maximal distance k(k−1)) — CITED for context only",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_2",
+     "reference": "K. Igusa, Solution of the Bulgarian solitaire conjecture, Math. Mag. 58 (1985) 259–271 — NOT read (paywalled); statement cited via Hopkins/Drensky",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_3",
+     "reference": "G. Etienne, Tableaux de Young et solitaire bulgare, J. Combin. Theory Ser. A 58 (1991) 181–197 — NOT read",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_4",
+     "reference": "J. R. Griggs, C.-C. Ho, The cycling of partitions and compositions under repeated shifts, Adv. Appl. Math. 21 (1998) 205–227 — NOT read",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_5",
+     "reference": "arXiv:1503.00885 (Drensky) and arXiv:2607.17194 (Meštrović) — read; both only cite Igusa/Etienne for the k(k−1) bound and name Toom's extremal τ=γ_k",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    },
+    {
+     "id": "src_6",
+     "reference": "M. Jonsson, Processes on Integer Partitions and Their Limit Shapes, PhD thesis, Mälardalen Univ. 2017 (DiVA diva2:1082060) — read the relevant pages; cites Etienne for the game-tree height k^2−k",
+     "claim_ids": [
+      "main"
+     ],
+     "submitted_excerpt": ""
+    }
+   ],
+   "artifacts": [
+    {
+     "id": "code_1",
+     "kind": "CODE",
+     "content": "# Exhaustive exact computation of D_B(T_k) and of all extremal partitions for k ≤ 9 (all partitions of T_k, orbit followed to δ_k). Finite set covered: every partition of T_k for k=1..9 (up to 89134 partitions). Wall-clock 0.48 s. Confirms D_B(T_k)=k^2−k for k≤9; does not prove the general upper bound.\n# rigor: exact\n\"\"\"Calcolo esatto di D_B(T_k) per k piccoli (esplorazione, aritmetica intera esatta).\n\nEnumera tutte le partizioni di n = T_k, applica lo shift B fino a raggiungere\ndelta_k (unico punto fisso per n triangolare: verifichiamo anche questo)\ne registra la distanza massima e le partizioni che la raggiungono.\n\"\"\"\nimport sys\n\n\ndef shift(parti):\n    \"\"\"Applica lo shift B: togli 1 da ogni parte, aggiungi la parte s.\"\"\"\n    s = len(parti)\n    nuove = [p - 1 for p in parti if p > 1] + [s]\n    return tuple(sorted(nuove, reverse=True))\n\n\ndef partizioni(n, massimo=None):\n    \"\"\"Genera tutte le partizioni di n con parti <= massimo (ordine decrescente).\"\"\"\n    if massimo is None:\n        massimo = n\n    if n == 0:\n        yield ()\n        return\n    for prima in range(min(n, massimo), 0, -1):\n        for resto in partizioni(n - prima, prima):\n            yield (prima,) + resto\n\n\ndef distanze_al_punto_fisso(n, punto_fisso):\n    \"\"\"Restituisce dict partizione -> numero di shift per arrivare al punto fisso.\n\n    Usa memoizzazione lungo le orbite; presuppone che ogni orbita finisca in punto_fisso\n    (lo verifichiamo con un controllo di sicurezza sul numero di passi).\n    \"\"\"\n    dist = {punto_fisso: 0}\n    for lam in partizioni(n):\n        cammino = []\n        cur = lam\n        while cur not in dist:\n            cammino.append(cur)\n            cur = shift(cur)\n            assert len(cammino) <= 10 * n * n, \"orbita troppo lunga: non converge?\"\n        base = dist[cur]\n        for i, p in enumerate(reversed(cammino)):\n            dist[p] = base + i + 1\n    return dist\n\n\ndef main(k_max):\n    for k in range(1, k_max + 1):\n        n = k * (k + 1) // 2\n        delta = tuple(range(k, 0, -1))\n        dist = distanze_al_punto_fisso(n, delta)\n        D = max(dist.values())\n        estremali = sorted(p for p, d in dist.items() if d == D)\n        print(f\"k={k} n={n} #partizioni={len(dist)} D_B={D} k^2-k={k*k-k} \"\n              f\"#estremali={len(estremali)}\")\n        for p in estremali[:12]:\n            print(\"   \", p)\n\n\nif __name__ == \"__main__\":\n    main(int(sys.argv[1]) if len(sys.argv) > 1 else 8)\n",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "id": "code_2",
+     "kind": "CODE",
+     "content": "# Exploration only: along every orbit for k ≤ 8, records the last time the pile count leaves {k−1,k,k+1} and the first time diagonals 1..k−1 are full; used to guide the (unfinished) upper-bound strategy. Exact integers, all partitions of T_k for k=3..8, ~1 min.\n# rigor: exact\n\"\"\"Esplorazione: statistiche sulla successione m(t) = numero di pile lungo le orbite.\"\"\"\nimport sys\nfrom collections import Counter\nfrom calcola_DB_triangolari import shift, partizioni\n\n\ndef conteggio_diagonali(parti):\n    \"\"\"c_d = numero di celle (i,j) del diagramma (righe = pile) con i+j-1 = d.\"\"\"\n    c = Counter()\n    for i, p in enumerate(parti, start=1):\n        for j in range(1, p + 1):\n            c[i + j - 1] += 1\n    return c\n\n\ndef diagonali_piene_fino(parti, d_max):\n    \"\"\"True se le diagonali 1..d_max sono tutte piene (c_d = d).\"\"\"\n    c = conteggio_diagonali(parti)\n    return all(c[d] == d for d in range(1, d_max + 1))\n\n\ndef main(k):\n    n = k * (k + 1) // 2\n    delta = tuple(range(k, 0, -1))\n    peggio_stab = 0; peggio_pieno = 0; combinazioni = Counter()\n    for lam in partizioni(n):\n        orbita = [lam]\n        while orbita[-1] != delta:\n            orbita.append(shift(orbita[-1]))\n        d = len(orbita) - 1\n        m = [len(p) for p in orbita]\n        t_stab = max([t + 1 for t in range(len(m)) if abs(m[t] - k) > 1] + [0])\n        t_pieno = next(t for t, p in enumerate(orbita) if diagonali_piene_fino(p, k - 1))\n        peggio_stab = max(peggio_stab, t_stab)\n        peggio_pieno = max(peggio_pieno, t_pieno)\n        combinazioni[(t_pieno, d - t_pieno)] += 1\n    print(f\"k={k}: max t_stab={peggio_stab}, max t_pieno={peggio_pieno}, k^2-k={k*k-k}\")\n\n\nif __name__ == \"__main__\":\n    for k in range(3, int(sys.argv[1]) + 1):\n        main(k)\n",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ]
+  },
+  "rules": {
+   "allow_literature_as_proof": false,
+   "allow_computation": true,
+   "require_machine_verification": false,
+   "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For each cell you attempt, hand in a written proof. You may use a computer to explore. A proof may rely on a computation only if you include the code, it runs in under 10 minutes on a laptop, and the computation is exhaustive over a finite set that your argument has reduced the problem to. Where a cell asks you to determine a quantity, give the exact value as a formula in $k$ and prove both bounds; state any partitions you use explicitly as functions of $k$. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+  }
+ },
+ "submission_digest": "a0543be4596b21b79c478afdf4f4a3b6491493fac8a66d50f79a37c8f33338fc",
+ "math": {
+  "report": {
+   "mathematical_verdict": "FAIL",
+   "first_fatal_error": {
+    "code": "MISSING_LEMMA",
+    "detail": "Theorem B (upper bound D_B(T_k) ≤ k^2−k for all k) is not proved; the submission itself marks it 'NOT PROVED HERE' and only cites Igusa/Etienne (statement not reproduced, sources not read) plus an exhaustive check for small k. The cell demands both bounds with proof, so the declared target 'main' (exact value k^2−k for every k) is not established. Finite exhaustive verification (k ≤ 8 in the orchestrator's re-run of code_1; k ≤ 9 claimed) does not prove the universal upper bound. What would close it: a proof that every partition of T_k reaches δ_k within k^2−k shifts (e.g. via the potential W of Lemma 2 plus a bound on the length of runs of cost‑0 steps).",
+    "severity": "FATAL",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   "accepted_mathematical_claims": [],
+   "unproved_claims": [
+    "main"
+   ],
+   "missing_cases": [],
+   "math_notes": "Independently checked and found correct (but NOT declared as a separate claim, so it cannot be listed as accepted): Lemma 1 (cell-moving rule for B; verified on (2,1,1,1,1)→(5,1) and (5,1)→(4,2), and the column-height bookkeeping of the U→V argument is sound) and Theorem A (lower bound D_B(T_k) ≥ k^2−k via γ_k=(k−1,k−1,k−2,…,2,1,1)). In Theorem A: the validity condition p_X∉{p_H,p_H+1} for S(p_H,p_X) is right (it also excludes S(k,k+1)); the pile-count case analysis and the identification of S(k,1) as the only configuration with a cell of height ≥ s+2 are correct; B(S(k,1))=δ_k checks out; the rotation dynamics p_H↦p_H+1 (mod k), p_X↦p_X+1 (mod k+1) follow from Lemma 1; the CRT computation gives first hitting time t_0=k^2−k−1 (checked k=2: (1,1,1)→(3)→(2,1), d=2). One small remark: the final step 'd_B(γ_k)=k^2−k' invokes uniqueness of the cyclic partition (C1 / Lemma 2 sketch, whose 'no cost‑0 periodic orbit' part is deferred), but this is not needed: the orbit reaches the fixed point δ_k at time k^2−k with all earlier states ≠ δ_k, so no earlier state can be cyclic (a cyclic earlier state would force the orbit to return to it after δ_k, impossible for a fixed point). Recommend declaring a reusable claim 'lower_bound: D_B(T_k) ≥ k^2−k for all k ≥ 1, attained by γ_k' and, separately, 'lemma_cell_rule' (Lemma 1) — both are established as written. The cited external theorem (Igusa 1985 / Etienne 1991: d_B(λ) ≤ k(k−1) for every partition of T_k) would, if allowed with a precise statement, make the result conditionally complete; that is a matter for Referee B. Trusted observation: code_1 re-ran successfully (default k_max=8, confirming D_B=k^2−k for k≤8 only; the k=9 claim was not reproduced by the orchestrator); code_2 crashed for lack of a CLI argument, but it is exploratory and carries no proof weight."
+  },
+  "limitation": null
+ },
+ "evidence": {
+  "report": {
+   "evidence_verdict": "PARTIAL",
+   "source_issues": [
+    {
+     "code": "SRC_NOT_RETRIEVED",
+     "detail": "src_2 (Igusa 1985), src_3 (Etienne 1991), src_4 (Griggs–Ho 1998) are declared NOT read; the upper bound D_B(T_k) ≤ k^2−k is attributed to them only via secondary sources (Hopkins, Drensky, Jonsson). No excerpt submitted for any source; I cannot check exact applicability. This is not a fabrication finding — the references are consistent with the known literature on Bulgarian solitaire — but none of them may be used as proof under the column rules anyway.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_UNCHECKABLE",
+     "detail": "src_5 arXiv:2607.17194 (Meštrović) is a 2026 preprint I cannot retrieve here; used for context only, so no impact on the verdict. Request the orchestrator confirm the identifier if it is to be kept in the final write-up.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "CODE2_RUNTIME_ERROR",
+     "detail": "code_2.py fails with IndexError when run without a CLI argument (trusted observation). It is exploration-only and does not support any claim, but as submitted it is not reproducible; add a default k_max or document the required argument.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "COMPUTATION_SCOPE",
+     "detail": "code_1.py re-ran successfully (trusted observation, exit 0; visible output confirms k=8: D_B=56=k^2−k over 17977 partitions, exact integer arithmetic, memoised orbits). This is an exhaustive check for k ≤ 9 only; it does not and is not claimed to prove the upper bound for general k, so the computation cannot serve as the proof the cell requires.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [
+    {
+     "code": "UPPER_BOUND_NOT_PROVED",
+     "detail": "The cell requires proof of both bounds. The candidate's Theorem B (D_B(T_k) ≤ k^2−k for all k) is explicitly NOT proved: it is cited from Igusa/Etienne, and allow_literature_as_proof=false plus the official rule 'Citing a published result for the statement you are asked to prove does not count as a solution' make this dependency inadmissible. The candidate is honest about this (states 'NOT PROVED HERE', 'remains to be proved'), so this is a missing half rather than a mis-stated result; the cell cannot be marked SOLVED.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "DEPENDENCY_ON_C1",
+     "detail": "Theorem A's last step ('δ_k is the only cyclic partition of T_k', needed to conclude d_B(γ_k)=k^2−k rather than merely B^t(γ_k)≠δ_k) is deferred to C1 / Lemma 2, and the candidate admits Lemma 2 alone does not prove it. highest_verified_cell=0, so this dependency is currently unverified inside the protocol. Either import a verified C1 claim or add the short argument that a partition of T_k with W>W(δ_k) cannot be periodic.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "KNOWN_IN_LITERATURE",
+      "COMPUTATIONALLY_VERIFIED",
+      "UNVERIFIED"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": false,
+     "relies_on_external_result": true,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1",
+      "src_2",
+      "src_3",
+      "src_5",
+      "src_6",
+      "code_1"
+     ],
+     "notes": "Lower bound D_B(T_k) ≥ k^2−k with explicit extremal γ_k=(k−1,k−1,k−2,…,2,1,1): self-contained argument (Lemma 1 cell rule + rotation of hole/extra cell with periods k and k+1; CRT gives first hit of S(k,1) at t=k^2−k−1), modulo the C1 uniqueness-of-cyclic-partition dependency. Upper bound: known in literature (Igusa 1985, Etienne 1991) but not proved here; verified exhaustively only for k ≤ 9 (code_1 reproduced by orchestrator). The final claim as registered (both bounds for every k) is therefore not established; reliance on the citation for the upper bound would be forbidden by the rules."
+    }
+   ],
+   "reproducibility_notes": "code_1.py: reproduced by the orchestrator (exit 0, ~0.1 s, exact integers, memoised orbits; visible output for k=8 matches the candidate's table). Full k=1..9 output was truncated in the observation; request the untruncated log for the record. code_2.py: not reproducible as submitted (needs argv[1]); exploration only. No floating point anywhere. Runtime well under the 10-minute limit. Sources: only secondary sources (Hopkins, Drensky, Jonsson) claimed read; primary sources unread; no excerpts submitted, so applicability was not checked. Recommended cell state: PARTIAL_PROGRESS (lower bound proved, upper bound open in-protocol)."
+  },
+  "limitation": null
+ },
+ "checks": [],
+ "check_errors": [],
+ "report": {
+  "final_verdict": "REJECT",
+  "highest_verified_cell": 0,
+  "math_review": {
+   "verdict": "FAIL",
+   "first_fatal_error": {
+    "code": "MISSING_LEMMA",
+    "detail": "Theorem B (upper bound D_B(T_k) ≤ k^2−k for all k) is not proved; the submission itself marks it 'NOT PROVED HERE' and only cites Igusa/Etienne (statement not reproduced, sources not read) plus an exhaustive check for small k. The cell demands both bounds with proof, so the declared target 'main' (exact value k^2−k for every k) is not established. Finite exhaustive verification (k ≤ 8 in the orchestrator's re-run of code_1; k ≤ 9 claimed) does not prove the universal upper bound. What would close it: a proof that every partition of T_k reaches δ_k within k^2−k shifts (e.g. via the potential W of Lemma 2 plus a bound on the length of runs of cost‑0 steps).",
+    "severity": "FATAL",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   "accepted_claims": [],
+   "unproved_claims": [
+    "main"
+   ],
+   "missing_cases": []
+  },
+  "evidence_review": {
+   "verdict": "PARTIAL",
+   "source_issues": [
+    {
+     "code": "SRC_NOT_RETRIEVED",
+     "detail": "src_2 (Igusa 1985), src_3 (Etienne 1991), src_4 (Griggs–Ho 1998) are declared NOT read; the upper bound D_B(T_k) ≤ k^2−k is attributed to them only via secondary sources (Hopkins, Drensky, Jonsson). No excerpt submitted for any source; I cannot check exact applicability. This is not a fabrication finding — the references are consistent with the known literature on Bulgarian solitaire — but none of them may be used as proof under the column rules anyway.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "SRC_UNCHECKABLE",
+     "detail": "src_5 arXiv:2607.17194 (Meštrović) is a 2026 preprint I cannot retrieve here; used for context only, so no impact on the verdict. Request the orchestrator confirm the identifier if it is to be kept in the final write-up.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "computation_issues": [
+    {
+     "code": "CODE2_RUNTIME_ERROR",
+     "detail": "code_2.py fails with IndexError when run without a CLI argument (trusted observation). It is exploration-only and does not support any claim, but as submitted it is not reproducible; add a default k_max or document the required argument.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "COMPUTATION_SCOPE",
+     "detail": "code_1.py re-ran successfully (trusted observation, exit 0; visible output confirms k=8: D_B=56=k^2−k over 17977 partitions, exact integer arithmetic, memoised orbits). This is an exhaustive check for k ≤ 9 only; it does not and is not claimed to prove the upper bound for general k, so the computation cannot serve as the proof the cell requires.",
+     "severity": "INFO",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "rule_violations": [
+    {
+     "code": "UPPER_BOUND_NOT_PROVED",
+     "detail": "The cell requires proof of both bounds. The candidate's Theorem B (D_B(T_k) ≤ k^2−k for all k) is explicitly NOT proved: it is cited from Igusa/Etienne, and allow_literature_as_proof=false plus the official rule 'Citing a published result for the statement you are asked to prove does not count as a solution' make this dependency inadmissible. The candidate is honest about this (states 'NOT PROVED HERE', 'remains to be proved'), so this is a missing half rather than a mis-stated result; the cell cannot be marked SOLVED.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    },
+    {
+     "code": "DEPENDENCY_ON_C1",
+     "detail": "Theorem A's last step ('δ_k is the only cyclic partition of T_k', needed to conclude d_B(γ_k)=k^2−k rather than merely B^t(γ_k)≠δ_k) is deferred to C1 / Lemma 2, and the candidate admits Lemma 2 alone does not prove it. highest_verified_cell=0, so this dependency is currently unverified inside the protocol. Either import a verified C1 claim or add the short argument that a partition of T_k with W>W(δ_k) cannot be periodic.",
+     "severity": "MISSING",
+     "claim_ids": [
+      "main"
+     ]
+    }
+   ],
+   "claim_provenance": [
+    {
+     "claim_id": "main",
+     "categories": [
+      "PROVED_BY_US",
+      "KNOWN_IN_LITERATURE",
+      "COMPUTATIONALLY_VERIFIED",
+      "UNVERIFIED"
+     ],
+     "evidence_sufficient": false,
+     "permitted_by_rules": false,
+     "relies_on_external_result": true,
+     "uses_computation_as_proof": false,
+     "references": [
+      "src_1",
+      "src_2",
+      "src_3",
+      "src_5",
+      "src_6",
+      "code_1"
+     ],
+     "notes": "Lower bound D_B(T_k) ≥ k^2−k with explicit extremal γ_k=(k−1,k−1,k−2,…,2,1,1): self-contained argument (Lemma 1 cell rule + rotation of hole/extra cell with periods k and k+1; CRT gives first hit of S(k,1) at t=k^2−k−1), modulo the C1 uniqueness-of-cyclic-partition dependency. Upper bound: known in literature (Igusa 1985, Etienne 1991) but not proved here; verified exhaustively only for k ≤ 9 (code_1 reproduced by orchestrator). The final claim as registered (both bounds for every k) is therefore not established; reliance on the citation for the upper bound would be forbidden by the rules."
+    }
+   ]
+  },
+  "accepted_progress": [],
+  "blocking_issue": "Referee A: Theorem B (upper bound D_B(T_k) ≤ k^2−k for all k) is not proved; the submission itself marks it 'NOT PROVED HERE' and only cites Igusa/Etienne (statement not reproduced, sources not read) plus an exhaustive check for small k. The cell demands both bounds with proof, so the declared target 'main' (exact value k^2−k for every k) is not established. Finite exhaustive verification (k ≤ 8 in the orchestrator's re-run of code_1; k ≤ 9 claimed) does not prove the universal upper bound. What would close it: a proof that every partition of T_k reaches δ_k within k^2−k shifts (e.g. via the potential W of Lemma 2 plus a bound on the length of runs of cost‑0 steps).",
+  "next_required_step": "Address the stated blocking obligation without silently changing the target",
+  "stagnation_signal": false
+ },
+ "review_status": "NEEDS_WORK",
+ "proposed_claim_ids": []
+}

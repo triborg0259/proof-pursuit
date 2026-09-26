@@ -1,0 +1,20 @@
+{
+ "report": {
+  "mathematical_verdict": "FAIL",
+  "first_fatal_error": {
+   "code": "MISSING_LEMMA",
+   "detail": "Theorem B (upper bound D_B(T_k) ≤ k^2−k for all k) is not proved; the submission itself marks it 'NOT PROVED HERE' and only cites Igusa/Etienne (statement not reproduced, sources not read) plus an exhaustive check for small k. The cell demands both bounds with proof, so the declared target 'main' (exact value k^2−k for every k) is not established. Finite exhaustive verification (k ≤ 8 in the orchestrator's re-run of code_1; k ≤ 9 claimed) does not prove the universal upper bound. What would close it: a proof that every partition of T_k reaches δ_k within k^2−k shifts (e.g. via the potential W of Lemma 2 plus a bound on the length of runs of cost‑0 steps).",
+   "severity": "FATAL",
+   "claim_ids": [
+    "main"
+   ]
+  },
+  "accepted_mathematical_claims": [],
+  "unproved_claims": [
+   "main"
+  ],
+  "missing_cases": [],
+  "math_notes": "Independently checked and found correct (but NOT declared as a separate claim, so it cannot be listed as accepted): Lemma 1 (cell-moving rule for B; verified on (2,1,1,1,1)→(5,1) and (5,1)→(4,2), and the column-height bookkeeping of the U→V argument is sound) and Theorem A (lower bound D_B(T_k) ≥ k^2−k via γ_k=(k−1,k−1,k−2,…,2,1,1)). In Theorem A: the validity condition p_X∉{p_H,p_H+1} for S(p_H,p_X) is right (it also excludes S(k,k+1)); the pile-count case analysis and the identification of S(k,1) as the only configuration with a cell of height ≥ s+2 are correct; B(S(k,1))=δ_k checks out; the rotation dynamics p_H↦p_H+1 (mod k), p_X↦p_X+1 (mod k+1) follow from Lemma 1; the CRT computation gives first hitting time t_0=k^2−k−1 (checked k=2: (1,1,1)→(3)→(2,1), d=2). One small remark: the final step 'd_B(γ_k)=k^2−k' invokes uniqueness of the cyclic partition (C1 / Lemma 2 sketch, whose 'no cost‑0 periodic orbit' part is deferred), but this is not needed: the orbit reaches the fixed point δ_k at time k^2−k with all earlier states ≠ δ_k, so no earlier state can be cyclic (a cyclic earlier state would force the orbit to return to it after δ_k, impossible for a fixed point). Recommend declaring a reusable claim 'lower_bound: D_B(T_k) ≥ k^2−k for all k ≥ 1, attained by γ_k' and, separately, 'lemma_cell_rule' (Lemma 1) — both are established as written. The cited external theorem (Igusa 1985 / Etienne 1991: d_B(λ) ≤ k(k−1) for every partition of T_k) would, if allowed with a precise statement, make the result conditionally complete; that is a matter for Referee B. Trusted observation: code_1 re-ran successfully (default k_max=8, confirming D_B=k^2−k for k≤8 only; the k=9 claim was not reproduced by the orchestrator); code_2 crashed for lack of a CLI argument, but it is exploratory and carries no proof weight."
+ },
+ "limitation": null
+}
