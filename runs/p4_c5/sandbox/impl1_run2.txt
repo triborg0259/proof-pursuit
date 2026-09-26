@@ -8,3 +8,6 @@ k=9 soglia=8 L=840 candidati=31 stato=TERMINATA senza_potenze=False tre_multipli
 k=10 soglia=9 L=2520 candidati=47 stato=TERMINATA senza_potenze=False tre_multipli=False nodi=14907 foglie=0 sopravvissuti=0 tempo=0.25s
 k=11 soglia=10 L=2520 candidati=47 stato=TERMINATA senza_potenze=False tre_multipli=False nodi=41768 foglie=128 sopravvissuti=0 tempo=0.59s
 k=12 soglia=11 L=27720 candidati=95 stato=TERMINATA senza_potenze=False tre_multipli=False nodi=280931 foglie=110 sopravvissuti=0 tempo=8.37s
+k=13 soglia=12 L=27720 candidati=95 stato=TERMINATA senza_potenze=False tre_multipli=False nodi=1224204 foglie=3889 sopravvissuti=1 tempo=50.97s
+   sopravvissuto: (10, 10, 10, 10, 10, 12, 12, 12, 12, 24, 36, 40, 45)
+$PY ricerca_moduli_hm.py ricerca 3 4 5 6 7 8 9 10 11 12 13  56.19s user 0.90s system 94% cpu 1:00.28 total

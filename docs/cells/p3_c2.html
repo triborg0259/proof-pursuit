@@ -1300,45 +1300,7 @@ def partizioni(n, massimo=None):
         return
     for prima in range(min(n, massimo), 0, -1):
         for resto in partizioni(n - prima, prima):
-            yield (prima,) + resto
-
-
-def distanze_al_punto_fisso(n, punto_fisso):
-    &quot;&quot;&quot;Restituisce dict partizione -&gt; numero di shift per arrivare al punto fisso.
-
-    Usa memoizzazione lungo le orbite; presuppone che ogni orbita finisca in punto_fisso
-    (lo verifichiamo con un controllo di sicurezza sul numero di passi).
-    &quot;&quot;&quot;
-    dist = {punto_fisso: 0}
-    for lam in partizioni(n):
-        cammino = []
-        cur = lam
-        while cur not in dist:
-            cammino.append(cur)
-            cur = shift(cur)
-            assert len(cammino) &lt;= 10 * n * n, &quot;orbita troppo lunga: non converge?&quot;
-        base = dist[cur]
-        for i, p in enumerate(reversed(cammino)):
-            dist[p] = base + i + 1
-    return dist
-
-
-def main(k_max):
-    for k in range(1, k_max + 1):
-        n = k * (k + 1) // 2
-        delta = tuple(range(k, 0, -1))
-        dist = distanze_al_punto_fisso(n, delta)
-        D = max(dist.values())
-        estremali = sorted(p for p, d in dist.items() if d == D)
-        print(f&quot;k={k} n={n} #partizioni={len(dist)} D_B={D} k^2-k={k*k-k} &quot;
-              f&quot;#estremali={len(estremali)}&quot;)
-        for p in estremali[:12]:
-            print(&quot;   &quot;, p)
-
-
-if __name__ == &quot;__main__&quot;:
-    main(int(sys.argv[1]) if len(sys.argv) &gt; 1 else 8)
-</code></pre>
+# ... (36 more lines: full script in the repository)</code></pre>
 <p><em>Riesecuzione fidata dell’orchestratore</em>:
 <code>orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 0.1s; stdout: ’1, 1)\n (4, 4, 3, 3, 3, 3, 3, 3, 2)\n (4, 4, 4, 3, 2, 2, 2, 2, 2, 1, 1, 1)\n (4, 4, 4, 3, 2, 2, 2, 2, 2, 2, 1)\nk=8 n=36 #partizioni=17977 D_B=56 k^2-k=56 #estremali=1267\n (5, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1)\n (5, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 2, 1)\n (5, 4, 4, 3, 3, 3,</code></p>
 <pre
@@ -1367,24 +1329,7 @@ def main(k):
     n = k * (k + 1) // 2
     delta = tuple(range(k, 0, -1))
     peggio_stab = 0; peggio_pieno = 0; combinazioni = Counter()
-    for lam in partizioni(n):
-        orbita = [lam]
-        while orbita[-1] != delta:
-            orbita.append(shift(orbita[-1]))
-        d = len(orbita) - 1
-        m = [len(p) for p in orbita]
-        t_stab = max([t + 1 for t in range(len(m)) if abs(m[t] - k) &gt; 1] + [0])
-        t_pieno = next(t for t, p in enumerate(orbita) if diagonali_piene_fino(p, k - 1))
-        peggio_stab = max(peggio_stab, t_stab)
-        peggio_pieno = max(peggio_pieno, t_pieno)
-        combinazioni[(t_pieno, d - t_pieno)] += 1
-    print(f&quot;k={k}: max t_stab={peggio_stab}, max t_pieno={peggio_pieno}, k^2-k={k*k-k}&quot;)
-
-
-if __name__ == &quot;__main__&quot;:
-    for k in range(3, int(sys.argv[1]) + 1):
-        main(k)
-</code></pre>
+# ... (18 more lines: full script in the repository)</code></pre>
 <p><em>Riesecuzione fidata dell’orchestratore</em>:
 <code>orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 1 in 0.1s; stdout: ’’; stderr: ’Traceback (most recent call last):\n File "/Users/thomastumini/proof-pursuit/runs/p3_c2/verifica/attempt_001/code_2.py", line 41, in &lt;module&gt;\n for k in range(3, int(sys.argv[1]) + 1):\n ~~~~~~~~^^^\nIndexError: list index out of range’</code></p>
 <pre
@@ -1413,74 +1358,7 @@ def successione_parti(lam):
 def trova_pattern(c, p, q):
     &quot;&quot;&quot;Restituisce x se (c_p,...,c_q) (1-based) = (x-1, x,...,x, x+1), q&gt;=p+2; altrimenti None.&quot;&quot;&quot;
     if q &lt; p + 2:
-        return None
-    x = c[p]  # c_{p+1}
-    if c[p - 1] != x - 1 or c[q - 1] != x + 1:
-        return None
-    if any(c[j - 1] != x for j in range(p + 1, q)):
-        return None
-    return x
-
-
-def controlla_lemmi_generali(n):
-    &quot;&quot;&quot;Lemma 8 (=3.6), Lemma 9 (=3.5 versione nostra), Lemma 7 (=3.4), Lemma 10 e c_{i+1}&lt;=c_i+1.&quot;&quot;&quot;
-    for lam in partizioni(n):
-        c = successione_parti(lam)
-        assert all(c[i + 1] &lt;= c[i] + 1 for i in range(len(c) - 1)), (&quot;3.2(1)&quot;, lam)
-        for p in range(1, 60):
-            for q in range(p + 2, p + 40):
-                x = trova_pattern(c, p, q)
-                if x is None:
-                    continue
-                if q == p + 2:
-                    assert p &lt;= x, (&quot;3.6&quot;, lam, p, q, x)
-                else:
-                    if p &gt; x:
-                        # deve esistere pattern (x&#39;,p&#39;,q&#39;) con x&#39;&lt;=x, p&#39;&gt;=p-x, 2&lt;=q&#39;-p&#39;&lt;=q-p-1
-                        ok = any(
-                            (xp := trova_pattern(c, pp, qq)) is not None and xp &lt;= x
-                            for pp in range(max(1, p - x), p + 1)
-                            for qq in range(pp + 2, pp + q - p))
-                        assert ok, (&quot;3.5&quot;, lam, p, q, x)
-                # conseguenza: p &lt;= x(q-p-1)
-                assert p &lt;= x * (q - p - 1), (&quot;catena&quot;, lam, p, q, x)
-                # Lemma 3.4: pattern (k-2, (k-1)^(k-1), k) di lunghezza k+1 =&gt; p+k &lt;= n+1
-                k = x + 1
-                if q - p == k:
-                    assert p + k &lt;= n + 1, (&quot;3.4&quot;, lam, p, q, x)
-
-
-def controlla_lemma_33(k):
-    &quot;&quot;&quot;Lemma 6 per n = T_k: c_t = k-1, c_{t+1..} = k, e (i) oppure (ii) se t &gt;= k+1; e t &lt;= k^2-k.&quot;&quot;&quot;
-    n = k * (k + 1) // 2
-    delta = tuple(range(k, 0, -1))
-    for lam in partizioni(n):
-        c = successione_parti(lam)
-        cur, t = lam, 0
-        while cur != delta:
-            cur = shift(cur); t += 1
-        assert all(c[i - 1] == k for i in range(t + 1, LUNGHEZZA + 1)), (&quot;3.3(1)a&quot;, lam)
-        if t &gt;= 1:
-            assert c[t - 1] == k - 1, (&quot;3.3(1)b&quot;, lam)
-        if t &gt;= k + 1:
-            i_ok = any(trova_pattern(c, p, q) == k for p in range(t - k, t) for q in range(p + 2, t))
-            ii_ok = any(trova_pattern(c, p, q) == k - 1 for p in range(t - k + 1, t + 1) for q in range(p + 2, t + 2))
-            assert i_ok or ii_ok, (&quot;3.3(2)&quot;, lam, t)
-            assert t &lt;= k * k - k, (&quot;teorema&quot;, lam, t)
-
-
-if __name__ == &quot;__main__&quot;:
-    import time
-    t0 = time.time()
-    N_MAX = int(sys.argv[1]) if len(sys.argv) &gt; 1 else 24
-    for n in range(1, N_MAX + 1):
-        controlla_lemmi_generali(n)
-    print(f&quot;lemmi generali ok per tutte le partizioni di n &lt;= {N_MAX}&quot;)
-    for k in range(3, 8):
-        controlla_lemma_33(k)
-    print(&quot;Lemma 3.3 e teorema ok per k = 3..7&quot;)
-    print(f&quot;tempo {time.time() - t0:.1f} s&quot;)
-</code></pre>
+# ... (36 more lines: full script in the repository)</code></pre>
 <p><em>Riesecuzione fidata dell’orchestratore</em>:
 <code>orchestrator re-ran code_1.py (python3, clean copy of the researcher sandbox): exit 0 in 14.3s; stdout: ’lemmi generali ok per tutte le partizioni di n &lt;= 24\nLemma 3.3 e teorema ok per k = 3..7\ntempo 14.2 s’; stderr: ’’</code></p>
 <pre
@@ -1509,41 +1387,7 @@ def partizioni(n, massimo=None):
         return
     for prima in range(min(n, massimo), 0, -1):
         for resto in partizioni(n - prima, prima):
-            yield (prima,) + resto
-
-
-def distanze_al_punto_fisso(n, punto_fisso):
-    &quot;&quot;&quot;Restituisce dict partizione -&gt; numero di shift per arrivare al punto fisso.&quot;&quot;&quot;
-    dist = {punto_fisso: 0}
-    for lam in partizioni(n):
-        cammino = []
-        cur = lam
-        while cur not in dist:
-            cammino.append(cur)
-            cur = shift(cur)
-            assert len(cammino) &lt;= 10 * n * n, &quot;orbita troppo lunga: non converge?&quot;
-        base = dist[cur]
-        for i, p in enumerate(reversed(cammino)):
-            dist[p] = base + i + 1
-    return dist
-
-
-def main(k_max):
-    for k in range(1, k_max + 1):
-        n = k * (k + 1) // 2
-        delta = tuple(range(k, 0, -1))
-        dist = distanze_al_punto_fisso(n, delta)
-        D = max(dist.values())
-        estremali = sorted(p for p, d in dist.items() if d == D)
-        print(f&quot;k={k} n={n} #partizioni={len(dist)} D_B={D} k^2-k={k*k-k} &quot;
-              f&quot;#estremali={len(estremali)}&quot;)
-        for p in estremali[:12]:
-            print(&quot;   &quot;, p)
-
-
-if __name__ == &quot;__main__&quot;:
-    main(int(sys.argv[1]) if len(sys.argv) &gt; 1 else 8)
-</code></pre>
+# ... (35 more lines: full script in the repository)</code></pre>
 <p><em>Riesecuzione fidata dell’orchestratore</em>:
 <code>orchestrator re-ran code_2.py (python3, clean copy of the researcher sandbox): exit 0 in 0.1s; stdout: ’1, 1)\n (4, 4, 3, 3, 3, 3, 3, 3, 2)\n (4, 4, 4, 3, 2, 2, 2, 2, 2, 1, 1, 1)\n (4, 4, 4, 3, 2, 2, 2, 2, 2, 2, 1)\nk=8 n=36 #partizioni=17977 D_B=56 k^2-k=56 #estremali=1267\n (5, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1)\n (5, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 2, 1)\n (5, 4, 4, 3, 3, 3,</code></p>
 <h1 id="arxiv-literature-consulted">arXiv literature consulted</h1>

@@ -150,7 +150,7 @@ def accorcia_listati(tex, righe_max):
         if len(righe) <= righe_max:
             return m.group(0)
         return m.group(1) + "\n".join(righe[:righe_max]) + f"\n# ... ({len(righe) - righe_max} more lines: full script in the repository)\n\\end{{lstlisting}}"
-    return re.sub(r"(\\begin\{lstlisting\}\[[^\]]*\]\n)(.*?)\\end\{lstlisting\}", taglio, tex, flags=re.S)
+    return re.sub(r"(\\begin\{lstlisting\}\[caption=\{.*?\}\]\n)(.*?)\\end\{lstlisting\}", taglio, tex, flags=re.S)
 
 
 def entro_limite(testo, limite, riduttori):
