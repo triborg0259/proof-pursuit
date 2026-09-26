@@ -10,7 +10,7 @@
 | /p/p1/c6 | problem 1, part 6 | parziale | `problema-1/submission/parte-6.argument.md` | https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p1_c6.tex |
 | /p/p2/c1 | problem 2, part 1 | revisionato | `problema-2/submission/parte-1.argument.md` | https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p2_c1.tex |
 | /p/p2/c2 | problem 2, part 2 | revisionato | `problema-2/submission/parte-2.argument.md` | https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p2_c2.tex |
-| /p/p2/c3 | problem 2, part 3 | parziale | `problema-2/submission/parte-3.argument.md` | https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p2_c3.tex |
+| /p/p2/c3 | problem 2, part 3 | revisionato | `problema-2/submission/parte-3.argument.md` | https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p2_c3.tex |
 | /p/p2/c4 | problem 2, part 4 | parziale | `problema-2/submission/parte-4.argument.md` | https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p2_c4.tex |
 | /p/p2/c5 | problem 2, part 5 | parziale | `problema-2/submission/parte-5.argument.md` | https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p2_c5.tex |
 | /p/p2/c6 | problem 2, part 6 | parziale | `problema-2/submission/parte-6.argument.md` | https://github.com/triborg0259/proof-pursuit/blob/main/report/cells/p2_c6.tex |
