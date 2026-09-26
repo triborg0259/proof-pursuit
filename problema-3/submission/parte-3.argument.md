@@ -11,9 +11,7 @@ the position with respect to the literature and what remains open. Nothing is de
 
 Now the numbers strictly between two consecutive triangular numbers. Prove that for every $k \ge 4$ and every
 non-triangular $n$ with $T_{k-1} < n < T_k$,
-$$
-D_B(n) \le k^2 - 2k - 1,
-$$
+$$D_B(n) \le k^2 - 2k - 1,$$
 and determine $D_B(T_k - 1)$ exactly. Determine also, for that $n$, which partitions attain the maximum.
 
 **What we deliver.** No proof. Plan: exact table of $D_B(n)$ for $n\le60$ with extremal partitions, then formula and proof.

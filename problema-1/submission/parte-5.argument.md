@@ -11,9 +11,7 @@ the position with respect to the literature, and what remains open. Nothing is c
 
 The case $N = d+2$ in every dimension, with the same conjectured optimum: the $d$ coordinate axes, two of them
 repeated. Prove that for every $d \ge 2$, any $d+2$ lines in $\mathbb{R}^d$ satisfy
-$$
-S \;\le\; \left( \binom{d+2}{2} - 2 \right) \frac{\pi}{2}.
-$$
+$$S \;\le\; \left( \binom{d+2}{2} - 2 \right) \frac{\pi}{2}.$$
 
 **What we deliver.** No proof. Reformulation in terms of deficits ($\sum\delta_{ij}\ge\pi$) and sanity check of the values.
 

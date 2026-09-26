@@ -11,9 +11,7 @@ the position with respect to the literature, and what remains open. Nothing is c
 
 The first case in every dimension: one line more than the dimension, $N = d+1$, where the conjectured optimum
 repeats exactly one of the $d$ coordinate axes. Let $d \ge 1$. Prove that any $d+1$ lines in $\mathbb{R}^d$ satisfy
-$$
-S \;\le\; \left( \binom{d+1}{2} - 1 \right) \cdot \frac{\pi}{2}.
-$$
+$$S \;\le\; \left( \binom{d+1}{2} - 1 \right) \cdot \frac{\pi}{2}.$$
 
 **What we deliver.** Reduction of the statement to an inequality on the deficits $\delta_{ij}=\pi/2-\theta_{ij}$: the claim is equivalent to $\sum_{i<j}\delta_{ij}\ge\pi/2$ for $d+1$ unit vectors in $\mathbb R^d$. The lemma of part 2 (proved and approved) provides exactly a total deficit $\ge\pi/2$ along a chain. The case $d=1$ is trivial (two coincident lines, $S=0$).
 

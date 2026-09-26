@@ -17,7 +17,7 @@ $S=\sum_{i<j}\theta(\ell_i,\ell_j)\le \frac{\pi}{2}\left\lfloor \frac{N^2}{4}\ri
 Every line $\ell$ through the origin of $\mathbb R^2$ is spanned by exactly one unit vector of the form $(\cos t,\sin t)$ with $t\in[0,\pi)$ (the two unit vectors of $\ell$ are $\pm(\cos t,\sin t)$, and exactly one of the two angles $t,t+\pi$ lies in $[0,\pi)$). Call $t=\tau(\ell)$ the *direction* of $\ell$.
 For two lines with directions $t,t'\in[0,\pi)$ we have $\langle(\cos t,\sin t),(\cos t',\sin t')\rangle=\cos(t-t')$, hence $\theta(\ell,\ell')=\arccos|\cos(t-t')|$.
 Put $u=|t-t'|\in[0,\pi)$. If $u\le\pi/2$ then $\cos u\ge 0$, so $|\cos u|=\cos u$ and $\arccos(\cos u)=u$ because $u\in[0,\pi]$. If $u>\pi/2$ then $\cos u<0$, so $|\cos u|=-\cos u=\cos(\pi-u)$ with $\pi-u\in(0,\pi/2)$, and $\arccos(\cos(\pi-u))=\pi-u$. In both cases
-$$\theta(\ell,\ell')=\min(u,\pi-u),\qquad u=|\tau(\ell)-\tau(\ell')|.\tag{1}$$
+$$\theta(\ell,\ell')=\min(u,\pi-u),\qquad u=|\tau(\ell)-\tau(\ell')|.\qquad(1)$$
 Coincident lines have $u=0$ and angle $0$, as they should. Note also that $\min(u,\pi-u)$ is unchanged if $u$ is replaced by $\pi-u$, so (1) also holds with $u=(\tau(\ell')-\tau(\ell))\bmod\pi$ (the representative in $[0,\pi)$): indeed this quantity equals $|t-t'|$ or $\pi-|t-t'|$.
 
 ## 2. A random half-turn of directions
@@ -41,7 +41,7 @@ In both cases the probability is $|J_0\triangle J_u|/\pi=2\varphi/\pi$. $\square
 
 ## 3. Counting the pairs separated by $A_\psi$
 Let $t_i=\tau(\ell_i)$ and, for $\psi\in[0,\pi)$, $k_\psi=\#\{i: t_i\in A_\psi\}\in\{0,1,\dots,N\}$. A pair $\{i,j\}$ has exactly one member with direction in $A_\psi$ if and only if one index is among the $k_\psi$ "inside" indices and the other among the $N-k_\psi$ "outside" indices; hence the number of such pairs is exactly $k_\psi(N-k_\psi)$. Writing $X_{ij}(\psi)$ for the indicator of the event of Lemma 1 for the pair $(t_i,t_j)$, we have $k_\psi(N-k_\psi)=\sum_{i<j}X_{ij}(\psi)$ for every $\psi$ (each $X_{ij}$ is the indicator of a finite union of intervals, so everything is measurable), and by linearity of expectation, Lemma 1 and (1),
-$$\mathbb E\big[k_\psi(N-k_\psi)\big]=\sum_{i<j}\Pr[X_{ij}=1]=\sum_{i<j}\frac{2}{\pi}\theta(\ell_i,\ell_j)=\frac{2}{\pi}S.\tag{2}$$
+$$\mathbb E\big[k_\psi(N-k_\psi)\big]=\sum_{i<j}\Pr[X_{ij}=1]=\sum_{i<j}\frac{2}{\pi}\theta(\ell_i,\ell_j)=\frac{2}{\pi}S.\qquad(2)$$
 
 ## 4. Conclusion
 For every integer $k$ we have $N^2-4k(N-k)=(N-2k)^2\ge0$, so $k(N-k)\le N^2/4$; as $k(N-k)$ is an integer, $k(N-k)\le\lfloor N^2/4\rfloor$. Applying this to $k=k_\psi$ for every $\psi$ and taking expectations, (2) gives

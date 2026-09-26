@@ -14,9 +14,7 @@ Three directions beyond the certified range; any one of them counts. Any of the 
 (a) Decide a size $k \ge 25$.
 
 (b) The asymptotic form. It is known that a pairwise disjoint family of size $k$ always has a pair with
-$$
-\gcd(m_i, m_j) \;\ge\; k \cdot \exp\!\left( -(2 + o(1)) \frac{\log k}{\log\log k} \right),
-$$
+$$\gcd(m_i, m_j) \;\ge\; k \cdot \exp\!\left( -(2 + o(1)) \frac{\log k}{\log\log k} \right),$$
 which is $k^{1 - o(1)}$ but not linear in $k$. Prove the statement in full, or prove the weaker bound
 $\gcd(m_i, m_j) \ge ck$ for some absolute constant $c > 0$, or improve the exponential factor above.
 

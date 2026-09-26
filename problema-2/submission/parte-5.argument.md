@@ -10,9 +10,7 @@ the position with respect to the literature and what remains open. Nothing is de
 **Punteggio:** 8 points · **Valutazione:** Judged
 
 $Q_9$ has $512$ vertices and $2304$ edges. The best bounds known to the organisers are
-$$
-2368 \le U(Q_9) \le 2400;
-$$
+$$2368 \le U(Q_9) \le 2400;$$
 the lower bound is unpublished. Improve either one: prove that $U(Q_9) \ge 2369$, or exhibit a labelling of $Q_9$
 with at most $2399$ uphill paths.
 

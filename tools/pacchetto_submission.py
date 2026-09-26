@@ -75,6 +75,18 @@ def fonti_md(n, pid):
     return "\n".join(f"- arXiv:{v['arxiv_id']} — *{v['title']}* ({', '.join(v['authors'][:3])}, {v['published'][:4]}), found by query `{v.get('query','')}`; abstract read, full text not relied upon." for v in br.fonti_arxiv(n, pid)) or "- No relevant arXiv entry found by the deterministic search."
 
 
+def normalizza_math(testo):
+    """Adatta il Markdown al campo della piattaforma ("$…$ inline, $$…$$ display"): ogni blocco $$…$$ su UNA riga,
+    niente \\tag (numero messo a fianco), nessuna riga vuota dentro le formule. Il codice nei blocchi ``` non viene toccato."""
+    pezzi = testo.split("```")
+    for i in range(0, len(pezzi), 2):        # solo le parti fuori dai blocchi di codice
+        t = pezzi[i]
+        t = re.sub(r"\$\$(.+?)\$\$", lambda m: "$$" + " ".join(m.group(1).split()) + "$$", t, flags=re.S)
+        t = re.sub(r"\\tag\{([^}]*)\}", r"\\qquad(\1)", t)
+        pezzi[i] = t
+    return "```".join(pezzi)
+
+
 def argument(pid, n, k):
     sub = ROOT / f"problema-{n}" / "submission"
     base = (sub / f"parte-{k}.en.md").read_text(encoding="utf-8") if (sub / f"parte-{k}.en.md").exists() else "(no draft)"
@@ -84,7 +96,7 @@ def argument(pid, n, k):
         + "\n".join(decisioni_md(r) for r in runs) + "\n\n## 6b. Tokens used by the agents\n" + "\n".join(token_md(r) for r in runs) + "\n\n## 7. arXiv literature consulted\n" + fonti_md(n, pid) \
         + "\n\n## 8. Code\n" + ("\n".join(codice_md(r) for r in runs) or "See the certificates listed in section 3.") \
         + f"\n\n---\nFull write-up (LaTeX, all resources): {REPO}report/cells/{pid}_c{k}.tex · Repository: {REPO}\n"
-    (sub / f"parte-{k}.argument.md").write_text(testo, encoding="utf-8")
+    (sub / f"parte-{k}.argument.md").write_text(normalizza_math(testo), encoding="utf-8")
     return testo
 
 

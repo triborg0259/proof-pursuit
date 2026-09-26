@@ -31,7 +31,7 @@ which are exactly the numbers $k-i'+(\sigma\varepsilon)_{i'}$, $i'=1,\dots,k$. S
 A *composition* is a finite sequence $c=(c_1,\dots,c_s)$ of positive integers. Define
 $$\tilde B(c):=\text{the sequence }(s,\ c_1-1,\ \dots,\ c_s-1)\text{ with all zero entries deleted}.$$
 The multiset of entries of $\tilde B(c)$ is $\{s\}\cup\{c_i-1:c_i\ge2\}$, which is by definition the multiset of parts of $B(\mathrm{sort}(c))$. Hence, starting from $c^{(0)}:=\lambda$ (as a sequence) and putting $c^{(t+1)}:=\tilde B(c^{(t)})$, we have
-$$B^t(\lambda)=\mathrm{sort}(c^{(t)})\quad\text{for all }t\ge0. \tag{1}$$
+$$B^t(\lambda)=\mathrm{sort}(c^{(t)})\quad\text{for all }t\ge0. \qquad(1)$$
 Write $s_t$ for the length of $c^{(t)}$. The *cell set* of a composition is $C(c):=\{(i,j):1\le i\le s,\ 1\le j\le c_i\}\subset\mathbb Z_{\ge1}^2$; put $C_t:=C(c^{(t)})$. Cell $(i,j)$ lies on *diagonal* $i+j$. Two properties hold for every composition, by definition: (**closed**) if $(i,j)\in C(c)$ and $1\le j'\le j$ then $(i,j')\in C(c)$; (**gap-free**) if $(i,1)\in C(c)$ and $1\le i'\le i$ then $(i',1)\in C(c)$; and $(i,1)\notin C(c)$ iff $i>s$.
 
 ### II.2 The potential
@@ -44,7 +44,7 @@ $$\Phi(e)=\sum_{j=1}^{s}(1+j)+\sum_{i=1}^{s}\sum_{j=1}^{c_i-1}(i+1+j)=\sum_{i=1}
 where we substituted $j'=j+1$ and used that the term $j'=1$ of column $i$ is $i+1$. Now $\tilde B(c)$ is obtained from $e$ by deleting its zero entries; an entry $e_q>0$ preceded by $z_q$ zeros moves to position $q-z_q$, so $\Phi$ decreases by $\sum_{q:e_q>0}z_q e_q\ge0$, with equality iff no positive entry is preceded by a zero, i.e. iff the zeros of $e$ form a terminal segment. Since $e_1=s\ge1$ and $e_{i+1}=0\iff c_i=1$, this says exactly that $\{i:c_i=1\}$ is terminal in $\{1,\dots,s\}$. $\square$
 
 By Lemma 2, $(\Phi(c^{(t)}))_{t\ge0}$ is a non-increasing sequence of non-negative integers, hence eventually constant: there is $t_0$ with $\Phi(c^{(t+1)})=\Phi(c^{(t)})$ for all $t\ge t_0$. By the equality case of Lemma 2:
-$$\text{for all }t\ge t_0:\quad \{i:c^{(t)}_i=1\}\text{ is a terminal segment of }\{1,\dots,s_t\}. \tag{2}$$
+$$\text{for all }t\ge t_0:\quad \{i:c^{(t)}_i=1\}\text{ is a terminal segment of }\{1,\dots,s_t\}. \qquad(2)$$
 
 ### II.3 Diagonal motion in the steady regime
 Define $\rho:\mathbb Z_{\ge1}^2\to\mathbb Z_{\ge1}^2$ by $\rho(i,j)=(i+1,j-1)$ if $j\ge2$ and $\rho(i,1)=(1,i)$. Then $\rho$ preserves $i+j$, and $\rho$ is a bijection (inverse: $(i,j)\mapsto(i-1,j+1)$ for $i\ge2$, $(1,j)\mapsto(j,1)$). On diagonal $d\ge2$, whose cells are $(i,d-i)$, $1\le i\le d-1$, $\rho$ sends column $i$ to column $i+1$ for $i\le d-2$ and column $d-1$ to column $1$; hence $\rho^m$ sends the cell of diagonal $d$ in column $i$ to the cell in the unique column $\equiv i+m \pmod{d-1}$ in $\{1,\dots,d-1\}$.
@@ -54,7 +54,7 @@ Define $\rho:\mathbb Z_{\ge1}^2\to\mathbb Z_{\ge1}^2$ by $\rho(i,j)=(i+1,j-1)$ i
 *Proof.* Let $c=c^{(t)}$, $e=(s,c_1-1,\dots,c_s-1)$ as in Lemma 2. The cells of $e$ (defined as for compositions, zero entries giving no cells) are $\{(1,j):1\le j\le s\}=\rho(\{(j,1):1\le j\le s\})$ together with $\{(i+1,j-1):2\le j\le c_i\}=\rho(\{(i,j)\in C_t: j\ge2\})$; so the cell set of $e$ is $\rho(C_t)$. By (2), the zeros of $e$ form a terminal segment, so deleting them does not move any positive entry, and $C_{t+1}=C(\tilde B(c))$ is the cell set of $e$. $\square$
 
 Consequently, for $t\ge t_0$ and $m\ge0$, $C_{t+m}=\rho^m(C_t)$, and since $\rho^m$ is injective,
-$$x\in C_t\iff\rho^m(x)\in C_{t+m}\qquad(x\in\mathbb Z_{\ge1}^2). \tag{3}$$
+$$x\in C_t\iff\rho^m(x)\in C_{t+m}\qquad(x\in\mathbb Z_{\ge1}^2). \qquad(3)$$
 
 ### II.4 The hole lemma
 **Lemma 4.** Let $t\ge t_0$ and $d\ge2$. If some cell of diagonal $d$ is not in $C_t$ (a *hole*), then no cell of any diagonal $D>d$ lies in $C_t$.

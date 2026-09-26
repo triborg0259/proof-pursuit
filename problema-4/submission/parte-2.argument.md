@@ -18,7 +18,7 @@ Let $g=\gcd(m,m')$. If $g\mid a-a'$ then the classes $a\ (\mathrm{mod}\ m)$ and 
 
 ## Proof of the cell
 Write $g_{ij}=\gcd(m_i,m_j)$ for $i\ne j$. Suppose, for a contradiction, that $g_{ij}\le3$ for all pairs. By Lemma 0, $g_{ij}=1$ is impossible for disjoint classes ($1\mid a_i-a_j$), hence
-$$g_{ij}\in\{2,3\}\quad\text{for all } i\ne j.\tag{1}$$
+$$g_{ij}\in\{2,3\}\quad\text{for all } i\ne j.\qquad(1)$$
 Two consequences of (1) and Lemma 0, for $i\ne j$:
 - (E) if $2\mid m_i$ and $2\mid m_j$, then $2\mid g_{ij}$, so by (1) $g_{ij}=2$, and disjointness gives $2\nmid a_i-a_j$, i.e. $a_i\not\equiv a_j\pmod2$;
 - (T) if $3\mid m_i$ and $3\mid m_j$, then $3\mid g_{ij}$, so $g_{ij}=3$, and disjointness gives $a_i\not\equiv a_j\pmod3$.

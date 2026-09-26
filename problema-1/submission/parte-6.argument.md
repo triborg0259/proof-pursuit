@@ -11,13 +11,9 @@ the position with respect to the literature and what remains open. Nothing is de
 
 Fejes Tóth's conjecture from the Setting, for every $N$ and every $d$. For $N$ lines in $\mathbb{R}^d$, write
 $N = qd + s$ with $0 \le s < d$, and let
-$$
-M(N,d) = s \binom{q+1}{2} + (d-s) \binom{q}{2}.
-$$
+$$M(N,d) = s \binom{q+1}{2} + (d-s) \binom{q}{2}.$$
 Prove or disprove: every $N$ lines in $\mathbb{R}^d$ satisfy
-$$
-S \;\le\; \left( \binom{N}{2} - M(N,d) \right) \frac{\pi}{2}.
-$$
+$$S \;\le\; \left( \binom{N}{2} - M(N,d) \right) \frac{\pi}{2}.$$
 This is the value attained by splitting the lines as evenly as possible among $d$ mutually orthogonal
 directions. Settling any infinite family not already covered above counts as partial progress.
 
