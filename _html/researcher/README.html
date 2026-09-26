@@ -241,16 +241,41 @@ $0.48, prova completa del giocattolo); <code>runs/toy_fail</code>
 (tentativo → REJECT iniettato → secondo tentativo che corregge
 esattamente l’errore segnalato, 30 s, $0.25). Costo indicativo su
 problemi veri con effort high/xhigh: 1–5 $ e 1–5 min per tentativo.</p>
+<h2 id="shell---shell-sandboxfull-solo-backend-cli">Shell
+(<code>--shell sandbox|full</code>, solo backend cli)</h2>
+<pre><code>python3 researcher/researcher.py run --workdir runs/X --backend cli --shell sandbox --effort high --strict
+python3 researcher/researcher.py run --workdir runs/X --backend cli --shell full    --effort high --strict</code></pre>
+<ul>
+<li><code>sandbox</code>: Bash limitato a <code>python3</code> (più
+ls/cat/head/tail/wc), Read/Write/Edit, dentro
+<code>runs/X/sandbox/</code>; niente rete, pip, git, rm.
+<code>--permission-mode dontAsk</code>: ogni chiamata fuori allowlist è
+negata, non chiesta (<code>meta.permission_denials</code> le
+conta).</li>
+<li><code>full</code>: tutti gli strumenti di Claude Code, Bash libero,
+rete (WebSearch, WebFetch, curl), accesso all’intero repo
+(<code>--add-dir</code>),
+<code>--permission-mode bypassPermissions</code>. Il prompt obbliga a
+citare con precisione ciò che si legge online, a installare pacchetti
+solo nel <code>.venv</code>, e alle stesse regole di rigore del sandbox.
+La cartella di lavoro del modello è sempre <code>runs/X/sandbox/</code>.
+Limiti: <code>--max-turns</code> (150) e <code>--max-budget-usd</code>
+(15). <strong>Va lanciato da un terminale umano</strong> (in Claude
+Code: prefisso <code>!</code>): un agente che lancia un altro agente con
+permessi pre-autorizzati viene bloccato dal classificatore di sicurezza
+di Claude Code, anche in <code>--dry-run</code>.</li>
+</ul>
 <h2 id="limiti-noti">Limiti noti</h2>
 <ul>
 <li>La similarità dei <code>fatal_error</code> è lessicale: un Referee
 che riformula lo stesso errore con parole diverse può ritardare la
 rilevazione della stagnazione (il Researcher può comunque impostare
 <code>request_creative</code> da solo).</li>
-<li>Nessun uso di strumenti (<code>--tools ""</code>): il Researcher non
-esegue codice; se propone calcoli li allega in <code>code_used</code> e
-spetta al Referee eseguirli. Da valutare l’abilitazione di Bash in
-sandbox per le celle computazionali.</li>
+<li>Senza <code>--shell</code> il Researcher non esegue codice: allega i
+calcoli in <code>code_used</code> e spetta al Referee eseguirli.</li>
+<li>Il run reale con <code>--shell</code> su <code>runs/p2_q3</code>
+(U(Q_3) per enumerazione esaustiva) non è ancora stato eseguito: farlo
+da terminale.</li>
 </ul>
 </body>
 </html>
