@@ -1,0 +1,3 @@
+{"problem_id": "toy_x2", "highest_verified_cell": 0, "current_target": "cell_1",
+ "current_blocker": "Prove x^2 + 1 >= 2x for all real x", "verified_claims": [], "failed_attempts": [],
+ "stagnation_count": 0, "cell_status": {}}

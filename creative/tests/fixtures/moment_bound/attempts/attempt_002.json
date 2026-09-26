@@ -1,0 +1,6 @@
+{"attempt_id": "attempt_002", "target_cell": 1, "subgoal": "Refine the constant in the second-moment bound",
+ "approach": "Second-moment bound, refined constant.", "approach_family": "algebraic_reformulation",
+ "reason_for_choice": "tried a tighter constant after attempt_001 was rejected",
+ "proof_attempt": "(sketch, elided for fixture)", "claims_used": [], "sources_used": [], "code_used": [],
+ "claimed_progress": "second-moment bound, refined", "claimed_status": "LEMMA_CANDIDATE",
+ "self_reported_gaps": [], "request_creative": false}

@@ -1,0 +1,4 @@
+{"attempt_id": "attempt_001", "verdict": "REJECT", "highest_verified_cell": 0, "accepted_claims": [],
+ "fatal_error": "The second-moment bound is insufficient and does not imply the nonlinear target bound.",
+ "citation_issue": false, "computation_issue": false, "next_blocker": "need a bound beyond the second moment",
+ "reasoning_summary": "fixture: injected referee report"}

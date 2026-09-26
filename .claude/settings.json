@@ -6,10 +6,14 @@
       "Edit(tests/**)",
       "Edit(runs/**)",
       "Edit(tools/**)",
+      "Edit(creative/**)",
       "Bash(python3 researcher/researcher.py *)",
       "Bash(python3 tests/*)",
       "Bash(.venv/bin/python researcher/researcher.py *)",
-      "Bash(.venv/bin/python tests/*)"
+      "Bash(.venv/bin/python tests/*)",
+      "Bash(python3 -m creative.creative_agent *)",
+      "Bash(python3 -m unittest discover -s creative/tests *)",
+      "Bash(.venv/bin/python -m creative.creative_agent *)"
     ]
   }
 }
