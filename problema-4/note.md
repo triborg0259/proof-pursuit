@@ -70,3 +70,13 @@ riduzione dell'ambiguità 2, non forza bruta.
 - La domanda è nota come congettura di Z.-W. Sun sulle classi (coset) disgiunte (~2004); Sun ha risultati su
   $\max\gcd$ e sulla forma gruppale per $k$ piccoli. Erdős Problems potrebbe averla catalogata. Cercare anche
   "disjoint residue classes gcd of moduli" e lavori 2020–2026 (es. su arXiv) con calcoli certificati.
+
+## Letteratura arXiv (ricerca deterministica 2026-09-26, abstract letti; testo completo NON ancora letto)
+- **[2607.24655] J. Fornal, Yu-Chen Sun, "On the problem of large gcd for disjoint residue classes" (lug. 2026).**
+  Abstract: per $k$ classi disgiunte $\max\gcd(m_i,m_j)\gg k\exp\!\big(-(2+o(1))\sqrt{\log k/\log\log k}\big)$; metodo: grafo
+  completo con archi colorati dai gcd + lemma strutturale + partizione crivellante + inversione di Möbius + DFT.
+  **Conseguenza per C6(b):** il bound "noto" citato nell'enunciato ($\exp(-(2+o(1))\log k/\log\log k)$) è già stato
+  migliorato (radice quadrata all'esponente). Citare non vale; riprodurre la prova per esteso sì ("whatever its source").
+  Via realistica per C6(b): scaricare il paper (shell `full`) e riscrivere la dimostrazione completa, verificandola.
+  Il "grafo dei gcd" è la stessa struttura del nostro schema "clique per primo" per C2–C5.
+- [1511.04293], [2603.26043] (disjoint covering systems con un modulo ripetuto): contesto, non usati.

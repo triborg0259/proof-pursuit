@@ -4,3 +4,4 @@
 [bridge] orchestrator re-ran code_4.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: "totale cammini: 88\nvalli: ['00000', '11110', '11001', '
 [bridge] orchestrator re-ran code_5.py (python3, clean copy of the researcher sandbox): exit 0 in 0.0s; stdout: "valli: ['00000', '11110', '11001', '10101', '01101', '10
 [bridge] orchestrator re-ran code_6.py (python3, clean copy of the researcher sandbox): exit 0 in 13.4s; stdout: "identita' verificata su 200000 etichettature casuali; m
+[bridge] orchestrator re-ran code_7.py (python3, clean copy of the researcher sandbox): exit 0 in 60.5s; stdout: "seed 0: 88\nseed 1: 88\nseed 2: 88\nseed 3: 88\nseed 4:

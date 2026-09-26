@@ -42,6 +42,26 @@ def md_a_tex(percorso: Path, shift=2):
     return "\\begin{verbatim}\n" + percorso.read_text(encoding="utf-8") + "\n\\end{verbatim}\n"
 
 
+def md_testo_a_tex(testo_md, shift=3):
+    """Come md_a_tex ma da una stringa: usato per i pezzi di enunciato ritagliati (preambolo, singola parte)."""
+    tmp = ROOT / "report" / "_frammento.md"
+    tmp.write_text(testo_md, encoding="utf-8")
+    try:
+        return md_a_tex(tmp, shift)
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
+def pezzo_enunciato(numero_problema, k=None):
+    """k=None: il preambolo ufficiale (tutto ciò che precede la prima '## Parte'); altrimenti la sezione '## Parte k'.
+    Perché: la richiesta ufficiale di ogni cella va riportata alla lettera e con le formule rese, non parafrasata."""
+    testo = (ROOT / f"problema-{numero_problema}" / "enunciato.md").read_text(encoding="utf-8")
+    sezioni = re.split(r"(?m)^(?=## Parte )", testo)
+    if k is None:
+        return sezioni[0]
+    return next((sz for sz in sezioni[1:] if re.match(rf"## Parte {k}\b", sz)), "")
+
+
 def listing(codice, titolo):
     """Blocco di codice; `end{lstlisting}` nel testo spezzerebbe il blocco, quindi viene neutralizzato."""
     codice = codice.replace("\\end{lstlisting}", "\\end{lst listing}")
@@ -153,7 +173,9 @@ def fonti_arxiv(numero_problema, pid):
 def sezione_cella(pid, numero_problema, k, testo):
     stato, evidenza = stato_cella(numero_problema, k)
     parti = [f"\\subsection{{Cella {k} ({PUNTI[k]} punti) — stato: {tex(stato)}}}",
-             f"\\textbf{{Richiesta.}} {tex(testo)}\n", f"\\textbf{{Evidenza registrata in STATUS.md.}} {tex(evidenza) or '—'}\n"]
+             md_testo_a_tex(pezzo_enunciato(numero_problema, k), 3),
+             f"\\textbf{{Enunciato protetto dato agli agenti (state.json).}} \\texttt{{{tex(testo)}}}\n",
+             f"\\textbf{{Evidenza registrata in STATUS.md.}} {tex(evidenza) or '—'}\n"]
     sub = ROOT / f"problema-{numero_problema}" / "submission" / f"parte-{k}.md"
     parti.append("\\subsubsection{Consegna (prova)}\n" + (md_a_tex(sub, 3) if sub.exists() else "Nessuna bozza di consegna ancora scritta.\n"))
     runs = cartelle_run(pid, k)
@@ -164,8 +186,8 @@ def sezione_cella(pid, numero_problema, k, testo):
 
 def sezione_problema(pid):
     n = pid[1]
-    parti = [f"\\section{{Problema {n} — {tex(CELLE[pid]['title'])}}}", "\\subsection{Enunciato ufficiale}",
-             md_a_tex(ROOT / f"problema-{n}" / "enunciato.md", 2)]
+    parti = [f"\\section{{Problema {n} — {tex(CELLE[pid]['title'])}}}", "\\subsection{Enunciato ufficiale: preambolo e regole di consegna}",
+             md_testo_a_tex(pezzo_enunciato(n), 2)]
     for k, testo in CELLE[pid]["cells"].items():
         parti.append(sezione_cella(pid, n, k, testo))
     cert = certificati(n)

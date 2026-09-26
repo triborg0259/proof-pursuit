@@ -15,7 +15,7 @@ fatale; Creative: quando e perché è intervenuto) e il codice su cui il tentati
 fidata. DIMOSTRATO, CITATO, VERIFICATO SU INTERVALLO FINITO e CONGETTURA restano distinti. L'architettura del sistema
 è descritta nel README del repository.
 \section{Problema 1 — Angles between lines (Fejes Toth)}
-\subsection{Enunciato ufficiale}
+\subsection{Enunciato ufficiale: preambolo e regole di consegna}
 \subsubsection{Problema 1 --- Angles between
 lines}\label{problema-1-angles-between-lines}
 
@@ -57,7 +57,8 @@ a laptop, and it is rigorous: exact or interval arithmetic, or an
 argument that bounds the numerical error. Say clearly which cells you
 consider solved and which are partial.
 
-\paragraph{Parte 1 --- Lines in the
+\subsection{Cella 1 (1 punti) — stato: in corso}
+\subparagraph{Parte 1 --- Lines in the
 plane}\label{parte-1-lines-in-the-plane}
 
 \textbf{Punteggio:} 1 point · \textbf{Valutazione:} Judged
@@ -69,7 +70,21 @@ Prove that \[
 S(\ell_1, \ldots, \ell_N) \;\le\; \frac{\pi}{2} \cdot \left\lfloor \frac{N^2}{4} \right\rfloor .
 \]
 
-\paragraph{Parte 2 --- An orthogonality
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Let l\_1..l\_N be lines through the origin in R\textasciicircum{}2. Prove S(l\_1..l\_N) = sum\_\{i\textless{}j\} theta(l\_i,l\_j) \textless{}= (pi/2) * floor(N\textasciicircum{}2/4).}
+
+\textbf{Evidenza registrata in STATUS.md.} E1: max numerico = target per N≤10; prova via argomento di Crofton abbozzata (note.md, E), da scrivere e revisionare; definizione di \$S\$ confermata dal preambolo
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p1\_c1}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 2 (2 punti) — stato: in corso}
+\subparagraph{Parte 2 --- An orthogonality
 lemma}\label{parte-2-an-orthogonality-lemma}
 
 \textbf{Punteggio:} 2 points · \textbf{Valutazione:} Judged
@@ -82,7 +97,21 @@ be orthogonal only to its immediate neighbours in the list. Let
 \sum_{i=1}^{m-1} \theta(x_i, x_{i+1}) \;\le\; (m-2) \cdot \frac{\pi}{2},
 \] where \(\theta(x,y) = \arccos\,\lvert \langle x, y \rangle \rvert\).
 
-\paragraph{\texorpdfstring{Parte 3 --- \(d+1\) lines in
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Let m \textgreater{}= 2 and x\_1..x\_m unit vectors in R\textasciicircum{}\{m-1\} with \textless{}x\_i,x\_j\textgreater{} = 0 whenever |i-j| \textgreater{}= 2. Prove sum\_\{i=1\}\textasciicircum{}\{m-1\} theta(x\_i,x\_\{i+1\}) \textless{}= (m-2) pi/2, where theta(x,y) = arccos|\textless{}x,y\textgreater{}|.}
+
+\textbf{Evidenza registrata in STATUS.md.} prova per induzione abbozzata (note.md, F); casi m=2,3 verificati a mano
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p1\_c2}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 3 (3 punti) — stato: in analisi}
+\subparagraph{\texorpdfstring{Parte 3 --- \(d+1\) lines in
 \(\mathbb{R}^d\)}{Parte 3 --- d+1 lines in \textbackslash mathbb\{R\}\^{}d}}\label{parte-3-d1-lines-in-mathbbrd}
 
 \textbf{Punteggio:} 3 points · \textbf{Valutazione:} Judged
@@ -94,8 +123,22 @@ The first case in every dimension: one line more than the dimension,
 S \;\le\; \left( \binom{d+1}{2} - 1 \right) \cdot \frac{\pi}{2}.
 \]
 
-\paragraph{\texorpdfstring{Parte 4 --- Five lines in \(\mathbb{R}^3\),
-six in
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Let d \textgreater{}= 1. Prove that any d+1 lines through the origin in R\textasciicircum{}d satisfy S \textless{}= (C(d+1,2) - 1) pi/2.}
+
+\textbf{Evidenza registrata in STATUS.md.} triage in note.md; dipende dal lemma P2
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p1\_c3}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 4 (5 punti) — stato: in analisi}
+\subparagraph{\texorpdfstring{Parte 4 --- Five lines in
+\(\mathbb{R}^3\), six in
 \(\mathbb{R}^4\)}{Parte 4 --- Five lines in \textbackslash mathbb\{R\}\^{}3, six in \textbackslash mathbb\{R\}\^{}4}}\label{parte-4-five-lines-in-mathbbr3-six-in-mathbbr4}
 
 \textbf{Punteggio:} 5 points · \textbf{Valutazione:} Judged
@@ -106,7 +149,21 @@ repeats two of the coordinate axes. Prove that any \(5\) lines in
 \(\mathbb{R}^3\) satisfy \(S \le 4\pi\), and that any \(6\) lines in
 \(\mathbb{R}^4\) satisfy \(S \le 13\pi/2\).
 
-\paragraph{\texorpdfstring{Parte 5 --- \(d+2\) lines in
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Prove that any 5 lines through the origin in R\textasciicircum{}3 satisfy S \textless{}= 4 pi, and that any 6 lines in R\textasciicircum{}4 satisfy S \textless{}= 13 pi/2. A rigorous computation (exact/interval arithmetic, \textless{} 10 min, code included) is admissible.}
+
+\textbf{Evidenza registrata in STATUS.md.} triage; possibile via P5 o calcolo rigoroso
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p1\_c4}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 5 (8 punti) — stato: in analisi}
+\subparagraph{\texorpdfstring{Parte 5 --- \(d+2\) lines in
 \(\mathbb{R}^d\)}{Parte 5 --- d+2 lines in \textbackslash mathbb\{R\}\^{}d}}\label{parte-5-d2-lines-in-mathbbrd}
 
 \textbf{Punteggio:} 8 points · \textbf{Valutazione:} Judged
@@ -117,7 +174,21 @@ every \(d \ge 2\), any \(d+2\) lines in \(\mathbb{R}^d\) satisfy \[
 S \;\le\; \left( \binom{d+2}{2} - 2 \right) \frac{\pi}{2}.
 \]
 
-\paragraph{\texorpdfstring{Parte 6 --- \(N\) lines in
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Prove that for every d \textgreater{}= 2, any d+2 lines through the origin in R\textasciicircum{}d satisfy S \textless{}= (C(d+2,2) - 2) pi/2.}
+
+\textbf{Evidenza registrata in STATUS.md.} triage
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p1\_c5}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 6 (13 punti) — stato: in analisi}
+\subparagraph{\texorpdfstring{Parte 6 --- \(N\) lines in
 \(\mathbb{R}^d\)}{Parte 6 --- N lines in \textbackslash mathbb\{R\}\^{}d}}\label{parte-6-n-lines-in-mathbbrd}
 
 \textbf{Punteggio:} 13 points · \textbf{Valutazione:} Judged ·
@@ -135,78 +206,7 @@ infinite family not already covered above counts as partial progress.
 
 \emph{(Fine del problema 1. Punteggi: 1+2+3+5+8+13 = 32.)}
 
-\subsection{Cella 1 (1 punti) — stato: in corso}
-\textbf{Richiesta.} Let l\_1..l\_N be lines through the origin in R\textasciicircum{}2. Prove S(l\_1..l\_N) = sum\_\{i\textless{}j\} theta(l\_i,l\_j) \textless{}= (pi/2) * floor(N\textasciicircum{}2/4).
-
-\textbf{Evidenza registrata in STATUS.md.} E1: max numerico = target per N≤10; prova via argomento di Crofton abbozzata (note.md, E), da scrivere e revisionare; definizione di \$S\$ confermata dal preambolo
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-\paragraph{Run \texttt{p1\_c1}}
-
-\subsubsection{Codice su cui poggia il tentativo}
-Nessun codice nei tentativi.
-
-\subsection{Cella 2 (2 punti) — stato: in corso}
-\textbf{Richiesta.} Let m \textgreater{}= 2 and x\_1..x\_m unit vectors in R\textasciicircum{}\{m-1\} with \textless{}x\_i,x\_j\textgreater{} = 0 whenever |i-j| \textgreater{}= 2. Prove sum\_\{i=1\}\textasciicircum{}\{m-1\} theta(x\_i,x\_\{i+1\}) \textless{}= (m-2) pi/2, where theta(x,y) = arccos|\textless{}x,y\textgreater{}|.
-
-\textbf{Evidenza registrata in STATUS.md.} prova per induzione abbozzata (note.md, F); casi m=2,3 verificati a mano
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-\paragraph{Run \texttt{p1\_c2}}
-
-\subsubsection{Codice su cui poggia il tentativo}
-Nessun codice nei tentativi.
-
-\subsection{Cella 3 (3 punti) — stato: in analisi}
-\textbf{Richiesta.} Let d \textgreater{}= 1. Prove that any d+1 lines through the origin in R\textasciicircum{}d satisfy S \textless{}= (C(d+1,2) - 1) pi/2.
-
-\textbf{Evidenza registrata in STATUS.md.} triage in note.md; dipende dal lemma P2
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-\paragraph{Run \texttt{p1\_c3}}
-
-\subsubsection{Codice su cui poggia il tentativo}
-Nessun codice nei tentativi.
-
-\subsection{Cella 4 (5 punti) — stato: in analisi}
-\textbf{Richiesta.} Prove that any 5 lines through the origin in R\textasciicircum{}3 satisfy S \textless{}= 4 pi, and that any 6 lines in R\textasciicircum{}4 satisfy S \textless{}= 13 pi/2. A rigorous computation (exact/interval arithmetic, \textless{} 10 min, code included) is admissible.
-
-\textbf{Evidenza registrata in STATUS.md.} triage; possibile via P5 o calcolo rigoroso
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-\paragraph{Run \texttt{p1\_c4}}
-
-\subsubsection{Codice su cui poggia il tentativo}
-Nessun codice nei tentativi.
-
-\subsection{Cella 5 (8 punti) — stato: in analisi}
-\textbf{Richiesta.} Prove that for every d \textgreater{}= 2, any d+2 lines through the origin in R\textasciicircum{}d satisfy S \textless{}= (C(d+2,2) - 2) pi/2.
-
-\textbf{Evidenza registrata in STATUS.md.} triage
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-\paragraph{Run \texttt{p1\_c5}}
-
-\subsubsection{Codice su cui poggia il tentativo}
-Nessun codice nei tentativi.
-
-\subsection{Cella 6 (13 punti) — stato: in analisi}
-\textbf{Richiesta.} OPEN. For N lines in R\textasciicircum{}d write N = qd+s, 0 \textless{}= s \textless{} d, M(N,d) = s C(q+1,2) + (d-s) C(q,2). Prove or disprove: S \textless{}= (C(N,2) - M(N,d)) pi/2. Settling any infinite family not covered by cells 1-5 counts as partial progress.
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{OPEN. For N lines in R\textasciicircum{}d write N = qd+s, 0 \textless{}= s \textless{} d, M(N,d) = s C(q+1,2) + (d-s) C(q,2). Prove or disprove: S \textless{}= (C(N,2) - M(N,d)) pi/2. Settling any infinite family not covered by cells 1-5 counts as partial progress.}
 
 \textbf{Evidenza registrata in STATUS.md.} triage; solo ricerca controesempi / famiglie infinite
 
@@ -226,7 +226,7 @@ Nessun codice nei tentativi.
 \item \cite{1204.3850v1} Simple Agents Learn to Find Their Way: An Introduction on Mapping Polygons — Jérémie Chalopin, Shantanu Das, Yann Disser, Matúš Mihalák (2012). \emph{Query}: \texttt{angles between lines}.
 \end{itemize}
 \section{Problema 2 — Uphill paths on the hypercube}
-\subsection{Enunciato ufficiale}
+\subsection{Enunciato ufficiale: preambolo e regole di consegna}
 \subsubsection{Problema 2 --- Uphill paths on the
 hypercube}\label{problema-2-uphill-paths-on-the-hypercube}
 
@@ -286,7 +286,8 @@ code; it must run in under 10 minutes on a laptop, and you must explain
 why the computation proves the bound. Say clearly which cells you
 consider solved and which are partial.
 
-\paragraph{\texorpdfstring{Parte 1 (C1) --- \(U(Q_3)\) and
+\subsection{Cella 1 (1 punti) — stato: revisionato}
+\subparagraph{\texorpdfstring{Parte 1 (C1) --- \(U(Q_3)\) and
 \(U(Q_4)\)}{Parte 1 (C1) --- U(Q\_3) and U(Q\_4)}}\label{parte-1-c1-uq_3-and-uq_4}
 
 \textbf{Punteggio:} 1 point · \textbf{Valutazione:} Checked instantly
@@ -295,54 +296,7 @@ The two smallest interesting cubes: \(Q_3\) has \(8\) vertices and
 \(12\) edges, \(Q_4\) has \(16\) vertices and \(32\) edges. Determine
 \(U(Q_3)\) and \(U(Q_4)\).
 
-\paragraph{\texorpdfstring{Parte 2 (C2) ---
-\(U(Q_5)\)}{Parte 2 (C2) --- U(Q\_5)}}\label{parte-2-c2-uq_5}
-
-\textbf{Punteggio:} 2 points · \textbf{Valutazione:} Checked instantly
-
-\(Q_5\) has \(32\) vertices and \(80\) edges. Determine \(U(Q_5)\).
-
-\paragraph{\texorpdfstring{Parte 3 (C3) ---
-\(U(Q_6)\)}{Parte 3 (C3) --- U(Q\_6)}}\label{parte-3-c3-uq_6}
-
-\textbf{Punteggio:} 3 points · \textbf{Valutazione:} Checked instantly
-
-\(Q_6\) has \(64\) vertices and \(192\) edges. Determine \(U(Q_6)\).
-
-\paragraph{\texorpdfstring{Parte 4 (C4) --- \(U(Q_7)\) and
-\(U(Q_8)\)}{Parte 4 (C4) --- U(Q\_7) and U(Q\_8)}}\label{parte-4-c4-uq_7-and-uq_8}
-
-\textbf{Punteggio:} 5 points · \textbf{Valutazione:} Checked instantly
-
-Two larger cubes: \(Q_7\) has \(128\) vertices and \(448\) edges,
-\(Q_8\) has \(256\) vertices and \(1024\) edges. Determine \(U(Q_7)\)
-and \(U(Q_8)\).
-
-\paragraph{\texorpdfstring{Parte 5 (C5) --- Bounds for
-\(U(Q_9)\)}{Parte 5 (C5) --- Bounds for U(Q\_9)}}\label{parte-5-c5-bounds-for-uq_9}
-
-\textbf{Punteggio:} 8 points · \textbf{Valutazione:} Judged
-
-\(Q_9\) has \(512\) vertices and \(2304\) edges. The best bounds known
-to the organisers are \[
-2368 \le U(Q_9) \le 2400;
-\] the lower bound is unpublished. Improve either one: prove that
-\(U(Q_9) \ge 2369\), or exhibit a labelling of \(Q_9\) with at most
-\(2399\) uphill paths.
-
-\paragraph{\texorpdfstring{Parte 6 (C6) ---
-\(U(Q_9)\)}{Parte 6 (C6) --- U(Q\_9)}}\label{parte-6-c6-uq_9}
-
-\textbf{Punteggio:} 13 points · \textbf{Valutazione:} Judged ·
-\textbf{Open question}
-
-The same cube, settled completely. Determine \(U(Q_9)\) exactly, with
-proof of both bounds.
-
-\emph{(Fine del problema 2. Punteggi: 1+2+3+5+8+13 = 32.)}
-
-\subsection{Cella 1 (1 punti) — stato: revisionato}
-\textbf{Richiesta.} Determine U(Q\_3) and U(Q\_4), each with an explicit optimal labelling (list of the 2\textasciicircum{}d vertices in increasing label order as 0/1 strings).
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine U(Q\_3) and U(Q\_4), each with an explicit optimal labelling (list of the 2\textasciicircum{}d vertices in increasing label order as 0/1 strings).}
 
 \textbf{Evidenza registrata in STATUS.md.} \$U(Q\_3)=14\$, \$U(Q\_4)=34\$: prove a mano rilette passo per passo + verifiche esatte indipendenti; bozza in submission/parte-1.md
 
@@ -1165,12 +1119,395 @@ if __name__ == "__main__":
 \end{lstlisting}
 
 \subsection{Cella 2 (2 punti) — stato: bozza pronta}
-\textbf{Richiesta.} Determine U(Q\_5) exactly and exhibit an optimal labelling of Q\_5 in the required format.
+\subparagraph{\texorpdfstring{Parte 2 (C2) ---
+\(U(Q_5)\)}{Parte 2 (C2) --- U(Q\_5)}}\label{parte-2-c2-uq_5}
 
-\textbf{Evidenza registrata in STATUS.md.} \$U(Q\_5)=88\$: riduzione a (★) riletta a mano + 3 enumerazioni concordi; etichettatura verificata; verdetto Referee automatico in corso
+\textbf{Punteggio:} 2 points · \textbf{Valutazione:} Checked instantly
+
+\(Q_5\) has \(32\) vertices and \(80\) edges. Determine \(U(Q_5)\).
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine U(Q\_5) exactly and exhibit an optimal labelling of Q\_5 in the required format.}
+
+\textbf{Evidenza registrata in STATUS.md.} \$U(Q\_5)=88\$: riduzione a (★) riletta a mano + 3 enumerazioni concordi; etichettatura verificata; Referee automatico: giudice A PASS (2 run), giudice B PARTIAL solo per regole segnaposto → terzo run con regole ufficiali in corso; bozza in submission/parte-2.md
 
 \subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
+\paragraph{Problema 2 --- Parte 2 (C2) --- bozza di
+consegna}\label{problema-2-parte-2-c2-bozza-di-consegna}
+
+\textbf{Stato dichiarato: BOZZA PRONTA, da revisionare.} Valore
+\(U(Q_5)=88\) con etichettatura esplicita; lower bound per riduzione a
+un enunciato finito (★) confutato per enumerazione esaustiva (tre
+implementazioni concordi, una indipendente per metodo). Verdetto del
+Referee automatico: giudice A (matematica) PASS su entrambe le direzioni
+in due run indipendenti; giudice B (evidenze): vedi §5. Revisione umana
+della riduzione: fatta lemma per lemma (STATUS.md).
+
+\subparagraph{1. Risultato e ambito}\label{risultato-e-ambito}
+
+\(U(Q_5) = 88 = |E(Q_5)| + 8\). Etichettatura ottima (ordine crescente
+di etichetta; posizione \(i\) della stringa = coordinata \(i\);
+convenzione irrilevante perché le permutazioni di coordinate sono
+automorfismi di \(Q_5\)), con 8 valli:
+\texttt{00000,\ 11110,\ 11001,\ 10101,\ 01101,\ 10011,\ 01011,\ 00111}
+sono le etichette 1--8 (le valli), seguite dalle foglie e dai picchi
+come nella lista completa in §2 (tabella dell'upper bound). La lista
+completa a 32 elementi è prodotta e verificata da
+\texttt{certificati/costruzione\_88.py} e
+\texttt{certificati/verifica\_dfs\_88.py}.
+
+\subparagraph{2. Dimostrazione}\label{dimostrazione}
+
+\emph{(Testo del tentativo
+\texttt{runs/p2\_q5/attempts/attempt\_001.json} del Researcher, riletto
+lemma per lemma dal team; le verifiche computazionali sono state
+rieseguite dall'orchestratore in
+\texttt{runs/p2\_q5/verifica/attempt\_001/}.)}
+
+\paragraph{\texorpdfstring{\(U(Q_5) = 88\)}{U(Q\_5) = 88}}\label{uq_5-88}
+
+\textbf{Conventions.} \(V(Q_5)=\{0,1\}^5\), \(u\sim v\) iff they differ
+in exactly one coordinate; \(|V|=32\), \(|E|=80\), every vertex has
+degree \(5\). In a 0/1 string the \(i\)-th character from the left is
+coordinate \(i\) (irrelevant for the count: coordinate permutations are
+automorphisms). For a labelling \(f\), orient each edge from the smaller
+to the larger label (\(u\to v\) iff \(uv\in E\), \(f(u)<f(v)\));
+\(\deg^-(v)=\#\{u:u\to v\}\), \(\deg^+(v)=\#\{w:v\to w\}\),
+\(\deg^-(v)+\deg^+(v)=5\). Let \(p(v)\) be the number of uphill paths
+whose last vertex is \(v\). A \emph{valley} is a vertex with
+\(\deg^-=0\); a \emph{peak} is a vertex with \(\deg^+=0\). The vertex
+with label \(1\) is a valley, so \(v:=\#\text{valleys}\ge1\).
+
+\subparagraph{0. Preliminaries (restated with proof for
+self-containedness)}\label{preliminaries-restated-with-proof-for-self-containedness}
+
+\textbf{Lemma 1 (recursion).}
+\(p(v)=[v\text{ valley}]+\sum_{u\to v}p(u)\) and the total number of
+uphill paths is \(T=\sum_v p(v)\).
+
+\emph{Proof.} An uphill path ending at \(v\) has length \(1\) --- then
+it is \((v)\) and \(v\) is a valley; conversely a valley gives exactly
+this path --- or length \(\ge2\); deleting \(v\) gives an uphill path
+ending at its penultimate vertex \(u\) with \(u\to v\); conversely
+appending \(v\) to an uphill path ending at \(u\) with \(u\to v\) gives
+an uphill path ending at \(v\) (the increasing condition is exactly
+\(f(u)<f(v)\)). These maps are mutually inverse and different \(u\) give
+disjoint sets. Every uphill path has a unique last vertex. \(\square\)
+
+\textbf{Lemma 2.} For every vertex \(v\): \(p(v)\ge1\), and
+\(p(v)\ge\deg^-(v)\).
+
+\emph{Proof.} From \(v\) move repeatedly to a neighbour with smaller
+label while one exists; labels strictly decrease, so this stops at a
+valley; the reversed walk is an uphill path ending at \(v\). Hence
+\(p(v)\ge1\) for all \(v\), and by Lemma 1,
+\(p(v)\ge\sum_{u\to v}p(u)\ge\deg^-(v)\). \(\square\)
+
+\subparagraph{1. The excess identity}\label{the-excess-identity}
+
+Define the \textbf{excess} \(X:=\sum_{(u\to w)\in E}\bigl(p(u)-1\bigr)\)
+(sum over all \(80\) oriented edges). By Lemma 2 every term is \(\ge0\).
+
+\textbf{Lemma 3.} \(T=|E|+v+X = 80+v+X\).
+
+\emph{Proof.} By Lemma 1,
+\(T=\sum_v p(v)=v+\sum_{w}\sum_{u\to w}p(u)=v+\sum_{(u\to w)\in E}\bigl(1+(p(u)-1)\bigr)=v+|E|+X\),
+since each edge is counted once, at its head. \(\square\)
+
+Grouping the terms of \(X\) by tail: \(X=\sum_u \deg^+(u)\,(p(u)-1)\).
+Call \(u\) \textbf{heavy} if \(\deg^+(u)\ge1\) and \(p(u)\ge2\); let
+\(H\) be the set of heavy vertices and \(c(u):=\deg^+(u)(p(u)-1)\) its
+contribution, so \(X=\sum_{u\in H}c(u)\). Vertices with \(p=1\) are
+called \textbf{light}.
+
+\textbf{Lemma 4 (structure of light vertices).} If \(p(u)=1\) then
+either \(u\) is a valley or \(\deg^-(u)=1\) and its unique in-neighbour
+is light. Consequently, for any set \(L\) of light vertices, the
+subgraph of \(Q_5\) induced by \(L\) is acyclic.
+
+\emph{Proof.} By Lemma 2, \(\deg^-(u)\le p(u)=1\). If \(\deg^-(u)=1\)
+with in-neighbour \(u'\), Lemma 1 gives \(1=p(u)=p(u')\). For the second
+claim: a cycle inside \(L\) contains a vertex of maximal label, which
+has two in-neighbours on the cycle, contradicting \(\deg^-\le1\).
+\(\square\)
+
+\textbf{Lemma 5 (every heavy vertex costs at least 3).} For every heavy
+\(u\), \(c(u)\ge3\). Moreover, writing \(i=\deg^-(u)\) (so
+\(\deg^+(u)=5-i\), \(1\le i\le4\) since \(\deg^+\ge1\) and \(p\ge2\)
+excludes valleys): - if \(i=1\): \(p(u)=p(u')\ge2\) for the in-neighbour
+\(u'\), which is then itself heavy (\(\deg^+(u')\ge1\) because
+\(u'\to u\)), and \(c(u)=4(p(u)-1)\ge4\); - if \(i=2\):
+\(c(u)=3(p(u)-1)\ge3\), with equality iff \(p(u)=2\) iff both
+in-neighbours are light; - if \(i=3\): \(c(u)=2(p(u)-1)\ge4\) (as
+\(p(u)\ge3\)), with equality iff all three in-neighbours are light; - if
+\(i=4\): \(c(u)=p(u)-1\ge3\), with equality iff all four in-neighbours
+are light.
+
+\emph{Proof.} Direct from Lemma 2 (\(p(u)\ge i\)) and Lemma 1
+(\(p(u)=\sum_{u'\to u}p(u')\) with each \(p(u')\ge1\); equality
+\(p(u)=i\) iff every in-neighbour has \(p=1\)). Note also: if an
+in-neighbour \(u'\) of a heavy \(u\) has \(p(u')\ge2\) then \(u'\) is
+heavy (it has \(\deg^+\ge1\)). \(\square\)
+
+\textbf{Corollary 6.} \(X\in\{0\}\cup[3,\infty)\), and \(X\le 7\) forces
+\(|H|\le2\).
+
+\textbf{Lemma 7 (in-degree count).} Let \(P\) be the set of peaks,
+\(q=|P|\), \(s_H=\sum_{u\in H}\deg^-(u)\). If every non-heavy non-peak
+vertex is light (which holds automatically for every vertex with
+\(\deg^+\ge1\) that is not heavy, by definition of heavy), then
+\[4q=48+v+|H|-s_H .\]
+
+\emph{Proof.} Peaks have \(\deg^-=5\); no peak is heavy (heavy needs
+\(\deg^+\ge1\)) and no valley is heavy. The vertices outside \(P\cup H\)
+are light: valleys (\(\deg^-=0\), \(v\) of them) and light non-valleys
+(\(\deg^-=1\) by Lemma 4, \(32-q-|H|-v\) of them). Summing in-degrees,
+\(80=\sum_u\deg^-(u)=5q+s_H+(32-q-|H|-v)\), i.e.~\(4q=48+v+|H|-s_H\).
+\(\square\)
+
+Also note: \textbf{peaks form an independent set} (if two peaks were
+adjacent, the one with the smaller label would have \(\deg^+\ge1\)).
+
+\subparagraph{\texorpdfstring{2. Case analysis: every labelling with
+\(T\le87\) has one of four
+structures}{2. Case analysis: every labelling with T\textbackslash le87 has one of four structures}}\label{case-analysis-every-labelling-with-tle87-has-one-of-four-structures}
+
+Assume \(T\le87\), i.e.~(Lemma 3) \(v+X\le7\) with \(v\ge1\), so
+\(X\le6\). By Corollary 6, \(X\in\{0,3,4,5,6\}\) and \(|H|\le2\).
+
+\textbf{Case \(|H|=2\).} Then \(X\ge6\), so \(X=6\), \(v=1\), and both
+heavy vertices have \(c=3\); by Lemma 5 each has
+\((\deg^-,p)\in\{(2,2),(4,4)\}\), so \(s_H\in\{4,6,8\}\) and Lemma 7
+gives \(4q=48+1+2-s_H\in\{47,45,43\}\), none divisible by \(4\).
+\textbf{Impossible.}
+
+\textbf{Case \(|H|=0\).} Then \(X=0\), \(T=80+v\), and Lemma 7 gives
+\(4q=48+v\), so \(v\equiv0\pmod 4\); with \(T\le87\) this forces
+\(v=4\), \(q=13\), \(T=84\). Every non-peak vertex is light; so
+\(F:=V\setminus P\) (19 vertices) induces an acyclic subgraph (Lemma 4),
+and \(P\) is an independent set of size \(13\). \textbf{(Structure A.)}
+
+\textbf{Case \(|H|=1\), \(H=\{u\}\).} Then \(X=c(u)\le6\). By Lemma 5,
+if some in-neighbour of \(u\) had \(p\ge2\) it would be heavy,
+contradicting \(|H|=1\); hence all in-neighbours of \(u\) are light and
+\(p(u)=\deg^-(u)=:i\); \(i=1\) is excluded (it needs a heavy
+in-neighbour). So \((i,c(u))\in\{(2,3),(3,4),(4,3)\}\), and Lemma 7 with
+\(|H|=1\), \(s_H=i\) gives \(4q=49+v-i\): - \(i=2\): \(4q=47+v\),
+\(v\equiv1\pmod4\), and \(v+X=v+3\le7\) gives \(v=1\), \(q=12\),
+\(T=84\). \textbf{(Structure B.)} - \(i=3\): \(4q=46+v\),
+\(v\equiv2\pmod4\), \(v+4\le7\) gives \(v=2\), \(q=12\), \(T=86\).
+\textbf{(Structure C.)} - \(i=4\): \(4q=45+v\), \(v\equiv3\pmod4\),
+\(v+3\le7\) gives \(v=3\), \(q=12\), \(T=86\). \textbf{(Structure D.)}
+
+In each of B, C, D: the out-neighbours \(w\) of \(u\) satisfy
+\(p(w)\ge p(u)\ge2\) (Lemma 1), so if such a \(w\) had \(\deg^+(w)\ge1\)
+it would be heavy; hence \textbf{all out-neighbours of \(u\) are peaks}.
+The in-neighbours of \(u\) are non-peaks. All vertices other than \(u\)
+and the peaks are light, so by Lemma 4 the set
+\(L:=V\setminus(P\cup\{u\})\) induces an acyclic subgraph; \(P\) is an
+independent set of size \(12\) and \(u\notin P\).
+
+\textbf{Summary.} If \(T\le 87\) then there exist an independent set
+\(I\subseteq V(Q_5)\) and a vertex \(u\notin I\) such that
+\(V\setminus(I\cup\{u\})\) induces an acyclic subgraph, where either
+\(|I|=12\) (structures B, C, D with \(I=P\)), or \(|I|=13\) and
+\(V\setminus I\) is acyclic (structure A) --- in which case, choosing
+any \(u_0\in I\) and \(I'=I\setminus\{u_0\}\), the pair \((I',u_0)\) has
+\(|I'|=12\), \(I'\) independent, \(u_0\notin I'\), and
+\(V\setminus(I'\cup\{u_0\})=V\setminus I\) acyclic. So in all cases:
+
+\begin{quote}
+\textbf{(★)} there is an independent set \(I\) of \(Q_5\) with
+\(|I|=12\) and a vertex \(u\notin I\) such that \(Q_5-(I\cup\{u\})\) is
+a forest.
+\end{quote}
+
+\subparagraph{\texorpdfstring{3. Exact finite verification: (★) never
+holds in
+\(Q_5\)}{3. Exact finite verification: (★) never holds in Q\_5}}\label{exact-finite-verification-never-holds-in-q_5}
+
+\textbf{Reduction.} The maps \(x\mapsto x\oplus t\) are automorphisms of
+\(Q_5\) and act transitively on vertices, and (★) is invariant under
+automorphisms. Hence it suffices to check all independent \(12\)-sets
+\(I\) containing the vertex \(00000\) and all \(u\notin I\).
+
+\textbf{Computation 1} (\texttt{verifica\_q5\_indipendenti.py}, exact
+integer arithmetic): backtracking enumerates all independent sets of
+size \(12\) containing \(0\) in increasing vertex order (a vertex may be
+added iff it is neither in the set nor adjacent to it), and for each of
+the \(20\) vertices \(u\notin I\) tests acyclicity of the induced
+subgraph on the \(19\) remaining vertices by the exact criterion
+\emph{\#edges = \#vertices − \#components}. Output:
+\texttt{insiemi\ indipendenti\ di\ taglia\ 12\ contenenti\ 0:\ 1377;\ coppie\ (I,u)\ esaminate:\ 27540;\ complementi\ aciclici\ trovati:\ 0;\ tempo\ 0.24s}.
+
+\textbf{Computation 2} (\texttt{verifica\_q5\_bipartita.py}, independent
+method, no symmetry reduction): every independent set is \(A\cup B\)
+with \(A\) a subset of the 16 even-weight vertices and \(B\) a subset of
+the odd-weight vertices not adjacent to \(A\); the script scans all
+\(2^{16}\) bitmasks \(A\), all \(B\) of size \(12-|A|\), and tests
+acyclicity by union--find over the edge list. Output:
+\texttt{insiemi\ indipendenti\ di\ taglia\ 12\ (tutti):\ 3672;\ coppie\ (I,u)\ esaminate:\ 73440;\ complementi\ aciclici:\ 0;\ tempo\ 0.39s}.
+Consistency: \(3672\cdot 12/32=1377\), as vertex-transitivity predicts.
+
+Hence (★) is false, so no labelling of \(Q_5\) has \(T\le87\):
+\[U(Q_5)\ge 88.\]
+
+(The counts also make the impossibility of the \(X=0\), \(v=4\)
+structure transparent by hand: an independent \(12\)- or \(13\)-set
+turns out to lie in one parity class except for a few mixed sets, and
+any three even vertices contain two at distance \(2\), which share two
+odd neighbours and thus close a \(4\)-cycle in the complement; but the
+proof relies only on the exhaustive check above.)
+
+\subparagraph{4. Upper bound: a labelling with exactly 88 uphill
+paths}\label{upper-bound-a-labelling-with-exactly-88-uphill-paths}
+
+Let \(R=\{00000,11110\}\) and let \(P\) be the \(14\) even-weight
+vertices other than \(R\). \(P\) is independent (even-weight vertices
+are pairwise non-adjacent). The complement
+\(F=R\cup\{\text{16 odd vertices}\}\) induces exactly the \(10\) edges
+from \(R\) to the odd vertices (the two vertices of \(R\) are at
+distance \(4\), so their neighbourhoods
+\(\{10000,01000,00100,00010,00001\}\) and
+\(\{01110,10110,11010,11100,11111\}\) are disjoint): \(F\) is a forest
+with \(18\) vertices, \(10\) edges and \(8\) components, namely the two
+stars centred at \(R\) and the \(6\) isolated odd vertices
+\(11001,10101,01101,10011,01011,00111\).
+
+Labelling (increasing label order; coordinate 1 on the left):
+
+\begin{verbatim}
+00000,11110,11001,10101,01101,10011,01011,00111,
+10000,01000,00100,11100,00010,11010,10110,01110,00001,11111,
+11000,10100,01100,10010,01010,00110,10001,01001,00101,11101,00011,11011,10111,01111
+\end{verbatim}
+
+i.e.~labels \(1\)--\(2\): the star centres; \(3\)--\(8\): the six
+isolated odd vertices; \(9\)--\(18\): the ten star leaves;
+\(19\)--\(32\): the fourteen peaks \(P\).
+
+\emph{Count.} The \(8\) vertices with labels \(1\)--\(8\) have all
+neighbours higher (their \(F\)-neighbours, if any, are leaves labelled
+\(9\)--\(18\); their other neighbours are in \(P\)): they are valleys,
+\(p=1\). Each leaf (labels \(9\)--\(18\)) has exactly one lower
+neighbour, its star centre, so \(p=1\). Each peak has all \(5\)
+neighbours lower, all in \(F\) with \(p=1\), so \(p=5\). Total
+\(T=18\cdot1+14\cdot5=88\). Verified exactly by two independent scripts:
+\texttt{costruzione\_88.py} (recursion of Lemma 1) and
+\texttt{verifica\_dfs\_88.py} (explicit DFS enumeration of all uphill
+paths from the \(8\) valleys), both printing \(88\) and the same \(8\)
+valleys.
+
+\subparagraph{5. Conclusion}\label{conclusion}
+
+\(U(Q_5)=88=|E|+8\), attained by the labelling in §4. Consistency checks
+(not part of the proof): the same Lemmas 3--7 for \(Q_4\) give
+\(c(u)\ge2\) and \(3q=16+v\), reproducing \(U(Q_4)=34\) with \(v=2\);
+for \(Q_3\) they reproduce \(U(Q_3)=14\). The identity \(T=80+v+X\) and
+the fact \(X\in\{0\}\cup[3,\infty)\) were also sanity-checked on
+\(200{,}000\) random labellings of \(Q_5\) (\texttt{sanity\_eccesso.py};
+the smallest positive \(X\) seen was \(14\)). Simulated annealing over
+labellings (\texttt{ricottura\_q5.py}, 200k swap moves per seed, exact
+scoring) never went below \(88\) in any seed run so far (evidence only).
+
+\subparagraph{3. Verifica: istruzioni, dipendenze,
+tempi}\label{verifica-istruzioni-dipendenze-tempi}
+
+Dipendenze: Python 3 standard, nessun pacchetto. Tutti gli script usano
+aritmetica intera esatta.
+
+\begin{verbatim}
+cd problema-2/certificati
+python3 costruzione_88.py                 # costruisce l'etichettatura e conta 88 cammini (< 0.1 s)
+python3 verifica_dfs_88.py                # conteggio indipendente per DFS esplicita (< 0.1 s)
+python3 verifica_q5_indipendenti.py       # (★) confutata: 1377 insiemi con 0, 27540 coppie, 0 aciclici (0.47 s)
+python3 verifica_q5_bipartita.py          # (★) confutata senza riduzione per simmetria: 3672 / 73440 / 0 (0.71 s)
+python3 q5_stella_verifica_indipendente.py  # (★) confutata con metodo diverso (potatura delle foglie): 3672 / 73440 / 0 (0.40 s)
+\end{verbatim}
+
+Tempi misurati su portatile (riesecuzione fidata dell'orchestratore,
+2026-09-26). Codice del tentativo: - \texttt{code\_1} (python, rigore
+\texttt{exact}): Exact count of uphill paths of a labelling of Q\_d via
+the recursion p(v) = {[}valley{]} + sum of p over lower neighbours
+(shared module). - \texttt{code\_2} (python, rigore \texttt{exact}):
+Certificate 1 for the lower bound: enumerate all independent 12-sets of
+Q\_5 containing vertex 0 (1377 sets, symmetry reduction by XOR
+translations) and, for eac - \texttt{code\_3} (python, rigore
+\texttt{exact}): Certificate 2 for the lower bound, independent method
+and no symmetry reduction: all independent 12-sets as A ∪ B (A ⊆ even
+class over all 2\^{}16 bitmasks, B ⊆ od - \texttt{code\_4} (python,
+rigore \texttt{exact}): Builds the 88-path labelling (peaks = even
+vertices minus 00000, 11110) and counts exactly with the recursion:
+prints 88, the 8 valleys and the 32-vertex order. - \texttt{code\_5}
+(python, rigore \texttt{exact}): Independent verification of the
+submitted labelling by explicit DFS enumeration of every uphill path
+from each valley (string-based, no shared code): prints 88. -
+\texttt{code\_6} (python, rigore \texttt{exact}): Sanity check (evidence
+only, not part of the proof) of the identity T = 80 + \#valleys + X and
+of X ∈ \{0\} ∪ {[}3,∞) on 200000 random labellings of Q\_5 (all asserts
+- \texttt{code\_7} (python, rigore \texttt{float\_exploration\_only}):
+Simulated annealing over labellings (exploration only): best value found
+88 in every seed run (seeds 0-5 in a first run, seeds 0-3 in a second
+run; 200k swap mo
+
+\subparagraph{4. Fonti e contributo}\label{fonti-e-contributo}
+
+\begin{itemize}
+\tightlist
+\item
+  Lemma di conteggio \(p(v)=[\text{valle}]+\sum_{u\to v}p(u)\) e bound
+  \(\#\ge|E|+\#\text{valli}\): nostri (parte 1, ridimostrati qui).
+\item
+  Contesto: IMO 2022 P6 (griglia), citato solo come contesto; nessun
+  risultato preso dalla letteratura.
+\item
+  Ricerca arXiv deterministica (\texttt{runs/p2\_q5/literature.json},
+  \texttt{problema-2/fonti/arxiv.json}): nessun lavoro sui cammini in
+  salita sull'ipercubo; il problema risulta inedito. Contributo
+  interamente nostro.
+\end{itemize}
+
+\subparagraph{5. Limiti e parti
+irrisolte}\label{limiti-e-parti-irrisolte}
+
+\begin{itemize}
+\tightlist
+\item
+  Gap dichiarati dal Researcher nel tentativo:
+\item
+  The lower bound is computer-assisted at one point: statement (★) (no
+  independent 12-set I and vertex u with Q\_5 − (I ∪ \{u\}) acyclic) is
+  proved by exhaustive enumeration, not by hand. The reduction to (★) is
+  fully by hand; the enumeration is exact, covers the whole finite set
+  (all 3672 independent 12-sets × 20 outside vertices), runs in
+  \textless{} 1 s and was done by two methods. A hand proof of (★) was
+  only sketched (parity-class argument), not written out.
+\item
+  In Lemma 7 / §2 I use that every non-peak, non-heavy vertex is light;
+  this is immediate from the definitions (a vertex with deg\^{}+ ≥ 1 and
+  p ≥ 2 is heavy by definition) but the Referee should check that no
+  case escapes: valleys (p=1), peaks (deg\^{}+=0), heavy, light ---
+  these four classes cover V.
+\item
+  The step `out-neighbours of the unique heavy vertex u are peaks'
+  (needed for nothing in the final finite check, since (★) only uses I
+  independent of size 12 and u ∉ I) is included for completeness; the
+  final reduction deliberately uses only the weaker necessary
+  conditions, so any slip there does not affect the proof.
+\item
+  Simulated annealing results are exploration only and play no role in
+  the proof; the second SA run (20 seeds) was still running when this
+  report was written (4 seeds completed, all at 88).
+\item
+  Il giudice B ha classificato tutte le osservazioni su fonti e calcoli
+  come INFO (fonti di contesto non caricate, versione di Python non
+  registrata: 3.14, libreria standard); l'unico punto MISSING riguardava
+  le regole ufficiali, ora passate alla lettera dal preambolo
+  dell'enunciato.
+\item
+  La cella è ``checked instantly'' sul valore: il rischio residuo è un
+  errore nella riduzione a (★); per questo la riduzione è stata riletta
+  a mano e (★) confutata da tre programmi diversi.
+\end{itemize}
 
 \subsubsection{Decisioni degli agenti}
 \paragraph{Run \texttt{p2\_c2}}
@@ -1290,7 +1627,7 @@ if __name__ == "__main__":
     print(f"tempo {time.time()-inizio:.2f}s")
 
 \end{lstlisting}
-\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_2.py (python3, clean copy of the researcher sandbox): exit 0 in 0.5s; stdout: 'insiemi indipendenti di taglia 12 contenenti 0: 1377\textbackslash{}ncoppie (I,u) esaminate: 27540; complementi aciclici trovati: 0\textbackslash{}ntempo 0.47s'; stderr: ''}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_2.py (python3, clean copy of the researcher sandbox): exit 0 in 0.5s; stdout: 'insiemi indipendenti di taglia 12 contenenti 0: 1377\textbackslash{}ncoppie (I,u) esaminate: 27540; complementi aciclici trovati: 0\textbackslash{}ntempo 0.44s'; stderr: ''}
 \begin{lstlisting}[caption={attempt\_001 code\_3 [python, rigore exact] — Certificate 2 for the lower bound, independent method and no symmetry reduction: all indep — verdetto del Referee: UNKNOWN\_STATUS}]
 """Certificato per il bound inferiore U(Q_5) >= 88 (implementazione 2, metodo diverso).
 
@@ -1371,7 +1708,7 @@ if __name__ == "__main__":
     print(f"tempo {time.time()-inizio:.2f}s")
 
 \end{lstlisting}
-\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_3.py (python3, clean copy of the researcher sandbox): exit 0 in 0.7s; stdout: 'insiemi indipendenti di taglia 12 (tutti, senza simmetria): 3672\textbackslash{}ncoppie (I,u) esaminate: 73440; complementi aciclici: 0\textbackslash{}ntempo 0.71s'; stderr: ''}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_3.py (python3, clean copy of the researcher sandbox): exit 0 in 0.8s; stdout: 'insiemi indipendenti di taglia 12 (tutti, senza simmetria): 3672\textbackslash{}ncoppie (I,u) esaminate: 73440; complementi aciclici: 0\textbackslash{}ntempo 0.77s'; stderr: ''}
 \begin{lstlisting}[caption={attempt\_001 code\_4 [python, rigore exact] — Builds the 88-path labelling (peaks = even vertices minus 00000, 11110) and counts exactly — verdetto del Referee: UNKNOWN\_STATUS}]
 """Costruzione esplicita con 88 cammini in salita su Q_5 e verifica esatta.
 
@@ -1455,7 +1792,7 @@ print("identita' verificata su 200000 etichettature casuali; min X>0 osservato:"
 print("valori di X osservati sotto 10:", sorted(v for v in valori_x if v < 10))
 
 \end{lstlisting}
-\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_6.py (python3, clean copy of the researcher sandbox): exit 0 in 15.5s; stdout: "identita' verificata su 200000 etichettature casuali; min X\textgreater{}0 osservato: 14\textbackslash{}nvalori di X osservati sotto 10: []"; stderr: ''}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_6.py (python3, clean copy of the researcher sandbox): exit 0 in 13.4s; stdout: "identita' verificata su 200000 etichettature casuali; min X\textgreater{}0 osservato: 14\textbackslash{}nvalori di X osservati sotto 10: []"; stderr: ''}
 \begin{lstlisting}[caption={attempt\_001 code\_7 [python, rigore float\_exploration\_only] — Simulated annealing over labellings (exploration only): best value found 88 in every seed  — verdetto del Referee: UNKNOWN\_STATUS}]
 """Ricerca locale (simulated annealing) sul numero di cammini in salita di Q_5.
 
@@ -1508,10 +1845,17 @@ if __name__ == "__main__":
     print(f"tempo {time.time()-inizio:.1f}s")
 
 \end{lstlisting}
-\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_7.py (python3, clean copy of the researcher sandbox): exit 0 in 78.9s; stdout: "seed 0: 88\textbackslash{}nseed 1: 88\textbackslash{}nseed 2: 88\textbackslash{}nseed 3: 88\textbackslash{}nseed 4: 88\textbackslash{}nseed 5: 88\textbackslash{}nseed 6: 88\textbackslash{}nseed 7: 88\textbackslash{}nmigliore: 88 valli: ['01001', '11100', '11010', '11111', '10011']\textbackslash{}nordine: 01001,11100,01000,11010,11111,01101,10100,10110,00110,00100,00111,01110,11001,01011,00001,11110,00010,10101,10011,10000,1100}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_7.py (python3, clean copy of the researcher sandbox): exit 0 in 60.5s; stdout: "seed 0: 88\textbackslash{}nseed 1: 88\textbackslash{}nseed 2: 88\textbackslash{}nseed 3: 88\textbackslash{}nseed 4: 88\textbackslash{}nseed 5: 88\textbackslash{}nseed 6: 88\textbackslash{}nseed 7: 88\textbackslash{}nmigliore: 88 valli: ['01001', '11100', '11010', '11111', '10011']\textbackslash{}nordine: 01001,11100,01000,11010,11111,01101,10100,10110,00110,00100,00111,01110,11001,01011,00001,11110,00010,10101,10011,10000,1100}
 
 \subsection{Cella 3 (3 punti) — stato: in analisi}
-\textbf{Richiesta.} Determine U(Q\_6) exactly (64 vertices, 192 edges) and exhibit an optimal labelling in the required format. Checked on the value: it must be the true minimum, so a lower-bound proof (hand or certified computation \textless{} 10 min) is needed.
+\subparagraph{\texorpdfstring{Parte 3 (C3) ---
+\(U(Q_6)\)}{Parte 3 (C3) --- U(Q\_6)}}\label{parte-3-c3-uq_6}
+
+\textbf{Punteggio:} 3 points · \textbf{Valutazione:} Checked instantly
+
+\(Q_6\) has \(64\) vertices and \(192\) edges. Determine \(U(Q_6)\).
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine U(Q\_6) exactly (64 vertices, 192 edges) and exhibit an optimal labelling in the required format. Checked on the value: it must be the true minimum, so a lower-bound proof (hand or certified computation \textless{} 10 min) is needed.}
 
 \textbf{Evidenza registrata in STATUS.md.} —
 
@@ -1525,7 +1869,16 @@ Nessuna bozza di consegna ancora scritta.
 Nessun codice nei tentativi.
 
 \subsection{Cella 4 (5 punti) — stato: in analisi}
-\textbf{Richiesta.} Determine U(Q\_7) and U(Q\_8) exactly, each with an explicit optimal labelling in the required format. Checked on the values: lower-bound proofs needed.
+\subparagraph{\texorpdfstring{Parte 4 (C4) --- \(U(Q_7)\) and
+\(U(Q_8)\)}{Parte 4 (C4) --- U(Q\_7) and U(Q\_8)}}\label{parte-4-c4-uq_7-and-uq_8}
+
+\textbf{Punteggio:} 5 points · \textbf{Valutazione:} Checked instantly
+
+Two larger cubes: \(Q_7\) has \(128\) vertices and \(448\) edges,
+\(Q_8\) has \(256\) vertices and \(1024\) edges. Determine \(U(Q_7)\)
+and \(U(Q_8)\).
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine U(Q\_7) and U(Q\_8) exactly, each with an explicit optimal labelling in the required format. Checked on the values: lower-bound proofs needed.}
 
 \textbf{Evidenza registrata in STATUS.md.} —
 
@@ -1539,7 +1892,19 @@ Nessuna bozza di consegna ancora scritta.
 Nessun codice nei tentativi.
 
 \subsection{Cella 5 (8 punti) — stato: in analisi}
-\textbf{Richiesta.} Improve one of the known bounds 2368 \textless{}= U(Q\_9) \textless{}= 2400: either prove U(Q\_9) \textgreater{}= 2369, or exhibit a labelling of Q\_9 with at most 2399 uphill paths (its paths are counted mechanically).
+\subparagraph{\texorpdfstring{Parte 5 (C5) --- Bounds for
+\(U(Q_9)\)}{Parte 5 (C5) --- Bounds for U(Q\_9)}}\label{parte-5-c5-bounds-for-uq_9}
+
+\textbf{Punteggio:} 8 points · \textbf{Valutazione:} Judged
+
+\(Q_9\) has \(512\) vertices and \(2304\) edges. The best bounds known
+to the organisers are \[
+2368 \le U(Q_9) \le 2400;
+\] the lower bound is unpublished. Improve either one: prove that
+\(U(Q_9) \ge 2369\), or exhibit a labelling of \(Q_9\) with at most
+\(2399\) uphill paths.
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Improve one of the known bounds 2368 \textless{}= U(Q\_9) \textless{}= 2400: either prove U(Q\_9) \textgreater{}= 2369, or exhibit a labelling of Q\_9 with at most 2399 uphill paths (its paths are counted mechanically).}
 
 \textbf{Evidenza registrata in STATUS.md.} via realistica: etichettatura \$\textbackslash{}le2399\$
 
@@ -1553,7 +1918,18 @@ Nessuna bozza di consegna ancora scritta.
 Nessun codice nei tentativi.
 
 \subsection{Cella 6 (13 punti) — stato: in analisi}
-\textbf{Richiesta.} OPEN. Determine U(Q\_9) exactly, with an optimal labelling and a proof of both bounds.
+\subparagraph{\texorpdfstring{Parte 6 (C6) ---
+\(U(Q_9)\)}{Parte 6 (C6) --- U(Q\_9)}}\label{parte-6-c6-uq_9}
+
+\textbf{Punteggio:} 13 points · \textbf{Valutazione:} Judged ·
+\textbf{Open question}
+
+The same cube, settled completely. Determine \(U(Q_9)\) exactly, with
+proof of both bounds.
+
+\emph{(Fine del problema 2. Punteggi: 1+2+3+5+8+13 = 32.)}
+
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{OPEN. Determine U(Q\_9) exactly, with an optimal labelling and a proof of both bounds.}
 
 \textbf{Evidenza registrata in STATUS.md.} —
 
@@ -2261,7 +2637,7 @@ if __name__ == "__main__":
 \item \cite{1412.3893v1} The competition between simple and complex evolutionary trajectories in asexual populations — Ian E. Ochs, Michael M. Desai (2014). \emph{Query}: \texttt{uphill paths}.
 \end{itemize}
 \section{Problema 3 — Bulgarian solitaire}
-\subsection{Enunciato ufficiale}
+\subsection{Enunciato ufficiale: preambolo e regole di consegna}
 \subsubsection{Problema 3 --- Bulgarian
 solitaire}\label{problema-3-bulgarian-solitaire}
 
@@ -2317,7 +2693,8 @@ Citing a published result for the statement you are asked to prove does
 not count as a solution; a proof written out in full does, whatever its
 source.
 
-\paragraph{Parte 1 (C1) --- Cyclic partitions and
+\subsection{Cella 1 (1 punti) — stato: in analisi}
+\subparagraph{Parte 1 (C1) --- Cyclic partitions and
 cycles}\label{parte-1-c1-cyclic-partitions-and-cycles}
 
 \textbf{Punteggio:} 1 point · \textbf{Valutazione:} Judged
@@ -2331,7 +2708,21 @@ partition of \(n\). Then let \(n\) be arbitrary of rank \(k\), say
 partitions of \(n\), and determine the number of distinct cycles of
 \(B\) on the partitions of \(n\). Prove both.
 
-\paragraph{\texorpdfstring{Parte 2 (C2) --- \(D_B\) at triangular
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Let n = T\_k. Prove that every partition of n reaches delta\_k = (k,k-1,...,1) under iterated B and that delta\_k is the only cyclic partition. Then for n = T\_\{k-1\} + r, 1 \textless{}= r \textless{}= k, determine all cyclic partitions of n and the number of distinct cycles of B on partitions of n, with proofs.}
+
+\textbf{Evidenza registrata in STATUS.md.} struttura nota (collane), prova da scrivere
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p3\_c1}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 2 (2 punti) — stato: in analisi}
+\subparagraph{\texorpdfstring{Parte 2 (C2) --- \(D_B\) at triangular
 \(n\)}{Parte 2 (C2) --- D\_B at triangular n}}\label{parte-2-c2-d_b-at-triangular-n}
 
 \textbf{Punteggio:} 2 points · \textbf{Valutazione:} Judged
@@ -2340,7 +2731,21 @@ Next, how long the process can take to reach a cycle, starting with the
 triangular numbers. Determine \(D_B(T_k)\) for every \(k\), with proof
 of both bounds.
 
-\paragraph{Parte 3 (C3) --- A general upper
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine D\_B(T\_k) for every k, with proof of both bounds (exact value as a formula in k).}
+
+\textbf{Evidenza registrata in STATUS.md.} atteso \$k\textasciicircum{}2-k\$ (Igusa/Etienne, da verificare)
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p3\_c2}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 3 (3 punti) — stato: in analisi}
+\subparagraph{Parte 3 (C3) --- A general upper
 bound}\label{parte-3-c3-a-general-upper-bound}
 
 \textbf{Punteggio:} 3 points · \textbf{Valutazione:} Judged
@@ -2352,7 +2757,21 @@ D_B(n) \le k^2 - 2k - 1,
 \] and determine \(D_B(T_k - 1)\) exactly. Determine also, for that
 \(n\), which partitions attain the maximum.
 
-\paragraph{Parte 4 (C4) --- One above a triangular
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Prove that for every k \textgreater{}= 4 and every non-triangular n with T\_\{k-1\} \textless{} n \textless{} T\_k, D\_B(n) \textless{}= k\textasciicircum{}2 - 2k - 1; determine D\_B(T\_k - 1) exactly and which partitions attain the maximum.}
+
+\textbf{Evidenza registrata in STATUS.md.} —
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p3\_c3}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 4 (5 punti) — stato: in analisi}
+\subparagraph{Parte 4 (C4) --- One above a triangular
 number}\label{parte-4-c4-one-above-a-triangular-number}
 
 \textbf{Punteggio:} 5 points · \textbf{Valutazione:} Judged
@@ -2362,7 +2781,21 @@ that is \(n = 11, 16, 22, 29, \ldots\) for \(k = 5, 6, 7, 8, \ldots\).
 Determine \(D_B(T_{k-1} + 1)\) for every \(k \ge 5\), with proof of both
 bounds.
 
-\paragraph{Parte 5 (C5) --- Two above a triangular
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine D\_B(T\_\{k-1\} + 1) for every k \textgreater{}= 5, with proof of both bounds.}
+
+\textbf{Evidenza registrata in STATUS.md.} —
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p3\_c4}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 5 (8 punti) — stato: in analisi}
+\subparagraph{Parte 5 (C5) --- Two above a triangular
 number}\label{parte-5-c5-two-above-a-triangular-number}
 
 \textbf{Punteggio:} 8 points · \textbf{Valutazione:} Judged
@@ -2380,7 +2813,21 @@ Say also where the straightforward extension of the C3 argument stops:
 give the bound it does yield, show it is strictly weaker than the truth,
 and identify precisely what your proof supplies in its place.
 
-\paragraph{\texorpdfstring{Parte 6 (C6) --- \(D_B(n)\) for every
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine D\_B(T\_\{k-1\} + 2) for every k, with proof of both bounds; state exactly for which k the formula holds and give the remaining values; the upper bound must be one uniform argument; give the extremal partitions explicitly in k; say where the straightforward extension of the C3 argument stops and what replaces it.}
+
+\textbf{Evidenza registrata in STATUS.md.} —
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p3\_c5}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 6 (13 punti) — stato: in analisi}
+\subparagraph{\texorpdfstring{Parte 6 (C6) --- \(D_B(n)\) for every
 \(n\)}{Parte 6 (C6) --- D\_B(n) for every n}}\label{parte-6-c6-d_bn-for-every-n}
 
 \textbf{Punteggio:} 13 points · \textbf{Valutazione:} Judged ·
@@ -2391,36 +2838,7 @@ for every \(n\).
 
 \emph{(Fine del problema 3. Punteggi: 1+2+3+5+8+13 = 32.)}
 
-\subsection{Cella 1 (1 punti) — stato: in analisi}
-\textbf{Richiesta.} Let n = T\_k. Prove that every partition of n reaches delta\_k = (k,k-1,...,1) under iterated B and that delta\_k is the only cyclic partition. Then for n = T\_\{k-1\} + r, 1 \textless{}= r \textless{}= k, determine all cyclic partitions of n and the number of distinct cycles of B on partitions of n, with proofs.
-
-\textbf{Evidenza registrata in STATUS.md.} struttura nota (collane), prova da scrivere
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
-
-\subsubsection{Codice su cui poggia il tentativo}
-—
-
-\subsection{Cella 2 (2 punti) — stato: in analisi}
-\textbf{Richiesta.} Determine D\_B(T\_k) for every k, with proof of both bounds (exact value as a formula in k).
-
-\textbf{Evidenza registrata in STATUS.md.} atteso \$k\textasciicircum{}2-k\$ (Igusa/Etienne, da verificare)
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
-
-\subsubsection{Codice su cui poggia il tentativo}
-—
-
-\subsection{Cella 3 (3 punti) — stato: in analisi}
-\textbf{Richiesta.} Prove that for every k \textgreater{}= 4 and every non-triangular n with T\_\{k-1\} \textless{} n \textless{} T\_k, D\_B(n) \textless{}= k\textasciicircum{}2 - 2k - 1; determine D\_B(T\_k - 1) exactly and which partitions attain the maximum.
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{OPEN. Determine D\_B(n) for every n.}
 
 \textbf{Evidenza registrata in STATUS.md.} —
 
@@ -2428,52 +2846,10 @@ Nessuna run del loop su questa cella.
 Nessuna bozza di consegna ancora scritta.
 
 \subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
+\paragraph{Run \texttt{p3\_c6}}
 
 \subsubsection{Codice su cui poggia il tentativo}
-—
-
-\subsection{Cella 4 (5 punti) — stato: in analisi}
-\textbf{Richiesta.} Determine D\_B(T\_\{k-1\} + 1) for every k \textgreater{}= 5, with proof of both bounds.
-
-\textbf{Evidenza registrata in STATUS.md.} —
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
-
-\subsubsection{Codice su cui poggia il tentativo}
-—
-
-\subsection{Cella 5 (8 punti) — stato: in analisi}
-\textbf{Richiesta.} Determine D\_B(T\_\{k-1\} + 2) for every k, with proof of both bounds; state exactly for which k the formula holds and give the remaining values; the upper bound must be one uniform argument; give the extremal partitions explicitly in k; say where the straightforward extension of the C3 argument stops and what replaces it.
-
-\textbf{Evidenza registrata in STATUS.md.} —
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
-
-\subsubsection{Codice su cui poggia il tentativo}
-—
-
-\subsection{Cella 6 (13 punti) — stato: in analisi}
-\textbf{Richiesta.} OPEN. Determine D\_B(n) for every n.
-
-\textbf{Evidenza registrata in STATUS.md.} —
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
-
-\subsubsection{Codice su cui poggia il tentativo}
-—
+Nessun codice nei tentativi.
 
 \subsection{Letteratura arXiv consultata (ricerca deterministica, abstract letti)}
 \begin{itemize}
@@ -2485,7 +2861,7 @@ Nessuna run del loop su questa cella.
 \item \cite{2208.14496v1} Limiting behavior in growth of Bulgarian Solitaire orbits — Nhung Pham (2022). \emph{Query}: \texttt{Bulgarian solitaire}.
 \end{itemize}
 \section{Problema 4 — Disjoint congruence classes and large gcd}
-\subsection{Enunciato ufficiale}
+\subsection{Enunciato ufficiale: preambolo e regole di consegna}
 \subsubsection{Problema 4 --- Disjoint congruence classes and large
 gcd}\label{problema-4-disjoint-congruence-classes-and-large-gcd}
 
@@ -2599,7 +2975,8 @@ not count as a solution; a proof written out in full does, whatever its
 source. If you rely on a published argument, you are responsible for it:
 check it yourself, and report it if it does not hold up.
 
-\paragraph{Parte 1 (C1) --- Three
+\subsection{Cella 1 (1 punti) — stato: in analisi}
+\subparagraph{Parte 1 (C1) --- Three
 classes}\label{parte-1-c1-three-classes}
 
 \textbf{Punteggio:} 1 point · \textbf{Valutazione:} Judged
@@ -2608,13 +2985,42 @@ The first size that the two trivial observations above do not settle.
 Prove the statement for \(k = 3\): any three pairwise disjoint classes
 have \(\gcd(m_i, m_j) \ge 3\) for some \(i < j\).
 
-\paragraph{Parte 2 (C2) --- Four classes}\label{parte-2-c2-four-classes}
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Prove: any three pairwise disjoint congruence classes a\_i (mod m\_i) have gcd(m\_i,m\_j) \textgreater{}= 3 for some i \textless{} j.}
+
+\textbf{Evidenza registrata in STATUS.md.} prova a mano abbozzata (parità)
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p4\_c1}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 2 (2 punti) — stato: in analisi}
+\subparagraph{Parte 2 (C2) --- Four
+classes}\label{parte-2-c2-four-classes}
 
 \textbf{Punteggio:} 2 points · \textbf{Valutazione:} Judged
 
 The same question for four classes. Prove the statement for \(k = 4\).
 
-\paragraph{\texorpdfstring{Parte 3 (C3) --- Every \(k\) up to
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Prove the statement for k = 4: any four pairwise disjoint classes have a pair with gcd(m\_i,m\_j) \textgreater{}= 4.}
+
+\textbf{Evidenza registrata in STATUS.md.} schema "clique per primo" abbozzato
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p4\_c2}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 3 (3 punti) — stato: in analisi}
+\subparagraph{\texorpdfstring{Parte 3 (C3) --- Every \(k\) up to
 8}{Parte 3 (C3) --- Every k up to 8}}\label{parte-3-c3-every-k-up-to-8}
 
 \textbf{Punteggio:} 3 points · \textbf{Valutazione:} Judged
@@ -2622,7 +3028,21 @@ The same question for four classes. Prove the statement for \(k = 4\).
 A first range of sizes: after C1 and C2, the sizes \(k = 5, 6, 7\) and
 \(8\) remain. Prove the statement for every \(k \le 8\).
 
-\paragraph{\texorpdfstring{Parte 4 (C4) --- Every \(k\) up to
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Prove the statement for every k \textless{}= 8 (sizes 5,6,7,8 remain after cells 1-2). A computation is admissible only with the full exhaustiveness certificate (finite set + proof, pruning rules proved, node counts, wall clock, rerun, decisions for every survivor).}
+
+\textbf{Evidenza registrata in STATUS.md.} riduzione a insieme finito abbozzata (note.md)
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p4\_c3}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 4 (5 punti) — stato: in analisi}
+\subparagraph{\texorpdfstring{Parte 4 (C4) --- Every \(k\) up to
 12}{Parte 4 (C4) --- Every k up to 12}}\label{parte-4-c4-every-k-up-to-12}
 
 \textbf{Punteggio:} 5 points · \textbf{Valutazione:} Judged
@@ -2635,7 +3055,21 @@ something, exhibit it in full. If that disagrees with any source you
 consulted, say which of the two is right and why. An answer that reports
 agreement with a source it did not test will be marked wrong.
 
-\paragraph{Parte 5 (C5) --- The certified
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Prove the statement for every k \textless{}= 12; then for each k = 9..16 report exactly what the method leaves undecided (nothing: prove it; something: exhibit it in full); compare with sources only if tested.}
+
+\textbf{Evidenza registrata in STATUS.md.} —
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p4\_c4}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 5 (8 punti) — stato: in analisi}
+\subparagraph{Parte 5 (C5) --- The certified
 boundary}\label{parte-5-c5-the-certified-boundary}
 
 \textbf{Punteggio:} 8 points · \textbf{Valutazione:} Judged
@@ -2681,7 +3115,21 @@ enough on its own. Add:
   means one of them is wrong, and finding which is part of the cell.
 \end{enumerate}
 
-\paragraph{Parte 6 (C6) --- Beyond the
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{Determine the largest k for which the statement is certified for all sizes up to k (contiguous range), with the strengthened certificate (i)-(v): non-vacuity demonstration, individual decisions for survivors with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, a second independent implementation compared elementwise. Also decide k = 24 and k = 30: show neither is the least size at which the statement can fail.}
+
+\textbf{Evidenza registrata in STATUS.md.} richiede 2 implementazioni indipendenti
+
+\subsubsection{Consegna (prova)}
+Nessuna bozza di consegna ancora scritta.
+
+\subsubsection{Decisioni degli agenti}
+\paragraph{Run \texttt{p4\_c5}}
+
+\subsubsection{Codice su cui poggia il tentativo}
+Nessun codice nei tentativi.
+
+\subsection{Cella 6 (13 punti) — stato: in analisi}
+\subparagraph{Parte 6 (C6) --- Beyond the
 boundary}\label{parte-6-c6-beyond-the-boundary}
 
 \textbf{Punteggio:} 13 points · \textbf{Valutazione:} Judged ·
@@ -2713,50 +3161,7 @@ of the following.
 
 \emph{(Fine del problema 4. Punteggi: 1+2+3+5+8+13 = 32.)}
 
-\subsection{Cella 1 (1 punti) — stato: in analisi}
-\textbf{Richiesta.} Prove: any three pairwise disjoint congruence classes a\_i (mod m\_i) have gcd(m\_i,m\_j) \textgreater{}= 3 for some i \textless{} j.
-
-\textbf{Evidenza registrata in STATUS.md.} prova a mano abbozzata (parità)
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
-
-\subsubsection{Codice su cui poggia il tentativo}
-—
-
-\subsection{Cella 2 (2 punti) — stato: in analisi}
-\textbf{Richiesta.} Prove the statement for k = 4: any four pairwise disjoint classes have a pair with gcd(m\_i,m\_j) \textgreater{}= 4.
-
-\textbf{Evidenza registrata in STATUS.md.} schema "clique per primo" abbozzato
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
-
-\subsubsection{Codice su cui poggia il tentativo}
-—
-
-\subsection{Cella 3 (3 punti) — stato: in analisi}
-\textbf{Richiesta.} Prove the statement for every k \textless{}= 8 (sizes 5,6,7,8 remain after cells 1-2). A computation is admissible only with the full exhaustiveness certificate (finite set + proof, pruning rules proved, node counts, wall clock, rerun, decisions for every survivor).
-
-\textbf{Evidenza registrata in STATUS.md.} riduzione a insieme finito abbozzata (note.md)
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
-
-\subsubsection{Codice su cui poggia il tentativo}
-—
-
-\subsection{Cella 4 (5 punti) — stato: in analisi}
-\textbf{Richiesta.} Prove the statement for every k \textless{}= 12; then for each k = 9..16 report exactly what the method leaves undecided (nothing: prove it; something: exhibit it in full); compare with sources only if tested.
+\textbf{Enunciato protetto dato agli agenti (state.json).} \texttt{OPEN. Any of: (a) decide a size k \textgreater{}= 25; (b) prove gcd \textgreater{}= ck for an absolute c \textgreater{} 0 or improve the known factor k exp(-(2+o(1)) log k / log log k); (c) the group form (disjoint cosets of finite-index subgroups), settle k = 6.}
 
 \textbf{Evidenza registrata in STATUS.md.} —
 
@@ -2764,38 +3169,10 @@ Nessuna run del loop su questa cella.
 Nessuna bozza di consegna ancora scritta.
 
 \subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
+\paragraph{Run \texttt{p4\_c6}}
 
 \subsubsection{Codice su cui poggia il tentativo}
-—
-
-\subsection{Cella 5 (8 punti) — stato: in analisi}
-\textbf{Richiesta.} Determine the largest k for which the statement is certified for all sizes up to k (contiguous range), with the strengthened certificate (i)-(v): non-vacuity demonstration, individual decisions for survivors with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, a second independent implementation compared elementwise. Also decide k = 24 and k = 30: show neither is the least size at which the statement can fail.
-
-\textbf{Evidenza registrata in STATUS.md.} richiede 2 implementazioni indipendenti
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
-
-\subsubsection{Codice su cui poggia il tentativo}
-—
-
-\subsection{Cella 6 (13 punti) — stato: in analisi}
-\textbf{Richiesta.} OPEN. Any of: (a) decide a size k \textgreater{}= 25; (b) prove gcd \textgreater{}= ck for an absolute c \textgreater{} 0 or improve the known factor k exp(-(2+o(1)) log k / log log k); (c) the group form (disjoint cosets of finite-index subgroups), settle k = 6.
-
-\textbf{Evidenza registrata in STATUS.md.} —
-
-\subsubsection{Consegna (prova)}
-Nessuna bozza di consegna ancora scritta.
-
-\subsubsection{Decisioni degli agenti}
-Nessuna run del loop su questa cella.
-
-\subsubsection{Codice su cui poggia il tentativo}
-—
+Nessun codice nei tentativi.
 
 \subsection{Letteratura arXiv consultata (ricerca deterministica, abstract letti)}
 \begin{itemize}

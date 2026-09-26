@@ -10,7 +10,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | Problema | Titolo | Celle con evidenza | Stato complessivo |
 |---|---|---|---|
 | 1 | Angles between lines (Fejes Tóth), 32 pt | 0/6 | in corso (tutte le 6 parti ricevute) |
-| 2 | Uphill paths on the hypercube, 32 pt | 1/6 | in corso (C1 revisionata) |
+| 2 | Uphill paths on the hypercube, 32 pt | 2/6 | in corso (C1 revisionata, C2 bozza pronta) |
 | 3 | Bulgarian solitaire, 32 pt | 0/6 | in analisi (tutte le 6 parti ricevute) |
 | 4 | Disjoint classes / gcd of moduli, 32 pt | 0/6 | in analisi (tutte le 6 parti ricevute) |
 
@@ -30,7 +30,7 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | Parte | Richiesta | Stato | Evidenza |
 |---|---|---|---|
 | 1 | $U(Q_3)$, $U(Q_4)$ + etichettature (1 pt, checked) | revisionato | $U(Q_3)=14$, $U(Q_4)=34$: prove a mano rilette passo per passo + verifiche esatte indipendenti; bozza in submission/parte-1.md |
-| 2 | $U(Q_5)$ (2 pt, checked) | bozza pronta | $U(Q_5)=88$: riduzione a (★) riletta a mano + 3 enumerazioni concordi; etichettatura verificata; verdetto Referee automatico in corso |
+| 2 | $U(Q_5)$ (2 pt, checked) | bozza pronta | $U(Q_5)=88$: riduzione a (★) riletta a mano + 3 enumerazioni concordi; etichettatura verificata; Referee automatico: giudice A PASS (2 run), giudice B PARTIAL solo per regole segnaposto → terzo run con regole ufficiali in corso; bozza in submission/parte-2.md |
 | 3 | $U(Q_6)$ (3 pt, checked) | in analisi | |
 | 4 | $U(Q_7)$, $U(Q_8)$ (5 pt, checked) | in analisi | |
 | 5 | Migliorare $2368\le U(Q_9)\le2400$ (8 pt) | in analisi | via realistica: etichettatura $\le2399$ |
@@ -59,6 +59,8 @@ Legenda stati: non iniziato · in analisi · in corso · parziale · bozza pront
 | 6 | oltre (13 pt, open) | in analisi | |
 
 ## Registro decisioni e ostacoli
+- 2026-09-26 ~15:00: INTEGRAZIONE COMPLETA su main. Mergiati `feature/referee-a` (prompt del giudice A + regole di campo, 2 suite) e `feature/referee-b` (Referee B consolidato nel ponte: claim `dep_k`, enunciato da problem.md, regole da file, UTF-8); conflitti solo in .gitignore/STATUS (uniti). Creative di Marco collegato al loop come default (`--creative cli|rule_based|none`). Tre bug reali trovati dai run: (1) `--tools ""` è variadico e ingoiava il prompt se ultimo (fix: subito dopo -p); (2) il giudice A allegava una `limitation` a un PASS valido e il contratto scartava il rapporto (fix: la riserva va nelle note); (3) il giudice B esigeva riesecuzioni fidate e le regole ufficiali (fix: il ponte rilancia `code_used` in una copia pulita → trusted_observations; `rules` di ogni run = paragrafo 'What to hand in' dell'enunciato). Tutte le suite verdi: 26 test nostri, 94 Referee, 20 Creative (`tools/run_tests.sh`). Cartelle `runs/pN_cK` per tutte le 24 celle con letteratura arXiv filtrata (`tools/prepara_runs.py`), lanciatore `tools/lancia_loop.sh`, rapporto LaTeX `tools/build_report.py` → `report/proof_pursuit.tex`, README di architettura, SPIEGAZIONE_SEMPLICE.md. Rami remoti integrati da cancellare (permesso negato all'agente).
+- 2026-09-26 ~14:40: arXiv per P4 trova Fornal–Sun [2607.24655] (lug. 2026): $\max\gcd\gg k\exp(-(2+o(1))\sqrt{\log k/\log\log k})$, migliora il bound citato nell'enunciato di C6(b). Riprodurre la prova per esteso varrebbe (regola: 'whatever its source'). Per P1: Lim–McCann [2007.08698] non copre $N=d+1,d+2$.
 - 2026-09-26 ~14:30: Referee B consolidato su `feature/referee-b` DENTRO `bridge_referee.py`, senza creare un secondo ponte: la prima versione (pacchetto `referees/` + `adapter_b.py`) duplicava `referee/referees/` ed è stata cancellata. Tre migliorie portate nel ponte: (1) un `claims_used` senza riscontro diventa un claim `dep_k` del candidato invece di sparire, così il Referee ne valuta la provenienza; (2) l'enunciato della cella si cerca anche nella riga `Cell N:` di `problem.md` e in mancanza totale ci si ferma invece di usare un segnaposto; (3) le regole vengono da `shared/competition_rules.example.json` (segnaposto, NON il regolamento ufficiale) invece che da un dizionario nel codice. 15 test in `tests/test_b_referee.py` coprono i sette casi di CLAUDE_CODE_B.md con backend simulato, nessuna chiamata a pagamento: 21 test nel progetto, 50 nel pacchetto `referee/` (intatto). Corretto un bug di encoding in `researcher.py`: lettura/scrittura senza `encoding="utf-8"` corrompeva i caratteri non-ASCII su Windows (cp1252). Invariante confermato dai test: nessuna combinazione di verdetti dei modelli produce ACCEPT, che resta un'approvazione umana firmata.
 - 2026-09-26 ~13:55 CHECKPOINT (pre-compact): primo loop reale su Q5: Researcher ok (88), Referee fallito per ValidationError su entrambi i giudici → backend CLI ora salva output grezzi e ritenta una volta con l'errore; re-run del Referee in corso. Prossimo: merge dei branch dei collaboratori, test, conflitti, loop end-to-end per parte.
 - 2026-09-26 ~13:35: ciclo end-to-end `researcher/loop.py` (test mock verdi) + ricerca arXiv `literature.py` con campo `literature_position` obbligatorio nel tentativo. Creative NON collegato per scelta: arriva dal team; il loop ha il punto d'aggancio `--creative-cmd`. arXiv non ha letteratura sul problema 2 (ricerca fatta, esito vuoto).

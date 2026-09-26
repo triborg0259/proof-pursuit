@@ -1,0 +1,17 @@
+{
+ "problem_id": "p3_c3",
+ "highest_verified_cell": 0,
+ "current_target": "cell_3",
+ "cell_statement": "Prove that for every k >= 4 and every non-triangular n with T_{k-1} < n < T_k, D_B(n) <= k^2 - 2k - 1; determine D_B(T_k - 1) exactly and which partitions attain the maximum.",
+ "current_blocker": "",
+ "rules": {
+  "allow_literature_as_proof": false,
+  "allow_computation": true,
+  "require_machine_verification": false,
+  "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For each cell you attempt, hand in a written proof. You may use a computer to explore. A proof may rely on a computation only if you include the code, it runs in under 10 minutes on a laptop, and the computation is exhaustive over a finite set that your argument has reduced the problem to. Where a cell asks you to determine a quantity, give the exact value as a formula in $k$ and prove both bounds; state any partitions you use explicitly as functions of $k$. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+ },
+ "verified_claims": [],
+ "failed_attempts": [],
+ "stagnation_count": 0,
+ "cell_status": {}
+}

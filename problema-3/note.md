@@ -57,3 +57,9 @@ Grafo funzionale sulle partizioni; $d_B$ via ricerca dei cicli (Floyd/marcatura)
 $D_B(n)$, numero di cicli, partizioni estremali. Interi esatti: nessun problema numerico.
 Verifica indipendente: due implementazioni (una su partizioni come tuple, una su "diagramma/insieme di carte
 in posizione") per C-cell che richiedono calcolo esaustivo.
+
+## Letteratura arXiv (ricerca deterministica 2026-09-26, abstract letti)
+- [1503.00885] V. Drensky, "The Bulgarian solitaire and the mathematics around it" (2015): survey storico; conferma la
+  convergenza a $\delta_k$ per $n=T_k$. [2607.17194] R. Meštrović, survey (2026): cita Brandt 1982 per la
+  caratterizzazione delle partizioni cicliche (nostra C1). Da leggere per le fonti di $D_B$ (Igusa, Etienne, Griggs–Ho).
+- Rumore scartato: [math/0401385] random Bulgarian solitaire, [1101.1546] prova di Toom, [1703.07102], [2208.14496].

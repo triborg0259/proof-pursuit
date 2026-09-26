@@ -166,3 +166,9 @@ Parte 1: approccio E promettente, prova da scrivere e revisionare.
 Parte 2: approccio F, prova abbozzata per induzione, da scrivere e revisionare.
 Parti 3–6: solo triage. Ordine naturale: 1 → 2 → 3 → (5 → 4) → 6. In attesa delle parti 2–6 e della
 definizione ufficiale di $S$ (se diversa dall'ipotesi, l'approccio E va riadattato).
+
+## Letteratura arXiv (ricerca deterministica 2026-09-26)
+- [1801.07837] Bilyk–Matzke (letto integralmente, vedi fonti/README.md). [2007.08698] T. Lim, R. McCann (2020), abstract:
+  immergono la congettura in una famiglia a un parametro $\alpha$ (potenze degli angoli rinormalizzati); congettura
+  equivalente all'unicità dell'ottimizzatore per ogni $\alpha>1$; dimostrano ottimalità e unicità per $\alpha=\infty$.
+  Non dà i casi $N=d+1$, $d+2$ (P3–P5): restano non coperti in letteratura, coerente con BM18.

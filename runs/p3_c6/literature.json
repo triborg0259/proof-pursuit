@@ -1,0 +1,71 @@
+[
+ {
+  "arxiv_id": "math/0401385v2",
+  "url": "http://arxiv.org/abs/math/0401385v2",
+  "title": "Random Bulgarian solitaire",
+  "authors": [
+   "Serguei Popov"
+  ],
+  "published": "2004-01-27",
+  "abstract": "We consider a stochastic variant of the game of Bulgarian solitaire [M. Gardner (1983), Sci. Amer. 249, 12-21]. For the stationary measure of the random Bulgarian solitaire, we prove that most of its mass is concentrated on (roughly) triangular configurations of certain type.",
+  "query": "Bulgarian solitaire"
+ },
+ {
+  "arxiv_id": "1503.00885v1",
+  "url": "http://arxiv.org/abs/1503.00885v1",
+  "title": "The Bulgarian solitaire and the mathematics around it",
+  "authors": [
+   "Vesselin Drensky"
+  ],
+  "published": "2015-03-03",
+  "abstract": "The Bulgarian solitaire is a mathematical card game played by one person. A pack of n cards is divided into several decks (or \"piles\"). Each move consists of the removing of one card from each deck and collecting the removed cards to form a new deck. The game ends when the same position occurs twice. It has turned out that when n=k(k+1)/2 is a triangular number, the game reaches the same stable configuration with size of the piles 1,2,...,k. The purpose of the paper is to tell the (quite amusing) story of the game and to discuss mathematical problems related with the Bulgarian solitaire. The paper is dedicated to the memory of Borislav Bojanov (1944-2009), a great mathematician, person, and friend, and one of the main protagonists in the story of the Bulgarian solitaire.",
+  "query": "Bulgarian solitaire"
+ },
+ {
+  "arxiv_id": "2607.17194v1",
+  "url": "http://arxiv.org/abs/2607.17194v1",
+  "title": "A short survey the game Bulgarian solitaire and related games",
+  "authors": [
+   "Romeo Meštrović"
+  ],
+  "published": "2026-07-19",
+  "abstract": "Let $N$ be an arbitrary positive integer and let $λ=(λ_1, λ_2, \\ldots, λ_l)$ be a partition of $N$ of length $l$, i.e., $\\sum_{i=1}^lλ_i= N$ with parts $λ_1\\ge λ_2\\ldots λ_l\\ge 1$. Define $T(λ)$ as the partition of $N$ with parts $l,λ_1-1λ_2-1,\\ldots λ_l-1$,ignoring any zeros that might occur. Starting with a partition $λ$ of $N$, we describe Bulgarian solitaire by repeatedly applying the shift operation $T$ to obtain the sequence of partitions $$ λ, T(λ), T^2(λ),\\ldots . $$ We say a partition $μ$ of $N$ is $T$-cyclic if $T(μ) = μ$ for some $i\\ge 1$. In 1982 Brandt [9] characterized all $T$-cyclic partitions for Bulgarian solitaire. Bulgarian solitaire is a dynamical system on integer partition of a positive integer $N$ which converges to a unique fixed point if $N=1+2+\\cdots +k$ is a triangular number. In this paper we present a short survey of the game Bulgarian solitaire and several variations of this game.",
+  "query": "Bulgarian solitaire"
+ },
+ {
+  "arxiv_id": "1101.1546v3",
+  "url": "http://arxiv.org/abs/1101.1546v3",
+  "title": "Revisiting Toom's proof of Bulgarian Solitaire",
+  "authors": [
+   "Therese A. Hart",
+   "Gabriel Khan",
+   "Mizan R. Khan"
+  ],
+  "published": "2011-01-07",
+  "abstract": "In this article we give an exposition of Toom's proof of Bulgarian Solitaire that appeared in \\emph{Kvant}. We provide more details. We also show how an application of the Chinese Remainder Theorem allows us to generalize the proof.",
+  "query": "Bulgarian solitaire"
+ },
+ {
+  "arxiv_id": "1703.07102v1",
+  "url": "http://arxiv.org/abs/1703.07102v1",
+  "title": "An exponential limit shape of random $q$-proportion Bulgarian solitaire",
+  "authors": [
+   "Kimmo Eriksson",
+   "Markus Jonsson abd Jonas Sjöstrand"
+  ],
+  "published": "2017-03-21",
+  "abstract": "We introduce \\emph{$p_n$-random $q_n$-proportion Bulgarian solitaire} ($0<p_n,q_n\\le 1$), played on $n$ cards distributed in piles. In each pile, a number of cards equal to the proportion $q_n$ of the pile size rounded upward to the nearest integer are candidates to be picked. Each candidate card is picked with probability $p_n$, independently of other candidate cards. This generalizes Popov's random Bulgarian solitaire, in which there is a single candidate card in each pile. Popov showed that a triangular limit shape is obtained for a fixed $p$ as $n$ tends to infinity. Here we let both $p_n$ and $q_n$ vary with $n$. We show that under the conditions $q_n^2 p_n n/{\\log n}\\rightarrow \\infty$ and $p_n q_n \\rightarrow 0$ as $n\\to\\infty$, the $p_n$-random $q_n$-proportion Bulgarian solitaire has an exponential limit shape.",
+  "query": "Bulgarian solitaire"
+ },
+ {
+  "arxiv_id": "2208.14496v1",
+  "url": "http://arxiv.org/abs/2208.14496v1",
+  "title": "Limiting behavior in growth of Bulgarian Solitaire orbits",
+  "authors": [
+   "Nhung Pham"
+  ],
+  "published": "2022-08-30",
+  "abstract": "The Bulgarian Solitaire rule induces a finite dynamical system on the set of integer partitions of $n$. Brandt characterized and counted all cycles in its recurrent set for any given $n$, with orbits parametrized by necklaces of black and white beads. However, the transient behavior within each orbit has been almost completely unknown. The only known case is when $n=\\binom{k}{2}$ is a triangular number, in which case there is only one orbit. Eriksson and Jonsson gave an analysis for convergence of the structure as $k$ grows, and to what extent the limit applied to the finite case. In this article, we generalize the convergent structure for orbits of Bulgarian Solitaire system for any $n$. For necklaces of the form $(BW)^k = BWBW\\cdots$, we give the precise limit of the generating functions as $k$ grows. For other necklaces, we prove that the generating functions are rational and provide a bound for their denominator and numerator degrees.",
+  "query": "Bulgarian solitaire"
+ }
+]

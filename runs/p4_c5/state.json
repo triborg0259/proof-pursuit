@@ -1,0 +1,17 @@
+{
+ "problem_id": "p4_c5",
+ "highest_verified_cell": 0,
+ "current_target": "cell_5",
+ "cell_statement": "Determine the largest k for which the statement is certified for all sizes up to k (contiguous range), with the strengthened certificate (i)-(v): non-vacuity demonstration, individual decisions for survivors with minimal forcing part, exact survivor lists, all pruning rules proved and tested off, a second independent implementation compared elementwise. Also decide k = 24 and k = 30: show neither is the least size at which the statement can fail.",
+ "current_blocker": "",
+ "rules": {
+  "allow_literature_as_proof": false,
+  "allow_computation": true,
+  "require_machine_verification": false,
+  "additional_rules": "OFFICIAL hand-in rules of this column (verbatim from the problem statement): For each cell you attempt, hand in a written proof. You may use a computer to explore. A proof may rely on a computation only if you include the code, it runs in under ten minutes on a laptop, and the computation is exhaustive over a finite set that your own argument has reduced the problem to. A computational cell is accepted only with an *exhaustiveness certificate*, meaning all four of: 1. an exact description of the finite set your search enumerates, together with the proof that nothing outside it can be a counterexample; 2. every pruning rule you use, stated precisely, each with the proof that it discards only objects that cannot be completed to a counterexample; 3. the node count of the search at each size you claim, and the wall clock; 4. a rerun that reproduces those counts; 5. and, if anything at all survives your pruning at a size you claim, a separate decision for every survivor — not a sample — together with, for each one, the smallest part of it that already forces the decision, and your proof that no smaller part does. A survivor you cannot decide means the size is not certified. A run that reports \"I searched and found nothing\" without 1–5 is not a certificate and scores nothing. If a search does not finish at some size, report it as unfinished and do not claim that size; a partial search is a legitimate partial result and should be handed in as one, with the counts it reached. Where a cell asks you to determine a boundary, state the exact value you claim. Claim only what you have certified: an unfinished size, or one certified under an assumption you have not verified, must be reported as such. Say clearly which cells you consider solved and which are partial. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source. If you rely on a published argument, you are responsible for it: check it yourself, and report it if it does not hold up. Citing a published result for the statement you are asked to prove does not count as a solution; a proof written out in full does, whatever its source."
+ },
+ "verified_claims": [],
+ "failed_attempts": [],
+ "stagnation_count": 0,
+ "cell_status": {}
+}
