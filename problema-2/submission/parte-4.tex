@@ -202,10 +202,137 @@ ragione di aspettarsi che ridiventi ottimale per $d\ge6$. Essendo C4 valutata su
 valore, una risposta plausibile ma non dimostrata varrebbe zero.
 \end{remark}
 
-\section{Ricerca locale sullo spazio completo}
+\section{Una costruzione esatta da insiemi che spezzano i cicli}
 
-%% SEZIONE DA COMPLETARE CON GLI ESITI DELLE RICERCHE IN CORSO
-%% I numeri verranno inseriti solo a ricerca conclusa.
+La famiglia per classi di peso fallisce perché produce troppi pochi vertici con
+$p=1$. La costruzione seguente massimizza invece proprio quelli.
+
+\begin{proposition}\label{prop:costruzione}
+Sia $I\subseteq V(\Qd)$ un insieme \emph{indipendente} tale che $\Qd-I$ sia una
+\emph{foresta}. Allora esiste un'etichettatura di $\Qd$ con esattamente
+\[
+2^d+(d-1)\,|I|
+\]
+cammini in salita. In particolare
+$U(\Qd)\le 2^d+(d-1)\,\nabla_{\mathrm{ind}}(\Qd)$, dove
+$\nabla_{\mathrm{ind}}(\Qd)$ è la minima cardinalità di un tale $I$.
+\end{proposition}
+
+\begin{proof}
+Costruiamo $f$ così: assegniamo le etichette $1,\dots,2^d-|I|$ ai vertici di
+$\Qd-I$, visitando ogni albero della foresta in ampiezza a partire da una sua
+radice scelta arbitrariamente, in modo che ogni vertice riceva etichetta maggiore
+del proprio padre; assegniamo poi le etichette restanti, tutte maggiori, ai
+vertici di $I$ in ordine arbitrario.
+
+Sia $v\notin I$. I suoi vicini sono di due tipi. Quelli in $I$ hanno etichetta
+maggiore per costruzione, quindi non sono predecessori. Quelli in $\Qd-I$ sono i
+vicini di $v$ nella foresta: sono il padre di $v$ (etichetta minore) e i figli di
+$v$ (etichetta maggiore), e il padre esiste se e solo se $v$ non è radice.
+Dunque $\deg^-(v)=0$ se $v$ è radice e $\deg^-(v)=1$ altrimenti. Per
+\eqref{eq:ricorrenza}, per induzione lungo l'albero a partire dalla radice,
+$p(v)=1$ per ogni $v\notin I$: le radici sono valli, e ogni altro vertice eredita
+il valore $1$ dal solo padre.
+
+Sia ora $v\in I$. Poiché $I$ è indipendente, tutti i $d$ vicini di $v$ stanno in
+$\Qd-I$ e hanno quindi etichetta minore. Per \eqref{eq:ricorrenza},
+$p(v)=\sum_{u\sim v}p(u)=d\cdot 1=d$.
+
+Sommando, $\sum_v p(v)=(2^d-|I|)\cdot 1+|I|\cdot d=2^d+(d-1)|I|$.
+\end{proof}
+
+\begin{remark}
+La Proposizione~\ref{prop:costruzione} riconduce un problema di minimo su $2^d!$
+etichettature a un problema di minimo su sottoinsiemi di vertici: trovare il più
+piccolo insieme indipendente il cui complemento sia aciclico. È una variante
+\emph{indipendente} del problema del \emph{decycling set} (insieme di vertici di
+retroazione).
+\end{remark}
+
+\section{Risultati sperimentali}
+
+Abbiamo attaccato il problema con due procedure \textbf{indipendenti nel metodo},
+non due riscritture della stessa idea:
+
+\begin{enumerate}
+\item \textbf{Ricottura sulle etichettature} (\texttt{c4\_ricerca\_locale.py}):
+stato $=$ permutazione dei $2^d$ vertici, mosse $=$ scambio e spostamento di
+etichette, punteggio $=$ conteggio esatto via \eqref{eq:ricorrenza}. Questa
+procedura \textbf{non conosce} la Proposizione~\ref{prop:costruzione}.
+\item \textbf{Ricottura sugli insiemi} (\texttt{c4\_insieme\_decycling.py}):
+stato $=$ sottoinsieme $I$ di vertici, costo $=|I|$ più penalità per coppie
+adiacenti in $I$ e per spigoli in eccesso rispetto a una foresta; il valore si
+ottiene poi dalla Proposizione~\ref{prop:costruzione}.
+\end{enumerate}
+
+\paragraph{Calibrazione.} Entrambe le procedure sono state prima eseguite su
+$d=5$, dove la risposta $88$ è nota e dimostrata. Entrambe l'hanno ritrovata: la
+prima in $45$~s ($281\,600$ mosse), la seconda in $50$~s (trovando $|I|=14$).
+Una procedura che non ritrova un valore noto non è credibile su valori ignoti.
+
+\paragraph{Stabilità.} Su $d=6$ la ricottura sulle etichettature è stata
+ripetuta con tre semi indipendenti ($1$, $7$, $13$), per $500$--$600$~s
+ciascuna: tutte e tre si fermano su $204$, mai sotto. La ricerca sugli insiemi,
+partendo da tutt'altro spazio di stati, trova $|I|=28$ e quindi di nuovo $204$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{crrrrl}
+\toprule
+$d$ & $|I|$ & $2^d+(d-1)|I|$ & ricottura etichettature & stato\\
+\midrule
+3 & 3   & 14   & ---   & $=U(Q_3)$, dimostrato (C1)\\
+4 & 6   & 34   & ---   & $=U(Q_4)$, dimostrato (C1)\\
+5 & 14  & 88   & $88$  & $=U(Q_5)$, dimostrato (C2)\\
+6 & 28  & 204  & $204$ & limite superiore\\
+7 & 56  & 464  & $464$ & limite superiore\\
+8 & 112 & 1040 & $1040$& limite superiore\\
+\bottomrule
+\end{tabular}
+\caption{Le due procedure concordano su ogni riga in cui entrambe sono state
+eseguite. Ogni etichettatura prodotta è stata ricontata con un conteggio
+indipendente, e ogni $I$ è stato verificato indipendente e con complemento
+aciclico.}
+\label{tab:risultati}
+\end{table}
+
+\begin{proposition}\label{prop:bound}
+$U(Q_6)\le 204$, \quad $U(Q_7)\le 464$, \quad $U(Q_8)\le 1040$.
+\end{proposition}
+
+\begin{proof}
+Per ciascun $d\in\{6,7,8\}$ esibiamo nei file allegati un insieme $I$ di
+cardinalità $28$, $56$, $112$ rispettivamente, verificato indipendente e con
+$\Qd-I$ foresta, e l'etichettatura esplicita che ne discende. La
+Proposizione~\ref{prop:costruzione} dà il valore; il conteggio diretto sulle
+etichettature lo conferma.
+\end{proof}
+
+\begin{remark}[Congettura]
+I valori della Tabella~\ref{tab:risultati} soddisfano tutti
+$U(\Qd)=2^d+(d-1)\nabla_{\mathrm{ind}}(\Qd)$, e per $d=3,4,5$ questo coincide con
+il valore \emph{dimostrato}. Congetturiamo quindi
+\[
+U(Q_7)=464,\qquad U(Q_8)=1040,
+\]
+ma \textbf{non lo dimostriamo}: manca il limite inferiore, cioè la prova che
+nessun insieme indipendente più piccolo renda $\Qd$ una foresta e che nessuna
+etichettatura fuori da questa costruzione faccia meglio.
+\end{remark}
+
+\begin{remark}[Un vincolo su $d=9$]
+La successione $|I|=3,6,14,28,56,112$ raddoppia da $d=5$ in poi. Se il
+raddoppio proseguisse si avrebbe $\nabla_{\mathrm{ind}}(Q_9)\le224$, e la
+Proposizione~\ref{prop:costruzione} darebbe $U(Q_9)\le 512+8\cdot224=2304$. Ma
+gli organizzatori dichiarano $U(Q_9)\ge2368$. Poiché la
+Proposizione~\ref{prop:costruzione} è dimostrata, le due cose sono
+incompatibili: assumendo corretto il limite degli organizzatori,
+\[
+\nabla_{\mathrm{ind}}(Q_9)\;\ge\;232,
+\]
+cioè il raddoppio \emph{deve} rompersi a $d=9$. È un'informazione utile per C5 e
+C6: indica che la costruzione va modificata, non estesa per inerzia.
+\end{remark}
 
 \section{Che cosa consideriamo risolto}
 
