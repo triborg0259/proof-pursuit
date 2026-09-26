@@ -137,6 +137,9 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Referee: `UNKNOWN_STATUS` / `READY_FOR_HUMAN`; next: Human reviews the exact target, proof and evidence, then approves explicit claims
 - **Human approval**: Thomas Tumini (human) at 2026-09-26T15:11:52 (READY_FOR_HUMAN → ACCEPT).
 
+## 6b. Tokens used by the agents
+- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+
 ## 7. arXiv literature consulted
 - arXiv:1412.3893v1 — *The competition between simple and complex evolutionary trajectories in asexual populations* (Ian E. Ochs, Michael M. Desai, 2014), found by query `uphill paths`; abstract read, full text not relied upon.
 

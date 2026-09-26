@@ -266,7 +266,8 @@ class CliBackend:
         out = json.loads(res.stdout)
         if out.get("is_error"):
             raise ValueError(f"claude CLI error: {out.get('result')}")
-        self.usage.append({"role": role, "cost_usd": out.get("total_cost_usd"), "model": list((out.get("modelUsage") or {}).keys())})
+        self.usage.append({"role": role, "cost_usd": out.get("total_cost_usd"), "model": list((out.get("modelUsage") or {}).keys()),
+                           "usage": out.get("usage")})   # token (output = risposta + ragionamento)
         return out.get("structured_output") or json.loads(out["result"])
 
     async def generate(self, *, role, system, payload, schema):

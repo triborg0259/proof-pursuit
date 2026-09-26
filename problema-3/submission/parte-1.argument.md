@@ -139,6 +139,9 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Referee: `UNKNOWN_STATUS` / `READY_FOR_HUMAN`; next: Human reviews the exact target, proof and evidence, then approves explicit claims
 - **Human approval**: Thomas Tumini (human) at 2026-09-26T15:08:49 (READY_FOR_HUMAN → ACCEPT).
 
+## 6b. Tokens used by the agents
+- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+
 ## 7. arXiv literature consulted
 - arXiv:math/0401385v2 — *Random Bulgarian solitaire* (Serguei Popov, 2004), found by query `Bulgarian solitaire`; abstract read, full text not relied upon.
 - arXiv:1503.00885v1 — *The Bulgarian solitaire and the mathematics around it* (Vesselin Drensky, 2015), found by query `Bulgarian solitaire`; abstract read, full text not relied upon.

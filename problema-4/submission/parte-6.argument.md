@@ -52,6 +52,9 @@ Everything; route (b) via reproduction of the proof is the indicated one.
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - No agent run on this cell; the text was written by the team from its notes.
 
+## 6b. Tokens used by the agents
+- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+
 ## 7. arXiv literature consulted
 - arXiv:2603.26043v1 — *Finiteness of Disjoint Covering Systems with Precisely One Repeated Modulus* (Yu Hashimoto, 2026), found by query `disjoint covering systems`; abstract read, full text not relied upon.
 - arXiv:1511.04293v1 — *Searching for Disjoint Covering Systems with Precisely One Repeated Modulus* (Shalosh B. Ekhad, Aviezri S. Fraenkel, Doron Zeilberger, 2015), found by query `disjoint covering systems`; abstract read, full text not relied upon.

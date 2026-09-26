@@ -1,0 +1,85 @@
+{
+ "report": {
+  "evidence_verdict": "PARTIAL",
+  "source_issues": [
+   {
+    "code": "SRC_NOT_RETRIEVED",
+    "detail": "src_2 (Igusa 1985), src_3 (Etienne 1991), src_4 (Griggs–Ho 1998) are declared NOT read; the upper bound D_B(T_k) ≤ k^2−k is attributed to them only via secondary sources (Hopkins, Drensky, Jonsson). No excerpt submitted for any source; I cannot check exact applicability. This is not a fabrication finding — the references are consistent with the known literature on Bulgarian solitaire — but none of them may be used as proof under the column rules anyway.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "SRC_UNCHECKABLE",
+    "detail": "src_5 arXiv:2607.17194 (Meštrović) is a 2026 preprint I cannot retrieve here; used for context only, so no impact on the verdict. Request the orchestrator confirm the identifier if it is to be kept in the final write-up.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "computation_issues": [
+   {
+    "code": "CODE2_RUNTIME_ERROR",
+    "detail": "code_2.py fails with IndexError when run without a CLI argument (trusted observation). It is exploration-only and does not support any claim, but as submitted it is not reproducible; add a default k_max or document the required argument.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "COMPUTATION_SCOPE",
+    "detail": "code_1.py re-ran successfully (trusted observation, exit 0; visible output confirms k=8: D_B=56=k^2−k over 17977 partitions, exact integer arithmetic, memoised orbits). This is an exhaustive check for k ≤ 9 only; it does not and is not claimed to prove the upper bound for general k, so the computation cannot serve as the proof the cell requires.",
+    "severity": "INFO",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "rule_violations": [
+   {
+    "code": "UPPER_BOUND_NOT_PROVED",
+    "detail": "The cell requires proof of both bounds. The candidate's Theorem B (D_B(T_k) ≤ k^2−k for all k) is explicitly NOT proved: it is cited from Igusa/Etienne, and allow_literature_as_proof=false plus the official rule 'Citing a published result for the statement you are asked to prove does not count as a solution' make this dependency inadmissible. The candidate is honest about this (states 'NOT PROVED HERE', 'remains to be proved'), so this is a missing half rather than a mis-stated result; the cell cannot be marked SOLVED.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   },
+   {
+    "code": "DEPENDENCY_ON_C1",
+    "detail": "Theorem A's last step ('δ_k is the only cyclic partition of T_k', needed to conclude d_B(γ_k)=k^2−k rather than merely B^t(γ_k)≠δ_k) is deferred to C1 / Lemma 2, and the candidate admits Lemma 2 alone does not prove it. highest_verified_cell=0, so this dependency is currently unverified inside the protocol. Either import a verified C1 claim or add the short argument that a partition of T_k with W>W(δ_k) cannot be periodic.",
+    "severity": "MISSING",
+    "claim_ids": [
+     "main"
+    ]
+   }
+  ],
+  "claim_provenance": [
+   {
+    "claim_id": "main",
+    "categories": [
+     "PROVED_BY_US",
+     "KNOWN_IN_LITERATURE",
+     "COMPUTATIONALLY_VERIFIED",
+     "UNVERIFIED"
+    ],
+    "evidence_sufficient": false,
+    "permitted_by_rules": false,
+    "relies_on_external_result": true,
+    "uses_computation_as_proof": false,
+    "references": [
+     "src_1",
+     "src_2",
+     "src_3",
+     "src_5",
+     "src_6",
+     "code_1"
+    ],
+    "notes": "Lower bound D_B(T_k) ≥ k^2−k with explicit extremal γ_k=(k−1,k−1,k−2,…,2,1,1): self-contained argument (Lemma 1 cell rule + rotation of hole/extra cell with periods k and k+1; CRT gives first hit of S(k,1) at t=k^2−k−1), modulo the C1 uniqueness-of-cyclic-partition dependency. Upper bound: known in literature (Igusa 1985, Etienne 1991) but not proved here; verified exhaustively only for k ≤ 9 (code_1 reproduced by orchestrator). The final claim as registered (both bounds for every k) is therefore not established; reliance on the citation for the upper bound would be forbidden by the rules."
+   }
+  ],
+  "reproducibility_notes": "code_1.py: reproduced by the orchestrator (exit 0, ~0.1 s, exact integers, memoised orbits; visible output for k=8 matches the candidate's table). Full k=1..9 output was truncated in the observation; request the untruncated log for the record. code_2.py: not reproducible as submitted (needs argv[1]); exploration only. No floating point anywhere. Runtime well under the 10-minute limit. Sources: only secondary sources (Hopkins, Drensky, Jonsson) claimed read; primary sources unread; no excerpts submitted, so applicability was not checked. Recommended cell state: PARTIAL_PROGRESS (lower bound proved, upper bound open in-protocol)."
+ },
+ "limitation": null
+}

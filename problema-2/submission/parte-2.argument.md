@@ -162,6 +162,10 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Position w.r.t. the literature: none found. No LITERATURE section was supplied. I searched the web for "uphill paths" hypercube labelling valley minimum (WebSearch, 2026-09-26): only IMO 2022 Problem 6 material (Nordic squares, answer 2n^2-2n+1: AoPS wiki https://artofproblemsolving.com/wiki/index.php/2022_IMO_Problems/Problem_6, Evan Chen's notes https://web.evanchen.cc/exams/IMO-2022-notes.pdf, D. Grozev's blog https://dgrozev.wordpress.com/2022/07/16/three-graph-problems-on-imo-2022-problem-6/) and unrelated hypercube papers (arXiv 2404.18014 on layered subgraphs, 2310.18163 open problems). None treats the hypercube version. The repo notes (problema-2/note.md, item F) record an earlier arXiv search with the same conclusion. My approach follows the IMO 2022 lower-bound idea (p(v) ≥ max(1, deg^-(v))) and departs from it by quantifying the excess per vertex, which is what the hypercube (regular of odd degree 5) makes decisive.
   - Referee: `UNKNOWN_STATUS` / `READY_FOR_HUMAN`; next: Human reviews the exact target, proof and evidence, then approves explicit claims
 
+## 6b. Tokens used by the agents
+- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+
 ## 7. arXiv literature consulted
 - arXiv:1412.3893v1 — *The competition between simple and complex evolutionary trajectories in asexual populations* (Ian E. Ochs, Michael M. Desai, 2014), found by query `uphill paths`; abstract read, full text not relied upon.
 

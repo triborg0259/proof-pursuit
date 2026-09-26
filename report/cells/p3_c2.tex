@@ -93,9 +93,128 @@ Riscrittura completa delle due direzioni.
 
 \subsubsection{Decisioni degli agenti}
 \paragraph{Run \texttt{p3\_c2}}
+\begin{description}
+\item[Iterazione 1 — attempt\_001]
+\textbf{Researcher}: famiglia \texttt{direct\_proof}, sotto-obiettivo: Establish the value D\_B(T\_k) = k\textasciicircum{}2 - k: prove the lower bound D\_B(T\_k) ≥ k\textasciicircum{}2 - k with an explicit extremal family and an exact cell-motion lemma for B; identify the general upper bound as the remaining blocker.. Stato dichiarato: \texttt{LEMMA\_CANDIDATE}.
+\emph{Perché questa scelta}: First iteration, no blocker stated. The cell asks for the exact value with both bounds; the literature (read: Hopkins 2012 survey) fixes the answer k\textasciicircum{}2-k and Igusa's extremal γ\_k, but no accessible source contains a written proof (Igusa 1985, Etienne 1991, Griggs–Ho 1998 are paywalled; the surveys and theses I read only cite them). I therefore built the proof from scratch. The lower bound and an exact structural lemma are complete; the general upper bound is not, and I say so.
+\emph{Rispetto allo stato dell'arte}: The listed arXiv abstracts (math/0401385, 1703.07102: random variants; 1101.1546: Toom's convergence proof; 2208.14496: orbit growth; 1503.00885 and 2607.17194: surveys) do not prove the bound. I fetched and read (pdftotext) Drensky 1503.00885, Meštrović 2607.17194, Hopkins "30 years of Bulgarian solitaire" (College Math. J. 43 (2012) 135–140), Hopkins–Jones (EJC 13 (2006) R80), N. Pham's honors thesis and M. Jonsson's PhD thesis (DiVA 1082060). All state, CITED: Knuth conjectured and Igusa (Math. Mag. 58 (1985) 259–271) and Etienne (JCTA 58 (1991) 181–197) proved that for n=T\_k the maximal number of moves is k(k−1), attained by γ\_k=(k−1,k−1,k−2,…,2,1,1) (Hopkins 2012, p. 137: "Igusa [15] shows that the partition γ\_k … is at distance k(k−1) from τ\_k and that this distance is maximal"). None of the read sources reproduces the proof. My approach follows the classical "cards on diagonals" idea mentioned by Hopkins (p. 137) but makes it exact (Lemma 1) and uses it to prove the lower bound in full; the upper bound argument of Igusa/Etienne is not reproduced.
+\textbf{Referee}: verdetto \texttt{(nessun verdetto)}.
+\end{description}
 
 \subsubsection{Codice su cui poggia il tentativo}
-Nessun codice nei tentativi.
+\begin{lstlisting}[caption={attempt\_001 code\_1 [python, rigore exact] — Exhaustive exact computation of D\_B(T\_k) and of all extremal partitions for k ≤ 9 (all par — verdetto del Referee: (nessun verdetto)}]
+"""Calcolo esatto di D_B(T_k) per k piccoli (esplorazione, aritmetica intera esatta).
+
+Enumera tutte le partizioni di n = T_k, applica lo shift B fino a raggiungere
+delta_k (unico punto fisso per n triangolare: verifichiamo anche questo)
+e registra la distanza massima e le partizioni che la raggiungono.
+"""
+import sys
+
+
+def shift(parti):
+    """Applica lo shift B: togli 1 da ogni parte, aggiungi la parte s."""
+    s = len(parti)
+    nuove = [p - 1 for p in parti if p > 1] + [s]
+    return tuple(sorted(nuove, reverse=True))
+
+
+def partizioni(n, massimo=None):
+    """Genera tutte le partizioni di n con parti <= massimo (ordine decrescente)."""
+    if massimo is None:
+        massimo = n
+    if n == 0:
+        yield ()
+        return
+    for prima in range(min(n, massimo), 0, -1):
+        for resto in partizioni(n - prima, prima):
+            yield (prima,) + resto
+
+
+def distanze_al_punto_fisso(n, punto_fisso):
+    """Restituisce dict partizione -> numero di shift per arrivare al punto fisso.
+
+    Usa memoizzazione lungo le orbite; presuppone che ogni orbita finisca in punto_fisso
+    (lo verifichiamo con un controllo di sicurezza sul numero di passi).
+    """
+    dist = {punto_fisso: 0}
+    for lam in partizioni(n):
+        cammino = []
+        cur = lam
+        while cur not in dist:
+            cammino.append(cur)
+            cur = shift(cur)
+            assert len(cammino) <= 10 * n * n, "orbita troppo lunga: non converge?"
+        base = dist[cur]
+        for i, p in enumerate(reversed(cammino)):
+            dist[p] = base + i + 1
+    return dist
+
+
+def main(k_max):
+    for k in range(1, k_max + 1):
+        n = k * (k + 1) // 2
+        delta = tuple(range(k, 0, -1))
+        dist = distanze_al_punto_fisso(n, delta)
+        D = max(dist.values())
+        estremali = sorted(p for p, d in dist.items() if d == D)
+        print(f"k={k} n={n} #partizioni={len(dist)} D_B={D} k^2-k={k*k-k} "
+              f"#estremali={len(estremali)}")
+        for p in estremali[:12]:
+            print("   ", p)
+
+
+if __name__ == "__main__":
+    main(int(sys.argv[1]) if len(sys.argv) > 1 else 8)
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_1.py (python3, clean copy of the researcher sandbox): exit 0 in 0.1s; stdout: '1, 1)\textbackslash{}n    (4, 4, 3, 3, 3, 3, 3, 3, 2)\textbackslash{}n    (4, 4, 4, 3, 2, 2, 2, 2, 2, 1, 1, 1)\textbackslash{}n    (4, 4, 4, 3, 2, 2, 2, 2, 2, 2, 1)\textbackslash{}nk=8 n=36 \#partizioni=17977 D\_B=56 k\textasciicircum{}2-k=56 \#estremali=1267\textbackslash{}n    (5, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1)\textbackslash{}n    (5, 4, 4, 3, 3, 3, 3, 2, 2, 2, 2, 2, 1)\textbackslash{}n    (5, 4, 4, 3, 3, 3,}
+\begin{lstlisting}[caption={attempt\_001 code\_2 [python, rigore exact] — Exploration only: along every orbit for k ≤ 8, records the last time the pile count leaves — verdetto del Referee: (nessun verdetto)}]
+"""Esplorazione: statistiche sulla successione m(t) = numero di pile lungo le orbite."""
+import sys
+from collections import Counter
+from calcola_DB_triangolari import shift, partizioni
+
+
+def conteggio_diagonali(parti):
+    """c_d = numero di celle (i,j) del diagramma (righe = pile) con i+j-1 = d."""
+    c = Counter()
+    for i, p in enumerate(parti, start=1):
+        for j in range(1, p + 1):
+            c[i + j - 1] += 1
+    return c
+
+
+def diagonali_piene_fino(parti, d_max):
+    """True se le diagonali 1..d_max sono tutte piene (c_d = d)."""
+    c = conteggio_diagonali(parti)
+    return all(c[d] == d for d in range(1, d_max + 1))
+
+
+def main(k):
+    n = k * (k + 1) // 2
+    delta = tuple(range(k, 0, -1))
+    peggio_stab = 0; peggio_pieno = 0; combinazioni = Counter()
+    for lam in partizioni(n):
+        orbita = [lam]
+        while orbita[-1] != delta:
+            orbita.append(shift(orbita[-1]))
+        d = len(orbita) - 1
+        m = [len(p) for p in orbita]
+        t_stab = max([t + 1 for t in range(len(m)) if abs(m[t] - k) > 1] + [0])
+        t_pieno = next(t for t, p in enumerate(orbita) if diagonali_piene_fino(p, k - 1))
+        peggio_stab = max(peggio_stab, t_stab)
+        peggio_pieno = max(peggio_pieno, t_pieno)
+        combinazioni[(t_pieno, d - t_pieno)] += 1
+    print(f"k={k}: max t_stab={peggio_stab}, max t_pieno={peggio_pieno}, k^2-k={k*k-k}")
+
+
+if __name__ == "__main__":
+    for k in range(3, int(sys.argv[1]) + 1):
+        main(k)
+
+\end{lstlisting}
+\noindent\emph{Riesecuzione fidata dell'orchestratore}: \texttt{orchestrator re-ran code\_2.py (python3, clean copy of the researcher sandbox): exit 1 in 0.1s; stdout: ''; stderr: 'Traceback (most recent call last):\textbackslash{}n  File "/Users/thomastumini/proof-pursuit/runs/p3\_c2/verifica/attempt\_001/code\_2.py", line 41, in \textless{}module\textgreater{}\textbackslash{}n    for k in range(3, int(sys.argv[1]) + 1):\textbackslash{}n                          \textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciitilde{}\textasciicircum{}\textasciicircum{}\textasciicircum{}\textbackslash{}nIndexError: list index out of range'}
 
 \section{arXiv literature consulted}
 \begin{thebibliography}{99}

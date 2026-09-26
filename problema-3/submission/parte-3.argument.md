@@ -43,6 +43,9 @@ Everything except the plan.
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - No agent run on this cell; the text was written by the team from its notes.
 
+## 6b. Tokens used by the agents
+- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+
 ## 7. arXiv literature consulted
 - arXiv:math/0401385v2 — *Random Bulgarian solitaire* (Serguei Popov, 2004), found by query `Bulgarian solitaire`; abstract read, full text not relied upon.
 - arXiv:1503.00885v1 — *The Bulgarian solitaire and the mathematics around it* (Vesselin Drensky, 2015), found by query `Bulgarian solitaire`; abstract read, full text not relied upon.

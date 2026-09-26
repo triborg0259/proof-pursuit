@@ -214,6 +214,11 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Why this approach: No failed attempts recorded. Simulated annealing (12 seeds) never went below 34 = |E| + 2, while the verified bound gives 33; the gap of 1 suggested a tightness analysis of the verified bound |E| + #valleys, exactly as Proposition 4 did for Q_3. The tightness analysis turned out to close with a pure counting argument (no case analysis), so I chose route (b) (hand proof + explicit labelling), and added a symmetry-reduced exact search only as an independent check, not as the proof.
   - Referee: `(nessun verdetto)` / `None`
 
+## 6b. Tokens used by the agents
+- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+
 ## 7. arXiv literature consulted
 - arXiv:1412.3893v1 — *The competition between simple and complex evolutionary trajectories in asexual populations* (Ian E. Ochs, Michael M. Desai, 2014), found by query `uphill paths`; abstract read, full text not relied upon.
 

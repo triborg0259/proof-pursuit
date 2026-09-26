@@ -71,6 +71,9 @@ Pipeline: formalised statement → Researcher (Claude, real shell) → orchestra
   - Referee: `UNKNOWN_STATUS` / `READY_FOR_HUMAN`; next: Human reviews the exact target, proof and evidence, then approves explicit claims
 - **Human approval**: Thomas Tumini (human) at 2026-09-26T14:53:05 (READY_FOR_HUMAN → ACCEPT).
 
+## 6b. Tokens used by the agents
+- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+
 ## 7. arXiv literature consulted
 - arXiv:1801.07837v1 — *On the Fejes Tóth Problem about the Sum of Angles Between Lines* (Dmitriy Bilyk, Ryan W Matzke, 2018), found by query `angles between lines`; abstract read, full text not relied upon.
 - arXiv:2007.08698v2 — *On Fejes Tóth's conjectured maximizer for the sum of angles between lines* (Tongseok Lim, Robert J. McCann, 2020), found by query `angles between lines`; abstract read, full text not relied upon.

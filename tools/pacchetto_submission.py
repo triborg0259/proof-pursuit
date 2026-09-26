@@ -49,6 +49,28 @@ def codice_md(run):
     return "\n".join(blocchi)
 
 
+def token_md(run):
+    """Token consumati dagli agenti su questa cella: Researcher (meta.usage) e Referee (referee_*.json usage).
+    Gli output token includono il ragionamento (thinking): la CLI non lo riporta separatamente."""
+    righe, tot_in, tot_out = [], 0, 0
+    for att in sorted((run / "attempts").glob("attempt_*.json")):
+        u = ((br.leggi_json(att) or {}).get("meta") or {}).get("usage") or {}
+        if u:
+            i, o = u.get("input_tokens", 0) + u.get("cache_read_input_tokens", 0) + u.get("cache_creation_input_tokens", 0), u.get("output_tokens", 0)
+            tot_in += i; tot_out += o
+            righe.append(f"- Researcher {att.stem}: input {i:,} · output (incl. reasoning) {o:,}")
+        r = br.leggi_json(run / "attempts" / att.name.replace("attempt_", "referee_")) or {}
+        for x in r.get("usage", []):
+            u = x.get("usage") or {}
+            if u:
+                i, o = u.get("input_tokens", 0) + u.get("cache_read_input_tokens", 0) + u.get("cache_creation_input_tokens", 0), u.get("output_tokens", 0)
+                tot_in += i; tot_out += o
+                righe.append(f"- Referee judge {x['role']}: input {i:,} · output (incl. reasoning) {o:,}")
+    if not righe:
+        return "- Token counts not recorded for this run (older harness version; only cost and turns were logged)."
+    return "\n".join(righe) + f"\n- **Total**: input {tot_in:,} · output {tot_out:,} tokens"
+
+
 def fonti_md(n, pid):
     return "\n".join(f"- arXiv:{v['arxiv_id']} — *{v['title']}* ({', '.join(v['authors'][:3])}, {v['published'][:4]}), found by query `{v.get('query','')}`; abstract read, full text not relied upon." for v in br.fonti_arxiv(n, pid)) or "- No relevant arXiv entry found by the deterministic search."
 
@@ -59,7 +81,7 @@ def argument(pid, n, k):
     runs = br.cartelle_run(pid, k)
     testo = base + "\n\n## 6. How this result was obtained (multi-agent trace)\n" \
         "Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:\n" \
-        + "\n".join(decisioni_md(r) for r in runs) + "\n\n## 7. arXiv literature consulted\n" + fonti_md(n, pid) \
+        + "\n".join(decisioni_md(r) for r in runs) + "\n\n## 6b. Tokens used by the agents\n" + "\n".join(token_md(r) for r in runs) + "\n\n## 7. arXiv literature consulted\n" + fonti_md(n, pid) \
         + "\n\n## 8. Code\n" + ("\n".join(codice_md(r) for r in runs) or "See the certificates listed in section 3.") \
         + f"\n\n---\nFull write-up (LaTeX, all resources): {REPO}report/cells/{pid}_c{k}.tex · Repository: {REPO}\n"
     (sub / f"parte-{k}.argument.md").write_text(testo, encoding="utf-8")

@@ -44,6 +44,9 @@ The step from generic lines to a chain without loss of deficit is missing. The a
 Pipeline: formalised statement → Researcher (Claude, real shell) → orchestrator re-runs every script → two independent Referee judges (mathematics / evidence) → human approval. Trace:
 - No agent run on this cell; the text was written by the team from its notes.
 
+## 6b. Tokens used by the agents
+- Token counts not recorded for this run (older harness version; only cost and turns were logged).
+
 ## 7. arXiv literature consulted
 - arXiv:1801.07837v1 — *On the Fejes Tóth Problem about the Sum of Angles Between Lines* (Dmitriy Bilyk, Ryan W Matzke, 2018), found by query `angles between lines`; abstract read, full text not relied upon.
 - arXiv:2007.08698v2 — *On Fejes Tóth's conjectured maximizer for the sum of angles between lines* (Tongseok Lim, Robert J. McCann, 2020), found by query `angles between lines`; abstract read, full text not relied upon.

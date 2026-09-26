@@ -241,7 +241,9 @@ def _cli_meta(output, started, shell, shell_mode):
     return {"backend": "cli", "model": list((output.get("modelUsage") or {}).keys()), "cost_usd": output.get("total_cost_usd"),
             "seconds": round(time.time() - started, 1), "session_id": output.get("session_id"),
             "num_turns": output.get("num_turns"), "shell": shell_mode if shell else None,
-            "permission_denials": len(output.get("permission_denials") or [])}
+            "permission_denials": len(output.get("permission_denials") or []),
+            # token consumati: output_tokens include anche il ragionamento (thinking) del modello, la CLI non li separa
+            "usage": output.get("usage"), "model_usage": output.get("modelUsage")}
 
 
 def call_cli(system_prompt, user_prompt, schema, model=None, effort=None, shell=None,
