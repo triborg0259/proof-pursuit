@@ -35,6 +35,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from researcher import read_json, write_json, next_attempt_number  # noqa: E402
 from bridge_referee import esito_unificato  # noqa: E402
+from integrita import impronta, differenze  # noqa: E402
 
 FERMA = {"READY_FOR_HUMAN": "pronto per approvazione umana", "ACCEPT": "accettato (verificare che l'approvazione sia umana)",
          "COUNTEREXAMPLE_FOUND": "controesempio trovato: la cella è falsa", "KNOWN_OPEN": "problema aperto: colonna chiusa",
@@ -161,10 +162,22 @@ def voce_di_log(i, attempt, report):
             "creative": "", "creative_analysis": "", "ts": time.strftime("%H:%M:%S")}
 
 
+def perimetro_violato(prima, workdir):
+    """Confronta il perimetro di verifica con l'impronta presa prima del Researcher. Ritorna la lista dei file
+    toccati: se non è vuota il tentativo non può essere giudicato, perché il verificatore stesso è sospetto."""
+    return differenze(prima, impronta(workdir))
+
+
 def iterazione(args, workdir, i):
     """Un giro completo; ritorna (esito_da_fermare_o_None, voce_di_log)."""
     stagnazione_prima = read_json(workdir / "state.json").get("stagnation_count", 0) if (workdir / "state.json").exists() else 0
+    prima = impronta(workdir)
     attempt = passo_researcher(args, workdir)
+    toccati = perimetro_violato(prima, workdir)
+    if toccati:
+        voce = voce_di_log(i, attempt, {"verdict": "REJECT", "esito": "REJECT", "fatal_error":
+                           "perimetro di verifica modificato dal Researcher: " + ", ".join(toccati)})
+        return "perimetro di verifica modificato: intervento umano necessario", voce
     report = passo_referee(args, workdir, attempt, i)
     esito = esito_unificato(report)
     voce = voce_di_log(i, attempt, report)

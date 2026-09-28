@@ -90,6 +90,8 @@ python3 researcher/loop.py --workdir runs/X --max-iter 4 --researcher-backend cl
 python3 researcher/loop.py --workdir runs/X --researcher-backend mock --referee mock --mock-rejects 2   # test senza modelli
 ```
 Regole di arresto: READY_FOR_HUMAN/ACCEPT (approvazione umana), COUNTEREXAMPLE_FOUND, KNOWN_OPEN, UNKNOWN_STATUS, `--max-iter`.
+
+**Perimetro di verifica** (`integrita.py`): prima di ogni tentativo il loop prende l'impronta SHA-256 di `referee/`, `shared/schemas/`, del bridge, del loop, di `CLAUDE.md` e dei file dell'orchestratore nel workdir (enunciato, stato, verdetti). Se dopo il Researcher qualcosa è cambiato, il tentativo non viene giudicato e il loop si ferma: un verificatore ritoccato dal candidato non vale nulla. Unica eccezione: `stagnation_count` in state.json, l'unico campo che il Researcher può toccare.
 PARTIAL_PROGRESS: i claim accettati entrano in `state.verified_claims`. Creative: punto d'aggancio `--creative-cmd`
 (deve scrivere `{workdir}/creative_ideas.json`), chiamato su `request_creative`, `stagnation_signal` o aumento di
 `stagnation_count`; se assente, avviso e si prosegue. Traccia per iterazione in `loop_log.jsonl`.

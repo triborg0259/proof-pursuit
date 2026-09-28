@@ -57,6 +57,22 @@ def test_creative_del_team_rule_based_scrive_idee():
     assert any("idee scritte" in r["creative"] for r in righe)
 
 
+def test_perimetro_di_verifica():
+    """L'impronta del perimetro cambia se si tocca un file protetto (enunciato, stato) e include il Referee;
+    NON cambia se il Researcher incrementa solo stagnation_count, l'unico campo che gli spetta."""
+    sys.path.insert(0, str(ROOT / "researcher"))
+    from integrita import impronta, differenze
+    d = cartella()
+    prima = impronta(d)
+    assert str(ROOT / "referee" / "referees" / "merge.py") in prima
+    stato = json.loads((d / "state.json").read_text()); stato["stagnation_count"] = 3
+    (d / "state.json").write_text(json.dumps(stato))
+    assert differenze(prima, impronta(d)) == []
+    (d / "problem.md").write_text((d / "problem.md").read_text() + "\n(enunciato ammorbidito)")
+    assert differenze(prima, impronta(d)) == [str(d / "problem.md")]
+    (d / "state.json").unlink()
+    assert str(d / "state.json") in differenze(prima, impronta(d))
+
 if __name__ == "__main__":
     for name, fn in list(globals().items()):
         if name.startswith("test_"):
