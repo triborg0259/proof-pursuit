@@ -14,6 +14,10 @@ import re
 import shutil
 import subprocess
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "researcher"))
+from researcher import esito_unificato  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "report" / "proof_pursuit.tex"
@@ -102,6 +106,7 @@ def voce_da_file(run: Path, i, att: Path):
     return {"iter": i, "attempt_id": a["attempt_id"], "family": a.get("approach_family"), "subgoal": a.get("subgoal"),
             "claimed_status": a.get("claimed_status"), "researcher_reason": a.get("reason_for_choice", ""),
             "literature_position": a.get("literature_position", ""), "verdict": r.get("verdict", "(nessun verdetto)"),
+            "esito": esito_unificato(r) if r else "(nessun verdetto)",
             "review_status": r.get("review_status"), "fatal_error": r.get("fatal_error"),
             "next_blocker": r.get("next_blocker"), "creative": "", "creative_analysis": ""}
 
@@ -126,8 +131,8 @@ def iterazioni(run: Path):
 
 
 def approvato(voce):
-    """Il tentativo è passato dal Referee? (READY_FOR_HUMAN, ACCEPT o PARTIAL_PROGRESS sui claim)."""
-    return voce.get("review_status") == "READY_FOR_HUMAN" or voce.get("verdict") in ("ACCEPT", "PARTIAL_PROGRESS")
+    """Il tentativo è passato dal Referee? (esito READY_FOR_HUMAN, o PARTIAL_PROGRESS sui claim)."""
+    return esito_unificato(voce) in ("READY_FOR_HUMAN", "ACCEPT", "PARTIAL_PROGRESS")
 
 
 # =============================================================================== sezioni del rapporto
@@ -142,8 +147,7 @@ def sezione_decisioni(run: Path):
             righe.append(f"\\emph{{Perché questa scelta}}: {tex(v['researcher_reason'])}")
         if v.get("literature_position"):
             righe.append(f"\\emph{{Rispetto allo stato dell'arte}}: {tex(v['literature_position'])}")
-        righe.append(f"\\textbf{{Referee}}: verdetto \\texttt{{{tex(v.get('verdict'))}}}"
-                     + (f" (review\\_status \\texttt{{{tex(v['review_status'])}}})" if v.get("review_status") else "") + ".")
+        righe.append(f"\\textbf{{Referee}}: esito \\texttt{{{tex(esito_unificato(v))}}}.")
         if v.get("fatal_error"):
             righe.append(f"\\emph{{Errore fatale}}: {tex(v['fatal_error'])}")
         if v.get("next_blocker"):
@@ -160,7 +164,7 @@ def sezione_codice(run: Path):
     for v in iterazioni(run):
         a = leggi_json(run / "attempts" / f"{v['attempt_id']}.json") or {}
         oss = leggi_json(run / "verifica" / v["attempt_id"] / "osservazioni.json") or []
-        esito = "approvato dal Referee" if approvato(v) else f"verdetto del Referee: {v.get('verdict')}"
+        esito = "approvato dal Referee" if approvato(v) else f"esito del Referee: {esito_unificato(v)}"
         for i, c in enumerate(a.get("code_used", []), start=1):
             titolo = f"{v['attempt_id']} code_{i} [{c.get('language')}, rigore {c.get('rigor')}] — {c.get('purpose', '')[:90]} — {esito}"
             blocchi.append(listing(c.get("code", ""), titolo))

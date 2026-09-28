@@ -49,7 +49,7 @@ def decisioni_md(run):
             righe.append(f"  - Why this approach: {v['researcher_reason']}")
         if v.get("literature_position"):
             righe.append(f"  - Position w.r.t. the literature: {v['literature_position']}")
-        righe.append(f"  - Referee: `{v.get('verdict')}` / `{v.get('review_status')}`" + (f"; fatal error: {v['fatal_error']}" if v.get("fatal_error") else "") + (f"; next: {v['next_blocker']}" if v.get("next_blocker") else ""))
+        righe.append(f"  - Referee: `{v.get('esito') or (v.get('review_status') if v.get('review_status') == 'READY_FOR_HUMAN' else v.get('verdict'))}`" + (f"; fatal error: {v['fatal_error']}" if v.get("fatal_error") else "") + (f"; next: {v['next_blocker']}" if v.get("next_blocker") else ""))
         if v.get("creative"):
             righe.append(f"  - Creative agent activated ({v['creative']}): {v.get('creative_analysis')}")
     appr = run / "approval.json"

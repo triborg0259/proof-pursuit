@@ -96,13 +96,26 @@ def stato_cella(problema, cella, status_md):
         return "ok", ultima
     if loop_attivo(cartella):
         return "loop", ultima
-    if report.get("review_status") == "READY_FOR_HUMAN":
+    esito = esito_del_report(report)
+    if esito == "READY_FOR_HUMAN":
         return "cand", ultima
-    if report.get("verdict") == "REJECT":
+    if esito in ("REJECT", "COUNTEREXAMPLE_FOUND"):
         return "rej", ultima
-    if report.get("verdict"):
+    if esito:
         return "unk", ultima
     return ("parz" if bozza_esiste(problema, cella) else "none"), ultima
+
+
+def esito_del_report(report):
+    """Esito unificato di un referee_report: il campo `esito` se c'è, altrimenti la stessa regola dei report
+    vecchi (READY_FOR_HUMAN vince, poi `verdict`). Stringa vuota se non c'è nessun verdetto."""
+    if not report:
+        return ""
+    if report.get("esito"):
+        return report["esito"]
+    if report.get("review_status") == "READY_FOR_HUMAN":
+        return "READY_FOR_HUMAN"
+    return report.get("verdict", "")
 
 
 def righe_log(cartella):
@@ -172,7 +185,7 @@ def testo_dettaglio(voce, cella):
     if not ultima:
         return [testa + "  (nessuna iterazione registrata)"]
     return [testa + f"  iter {ultima.get('iter', '?')}  famiglia {ultima.get('family', '?')}"
-            f"  ·  verdetto {ultima.get('verdict', '?')} / {ultima.get('review_status', '?')}",
+            f"  ·  esito {ultima.get('esito') or esito_del_report(ultima)}",
             f"   errore fatale: {(ultima.get('fatal_error') or '—')[:150]}",
             f"   prossimo blocco: {(ultima.get('next_blocker') or '—')[:150]}"]
 
@@ -242,7 +255,7 @@ def disegna_log(schermo, cartella, y):
         return y + 1
     for r in righe[-(altezza - y - 3):]:
         scrivi(schermo, y, f"   {r.get('ts', '')}  iter {r.get('iter', '?')}  {r.get('family', '?'):<16}"
-                            f" {r.get('verdict', '?'):<18} {(r.get('fatal_error') or '')[:70]}")
+                            f" {(r.get('esito') or esito_del_report(r)):<18} {(r.get('fatal_error') or '')[:70]}")
         y += 1
     return y
 

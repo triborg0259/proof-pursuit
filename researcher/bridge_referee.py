@@ -30,7 +30,7 @@ ROOT = HERE.parent
 sys.path.insert(0, str(ROOT / "referee"))   # il pacchetto `referees` vive in referee/ senza installazione
 sys.path.insert(0, str(HERE))
 
-from researcher import read_json, read_text, write_json, next_attempt_number, target_cell_from_state  # noqa: E402
+from researcher import read_json, read_text, write_json, next_attempt_number, target_cell_from_state, esito_unificato  # noqa: E402
 
 # Regole della competizione: file condiviso e sostituibile. NON e' il regolamento ufficiale.
 REGOLE_FILE = ROOT / "shared" / "competition_rules.example.json"
@@ -159,13 +159,14 @@ def _errore_fatale(report):
 
 
 def converti_packet(packet, attempt_id):
-    """Traduce il ReviewPacket nel nostro referee_report.schema.json. `review_status` viene conservato perché
-    READY_FOR_HUMAN non è un ACCEPT: l'approvazione resta umana (regola del pacchetto Referee)."""
+    """Traduce il ReviewPacket nel nostro referee_report.schema.json. `verdict` e `review_status` restano per
+    tracciabilità verso il pacchetto Referee; `esito` è il campo unificato da usare (vedi esito_unificato)."""
     report = packet["report"]
     evidenze = report.get("evidence_review") or {}
     matematica = report.get("math_review") or {}
     return {
         "attempt_id": attempt_id,
+        "esito": esito_unificato({"verdict": report["final_verdict"], "review_status": packet["review_status"]}),
         "verdict": report["final_verdict"],
         "review_status": packet["review_status"],
         "highest_verified_cell": int(report.get("highest_verified_cell", 0)),
@@ -187,7 +188,7 @@ def registra_report(workdir: Path, report):
     write_json(workdir / "attempts" / f"referee_{numero:03d}.json", report)
     write_json(workdir / "referee_report.json", report)
     if report["verdict"] in ("REJECT", "COUNTEREXAMPLE_FOUND"):
-        from researcher import append_failed_attempt
+        from researcher import append_failed_attempt  # noqa: F401
         append_failed_attempt(workdir, numero, report)
 
 
@@ -381,7 +382,7 @@ def cmd_from_packet(args):
     packet = read_json(Path(args.packet))
     report = converti_packet(packet, packet["job"]["candidate"]["attempt_id"])
     registra_report(workdir, report)
-    print(json.dumps({k: report[k] for k in ("attempt_id", "verdict", "review_status", "fatal_error", "next_blocker")},
+    print(json.dumps({k: report[k] for k in ("attempt_id", "esito", "fatal_error", "next_blocker")},
                      ensure_ascii=False))
     return 0
 
@@ -424,7 +425,7 @@ def cmd_review(args):
     if backend is not None:
         report["usage"] = getattr(backend, "usage", [])
     registra_report(workdir, report)
-    print(json.dumps({k: report.get(k) for k in ("attempt_id", "verdict", "review_status", "fatal_error", "next_blocker", "usage")},
+    print(json.dumps({k: report.get(k) for k in ("attempt_id", "esito", "fatal_error", "next_blocker", "usage")},
                      ensure_ascii=False))
     return 0
 

@@ -67,7 +67,7 @@ il ponte traduce nei due sensi e archivia il verdetto come `researcher.py record
 .venv/bin/python researcher/bridge_referee.py from-packet --workdir runs/X --packet packet.json
 ```
 Mappatura: `final_verdict`→`verdict`, `first_fatal_error.detail`→`fatal_error`, `next_required_step`→`next_blocker`;
-`review_status` è conservato: **READY_FOR_HUMAN non è ACCEPT**, l'approvazione resta umana (`python -m referees approve`).
+Il campo da leggere è **`esito`** (unificato da `esito_unificato`): READY_FOR_HUMAN se entrambi i giudici passano, altrimenti il verdict. **READY_FOR_HUMAN non è ACCEPT**, l'approvazione resta umana (`python -m referees approve`). `verdict` e `review_status` restano solo per tracciabilità verso il pacchetto Referee.
 L'enunciato protetto della cella si cerca in quest'ordine: `cell_statement` in state.json, riga `Cell N:` di
 `problem.md`, `current_blocker`. Se manca ovunque il ponte si ferma con un errore invece di usare un segnaposto:
 il Referee protegge quel testo esatto, e giudicare un bersaglio inventato darebbe un verdetto senza significato.

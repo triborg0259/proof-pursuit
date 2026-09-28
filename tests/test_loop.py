@@ -29,6 +29,7 @@ def test_reject_poi_ready_con_creative_agganciato():
     righe = [json.loads(l) for l in (d / "loop_log.jsonl").read_text().splitlines()]
     assert [r["verdict"] for r in righe] == ["REJECT", "REJECT", "UNKNOWN_STATUS"]
     assert righe[-1]["review_status"] == "READY_FOR_HUMAN"
+    assert [r["esito"] for r in righe] == ["REJECT", "REJECT", "READY_FOR_HUMAN"]   # campo unificato
     assert "idee scritte" in righe[1]["creative"]            # al 2° REJECT il Referee segnala stagnazione → Creative
     assert righe[2]["family"] == "extremal"                  # il Researcher segue l'idea del Creative
     assert (d / "failed_attempts.md").read_text().count("attempt_") == 2

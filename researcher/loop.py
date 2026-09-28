@@ -34,6 +34,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 from researcher import read_json, write_json, next_attempt_number  # noqa: E402
+from bridge_referee import esito_unificato  # noqa: E402
 
 FERMA = {"READY_FOR_HUMAN": "pronto per approvazione umana", "ACCEPT": "accettato (verificare che l'approvazione sia umana)",
          "COUNTEREXAMPLE_FOUND": "controesempio trovato: la cella è falsa", "KNOWN_OPEN": "problema aperto: colonna chiusa",
@@ -87,7 +88,8 @@ def _referee_mock(workdir, attempt, iterazione, rifiuti):
     """Referee finto per i test del ciclo: stesso motivo di rigetto ogni volta, segnale di stagnazione al 2° rifiuto."""
     from bridge_referee import registra_report
     rifiuta = iterazione <= rifiuti
-    report = {"attempt_id": attempt["attempt_id"], "verdict": "REJECT" if rifiuta else "UNKNOWN_STATUS",
+    report = {"attempt_id": attempt["attempt_id"], "esito": "REJECT" if rifiuta else "READY_FOR_HUMAN",
+              "verdict": "REJECT" if rifiuta else "UNKNOWN_STATUS",
               "review_status": "NEEDS_WORK" if rifiuta else "READY_FOR_HUMAN", "highest_verified_cell": 0,
               "accepted_claims": [], "proposed_claim_ids": [],
               "fatal_error": "Step 2 asserts the key identity without proof." if rifiuta else None,
@@ -154,7 +156,7 @@ def voce_di_log(i, attempt, report):
             "subgoal": attempt.get("subgoal"), "claimed_status": attempt.get("claimed_status"),
             "researcher_reason": (attempt.get("reason_for_choice") or "")[:600],
             "literature_position": (attempt.get("literature_position") or "")[:600],
-            "verdict": report["verdict"], "review_status": report.get("review_status"),
+            "esito": esito_unificato(report), "verdict": report["verdict"], "review_status": report.get("review_status"),
             "fatal_error": report.get("fatal_error"), "next_blocker": report.get("next_blocker"),
             "creative": "", "creative_analysis": "", "ts": time.strftime("%H:%M:%S")}
 
@@ -164,11 +166,11 @@ def iterazione(args, workdir, i):
     stagnazione_prima = read_json(workdir / "state.json").get("stagnation_count", 0) if (workdir / "state.json").exists() else 0
     attempt = passo_researcher(args, workdir)
     report = passo_referee(args, workdir, attempt, i)
-    esito = report.get("review_status") if report.get("review_status") == "READY_FOR_HUMAN" else report["verdict"]
+    esito = esito_unificato(report)
     voce = voce_di_log(i, attempt, report)
     if esito in FERMA:
         return FERMA[esito], voce
-    if report["verdict"] == "PARTIAL_PROGRESS":
+    if esito == "PARTIAL_PROGRESS":
         voce["new_claims"] = integra_progresso_parziale(workdir, report)
     motivo = serve_creative(workdir, attempt, report, stagnazione_prima)
     if motivo:

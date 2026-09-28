@@ -137,6 +137,19 @@ def similar(text_a, text_b, threshold=0.5):
     return len(words_a & words_b) / len(words_a | words_b) >= threshold
 
 
+def esito_unificato(report):
+    """L'UNICO esito di un verdetto, quello che il loop e la dashboard leggono. Il pacchetto Referee produce due
+    campi che confondono chi legge: `verdict` (mai ACCEPT in automatico, quindi UNKNOWN_STATUS anche quando
+    entrambi i giudici passano) e `review_status` (READY_FOR_HUMAN / NEEDS_WORK / INCOMPLETE). Qui si fondono:
+    READY_FOR_HUMAN vince su tutto (l'approvazione resta umana), altrimenti vale `verdict`.
+    Funziona anche sui report vecchi che non hanno ancora il campo `esito`."""
+    if report.get("esito"):
+        return report["esito"]
+    if report.get("review_status") == "READY_FOR_HUMAN":
+        return "READY_FOR_HUMAN"
+    return report.get("verdict", "UNKNOWN_STATUS")
+
+
 def detect_stagnation(history, window=STAGNATION_WINDOW):
     """Applica la regola del brief agli ultimi `window` tentativi giudicati:
     tutti REJECT, nessun claim accettato, stessa approach_family, motivi di rigetto simili.
@@ -166,7 +179,7 @@ def _history_section(history):
     for h in [h for h in history if h["attempt"]][-6:]:
         attempt, report = h["attempt"], h["report"] or {}
         lines.append(f"- attempt_{h['n']:03d}: family={attempt.get('approach_family')} | subgoal={attempt.get('subgoal')} | "
-                     f"verdict={report.get('verdict', 'PENDING')} | fatal_error={report.get('fatal_error')}")
+                     f"verdict={esito_unificato(report) if report else 'PENDING'} | fatal_error={report.get('fatal_error')}")
     return "# RECENT ATTEMPT HISTORY (structured)\n" + "\n".join(lines) if lines else ""
 
 
@@ -405,7 +418,7 @@ def append_failed_attempt(workdir: Path, number, report):
     attempt = read_json(workdir / "attempts" / f"attempt_{number:03d}.json") or {}
     with open(workdir / "failed_attempts.md", "a", encoding="utf-8") as f:
         f.write(f"- attempt_{number:03d} [{attempt.get('approach_family')}] {attempt.get('subgoal')}: "
-                f"{report.get('verdict')} — {report.get('fatal_error')}\n")
+                f"{esito_unificato(report)} — {report.get('fatal_error')}\n")
 
 
 def cmd_record(args):
@@ -430,7 +443,7 @@ def cmd_history(args):
     for h in load_history(Path(args.workdir)):
         attempt, report = h["attempt"] or {}, h["report"] or {}
         print(f"attempt_{h['n']:03d}  {attempt.get('approach_family'):<26} {attempt.get('claimed_status'):<26} "
-              f"-> {report.get('verdict', 'PENDING'):<16} {(report.get('fatal_error') or '')[:70]}")
+              f"-> {(esito_unificato(report) if report else 'PENDING'):<16} {(report.get('fatal_error') or '')[:70]}")
     return 0
 
 

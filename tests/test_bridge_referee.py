@@ -34,6 +34,7 @@ def test_review_offline_archivia_il_verdetto():
     p = run("review", "--workdir", str(d), "--offline"); assert p.returncode == 0, p.stderr
     r = json.loads((d / "referee_report.json").read_text())
     assert r["verdict"] == "UNKNOWN_STATUS" and r["review_status"] == "INCOMPLETE"
+    assert r["esito"] == "UNKNOWN_STATUS"   # campo unificato: senza READY_FOR_HUMAN vale il verdict
     assert (d / "attempts" / "referee_001.json").exists() and (d / "attempts" / "packet_001.json").exists()
     assert not (d / "failed_attempts.md").exists()   # UNKNOWN_STATUS non è un fallimento
 
@@ -69,6 +70,16 @@ def test_riesecuzione_codice_produce_osservazioni():
     oss = esegui_codice(d, attempt, timeout=30)
     assert len(oss) == 2 and "exit 0" in oss[0] and "'4'" in oss[0] and "not re-run" in oss[1]
     assert (d / "verifica" / "attempt_001" / "osservazioni.json").exists()
+
+
+def test_esito_unificato_sui_report_vecchi():
+    """I report della gara non hanno `esito`: READY_FOR_HUMAN vince sul verdict grezzo, altrimenti vale il verdict."""
+    sys.path.insert(0, str(ROOT / "researcher"))
+    from researcher import esito_unificato
+    assert esito_unificato({"verdict": "UNKNOWN_STATUS", "review_status": "READY_FOR_HUMAN"}) == "READY_FOR_HUMAN"
+    assert esito_unificato({"verdict": "REJECT", "review_status": "NEEDS_WORK"}) == "REJECT"
+    assert esito_unificato({"esito": "PARTIAL_PROGRESS", "verdict": "REJECT"}) == "PARTIAL_PROGRESS"
+    assert esito_unificato({}) == "UNKNOWN_STATUS"
 
 
 if __name__ == "__main__":
