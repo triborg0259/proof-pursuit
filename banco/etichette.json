@@ -1,0 +1,90 @@
+{
+ "caso_01": {
+  "origine": "runs/p3_c1",
+  "categoria": "corretta",
+  "nota": "prova approvata da umano (problema 3 parte 1)",
+  "atteso": {
+   "A": "PASS",
+   "B": "PASS",
+   "esito": "READY_FOR_HUMAN"
+  },
+  "creato": "2026-09-28T20:59:22"
+ },
+ "caso_02": {
+  "origine": "runs/p1_c1",
+  "categoria": "corretta",
+  "nota": "prova approvata da umano (problema 1 parte 1)",
+  "atteso": {
+   "A": "PASS",
+   "B": "PASS",
+   "esito": "READY_FOR_HUMAN"
+  },
+  "creato": "2026-09-28T21:00:01"
+ },
+ "caso_03": {
+  "origine": "runs/p1_c2",
+  "categoria": "corretta",
+  "nota": "prova approvata da umano (problema 1 parte 2)",
+  "atteso": {
+   "A": "PASS",
+   "B": "PASS",
+   "esito": "READY_FOR_HUMAN"
+  },
+  "creato": "2026-09-28T21:00:01"
+ },
+ "caso_04": {
+  "origine": "runs/p2_c3",
+  "categoria": "corretta",
+  "nota": "prova approvata da umano (problema 2 parte 3)",
+  "atteso": {
+   "A": "PASS",
+   "B": "PASS",
+   "esito": "READY_FOR_HUMAN"
+  },
+  "creato": "2026-09-28T21:00:01"
+ },
+ "caso_05": {
+  "origine": "runs/p3_c2",
+  "categoria": "corretta",
+  "nota": "prova approvata da umano (problema 3 parte 2)",
+  "atteso": {
+   "A": "PASS",
+   "B": "PASS",
+   "esito": "READY_FOR_HUMAN"
+  },
+  "creato": "2026-09-28T21:00:01"
+ },
+ "caso_06": {
+  "origine": "runs/p4_c1",
+  "categoria": "corretta",
+  "nota": "prova approvata da umano (problema 4 parte 1)",
+  "atteso": {
+   "A": "PASS",
+   "B": "PASS",
+   "esito": "READY_FOR_HUMAN"
+  },
+  "creato": "2026-09-28T21:00:01"
+ },
+ "caso_07": {
+  "origine": "runs/p4_c2",
+  "categoria": "corretta",
+  "nota": "prova approvata da umano (problema 4 parte 2)",
+  "atteso": {
+   "A": "PASS",
+   "B": "PASS",
+   "esito": "READY_FOR_HUMAN"
+  },
+  "creato": "2026-09-28T21:00:01"
+ },
+ "caso_08": {
+  "origine": "runs/p4_c3",
+  "categoria": "corretta",
+  "nota": "prova approvata da umano (problema 4 parte 3)",
+  "atteso": {
+   "A": "PASS",
+   "B": "PASS",
+   "esito": "READY_FOR_HUMAN"
+  },
+  "creato": "2026-09-28T21:00:01"
+ }
+}

@@ -1,0 +1,6 @@
+k=3 soglia_gcd<=3 multinsiemi_moduli=76 famiglie(a1=0)=2286 tempo=0.01s
+   esempio: ((0, 3), (1, 3), (2, 3))
+k=5 soglia_gcd<=5 multinsiemi_moduli=246 famiglie(a1=0)=19416 tempo=0.09s
+   esempio: ((0, 5), (1, 5), (2, 5), (3, 5), (4, 5))
+k=7 soglia_gcd<=7 multinsiemi_moduli=1304 famiglie(a1=0)=425520 tempo=3.19s
+   esempio: ((0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7))

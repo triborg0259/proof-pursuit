@@ -213,7 +213,7 @@ def build_parser():
     p.add_argument("--workdir", required=True)
     p.add_argument("--max-iter", type=int, default=4)
     p.add_argument("--researcher-backend", choices=["cli", "api", "mock"], default="cli")
-    p.add_argument("--shell", choices=["sandbox", "full"])
+    p.add_argument("--shell", choices=["sandbox", "full", "container"])
     p.add_argument("--effort")
     p.add_argument("--referee", choices=["cli", "offline", "mock"], default="cli")
     p.add_argument("--mock-rejects", type=int, default=2, help="solo --referee mock: quanti REJECT prima di READY")

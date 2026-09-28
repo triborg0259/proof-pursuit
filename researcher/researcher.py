@@ -49,7 +49,11 @@ SHELL_MODES = {
                 "Bash(ssh *)", "WebFetch", "WebSearch",
                 "--permission-mode", "dontAsk"],
     "full": ["--permission-mode", "bypassPermissions", "--add-dir", str(ROOT)],
+    # container: permessi bypassati ma dentro Docker, dove esistono solo /work, /repo/tools e /repo/problema-N
+    # (vedi container/README.md). Il confine lo fa il sistema, non l'elenco degli strumenti.
+    "container": ["--permission-mode", "bypassPermissions"],
 }
+LANCIA_CONTAINER = ROOT / "container" / "lancia_researcher.sh"
 
 
 # =============================================================================== lettura/scrittura file
@@ -183,6 +187,11 @@ def _history_section(history):
     return "# RECENT ATTEMPT HISTORY (structured)\n" + "\n".join(lines) if lines else ""
 
 
+def _cartella_problema(shell_dir):
+    """Da runs/p3_c3/sandbox alla cartella del problema: problema-3. È l'unica cartella del repo che il container vede."""
+    return f"problema-{Path(shell_dir).parent.name[1]}"
+
+
 def _shell_section(shell_dir, mode):
     """Istruzioni per l'uso della shell. Le regole di rigore (script salvati, insieme finito dichiarato, float solo
     per esplorare) valgono in entrambe le modalità; in `full` si aggiungono rete e repo, con l'obbligo di citare
@@ -193,6 +202,10 @@ def _shell_section(shell_dir, mode):
     if mode == "sandbox":
         return ("# SANDBOX SHELL AVAILABLE\nYou may run `python3` only (no network, no pip, no other commands) in the "
                 f"current directory for exploration and EXACT computations. {rigor} Working directory: {shell_dir}")
+    if mode == "container":
+        return ("# CONTAINER SHELL AVAILABLE\nYou have a full shell with network access inside a container. Working "
+                f"directory: /work (your sandbox). Read-only: /repo/tools and /repo/{_cartella_problema(shell_dir)} "
+                f"(statement, notes, experiments). python3 has numpy, mpmath, scipy. {rigor}")
     return ("# FULL SHELL AVAILABLE\nYou have a full shell, network access (WebSearch, WebFetch, curl) and the whole "
             f"repository at {ROOT}: read the problem folders, reuse tools/ and the .venv (numpy, mpmath); install "
             "packages in .venv only. Use the network to check literature: record exact references and quote the "
@@ -246,7 +259,11 @@ def _cli_command(system_prompt, user_prompt, schema, model, effort, shell, max_t
         cmd += ["--model", model]
     if effort:
         cmd += ["--effort", effort]
-    return cmd + [user_prompt]
+    cmd.append(user_prompt)
+    if shell_mode == "container" and shell:
+        # lo script monta sandbox e cartella del problema e lancia `claude` dentro Docker con gli stessi argomenti
+        return [str(LANCIA_CONTAINER), str(shell), _cartella_problema(shell)] + cmd[1:]
+    return cmd
 
 
 def _cli_meta(output, started, shell, shell_mode):
@@ -458,7 +475,8 @@ def build_parser():
     run.add_argument("--model")
     run.add_argument("--effort", choices=["low", "medium", "high", "xhigh", "max"])
     run.add_argument("--shell", choices=list(SHELL_MODES),
-                     help="sandbox = solo python3 in <workdir>/sandbox; full = tutti gli strumenti, rete inclusa (solo backend cli)")
+                     help="sandbox = solo python3 in <workdir>/sandbox; full = tutti gli strumenti, rete inclusa; "
+                          "container = come full ma dentro Docker senza referee/ (solo backend cli)")
     run.add_argument("--max-turns", type=int, default=150)
     run.add_argument("--max-budget-usd", type=float, default=15.0)
     run.add_argument("--dry-run", action="store_true", help="stampa solo il prompt costruito")

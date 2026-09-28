@@ -29,6 +29,10 @@ Ammessi: web, letteratura, AI, codice.
 - `tools/autoloop.py` — harness "proponi / valuta / tieni se migliora" (pattern autoresearch, senza il repo): seed paralleli, budget fisso, restart, ricertificazione mpmath, ledger JSONL. Protocollo d’uso in `tools/program.md`; tabelle con `tools/ledger_table.py`. Ambiente: `.venv` (numpy, mpmath). Output float ⇒ MAI una prova.
 - `tools/dashboard.py` — griglia 4×6 nel terminale, sola lettura (curses, nessuna dipendenza): stato di ogni cella da
   `runs/`, `STATUS.md` e processi attivi, ultima iterazione del loop, spesa equivalente USD. `--once` stampa e esce.
+- `banco/` — banco di prova del Referee con errori piantati (`tools/banco_prova.py`): casi con id neutri, etichette
+  separate in `etichette.json`, risultati in `risultati.jsonl`; `tabella` dà falsi accettati / falsi rifiutati per giudice.
+- `container/` — Docker del Researcher (`--shell container`): dentro esistono solo sandbox, `tools/` e la cartella del
+  problema; credenziali fuori dal repo in `~/.proof-pursuit/claude`. Vedi `container/README.md`.
 - `shared/` — contratto JSON del sistema multi-agente (state, attempt, referee_report, creative_ideas); `researcher/` —
   agente Researcher (nostra parte del brief MVP); `runs/<problem>/` — cartelle di lavoro del loop; `tests/`.
   Il Researcher NON giudica e NON dichiara celle risolte: solo il Referee approva. Stati di cella ammessi:
