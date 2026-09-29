@@ -8,12 +8,13 @@ altri run non sono montati, quindi non sono leggibili né modificabili.
 ```
 docker build -t proof-pursuit-researcher container/
 mkdir -p ~/.proof-pursuit/claude && chmod 700 ~/.proof-pursuit/claude
-security find-generic-password -s "Claude Code-credentials" -w > ~/.proof-pursuit/claude/.credentials.json
-chmod 600 ~/.proof-pursuit/claude/.credentials.json
+docker run --rm -it -v ~/.proof-pursuit/claude:/home/researcher/.claude -e HOME=/home/researcher proof-pursuit-researcher claude
 ```
-Il secondo blocco esporta il token dell'abbonamento dal portachiavi di macOS in un file FUORI dal repo.
-È un segreto della tua sessione: non copiarlo altrove, non versionarlo. Se la CLI lo rifiuta nel container,
-l'alternativa è `ANTHROPIC_API_KEY` passata con `-e` (spesa a consumo).
+Nell'ultima riga la CLI parte dentro il container con la cartella delle credenziali montata in scrittura:
+scrivi `/login`, completa il login nel browser, poi `/exit`. Da quel momento il container ha una sessione
+propria in `~/.proof-pursuit/claude`, FUORI dal repo, che si rinnova da sola. Copiare il token dal portachiavi
+di macOS non funziona: la CLI ruota i token e la copia risulta revocata (provato il 2026-09-29).
+Se il login nel container non fosse possibile, l'alternativa è `ANTHROPIC_API_KEY` passata con `-e` (spesa a consumo).
 
 ## Prova che l'autenticazione funziona
 ```

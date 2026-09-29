@@ -8,7 +8,7 @@ SANDBOX=$1; PROBLEMA=$2; shift 2
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 CRED="${PROOF_PURSUIT_CLAUDE_HOME:-$HOME/.proof-pursuit/claude}"
 [ -f "$CRED/.credentials.json" ] || { echo "manca $CRED/.credentials.json: vedi container/README.md" >&2; exit 3; }
-exec docker run --rm -i \
+exec docker run --rm \
   -v "$SANDBOX":/work \
   -v "$ROOT/tools":/repo/tools:ro \
   -v "$ROOT/$PROBLEMA":/repo/"$PROBLEMA":ro \
