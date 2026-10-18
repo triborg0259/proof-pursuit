@@ -14,3 +14,8 @@ reference_referee/
 *.key
 *.pem
 secrets.json
+
+# Testi integrali di articoli e tesi letti dal Researcher: servono in locale al caso del banco, ma non sono nostri
+# e non sono ridistribuibili. I riferimenti stanno in banco/caso_05/sandbox/FONTI.md.
+banco/caso_05/sandbox/*.pdf
+banco/caso_05/sandbox/*.txt
