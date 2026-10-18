@@ -72,6 +72,50 @@ def test_riesecuzione_codice_produce_osservazioni():
     assert (d / "verifica" / "attempt_001" / "osservazioni.json").exists()
 
 
+def test_copia_di_verifica_non_segue_i_link_simbolici():
+    """Un link nella sandbox verso un file dell'host resta un link nella copia di verifica: il contenuto dell'host
+    non deve finire in runs/.../verifica, che è versionata e pubblica."""
+    sys.path.insert(0, str(ROOT / "researcher"))
+    from bridge_referee import _cartella_verifica
+    base = Path(tempfile.mkdtemp(prefix="pp_link_"))
+    segreto = base / "segreto_host.txt"
+    segreto.write_text("SEGRETO")
+    (base / "run" / "sandbox").mkdir(parents=True)
+    (base / "run" / "sandbox" / "x.txt").symlink_to(segreto)
+    dest = _cartella_verifica(base / "run", {"attempt_id": "attempt_001", "code_used": []})
+    assert (dest / "x.txt").is_symlink()
+
+
+def test_estratto_interno_resta_dentro_il_repo():
+    """Una fonte citata con un percorso che esce dal repo (../ o link verso l'host) non viene allegata al Referee."""
+    sys.path.insert(0, str(ROOT / "researcher"))
+    import bridge_referee
+    base = Path(tempfile.mkdtemp(prefix="pp_fonti_"))
+    (base / "repo").mkdir()
+    (base / "fuori.md").write_text("SEGRETO")
+    (base / "repo" / "link.md").symlink_to(base / "fuori.md")
+    (base / "repo" / "nota.md").write_text("ok")
+    originale, bridge_referee.ROOT = bridge_referee.ROOT, base / "repo"
+    try:
+        assert bridge_referee._estratto_interno("../fuori.md") == ""
+        assert bridge_referee._estratto_interno("link.md") == ""
+        assert bridge_referee._estratto_interno("nota.md") == "ok"
+    finally:
+        bridge_referee.ROOT = originale
+
+
+def test_riesecuzione_in_container_senza_rete():
+    """In modalità container gli script del Researcher girano in Docker senza rete né credenziali, mai con il
+    Python dell'host; fuori dal container resta il comportamento di prima."""
+    sys.path.insert(0, str(ROOT / "researcher"))
+    from bridge_referee import _comando_script
+    cmd = _comando_script("code_1.py", Path("/tmp/v"), "container", 600)
+    assert cmd[:2] == ["docker", "run"] and cmd[cmd.index("--network") + 1] == "none"
+    assert "/tmp/v:/work" in cmd and not any(".claude" in parte for parte in cmd)
+    assert sys.executable not in cmd and cmd[-2:] == ["python3", "code_1.py"]
+    assert _comando_script("code_1.py", Path("/tmp/v"), "host", 600) == [sys.executable, "code_1.py"]
+
+
 def test_esito_unificato_sui_report_vecchi():
     """I report della gara non hanno `esito`: READY_FOR_HUMAN vince sul verdict grezzo, altrimenti vale il verdict."""
     sys.path.insert(0, str(ROOT / "researcher"))

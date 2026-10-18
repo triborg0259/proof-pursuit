@@ -1,5 +1,5 @@
 """Test del ciclo end-to-end senza modelli: Researcher mock + Referee mock + Creative finto. Esecuzione: .venv/bin/python tests/test_loop.py"""
-import json, shutil, subprocess, sys, tempfile
+import argparse, json, shutil, subprocess, sys, tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -72,6 +72,46 @@ def test_perimetro_di_verifica():
     assert differenze(prima, impronta(d)) == [str(d / "problem.md")]
     (d / "state.json").unlink()
     assert str(d / "state.json") in differenze(prima, impronta(d))
+
+def test_referee_riesegue_in_container_se_il_researcher_era_in_container():
+    """Il codice di un Researcher chiuso in Docker non deve poi girare sull'host durante la verifica."""
+    sys.path.insert(0, str(ROOT / "researcher"))
+    import loop
+    d = cartella()
+    (d / "referee_report.json").write_text("{}")
+    comandi = []
+    originale, loop.esegui = loop.esegui, lambda cmd, cwd=None: comandi.append(cmd)
+    try:
+        for shell in ("container", "full"):
+            loop.passo_referee(argparse.Namespace(referee="cli", shell=shell), d, {"attempt_id": "attempt_001"}, 1)
+    finally:
+        loop.esegui = originale
+    assert comandi[0][-2:] == ["--run-code-in", "container"]
+    assert "--run-code-in" not in comandi[1]
+
+
+def test_perimetro_toccato_durante_il_referee_ferma_il_loop():
+    """Il codice rieseguito dal Referee gira DOPO il controllo sul Researcher: se tocca l'enunciato, il loop si
+    ferma e non si fida del verdetto, anche se dice READY_FOR_HUMAN."""
+    sys.path.insert(0, str(ROOT / "researcher"))
+    import loop
+    d = cartella()
+    tentativo = {"attempt_id": "attempt_001", "approach_family": "x", "subgoal": "s"}
+
+    def referee_che_manomette(args, workdir, attempt, i):
+        (workdir / "problem.md").write_text("enunciato ammorbidito")
+        report = {"attempt_id": "attempt_001", "verdict": "UNKNOWN_STATUS", "review_status": "READY_FOR_HUMAN"}
+        (workdir / "referee_report.json").write_text(json.dumps(report))
+        return report
+
+    originali = loop.passo_researcher, loop.passo_referee
+    loop.passo_researcher, loop.passo_referee = (lambda args, workdir: tentativo), referee_che_manomette
+    try:
+        motivo, voce = loop.iterazione(argparse.Namespace(), d, 1)
+    finally:
+        loop.passo_researcher, loop.passo_referee = originali
+    assert "perimetro" in motivo and voce["esito"] == "REJECT"
+
 
 if __name__ == "__main__":
     for name, fn in list(globals().items()):

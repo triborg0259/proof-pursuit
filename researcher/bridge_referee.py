@@ -112,10 +112,13 @@ def _artefatti(attempt):
 
 def _estratto_interno(riferimento, massimo=2500):
     """Se la fonte è un file del repo (es. problema-2/submission/parte-1.md) ne allega l'inizio: il giudice B non
-    vede il repo e altrimenti segnala la fonte come non ispezionata."""
+    vede il repo e altrimenti segnala la fonte come non ispezionata. Il percorso lo scrive il Researcher: risolto
+    (link compresi) deve restare dentro il repo, altrimenti un `../` o un link porterebbe file dell'host nel
+    pacchetto del Referee, che finisce versionato."""
     m = re.search(r"[\w./-]+\.(?:md|py|txt)", riferimento or "")
-    percorso = ROOT / m.group(0) if m else None
-    return percorso.read_text(encoding="utf-8")[:massimo] if percorso and percorso.is_file() else ""
+    percorso = (ROOT / m.group(0)).resolve() if m else None
+    dentro_il_repo = percorso is not None and percorso.is_relative_to(ROOT.resolve())
+    return percorso.read_text(encoding="utf-8")[:massimo] if dentro_il_repo and percorso.is_file() else ""
 
 
 def _fonti(attempt):
@@ -319,43 +322,65 @@ class ReplayBackend:
 # =============================================================================== riesecuzione fidata del codice
 def _cartella_verifica(workdir: Path, attempt):
     """Cartella pulita per rilanciare gli script: copia della sandbox del Researcher (gli script si importano
-    a vicenda con i loro nomi veri) più un file code_i.py per ogni voce di code_used."""
+    a vicenda con i loro nomi veri) più un file code_i.py per ogni voce di code_used. I link simbolici restano link:
+    seguirli copierebbe in verifica/, che è versionata, qualunque file dell'host il Researcher abbia puntato."""
     import shutil
     dest = workdir / "verifica" / attempt["attempt_id"]
     if dest.exists():
         shutil.rmtree(dest)
     sandbox = workdir / "sandbox"
     if sandbox.exists():
-        shutil.copytree(sandbox, dest, ignore=shutil.ignore_patterns("__pycache__"))
+        shutil.copytree(sandbox, dest, symlinks=True, ignore=shutil.ignore_patterns("__pycache__"))
     dest.mkdir(parents=True, exist_ok=True)
     for i, codice in enumerate(attempt.get("code_used", []), start=1):
         (dest / f"code_{i}.py").write_text(codice.get("code", ""), encoding="utf-8")
     return dest
 
 
-def _osserva_script(cartella: Path, nome, timeout):
+IMMAGINE_CONTAINER = "proof-pursuit-researcher"   # la stessa di container/lancia_researcher.sh
+
+
+def _comando_script(nome, cartella: Path, dove, timeout):
+    """Comando che rilancia uno script di code_used. `host`: il Python dell'orchestratore, come sempre.
+    `container`: se il Researcher lavorava chiuso in Docker, il suo codice si riesegue lì, senza rete né credenziali
+    e con la sola copia di verifica montata; sull'host girerebbe con i nostri permessi e il container non isolerebbe
+    nulla. `timeout` dentro il container ferma lo script anche se il client docker viene ucciso."""
+    if dove == "host":
+        return [sys.executable, nome]
+    return ["docker", "run", "--rm", "--network", "none", "--cap-drop", "ALL", "--security-opt", "no-new-privileges",
+            "-v", f"{Path(cartella).absolute()}:/work", "-w", "/work", IMMAGINE_CONTAINER,
+            "timeout", str(timeout), "python3", nome]
+
+
+def _osserva_script(cartella: Path, nome, timeout, dove="host"):
     """Esegue uno script e riassume l'esito in una riga: è ciò che il giudice B legge come osservazione fidata."""
     import time
     inizio = time.time()
+    margine = 60 if dove == "container" else 0   # avvio del container; il limite vero lo applica `timeout`
     try:
-        res = subprocess.run([sys.executable, nome], cwd=cartella, capture_output=True, text=True, timeout=timeout)
+        res = subprocess.run(_comando_script(nome, cartella, dove, timeout), cwd=cartella, capture_output=True,
+                             text=True, timeout=timeout + margine)
+        if dove == "container" and res.returncode == 124:   # 124 = script fermato da `timeout`
+            raise subprocess.TimeoutExpired(nome, timeout)
         esito = f"exit {res.returncode} in {time.time() - inizio:.1f}s"
         dettagli = f"stdout: {res.stdout.strip()[-700:]!r}; stderr: {res.stderr.strip()[-300:]!r}"
     except subprocess.TimeoutExpired:
         esito, dettagli = f"TIMEOUT after {timeout}s", "killed: exceeds the verification time limit"
-    return f"orchestrator re-ran {nome} (python3, clean copy of the researcher sandbox): {esito}; {dettagli}"
+    luogo = "python3 in a container without network" if dove == "container" else "python3"
+    return f"orchestrator re-ran {nome} ({luogo}, clean copy of the researcher sandbox): {esito}; {dettagli}"
 
 
-def esegui_codice(workdir: Path, attempt, timeout=600):
+def esegui_codice(workdir: Path, attempt, timeout=600, dove="host"):
     """Rilancia ogni script Python di code_used e ritorna le osservazioni. Perché: per il Referee i risultati
-    riportati dal candidato non fanno fede; contano solo esecuzioni fatte dall'orchestratore (< 10 min ciascuna)."""
+    riportati dal candidato non fanno fede; contano solo esecuzioni fatte dall'orchestratore (< 10 min ciascuna).
+    `dove`: host oppure container (vedi `_comando_script`)."""
     cartella = _cartella_verifica(workdir, attempt)
     osservazioni = []
     for i, codice in enumerate(attempt.get("code_used", []), start=1):
         if codice.get("language", "").lower() != "python":
             osservazioni.append(f"code_{i}: not re-run (language {codice.get('language')!r} not supported by the orchestrator)")
             continue
-        osservazioni.append(_osserva_script(cartella, f"code_{i}.py", timeout))
+        osservazioni.append(_osserva_script(cartella, f"code_{i}.py", timeout, dove))
         print(f"[bridge] {osservazioni[-1][:160]}", file=sys.stderr)
     write_json(cartella / "osservazioni.json", osservazioni)
     return osservazioni
@@ -418,7 +443,7 @@ def cmd_review(args):
         return 2
     job = costruisci_review_input(workdir, attempt)
     backend = _scegli_backend(args)
-    osservazioni = esegui_codice(workdir, attempt) if args.run_code else []
+    osservazioni = esegui_codice(workdir, attempt, dove=args.run_code_in) if args.run_code else []
     packet = asyncio.run(_esegui_review(job, backend, args.timeout, osservazioni))
     write_json(workdir / "attempts" / f"packet_{attempt['attempt_id'].split('_')[1]}.json", packet)
     report = converti_packet(packet, attempt["attempt_id"])
@@ -448,6 +473,8 @@ def build_parser():
                     help="ri-fonde gli ultimi rapporti grezzi salvati dei due giudici, senza chiamare i modelli")
     rv.add_argument("--run-code", action="store_true",
                     help="rilancia gli script di code_used e passa gli esiti al Referee come osservazioni fidate")
+    rv.add_argument("--run-code-in", choices=["host", "container"], default="host",
+                    help="dove rilanciarli: container = Docker senza rete, obbligatorio se il Researcher era in container")
     rv.add_argument("--backend", choices=["cli", "api"], default="cli")
     rv.add_argument("--model")
     rv.add_argument("--model-b")

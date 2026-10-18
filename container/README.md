@@ -26,3 +26,7 @@ container/lancia_researcher.sh /tmp problema-1 -p "rispondi solo: ok" --output-f
 researcher/loop.py --workdir runs/p3_c3 --shell container ...
 ```
 In modalità `container` il Researcher lavora in `/work`; nel prompt i percorsi sono quelli del container.
+Anche la verifica resta nel container: il Referee rilancia gli script di `code_used` con `--run-code-in container`
+(lo passa il loop), cioè in questa immagine con `--network none`, senza credenziali e con montata solo la copia di
+verifica. Senza questo il codice del Researcher girerebbe sull'host con i nostri permessi e l'isolamento non
+varrebbe nulla. Dopo il Referee il loop ricontrolla anche il perimetro di verifica (`researcher/integrita.py`).

@@ -81,6 +81,8 @@ def passo_referee(args, workdir, attempt, iterazione):
     cmd = [sys.executable, str(HERE / "bridge_referee.py"), "review", "--workdir", str(workdir), "--run-code"]
     if args.referee == "offline":
         cmd.append("--offline")
+    if args.shell == "container":   # il codice di un Researcher chiuso in Docker si riesegue in Docker, mai sull'host
+        cmd += ["--run-code-in", "container"]
     esegui(cmd)
     return read_json(workdir / "referee_report.json")
 
@@ -162,10 +164,19 @@ def voce_di_log(i, attempt, report):
             "creative": "", "creative_analysis": "", "ts": time.strftime("%H:%M:%S")}
 
 
-def perimetro_violato(prima, workdir):
-    """Confronta il perimetro di verifica con l'impronta presa prima del Researcher. Ritorna la lista dei file
-    toccati: se non è vuota il tentativo non può essere giudicato, perché il verificatore stesso è sospetto."""
-    return differenze(prima, impronta(workdir))
+def perimetro_violato(prima, workdir, consentiti=()):
+    """Confronta il perimetro di verifica con un'impronta presa prima del passo. Ritorna la lista dei file toccati,
+    esclusi i `consentiti` (file del workdir che quel passo ha il diritto di scrivere): se non è vuota il tentativo
+    non può essere giudicato, perché il verificatore stesso è sospetto."""
+    ammessi = {str(Path(workdir) / nome) for nome in consentiti}
+    return [p for p in differenze(prima, impronta(workdir)) if p not in ammessi]
+
+
+def fermo_per_perimetro(i, attempt, quando, toccati):
+    """Motivo di arresto e voce di log quando il perimetro è stato toccato: un eventuale verdetto non vale."""
+    voce = voce_di_log(i, attempt, {"verdict": "REJECT", "esito": "REJECT", "fatal_error":
+                       f"perimetro di verifica modificato {quando}: " + ", ".join(toccati)})
+    return f"perimetro di verifica modificato {quando}: intervento umano necessario", voce
 
 
 def iterazione(args, workdir, i):
@@ -175,10 +186,13 @@ def iterazione(args, workdir, i):
     attempt = passo_researcher(args, workdir)
     toccati = perimetro_violato(prima, workdir)
     if toccati:
-        voce = voce_di_log(i, attempt, {"verdict": "REJECT", "esito": "REJECT", "fatal_error":
-                           "perimetro di verifica modificato dal Researcher: " + ", ".join(toccati)})
-        return "perimetro di verifica modificato: intervento umano necessario", voce
+        return fermo_per_perimetro(i, attempt, "dal Researcher", toccati)
+    prima = impronta(workdir)
     report = passo_referee(args, workdir, attempt, i)
+    # Il Referee riesegue il codice del Researcher DOPO il controllo qui sopra: anche questo passo va controllato.
+    toccati = perimetro_violato(prima, workdir, consentiti=["referee_report.json"])
+    if toccati:
+        return fermo_per_perimetro(i, attempt, "durante il Referee", toccati)
     esito = esito_unificato(report)
     voce = voce_di_log(i, attempt, report)
     if esito in FERMA:
