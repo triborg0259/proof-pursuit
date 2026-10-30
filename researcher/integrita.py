@@ -15,7 +15,9 @@ ROOT = Path(__file__).resolve().parents[1]
 
 # Cartelle e file del repo che costituiscono il verificatore. Relativi a ROOT.
 PERIMETRO_REPO = ["referee", "shared/schemas", "researcher/bridge_referee.py", "researcher/loop.py",
-                  "researcher/integrita.py", "researcher/researcher.py", "CLAUDE.md"]
+                  "researcher/integrita.py", "researcher/researcher.py", "CLAUDE.md",
+                  # verificatore Lean: lo script e la configurazione del progetto (non lean/.lake, che pesa GB)
+                  "tools/verifica_lean.py", "lean/lakefile.toml", "lean/lean-toolchain", "lean/lake-manifest.json"]
 # File della cartella di lavoro che appartengono all'orchestratore, non al Researcher.
 PERIMETRO_RUN = ["problem.md", "state.json", "referee_report.json", "approval.json", "literature.json"]
 IGNORA = {"__pycache__", ".pytest_cache"}

@@ -227,3 +227,33 @@ Test del ciclo senza modelli: `--researcher-backend mock --referee mock --creati
 2. Clean code: funzioni piccole, commenti in italiano che dicono cosa e perché, nessuna dipendenza duplicata.
 3. Ogni esperimento: comando riproducibile, seed, tempi. Ogni certificato: separato dalla ricerca.
 4. Nessuna submission alla piattaforma dal repo.
+
+## 9. Un nuovo insieme di problemi (es. un assignment con template LaTeX)
+La repo non è legata ai 4 problemi della gara: tutto parte da `runs/celle.json`.
+1. `problema-N/enunciato.md` (testo fedele; paragrafo `**What to hand in.**` con le regole ufficiali di consegna) e
+   `problema-N/note.md` (triage). `N` può avere più cifre.
+2. Una voce `pN` in `runs/celle.json`: `title`, `cells` (una frase-bersaglio per cella) e, facoltativi,
+   `punti` (`{}` = senza punti), `parole_arxiv`, `verified_claims`, `regola_generale` (`""` toglie la regola della gara
+   sulle citazioni), `regole_squadra` (vincoli del team, passati al Referee come NON ufficiali: es. formato della
+   risposta).
+3. `RESEARCHER_SHELL=sandbox tools/lancia_loop.sh pN 3` — tutte le celle della voce, in parallelo; con la shell
+   `sandbox` il Researcher ha solo `python3` nella sua cartella e il lanciatore può partire anche da un agente.
+   `tools/dashboard.py` mostra i nuovi problemi senza modifiche.
+4. Se la consegna è un template LaTeX con blocchi da riempire (es. `\textbf{SOLUTION}` + `enumerate` di `\item`):
+   `.venv/bin/python tools/compila_template.py --template template/X.tex --output OUT.tex p5 p6 …` mette in ogni
+   `\item` la risposta firmata (approval.json) o, in mancanza, l'ultima READY_FOR_HUMAN; una cella senza risposta
+   pronta resta segnalata nel file e il comando esce con codice 1.
+
+## 10. Verifica formale con Lean 4 + Mathlib
+- **Ambiente.** `brew install elan-init`, poi in `lean/`: `lake exe cache get` (scarica Mathlib già compilata, circa
+  5–7 GB; non compilare Mathlib da sorgente). La versione è fissata in `lean/lean-toolchain` e `lean/lake-manifest.json`.
+- **Verificatore.** `python3 tools/verifica_lean.py FILE.lean --teorema NOME` → JSON: compila, nessun `sorry`, assiomi del
+  teorema solo standard (propext, Classical.choice, Quot.sound; `native_decide` o un `axiom` del file lo fanno fallire).
+  Lo usano il Researcher nella sua sandbox e l'orchestratore.
+- **Nel ciclo.** Il tentativo può portare `lean_proof` {code, theorem, covers}. Il ponte lo passa ai giudici come artefatto
+  `CERTIFICATE`, lo ricompila in `verifica/attempt_i/` (osservazione fidata, `lean.json`) e aggiunge alle regole una nota:
+  una prova compilata certifica solo il suo enunciato Lean, che deve dire la stessa cosa della cella. Nel modo container
+  non si compila (Lean non è nell'immagine).
+- **Quando chiederlo.** Voce `lean_richiesto` nel manifest (es. `"lean_richiesto": ["2"]`) → regola di team per quelle celle.
+  Per celle già preparate: `tools/prepara_runs.py pN --aggiorna --celle K --blocker "..."`.
+- **Test.** `tests/test_verifica_lean.py` gira senza Lean; con `PP_LEAN=1` compila anche un file vero.

@@ -4,7 +4,7 @@
 set -eo pipefail
 cd "$(dirname "$0")/.."
 PY=.venv/bin/python
-for t in tests/test_researcher.py tests/test_bridge_referee.py tests/test_loop.py tests/test_b_referee.py tests/test_banco_prova.py; do
+for t in tests/test_researcher.py tests/test_bridge_referee.py tests/test_loop.py tests/test_b_referee.py tests/test_banco_prova.py tests/test_compila_template.py tests/test_verifica_lean.py; do
   echo "== $t"; $PY "$t" | grep -c '^ok' | sed 's/^/   test ok: /'
 done
 echo "== referee/tests";  (cd referee && ../$PY -m unittest discover -s tests -q 2>&1 | tail -1)

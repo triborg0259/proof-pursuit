@@ -26,7 +26,12 @@ Ammessi: web, letteratura, AI, codice.
   - `esperimenti/` — codice di ricerca (trova risultati)
   - `certificati/` — oggetti da verificare + script di verifica (controlla risultati) — SEPARATI dalla ricerca
   - `submission/` — bozze delle consegne, una per cella
-- `tools/autoloop.py` — harness "proponi / valuta / tieni se migliora" (pattern autoresearch, senza il repo): seed paralleli, budget fisso, restart, ricertificazione mpmath, ledger JSONL. Protocollo d’uso in `tools/program.md`; tabelle con `tools/ledger_table.py`. Ambiente: `.venv` (numpy, mpmath). Output float ⇒ MAI una prova.
+- `tools/autoloop.py` — harness "proponi / valuta / tieni se migliora" (pattern autoresearch, senza il repo): seed paralleli, budget fisso, restart, ricertificazione mpmath, ledger JSONL. Protocollo d’uso in `tools/program.md`; tabelle con `tools/ledger_table.py`. Ambiente: `.venv` (numpy, scipy, sympy, mpmath,
+  networkx, matplotlib, seaborn, plotly, pandas). Output float ⇒ MAI una prova.
+- `lean/` — progetto Lean 4 + Mathlib (versione fissata in `lean-toolchain` e `lake-manifest.json`; `.lake/` non versionata,
+  si ricrea con `cd lean && lake exe cache get`). `tools/verifica_lean.py FILE --teorema NOME` compila e controlla: niente
+  `sorry`, solo assiomi standard (propext, Classical.choice, Quot.sound). Il ponte ricompila il `lean_proof` del tentativo
+  e lo passa al Referee come osservazione fidata. Certifica SOLO l'enunciato Lean: che coincida con la cella è un giudizio.
 - `tools/dashboard.py` — griglia 4×6 nel terminale, sola lettura (curses, nessuna dipendenza): stato di ogni cella da
   `runs/`, `STATUS.md` e processi attivi, ultima iterazione del loop, spesa equivalente USD. `--once` stampa e esce.
 - `banco/` — banco di prova del Referee con errori piantati (`tools/banco_prova.py`): casi con id neutri, etichette
@@ -53,6 +58,7 @@ Chiedere quanto tempo rimane se non è stato indicato.
 - Scrivere esattamente quale affermazione si cerca di stabilire.
 - Controllare definizioni, casi limite e piccoli esempi.
 - Distinguere sempre: DIMOSTRATO / CITATO (con fonte) / VERIFICATO SU INTERVALLO FINITO / CONGETTURA.
+  VERIFICATO IN LEAN vale per l'enunciato formale compilato; resta da controllare che dica ciò che chiede la cella.
 - Fonti esterne: registrare riferimento preciso, enunciato usato e ipotesi.
 - Se la cella richiede una prova, citare il risultato non sostituisce la dimostrazione.
 - Valore ottimo: separare la costruzione che lo raggiunge dalla prova che non si può fare meglio.

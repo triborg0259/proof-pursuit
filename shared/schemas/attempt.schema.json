@@ -29,7 +29,12 @@
       "COUNTEREXAMPLE_CANDIDATE", "NO_PROGRESS"],
       "description": "etichetta onesta di cosa il Researcher CREDE di aver ottenuto; il Referee decide"},
     "self_reported_gaps": {"type": "array", "items": {"type": "string"}, "description": "passi non completamente giustificati"},
-    "request_creative": {"type": "boolean", "description": "impostato dal Researcher quando rileva stagnazione"}
+    "request_creative": {"type": "boolean", "description": "impostato dal Researcher quando rileva stagnazione"},
+    "lean_proof": {"type": "object", "required": ["code", "theorem", "covers"],
+      "description": "facoltativo: formalizzazione Lean 4 + Mathlib; l'orchestratore la ricompila (tools/verifica_lean.py)",
+      "properties": {"code": {"type": "string", "description": "file .lean completo, con gli import"},
+                     "theorem": {"type": "string", "description": "nome qualificato del teorema principale"},
+                     "covers": {"type": "string", "description": "quale parte dell'enunciato della cella il teorema formalizza, e perche' l'enunciato Lean dice la stessa cosa"}}}
   },
   "additionalProperties": false
 }
