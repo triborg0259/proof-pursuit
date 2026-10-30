@@ -188,8 +188,9 @@ def _history_section(history):
 
 
 def _cartella_problema(shell_dir):
-    """Da runs/p3_c3/sandbox alla cartella del problema: problema-3. È l'unica cartella del repo che il container vede."""
-    return f"problema-{Path(shell_dir).parent.name[1]}"
+    """Da runs/p3_c3/sandbox alla cartella del problema: problema-3 (anche p12_c1 → problema-12). È l'unica cartella
+    del repo che il container vede."""
+    return f"problema-{Path(shell_dir).parent.name.split('_')[0][1:]}"
 
 
 def _shell_section(shell_dir, mode):
@@ -199,17 +200,25 @@ def _shell_section(shell_dir, mode):
     rigor = ("Save every script you rely on as a file in the working directory and copy it into `code_used` with "
              "`rigor` set honestly; state the finite set the computation covers and its wall-clock time. "
              "Floating point is exploration only. Keep each computation under 10 minutes.")
+    strumenti = ("python3 has numpy, scipy, sympy (exact symbolic algebra), mpmath, networkx, matplotlib, pandas. "
+                 "Optional formal verification: write a Lean 4 + Mathlib file and check it with "
+                 f"`python3 {ROOT / 'tools' / 'verifica_lean.py'} FILE.lean --teorema FULL.NAME` (JSON verdict: compiles, "
+                 "no sorry, standard axioms only; compiling with Mathlib takes about a minute). Put the final file in "
+                 "`lean_proof` with `covers` saying exactly which part of the cell its theorem states; the orchestrator "
+                 "recompiles it. A Lean theorem that states something weaker than the cell is not a proof of the cell.")
     if mode == "sandbox":
         return ("# SANDBOX SHELL AVAILABLE\nYou may run `python3` only (no network, no pip, no other commands) in the "
-                f"current directory for exploration and EXACT computations. {rigor} Working directory: {shell_dir}")
+                f"current directory for exploration and EXACT computations. {strumenti} {rigor} "
+                f"Working directory: {shell_dir}")
     if mode == "container":
         return ("# CONTAINER SHELL AVAILABLE\nYou have a full shell with network access inside a container. Working "
                 f"directory: /work (your sandbox). Read-only: /repo/tools and /repo/{_cartella_problema(shell_dir)} "
                 f"(statement, notes, experiments). python3 has numpy, mpmath, scipy. {rigor}")
     return ("# FULL SHELL AVAILABLE\nYou have a full shell, network access (WebSearch, WebFetch, curl) and the whole "
-            f"repository at {ROOT}: read the problem folders, reuse tools/ and the .venv (numpy, mpmath); install "
+            f"repository at {ROOT}: read the problem folders, reuse tools/ and the .venv; install "
             "packages in .venv only. Use the network to check literature: record exact references and quote the "
-            f"statement you rely on; never present an unread source as read. {rigor} Working directory: {shell_dir}")
+            f"statement you rely on; never present an unread source as read. {strumenti} {rigor} "
+            f"Working directory: {shell_dir}")
 
 
 def build_user_prompt(context, stagnating, reason, shell_dir=None, shell_mode="sandbox"):
@@ -276,6 +285,13 @@ def _cli_meta(output, started, shell, shell_mode):
             "usage": output.get("usage"), "model_usage": output.get("modelUsage")}
 
 
+def _ambiente_researcher():
+    """Ambiente del Researcher: `python3` è quello della .venv (numpy, scipy, sympy, mpmath, networkx, matplotlib,
+    pandas), lo stesso con cui l'orchestratore riesegue il codice; altrimenti uno script che funziona nella sandbox
+    fallirebbe alla verifica per una libreria mancante."""
+    return {**os.environ, "PATH": f"{ROOT / '.venv' / 'bin'}{os.pathsep}{os.environ.get('PATH', '')}"}
+
+
 def call_cli(system_prompt, user_prompt, schema, model=None, effort=None, shell=None,
              max_turns=150, max_budget_usd=15.0, timeout=3600, shell_mode="sandbox"):
     """Chiama Claude Code headless e ritorna (attempt, meta). L'output è strutturato dallo schema (--json-schema).
@@ -283,7 +299,7 @@ def call_cli(system_prompt, user_prompt, schema, model=None, effort=None, shell=
     pre-autorizzati viene bloccato dal classificatore di sicurezza."""
     cmd = _cli_command(system_prompt, user_prompt, schema, model, effort, shell, max_turns, max_budget_usd, shell_mode)
     started = time.time()
-    result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout,
+    result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout, env=_ambiente_researcher(),
                             stdin=subprocess.DEVNULL, cwd=str(shell) if shell else None)
     if result.returncode != 0:
         raise RuntimeError(f"claude CLI exit {result.returncode}: {result.stderr[:500]}")

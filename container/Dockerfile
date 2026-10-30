@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certifi
     && apt-get install -y --no-install-recommends nodejs \
     && npm install -g @anthropic-ai/claude-code \
     && rm -rf /var/lib/apt/lists/*
-RUN pip install --no-cache-dir numpy mpmath scipy pydantic
+RUN pip install --no-cache-dir numpy mpmath scipy pydantic sympy networkx matplotlib pandas
 
 # Utente non privilegiato: le credenziali montate in /home/researcher/.claude restano leggibili solo a lui.
 RUN useradd -m researcher

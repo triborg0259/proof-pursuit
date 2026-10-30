@@ -107,7 +107,28 @@ def _artefatti(attempt):
     for i, codice in enumerate(attempt.get("code_used", [])):
         testo = f"# {codice.get('purpose', '')}\n# rigor: {codice.get('rigor', '?')}\n{codice.get('code', '')}"
         artefatti.append({"id": f"code_{i + 1}", "kind": "CODE", "content": testo, "claim_ids": ["main"]})
+    lean = attempt.get("lean_proof")
+    if lean:
+        testo = f"-- Lean 4 + Mathlib; main theorem: {lean.get('theorem')}\n-- covers: {lean.get('covers')}\n{lean.get('code', '')}"
+        artefatti.append({"id": "lean_1", "kind": "CERTIFICATE", "content": testo, "claim_ids": ["main"]})
     return artefatti
+
+
+# Nota dell'orchestratore aggiunta alle regole quando il tentativo porta una prova Lean: le regole sono materiale
+# fidato per i giudici, il codice del candidato no. Una prova compilata certifica solo l'enunciato formale.
+NOTA_LEAN = ("ORCHESTRATOR NOTE (formal verification): the candidate includes a Lean 4 + Mathlib formalization "
+             "(artifact lean_1, kind CERTIFICATE). The orchestrator compiled it and reports compilation, `sorry` and the "
+             "axioms used as a trusted observation. A compiled proof certifies only its own Lean statement: it supports "
+             "the target only if that statement says the same thing as the cell statement (same objects, quantifiers, "
+             "domains, hypotheses and conclusion). Report any mismatch; a NOT VERIFIED observation is not by itself a "
+             "fatal error of the written proof.")
+
+
+def _regole_con_lean(regole, attempt):
+    """Le regole della cella, più NOTA_LEAN se il tentativo porta una prova Lean (copia: state.json non cambia)."""
+    if not attempt.get("lean_proof"):
+        return regole
+    return {**regole, "additional_rules": (regole.get("additional_rules", "") + "\n\n" + NOTA_LEAN).strip()}
 
 
 def _estratto_interno(riferimento, massimo=2500):
@@ -148,7 +169,7 @@ def costruisci_review_input(workdir: Path, attempt):
             "sources": _fonti(attempt),
             "artifacts": _artefatti(attempt),
         },
-        "rules": _regole(state),
+        "rules": _regole_con_lean(_regole(state), attempt),
     }
 
 
@@ -378,12 +399,40 @@ def esegui_codice(workdir: Path, attempt, timeout=600, dove="host"):
     osservazioni = []
     for i, codice in enumerate(attempt.get("code_used", []), start=1):
         if codice.get("language", "").lower() != "python":
-            osservazioni.append(f"code_{i}: not re-run (language {codice.get('language')!r} not supported by the orchestrator)")
+            osservazioni.append(_non_rieseguito(i, codice, attempt))
             continue
         osservazioni.append(_osserva_script(cartella, f"code_{i}.py", timeout, dove))
         print(f"[bridge] {osservazioni[-1][:160]}", file=sys.stderr)
+    if attempt.get("lean_proof"):
+        osservazioni.append(osserva_lean(cartella, attempt["lean_proof"], timeout, dove))
+        print(f"[bridge] {osservazioni[-1][:160]}", file=sys.stderr)
     write_json(cartella / "osservazioni.json", osservazioni)
     return osservazioni
+
+
+def _non_rieseguito(i, codice, attempt):
+    """Riga per uno script che l'orchestratore non riesegue. Un file Lean copiato anche in code_used (i Researcher
+    lo fanno) rimanda alla compilazione di lean_1, invece di sembrare un'evidenza mancante."""
+    lingua = codice.get("language", "")
+    if lingua.lower() == "lean" and attempt.get("lean_proof"):
+        return (f"code_{i}: Lean source, not re-run as a script; the formal proof is compiled separately as lean_1 "
+                "(see that observation)")
+    return f"code_{i}: not re-run (language {lingua!r} not supported by the orchestrator)"
+
+
+def osserva_lean(cartella: Path, lean, timeout, dove="host"):
+    """Ricompila la prova Lean del tentativo nella copia di verifica (tools/verifica_lean.py) e ne salva l'esito.
+    Nel modo container non si compila: Lean non è nell'immagine, e sull'host il file (che può contenere #eval)
+    girerebbe fuori dall'isolamento scelto."""
+    if dove == "container":
+        return "lean_1: not compiled (Lean is not available in the isolated container)"
+    sys.path.insert(0, str(ROOT / "tools"))
+    from verifica_lean import verifica
+    file_lean = cartella / "prova_lean.lean"
+    file_lean.write_text(lean.get("code", ""), encoding="utf-8")
+    esito, riga = verifica(file_lean, lean.get("theorem", ""), timeout)
+    write_json(cartella / "lean.json", esito)
+    return f"orchestrator compiled lean_1 (clean copy): {riga}"
 
 
 # =============================================================================== comandi
