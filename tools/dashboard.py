@@ -18,12 +18,19 @@ from pathlib import Path
 
 RADICE = Path(__file__).resolve().parent.parent
 RUNS = RADICE / "runs"
-PROBLEMI = ["p1", "p2", "p3", "p4"]
-CELLE = ["1", "2", "3", "4", "5", "6"]
-PUNTI = {"1": 1, "2": 2, "3": 3, "4": 5, "5": 8, "6": 13}
+# Problemi e celle vengono dal manifesto runs/celle.json: un nuovo insieme di problemi non richiede di toccare il
+# codice. Se il file manca si torna alla griglia della gara (4 problemi × 6 celle).
+try:
+    MANIFESTO = json.loads((RUNS / "celle.json").read_text())
+except (OSError, ValueError):
+    MANIFESTO = {}
+PROBLEMI = list(MANIFESTO) or ["p1", "p2", "p3", "p4"]
+CELLE = sorted({c for voce in MANIFESTO.values() for c in voce.get("cells", {})} or set("123456"), key=int)
+# Punti della gara (1/2/3/5/8/13); una voce del manifesto può dichiarare i propri con `punti` ({} = senza punti).
+PUNTI_GARA = {"1": 1, "2": 2, "3": 3, "4": 5, "5": 8, "6": 13}
 # Stato → (etichetta corta, coppia colore curses). Le etichette sono spiegate nella legenda a schermo.
 STATI = {"ok": ("✔ ok", 1), "cand": ("~ cand", 2), "loop": ("● loop", 3), "rej": ("✗ rej", 4),
-         "unk": ("? unk", 5), "parz": ("~ parz", 5), "none": ("· -", 0)}
+         "unk": ("? unk", 5), "parz": ("~ parz", 5), "none": ("· -", 0), "nd": ("", 0)}
 INTERVALLO_REFRESH = 2.0  # secondi tra due riletture dei file
 
 
@@ -64,7 +71,7 @@ def loop_attivo(cartella):
 
 def bozza_esiste(problema, cella):
     """Una bozza di submission (anche solo parziale) per problema-N/submission/parte-K.md."""
-    return (RADICE / f"problema-{problema[1]}" / "submission" / f"parte-{cella}.md").exists()
+    return (RADICE / f"problema-{problema[1:]}" / "submission" / f"parte-{cella}.md").exists()
 
 
 def stati_da_status_md():
@@ -144,17 +151,29 @@ def titolo_problema(problema, celle_json):
     return titolo[:10]
 
 
+def celle_del_problema(problema):
+    """Le celle che il manifesto dichiara per il problema (tutte, se il problema non è nel manifesto)."""
+    return list(MANIFESTO.get(problema, {}).get("cells", {})) or CELLE
+
+
+def punti_cella(problema, cella):
+    """Punti di una cella: quelli dichiarati nel manifesto, altrimenti la scala della gara."""
+    return MANIFESTO.get(problema, {}).get("punti", PUNTI_GARA).get(cella, 0)
+
+
 def raccogli():
-    """Fotografia completa: per ogni problema le 6 celle con stato, punti ottenuti e spesa equivalente."""
+    """Fotografia completa: per ogni problema le sue celle con stato, punti ottenuti e spesa equivalente.
+    Le colonne che il problema non ha restano vuote ("nd")."""
     celle_json = leggi_json(RUNS / "celle.json")
     status_md = stati_da_status_md()
     quadro = []
     for problema in PROBLEMI:
-        celle = {c: stato_cella(problema, c, status_md) for c in CELLE}
-        punti = sum(PUNTI[c] for c, (stato, _) in celle.items() if stato == "ok")
-        spesa = sum(costo_cella(RUNS / f"{problema}_c{c}") for c in CELLE)
-        quadro.append({"id": problema, "titolo": titolo_problema(problema, celle_json),
-                       "celle": celle, "punti": punti, "spesa": spesa})
+        proprie = celle_del_problema(problema)
+        celle = {c: stato_cella(problema, c, status_md) if c in proprie else ("nd", {}) for c in CELLE}
+        punti = sum(punti_cella(problema, c) for c, (stato, _) in celle.items() if stato == "ok")
+        spesa = sum(costo_cella(RUNS / f"{problema}_c{c}") for c in proprie)
+        quadro.append({"id": problema, "titolo": titolo_problema(problema, celle_json), "celle": celle,
+                       "punti": punti, "massimo": sum(punti_cella(problema, c) for c in proprie), "spesa": spesa})
     return quadro
 
 
@@ -162,7 +181,7 @@ def raccogli():
 def riga_problema(voce):
     """Una riga della griglia: codice, titolo, sei celle, punti e spesa."""
     celle = "  ".join(f"{STATI[voce['celle'][c][0]][0]:<7}" for c in CELLE)
-    return f" {voce['id'][1]}  {voce['titolo']:<10} {celle} {voce['punti']:>3}/32  ${voce['spesa']:>6.2f}"
+    return f" {voce['id'][1:]:<2} {voce['titolo']:<10} {celle} {voce['punti']:>3}/{voce['massimo']:<2}  ${voce['spesa']:>6.2f}"
 
 
 def testo_griglia(quadro):
